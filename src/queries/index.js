@@ -1,29 +1,24 @@
 import { gql } from "apollo-boost";
 
 /* Mutations */
+//TODO: fix App version issue
 export const CREATE_USER = gql`
   mutation(
     $username: String!
     $email: String!
-    $password: String!
     $phone: String!
-    $sex: String
-    $desires: [String]
+    $gender: String
     $interestedIn: [String]
     $dob: String
-    $about: String
   ) {
     createUser(
       username: $username
       email: $email
-      password: $password
       appVersion: "3"
       phone: $phone
-      sex: $sex
-      desires: $desires
+      gender: $gender
       interestedIn: $interestedIn
       dob: $dob
-      about: $about
     ) {
       token
     }
@@ -31,8 +26,8 @@ export const CREATE_USER = gql`
 `;
 
 export const LOGIN = gql`
-  mutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation($phone: String!) {
+    login(phone: $phone) {
       token
     }
   }
@@ -85,20 +80,78 @@ export const TOGGLE_EVENT_ATTEND = gql`
   }
 `;
 
+export const FB_RESOLVE = gql`
+  mutation($csrf: String, $code: String) {
+    fbResolve(csrf: $csrf, code: $code)
+  }
+`;
+
+export const UPLOAD_PHOTO = gql`
+  mutation($order: Int!, $photoUrl: String!) {
+    uploadPhoto(order: $order, photoUrl: $photoUrl) {
+      id
+    }
+  }
+`;
+
+export const SIGNS3 = gql`
+  mutation($filename: String!, $filetype: String!) {
+    signS3(filename: $filename, filetype: $filetype) {
+      key
+      signedRequest
+    }
+  }
+`;
+
 /* Queries */
 export const SEARCH_EVENTS = gql`
-  query {
-    searchEvents(lat: -23.00, long: 73.00, desires: "M") {
-      id
-      eventname
-      type
-      description
-      desires
-      sexes
-      lat
-      long
-      address
-      time
+  query($long: Float!, $lat: Float!, $desires: [String]) {
+    searchEvents(long: $long, lat: $lat, desires: $desires) {
+      docs {
+        date
+        events {
+          id
+          eventname
+          type
+          participants
+          desires
+          sexes
+          lat
+          long
+          address
+          time
+        }
+      }
+      total
+      offset
+    }
+  }
+`;
+
+export const SEARCH_PROFILES = gql`
+  query($long: Float!, $lat: Float!, $limit: Int, $skip: Int) {
+    searchProfiles(long: $long, lat: $lat, limit: $limit, skip: $skip) {
+      docs {
+        id
+        about
+        desires
+        photos {
+          photoUrl
+        }
+        users {
+          id
+          username
+          dob
+          gender
+          verifications {
+            std
+            photo
+          }
+        }
+        publicCode
+      }
+      total
+      offset
     }
   }
 `;
@@ -136,7 +189,15 @@ export const GET_CURRENT_USER = gql`
 export const GET_MY_PROFILE = gql`
   query {
     getMyProfile {
-      profilename
+      users {
+        username
+      }
+      photos {
+        url
+        private
+        id
+      }
+      about
       desires
     }
   }

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { ApolloConsumer } from "react-apollo";
 import { SEARCH_DESIRES } from "../../queries";
-import DesireItem from "../Desire/DesireItem";
+import DesireItem from "./DesireItem";
 
-class Search extends Component {
+class DesireSearch extends Component {
   state = {
     searchResults: [],
     selected: []
@@ -14,27 +14,12 @@ class Search extends Component {
     });
   };
 
-  handleClick = (event, desire) => {
-    this.state.selected.includes(desire)
-      ? (event.target.style.border = "1px solid blue")
-      : (event.target.style.border = "1px solid red");
-
-    this.setState(() => {
-      return {
-        selected: this.state.selected.includes(desire)
-          ? this.state.selected.filter(e => e !== desire)
-          : [...this.state.selected, desire]
-      };
-    });
-  };
-
   render() {
     const { searchResults } = this.state;
     return (
       <ApolloConsumer>
         {client => (
-          <div className="App">
-            <h1>Desires</h1>
+          <div>
             <input
               type="search"
               placeholder="Search Desires..."
@@ -52,12 +37,27 @@ class Search extends Component {
                 <DesireItem
                   key={desire}
                   desire={desire}
+                  style={
+                    this.props.desires.includes(desire)
+                      ? { border: "1px solid red" }
+                      : { border: "1px solid blue" }
+                  }
                   onClick={event => {
-                    this.handleClick(event, desire);
+                    this.props.onClick(event, desire);
                   }}
                 />
               ))}
             </ul>
+            <div>
+              Desires:
+              {this.props.desires.map((desire, i) => {
+                if (this.props.desires.length === i + 1) {
+                  return desire;
+                } else {
+                  return desire + ", ";
+                }
+              })}
+            </div>
           </div>
         )}
       </ApolloConsumer>
@@ -65,4 +65,4 @@ class Search extends Component {
   }
 }
 
-export default Search;
+export default DesireSearch;

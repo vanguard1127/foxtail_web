@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import Signout from "../components/Auth/Signout";
 
 const Navbar = ({ session }) => (
-  <nav>
+  <nav className="header">
     {session && session.currentuser ? (
       <NavbarAuth session={session} />
     ) : (
@@ -14,14 +14,6 @@ const Navbar = ({ session }) => (
 
 const NavbarUnAuth = () => (
   <ul>
-    <li>
-      <NavLink to="/" exact>
-        Home
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/search">Search</NavLink>
-    </li>
     <li>
       <NavLink to="/signin">Signin</NavLink>
     </li>
@@ -34,11 +26,7 @@ const NavbarUnAuth = () => (
 const NavbarAuth = ({ session }) => (
   <Fragment>
     <ul>
-      <li>
-        <NavLink to="/" exact>
-          Home
-        </NavLink>
-      </li>
+      <li>{""}</li>
       <li>
         <NavLink to="/search">Search</NavLink>
       </li>
@@ -52,9 +40,6 @@ const NavbarAuth = ({ session }) => (
         <Signout />
       </li>
     </ul>
-    <h4>
-      Welcome, <strong>{session.currentuser.username}</strong>
-    </h4>
   </Fragment>
 );
 

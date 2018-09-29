@@ -4,16 +4,23 @@ import { CREATE_EVENT, SEARCH_EVENTS } from "../../queries";
 import Error from "../Error";
 import { withRouter } from "react-router-dom";
 import withAuth from "../withAuth";
+import DesireSearch from "../Desire/DesireSearch";
+import AddressSearch from "../AddressSearch";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 const initialState = {
-  eventname: "",
-  description: "",
-  type: "Public",
-  desires: "",
-  sexes: "",
-  lat: "",
-  long: "",
-  time: ""
+  eventname: "Sexy Party",
+  image: "sdlsdlk.jpg",
+  description: "For old folks",
+  type: "Private",
+  time: "01/01/2001",
+  sexes: [],
+  desires: ["cuddling"],
+  maxDistance: 50,
+  address: "8392 Ash Dr. Seew,Carolina",
+  lat: -23.0,
+  long: 73.0,
+  eventID: ""
 };
 
 class AddEvent extends Component {
@@ -37,13 +44,54 @@ class AddEvent extends Component {
     });
   };
 
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => {
+        return getLatLng(results[0]);
+      })
+      .then(latLng =>
+        this.setState({
+          lat: latLng.lat,
+          long: latLng.lng,
+          address
+        })
+      )
+      .catch(error => console.error("Error", error));
+  };
+
+  handleClickDesire = (event, desire) => {
+    this.state.desires.includes(desire)
+      ? (event.target.style.border = "1px solid blue")
+      : (event.target.style.border = "1px solid red");
+
+    this.setState(() => {
+      return {
+        desires: this.state.desires.includes(desire)
+          ? this.state.desires.filter(e => e !== desire)
+          : [...this.state.desires, desire]
+      };
+    });
+  };
+
   handleSubmit = (event, createEvent) => {
     event.preventDefault();
-    createEvent().then(({ data }) => {
-      console.log(data);
-    });
-    this.clearState();
-    this.props.history.push("/");
+    // if (!navigator.geolocation) {
+    //   alert("Geolocation is not supported by this browser");
+    // }
+    // navigator.geolocation.getCurrentPosition(
+    //   position => {
+    //     console.log(position);
+    //   },
+    //   err => {
+    //     alert("Unable to fetch location");
+    //   }
+    // );
+    createEvent()
+      .then(({ data }) => {
+        this.clearState();
+        this.props.history.push("/event/" + data.createEvent.id);
+      })
+      .catch(e => console.log(e.message));
   };
 
   validateForm = () => {
@@ -70,42 +118,54 @@ class AddEvent extends Component {
   };
 
   updateCache = (cache, { data: { createEvent } }) => {
-    const { searchEvents } = cache.readQuery({ query: SEARCH_EVENTS });
-
-    cache.writeQuery({
+    console.log(cache);
+    const { searchEvents } = cache.readQuery({
       query: SEARCH_EVENTS,
-      data: {
-        searchEvents: [createEvent, ...searchEvents]
-      }
+      variables: { lat: 23, long: -173 }
     });
+    console.log(searchEvents);
+    // console.log(...searchEvents.docs);
+    // console.log(createEvent);
+    // cache.writeQuery({
+    //   query: SEARCH_EVENTS,
+    //   variables: { lat: 23, long: -173 },
+    //   data: {
+    //     searchEvents: [createEvent, ...searchEvents.docs]
+    //   }
+    // });
   };
-
+  //TODO: Add loading for address box
   render() {
     const {
       eventname,
-      type,
+      image,
       description,
-      desires,
+      type,
+      time,
       sexes,
+      desires,
+      maxDistance,
+      address,
       lat,
-      long,
-      time
+      long
     } = this.state;
     return (
       <Mutation
         mutation={CREATE_EVENT}
         variables={{
           eventname,
+          image,
           description,
           type,
-          desires,
+          time,
           sexes,
+          desires,
+          maxDistance,
+          address,
           lat,
           long,
-          time
+          eventID: null
         }}
-        update={this.updateCache}
-        refetchQueries={() => [{ query: SEARCH_EVENTS }]}
       >
         {(createEvent, { data, loading, error }) => {
           return (
@@ -122,46 +182,6 @@ class AddEvent extends Component {
                   onChange={this.handleChange}
                   value={eventname}
                 />
-                <select name="type" onChange={this.handleChange} value={type}>
-                  <option value="Public">Public</option>
-                  <option value="Request">Request</option>
-                  <option value="Private">Private</option>
-                </select>
-                <textarea
-                  type="text"
-                  name="description"
-                  placeholder="Description"
-                  onChange={this.handleChange}
-                  value={description}
-                />
-                <input
-                  type="text"
-                  name="desires"
-                  placeholder="Desires"
-                  onChange={this.handleChange}
-                  value={desires}
-                />
-                <input
-                  type="text"
-                  name="sexes"
-                  placeholder="Sexes"
-                  onChange={this.handleChange}
-                  value={sexes}
-                />
-                <input
-                  type="text"
-                  name="lat"
-                  placeholder="Latitude"
-                  onChange={this.handleChange}
-                  value={lat}
-                />
-                <input
-                  type="text"
-                  name="long"
-                  placeholder="Longitude"
-                  onChange={this.handleChange}
-                  value={long}
-                />
                 <input
                   type="text"
                   name="time"
@@ -169,6 +189,43 @@ class AddEvent extends Component {
                   onChange={this.handleChange}
                   value={time}
                 />
+                <AddressSearch
+                  onSelect={this.handleSelect}
+                  value={address}
+                  onChange={address => {
+                    this.setState({ address });
+                  }}
+                />
+                <input
+                  type="text"
+                  name="image"
+                  placeholder="Image"
+                  onChange={this.handleChange}
+                  value={image}
+                />
+                <textarea
+                  type="text"
+                  name="description"
+                  placeholder="Description"
+                  onChange={this.handleChange}
+                  value={description}
+                />
+                <DesireSearch
+                  desires={desires}
+                  onClick={this.handleClickDesire}
+                />
+                {/* <input
+                  type="text"
+                  name="sexes"
+                  placeholder="Sexes"
+                  onChange={this.handleChange}
+                  value={sexes}
+                /> */}
+                <select name="type" onChange={this.handleChange} value={type}>
+                  <option value="Public">Public</option>
+                  <option value="Request">Request</option>
+                  <option value="Private">Private</option>
+                </select>
                 <button
                   disabled={loading || this.validateForm()}
                   className="button-primary"

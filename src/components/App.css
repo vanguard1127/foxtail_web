@@ -1,10 +1,128 @@
+.wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+/* We tell all items to be 100% width, via flex-basis */
+.wrapper > * {
+  flex: 1 100%;
+}
+
+/* We rely on source order for mobile-first approach
+ * in this case:
+ * 1. header
+ * 2. article
+ * 3. aside 1
+ * 4. aside 2
+ * 5. footer
+ */
+.footer {
+  background: black;
+  color: #fff;
+}
+/* Medium screens */
+@media all and (min-width: 600px) {
+  /* We tell both sidebars to share a row */
+  .aside {
+    flex: 1 auto;
+  }
+}
+
+/* Large screens */
+@media all and (min-width: 800px) {
+  /* We invert order of first sidebar and main
+   * And tell the main element to take twice as much width as the other two sidebars
+   */
+  .main {
+    flex: 2 0px;
+  }
+  .aside-1 {
+    order: 1;
+    flex-grow: inherit;
+  }
+  .main {
+    order: 2;
+    flex-grow: 2;
+    padding: 20px;
+  }
+  .aside-2 {
+    order: 3;
+  }
+  .footer {
+    order: 4;
+  }
+}
+
+.logo {
+  position: absolute;
+  top: 5px;
+}
+
+.twocolumn {
+  flex-direction: row;
+  display: flex;
+  height: 85vh;
+}
+
+.fullHeight {
+  height: 85vh;
+}
+
+.centerRow {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex: 1;
+}
+
+.centerColumn {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.centerPageBox {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.genderItem {
+  width: 40px;
+  height: 40px;
+  border: dimgray 1px solid;
+}
+
+/* mouse over link */
+.genderItem:hover {
+  border: #ed213a 1px solid;
+}
+
+/* selected link */
+.genderItem:active {
+  color: #0000ff;
+}
+
+.itemRow {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
 .App {
   text-align: center;
 }
 
+.photoGridHeader {
+  column-span: 2;
+}
+
 nav {
   text-align: center;
-  margin-bottom: 1em;
   padding-bottom: 0.2em;
   padding-top: 2em;
   background-color: #efefef;
@@ -32,18 +150,163 @@ textarea {
   font-size: 1.2rem;
 }
 
+.profileBox {
+  display: flex;
+  padding: 50px;
+  justify-content: center;
+  background: #efefef;
+}
+
 .active {
   font-weight: bold;
 }
 
 .form {
   display: flex;
-  align-items: center;
-  justify-content: center;
+
+  width: 69%;
+  flex: 1;
   flex-direction: column;
+  justify-content: space-around;
+}
+
+/* you can make up upload button and sample style by using stylesheets */
+.ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: #999;
+}
+
+.ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
 }
 
 .delete-button {
   color: red;
   cursor: pointer;
+}
+
+#react-paginate ul {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#react-paginate li {
+  display: inline-block;
+}
+
+#react-paginate .break a {
+  cursor: default;
+}
+
+.ChatApp {
+  background-color: #93291e;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatroom {
+  width: 50vw;
+  height: 91vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.chatroom h3 {
+  font-family: "Pacifico", cursive;
+  background-color: #ed213a;
+  color: #fff;
+  margin: 0;
+  height: 40px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatroom .chats {
+  box-sizing: border-box;
+  padding: 0 20px;
+  margin: 10px 0 0;
+  height: 91vh;
+  overflow-y: auto;
+}
+
+.chatroom .chats .chat {
+  background: rgba(255, 255, 255, 0.8);
+  position: relative;
+  padding: 5px 13px;
+  font-size: 14px;
+  border-radius: 10px;
+  list-style: none;
+  float: left;
+  clear: both;
+  margin: 10px 0;
+  max-width: 200px;
+}
+
+.chatroom .chats .chat img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: -10px;
+  left: 0px;
+}
+
+.chatroom .chats .chat.right {
+  float: right;
+  clear: both;
+}
+
+.chatroom .chats .chat a {
+  text-decoration: none;
+  color: #3498db;
+}
+
+.chatroom .input {
+  height: 40px;
+  width: 100%;
+  background: #ed213a;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.chatroom .input input[type="text"] {
+  background: rgba(255, 255, 255, 0.5);
+  outline: 0;
+  border: 2px solid #93291e;
+  padding: 0 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-left: 10px;
+  height: 30px;
+  width: 270px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.chatroom .input input[type="submit"] {
+  background: transparent;
+  border: 1px solid #93291e;
+  height: 30px;
+  width: 70px;
+  font-size: 14px;
+  box-sizing: border-box;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chatroom .input input[type="submit"]:hover {
+  background: #93291e;
+  color: #fff;
 }

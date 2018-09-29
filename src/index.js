@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
@@ -8,14 +8,19 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import App from "./components/App";
+//import App from "./components/Test";
 import Navbar from "./components/Navbar";
-import Search from "./components/Profile/Search";
+import ProfileSearch from "./components/Profile/ProfileSearch";
 import Account from "./components/Account/AccountPage";
 import AddEvent from "./components/Event/AddEvent";
 import EventPage from "./components/Event/EventPage";
-import SearchDesire from "./components/Desire/Search";
+import ChatPage from "./components/Chat/ChatPage";
+import SearchEvents from "./components/Event/SearchEvents";
+import EditProfile from "./components/EditProfile/EditProfilePage";
+import SearchDesire from "./components/Desire/DesireSearch";
 import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
+import SideNavItem from "./components/SideNav";
 import withSession from "./components/withSession";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
@@ -47,23 +52,41 @@ const client = new ApolloClient({
 
 const Root = ({ refetch, session }) => (
   <Router>
-    <Fragment>
+    <div className="wrapper">
+      <div className="logo">
+        <img alt="Foxtail" src={require("../src/images/logoWords_red.png")} />
+      </div>
       <Navbar session={session} />
-      <Switch>
-        <Route path="/" component={App} exact />
-        <Route path="/search" component={Search} />
-        <Route path="/signin" render={() => <Signin refetch={refetch} />} />
-        <Route path="/signup" render={() => <Signup refetch={refetch} />} />
-        <Route
-          path="/event/add"
-          render={() => <AddEvent session={session} />}
-        />
-        <Route path="/event/:id" component={EventPage} />
-        <Route path="/myaccount" render={() => <Account session={session} />} />
-        <Route path="/desire/search" component={SearchDesire} />
-        <Redirect to="/" />
-      </Switch>
-    </Fragment>
+      <aside className="aside aside-1">
+        <SideNavItem session={session} />
+      </aside>
+      <article className="main">
+        <Switch>
+          <Route path="/" component={App} exact />
+          <Route path="/signup" render={() => <Signup refetch={refetch} />} />
+          <Route path="/search" component={ProfileSearch} />
+          <Route path="/event/search" component={SearchEvents} />
+          <Route path="/signin" render={() => <Signin refetch={refetch} />} />
+          <Route
+            path="/editprofile"
+            render={() => <EditProfile session={session} />}
+          />
+          <Route
+            path="/event/add"
+            render={() => <AddEvent session={session} />}
+          />
+          <Route path="/event/:id" component={EventPage} />
+          <Route path="/chat/:id" component={ChatPage} />
+          <Route
+            path="/myaccount"
+            render={() => <Account session={session} />}
+          />
+          <Route path="/desire/search" component={SearchDesire} />
+          <Redirect to="/" />
+        </Switch>
+      </article>
+      <footer className="footer">Foxtail</footer>
+    </div>
   </Router>
 );
 

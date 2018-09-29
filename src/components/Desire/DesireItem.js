@@ -1,14 +1,9 @@
 import React from "react";
 
-const DesireItem = ({ desire, onClick }) => (
+const DesireItem = ({ desire, onClick, style }) => (
   <div style={style} onClick={onClick}>
     {desire}
   </div>
 );
 
-const style = {
-  borderRadius: 5,
-  border: "1px blue solid",
-  width: "auto"
-};
 export default DesireItem;
