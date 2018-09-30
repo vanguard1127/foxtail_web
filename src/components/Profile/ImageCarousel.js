@@ -10,21 +10,21 @@ class ImageCarousel extends Component {
           <img
             alt="photo1"
             src={require("../../images/girl1.jpg")}
-            style={{ width: "200px", height: "200px" }}
+            style={{ width: "100%", height: "45vh" }}
           />
         </div>
         <div>
           <img
             alt="photo2"
             src={require("../../images/girl2.jpg")}
-            style={{ width: "200px", height: "200px" }}
+            style={{ width: "100%", height: "45vh" }}
           />
         </div>
         <div>
           <img
             alt="photo3"
             src={require("../../images/girl3.jpg")}
-            style={{ width: "200px", height: "200px" }}
+            style={{ width: "100%", height: "45vh" }}
           />
         </div>
       </Carousel>

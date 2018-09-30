@@ -13,7 +13,7 @@ class PhotoWall extends React.Component {
     file: null,
     filename: "",
     filetype: "",
-    order: "1",
+    order: "0",
     photoUrl: ""
   };
 
@@ -27,7 +27,6 @@ class PhotoWall extends React.Component {
   };
 
   handleChange = ({ fileList }) => {
-    console.log(fileList);
     this.setState({ fileList });
   };
 
@@ -41,7 +40,16 @@ class PhotoWall extends React.Component {
     signS3().then(async ({ data }) => {
       const { signedRequest, key } = data.signS3;
       await this.uploadToS3(file, signedRequest);
-      this.setState({ photoUrl: key });
+      console.log(this.state.fileList.length);
+      console.log("to", this.state.fileList.length - 1);
+      if (this.props.private) {
+        console.log("NO");
+        this.setState({ photoUrl: key, order: this.state.fileList.length + 3 });
+      } else {
+        console.log("YES");
+        this.setState({ photoUrl: key, order: this.state.fileList.length - 1 });
+      }
+
       try {
         uploadPhoto().then(async ({ data }) => {
           console.log("GraphResponse::::", data);
@@ -73,9 +81,20 @@ class PhotoWall extends React.Component {
   };
 
   componentDidMount() {
-    console.log("KKK", this.props.fileList);
+    var filearray = [];
+
+    for (var i = 0; i < this.props.fileList.length; i++) {
+      if (this.props.fileList[i].url !== "x") {
+        filearray.push({
+          uid: this.props.fileList[i].id,
+          url:
+            "https://ft-img-bucket.s3.amazonaws.com/" +
+            this.props.fileList[i].url
+        });
+      }
+    }
     this.setState({
-      fileList: this.props.fileList
+      fileList: filearray
     });
   }
 
@@ -110,7 +129,7 @@ class PhotoWall extends React.Component {
     }
 
     return (
-      <Mutation mutation={UPLOAD_PHOTO} variables={{ order, photoUrl }}>
+      <Mutation mutation={UPLOAD_PHOTO} variables={{ order, url: photoUrl }}>
         {(uploadPhoto, { data, loading, error }) => (
           <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
             {(signS3, { data, loading, error }) => (
@@ -131,7 +150,7 @@ class PhotoWall extends React.Component {
                   onCancel={this.handleCancel}
                 >
                   <img
-                    alt="example"
+                    alt="original"
                     style={{ width: "100%" }}
                     src={previewImage}
                   />

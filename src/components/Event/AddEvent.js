@@ -75,17 +75,6 @@ class AddEvent extends Component {
 
   handleSubmit = (event, createEvent) => {
     event.preventDefault();
-    // if (!navigator.geolocation) {
-    //   alert("Geolocation is not supported by this browser");
-    // }
-    // navigator.geolocation.getCurrentPosition(
-    //   position => {
-    //     console.log(position);
-    //   },
-    //   err => {
-    //     alert("Unable to fetch location");
-    //   }
-    // );
     createEvent()
       .then(({ data }) => {
         this.clearState();

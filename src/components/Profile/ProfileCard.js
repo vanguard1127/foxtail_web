@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import ImageCarousel from "./ImageCarousel";
 import NamePlate from "./NamePlate";
 import DesiresList from "../Desire/DesiresList";
+import { Card, Icon, Avatar } from "antd";
+
+const { Meta } = Card;
 
 class ProfileCard extends Component {
   state = {};
@@ -9,19 +12,27 @@ class ProfileCard extends Component {
   render() {
     const { users, desires, about, id } = this.props.profile;
     return (
-      <div
+      <Card
         style={{
-          width: "400px",
+          width: "50%",
           display: "inline-block",
           border: "2px solid #eee",
           borderRadius: "5px",
           margin: "20px"
         }}
-        key={id}
+        cover={<ImageCarousel />}
+        actions={[
+          <Icon type="heart" />,
+          <Icon type="message" />,
+          <Icon type="share-alt" />,
+          <Icon type="flag" />
+        ]}
       >
-        <ImageCarousel />
-        <div>
-          <div style={{ width: "50%", height: "5em", display: "inline-block" }}>
+        <Meta
+          style={{
+            height: "20vh"
+          }}
+          title={
             <ul>
               {users.map(user => (
                 <li key={user.id}>
@@ -29,36 +40,16 @@ class ProfileCard extends Component {
                 </li>
               ))}
             </ul>
-          </div>
-          <div
-            style={{ width: "50%", display: "inline-block", float: "right" }}
-          >
-            {" "}
-            <button>Chat</button>
-            <button>Like</button>
-          </div>
-        </div>
-        Desires: <DesiresList desires={desires} />
-        Bio:
-        <div>{about}</div>
-        <ul>
-          <li>
-            <button>Like</button>
-          </li>
-          <li>
-            {" "}
-            <button>Send Message</button>
-          </li>
-          <li>
-            {" "}
-            <button>Share (if not private)</button>
-          </li>
-          <li>
-            {" "}
-            <button>Block & Report</button>
-          </li>
-        </ul>
-      </div>
+          }
+          description={
+            <div>
+              Desires:
+              <DesiresList desires={desires} /> Bio:
+              <div>{about}</div>
+            </div>
+          }
+        />
+      </Card>
     );
   }
 }

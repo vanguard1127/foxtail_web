@@ -17,6 +17,7 @@ class NamePlate extends Component {
             style={{ width: "20px", height: "20px" }}
           />
         </div>
+        <br />
       </div>
     );
   }

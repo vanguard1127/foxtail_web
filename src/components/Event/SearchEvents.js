@@ -11,6 +11,17 @@ class SearchEvents extends Component {
     currentDate: ""
   };
 
+  // if (!navigator.geolocation) {
+  //   alert("Geolocation is not supported by this browser");
+  // }
+  // navigator.geolocation.getCurrentPosition(
+  //   position => {
+  //     console.log(position);
+  //   },
+  //   err => {
+  //     alert("Unable to fetch location");
+  //   }
+  // );
   handleEventCard = eventdate => {
     return (
       <div>

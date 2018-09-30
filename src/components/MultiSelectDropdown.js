@@ -8,7 +8,7 @@ const MultiSelectDropdown = ({
   handleChange,
   placeholder,
   name,
-  value,
+  defaultValue,
   options,
   style
 }) => (
@@ -16,7 +16,7 @@ const MultiSelectDropdown = ({
     mode="multiple"
     style={{ ...style }}
     placeholder={placeholder}
-    defaultValue={value}
+    defaultValue={defaultValue}
     onChange={handleChange}
   >
     {options.map(option => (

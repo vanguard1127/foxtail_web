@@ -8,7 +8,6 @@ class PhotoGrid extends Component {
     const photos = this.props.photos;
     const publicPics = photos.slice(0, 4);
     const privatePics = photos.slice(4, 8);
-    console.log("pp", publicPics, "lkk", privatePics);
     return (
       <table style={{ width: "30vw" }}>
         <tbody>
@@ -17,7 +16,7 @@ class PhotoGrid extends Component {
           </tr>
           <tr>
             <td>
-              <PhotoWall fileList={publicPics} />
+              <PhotoWall fileList={publicPics} private={false} />
             </td>
           </tr>
           <tr>
@@ -27,7 +26,7 @@ class PhotoGrid extends Component {
           </tr>
           <tr>
             <td>
-              <PhotoWall fileList={privatePics} />
+              <PhotoWall fileList={privatePics} private={true} />
             </td>
           </tr>
         </tbody>

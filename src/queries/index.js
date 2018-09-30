@@ -87,8 +87,18 @@ export const FB_RESOLVE = gql`
 `;
 
 export const UPLOAD_PHOTO = gql`
-  mutation($order: Int!, $photoUrl: String!) {
-    uploadPhoto(order: $order, photoUrl: $photoUrl) {
+  mutation($order: Int!, $url: String!) {
+    uploadPhoto(order: $order, url: $url) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_PROFILE = gql`
+  mutation($desires: [String], $about: String) {
+    updateProfile(desires: $desires, about: $about) {
+      desires
+      about
       id
     }
   }
@@ -136,7 +146,7 @@ export const SEARCH_PROFILES = gql`
         about
         desires
         photos {
-          photoUrl
+          url
         }
         users {
           id
