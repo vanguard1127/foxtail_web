@@ -4,28 +4,52 @@ import { Carousel } from "react-responsive-carousel";
 
 class ImageCarousel extends Component {
   render() {
+    //const { photos,showThumb } = this.props;
+
+    const { showThumbs, autoPlay, selectedItem } = this.props;
     return (
-      <Carousel showThumbs={false} showStatus={false}>
+      // <Carousel showThumbs={false} showStatus={false}>
+      //   {photos.map(photo => (
+      //     <div>
+      //       <img
+      //         alt={photo.order}
+      //         src={photo.url}
+      //         style={{ width: "100%", height: "25vh" }}
+      //       />
+      //     </div>
+      //   ))}
+      // </Carousel>
+
+      <Carousel
+        showThumbs={showThumbs}
+        showStatus={false}
+        width="100%"
+        autoPlay={autoPlay}
+        selectedItem={selectedItem}
+      >
         <div>
-          <img
-            alt="photo1"
-            src={require("../../images/girl1.jpg")}
-            style={{ width: "100%", height: "45vh" }}
-          />
+          <img alt="photo1" src={require("../../images/girl1.jpg")} />
         </div>
         <div>
-          <img
-            alt="photo2"
-            src={require("../../images/girl2.jpg")}
-            style={{ width: "100%", height: "45vh" }}
-          />
+          <img alt="photo2" src={require("../../images/girl2.jpg")} />
         </div>
         <div>
-          <img
-            alt="photo3"
-            src={require("../../images/girl3.jpg")}
-            style={{ width: "100%", height: "45vh" }}
-          />
+          <img alt="photo3" src={require("../../images/girl3.jpg")} />
+        </div>
+        <div>
+          <img alt="photo4" src={require("../../images/girl3.jpg")} />
+        </div>
+        <div>
+          <img alt="photo1" src={require("../../images/girl1.jpg")} />
+        </div>
+        <div>
+          <img alt="photo2" src={require("../../images/girl2.jpg")} />
+        </div>
+        <div>
+          <img alt="photo3" src={require("../../images/girl3.jpg")} />
+        </div>
+        <div>
+          <img alt="photo4" src={require("../../images/girl3.jpg")} />
         </div>
       </Carousel>
     );

@@ -25,6 +25,17 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const LIKE_PROFILE = gql`
+  mutation($toProfileID: ID!) {
+    likeProfile(toProfileID: $toProfileID)
+  }
+`;
+
+export const BLOCK_PROFILE = gql`
+  mutation($blockedProfileID: ID!) {
+    blockProfile(blockedProfileID: $blockedProfileID)
+  }
+`;
 export const LOGIN = gql`
   mutation($phone: String!) {
     login(phone: $phone) {
@@ -141,27 +152,24 @@ export const SEARCH_EVENTS = gql`
 export const SEARCH_PROFILES = gql`
   query($long: Float!, $lat: Float!, $limit: Int, $skip: Int) {
     searchProfiles(long: $long, lat: $lat, limit: $limit, skip: $skip) {
-      docs {
-        id
-        about
-        desires
-        photos {
-          url
-        }
-        users {
-          id
-          username
-          dob
-          gender
-          verifications {
-            std
-            photo
-          }
-        }
-        publicCode
+      id
+      about
+      desires
+      photos {
+        url
+        private
       }
-      total
-      offset
+      users {
+        id
+        username
+        dob
+        gender
+        verifications {
+          std
+          photo
+        }
+      }
+      publicCode
     }
   }
 `;
@@ -209,6 +217,31 @@ export const GET_MY_PROFILE = gql`
       }
       about
       desires
+    }
+  }
+`;
+
+export const GET_PROFILE = gql`
+  query($id: String!) {
+    profile(id: $id) {
+      id
+      about
+      desires
+      photos {
+        url
+        private
+      }
+      users {
+        id
+        username
+        dob
+        gender
+        verifications {
+          std
+          photo
+        }
+      }
+      publicCode
     }
   }
 `;

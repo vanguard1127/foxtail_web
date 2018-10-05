@@ -28,10 +28,13 @@ const NavbarAuth = ({ session }) => (
     <ul>
       <li>{""}</li>
       <li>
-        <NavLink to="/search">Search</NavLink>
+        <NavLink to="/search">Meet Members</NavLink>
       </li>
       <li>
-        <NavLink to="/event/add">Add Event</NavLink>
+        <NavLink to="/event/search">Events</NavLink>
+      </li>
+      <li>
+        <NavLink to="/editprofile">Edit Profile</NavLink>
       </li>
       <li>
         <NavLink to="/myaccount">My Account</NavLink>

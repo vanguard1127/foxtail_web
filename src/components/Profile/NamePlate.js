@@ -6,8 +6,8 @@ class NamePlate extends Component {
   render() {
     const { user } = this.props;
     return (
-      <div>
-        <div style={{ float: "left" }}>
+      <div style={{ display: "flex" }}>
+        <div>
           {user.username},{moment().diff(user.dob, "years")} {user.gender}
         </div>
         <div style={{ marginLeft: "5px", float: "left" }}>
@@ -17,7 +17,6 @@ class NamePlate extends Component {
             style={{ width: "20px", height: "20px" }}
           />
         </div>
-        <br />
       </div>
     );
   }

@@ -14,13 +14,13 @@ import ProfileSearch from "./components/Profile/ProfileSearch";
 import Account from "./components/Account/AccountPage";
 import AddEvent from "./components/Event/AddEvent";
 import EventPage from "./components/Event/EventPage";
+import ProfilePage from "./components/Profile/ProfilePage";
 import ChatPage from "./components/Chat/ChatPage";
 import SearchEvents from "./components/Event/SearchEvents";
 import EditProfile from "./components/EditProfile/EditProfilePage";
 import SearchDesire from "./components/Desire/DesireSearch";
 import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
-import SideNavItem from "./components/SideNav";
 import withSession from "./components/withSession";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
@@ -57,9 +57,6 @@ const Root = ({ refetch, session }) => (
         <img alt="Foxtail" src={require("../src/images/logoWords_red.png")} />
       </div>
       <Navbar session={session} />
-      <aside className="aside aside-1">
-        <SideNavItem session={session} />
-      </aside>
       <article className="main">
         <Switch>
           <Route path="/" component={App} exact />
@@ -76,6 +73,7 @@ const Root = ({ refetch, session }) => (
             render={() => <AddEvent session={session} />}
           />
           <Route path="/event/:id" component={EventPage} />
+          <Route path="/profile/:id" component={ProfilePage} />
           <Route path="/chat/:id" component={ChatPage} />
           <Route
             path="/myaccount"

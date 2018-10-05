@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import CardsList from "./CardsList";
 import { SEARCH_PROFILES } from "../../queries";
-import ReactPaginate from "react-paginate";
+import Waypoint from "react-waypoint";
 import { graphql } from "react-apollo";
 
-const LIMIT = 2;
+const LIMIT = 6;
 class ProfileSearch extends Component {
   state = {
     skip: 0,
@@ -19,11 +19,18 @@ class ProfileSearch extends Component {
         skip: this.state.skip
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
+        console.log("prev", [
+          ...previousResult.searchProfiles,
+          ...fetchMoreResult.searchProfiles
+        ]);
         if (!fetchMoreResult) {
           return previousResult;
         }
         return {
-          searchProfiles: fetchMoreResult.searchProfiles
+          searchProfiles: [
+            ...previousResult.searchProfiles,
+            ...fetchMoreResult.searchProfiles
+          ]
         };
       }
     });
@@ -32,13 +39,12 @@ class ProfileSearch extends Component {
     });
   };
 
-  handleEnd = data => {
-    let selected = data.selected;
-    let skip = Math.ceil(selected * LIMIT);
-
-    this.setState({ skip: skip }, () => {
-      this.fetchData();
-    });
+  handleEnd = () => {
+    console.log("go", this.state.skip + LIMIT);
+    this.setState(
+      state => ({ skip: this.state.skip + LIMIT }),
+      () => this.fetchData()
+    );
   };
 
   render() {
@@ -50,25 +56,11 @@ class ProfileSearch extends Component {
 
     return (
       <div>
-        <select>
+        {/* <select>
           <option>Nearby</option>
-        </select>
-        <CardsList searchProfiles={data.docs} />
-        <div id="react-paginate">
-          <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={<a href="">...</a>}
-            breakClassName={"break-me"}
-            pageCount={data.total / LIMIT}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handleEnd}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </div>
+        </select> */}
+        <CardsList searchProfiles={data} />
+        <Waypoint onEnter={this.handleEnd} />
       </div>
     );
   }

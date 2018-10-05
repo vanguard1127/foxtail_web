@@ -74,10 +74,23 @@
   display: flex;
   flex: 1;
 }
-
+.leftRow {
+  justify-content: left;
+  align-items: left;
+  display: flex;
+  flex: 1;
+}
 .centerColumn {
   justify-content: center;
   align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.leftColumn {
+  justify-content: left;
+  align-items: left;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -309,4 +322,17 @@ textarea {
 .chatroom .input input[type="submit"]:hover {
   background: #93291e;
   color: #fff;
+}
+
+.ant-card-body {
+  padding-top: 10px !important;
+  height: 14vh !important;
+}
+
+.ant-card-meta-title {
+  height: 5vh !important;
+}
+
+.carousel .thumb {
+  width: 25% !important;
 }
