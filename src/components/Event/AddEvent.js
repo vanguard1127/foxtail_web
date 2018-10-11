@@ -5,7 +5,7 @@ import Error from "../Error";
 import { withRouter } from "react-router-dom";
 import withAuth from "../withAuth";
 import DesireSearch from "../Desire/DesireSearch";
-import AddressSearch from "../AddressSearch";
+import AddressSearch from "../common/AddressSearch";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 const initialState = {
@@ -29,13 +29,6 @@ class AddEvent extends Component {
   clearState = () => {
     this.setState({ ...initialState });
   };
-
-  componentDidMount() {
-    console.log(this.props.session.currentuser.username);
-    // this.setState({
-    //   username:this.props.session.currentuser.username
-    // });
-  }
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -107,7 +100,6 @@ class AddEvent extends Component {
   };
 
   updateCache = (cache, { data: { createEvent } }) => {
-    console.log(cache);
     const { searchEvents } = cache.readQuery({
       query: SEARCH_EVENTS,
       variables: { lat: 23, long: -173 }
@@ -203,13 +195,6 @@ class AddEvent extends Component {
                   desires={desires}
                   onClick={this.handleClickDesire}
                 />
-                {/* <input
-                  type="text"
-                  name="sexes"
-                  placeholder="Sexes"
-                  onChange={this.handleChange}
-                  value={sexes}
-                /> */}
                 <select name="type" onChange={this.handleChange} value={type}>
                   <option value="Public">Public</option>
                   <option value="Request">Request</option>

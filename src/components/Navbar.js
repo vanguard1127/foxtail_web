@@ -1,49 +1,53 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import Signout from "../components/Auth/Signout";
+import { Menu } from "antd";
 
 const Navbar = ({ session }) => (
-  <nav className="header">
+  <Fragment>
     {session && session.currentuser ? (
       <NavbarAuth session={session} />
     ) : (
       <NavbarUnAuth />
     )}
-  </nav>
+  </Fragment>
 );
 
 const NavbarUnAuth = () => (
-  <ul>
-    <li>
+  <Menu
+    theme="dark"
+    mode="horizontal"
+    defaultSelectedKeys={["1"]}
+    style={{ lineHeight: "64px" }}
+  >
+    <Menu.Item key="1">
       <NavLink to="/signin">Signin</NavLink>
-    </li>
-    <li>
+    </Menu.Item>
+    <Menu.Item key="2">
       <NavLink to="/signup">Signup</NavLink>
-    </li>
-  </ul>
+    </Menu.Item>
+  </Menu>
 );
 
 const NavbarAuth = ({ session }) => (
-  <Fragment>
-    <ul>
-      <li>{""}</li>
-      <li>
-        <NavLink to="/search">Meet Members</NavLink>
-      </li>
-      <li>
-        <NavLink to="/event/search">Events</NavLink>
-      </li>
-      <li>
-        <NavLink to="/editprofile">Edit Profile</NavLink>
-      </li>
-      <li>
-        <NavLink to="/myaccount">My Account</NavLink>
-      </li>
-      <li>
-        <Signout />
-      </li>
-    </ul>
-  </Fragment>
+  <Menu
+    theme="dark"
+    mode="horizontal"
+    defaultSelectedKeys={["1"]}
+    style={{ lineHeight: "64px" }}
+  >
+    <Menu.Item key="1">
+      <NavLink to="/search">Meet Members</NavLink>
+    </Menu.Item>
+    <Menu.Item key="2">
+      <NavLink to="/event/search">Events</NavLink>
+    </Menu.Item>
+    <Menu.Item key="3">
+      <NavLink to="/editprofile">Edit Profile</NavLink>
+    </Menu.Item>
+    <Menu.Item key="4">
+      <NavLink to="/myaccount">My Account</NavLink>
+    </Menu.Item>
+  </Menu>
 );
 
 export default Navbar;

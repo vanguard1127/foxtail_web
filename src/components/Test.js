@@ -21,7 +21,6 @@ class App extends Component {
   };
 
   handleFBReturn = ({ state, code }, fbResolve) => {
-    console.log("curr", this.state);
     this.setState({
       csrf: state,
       code

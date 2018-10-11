@@ -19,10 +19,6 @@ class ProfileSearch extends Component {
         skip: this.state.skip
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        console.log("prev", [
-          ...previousResult.searchProfiles,
-          ...fetchMoreResult.searchProfiles
-        ]);
         if (!fetchMoreResult) {
           return previousResult;
         }
@@ -40,7 +36,6 @@ class ProfileSearch extends Component {
   };
 
   handleEnd = () => {
-    console.log("go", this.state.skip + LIMIT);
     this.setState(
       state => ({ skip: this.state.skip + LIMIT }),
       () => this.fetchData()

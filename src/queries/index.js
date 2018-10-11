@@ -126,25 +126,33 @@ export const SIGNS3 = gql`
 
 /* Queries */
 export const SEARCH_EVENTS = gql`
-  query($long: Float!, $lat: Float!, $desires: [String]) {
-    searchEvents(long: $long, lat: $lat, desires: $desires) {
-      docs {
-        date
-        events {
-          id
-          eventname
-          type
-          participants
-          desires
-          sexes
-          lat
-          long
-          address
-          time
-        }
+  query(
+    $long: Float!
+    $lat: Float!
+    $desires: [String]
+    $limit: Int
+    $skip: Int
+  ) {
+    searchEvents(
+      long: $long
+      lat: $lat
+      desires: $desires
+      limit: $limit
+      skip: $skip
+    ) {
+      date
+      events {
+        id
+        eventname
+        type
+        participants
+        desires
+        sexes
+        lat
+        long
+        address
+        time
       }
-      total
-      offset
     }
   }
 `;

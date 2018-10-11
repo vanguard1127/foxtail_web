@@ -52,28 +52,26 @@ class DesiresList extends Component {
   }
 
   render() {
-    const { desires, all } = this.props;
+    const { desires, all, style } = this.props;
     let count = 0;
     return (
-      <div ref="outer">
-        <div ref="inner" style={{ overflowY: "hidden" }}>
-          {desires.map(desire => {
-            if (count < 6 || all) {
-              count++;
-              return (
-                <Button type="dashed" key={desire}>
-                  {desire}
-                </Button>
-              );
-            } else {
-              return null;
-            }
-          })}
+      <div ref="inner" style={{ ...style }}>
+        {desires.map(desire => {
+          if (count < 6 || all) {
+            count++;
+            return (
+              <Button type="dashed" key={desire}>
+                {desire}
+              </Button>
+            );
+          } else {
+            return null;
+          }
+        })}
 
-          {desires.length - count > 0 && (
-            <Button type="dashed">+{desires.length - count}</Button>
-          )}
-        </div>
+        {desires.length - count > 0 && (
+          <Button type="dashed">+{desires.length - count}</Button>
+        )}
       </div>
     );
   }

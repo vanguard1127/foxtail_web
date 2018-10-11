@@ -24,6 +24,9 @@ import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
+import { Layout, Breadcrumb } from "antd";
+
+const { Header, Content, Footer } = Layout;
 
 const client = new ApolloClient({
   uri: "http://localhost:4444/graphql",
@@ -52,12 +55,18 @@ const client = new ApolloClient({
 
 const Root = ({ refetch, session }) => (
   <Router>
-    <div className="wrapper">
-      <div className="logo">
-        <img alt="Foxtail" src={require("../src/images/logoWords_red.png")} />
-      </div>
-      <Navbar session={session} />
-      <article className="main">
+    <Layout className="layout">
+      <Header>
+        <div className="logo" />
+
+        <Navbar session={session} />
+      </Header>
+      <Content style={{ padding: "0 50px" }}>
+        <Breadcrumb style={{ margin: "16px 0" }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>List</Breadcrumb.Item>
+          <Breadcrumb.Item>App</Breadcrumb.Item>
+        </Breadcrumb>
         <Switch>
           <Route path="/" component={App} exact />
           <Route path="/signup" render={() => <Signup refetch={refetch} />} />
@@ -82,9 +91,11 @@ const Root = ({ refetch, session }) => (
           <Route path="/desire/search" component={SearchDesire} />
           <Redirect to="/" />
         </Switch>
-      </article>
-      <footer className="footer">Foxtail</footer>
-    </div>
+      </Content>
+      <Footer style={{ textAlign: "center" }}>
+        Ant Design ©2018 Created by Ant UED
+      </Footer>
+    </Layout>
   </Router>
 );
 

@@ -3,15 +3,13 @@ import PlacesAutocomplete from "react-places-autocomplete";
 
 export default class AddressSearch extends React.Component {
   render() {
+    const { value, onChange, onSelect, style } = this.props;
     return (
-      <PlacesAutocomplete
-        value={this.props.value}
-        onChange={this.props.onChange}
-        onSelect={this.props.onSelect}
-      >
+      <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect}>
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <input
+              style={{ ...style }}
               {...getInputProps({
                 placeholder: "Search Places ...",
                 className: "location-search-input"

@@ -40,22 +40,18 @@ class PhotoWall extends React.Component {
     signS3().then(async ({ data }) => {
       const { signedRequest, key } = data.signS3;
       await this.uploadToS3(file, signedRequest);
-      console.log(this.state.fileList.length);
-      console.log("to", this.state.fileList.length - 1);
       if (this.props.private) {
-        console.log("NO");
         this.setState({ photoUrl: key, order: this.state.fileList.length + 3 });
       } else {
-        console.log("YES");
         this.setState({ photoUrl: key, order: this.state.fileList.length - 1 });
       }
 
       try {
         uploadPhoto().then(async ({ data }) => {
-          console.log("GraphResponse::::", data);
+          console.log("Response:", data);
         });
       } catch (e) {
-        console.log("ERRRR", e);
+        console.log("Error", e);
       }
     });
   };

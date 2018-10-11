@@ -12,7 +12,6 @@ class CardsList extends Component {
   };
 
   setProfileModalVisible = (profileModalVisible, profile) => {
-    console.log("attemo");
     this.setState({ profile, profileModalVisible });
   };
 

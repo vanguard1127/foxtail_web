@@ -84,7 +84,7 @@ const EventCard = ({
               Looking for:
               {desires}
               <br />
-              {participants.length} attending
+              {participants ? participants.length : "0"} attending
             </div>
           </td>
           <td>

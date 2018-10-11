@@ -5,7 +5,8 @@ import { GET_PROFILE } from "../../queries";
 import moment from "moment";
 import ImageCarousel from "./ImageCarousel";
 import DesiresList from "../Desire/DesiresList";
-
+import { Icon, Button } from "antd";
+const ButtonGroup = Button.Group;
 class ProfilePage extends Component {
   state = {
     selectedPhoto: 0
@@ -41,53 +42,152 @@ class ProfilePage extends Component {
                 flexDirection: "column"
               }}
             >
-              <div
-                style={{ backgroundColor: "blue", flex: 2, display: "flex" }}
-              >
+              <div style={{ flex: 2, display: "flex" }}>
                 <div
                   className="leftRow"
                   style={{
-                    backgroundColor: "red",
+                    backgroundColor: "#666",
                     flexDirection: "column",
                     flex: "1",
-                    display: "flex",
-                    padding: "3vh"
+                    display: "flex"
                   }}
                 >
-                  {users.map((user, index) => (
-                    <div key={index}>
-                      {" "}
-                      <strong> {user.username}</strong>,
-                      {moment().diff(user.dob, "years")} {user.gender}
-                      <div>
+                  <div style={{ padding: "1vw", display: "flex" }}>
+                    {users.map((user, index) => (
+                      <div key={index}>
                         {" "}
-                        <img
-                          alt="badge"
-                          src={require("../../images/badge.JPG")}
-                          style={{ width: "20px", height: "20px" }}
-                        />{" "}
-                        STD Verified
+                        <div
+                          style={{
+                            fontSize: "30px",
+                            fontWeight: "bolder",
+                            display: "inline"
+                          }}
+                        >
+                          {" "}
+                          {user.username}
+                        </div>
+                        ,{moment().diff(user.dob, "years")} {user.gender}
+                        <div style={{ fontSize: "15px" }}>
+                          {" "}
+                          <img
+                            alt="badge"
+                            src={require("../../images/badge.JPG")}
+                            style={{ width: "20px", height: "20px" }}
+                          />{" "}
+                          STD Verified
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                   <div
                     className="leftRow"
-                    style={{ flex: 1, flexDirection: "column" }}
+                    style={{ flex: 1, flexDirection: "column", padding: "2vw" }}
                   >
-                    <h5>Bio:</h5>
-                    <div>{about}</div>
+                    <div
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Bio:
+                    </div>
+                    <div
+                      style={{
+                        overflowY: "auto",
+                        fontSize: "18px",
+                        display: "flex",
+                        flexWrap: "wrap"
+                      }}
+                    >
+                      {about}
+                    </div>
                   </div>
                   <div
                     className="leftColumn"
-                    style={{ flex: 1, flexDirection: "column" }}
+                    style={{ flex: 1, flexDirection: "column", padding: "2vw" }}
                   >
-                    <h5>Desires:</h5>
-                    <DesiresList desires={desires} />
+                    <div
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Desires:
+                    </div>
+                    <DesiresList
+                      desires={desires}
+                      style={{
+                        overflowY: "aut0",
+                        display: "flex",
+                        flexWrap: "wrap"
+                      }}
+                      all={true}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      alignSelf: "center",
+                      alignItems: "flex-end",
+                      display: "flex",
+                      width: "100%"
+                    }}
+                  >
+                    <ButtonGroup
+                      style={{
+                        width: "100%"
+                      }}
+                    >
+                      <Button
+                        style={{
+                          width: "25%",
+                          height: "8vh"
+                        }}
+                      >
+                        <Icon
+                          type="heart"
+                          style={{ fontSize: "25px" }}
+                          theme="twoTone"
+                          twoToneColor="#eb2f96"
+                        />
+                      </Button>
+                      <Button
+                        style={{
+                          width: "25%",
+                          height: "8vh"
+                        }}
+                      >
+                        <Icon
+                          type="message"
+                          style={{ fontSize: "25px" }}
+                          theme="twoTone"
+                          twoToneColor="#1A63FF"
+                        />
+                      </Button>
+                      <Button
+                        style={{
+                          width: "25%",
+                          height: "8vh"
+                        }}
+                      >
+                        <Icon type="share-alt" style={{ fontSize: "25px" }} />
+                      </Button>
+                      <Button
+                        style={{
+                          width: "25%",
+                          height: "8vh"
+                        }}
+                      >
+                        <Icon
+                          type="flag"
+                          style={{ fontSize: "25px", color: "#E84D3B" }}
+                        />
+                      </Button>
+                    </ButtonGroup>
                   </div>
                 </div>
                 <div
                   className="centerColumn"
-                  style={{ backgroundColor: "green" }}
+                  style={{ backgroundColor: "#eee" }}
                 >
                   <ImageCarousel
                     photos={photos}
@@ -97,7 +197,6 @@ class ProfilePage extends Component {
                   />
                   <ul style={{ display: "flex" }}>
                     {publicPics.map((photo, index) => {
-                      console.log(photo);
                       return (
                         <li>
                           <img
@@ -109,8 +208,9 @@ class ProfilePage extends Component {
                             style={{
                               width: "10vw",
                               height: "12vh",
-                              padding: "5px",
-                              display: "inline"
+                              margin: "5px",
+                              display: "inline",
+                              cursor: "pointer"
                             }}
                           />
                         </li>
@@ -119,7 +219,6 @@ class ProfilePage extends Component {
                   </ul>
                   <ul style={{ display: "flex" }}>
                     {privatePics.map((photo, index) => {
-                      console.log(photo);
                       return (
                         <li>
                           <img
@@ -131,8 +230,9 @@ class ProfilePage extends Component {
                             style={{
                               width: "10vw",
                               height: "12vh",
-                              padding: "5px",
-                              display: "inline"
+                              margin: "5px",
+                              display: "inline",
+                              cursor: "pointer"
                             }}
                           />
                         </li>
