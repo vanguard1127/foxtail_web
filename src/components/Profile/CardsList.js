@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import ProfileCard from "./ProfileCard";
 import BlockModal from "../common/BlockModal";
-import ProfileModal from "../common/ProfileModal";
+import ShareModal from "../common/ShareModal";
 
 class CardsList extends Component {
   state = {
     searchProfiles: this.props.searchProfiles,
-    profileModalVisible: false,
+    shareModalVisible: false,
     blockModalVisible: false,
     profile: ""
   };
 
-  setProfileModalVisible = (profileModalVisible, profile) => {
-    this.setState({ profile, profileModalVisible });
+  setShareModalVisible = (shareModalVisible, profile) => {
+    if (profile) this.setState({ profile, shareModalVisible });
+    else this.setState({ shareModalVisible });
   };
 
   setBlockModalVisible = (blockModalVisible, profile) => {
-    this.setState({ profile, blockModalVisible });
+    if (profile) this.setState({ profile, blockModalVisible });
+    else this.setState({ blockModalVisible });
   };
 
   removeProfile = id => {
@@ -41,14 +43,15 @@ class CardsList extends Component {
       >
         <BlockModal
           profile={profile}
+          id={profile.id}
           visible={this.state.blockModalVisible}
           close={() => this.setBlockModalVisible(false)}
           removeProfile={this.removeProfile}
         />
-        <ProfileModal
+        <ShareModal
           profile={profile}
-          visible={this.state.profileModalVisible}
-          close={() => this.setProfileModalVisible(false)}
+          visible={this.state.shareModalVisible}
+          close={() => this.setShareModalVisible(false)}
           removeProfile={this.removeProfile}
         />
 
@@ -58,7 +61,7 @@ class CardsList extends Component {
             profile={profile}
             removeProfile={this.removeProfile}
             showBlockModal={this.setBlockModalVisible}
-            showProfileModal={this.setProfileModalVisible}
+            showShareModal={this.setShareModalVisible}
           />
         ))}
       </div>

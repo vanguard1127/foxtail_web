@@ -12,7 +12,6 @@ import App from "./components/App";
 import Navbar from "./components/Navbar";
 import ProfileSearch from "./components/Profile/ProfileSearch";
 import Account from "./components/Account/AccountPage";
-import AddEvent from "./components/Event/AddEvent";
 import EventPage from "./components/Event/EventPage";
 import ProfilePage from "./components/Profile/ProfilePage";
 import ChatPage from "./components/Chat/ChatPage";
@@ -76,10 +75,6 @@ const Root = ({ refetch, session }) => (
           <Route
             path="/editprofile"
             render={() => <EditProfile session={session} />}
-          />
-          <Route
-            path="/event/add"
-            render={() => <AddEvent session={session} />}
           />
           <Route path="/event/:id" component={EventPage} />
           <Route path="/profile/:id" component={ProfilePage} />

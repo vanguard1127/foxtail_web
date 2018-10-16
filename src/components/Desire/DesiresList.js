@@ -57,7 +57,7 @@ class DesiresList extends Component {
     return (
       <div ref="inner" style={{ ...style }}>
         {desires.map(desire => {
-          if (count < 6 || all) {
+          if (count < 3 || all) {
             count++;
             return (
               <Button type="dashed" key={desire}>

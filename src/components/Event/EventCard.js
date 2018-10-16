@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
+import { Dropdown, Menu, Icon } from "antd";
 import { DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
 
 const handleDelete = deleteEvent => {
@@ -14,91 +15,149 @@ const handleDelete = deleteEvent => {
     });
   }
 };
-const EventCard = ({
-  id,
-  eventname,
-  type,
-  desires,
-  sexes,
-  lat,
-  long,
-  time,
-  address,
-  participants
-}) => (
-  <div>
-    <table>
-      <tbody>
-        <tr>
-          <td colSpan="3">
-            <Mutation
-              mutation={DELETE_EVENT}
-              variables={{ eventID: id }}
-              update={(cache, { data: { deleteEvent } }) => {
-                const { searchEvents } = cache.readQuery({
-                  query: SEARCH_EVENTS,
-                  variables: { lat, long, desires }
-                });
 
-                cache.writeQuery({
-                  query: SEARCH_EVENTS,
-                  variables: { lat, long, desires },
-                  data: {
-                    searchEvents: searchEvents.filter(
-                      event => event.id !== deleteEvent
-                    )
-                  }
-                });
-              }}
-              refetchQueries={() => [
-                { query: SEARCH_EVENTS, variables: { lat, long, desires } }
-              ]}
-            >
-              {(deleteEvent, attrs = {}) => {
-                return (
-                  <p
-                    className="delete-button"
-                    onClick={() => handleDelete(deleteEvent)}
-                    style={{ float: "right" }}
+class EventCard extends Component {
+  render() {
+    const { event } = this.props;
+    const {
+      id,
+      eventname,
+      desires,
+      lat,
+      long,
+      time,
+      address,
+      participants
+    } = event;
+
+    return (
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <td colSpan="3">
+                <div
+                  style={{
+                    backgroundImage:
+                      "url(" + require("../../images/party.jpg") + ")",
+                    backgroundSize: "cover",
+                    height: "25vh",
+                    width: "40vw"
+                  }}
+                >
+                  <Mutation
+                    mutation={DELETE_EVENT}
+                    variables={{ eventID: id }}
+                    update={(cache, { data: { deleteEvent } }) => {
+                      const { searchEvents } = cache.readQuery({
+                        query: SEARCH_EVENTS,
+                        variables: { lat, long, desires }
+                      });
+
+                      cache.writeQuery({
+                        query: SEARCH_EVENTS,
+                        variables: { lat, long, desires },
+                        data: {
+                          searchEvents: searchEvents.filter(
+                            event => event.id !== deleteEvent
+                          )
+                        }
+                      });
+                    }}
+                    refetchQueries={() => [
+                      {
+                        query: SEARCH_EVENTS,
+                        variables: { lat, long, desires }
+                      }
+                    ]}
                   >
-                    {attrs.loading ? "deleting..." : "X"}
-                  </p>
-                );
-              }}
-            </Mutation>
-            <img alt="Event" src={require("../../images/party.jpg")} />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div style={{ float: "left" }}>
-              {moment(time).format("hh:mm a")}
-            </div>
-          </td>
-          <td>
-            <div style={{ display: "block" }}>
-              <Link to={`/event/${id}`}>{eventname}</Link>
-              <br />
-              {address}
-              <br />
-              Looking for:
-              {desires}
-              <br />
-              {participants ? participants.length : "0"} attending
-            </div>
-          </td>
-          <td>
-            <div>
-              <button>Open</button>
-            </div>
-            <div>
-              <button>Flag</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-);
+                    {(deleteEvent, attrs = {}) => {
+                      const menu = (
+                        <Menu>
+                          <Menu.Item
+                            key="0"
+                            onClick={() => handleDelete(deleteEvent)}
+                          >
+                            Edit
+                          </Menu.Item>
+                          <Menu.Item
+                            key="1"
+                            onClick={() => handleDelete(deleteEvent)}
+                          >
+                            Delete
+                          </Menu.Item>
+                        </Menu>
+                      );
+                      return (
+                        <Dropdown overlay={menu} trigger={["click"]}>
+                          <a
+                            className="ant-dropdown-link"
+                            href={null}
+                            style={{ float: "right" }}
+                          >
+                            {attrs.loading ? (
+                              "deleting..."
+                            ) : (
+                              <Icon
+                                type="edit"
+                                style={{
+                                  fontSize: "24px",
+                                  color: "#FFF"
+                                }}
+                              />
+                            )}
+                          </a>
+                        </Dropdown>
+                      );
+                    }}
+                  </Mutation>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div style={{ float: "left" }}>
+                  {moment(time).format("hh:mm a")}
+                </div>
+              </td>
+              <td>
+                <div style={{ display: "block" }}>
+                  <Link to={`/event/${id}`}>{eventname}</Link>
+                  <br />
+                  {address}
+                  <br />
+                  {"What to Expect: " + desires.map(desire => desire)}
+                  <br />
+                  {participants ? participants.length : "0"} attending
+                </div>
+              </td>
+              <td>
+                <div>
+                  <button
+                    onClick={() => this.props.history.push(`/event/${id}`)}
+                  >
+                    Open
+                  </button>
+                </div>
+                <div>
+                  <button
+                    onClick={() => this.props.showBlockModal(true, event)}
+                  >
+                    Flag
+                  </button>
+                  <button
+                    onClick={() => this.props.showShareModal(true, event)}
+                  >
+                    Share
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
 
-export default EventCard;
+export default withRouter(EventCard);

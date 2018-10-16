@@ -39,7 +39,7 @@ const NavbarAuth = ({ session }) => (
       <NavLink to="/search">Meet Members</NavLink>
     </Menu.Item>
     <Menu.Item key="2">
-      <NavLink to="/event/search">Events</NavLink>
+      <NavLink to="/event/search">Go to Events</NavLink>
     </Menu.Item>
     <Menu.Item key="3">
       <NavLink to="/editprofile">Edit Profile</NavLink>

@@ -5,6 +5,7 @@ import DesiresList from "../Desire/DesiresList";
 import { Card, Icon } from "antd";
 import { LIKE_PROFILE } from "../../queries";
 import { Mutation } from "react-apollo";
+import { withRouter } from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -43,9 +44,16 @@ class ProfileCard extends Component {
               <div>
                 <ImageCarousel photos={photos} showThumbs={false} />
                 <Icon
-                  style={{ float: "right", padding: "7px", fontSize: "20px" }}
+                  style={{
+                    float: "right",
+                    padding: "7px",
+                    fontSize: "20px",
+                    cursor: "pointer"
+                  }}
                   type="info-circle"
-                  onClick={() => this.props.showProfileModal(true, profile)}
+                  onClick={() =>
+                    this.props.history.push("/profile/" + profile.id)
+                  }
                 />
               </div>
             }
@@ -63,7 +71,11 @@ class ProfileCard extends Component {
                 theme="twoTone"
                 twoToneColor="#1A63FF"
               />,
-              <Icon type="share-alt" style={{ fontSize: "25px" }} />,
+              <Icon
+                type="share-alt"
+                style={{ fontSize: "25px" }}
+                onClick={() => this.props.showShareModal(true, profile)}
+              />,
               <Icon
                 type="flag"
                 style={{ fontSize: "20px", color: "#E84D3B" }}
@@ -97,4 +109,4 @@ class ProfileCard extends Component {
   }
 }
 
-export default ProfileCard;
+export default withRouter(ProfileCard);

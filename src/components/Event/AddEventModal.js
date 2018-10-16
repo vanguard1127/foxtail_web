@@ -18,7 +18,7 @@ import { Mutation } from "react-apollo";
 import { SIGNS3 } from "../../queries";
 
 const FormItem = Form.Item;
-const { RangePicker } = DatePicker;
+
 const options = [
   { value: "cuddling", label: "Cuddling" },
   { value: "cooking", label: "Cooking" },
@@ -52,7 +52,8 @@ const AddEventModal = Form.create()(
       sexes: [],
       desires: [],
       maxDistance: 50,
-      eventID: null
+      eventID: null,
+      validating: ""
     };
 
     handlePhotoChange = info => {
@@ -89,10 +90,15 @@ const AddEventModal = Form.create()(
       signS3().then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
         await this.uploadToS3(file, signedRequest);
-        console.log(key);
         this.setState({
           photoUrl: key
         });
+      });
+    };
+
+    handleDateTime = time => {
+      this.setState({
+        time
       });
     };
 
@@ -138,13 +144,12 @@ const AddEventModal = Form.create()(
         }
         console.log("VAL");
         // Should format date value before submit.
-        const rangeTimeValue = fieldsValue["range-time-picker"];
+        const dateTimeValue = fieldsValue["date-time-picker"].format(
+          "YYYY-MM-DD HH:mm a"
+        );
         const values = {
           ...fieldsValue,
-          "range-time-picker": [
-            rangeTimeValue[0].format("YYYY-MM-DD HH:mm:ss"),
-            rangeTimeValue[1].format("YYYY-MM-DD HH:mm:ss")
-          ]
+          dateTimeValue
         };
         console.log("Received values of form: ", values);
       });
@@ -156,9 +161,12 @@ const AddEventModal = Form.create()(
           return getLatLng(results[0]);
         })
         .then(latLng => {
-          this.props.form.setFieldsValue({
+          this.setState({
             lat: latLng.lat,
             long: latLng.lng,
+            validating: "success"
+          });
+          this.props.form.setFieldsValue({
             address
           });
         })
@@ -168,13 +176,7 @@ const AddEventModal = Form.create()(
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
-      const { filename, filetype } = this.state;
-
-      const rangeConfig = {
-        rules: [
-          { type: "array", required: true, message: "Please select time!" }
-        ]
-      };
+      const { filename, filetype, lat, long, validating, time } = this.state;
 
       return (
         <Modal
@@ -182,7 +184,7 @@ const AddEventModal = Form.create()(
           title="Create a new event"
           okText="Create"
           onCancel={onCancel}
-          onOk={onCreate}
+          onOk={() => onCreate({ lat, long, time })}
         >
           <Form layout="vertical">
             <FormItem label="Event Name" {...formItemLayout}>
@@ -196,11 +198,32 @@ const AddEventModal = Form.create()(
               })(<Input />)}
             </FormItem>
             <FormItem label="Date/Time" {...formItemLayout}>
-              {getFieldDecorator("range-time-picker", rangeConfig)(
-                <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+              {getFieldDecorator("date-time-picker", {
+                rules: [
+                  {
+                    type: "object",
+                    required: true,
+                    message: "Please select time!"
+                  }
+                ]
+              })(
+                <DatePicker
+                  showTime={{ use12Hours: true }}
+                  format="YYYY-MM-DD HH:mm a"
+                  onChange={this.handleDateTime}
+                />
               )}
             </FormItem>
-            <FormItem label="Address" {...formItemLayout}>
+            <FormItem
+              label="Address"
+              {...formItemLayout}
+              validateStatus={validating}
+              help={
+                validating === "validating"
+                  ? "Please choose an address from the list"
+                  : ""
+              }
+            >
               {getFieldDecorator("address", {
                 initialValue: this.props.form.address
                   ? this.props.form.address
@@ -216,6 +239,8 @@ const AddEventModal = Form.create()(
                   style={{ width: "100%" }}
                   onSelect={this.handleSelect}
                   onChange={value => {
+                    if (value.length > 3)
+                      this.setState({ validating: "validating" });
                     this.props.form.setFieldsValue({ address: value });
                   }}
                 />
@@ -223,12 +248,6 @@ const AddEventModal = Form.create()(
             </FormItem>
             <FormItem label="Description" {...formItemLayout}>
               {getFieldDecorator("description")(<Input type="textarea" />)}
-            </FormItem>
-            <FormItem>
-              {getFieldDecorator("lat")(<Input type="hidden" />)}
-            </FormItem>
-            <FormItem>
-              {getFieldDecorator("long")(<Input type="hidden" />)}
             </FormItem>
             <FormItem
               label="Image"

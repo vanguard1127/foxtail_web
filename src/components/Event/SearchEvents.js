@@ -7,6 +7,8 @@ import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
 import { Button } from "antd";
 import AddEventModal from "./AddEventModal";
+import BlockModal from "../common/BlockModal";
+import ShareModal from "../common/ShareModal";
 
 const LIMIT = 3;
 //TODO: fix moment date format issue
@@ -15,7 +17,10 @@ class SearchEvents extends Component {
     currentDate: "",
     skip: 0,
     loading: false,
-    visible: false
+    visible: false,
+    blockModalVisible: false,
+    shareModalVisible: false,
+    event: {}
   };
 
   // if (!navigator.geolocation) {
@@ -33,21 +38,34 @@ class SearchEvents extends Component {
     this.setState({ visible: true });
   };
 
+  setShareModalVisible = (shareModalVisible, event) => {
+    if (event) this.setState({ event, shareModalVisible });
+    else this.setState({ shareModalVisible });
+  };
+
+  setBlockModalVisible = (blockModalVisible, event) => {
+    if (event) this.setState({ event, blockModalVisible });
+    else this.setState({ blockModalVisible });
+  };
+
   handleCancel = () => {
     this.setState({ visible: false });
   };
 
-  handleCreate = () => {
+  handleCreate = ({ lat, long, time }) => {
     const form = this.formRef.props.form;
     form.validateFields(async (err, values) => {
       if (err) {
         return;
       }
 
-      console.log("Received values of form: ", values);
+      console.log("Received values of form: ", values, "plus", lat, long);
       const response = await this.props.createEvent({
         variables: {
-          ...values
+          ...values,
+          lat,
+          long,
+          time
         }
       });
       console.log("Response", response);
@@ -117,16 +135,36 @@ class SearchEvents extends Component {
         <div>{moment(eventdate.date).format("dddd, MMMM Do YYYY")}</div>
         {eventdate.events.map(event => (
           <div key={event.id} style={{ marginLeft: "30vh" }}>
-            <EventCard key={event.id} {...event} />
+            <EventCard
+              key={event.id}
+              event={event}
+              showBlockModal={this.setBlockModalVisible}
+              showShareModal={this.setShareModalVisible}
+            />
           </div>
         ))}
       </div>
     );
   };
 
+  handleAddEventSubmit = (lat, long) => {
+    // this.setState({
+    //   lat,
+    //   long
+    // });
+    console.log("hiii", lat, long);
+  };
+
   render() {
+    const {
+      event,
+      loading,
+      visible,
+      blockModalVisible,
+      shareModalVisible
+    } = this.state;
     //TODO: Catch errors here
-    if (this.state.loading || this.props.data.searchEvents === undefined) {
+    if (loading || this.props.data.searchEvents === undefined) {
       return <div>loading</div>;
     }
     const data = this.props.data.searchEvents;
@@ -154,9 +192,21 @@ class SearchEvents extends Component {
         <Waypoint onEnter={this.handleEnd} />
         <AddEventModal
           wrappedComponentRef={this.saveFormRef}
-          visible={this.state.visible}
+          visible={visible}
           onCancel={this.handleCancel}
           onCreate={this.handleCreate}
+          onSubmit={this.handleAddEventSubmit}
+        />
+        <BlockModal
+          event={event}
+          id={event.id}
+          visible={blockModalVisible}
+          close={() => this.setBlockModalVisible(false)}
+        />
+        <ShareModal
+          event={event}
+          visible={shareModalVisible}
+          close={() => this.setShareModalVisible(false)}
         />
       </div>
     );

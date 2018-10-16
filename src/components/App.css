@@ -336,3 +336,7 @@ textarea {
 .carousel .thumb {
   width: 25% !important;
 }
+
+.is-validating.has-feedback .ant-form-item-children-icon {
+  margin-top: -35px !important;
+}

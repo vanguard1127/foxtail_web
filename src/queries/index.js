@@ -25,6 +25,12 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const FLAG_ITEM = gql`
+  mutation($type: String!, $reason: String!, $targetID: ID!) {
+    flagItem(type: $type, reason: $reason, targetID: $targetID)
+  }
+`;
+
 export const LIKE_PROFILE = gql`
   mutation($toProfileID: ID!) {
     likeProfile(toProfileID: $toProfileID)

@@ -5,7 +5,15 @@ export default class AddressSearch extends React.Component {
   render() {
     const { value, onChange, onSelect, style } = this.props;
     return (
-      <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect}>
+      <PlacesAutocomplete
+        value={value}
+        onChange={onChange}
+        onSelect={onSelect}
+        searchOptions={{
+          types: ["address"]
+        }}
+        shouldFetchSuggestions={value.length > 3}
+      >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <input
