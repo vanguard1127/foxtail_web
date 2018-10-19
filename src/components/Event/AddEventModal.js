@@ -35,25 +35,48 @@ const formItemLayout = {
     sm: { span: 19 }
   }
 };
+
+const initialState = {
+  lat: "",
+  long: "",
+  filename: "",
+  filetype: "",
+  photoUrl: "",
+  image: "",
+  type: "",
+  time: "",
+  sexes: [],
+  desires: [],
+  maxDistance: 50,
+  eventID: null,
+  validating: ""
+};
+
+const initialFormState = {
+  "date-time-picker": null,
+  address: "",
+  eventname: "",
+  description: "",
+  desires: []
+};
+
 const AddEventModal = Form.create()(
   class extends React.Component {
     state = {
-      address: "",
-      lat: "",
-      long: "",
-      filename: "",
-      filetype: "",
-      photoUrl: "",
-      eventname: "",
-      image: "",
-      description: "",
-      type: "",
-      time: "",
-      sexes: [],
-      desires: [],
-      maxDistance: 50,
-      eventID: null,
-      validating: ""
+      ...initialState
+    };
+
+    clearState = () => {
+      console.log("clear state called");
+
+      this.setState({ desires: [] });
+      // this.props.form.setFieldsValue({ upload: [] });
+      console.log(this.props.upload);
+      console.log(this.state.upload);
+      console.log(this.props.form.getFieldValue("upload"));
+      this.setState(initialState);
+      // this.props.form.setFieldsValue(initialFormState);
+      this.props.form.resetFields();
     };
 
     handlePhotoChange = info => {
@@ -132,7 +155,6 @@ const AddEventModal = Form.create()(
 
     handleChangeSelect = value => {
       this.props.form.setFieldsValue({ desires: value });
-      console.log(this.props.form.getFieldValue("desires"));
     };
 
     handleSubmit = e => {
@@ -173,17 +195,24 @@ const AddEventModal = Form.create()(
         .catch(error => console.error("Error", error));
     };
 
+    closeModal = onCancel => {
+      console.log(this.props.form.getFieldValue("desires"));
+      this.clearState();
+      console.log(this.props.form.getFieldValue("desires"));
+      onCancel();
+    };
+
     render() {
-      const { visible, onCancel, onCreate, form } = this.props;
+      const { visible, onCancel, onCreate, form, eventID } = this.props;
       const { getFieldDecorator } = form;
       const { filename, filetype, lat, long, validating, time } = this.state;
 
       return (
         <Modal
           visible={visible}
-          title="Create a new event"
+          title={eventID ? "Update Event" : "Create a New Event"}
           okText="Create"
-          onCancel={onCancel}
+          onCancel={() => this.closeModal(onCancel)}
           onOk={() => onCreate({ lat, long, time })}
         >
           <Form layout="vertical">
@@ -288,6 +317,7 @@ const AddEventModal = Form.create()(
                   handleChange={this.handleChangeSelect}
                   options={options}
                   style={{ width: "100%" }}
+                  currentvalue={this.props.form.getFieldValue("desires")}
                 />
               )}
             </FormItem>
@@ -295,7 +325,7 @@ const AddEventModal = Form.create()(
               label="Visibility"
               className="collection-create-form_last-form-item"
             >
-              {getFieldDecorator("modifier", {
+              {getFieldDecorator("visibility", {
                 initialValue: "public"
               })(
                 <Radio.Group
@@ -308,6 +338,7 @@ const AddEventModal = Form.create()(
               )}
             </FormItem>
           </Form>
+          <Button onClick={() => this.clearState()}>CLear</Button>
         </Modal>
       );
     }

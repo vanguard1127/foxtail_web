@@ -5,22 +5,25 @@ import { Select } from "antd";
 const Option = Select.Option;
 
 class MultiSelectDropdown extends Component {
+  componentDidMount() {
+    console.log("ice");
+  }
   render() {
     const {
       handleChange,
       placeholder,
       name,
-      defaultValue,
       options,
-      style
+      style,
+      currentvalue
     } = this.props;
     return (
       <Select
         mode="multiple"
         style={{ ...style }}
         placeholder={placeholder}
-        defaultValue={defaultValue}
         onChange={handleChange}
+        value={currentvalue}
       >
         {options.map(option => (
           <Option name={name} key={option.value}>

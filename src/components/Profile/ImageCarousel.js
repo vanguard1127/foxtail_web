@@ -14,7 +14,7 @@ class ImageCarousel extends Component {
       //       <img
       //         alt={photo.order}
       //         src={photo.url}
-      //         style={{ width: "100%", height: "25vh" }}
+      //         style={{ width: "100%", height: "35vh" }}
       //       />
       //     </div>
       //   ))}
@@ -28,28 +28,60 @@ class ImageCarousel extends Component {
         selectedItem={selectedItem}
       >
         <div>
-          <img alt="photo1" src={require("../../images/girl1.jpg")} />
+          <img
+            alt="photo1"
+            src={require("../../images/girl1.jpg")}
+            style={{ width: "23vw", height: "35vh" }}
+          />
         </div>
         <div>
-          <img alt="photo2" src={require("../../images/girl2.jpg")} />
+          <img
+            alt="photo2"
+            src={require("../../images/girl2.jpg")}
+            style={{ width: "23vw", height: "35vh" }}
+          />
         </div>
         <div>
-          <img alt="photo3" src={require("../../images/girl3.jpg")} />
+          <img
+            alt="photo3"
+            src={require("../../images/girl3.jpg")}
+            style={{ width: "23vw", height: "35vh" }}
+          />
         </div>
         <div>
-          <img alt="photo4" src={require("../../images/girl3.jpg")} />
+          <img
+            alt="photo4"
+            src={require("../../images/girl3.jpg")}
+            style={{ width: "23vw", height: "35vh" }}
+          />
         </div>
         <div>
-          <img alt="photo1" src={require("../../images/girl1.jpg")} />
+          <img
+            alt="photo1"
+            src={require("../../images/girl1.jpg")}
+            style={{ width: "23vw", height: "35vh" }}
+          />
         </div>
         <div>
-          <img alt="photo2" src={require("../../images/girl2.jpg")} />
+          <img
+            alt="photo2"
+            src={require("../../images/girl2.jpg")}
+            style={{ width: "23vw", height: "35vh" }}
+          />
         </div>
         <div>
-          <img alt="photo3" src={require("../../images/girl3.jpg")} />
+          <img
+            alt="photo3"
+            src={require("../../images/girl3.jpg")}
+            style={{ width: "23vw", height: "35vh" }}
+          />
         </div>
         <div>
-          <img alt="photo4" src={require("../../images/girl3.jpg")} />
+          <img
+            alt="photo4"
+            src={require("../../images/girl3.jpg")}
+            style={{ width: "23vw", height: "35vh" }}
+          />
         </div>
       </Carousel>
     );

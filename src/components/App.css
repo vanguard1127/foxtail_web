@@ -340,3 +340,7 @@ textarea {
 .is-validating.has-feedback .ant-form-item-children-icon {
   margin-top: -35px !important;
 }
+
+.control-arrow {
+  height: 100%;
+}
