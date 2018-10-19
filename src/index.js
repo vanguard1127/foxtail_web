@@ -4,7 +4,9 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
+  withRouter,
+  Link
 } from "react-router-dom";
 import "./index.css";
 import App from "./components/App";
@@ -17,7 +19,6 @@ import ProfilePage from "./components/Profile/ProfilePage";
 import ChatPage from "./components/Chat/ChatPage";
 import SearchEvents from "./components/Event/SearchEvents";
 import EditProfile from "./components/EditProfile/EditProfilePage";
-import SearchDesire from "./components/Desire/DesireSearch";
 import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
@@ -54,44 +55,94 @@ const client = new ApolloClient({
 
 const Root = ({ refetch, session }) => (
   <Router>
-    <Layout className="layout">
-      <Header>
-        <div className="logo" />
-
-        <Navbar session={session} />
-      </Header>
-      <Content style={{ padding: "0 50px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <Switch>
-          <Route path="/" component={App} exact />
-          <Route path="/signup" render={() => <Signup refetch={refetch} />} />
-          <Route path="/search" component={ProfileSearch} />
-          <Route path="/event/search" component={SearchEvents} />
-          <Route path="/signin" render={() => <Signin refetch={refetch} />} />
-          <Route
-            path="/editprofile"
-            render={() => <EditProfile session={session} />}
-          />
-          <Route path="/event/:id" component={EventPage} />
-          <Route path="/profile/:id" component={ProfilePage} />
-          <Route path="/chat/:id" component={ChatPage} />
-          <Route
-            path="/myaccount"
-            render={() => <Account session={session} />}
-          />
-          <Route path="/desire/search" component={SearchDesire} />
-          <Redirect to="/" />
-        </Switch>
-      </Content>
-      <Footer style={{ textAlign: "center" }}>
-        Ant Design ©2018 Created by Ant UED
-      </Footer>
-    </Layout>
+    <Wrapper refetch={refetch} session={session} />
   </Router>
+);
+
+const breadcrumbNameMap = {
+  "/": "Home",
+  "/signup": "Sign-Up",
+  "/members": "Search Members",
+  "/events": "Search Events",
+  "/signin": "Sign-In",
+  "/editprofile": "Edit Profile",
+  "/events/:id": "Event",
+  "/chat/:id": "Chat Num",
+  "/profile/:id": "Profile Num",
+  "/myaccount": "My Account"
+};
+
+const Wrapper = withRouter(props => {
+  const { location, refetch, session } = props;
+  const pathSnippets = location.pathname.split("/").filter(i => i);
+  let breadcrumbItems;
+  if (pathSnippets.length !== 0) {
+    let directLink;
+    const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+      const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+      if (url === "/events") {
+        directLink = "Event";
+      }
+      if (url === "/members") {
+        directLink = "Profile";
+      }
+      return (
+        <Breadcrumb.Item key={url}>
+          <Link to={url}>
+            {breadcrumbNameMap[url] ? breadcrumbNameMap[url] : directLink}
+          </Link>
+        </Breadcrumb.Item>
+      );
+    });
+    breadcrumbItems = [<Breadcrumb.Item key="home" />].concat(
+      extraBreadcrumbItems
+    );
+  } else {
+    breadcrumbItems = null;
+  }
+
+  return (
+    <div>
+      <Body
+        refetch={refetch}
+        session={session}
+        breadcrumbItems={breadcrumbItems}
+      />
+    </div>
+  );
+});
+
+const Body = ({ refetch, session, breadcrumbItems }) => (
+  <Layout className="layout">
+    <Header>
+      <div className="logo" />
+
+      <Navbar session={session} />
+    </Header>
+    <Content style={{ padding: "0 50px" }}>
+      {breadcrumbItems && <Breadcrumb>{breadcrumbItems}</Breadcrumb>}
+      <Switch>
+        <Route path="/" component={App} exact />
+        <Route path="/signup" render={() => <Signup refetch={refetch} />} />
+        <Route path="/members" component={ProfileSearch} exact />
+        <Route path="/events" component={SearchEvents} exact />
+        <Route path="/signin" render={() => <Signin refetch={refetch} />} />
+        <Route
+          path="/editprofile"
+          render={() => <EditProfile session={session} />}
+        />
+        <Route path="/events/:id" component={EventPage} />
+        <Route path="/members/:id" component={ProfilePage} />
+        <Route path="/chat/:id" component={ChatPage} />
+        <Route path="/myaccount" render={() => <Account session={session} />} />
+
+        <Redirect to="/" />
+      </Switch>
+    </Content>
+    <Footer style={{ textAlign: "center" }}>
+      Ant Design ©2018 Created by Ant UED
+    </Footer>
+  </Layout>
 );
 
 const RootWithSession = withSession(Root);

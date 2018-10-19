@@ -32,10 +32,12 @@ class ShareModal extends Component {
           ?
         </div>
       );
-    } else {
-      shareUrl = "http://localhost:3000/event/" + event.id;
+    } else if (event) {
+      shareUrl = "http://localhost:3000/events/" + event.id;
       title = "You have been invited to " + event.eventname;
       return <div>Share this Event?</div>;
+    } else {
+      return <span />;
     }
   };
   render() {

@@ -52,14 +52,6 @@ const initialState = {
   validating: ""
 };
 
-const initialFormState = {
-  "date-time-picker": null,
-  address: "",
-  eventname: "",
-  description: "",
-  desires: []
-};
-
 const AddEventModal = Form.create()(
   class extends React.Component {
     state = {

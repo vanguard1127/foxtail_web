@@ -122,7 +122,7 @@ class EventCard extends Component {
               </td>
               <td>
                 <div style={{ display: "block" }}>
-                  <Link to={`/event/${id}`}>{eventname}</Link>
+                  <Link to={`/events/${id}`}>{eventname}</Link>
                   <br />
                   {address}
                   <br />
@@ -134,7 +134,7 @@ class EventCard extends Component {
               <td>
                 <div>
                   <button
-                    onClick={() => this.props.history.push(`/event/${id}`)}
+                    onClick={() => this.props.history.push(`/events/${id}`)}
                   >
                     Open
                   </button>
