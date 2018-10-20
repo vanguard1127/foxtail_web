@@ -15,7 +15,8 @@ import AddressSearch from "../common/AddressSearch";
 import MultiSelectDropdown from "../MultiSelectDropdown";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { Mutation } from "react-apollo";
-import { SIGNS3 } from "../../queries";
+import { SIGNS3, CREATE_EVENT } from "../../queries";
+import moment from "moment";
 
 const FormItem = Form.Item;
 
@@ -47,9 +48,8 @@ const initialState = {
   time: "",
   sexes: [],
   desires: [],
-  maxDistance: 50,
-  eventID: null,
-  validating: ""
+  validating: "",
+  eventname: ""
 };
 
 const AddEventModal = Form.create()(
@@ -63,9 +63,9 @@ const AddEventModal = Form.create()(
 
       this.setState({ desires: [] });
       // this.props.form.setFieldsValue({ upload: [] });
-      console.log(this.props.upload);
-      console.log(this.state.upload);
-      console.log(this.props.form.getFieldValue("upload"));
+      // console.log(this.props.upload);
+      // console.log(this.state.upload);
+      // console.log(this.props.form.getFieldValue("upload"));
       this.setState(initialState);
       // this.props.form.setFieldsValue(initialFormState);
       this.props.form.resetFields();
@@ -149,26 +149,6 @@ const AddEventModal = Form.create()(
       this.props.form.setFieldsValue({ desires: value });
     };
 
-    handleSubmit = e => {
-      e.preventDefault();
-
-      this.props.form.validateFields((err, fieldsValue) => {
-        if (err) {
-          return;
-        }
-        console.log("VAL");
-        // Should format date value before submit.
-        const dateTimeValue = fieldsValue["date-time-picker"].format(
-          "YYYY-MM-DD HH:mm a"
-        );
-        const values = {
-          ...fieldsValue,
-          dateTimeValue
-        };
-        console.log("Received values of form: ", values);
-      });
-    };
-
     handleSelect = address => {
       geocodeByAddress(address)
         .then(results => {
@@ -188,150 +168,201 @@ const AddEventModal = Form.create()(
     };
 
     closeModal = onCancel => {
-      console.log(this.props.form.getFieldValue("desires"));
       this.clearState();
-      console.log(this.props.form.getFieldValue("desires"));
       onCancel();
     };
 
     render() {
-      const { visible, onCancel, onCreate, form, eventID } = this.props;
+      const {
+        visible,
+        onCancel,
+        form,
+        event,
+        handleSubmit,
+        handleUpdate
+      } = this.props;
       const { getFieldDecorator } = form;
       const { filename, filetype, lat, long, validating, time } = this.state;
+      const {
+        eventname,
+        desires,
+        sexes,
+        description,
+        address,
+        type
+      } = this.props.form.getFieldsValue();
 
       return (
-        <Modal
-          visible={visible}
-          title={eventID ? "Update Event" : "Create a New Event"}
-          okText="Create"
-          onCancel={() => this.closeModal(onCancel)}
-          onOk={() => onCreate({ lat, long, time })}
+        <Mutation
+          mutation={CREATE_EVENT}
+          variables={{
+            eventname,
+            desires,
+            sexes,
+            description,
+            address,
+            type,
+            lat: lat ? lat : event.lat,
+            long: long ? long : event.long,
+            time: time ? moment(time).toISOString() : event.time,
+            eventID: event.id
+          }}
+          update={handleUpdate}
         >
-          <Form layout="vertical">
-            <FormItem label="Event Name" {...formItemLayout}>
-              {getFieldDecorator("eventname", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input the name of the event!"
-                  }
-                ]
-              })(<Input />)}
-            </FormItem>
-            <FormItem label="Date/Time" {...formItemLayout}>
-              {getFieldDecorator("date-time-picker", {
-                rules: [
-                  {
-                    type: "object",
-                    required: true,
-                    message: "Please select time!"
-                  }
-                ]
-              })(
-                <DatePicker
-                  showTime={{ use12Hours: true }}
-                  format="YYYY-MM-DD HH:mm a"
-                  onChange={this.handleDateTime}
-                />
-              )}
-            </FormItem>
-            <FormItem
-              label="Address"
-              {...formItemLayout}
-              validateStatus={validating}
-              help={
-                validating === "validating"
-                  ? "Please choose an address from the list"
-                  : ""
-              }
+          {(createEvent, { data, loading, error }) => (
+            <Modal
+              visible={visible}
+              title={event ? "Update Event" : "Create a New Event"}
+              okText="Create"
+              onCancel={() => this.closeModal(onCancel)}
+              onOk={e => handleSubmit(e, createEvent)}
             >
-              {getFieldDecorator("address", {
-                initialValue: this.props.form.address
-                  ? this.props.form.address
-                  : "",
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input the address of the event!"
-                  }
-                ]
-              })(
-                <AddressSearch
-                  style={{ width: "100%" }}
-                  onSelect={this.handleSelect}
-                  onChange={value => {
-                    if (value.length > 3)
-                      this.setState({ validating: "validating" });
-                    this.props.form.setFieldsValue({ address: value });
-                  }}
-                />
-              )}
-            </FormItem>
-            <FormItem label="Description" {...formItemLayout}>
-              {getFieldDecorator("description")(<Input type="textarea" />)}
-            </FormItem>
-            <FormItem
-              label="Image"
-              extra="Image for Event banner. Best size: 34x129 px"
-              {...formItemLayout}
-            >
-              {getFieldDecorator("upload", {
-                valuePropName: "file",
-                getValueFromEvent: this.normFile
-              })(
-                <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
-                  {(signS3, { data, loading, error }) => (
-                    <Upload
-                      disabled={
-                        this.props.form.getFieldValue("upload") ? true : false
+              <Form layout="vertical">
+                <FormItem label="Event Name" {...formItemLayout}>
+                  {getFieldDecorator("eventname", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input the name of the event!"
                       }
-                      name="file"
-                      action="//jsonplaceholder.typicode.com/posts/"
-                      onChange={this.handlePhotoChange}
-                      file={this.props.form.upload}
-                      data={file => this.handleUpload(file, signS3)}
-                    >
-                      <Button>
-                        <Icon type="upload" /> Click to Upload
-                      </Button>
-                    </Upload>
+                    ],
+                    initialValue: this.props.event.eventname
+                      ? this.props.event.eventname
+                      : ""
+                  })(<Input />)}
+                </FormItem>
+                <FormItem label="Date/Time" {...formItemLayout}>
+                  {getFieldDecorator("time", {
+                    rules: [
+                      {
+                        type: "object",
+                        required: true,
+                        message: "Please select time!"
+                      }
+                    ],
+                    initialValue: this.props.event.time
+                      ? moment(this.props.event.time, "YYYY-MM-DD HH:mm a")
+                      : null
+                  })(
+                    <DatePicker
+                      showTime={{ use12Hours: true }}
+                      format="YYYY-MM-DD HH:mm a"
+                      onChange={this.handleDateTime}
+                    />
                   )}
-                </Mutation>
-              )}
-            </FormItem>
-            <FormItem label="For those interested in">
-              {getFieldDecorator("desires", {
-                initialValue: this.props.desires ? this.props.desires : []
-              })(
-                <MultiSelectDropdown
-                  name="desires"
-                  placeholder="Activities at the event..."
-                  handleChange={this.handleChangeSelect}
-                  options={options}
-                  style={{ width: "100%" }}
-                  currentvalue={this.props.form.getFieldValue("desires")}
-                />
-              )}
-            </FormItem>
-            <FormItem
-              label="Visibility"
-              className="collection-create-form_last-form-item"
-            >
-              {getFieldDecorator("visibility", {
-                initialValue: "public"
-              })(
-                <Radio.Group
-                  style={{ display: "flex", justifyContent: "center" }}
+                </FormItem>
+                <FormItem
+                  label="Address"
+                  {...formItemLayout}
+                  validateStatus={validating}
+                  help={
+                    validating === "validating"
+                      ? "Please choose an address from the list"
+                      : ""
+                  }
                 >
-                  <Radio value="public">Public</Radio>
-                  <Radio value="private">Private</Radio>
-                  <Radio value="request">Request</Radio>
-                </Radio.Group>
-              )}
-            </FormItem>
-          </Form>
-          <Button onClick={() => this.clearState()}>CLear</Button>
-        </Modal>
+                  {getFieldDecorator("address", {
+                    initialValue: this.props.event.address
+                      ? this.props.event.address
+                      : "",
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input the address of the event!"
+                      }
+                    ]
+                  })(
+                    <AddressSearch
+                      style={{ width: "100%" }}
+                      onSelect={this.handleSelect}
+                      onChange={value => {
+                        if (value.length > 3)
+                          this.setState({ validating: "validating" });
+                        this.props.form.setFieldsValue({ address: value });
+                      }}
+                    />
+                  )}
+                </FormItem>
+                <FormItem label="Description" {...formItemLayout}>
+                  {getFieldDecorator("description", {
+                    initialValue: this.props.event.description
+                      ? this.props.event.description
+                      : ""
+                  })(<Input type="textarea" />)}
+                </FormItem>
+                <FormItem
+                  label="Image"
+                  extra="Image for Event banner. Best size: 34x129 px"
+                  {...formItemLayout}
+                >
+                  {getFieldDecorator("upload", {
+                    valuePropName: "file",
+                    getValueFromEvent: this.normFile
+                  })(
+                    <Mutation
+                      mutation={SIGNS3}
+                      variables={{ filename, filetype }}
+                    >
+                      {(signS3, { data, loading, error }) => (
+                        <Upload
+                          disabled={
+                            this.props.form.getFieldValue("upload")
+                              ? true
+                              : false
+                          }
+                          name="file"
+                          action="//jsonplaceholder.typicode.com/posts/"
+                          onChange={this.handlePhotoChange}
+                          file={this.props.form.upload}
+                          data={file => this.handleUpload(file, signS3)}
+                        >
+                          <Button>
+                            <Icon type="upload" /> Click to Upload
+                          </Button>
+                        </Upload>
+                      )}
+                    </Mutation>
+                  )}
+                </FormItem>
+                <FormItem label="For those interested in">
+                  {getFieldDecorator("desires", {
+                    initialValue: this.props.event.desires
+                      ? this.props.event.desires
+                      : []
+                  })(
+                    <MultiSelectDropdown
+                      name="desires"
+                      placeholder="Activities at the event..."
+                      handleChange={this.handleChangeSelect}
+                      options={options}
+                      style={{ width: "100%" }}
+                      currentvalue={this.props.form.getFieldValue("desires")}
+                    />
+                  )}
+                </FormItem>
+                <FormItem
+                  label="Type"
+                  className="collection-create-form_last-form-item"
+                >
+                  {getFieldDecorator("type", {
+                    initialValue: this.props.event.type
+                      ? this.props.event.type
+                      : "public"
+                  })(
+                    <Radio.Group
+                      style={{ display: "flex", justifyContent: "center" }}
+                    >
+                      <Radio value="public">Public</Radio>
+                      <Radio value="private">Private</Radio>
+                      <Radio value="request">Request</Radio>
+                    </Radio.Group>
+                  )}
+                </FormItem>
+              </Form>
+              <Button onClick={() => this.clearState()}>CLear</Button>
+            </Modal>
+          )}
+        </Mutation>
       );
     }
   }

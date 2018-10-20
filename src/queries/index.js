@@ -58,8 +58,10 @@ export const CREATE_EVENT = gql`
     $description: String
     $lat: Float
     $long: Float
-    $address: String
-    $time: String
+    $address: String!
+    $type: String!
+    $time: String!
+    $eventID: ID
   ) {
     createEvent(
       eventname: $eventname
@@ -69,11 +71,14 @@ export const CREATE_EVENT = gql`
       lat: $lat
       long: $long
       time: $time
+      eventID: $eventID
       address: $address
+      type: $type
     ) {
       id
       eventname
       type
+      participants
       description
       desires
       sexes
@@ -152,6 +157,7 @@ export const SEARCH_EVENTS = gql`
         eventname
         type
         participants
+        description
         desires
         sexes
         lat
@@ -199,8 +205,15 @@ export const GET_EVENT = gql`
     event(id: $id) {
       id
       eventname
-      time
+      type
       participants
+      description
+      desires
+      sexes
+      lat
+      long
+      address
+      time
       invited {
         id
       }

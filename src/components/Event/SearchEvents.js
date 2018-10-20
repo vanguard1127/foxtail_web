@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from "react";
 import moment from "moment";
 
+import { withRouter } from "react-router-dom";
 import { graphql, compose } from "react-apollo";
-import { SEARCH_EVENTS, CREATE_EVENT } from "../../queries";
+import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
 import { Button } from "antd";
@@ -48,34 +49,33 @@ class SearchEvents extends Component {
     else this.setState({ blockModalVisible });
   };
 
-  handleCancel = () => {
-    this.setState({ visible: false });
-  };
+  handleSubmit = (e, createEvent) => {
+    e.preventDefault();
 
-  handleCreate = ({ lat, long, time }) => {
-    const form = this.formRef.props.form;
-    form.validateFields(async (err, values) => {
+    this.formRef.props.form.validateFields((err, fieldsValue) => {
       if (err) {
         return;
       }
+      // Should format date value before submit.
+      const dateTimeValue = fieldsValue["time"].format("YYYY-MM-DD HH:mm a");
+      const values = {
+        ...fieldsValue,
+        dateTimeValue
+      };
+      console.log("Received values of form: ", values);
 
-      console.log("Received values of form: ", values, "plus", lat, long);
-      const response = await this.props.createEvent({
-        variables: {
-          ...values,
-          lat,
-          long,
-          time
-        }
-      });
-      console.log("Response", response);
-      form.resetFields();
-      this.setState({ visible: false });
+      createEvent()
+        .then(({ data }) => {
+          this.props.history.push("/events/" + data.createEvent.id);
+        })
+        .catch(e => console.log(e.message));
     });
   };
-
   saveFormRef = formRef => {
     this.formRef = formRef;
+  };
+  handleCancel = () => {
+    this.setState({ event: {}, visible: false });
   };
 
   fetchData = async () => {
@@ -117,6 +117,7 @@ class SearchEvents extends Component {
         };
       }
     });
+
     this.setState({
       loading: false
     });
@@ -140,19 +141,12 @@ class SearchEvents extends Component {
               event={event}
               showBlockModal={this.setBlockModalVisible}
               showShareModal={this.setShareModalVisible}
+              handleEdit={this.handleEdit}
             />
           </div>
         ))}
       </div>
     );
-  };
-
-  handleAddEventSubmit = (lat, long) => {
-    // this.setState({
-    //   lat,
-    //   long
-    // });
-    console.log("hiii", lat, long);
   };
 
   render() {
@@ -194,8 +188,8 @@ class SearchEvents extends Component {
           wrappedComponentRef={this.saveFormRef}
           visible={visible}
           onCancel={this.handleCancel}
-          onCreate={this.handleCreate}
-          onSubmit={this.handleAddEventSubmit}
+          event={event}
+          handleSubmit={this.handleSubmit}
         />
         <BlockModal
           event={event}
@@ -213,22 +207,14 @@ class SearchEvents extends Component {
   }
 }
 
-export default compose(
-  graphql(SEARCH_EVENTS, {
-    options(ownProps) {
-      return {
-        variables: { long: 73.0, lat: -23.0, limit: LIMIT }
-      };
-    }
-  }),
-  graphql(CREATE_EVENT, { name: "createEvent" })
-)(SearchEvents);
-
-// export default compose(
-//    graphql(queries.getSubjects, {
-//       name: "subjectsQuery"
-//    }),
-//    graphql(queries.getApps, {
-//       name: "appsQuery"
-//    }),
-// )(Test);
+export default withRouter(
+  compose(
+    graphql(SEARCH_EVENTS, {
+      options(ownProps) {
+        return {
+          variables: { long: 73.0, lat: -23.0, limit: LIMIT }
+        };
+      }
+    })
+  )(SearchEvents)
+);
