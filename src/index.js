@@ -13,7 +13,7 @@ import App from "./components/App";
 //import App from "./components/Test";
 import Navbar from "./components/Navbar";
 import ProfileSearch from "./components/Profile/ProfileSearch";
-import Account from "./components/Account/AccountPage";
+import Settings from "./components/Account/Settings";
 import EventPage from "./components/Event/EventPage";
 import ProfilePage from "./components/Profile/ProfilePage";
 import ChatPage from "./components/Chat/ChatPage";
@@ -22,11 +22,12 @@ import EditProfile from "./components/EditProfile/EditProfilePage";
 import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
+import Footer from "./components/Footer";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { Layout, Breadcrumb } from "antd";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const client = new ApolloClient({
   uri: "http://localhost:4444/graphql",
@@ -134,7 +135,7 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
         <Route path="/events/:id" component={EventPage} />
         <Route path="/members/:id" component={ProfilePage} />
         <Route path="/chat/:id" component={ChatPage} />
-        <Route path="/myaccount" render={() => <Account session={session} />} />
+        <Route path="/settings" render={() => <Settings session={session} />} />
 
         <Redirect to="/" />
       </Switch>

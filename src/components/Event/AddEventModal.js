@@ -15,17 +15,12 @@ import AddressSearch from "../common/AddressSearch";
 import MultiSelectDropdown from "../MultiSelectDropdown";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { Mutation } from "react-apollo";
-import { SIGNS3, CREATE_EVENT } from "../../queries";
+import { SIGNS3, CREATE_EVENT, SEARCH_EVENTS } from "../../queries";
 import moment from "moment";
+import { desireOptions } from "../../docs/data";
 
 const FormItem = Form.Item;
 
-const options = [
-  { value: "cuddling", label: "Cuddling" },
-  { value: "cooking", label: "Cooking" },
-  { value: "dating", label: "Dating" },
-  { value: "flirting", label: "Flirting" }
-];
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -59,8 +54,6 @@ const AddEventModal = Form.create()(
     };
 
     clearState = () => {
-      console.log("clear state called");
-
       this.setState({ desires: [] });
       // this.props.form.setFieldsValue({ upload: [] });
       // console.log(this.props.upload);
@@ -191,6 +184,9 @@ const AddEventModal = Form.create()(
         address,
         type
       } = this.props.form.getFieldsValue();
+      const queryParams = JSON.parse(
+        sessionStorage.getItem("searchEventQuery")
+      );
 
       return (
         <Mutation
@@ -208,6 +204,12 @@ const AddEventModal = Form.create()(
             eventID: event.id
           }}
           update={handleUpdate}
+          refetchQueries={() => [
+            {
+              query: SEARCH_EVENTS,
+              variables: { ...queryParams }
+            }
+          ]}
         >
           {(createEvent, { data, loading, error }) => (
             <Modal
@@ -334,7 +336,7 @@ const AddEventModal = Form.create()(
                       name="desires"
                       placeholder="Activities at the event..."
                       handleChange={this.handleChangeSelect}
-                      options={options}
+                      options={desireOptions}
                       style={{ width: "100%" }}
                       currentvalue={this.props.form.getFieldValue("desires")}
                     />

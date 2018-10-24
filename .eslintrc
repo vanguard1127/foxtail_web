@@ -1,9 +1,9 @@
-"extends": [
-  "react-app",
-  "eslint:recommended",
-  "plugin:react/recommended"
-],
-"plugins": ["prettier"],
-"rules": {
-  "prettier/prettier": "error"
+{
+  "extends": ["react-app", "eslint:recommended", "plugin:react/recommended"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/display-name": [false],
+    "react/prop-types": [false]
+  }
 }

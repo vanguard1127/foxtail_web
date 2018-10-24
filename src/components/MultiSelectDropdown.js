@@ -5,9 +5,6 @@ import { Select } from "antd";
 const Option = Select.Option;
 
 class MultiSelectDropdown extends Component {
-  componentDidMount() {
-    console.log("ice");
-  }
   render() {
     const {
       handleChange,

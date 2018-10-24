@@ -50,8 +50,8 @@ class NavbarAuth extends Component {
         <Menu.Item key="/editprofile">
           <NavLink to="/editprofile">Edit Profile</NavLink>
         </Menu.Item>
-        <Menu.Item key="/myaccount">
-          <NavLink to="/myaccount">My Account</NavLink>
+        <Menu.Item key="/settings">
+          <NavLink to="/settings">Settings</NavLink>
         </Menu.Item>
       </Menu>
     );

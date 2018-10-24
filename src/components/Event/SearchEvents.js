@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import moment from "moment";
 
 import { withRouter } from "react-router-dom";
-import { graphql, compose } from "react-apollo";
+import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
@@ -15,13 +15,14 @@ const LIMIT = 3;
 //TODO: fix moment date format issue
 class SearchEvents extends Component {
   state = {
-    currentDate: "",
     skip: 0,
-    loading: false,
     visible: false,
     blockModalVisible: false,
     shareModalVisible: false,
-    event: {}
+    event: {},
+    lat: 0,
+    long: 0,
+    all: true
   };
 
   // if (!navigator.geolocation) {
@@ -35,8 +36,17 @@ class SearchEvents extends Component {
   //     alert("Unable to fetch location");
   //   }
   // );
+
   showModal = () => {
     this.setState({ visible: true });
+  };
+
+  saveFormRef = formRef => {
+    this.formRef = formRef;
+  };
+
+  handleCancel = () => {
+    this.setState({ event: {}, visible: false });
   };
 
   setShareModalVisible = (shareModalVisible, event) => {
@@ -57,12 +67,12 @@ class SearchEvents extends Component {
         return;
       }
       // Should format date value before submit.
-      const dateTimeValue = fieldsValue["time"].format("YYYY-MM-DD HH:mm a");
-      const values = {
-        ...fieldsValue,
-        dateTimeValue
-      };
-      console.log("Received values of form: ", values);
+      // const dateTimeValue = fieldsValue["time"].format("YYYY-MM-DD HH:mm a");
+      // const values = {
+      //   ...fieldsValue,
+      //   dateTimeValue
+      // };
+      // console.log("Received values of form: ", values);
 
       createEvent()
         .then(({ data }) => {
@@ -71,16 +81,10 @@ class SearchEvents extends Component {
         .catch(e => console.log(e.message));
     });
   };
-  saveFormRef = formRef => {
-    this.formRef = formRef;
-  };
-  handleCancel = () => {
-    this.setState({ event: {}, visible: false });
-  };
 
-  fetchData = async () => {
+  fetchData = fetchMore => {
     this.setState({ loading: true });
-    this.props.data.fetchMore({
+    fetchMore({
       variables: {
         limit: LIMIT,
         skip: this.state.skip
@@ -123,11 +127,13 @@ class SearchEvents extends Component {
     });
   };
 
-  handleEnd = () => {
-    this.setState(
-      state => ({ skip: this.state.skip + LIMIT }),
-      () => this.fetchData()
-    );
+  handleEnd = (previousPosition, fetchMore) => {
+    if (previousPosition === Waypoint.below) {
+      this.setState(
+        state => ({ skip: this.state.skip + LIMIT }),
+        () => this.fetchData(fetchMore)
+      );
+    }
   };
 
   handleEventCard = eventdate => {
@@ -141,7 +147,6 @@ class SearchEvents extends Component {
               event={event}
               showBlockModal={this.setBlockModalVisible}
               showShareModal={this.setShareModalVisible}
-              handleEdit={this.handleEdit}
             />
           </div>
         ))}
@@ -152,38 +157,27 @@ class SearchEvents extends Component {
   render() {
     const {
       event,
-      loading,
       visible,
       blockModalVisible,
-      shareModalVisible
+      shareModalVisible,
+      lat,
+      long,
+      all
     } = this.state;
-    //TODO: Catch errors here
-    if (loading || this.props.data.searchEvents === undefined) {
-      return <div>loading</div>;
-    }
-    const data = this.props.data.searchEvents;
 
-    return (
-      <div>
-        <div
-          style={{
-            display: "flex",
-            flex: "1",
-            alignItems: "flex-end",
-            flexDirection: "column"
-          }}
-        >
-          {" "}
-          <Button type="primary" onClick={this.showModal}>
-            Add Event
-          </Button>
-        </div>
-        <Fragment>
-          {data.map(eventdate => {
-            return this.handleEventCard(eventdate);
-          })}
-        </Fragment>
-        <Waypoint onEnter={this.handleEnd} />
+    const AddModalFrag = (
+      <div
+        style={{
+          display: "flex",
+          flex: "1",
+          alignItems: "flex-end",
+          flexDirection: "column"
+        }}
+      >
+        {" "}
+        <Button type="primary" onClick={this.showModal}>
+          Add Event
+        </Button>
         <AddEventModal
           wrappedComponentRef={this.saveFormRef}
           visible={visible}
@@ -191,6 +185,56 @@ class SearchEvents extends Component {
           event={event}
           handleSubmit={this.handleSubmit}
         />
+      </div>
+    );
+
+    sessionStorage.setItem(
+      "searchEventQuery",
+      JSON.stringify({
+        lat,
+        long,
+        all,
+        limit: LIMIT
+      })
+    );
+
+    return (
+      <div>
+        {AddModalFrag}
+        <Query
+          query={SEARCH_EVENTS}
+          variables={{ lat, long, all, limit: LIMIT }}
+          fetchPolicy="no-cache"
+        >
+          {({ data, loading, error, fetchMore }) => {
+            if (loading) {
+              return <div>loading</div>;
+            } else if (
+              data.searchEvents === undefined ||
+              data.searchEvents.length === 0
+            ) {
+              return <div>No Events Available</div>;
+            }
+
+            if (error) {
+              return <div>Error: {error.message}</div>;
+            }
+            return (
+              <div>
+                <Fragment>
+                  {data.searchEvents.map(eventdate => {
+                    return this.handleEventCard(eventdate);
+                  })}
+                </Fragment>
+                <Waypoint
+                  onEnter={({ previousPosition }) =>
+                    this.handleEnd(previousPosition, fetchMore)
+                  }
+                />
+              </div>
+            );
+          }}
+        </Query>
         <BlockModal
           event={event}
           id={event.id}
@@ -207,14 +251,4 @@ class SearchEvents extends Component {
   }
 }
 
-export default withRouter(
-  compose(
-    graphql(SEARCH_EVENTS, {
-      options(ownProps) {
-        return {
-          variables: { long: 73.0, lat: -23.0, limit: LIMIT }
-        };
-      }
-    })
-  )(SearchEvents)
-);
+export default withRouter(SearchEvents);

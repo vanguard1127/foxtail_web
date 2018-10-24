@@ -103,7 +103,9 @@ class EventPage extends Component {
           }
 
           const { event } = data;
-          const { lat, long, desires } = event;
+          const queryParams = JSON.parse(
+            sessionStorage.getItem("searchEventQuery")
+          );
           return (
             <div className="App">
               <AddEventModal
@@ -117,26 +119,10 @@ class EventPage extends Component {
               <Mutation
                 mutation={DELETE_EVENT}
                 variables={{ eventID: id }}
-                update={(cache, { data: { deleteEvent } }) => {
-                  const { searchEvents } = cache.readQuery({
-                    query: SEARCH_EVENTS,
-                    variables: { lat, long, desires }
-                  });
-
-                  cache.writeQuery({
-                    query: SEARCH_EVENTS,
-                    variables: { lat, long, desires },
-                    data: {
-                      searchEvents: searchEvents.filter(
-                        event => event.id !== deleteEvent
-                      )
-                    }
-                  });
-                }}
                 refetchQueries={() => [
                   {
                     query: SEARCH_EVENTS,
-                    variables: { lat, long, desires }
+                    variables: { ...queryParams }
                   }
                 ]}
               >

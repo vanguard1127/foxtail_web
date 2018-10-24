@@ -7,6 +7,7 @@ import Error from "../Error";
 import AccountKit from "react-facebook-account-kit";
 import MultiSelectDropdown from "../MultiSelectDropdown";
 import { Button, DatePicker, Input, Checkbox, Icon } from "antd";
+import { sexOptions } from "../../docs/data";
 
 const ButtonGroup = Button.Group;
 
@@ -21,18 +22,6 @@ const initialState = {
   csrf: "",
   code: ""
 };
-
-const options = [
-  { value: "f", label: "Female" },
-  { value: "m", label: "Male" },
-  { value: "t", label: "Transgender" },
-  { value: "mf", label: "Male + Female" },
-  { value: "ff", label: "Female + Female" },
-  { value: "mm", label: "Male + Male" },
-  { value: "tt", label: "Trans + Trans" },
-  { value: "ft", label: "Female + Trans" },
-  { value: "mt", label: "Male + Trans" }
-];
 
 class Signup extends React.Component {
   state = { ...initialState };
@@ -179,7 +168,7 @@ class Signup extends React.Component {
                           placeholder="Interested In"
                           handleChange={this.handleChangeSelect}
                           value={interestedIn}
-                          options={options}
+                          options={sexOptions}
                           style={{ width: "100%" }}
                         />
                       </div>

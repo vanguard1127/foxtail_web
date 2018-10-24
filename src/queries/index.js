@@ -25,6 +25,29 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const UPDATE_SETTINGS = gql`
+  mutation(
+    $username: String!
+    $email: String!
+    $phone: String!
+    $gender: String
+    $interestedIn: [String]
+    $dob: String
+  ) {
+    createUser(
+      username: $username
+      email: $email
+      appVersion: "3"
+      phone: $phone
+      gender: $gender
+      interestedIn: $interestedIn
+      dob: $dob
+    ) {
+      token
+    }
+  }
+`;
+
 export const FLAG_ITEM = gql`
   mutation($type: String!, $reason: String!, $targetID: ID!) {
     flagItem(type: $type, reason: $reason, targetID: $targetID)
@@ -143,6 +166,7 @@ export const SEARCH_EVENTS = gql`
     $desires: [String]
     $limit: Int
     $skip: Int
+    $all: Boolean
   ) {
     searchEvents(
       long: $long
@@ -150,6 +174,7 @@ export const SEARCH_EVENTS = gql`
       desires: $desires
       limit: $limit
       skip: $skip
+      all: $all
     ) {
       date
       events {

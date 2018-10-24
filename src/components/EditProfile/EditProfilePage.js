@@ -6,15 +6,9 @@ import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
 import { Input, Button, Icon } from "antd";
+import { desireOptions } from "../../docs/data";
 
 const { TextArea } = Input;
-
-const options = [
-  { value: "cuddling", label: "Cuddling" },
-  { value: "cooking", label: "Cooking" },
-  { value: "dating", label: "Dating" },
-  { value: "flirting", label: "Flirting" }
-];
 
 const initialState = {
   desires: [],
@@ -86,7 +80,7 @@ class EditProfile extends Component {
                         name="desires"
                         placeholder="Interested In"
                         handleChange={this.handleChangeSelect}
-                        options={options}
+                        options={desireOptions}
                         style={{ width: "100%" }}
                         defaultValue={data.getMyProfile.desires}
                       />

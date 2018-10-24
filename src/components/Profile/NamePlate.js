@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
+import Badge from "./Badge";
 
 class NamePlate extends Component {
   state = {};
@@ -11,11 +12,7 @@ class NamePlate extends Component {
           {user.username},{moment().diff(user.dob, "years")} {user.gender}
         </div>
         <div style={{ marginLeft: "5px", float: "left" }}>
-          <img
-            alt="badge"
-            src={require("../../images/badge.JPG")}
-            style={{ width: "20px", height: "20px" }}
-          />
+          <Badge />
         </div>
       </div>
     );
