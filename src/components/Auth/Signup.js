@@ -5,7 +5,7 @@ import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE } from "../../queries";
 import Error from "../Error";
 import AccountKit from "react-facebook-account-kit";
-import MultiSelectDropdown from "../MultiSelectDropdown";
+import MultiSelect from "../MultiSelect";
 import { Button, DatePicker, Input, Checkbox, Icon } from "antd";
 import { sexOptions } from "../../docs/data";
 
@@ -163,7 +163,7 @@ class Signup extends React.Component {
                         </ButtonGroup>
                       </div>
                       <div>
-                        <MultiSelectDropdown
+                        <MultiSelect
                           name="interestedIn"
                           placeholder="Interested In"
                           handleChange={this.handleChangeSelect}

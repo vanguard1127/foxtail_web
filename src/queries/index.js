@@ -27,24 +27,31 @@ export const CREATE_USER = gql`
 
 export const UPDATE_SETTINGS = gql`
   mutation(
-    $username: String!
-    $email: String!
-    $phone: String!
-    $gender: String
-    $interestedIn: [String]
-    $dob: String
+    $distance: Int!
+    $distanceMetric: String!
+    $ageRange: [Int]!
+    $interestedIn: [String]!
+    $locationLock: String
+    $visible: Boolean!
+    $newMsgNotify: Boolean!
+    $emailNotify: Boolean!
+    $showOnline: Boolean!
+    $likedOnly: Boolean!
+    $vibrateNotify: Boolean
   ) {
-    createUser(
-      username: $username
-      email: $email
-      appVersion: "3"
-      phone: $phone
-      gender: $gender
+    updateSettings(
+      distance: $distance
+      distanceMetric: $distanceMetric
+      ageRange: $ageRange
       interestedIn: $interestedIn
-      dob: $dob
-    ) {
-      token
-    }
+      locationLock: $locationLock
+      visible: $visible
+      newMsgNotify: $newMsgNotify
+      emailNotify: $emailNotify
+      showOnline: $showOnline
+      likedOnly: $likedOnly
+      vibrateNotify: $vibrateNotify
+    )
   }
 `;
 
@@ -77,7 +84,7 @@ export const CREATE_EVENT = gql`
   mutation(
     $eventname: String!
     $desires: [String]
-    $sexes: [String]
+    $interestedIn: [String]
     $description: String
     $lat: Float
     $long: Float
@@ -89,7 +96,7 @@ export const CREATE_EVENT = gql`
     createEvent(
       eventname: $eventname
       desires: $desires
-      sexes: $sexes
+      interestedIn: $interestedIn
       description: $description
       lat: $lat
       long: $long
@@ -104,7 +111,7 @@ export const CREATE_EVENT = gql`
       participants
       description
       desires
-      sexes
+      interestedIn
       lat
       long
       address
@@ -184,7 +191,7 @@ export const SEARCH_EVENTS = gql`
         participants
         description
         desires
-        sexes
+        interestedIn
         lat
         long
         address
@@ -234,7 +241,7 @@ export const GET_EVENT = gql`
       participants
       description
       desires
-      sexes
+      interestedIn
       lat
       long
       address
@@ -252,6 +259,24 @@ export const GET_CURRENT_USER = gql`
       username
       userID
       profileID
+    }
+  }
+`;
+
+export const GET_SETTINGS = gql`
+  query {
+    getSettings {
+      distance
+      distanceMetric
+      ageRange
+      interestedIn
+      locationLock
+      visible
+      newMsgNotify
+      emailNotify
+      showOnline
+      likedOnly
+      vibrateNotify
     }
   }
 `;

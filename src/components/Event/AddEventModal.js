@@ -12,7 +12,7 @@ import {
 } from "antd";
 import axios from "axios";
 import AddressSearch from "../common/AddressSearch";
-import MultiSelectDropdown from "../MultiSelectDropdown";
+import MultiSelect from "../MultiSelect";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { Mutation } from "react-apollo";
 import { SIGNS3, CREATE_EVENT, SEARCH_EVENTS } from "../../queries";
@@ -41,7 +41,7 @@ const initialState = {
   image: "",
   type: "",
   time: "",
-  sexes: [],
+  interestedIn: [],
   desires: [],
   validating: "",
   eventname: ""
@@ -179,7 +179,7 @@ const AddEventModal = Form.create()(
       const {
         eventname,
         desires,
-        sexes,
+        interestedIn,
         description,
         address,
         type
@@ -194,7 +194,7 @@ const AddEventModal = Form.create()(
           variables={{
             eventname,
             desires,
-            sexes,
+            interestedIn,
             description,
             address,
             type,
@@ -332,7 +332,7 @@ const AddEventModal = Form.create()(
                       ? this.props.event.desires
                       : []
                   })(
-                    <MultiSelectDropdown
+                    <MultiSelect
                       name="desires"
                       placeholder="Activities at the event..."
                       handleChange={this.handleChangeSelect}
@@ -361,7 +361,7 @@ const AddEventModal = Form.create()(
                   )}
                 </FormItem>
               </Form>
-              <Button onClick={() => this.clearState()}>CLear</Button>
+              <Button onClick={() => this.clearState()}>CLear TEST</Button>
             </Modal>
           )}
         </Mutation>

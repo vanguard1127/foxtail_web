@@ -77,7 +77,7 @@ class EventPage extends Component {
           ...createEvent,
           eventname,
           desires,
-          sexes: [],
+          interestedIn: [],
           invited: [],
           description,
           address,

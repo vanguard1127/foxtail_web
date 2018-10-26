@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PhotoGrid from "./PhotoGrid";
-import MultiSelectDropdown from "../MultiSelectDropdown";
+import MultiSelect from "../MultiSelect";
 import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
@@ -76,7 +76,7 @@ class EditProfile extends Component {
                       }}
                     >
                       Desires:
-                      <MultiSelectDropdown
+                      <MultiSelect
                         name="desires"
                         placeholder="Interested In"
                         handleChange={this.handleChangeSelect}
