@@ -43,8 +43,10 @@ class ProfileSearch extends Component {
   };
 
   render() {
-    if (this.state.loading || this.props.data.searchProfiles === undefined) {
+    if (this.state.loading) {
       return <div>loading</div>;
+    } else if (this.props.data.searchProfiles === undefined) {
+      return <div>No members near you</div>;
     }
 
     const data = this.props.data.searchProfiles;

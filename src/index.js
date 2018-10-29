@@ -30,7 +30,7 @@ import { Layout, Breadcrumb } from "antd";
 const { Header, Content } = Layout;
 
 const client = new ApolloClient({
-  uri: "http://localhost:4444/graphql",
+  uri: "http://develop-133124268.us-west-2.elb.amazonaws.com/graphql",
   fetchOptions: {
     credentials: "include"
   },

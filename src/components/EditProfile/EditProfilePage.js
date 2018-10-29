@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import PhotoGrid from "./PhotoGrid";
-import MultiSelect from "../MultiSelect";
 import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
-import { Input, Button, Icon } from "antd";
+import { Input, Button, Icon, Select } from "antd";
 import { desireOptions } from "../../docs/data";
 
 const { TextArea } = Input;
+const Option = Select.Option;
 
 const initialState = {
   desires: [],
@@ -76,14 +76,17 @@ class EditProfile extends Component {
                       }}
                     >
                       Desires:
-                      <MultiSelect
-                        name="desires"
+                      <Select
+                        mode="multiple"
                         placeholder="Interested In"
-                        handleChange={this.handleChangeSelect}
-                        options={desireOptions}
                         style={{ width: "100%" }}
+                        onChange={this.handleChangeSelect}
                         defaultValue={data.getMyProfile.desires}
-                      />
+                      >
+                        {desireOptions.map(option => (
+                          <Option key={option.value}>{option.label}</Option>
+                        ))}
+                      </Select>
                       Bio:
                       <TextArea
                         rows={4}

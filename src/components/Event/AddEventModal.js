@@ -8,11 +8,11 @@ import {
   Upload,
   Button,
   Icon,
-  message
+  message,
+  Select
 } from "antd";
 import axios from "axios";
 import AddressSearch from "../common/AddressSearch";
-import MultiSelect from "../MultiSelect";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { Mutation } from "react-apollo";
 import { SIGNS3, CREATE_EVENT, SEARCH_EVENTS } from "../../queries";
@@ -20,6 +20,7 @@ import moment from "moment";
 import { desireOptions } from "../../docs/data";
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 const formItemLayout = {
   labelCol: {
@@ -332,14 +333,17 @@ const AddEventModal = Form.create()(
                       ? this.props.event.desires
                       : []
                   })(
-                    <MultiSelect
-                      name="desires"
+                    <Select
+                      mode="multiple"
                       placeholder="Activities at the event..."
-                      handleChange={this.handleChangeSelect}
-                      options={desireOptions}
                       style={{ width: "100%" }}
+                      onChange={this.handleChangeSelect}
                       currentvalue={this.props.form.getFieldValue("desires")}
-                    />
+                    >
+                      {desireOptions.map(option => (
+                        <Option key={option.value}>{option.label}</Option>
+                      ))}
+                    </Select>
                   )}
                 </FormItem>
                 <FormItem
