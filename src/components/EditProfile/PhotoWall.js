@@ -4,13 +4,14 @@ import { Upload, Icon, Modal } from "antd";
 import { Mutation } from "react-apollo";
 import { SIGNS3, UPLOAD_PHOTO } from "../../queries";
 import axios from "axios";
+import { Button } from "antd/lib/radio";
 
 class PhotoWall extends React.Component {
   state = {
     previewVisible: false,
     previewImage: "",
     fileList: [],
-    file: null,
+    fileToLoad: null,
     filename: "",
     filetype: "",
     order: "0",
@@ -26,20 +27,32 @@ class PhotoWall extends React.Component {
     });
   };
 
-  handleChange = ({ fileList }) => {
-    this.setState({ fileList });
+  handleChange = (file, fileList) => {
+    this.setState({
+      fileList
+    });
   };
 
-  handleUpload = (file, signS3, uploadPhoto) => {
+  handleShowImage(fileToLoad) {
     this.setState({
-      filename: file.name,
-      filetype: file.type
+      fileToLoad,
+      previewImage: URL.createObjectURL(fileToLoad),
+      previewVisible: true
+    });
+  }
+
+  handleUpload = (signS3, uploadPhoto) => {
+    const { fileToLoad } = this.state;
+
+    this.setState({
+      filename: fileToLoad.name,
+      filetype: fileToLoad.type
     });
     //format name on backend
     //filename: this.formatFilename(file.name),
     signS3().then(async ({ data }) => {
       const { signedRequest, key } = data.signS3;
-      await this.uploadToS3(file, signedRequest);
+      await this.uploadToS3(fileToLoad, signedRequest);
       if (this.props.private) {
         this.setState({ photoUrl: key, order: this.state.fileList.length + 3 });
       } else {
@@ -48,6 +61,10 @@ class PhotoWall extends React.Component {
 
       try {
         uploadPhoto().then(async ({ data }) => {
+          this.setState({
+            previewImage: "https://ft-img-bucket.s3.amazonaws.com/" + key,
+            previewVisible: true
+          });
           console.log("Response:", data);
         });
       } catch (e) {
@@ -131,12 +148,14 @@ class PhotoWall extends React.Component {
             {(signS3, { data, loading, error }) => (
               <div className="clearfix">
                 <Upload
-                  data={file => this.handleUpload(file, signS3, uploadPhoto)}
+                  data={file => this.handleShowImage(file)}
                   listType="picture-card"
                   fileList={fileList}
                   beforeUpload={beforeUpload}
                   onPreview={this.handlePreview}
-                  onChange={this.handleChange}
+                  onChange={({ file, fileList }) =>
+                    this.handleChange(file, fileList)
+                  }
                 >
                   {fileList.length >= 4 ? null : uploadButton}
                 </Upload>
@@ -150,6 +169,11 @@ class PhotoWall extends React.Component {
                     style={{ width: "100%" }}
                     src={previewImage}
                   />
+                  <Button
+                    onClick={() => this.handleUpload(signS3, uploadPhoto)}
+                  >
+                    Upload
+                  </Button>
                 </Modal>
               </div>
             )}

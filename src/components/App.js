@@ -14,7 +14,7 @@ class App extends Component {
           </h4>
         </div>
         <div className="centerColumn">
-          <Signup formStyle={{ width: "50%" }} />{" "}
+          <Signup formStyle={{ width: "100%" }} />{" "}
         </div>
       </div>
     );

@@ -3,13 +3,26 @@ import moment from "moment";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE } from "../../queries";
-import Error from "../Error";
 import AccountKit from "react-facebook-account-kit";
-import MultiSelect from "../MultiSelect";
-import { Button, DatePicker, Input, Checkbox, Icon } from "antd";
+import {
+  Button,
+  DatePicker,
+  Input,
+  Checkbox,
+  Icon,
+  Form,
+  Select,
+  Radio
+} from "antd";
 import { sexOptions } from "../../docs/data";
+// import Moustache from "../../images/moustache.svg"; // path to your '*.svg' file.
+// import LipsSvg from "../../images/lips.svg"; // path to your '*.svg' file.
 
-const ButtonGroup = Button.Group;
+const RadioGroup = Radio.Group;
+const RadioButton = Radio.Button;
+const Option = Select.Option;
+
+const FormItem = Form.Item;
 
 const initialState = {
   username: "",
@@ -23,7 +36,7 @@ const initialState = {
   code: ""
 };
 
-class Signup extends React.Component {
+class SignupForm extends React.Component {
   state = { ...initialState };
 
   clearState = () => {
@@ -32,7 +45,7 @@ class Signup extends React.Component {
 
   handleChange = event => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    this.props.form.setFieldsValue({ [name]: value });
   };
 
   onChangeDate = (date, dateString) => {
@@ -44,19 +57,23 @@ class Signup extends React.Component {
   };
 
   handleFBReturn = ({ state, code }, fbResolve, createUser) => {
-    this.setState({
-      csrf: state,
-      code
-    });
-    fbResolve().then(({ data }) => {
-      this.setState({ phone: data.fbResolve });
-      createUser().then(async ({ data }) => {
-        localStorage.setItem("token", data.createUser.token);
-        //    await this.props.refetch();
-        this.clearState();
-        this.props.history.push("/editprofile");
-      });
-    });
+    this.setState(
+      {
+        csrf: state,
+        code
+      },
+      () => {
+        fbResolve().then(({ data }) => {
+          this.setState({ phone: data.fbResolve });
+          createUser().then(async ({ data }) => {
+            localStorage.setItem("token", data.createUser.token);
+            //    await this.props.refetch();
+            this.clearState();
+            this.props.history.push("/editprofile");
+          });
+        });
+      }
+    );
   };
 
   validateForm = () => {
@@ -68,17 +85,21 @@ class Signup extends React.Component {
   };
 
   render() {
+    const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 15 }
+    };
+
     const {
       username,
       email,
       dob,
       interestedIn,
-      gender,
-      iscouple,
-      csrf,
-      code,
-      phone
-    } = this.state;
+      gender
+    } = this.props.form.getFieldsValue();
+
+    const { csrf, code, phone } = this.state;
 
     return (
       <div className="centerColumn fullHeight">
@@ -99,87 +120,101 @@ class Signup extends React.Component {
               >
                 {(createUser, { data, loading, error }) => {
                   return (
-                    <form
-                      className="form"
-                      onSubmit={event => event.preventDefault()}
-                      style={{
-                        ...this.props.formStyle,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-around"
-                      }}
-                    >
-                      <Input
-                        placeholder="Name"
-                        name="username"
-                        onChange={this.handleChange}
-                        value={username}
-                      />
-                      <Input
-                        placeholder="Email"
-                        name="email"
-                        onChange={this.handleChange}
-                        value={email}
-                      />
-                      <DatePicker
-                        onChange={this.onChangeDate}
-                        defaultValue={
-                          dob
-                            ? moment({ dob })
-                            : moment(
-                                new Date().setFullYear(
-                                  new Date().getFullYear() - 18
-                                )
-                              )
-                        }
-                      />
-                      <div className="itemRow">
-                        <p>Gender:</p>
-                        <ButtonGroup
-                          onClick={this.handleChange}
-                          selected={gender}
-                        >
-                          <Button
-                            type="primary"
-                            icon="man"
-                            size="large"
-                            name="gender"
-                            value="M"
-                          />
-                          <Button
-                            type="primary"
-                            icon="woman"
-                            size="large"
-                            name="gender"
-                            value="F"
-                          />
-                          <Button
-                            type="primary"
-                            icon="cloud-download"
-                            size="large"
-                            name="gender"
-                            value="T"
-                          />
-                        </ButtonGroup>
-                      </div>
-                      <div>
-                        <MultiSelect
-                          name="interestedIn"
-                          placeholder="Interested In"
-                          handleChange={this.handleChangeSelect}
-                          value={interestedIn}
-                          options={sexOptions}
-                          style={{ width: "100%" }}
-                        />
-                      </div>
-                      <Checkbox
-                        name="iscouple"
-                        onChange={this.handleChange}
-                        value={iscouple}
+                    <div>
+                      <Form
+                        style={{
+                          ...this.props.formStyle,
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-around"
+                        }}
                       >
-                        Are you a couple?
-                      </Checkbox>
-
+                        <FormItem {...formItemLayout} label={" "} colon={false}>
+                          {getFieldDecorator("username")(
+                            <Input
+                              placeholder="Username"
+                              name="username"
+                              onChange={this.handleChange}
+                            />
+                          )}
+                        </FormItem>
+                        <FormItem {...formItemLayout} label={" "} colon={false}>
+                          {getFieldDecorator("email")(
+                            <Input
+                              placeholder="Email"
+                              name="email"
+                              onChange={this.handleChange}
+                            />
+                          )}
+                        </FormItem>
+                        <FormItem
+                          {...formItemLayout}
+                          label="Birthday"
+                          colon={false}
+                        >
+                          {getFieldDecorator("dob", {
+                            initialValue: dob
+                              ? moment({ dob })
+                              : moment(
+                                  new Date().setFullYear(
+                                    new Date().getFullYear() - 18
+                                  )
+                                )
+                          })(<DatePicker onChange={this.onChangeDate} />)}
+                        </FormItem>
+                        <FormItem
+                          {...formItemLayout}
+                          label="Gender"
+                          colon={false}
+                        >
+                          {getFieldDecorator("gender")(
+                            <RadioGroup
+                              onClick={this.handleChange}
+                              selected={gender}
+                            >
+                              <RadioButton size="large" value="M">
+                                Male
+                                {/* <Icon component={Moustache} /> */}
+                              </RadioButton>
+                              <RadioButton size="large" value="F">
+                                Female
+                                {/* <Icon component={LipsSvg} /> */}
+                              </RadioButton>
+                              <RadioButton size="large" value="T">
+                                Trans
+                                {/* <Icon component={MoustacheSvg} />
+                              <Icon component={LipsSvg} /> */}
+                              </RadioButton>
+                            </RadioGroup>
+                          )}
+                        </FormItem>
+                        <FormItem {...formItemLayout} label={" "} colon={false}>
+                          {getFieldDecorator("interestedIn")(
+                            <Select
+                              mode="multiple"
+                              style={{ width: "100%" }}
+                              placeholder="Interested In"
+                              onChange={this.handleChangeSelect}
+                            >
+                              {sexOptions.map(option => (
+                                <Option key={option.value}>
+                                  {option.label}
+                                </Option>
+                              ))}
+                            </Select>
+                          )}
+                        </FormItem>
+                        <FormItem {...formItemLayout} label={" "} colon={false}>
+                          {getFieldDecorator("iscouple")(
+                            <Checkbox
+                              name="iscouple"
+                              onChange={this.handleChange}
+                            >
+                              Are you a couple?
+                            </Checkbox>
+                          )}
+                        </FormItem>
+                      </Form>
                       <AccountKit
                         appId="172075056973555" // Update this!
                         version="v1.1" // Version must be in form v{major}.{minor}
@@ -197,6 +232,7 @@ class Signup extends React.Component {
                               size="large"
                               disabled={loading || this.validateForm()}
                               {...p}
+                              htmlType="submit"
                             >
                               {" "}
                               <Icon
@@ -215,8 +251,7 @@ class Signup extends React.Component {
                           </div>
                         )}
                       </AccountKit>
-                      {error && <Error error={error} />}
-                    </form>
+                    </div>
                   );
                 }}
               </Mutation>
@@ -227,5 +262,5 @@ class Signup extends React.Component {
     );
   }
 }
-
+const Signup = Form.create()(SignupForm);
 export default withRouter(Signup);
