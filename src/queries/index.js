@@ -25,6 +25,12 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const SEND_MESSAGE = gql`
+  mutation($chatID: ID, $text: String!, $invitedProfile: ID!) {
+    sendMessage(text: $text, invitedProfile: $invitedProfile)
+  }
+`;
+
 export const UPDATE_SETTINGS = gql`
   mutation(
     $distance: Int!
@@ -248,6 +254,43 @@ export const GET_EVENT = gql`
       time
       invited {
         id
+      }
+    }
+  }
+`;
+
+export const GET_INBOX = gql`
+  query {
+    getInbox {
+      id
+      chatID
+      text
+      fromUser {
+        username
+      }
+      profilePic
+      createdAt
+    }
+  }
+`;
+
+export const OPEN_CHAT = gql`
+  query($chatID: ID!) {
+    openChat(chatID: $chatID) {
+      messages {
+        id
+        text
+        fromUser {
+          username
+        }
+        profilePic
+        createdAt
+      }
+      participants {
+        profilePic
+        users {
+          username
+        }
       }
     }
   }

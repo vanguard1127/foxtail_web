@@ -17,6 +17,7 @@ import Settings from "./components/Account/Settings";
 import EventPage from "./components/Event/EventPage";
 import ProfilePage from "./components/Profile/ProfilePage";
 import ChatPage from "./components/Chat/ChatPage";
+import InboxPage from "./components/Inbox/InboxPage";
 import SearchEvents from "./components/Event/SearchEvents";
 import EditProfile from "./components/EditProfile/EditProfilePage";
 import Signin from "./components/Auth/Signin";
@@ -28,9 +29,9 @@ import { ApolloProvider } from "react-apollo";
 import { Layout, Breadcrumb } from "antd";
 
 const { Header, Content } = Layout;
-
+//http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
 const client = new ApolloClient({
-  uri: "http://develop-133124268.us-west-2.elb.amazonaws.com/graphql",
+  uri: "http://localhost:4444/graphql",
   fetchOptions: {
     credentials: "include"
   },
@@ -135,6 +136,7 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
         <Route path="/events/:id" component={EventPage} />
         <Route path="/members/:id" component={ProfilePage} />
         <Route path="/chat/:id" component={ChatPage} />
+        <Route path="/inbox" component={InboxPage} />
         <Route path="/settings" render={() => <Settings session={session} />} />
 
         <Redirect to="/" />

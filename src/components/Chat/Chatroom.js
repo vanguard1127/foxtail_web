@@ -1,77 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { List, Form, Input, Button } from "antd";
 
 import Message from "./Message.js";
 
-class Chatroom extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      chats: [
-        {
-          username: "Kevin Hsu",
-          content: <p>Hello World!</p>,
-          img: "http://i.imgur.com/Tj5DGiO.jpg"
-        },
-        {
-          username: "Alice Chen",
-          content: <p>Love it! :heart:</p>,
-          img: "http://i.imgur.com/Tj5DGiO.jpg"
-        },
-        {
-          username: "Kevin Hsu",
-          content: <p>Check out my Github at https://github.com/WigoHunter</p>,
-          img: "http://i.imgur.com/Tj5DGiO.jpg"
-        },
-        {
-          username: "KevHs",
-          content: (
-            <p>
-              Lorem ipsum dolor sit amet, nibh ipsum. Cum class sem inceptos
-              incidunt sed sed. Tempus wisi enim id, arcu sed lectus aliquam,
-              nulla vitae est bibendum molestie elit risus.
-            </p>
-          ),
-          img: "http://i.imgur.com/ARbQZix.jpg"
-        },
-        {
-          username: "Kevin Hsu",
-          content: <p>So</p>,
-          img: "http://i.imgur.com/Tj5DGiO.jpg"
-        },
-        {
-          username: "Kevin Hsu",
-          content: (
-            <p>
-              Chilltime is going to be an app for you to view videos with
-              friends
-            </p>
-          ),
-          img: "http://i.imgur.com/Tj5DGiO.jpg"
-        },
-        {
-          username: "Kevin Hsu",
-          content: <p>You can sign-up now to try out our private beta!</p>,
-          img: "http://i.imgur.com/Tj5DGiO.jpg"
-        },
-        {
-          username: "Alice Chen",
-          content: <p>Definitely! Sounds great!</p>,
-          img: "http://i.imgur.com/Tj5DGiO.jpg"
-        }
-      ]
-    };
-
-    this.submitMessage = this.submitMessage.bind(this);
-  }
-
+class Chatroom extends Component {
   componentDidMount() {
-    this.scrollToBot();
+    if (!this.props.loading) {
+      this.scrollToBot();
+    }
   }
 
   componentDidUpdate() {
-    this.scrollToBot();
+    if (!this.props.loading) {
+      this.scrollToBot();
+    }
   }
 
   scrollToBot() {
@@ -100,24 +43,41 @@ class Chatroom extends React.Component {
   }
 
   render() {
-    const username = "Kevin Hsu";
-    const { chats } = this.state;
-
+    const { style, messages, loading } = this.props;
+    const screen = !loading ? (
+      <List className="chats" ref="chats">
+        {messages.map(message => (
+          <Message key={message.id} message={message} />
+        ))}
+      </List>
+    ) : (
+      <div style={{ height: "100%" }}>Loading</div>
+    );
     return (
-      <div className="chatroom">
+      <div className="chatroom" style={style}>
         <h3>Foxtail</h3>
-        <ul className="chats" ref="chats">
-          {chats.map(chat => (
-            <Message chat={chat} user={username} />
-          ))}
-        </ul>
-        <form className="input" onSubmit={e => this.submitMessage(e)}>
-          <input type="text" ref="msg" />
-          <input type="submit" value="Submit" />
-        </form>
+        {screen}
+        <InputForm />
       </div>
     );
   }
 }
+
+class InputFormTemplate extends Component {
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <Form className="input" onSubmit={e => this.submitMessage(e)}>
+        <Form.Item style={{ marginBottom: "0px" }}>
+          {getFieldDecorator("text")(<Input type="text" />)}
+        </Form.Item>
+        <Form.Item style={{ marginBottom: "0px" }}>
+          <Button type="submit">Send</Button>
+        </Form.Item>
+      </Form>
+    );
+  }
+}
+const InputForm = Form.create()(InputFormTemplate);
 
 export default Chatroom;

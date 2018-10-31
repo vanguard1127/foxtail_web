@@ -47,6 +47,9 @@ class NavbarAuth extends Component {
         <Menu.Item key="/events">
           <NavLink to="/events">Go to Events</NavLink>
         </Menu.Item>
+        <Menu.Item key="/inbox">
+          <NavLink to="/inbox">Inbox</NavLink>
+        </Menu.Item>
         <Menu.Item key="/editprofile">
           <NavLink to="/editprofile">Edit Profile</NavLink>
         </Menu.Item>

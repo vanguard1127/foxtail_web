@@ -1,12 +1,17 @@
-import React from 'react';
+import React from "react";
+import { List, Avatar, Icon } from "antd";
 
-const Message = ({chat, user}) => (
-    <li className={`chat ${user === chat.username ? "right" : "left"}`}>
-        {user !== chat.username
-            && <img src={chat.img} alt={`${chat.username}'s profile pic`} />
-        }
-        {chat.content}
-    </li>
+const Message = ({ message }) => (
+  <List.Item>
+    <List.Item.Meta
+      avatar={<Avatar src={message.profilePic} />}
+      title={<a href="https://ant.design">{message.fromUser.username}</a>}
+      description={message.text}
+    />
+    <div>
+      <Icon type="ellipsis" theme="outlined" />
+    </div>
+  </List.Item>
 );
 
 export default Message;
