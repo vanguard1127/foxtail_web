@@ -1,11 +1,20 @@
 import React from "react";
 import { List, Avatar, Icon } from "antd";
+import moment from "moment";
 
 const Message = ({ message }) => (
   <List.Item>
     <List.Item.Meta
       avatar={<Avatar src={message.profilePic} />}
-      title={<a href="https://ant.design">{message.fromUser.username}</a>}
+      title={
+        <a href="https://ant.design">
+          {message.fromUser.username}
+          {",  "}
+          {moment(message.createdAt)
+            .format("MMM Do")
+            .toString()}
+        </a>
+      }
       description={message.text}
     />
     <div>

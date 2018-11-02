@@ -4,6 +4,7 @@ import { GET_INBOX, OPEN_CHAT } from "../../queries";
 import { Tabs, List, Avatar, Icon } from "antd";
 import Waypoint from "react-waypoint";
 import Chatroom from "../Chat/Chatroom";
+import moment from "moment";
 
 const TabPane = Tabs.TabPane;
 const LIMIT = 10;
@@ -85,7 +86,9 @@ class InboxPage extends Component {
           description={item.text}
         />
         <div>
-          <Icon type="ellipsis" theme="outlined" />
+          {moment(item.createdAt)
+            .format("MMM Do")
+            .toString()}
         </div>
       </List.Item>
     );
@@ -103,7 +106,7 @@ class InboxPage extends Component {
             backgroundColor: "red"
           }}
         >
-          <Query query={GET_INBOX} fetchPolicy="no-cache">
+          <Query query={GET_INBOX} fetchPolicy="cache-and-network">
             {({ data, loading, error, fetchMore }) => {
               const messages = data.getInbox;
               if (loading) {
@@ -160,41 +163,14 @@ class InboxPage extends Component {
           }}
         >
           {" "}
-          <Query
-            query={OPEN_CHAT}
-            variables={{ chatID }}
-            fetchPolicy="no-cache"
-          >
-            {({ data, loading, error, fetchMore }) => {
-              if (loading) {
-                return (
-                  <Chatroom
-                    style={{
-                      display: "flex",
-                      flex: 1,
-                      flexDirection: "column"
-                    }}
-                    loading={true}
-                  />
-                );
-              }
-
-              if (error) {
-                return <div>Error: {error.message}</div>;
-              }
-
-              return (
-                <Chatroom
-                  style={{
-                    display: "flex",
-                    flex: 1,
-                    flexDirection: "column"
-                  }}
-                  messages={data.openChat.messages}
-                />
-              );
+          <Chatroom
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column"
             }}
-          </Query>
+            chatID={chatID}
+          />
         </div>
       </div>
     );

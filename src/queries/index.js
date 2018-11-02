@@ -26,8 +26,16 @@ export const CREATE_USER = gql`
 `;
 
 export const SEND_MESSAGE = gql`
-  mutation($chatID: ID, $text: String!, $invitedProfile: ID!) {
-    sendMessage(text: $text, invitedProfile: $invitedProfile)
+  mutation($chatID: ID, $text: String!, $invitedProfile: ID) {
+    sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile) {
+      messages {
+        fromUser {
+          username
+        }
+        text
+        createdAt
+      }
+    }
   }
 `;
 
