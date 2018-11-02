@@ -1,13 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-  withRouter,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Link, Redirect, Route, Switch, withRouter } from "react-router-dom";
 import "./index.css";
 import App from "./components/App";
 //import App from "./components/Test";
@@ -26,7 +19,11 @@ import withSession from "./components/withSession";
 import Footer from "./components/Footer";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import { Layout, Breadcrumb } from "antd";
+import { Breadcrumb, Layout } from "antd";
+import { Provider } from "react-redux";
+import configureStore from "redux/configureStore";
+
+const store = configureStore();
 
 const { Header, Content } = Layout;
 //http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
@@ -151,8 +148,10 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
 const RootWithSession = withSession(Root);
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <RootWithSession />
-  </ApolloProvider>,
+  <Provider store={store}>
+    <ApolloProvider client={client}>
+      <RootWithSession />
+    </ApolloProvider>
+  </Provider>,
   document.getElementById("root")
 );
