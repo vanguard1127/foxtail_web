@@ -1,0 +1,1 @@
+export const SET_IMAGE_BLOB = 'SET_IMAGE_BLOB';

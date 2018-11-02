@@ -1,10 +1,11 @@
 import React from "react";
-import { Stage, Layer } from "react-konva";
+import { Layer, Stage } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
 import smile from "./smile4.png";
 import ProfilePic from "./profilepic.png";
+import { connect } from "react-redux";
 
 class EditCanvasImage extends React.Component {
   state = {
@@ -22,17 +23,18 @@ class EditCanvasImage extends React.Component {
   };
   handleExportClick = () => {
     /*this.setState(
-      {
-        width: this.props.store.imageWidth,
-        height: this.props.store.imageHeight
-      },
-      () => console.log(this.state)
-    );*/
+     {
+     width: this.props.store.imageWidth,
+     height: this.props.store.imageHeight
+     },
+     () => console.log(this.state)
+     );*/
     this.setState({ hideTransformer: true }, () => {
       const dataURL = this.stageRef.getStage().toDataURL();
       this.downloadURI(dataURL, "stage1.png");
     });
   };
+
   downloadURI(uri, name) {
     const link = window.document.createElement("a");
     link.download = name;
@@ -42,6 +44,7 @@ class EditCanvasImage extends React.Component {
     document.body.removeChild(link);
     //delete link;
   }
+
   onFileChange = e => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -104,4 +107,11 @@ class EditCanvasImage extends React.Component {
   }
 }
 
-export default EditCanvasImage;
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    image: state.profilePage.image
+  }
+};
+
+export default connect(mapStateToProps)(EditCanvasImage);
