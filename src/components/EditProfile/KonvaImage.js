@@ -1,5 +1,4 @@
 import React from "react";
-import Konva from "konva";
 import { Image } from "react-konva";
 
 class KonvaImage extends React.Component {

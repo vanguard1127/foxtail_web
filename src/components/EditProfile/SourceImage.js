@@ -1,6 +1,4 @@
-import React, { Component } from "react";
-import Konva from "konva";
-import { render } from "react-dom";
+import React from "react";
 import { Image } from "react-konva";
 
 class SourceImage extends React.Component {

@@ -1,13 +1,12 @@
 import React from "react";
-import Konva from "konva";
-import { Stage, Layer, Rect } from "react-konva";
+import { Stage, Layer } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
 import smile from "./smile4.png";
 import ProfilePic from "./profilepic.png";
 
-class EditProfile extends React.Component {
+class EditCanvasImage extends React.Component {
   state = {
     imageSrc: ProfilePic,
     width: 400,
@@ -105,4 +104,4 @@ class EditProfile extends React.Component {
   }
 }
 
-export default EditProfile;
+export default EditCanvasImage;

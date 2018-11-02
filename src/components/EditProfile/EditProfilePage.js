@@ -4,8 +4,9 @@ import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
-import { Input, Button, Icon, Select } from "antd";
+import { Input, Button, Icon, Select, Col } from "antd";
 import { desireOptions } from "../../docs/data";
+import EditCanvasImage from './EditCanvasImage';
 
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -65,7 +66,10 @@ class EditProfile extends Component {
               return (
                 <div>
                   <h4>Edit Profile: {users.map(user => user.username)}</h4>
-                  <div className="centerColumn">
+                  <Col span={6}>
+                    <EditCanvasImage/>
+                  </Col>
+                  <Col span={6} offset={3}>
                     <PhotoGrid photos={photos} />
                     <div
                       className="centerColumn"
@@ -114,7 +118,7 @@ class EditProfile extends Component {
                         Find Members Nearby <Icon type="search" />
                       </Button>
                     </div>
-                  </div>
+                  </Col>
                 </div>
               );
             }}

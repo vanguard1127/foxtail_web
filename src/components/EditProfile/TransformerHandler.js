@@ -1,5 +1,4 @@
 import React from "react";
-import Konva from "konva";
 import { Transformer } from "react-konva";
 
 class TransformerHandler extends React.Component {

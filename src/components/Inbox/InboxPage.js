@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Query } from "react-apollo";
 import { GET_INBOX, OPEN_CHAT } from "../../queries";
-import { Tabs, Affix, List, Avatar, Icon } from "antd";
+import { Tabs, List, Avatar, Icon } from "antd";
 import Waypoint from "react-waypoint";
 import Chatroom from "../Chat/Chatroom";
 
