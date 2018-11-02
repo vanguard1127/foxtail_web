@@ -28,7 +28,7 @@ const store = configureStore();
 const { Header, Content } = Layout;
 //http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
 const client = new ApolloClient({
-  uri: "http://localhost:4444/graphql",
+  uri: "http://production-151896178.us-west-2.elb.amazonaws.com/graphql", //"http://localhost:4444/graphql",
   fetchOptions: {
     credentials: "include"
   },

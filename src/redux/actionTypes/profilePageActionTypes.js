@@ -1,1 +1,1 @@
-export const SET_IMAGE_BLOB = 'SET_IMAGE_BLOB';
+export const SET_IMAGE_FOR_CANVAS = 'SET_IMAGE_FOR_CANVAS';

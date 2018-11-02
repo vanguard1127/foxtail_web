@@ -1,5 +1,5 @@
 const profilePage = {
-  image: null
+  imageObject: null
 };
 
 export {
