@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Query } from "react-apollo";
-import { GET_INBOX, OPEN_CHAT } from "../../queries";
-import { Tabs, List, Avatar, Icon } from "antd";
+import { GET_INBOX } from "../../queries";
+import { Tabs, List, Avatar } from "antd";
 import Waypoint from "react-waypoint";
 import Chatroom from "../Chat/Chatroom";
 import moment from "moment";
@@ -10,7 +10,7 @@ const TabPane = Tabs.TabPane;
 const LIMIT = 10;
 
 class InboxPage extends Component {
-  state = { chatID: "5bd9d9e68eda5a5664d6b4d2" };
+  state = { chatID: "5bddc980228e102900b9482f" };
 
   fetchData = fetchMore => {
     this.setState({ loading: true });

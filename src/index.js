@@ -24,25 +24,80 @@ import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
 import Footer from "./components/Footer";
-import ApolloClient from "apollo-boost";
+
 import { ApolloProvider } from "react-apollo";
+import ApolloClient from "apollo-client";
+import { WebSocketLink } from "apollo-link-ws";
+import { HttpLink } from "apollo-link-http";
+import { split } from "apollo-link";
+import { getMainDefinition } from "apollo-utilities";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloLink } from "apollo-link";
+
 import { Layout, Breadcrumb } from "antd";
 
 const { Header, Content } = Layout;
 //http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
+const wsurl = "ws://localhost:4444/subscriptions";
+const httpurl = "http://localhost:4444/graphql";
+
+const wsLink = new WebSocketLink({
+  uri: wsurl,
+  options: {
+    reconnect: true
+  }
+});
+
+const httpLink = new HttpLink({
+  uri: httpurl
+});
+
+// const AuthLink = (operation, forward) => {
+//   const token = localStorage.getItem("token");
+
+//   operation.setContext(context => ({
+//     ...context,
+//     headers: {
+//       ...context.headers,
+//       authorization: `Bearer ${token}`
+//     }
+//   }));
+
+//   return forward(operation);
+// };
+
+const AuthLink = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem("token");
+
+  operation.setContext(context => ({
+    ...context,
+    headers: {
+      ...context.headers,
+      authorization: `Bearer ${token}`
+    }
+  }));
+
+  return forward(operation);
+});
+
+const splitlink = split(
+  // split based on operation type
+  ({ query }) => {
+    const { kind, operation } = getMainDefinition(query);
+    return kind === "OperationDefinition" && operation === "subscription";
+  },
+  wsLink,
+  httpLink
+);
+
+const link = ApolloLink.from([AuthLink, splitlink]);
+
+// using the ability to split links, you can send data to each link
+// depending on what kind of operation is being sent
+
 const client = new ApolloClient({
-  uri: "http://localhost:4444/graphql",
-  fetchOptions: {
-    credentials: "include"
-  },
-  request: operation => {
-    const token = localStorage.getItem("token");
-    operation.setContext({
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-  },
+  link,
+  cache: new InMemoryCache(),
   onError: ({ networkError }) => {
     if (networkError) {
       console.log("Network Error:::", networkError);
