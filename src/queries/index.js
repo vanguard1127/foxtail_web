@@ -1,4 +1,20 @@
+//TODO: Remove apollo boost and replace with something smaller or already used
 import { gql } from "apollo-boost";
+
+/* Subscriptions */
+export const NEW_MESSAGE_SUB = gql`
+  subscription($chatID: ID!) {
+    newMessageSubscribe(chatID: $chatID) {
+      id
+      text
+      fromUser {
+        username
+      }
+      profilePic
+      createdAt
+    }
+  }
+`;
 
 /* Mutations */
 //TODO: fix App version issue
@@ -27,15 +43,7 @@ export const CREATE_USER = gql`
 
 export const SEND_MESSAGE = gql`
   mutation($chatID: ID, $text: String!, $invitedProfile: ID) {
-    sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile) {
-      messages {
-        fromUser {
-          username
-        }
-        text
-        createdAt
-      }
-    }
+    sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile)
   }
 `;
 
@@ -282,9 +290,9 @@ export const GET_INBOX = gql`
   }
 `;
 
-export const OPEN_CHAT = gql`
+export const GET_MESSAGES = gql`
   query($chatID: ID!) {
-    openChat(chatID: $chatID) {
+    getMessages(chatID: $chatID) {
       messages {
         id
         text
