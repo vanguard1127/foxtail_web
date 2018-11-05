@@ -57,11 +57,11 @@ class EditCanvasImage extends React.Component {
     }
   };
 
-  handleStickerClick = (id, name) => {
+  handleStickerClick = (id, name, src) => {
     const idFound = this.state.konvaImageList.find(x => x.id === id);
     if (idFound === undefined) {
       const imgList = [...this.state.konvaImageList];
-      imgList.push({ id, name });
+      imgList.push({ id, name, src });
       this.setState({ konvaImageList: imgList });
     }
   };
@@ -74,9 +74,9 @@ class EditCanvasImage extends React.Component {
   render() {
     const Sticker = (props) => (
       <div {...props}
-           onClick={() => this.handleStickerClick(props.id, props.name)}
+           onClick={() => this.handleStickerClick(props.id, props.name, props.src)}
            style={{ padding: 5, height: '100%' }}>
-        <img style={{ height: '100%' }} src="http://konvajs.github.io/assets/yoda.jpg"/>
+        <img style={{ height: '100%' }} src={require('./' + props.src)}/>
       </div>
     );
     return (
@@ -98,6 +98,7 @@ class EditCanvasImage extends React.Component {
             }
             {this.state.konvaImageList.length > 0 && this.state.konvaImageList.map(img =>
               <KonvaImage
+                src={img.src}
                 key={img.id}
                 onDragStart={this.handleDragStart}
                 width={100}
@@ -120,10 +121,8 @@ class EditCanvasImage extends React.Component {
           marginTop: 5,
           overflowY: 'auto'
         }}>
-          <Sticker id="1" name="stc1"/>
-          <Sticker id="2" name="stc2"/>
-          <Sticker id="3" name="stc3"/>
-          <Sticker id="4" name="stc4"/>
+          <Sticker id="1" name="stc1" src="test_mask_1.png"/>
+          <Sticker id="2" name="stc2" src="test_mask_2.png"/>
         </div>
       </div>
     );

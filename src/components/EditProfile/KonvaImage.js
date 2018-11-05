@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image } from 'react-konva';
-import yoda from './yodaX.jpg';
 
 class KonvaImage extends React.Component {
   state = {
@@ -8,9 +7,10 @@ class KonvaImage extends React.Component {
   };
 
   componentDidMount() {
+    const importImage = require('./' + this.props.src);
     const image = new window.Image();
     image.setAttribute('crossOrigin', 'anonymous');
-    image.src = this.props.src || yoda;
+    image.src = importImage;
     image.onload = () => {
       this.setState({
         image: image
