@@ -2,11 +2,10 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Icon, Modal, Upload } from 'antd';
 import { Mutation } from 'react-apollo';
-import { SIGNS3, UPLOAD_PHOTO } from '../../queries';
+import { SIGNS3, UPLOAD_PHOTO } from 'queries';
 import axios from 'axios';
 import { Button } from 'antd/lib/radio';
-import { connect } from 'react-redux';
-import { setImageForCanvas } from 'redux/actions/profilePageActions';
+import EditCanvasImage from 'components/EditProfile/EditCanvasImage';
 
 class PhotoWall extends React.Component {
   state = {
@@ -30,7 +29,6 @@ class PhotoWall extends React.Component {
   };
 
   handleChange = (file, fileList) => {
-    this.props.dispatch(setImageForCanvas(fileList[0]));
     this.setState({
       fileList
     });
@@ -120,7 +118,6 @@ class PhotoWall extends React.Component {
       filename,
       filetype,
       previewVisible,
-      previewImage,
       fileList
     } = this.state;
 
@@ -166,11 +163,17 @@ class PhotoWall extends React.Component {
                   footer={null}
                   onCancel={this.handleCancel}
                 >
-                  <img
-                    alt="original"
-                    style={{ width: '100%' }}
-                    src={previewImage}
-                  />
+                  <EditCanvasImage imageObject={fileList[0]}/>
+                  {/*<Query query={CLIENT_GET_IMAGE}>*/}
+                  {/*{({ data: { profilePage } }) => (*/}
+                  {/*<span>{profilePage.image}</span>*/}
+                  {/*)}*/}
+                  {/*</Query>*/}
+                  {/*<img*/}
+                  {/*alt="original"*/}
+                  {/*style={{ width: '100%' }}*/}
+                  {/*src={previewImage}*/}
+                  {/*/>*/}
                   <Button
                     onClick={() => this.handleUpload(signS3, uploadPhoto)}
                   >
@@ -186,4 +189,4 @@ class PhotoWall extends React.Component {
   }
 }
 
-export default connect()(PhotoWall);
+export default PhotoWall;

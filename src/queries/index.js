@@ -1,5 +1,15 @@
 //TODO: Remove apollo boost and replace with something smaller or already used
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
+
+
+/* Client Queries */
+export const CLIENT_GET_IMAGE = gql `
+  query {
+    profilePage @client {
+       image
+    }
+  }
+`;
 
 /* Subscriptions */
 export const NEW_MESSAGE_SUB = gql`

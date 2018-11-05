@@ -1,1 +1,0 @@
-export const SET_IMAGE_FOR_CANVAS = 'SET_IMAGE_FOR_CANVAS';

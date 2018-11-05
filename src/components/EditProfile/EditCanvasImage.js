@@ -1,12 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Layer, Stage } from 'react-konva';
 import TransformerHandler from './TransformerHandler';
 import SourceImage from './SourceImage';
 import KonvaImage from './KonvaImage';
-import { connect } from 'react-redux';
 import { Button } from 'antd';
 
 class EditCanvasImage extends React.Component {
+
+  static propTypes = {
+    imageObject: PropTypes.object
+  };
+
   state = {
     imageSrc: null,
     width: 400,
@@ -74,7 +79,6 @@ class EditCanvasImage extends React.Component {
         <img style={{ height: '100%' }} src="http://konvajs.github.io/assets/yoda.jpg"/>
       </div>
     );
-    console.log('redux store', this.props.imageObject)
     return (
       <div style={{ width: 'fit-content' }}>
         <Button style={{ marginBottom: 5 }} onClick={this.handleExportClick}>Export stage</Button>
@@ -126,10 +130,4 @@ class EditCanvasImage extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    imageObject: state.profilePage.imageObject
-  }
-};
-
-export default connect(mapStateToProps)(EditCanvasImage);
+export default EditCanvasImage;
