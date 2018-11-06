@@ -1,68 +1,41 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Query, Mutation } from "react-apollo";
 import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
-import { Form, Input, Button } from "antd";
-import Waypoint from "react-waypoint";
-import MessageList from "./MessageList.js";
+import { List, Form, Input, Button } from "antd";
 
-const LIMIT = 15;
+import Message from "./Message.js";
 
 class Chatroom extends Component {
-  constructor(props) {
-    super(props);
-    this.scroller = React.createRef();
-    this.msgList = React.createRef();
-  }
-
-  state = { loading: true, cursor: null };
+  state = { loading: true };
   componentDidMount() {
-    console.log("1");
+    this.scrollToBot();
   }
 
   componentDidUpdate() {
-    console.log("2");
-
     this.scrollToBot();
   }
 
   scrollToBot() {
-    //this.msgList.msgListContainer.current.scrollTop = 0;
-    // console.log(this);
-    //this.msgList.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
-    // this.msgList.current.scrollTop = 0;
-    // console.log("REF", this.msgList.msgListContainer.current.scrollTop);
-    // console.log("REF", this.msgList);
-    //this.msgList.current.scrollTop = 0;
-    // this.scroller.current.scrollTop = 1;
-    // console.log("SSS", this.scroller.current.scrollTop);
+    //this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    //   if (this.refs.chats) {
+    //   ReactDOM.findDOMNode(this.refs.chats).scrollTop = ReactDOM.findDOMNode(
+    //     this.refs.chats
+    //   ).scrollHeight;
+    // }
   }
-
-  handleEnd = (previousPosition, fetchMore, cursor) => {
-    if (previousPosition === Waypoint.above) {
-      this.setState(state => ({ cursor }), () => this.fetchData(fetchMore));
-    }
-  };
-
-  saveMsgRef = msgList => {
-    this.msgList = msgList;
-    this.scrollToBot();
-  };
 
   render() {
     const { style, chatID } = this.props;
-    const { cursor } = this.state;
-
     let unsubscribe = null;
-
     return (
-      <div className="chatroom" style={style} ref={this.scroller}>
+      <div className="chatroom" style={style}>
         <h3>Foxtail</h3>
         <Query
           query={GET_MESSAGES}
-          variables={{ chatID, limit: LIMIT, cursor }}
-          fetchPolicy="network-only"
+          variables={{ chatID }}
+          fetchPolicy="cache-and-network"
         >
-          {({ data, loading, error, subscribeToMore, fetchMore }) => {
+          {({ data, loading, error, subscribeToMore }) => {
             if (loading) {
               return <div style={{ height: "100%" }}>Loading</div>;
             }
@@ -77,7 +50,6 @@ class Chatroom extends Component {
                 variables: { chatID },
                 updateQuery: (prev, { subscriptionData }) => {
                   const { newMessageSubscribe } = subscriptionData.data;
-
                   if (!newMessageSubscribe) {
                     return prev;
                   }
@@ -92,12 +64,13 @@ class Chatroom extends Component {
             }
 
             return (
-              <MessageList
-                data={data}
-                handleEnd={this.handleEnd}
-                fetchMore={fetchMore}
-                ref={node => this.saveMsgRef(node)}
-              />
+              <List className="chats" ref="chats">
+                {console.log("RECIEVE:", data)}
+                {data.getMessages.messages.map(message => (
+                  <Message key={message.id} message={message} />
+                ))}
+                <List.Item />
+              </List>
             );
           }}
         </Query>
@@ -137,6 +110,13 @@ class InputFormTemplate extends Component {
           chatID,
           text: this.props.form.getFieldValue("text")
         }}
+        fetchPolicy="cache-and-network"
+        refetchQueries={() => [
+          {
+            query: GET_MESSAGES,
+            variables: { chatID }
+          }
+        ]}
       >
         {(sendMessage, { data, loading, error }) => (
           <Form className="input">

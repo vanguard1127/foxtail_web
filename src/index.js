@@ -38,6 +38,10 @@ import { Layout, Breadcrumb } from "antd";
 
 const { Header, Content } = Layout;
 //http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
+// const wsurl =
+//   "ws://production-151896178.us-west-2.elb.amazonaws.com/subscriptions";
+// const httpurl =
+//   "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
 const wsurl = "ws://localhost:4444/subscriptions";
 const httpurl = "http://localhost:4444/graphql";
 
@@ -51,20 +55,6 @@ const wsLink = new WebSocketLink({
 const httpLink = new HttpLink({
   uri: httpurl
 });
-
-// const AuthLink = (operation, forward) => {
-//   const token = localStorage.getItem("token");
-
-//   operation.setContext(context => ({
-//     ...context,
-//     headers: {
-//       ...context.headers,
-//       authorization: `Bearer ${token}`
-//     }
-//   }));
-
-//   return forward(operation);
-// };
 
 const AuthLink = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem("token");

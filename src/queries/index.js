@@ -291,8 +291,8 @@ export const GET_INBOX = gql`
 `;
 
 export const GET_MESSAGES = gql`
-  query($chatID: ID!) {
-    getMessages(chatID: $chatID) {
+  query($chatID: ID!, $limit: Int!, $cursor: String) {
+    getMessages(chatID: $chatID, limit: $limit, cursor: $cursor) {
       messages {
         id
         text
