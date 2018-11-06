@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Query, Mutation } from "react-apollo";
 import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
 import { Form, Input, Button } from "antd";
@@ -8,44 +8,12 @@ import MessageList from "./MessageList.js";
 const LIMIT = 15;
 
 class Chatroom extends Component {
-  constructor(props) {
-    super(props);
-    this.scroller = React.createRef();
-    this.msgList = React.createRef();
-  }
-
   state = { loading: true, cursor: null };
-  componentDidMount() {
-    console.log("1");
-  }
-
-  componentDidUpdate() {
-    console.log("2");
-
-    this.scrollToBot();
-  }
-
-  scrollToBot() {
-    //this.msgList.msgListContainer.current.scrollTop = 0;
-    // console.log(this);
-    //this.msgList.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
-    // this.msgList.current.scrollTop = 0;
-    // console.log("REF", this.msgList.msgListContainer.current.scrollTop);
-    // console.log("REF", this.msgList);
-    //this.msgList.current.scrollTop = 0;
-    // this.scroller.current.scrollTop = 1;
-    // console.log("SSS", this.scroller.current.scrollTop);
-  }
 
   handleEnd = (previousPosition, fetchMore, cursor) => {
     if (previousPosition === Waypoint.above) {
       this.setState(state => ({ cursor }), () => this.fetchData(fetchMore));
     }
-  };
-
-  saveMsgRef = msgList => {
-    this.msgList = msgList;
-    this.scrollToBot();
   };
 
   render() {
@@ -55,12 +23,12 @@ class Chatroom extends Component {
     let unsubscribe = null;
 
     return (
-      <div className="chatroom" style={style} ref={this.scroller}>
+      <div className="chatroom" style={style}>
         <h3>Foxtail</h3>
         <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit: LIMIT, cursor }}
-          fetchPolicy="network-only"
+          fetchPolicy="cache-first"
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (loading) {
@@ -96,7 +64,6 @@ class Chatroom extends Component {
                 data={data}
                 handleEnd={this.handleEnd}
                 fetchMore={fetchMore}
-                ref={node => this.saveMsgRef(node)}
               />
             );
           }}

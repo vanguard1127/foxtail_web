@@ -21,6 +21,7 @@ class ImageCarousel extends Component {
       // </Carousel>
 
       <Carousel
+        emulateTouch
         showThumbs={showThumbs}
         showStatus={false}
         width="100%"

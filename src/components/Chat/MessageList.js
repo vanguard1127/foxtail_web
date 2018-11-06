@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { List } from "antd";
 import Waypoint from "react-waypoint";
 import Message from "./Message.js";
 
@@ -9,17 +8,19 @@ class MessageList extends Component {
     this.messagesEnd = React.createRef();
   }
   componentDidMount() {
-    // console.log("div", this.messagesEnd.scrollTop);
+    this.scrollToBot();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBot();
   }
   scrollToBot() {
-    console.log("div", this.messagesEnd.current);
-    //this.messagesEnd.current.scrollTop = 100;
+    this.messagesEnd.current.scrollTop = this.messagesEnd.current.scrollHeight;
   }
   render() {
     const { data, fetchMore, handleEnd } = this.props;
     return (
-      <Fragment ref={this.messagesEnd}>
-        <a onClick={() => this.scrollToBot()}>Test Scroll</a>
+      <Fragment>
         <Waypoint
           onEnter={({ previousPosition }) =>
             handleEnd(
@@ -30,12 +31,11 @@ class MessageList extends Component {
             )
           }
         />
-        <List className="chats" ref={this.messagesEnd}>
+        <div className="chats" ref={this.messagesEnd}>
           {data.getMessages.messages.map(message => (
             <Message key={message.id} message={message} />
           ))}
-          <List.Item />
-        </List>
+        </div>
       </Fragment>
     );
   }

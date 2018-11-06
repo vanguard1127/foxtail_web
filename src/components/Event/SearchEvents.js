@@ -10,6 +10,7 @@ import { Button } from "antd";
 import AddEventModal from "./AddEventModal";
 import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
+import MyEvents from "./MyEvents";
 
 const LIMIT = 3;
 //TODO: fix moment date format issue
@@ -200,11 +201,12 @@ class SearchEvents extends Component {
 
     return (
       <div>
+        <MyEvents />
         {AddModalFrag}
         <Query
           query={SEARCH_EVENTS}
           variables={{ lat, long, all, limit: LIMIT }}
-          fetchPolicy="no-cache"
+          fetchPolicy="cache-first"
         >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
@@ -213,12 +215,14 @@ class SearchEvents extends Component {
               data.searchEvents === undefined ||
               data.searchEvents.length === 0
             ) {
+              console.log("DATE", data, lat, long);
               return <div>No Events Available</div>;
             }
 
             if (error) {
               return <div>Error: {error.message}</div>;
             }
+            console.log("DATE", data, lat, long);
             return (
               <div>
                 <Fragment>

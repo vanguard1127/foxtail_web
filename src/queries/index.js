@@ -290,6 +290,20 @@ export const GET_INBOX = gql`
   }
 `;
 
+export const GET_MY_EVENTS = gql`
+  query($skip: Int!) {
+    getMyEvents(skip: $skip) {
+      docs {
+        id
+        eventname
+        time
+      }
+      total
+      offset
+    }
+  }
+`;
+
 export const GET_MESSAGES = gql`
   query($chatID: ID!, $limit: Int!, $cursor: String) {
     getMessages(chatID: $chatID, limit: $limit, cursor: $cursor) {
