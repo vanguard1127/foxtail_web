@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
+  Link,
+  Redirect,
   Route,
   Switch,
-  Redirect,
-  withRouter,
-  Link
+  withRouter
 } from "react-router-dom";
 import "./index.css";
 import App from "./components/App";
@@ -26,15 +26,14 @@ import withSession from "./components/withSession";
 import Footer from "./components/Footer";
 
 import { ApolloProvider } from "react-apollo";
+import { Breadcrumb, Layout } from "antd";
 import ApolloClient from "apollo-client";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
-import { split } from "apollo-link";
+import { ApolloLink, split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { ApolloLink } from "apollo-link";
-
-import { Layout, Breadcrumb } from "antd";
+import { withClientState } from "apollo-link-state";
 
 const { Header, Content } = Layout;
 //http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
@@ -80,14 +79,28 @@ const splitlink = split(
   httpLink
 );
 
-const link = ApolloLink.from([AuthLink, splitlink]);
+const cache = new InMemoryCache();
+
+const defaultState = {
+  profilePage: {
+    __typename: "ProfilePage",
+    image: "123"
+  }
+};
+
+const stateLink = withClientState({
+  cache,
+  defaults: defaultState
+});
+
+const link = ApolloLink.from([stateLink, AuthLink, splitlink]);
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
 
 const client = new ApolloClient({
   link,
-  cache: new InMemoryCache(),
+  cache,
   onError: ({ networkError }) => {
     if (networkError) {
       console.log("Network Error:::", networkError);

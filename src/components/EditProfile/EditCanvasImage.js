@@ -1,18 +1,24 @@
-import React from "react";
-import { Stage, Layer } from "react-konva";
-import TransformerHandler from "./TransformerHandler";
-import SourceImage from "./SourceImage";
-import KonvaImage from "./KonvaImage";
-import smile from "./smile4.png";
-import ProfilePic from "./profilepic.png";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Layer, Stage } from 'react-konva';
+import TransformerHandler from './TransformerHandler';
+import SourceImage from './SourceImage';
+import KonvaImage from './KonvaImage';
+import { Button } from 'antd';
 
 class EditCanvasImage extends React.Component {
+
+  static propTypes = {
+    imageObject: PropTypes.object
+  };
+
   state = {
-    imageSrc: ProfilePic,
+    imageSrc: null,
     width: 400,
     height: 400,
-    selectedShapeName: "",
-    hideTransformer: false
+    selectedShapeName: '',
+    hideTransformer: false,
+    konvaImageList: []
   };
 
   handleStageClick = e => {
@@ -22,36 +28,27 @@ class EditCanvasImage extends React.Component {
   };
   handleExportClick = () => {
     /*this.setState(
-      {
-        width: this.props.store.imageWidth,
-        height: this.props.store.imageHeight
-      },
-      () => console.log(this.state)
-    );*/
+     {
+     width: this.props.store.imageWidth,
+     height: this.props.store.imageHeight
+     },
+     () => console.log(this.state)
+     );*/
     this.setState({ hideTransformer: true }, () => {
       const dataURL = this.stageRef.getStage().toDataURL();
-      this.downloadURI(dataURL, "stage1.png");
+      this.downloadURI(dataURL, 'stage1.png');
     });
   };
+
   downloadURI(uri, name) {
-    const link = window.document.createElement("a");
+    const link = window.document.createElement('a');
     link.download = name;
     link.href = uri;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    //delete link;
   }
-  onFileChange = e => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
 
-    reader.onload = e => {
-      this.setState({ imageSrc: e.target.result });
-    };
-
-    reader.readAsDataURL(file);
-  };
 
   handleDragStart = e => {
     const shapeName = e.target.attrs.name;
@@ -60,13 +57,34 @@ class EditCanvasImage extends React.Component {
     }
   };
 
+  handleStickerClick = (id, name, src) => {
+    const idFound = this.state.konvaImageList.find(x => x.id === id);
+    if (idFound === undefined) {
+      const imgList = [...this.state.konvaImageList];
+      imgList.push({ id, name, src });
+      this.setState({ konvaImageList: imgList });
+    }
+  };
+
+  removeSelectedSticker = () => {
+    const filteredList = this.state.konvaImageList.filter(x => x.name !== this.state.selectedShapeName);
+    this.setState({ konvaImageList: filteredList });
+  };
+
   render() {
+    const Sticker = (props) => (
+      <div {...props}
+           onClick={() => this.handleStickerClick(props.id, props.name, props.src)}
+           style={{ padding: 5, height: '100%' }}>
+        <img style={{ height: '100%' }} src={require('./' + props.src)}/>
+      </div>
+    );
     return (
-      <div>
-        <input type="file" onChange={this.onFileChange} />
-        <button onClick={this.handleExportClick}>Export stage</button>
+      <div style={{ width: 'fit-content' }}>
+        <Button style={{ marginBottom: 5 }} onClick={this.handleExportClick}>Export stage</Button>
+        <Button style={{ marginBottom: 5 }} onClick={this.removeSelectedSticker}>Remove Selected Sticker</Button>
         <Stage
-          style={{ backgroundColor: "gray" }}
+          style={{ backgroundColor: 'gray' }}
           width={this.state.width}
           height={this.state.height}
           onClick={this.handleStageClick}
@@ -75,23 +93,19 @@ class EditCanvasImage extends React.Component {
           }}
         >
           <Layer>
-            {this.state.imageSrc !== null && (
-              <SourceImage imageSrc={this.state.imageSrc} />
+            {this.props.imageObject &&
+            <SourceImage width={400} height={400} sourceImageObject={this.props.imageObject}/>
+            }
+            {this.state.konvaImageList.length > 0 && this.state.konvaImageList.map(img =>
+              <KonvaImage
+                src={img.src}
+                key={img.id}
+                onDragStart={this.handleDragStart}
+                width={100}
+                height={100}
+                name={img.name}
+              />
             )}
-            <KonvaImage
-              onDragStart={this.handleDragStart}
-              width={100}
-              height={100}
-              name="smile"
-              src={smile}
-            />
-            <KonvaImage
-              onDragStart={this.handleDragStart}
-              width={100}
-              height={100}
-              name="smile2"
-              src={smile}
-            />
             {this.state.hideTransformer === false && (
               <TransformerHandler
                 selectedShapeName={this.state.selectedShapeName}
@@ -99,6 +113,17 @@ class EditCanvasImage extends React.Component {
             )}
           </Layer>
         </Stage>
+        <div style={{
+          display: 'flex',
+          height: 70,
+          width: this.state.width,
+          border: '1px solid silver',
+          marginTop: 5,
+          overflowY: 'auto'
+        }}>
+          <Sticker id="1" name="stc1" src="test_mask_1.png"/>
+          <Sticker id="2" name="stc2" src="test_mask_2.png"/>
+        </div>
       </div>
     );
   }
