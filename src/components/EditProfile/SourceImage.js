@@ -1,9 +1,8 @@
-import React from 'react';
-import { Image } from 'react-konva';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Image } from "react-konva";
+import PropTypes from "prop-types";
 
 class SourceImage extends React.Component {
-
   static propTypes = {
     sourceImageObject: PropTypes.object,
     width: PropTypes.number,
@@ -12,15 +11,20 @@ class SourceImage extends React.Component {
 
   state = {
     image: null,
-    imageBase64: ''
+    imageBase64: ""
   };
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   this.readFile();
+  // }
+
+  UNSAFE_componentWillReceiveProps() {
     this.readFile();
   }
 
   readFile = () => {
     const file = this.props.sourceImageObject.originFileObj;
+    // console.log("SourceIMage", file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = e => {
@@ -34,10 +38,10 @@ class SourceImage extends React.Component {
     if (this.props.width) image.width = this.props.width;
     if (this.props.height) image.height = this.props.height;
     const _this = this;
-    image.onload = function () {
+    image.onload = function() {
       _this.setState({
         image: image,
-        type: 'SET_IMAGE_SIZE',
+        type: "SET_IMAGE_SIZE",
         width: this.width,
         height: this.height
       });
@@ -45,7 +49,7 @@ class SourceImage extends React.Component {
   };
 
   render() {
-    return <Image image={this.state.image}/>;
+    return <Image image={this.state.image} />;
   }
 }
 

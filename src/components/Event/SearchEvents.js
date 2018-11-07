@@ -215,14 +215,12 @@ class SearchEvents extends Component {
               data.searchEvents === undefined ||
               data.searchEvents.length === 0
             ) {
-              console.log("DATE", data, lat, long);
               return <div>No Events Available</div>;
             }
 
             if (error) {
               return <div>Error: {error.message}</div>;
             }
-            console.log("DATE", data, lat, long);
             return (
               <div>
                 <Fragment>

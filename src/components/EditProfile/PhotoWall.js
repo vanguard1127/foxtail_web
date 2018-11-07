@@ -1,27 +1,33 @@
-import React from 'react';
-import 'antd/dist/antd.css';
-import { Icon, Modal, Upload } from 'antd';
-import { Mutation } from 'react-apollo';
-import { SIGNS3, UPLOAD_PHOTO } from 'queries';
-import axios from 'axios';
-import { Button } from 'antd/lib/radio';
-import EditCanvasImage from 'components/EditProfile/EditCanvasImage';
+import React from "react";
+import "antd/dist/antd.css";
+import { Icon, Modal, Upload } from "antd";
+import { Mutation } from "react-apollo";
+import { SIGNS3, UPLOAD_PHOTO } from "queries";
+import axios from "axios";
+import EditCanvasImage from "components/EditProfile/EditCanvasImage";
+
+const dummyRequest = ({ file, onSuccess }) => {
+  setTimeout(() => {
+    onSuccess("ok");
+  }, 0);
+};
 
 class PhotoWall extends React.Component {
   state = {
     previewVisible: false,
-    previewImage: '',
+    previewImage: "",
     fileList: [],
     fileToLoad: null,
-    filename: '',
-    filetype: '',
-    order: '0',
-    photoUrl: ''
+    filename: "",
+    filetype: "",
+    order: "0",
+    photoUrl: ""
   };
 
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = file => {
+    console.log("PRE", file);
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true
@@ -30,6 +36,7 @@ class PhotoWall extends React.Component {
 
   handleChange = (file, fileList) => {
     this.setState({
+      file,
       fileList
     });
   };
@@ -42,35 +49,18 @@ class PhotoWall extends React.Component {
     });
   }
 
-  handleUpload = (signS3, uploadPhoto) => {
-    const { fileToLoad } = this.state;
-
+  setPhotoDetails = (name, type) => {
     this.setState({
-      filename: fileToLoad.name,
-      filetype: fileToLoad.type
+      filename: name,
+      filetype: type
     });
-    //format name on backend
-    //filename: this.formatFilename(file.name),
-    signS3().then(async ({ data }) => {
-      const { signedRequest, key } = data.signS3;
-      await this.uploadToS3(fileToLoad, signedRequest);
-      if (this.props.private) {
-        this.setState({ photoUrl: key, order: this.state.fileList.length + 3 });
-      } else {
-        this.setState({ photoUrl: key, order: this.state.fileList.length - 1 });
-      }
+  };
 
-      try {
-        uploadPhoto().then(async ({ data }) => {
-          this.setState({
-            previewImage: 'https://ft-img-bucket.s3.amazonaws.com/' + key,
-            previewVisible: true
-          });
-          console.log('Response:', data);
-        });
-      } catch (e) {
-        console.log('Error', e);
-      }
+  setProfilePicDetails = ({ photoUrl, order }) => {
+    console.log("order", order, "filelist", this.state.fileList);
+    this.setState({
+      photoUrl,
+      order
     });
   };
 
@@ -79,15 +69,15 @@ class PhotoWall extends React.Component {
       //ORIGINAL
       const options = {
         headers: {
-          'Content-Type': file.type
+          "Content-Type": file.type
         }
       };
 
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status === 200) {
-        console.log('upload ok');
+        console.log("upload ok");
       } else {
-        console.log('Something went wrong');
+        console.log("Something went wrong");
       }
     } catch (e) {
       console.log(e);
@@ -98,11 +88,12 @@ class PhotoWall extends React.Component {
     var filearray = [];
 
     for (var i = 0; i < this.props.fileList.length; i++) {
-      if (this.props.fileList[i].url !== 'x') {
+      if (this.props.fileList[i].url !== "x") {
         filearray.push({
           uid: this.props.fileList[i].id,
-          url: 'https://ft-img-bucket.s3.amazonaws.com/' +
-          this.props.fileList[i].url
+          url:
+            "https://ft-img-bucket.s3.amazonaws.com/" +
+            this.props.fileList[i].url
         });
       }
     }
@@ -118,24 +109,25 @@ class PhotoWall extends React.Component {
       filename,
       filetype,
       previewVisible,
-      fileList
+      fileList,
+      file
     } = this.state;
 
     const uploadButton = (
       <div>
-        <Icon type="plus"/>
+        <Icon type="plus" />
         <div className="ant-upload-text">Upload</div>
       </div>
     );
 
     function beforeUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
+      const isJPG = file.type === "image/jpeg";
       if (!isJPG) {
-        alert('You can only upload JPG file!');
+        alert("You can only upload JPG file!");
       }
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
-        alert('Image must smaller than 2MB!');
+        alert("Image must smaller than 2MB!");
       }
       return isJPG && isLt2M;
     }
@@ -155,6 +147,7 @@ class PhotoWall extends React.Component {
                   onChange={({ file, fileList }) =>
                     this.handleChange(file, fileList)
                   }
+                  customRequest={dummyRequest}
                 >
                   {fileList.length >= 4 ? null : uploadButton}
                 </Upload>
@@ -163,22 +156,15 @@ class PhotoWall extends React.Component {
                   footer={null}
                   onCancel={this.handleCancel}
                 >
-                  <EditCanvasImage imageObject={fileList[0]}/>
-                  {/*<Query query={CLIENT_GET_IMAGE}>*/}
-                  {/*{({ data: { profilePage } }) => (*/}
-                  {/*<span>{profilePage.image}</span>*/}
-                  {/*)}*/}
-                  {/*</Query>*/}
-                  {/*<img*/}
-                  {/*alt="original"*/}
-                  {/*style={{ width: '100%' }}*/}
-                  {/*src={previewImage}*/}
-                  {/*/>*/}
-                  <Button
-                    onClick={() => this.handleUpload(signS3, uploadPhoto)}
-                  >
-                    Upload
-                  </Button>
+                  <EditCanvasImage
+                    imageObject={file}
+                    signS3={signS3}
+                    uploadPhoto={uploadPhoto}
+                    setPhotoDetails={this.setPhotoDetails}
+                    uploadToS3={this.uploadToS3}
+                    fileList={fileList}
+                    setProfilePicDetails={this.setProfilePicDetails}
+                  />
                 </Modal>
               </div>
             )}
