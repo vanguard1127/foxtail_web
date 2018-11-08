@@ -29,7 +29,7 @@ class PhotoWall extends React.Component {
   handlePreview = file => {
     console.log("PRE", file);
     this.setState({
-      previewImage: file.url || file.thumbUrl,
+      file,
       previewVisible: true
     });
   };

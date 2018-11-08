@@ -1,15 +1,6 @@
 //TODO: Remove apollo boost and replace with something smaller or already used
 import { gql } from "apollo-boost";
 
-/* Client Queries */
-export const CLIENT_GET_IMAGE = gql`
-  query {
-    profilePage @client {
-      image
-    }
-  }
-`;
-
 /* Subscriptions */
 export const NEW_MESSAGE_SUB = gql`
   subscription($chatID: ID!) {
@@ -47,6 +38,21 @@ export const CREATE_USER = gql`
     ) {
       token
     }
+  }
+`;
+
+export const LINK_PROFILE = gql`
+  mutation($code: String!) {
+    linkProfile(code: $code) {
+      id
+      partnerName
+    }
+  }
+`;
+
+export const UNLINK_PROFILE = gql`
+  mutation {
+    unlinkProfile
   }
 `;
 
@@ -359,7 +365,14 @@ export const GET_SETTINGS = gql`
       showOnline
       likedOnly
       vibrateNotify
+      couplePartner
     }
+  }
+`;
+
+export const GENERATE_CODE = gql`
+  query {
+    generateCode
   }
 `;
 
