@@ -4,6 +4,7 @@ import { Query, Mutation } from "react-apollo";
 import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
 import { Dropdown, Menu, Icon } from "antd";
 import AttendEvent from "./AttendEvent";
+import Chatroom from "../Chat/Chatroom";
 import moment from "moment";
 
 import AddEventModal from "./AddEventModal";
@@ -173,6 +174,15 @@ class EventPage extends Component {
                 {event.participants.length}
               </p>
               <AttendEvent id={event.id} participants={event.participants} />
+              <Chatroom
+                style={{
+                  display: "flex",
+                  flex: 1,
+                  flexDirection: "column"
+                }}
+                chatID={event.chatID}
+                chatTitle={event.eventname}
+              />
             </div>
           );
         }}

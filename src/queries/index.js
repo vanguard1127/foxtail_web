@@ -7,9 +7,7 @@ export const NEW_MESSAGE_SUB = gql`
     newMessageSubscribe(chatID: $chatID) {
       id
       text
-      fromUser {
-        username
-      }
+      fromUser
       profilePic
       createdAt
     }
@@ -296,9 +294,7 @@ export const GET_INBOX = gql`
       id
       chatID
       text
-      fromUser {
-        username
-      }
+      fromUser
       profilePic
       createdAt
     }
@@ -325,14 +321,13 @@ export const GET_MESSAGES = gql`
       messages {
         id
         text
-        fromUser {
-          username
-        }
+        fromUser
         profilePic
         createdAt
       }
       participants {
         profilePic
+        profileName
         users {
           username
         }

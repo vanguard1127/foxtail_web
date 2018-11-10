@@ -10,7 +10,7 @@ const TabPane = Tabs.TabPane;
 const LIMIT = 10;
 
 class InboxPage extends Component {
-  state = { chatID: "5bddc980228e102900b9482f" };
+  state = { chatID: null };
 
   fetchData = fetchMore => {
     this.setState({ loading: true });
@@ -79,9 +79,7 @@ class InboxPage extends Component {
             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
           }
           title={
-            <a onClick={e => this.setChatID(e, item.chatID)}>
-              {item.fromUser.username}
-            </a>
+            <a onClick={e => this.setChatID(e, item.chatID)}>{item.fromUser}</a>
           }
           description={item.text}
         />
@@ -94,84 +92,92 @@ class InboxPage extends Component {
     );
   };
 
+  renderMsgList = messages => {
+    return (
+      <Fragment>
+        {messages.map(message => {
+          return this.renderItem(message);
+        })}
+      </Fragment>
+    );
+  };
+
   render() {
     const { chatID } = this.state;
     return (
       <div style={{ display: "flex", flex: 1, flexDirection: "horizontal" }}>
-        <div
-          style={{
-            display: "flex",
-            flex: 1,
-            flexDirection: "horizontal",
-            backgroundColor: "red"
-          }}
-        >
-          <Query query={GET_INBOX} fetchPolicy="cache-and-network">
-            {({ data, loading, error, fetchMore }) => {
-              const messages = data.getInbox;
-              if (loading) {
-                return <div>loading</div>;
-              } else if (messages === undefined || messages.length === 0) {
-                return <div>No Messages Available</div>;
-              }
+        <Query query={GET_INBOX} fetchPolicy="cache-and-network">
+          {({ data, loading, error, subscribeToMore }) => {
+            if (loading) {
+              return <div>loading</div>;
+            }
 
-              if (error) {
-                return <div>Error: {error.message}</div>;
-              }
-              return (
+            if (error) {
+              return <div>Error: {error.message}</div>;
+            }
+
+            const messages = data.getInbox;
+            console.log("SHOU", messages, "CHH", chatID);
+            if (messages === undefined || messages.length === 0) {
+              return <div>No Messages Available</div>;
+            }
+            return (
+              <div style={{ display: "contents" }}>
                 <div
                   style={{
                     display: "flex",
                     flex: 1,
-                    flexDirection: "column",
-                    backgroundColor: "lightblue",
-                    padding: "10px"
+                    flexDirection: "horizontal",
+                    backgroundColor: "red"
                   }}
                 >
-                  <Tabs defaultActiveKey="1">
-                    <TabPane tab="All" key="1">
-                      <Fragment>
-                        {messages.map(message => {
-                          return this.renderItem(message);
-                        })}
-                      </Fragment>
-                    </TabPane>
-                    <TabPane tab="New" key="2">
-                      Online
-                    </TabPane>
-                    <TabPane tab="Online" key="3">
-                      Pop
-                    </TabPane>
-                  </Tabs>
+                  <div
+                    style={{
+                      display: "flex",
+                      flex: 1,
+                      flexDirection: "column",
+                      backgroundColor: "lightblue",
+                      padding: "10px"
+                    }}
+                  >
+                    <Tabs defaultActiveKey="1">
+                      <TabPane tab="All" key="1">
+                        {this.renderMsgList(messages)}
+                      </TabPane>
+                      <TabPane tab="Online" key="2">
+                        Online
+                      </TabPane>
+                    </Tabs>
 
-                  {/* <Waypoint
+                    {/* <Waypoint
                       onEnter={({ previousPosition }) =>
                         this.handleEnd(previousPosition, fetchMore)
                       }
                     /> */}
+                  </div>
                 </div>
-              );
-            }}
-          </Query>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flex: 4,
-            flexDirection: "horizontal",
-            backgroundColor: "blue"
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 4,
+                    flexDirection: "horizontal",
+                    backgroundColor: "blue"
+                  }}
+                >
+                  {" "}
+                  <Chatroom
+                    style={{
+                      display: "flex",
+                      flex: 1,
+                      flexDirection: "column"
+                    }}
+                    chatID={chatID !== null ? chatID : messages[0].chatID}
+                  />
+                </div>
+              </div>
+            );
           }}
-        >
-          {" "}
-          <Chatroom
-            style={{
-              display: "flex",
-              flex: 1,
-              flexDirection: "column"
-            }}
-            chatID={chatID}
-          />
-        </div>
+        </Query>
       </div>
     );
   }

@@ -8,7 +8,7 @@ const Message = ({ message }) => (
       avatar={<Avatar src={message.profilePic} />}
       title={
         <a href="https://ant.design">
-          {message.fromUser.username}
+          {message.fromUser}
           {",  "}
           {moment(message.createdAt)
             .format("MMM Do")

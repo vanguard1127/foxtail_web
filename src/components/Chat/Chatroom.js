@@ -17,14 +17,14 @@ class Chatroom extends Component {
   };
 
   render() {
-    const { style, chatID } = this.props;
+    const { style, chatID, chatTitle } = this.props;
     const { cursor } = this.state;
 
     let unsubscribe = null;
 
     return (
       <div className="chatroom" style={style}>
-        <h3>Foxtail</h3>
+        <h3>{chatTitle}</h3>
         <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit: LIMIT, cursor }}

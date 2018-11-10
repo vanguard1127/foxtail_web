@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import {
-  GENERATE_CODE,
-  LINK_PROFILE,
-  UNLINK_PROFILE,
-  GET_SETTINGS
-} from "../../queries";
+import { GENERATE_CODE, LINK_PROFILE, UNLINK_PROFILE } from "../../queries";
 import { Query, Mutation } from "react-apollo";
 import { Modal, Input, Divider, Button, Checkbox, Carousel } from "antd";
+import { EmailShareButton, EmailIcon } from "react-share";
 
 class CoupleModal extends Component {
-  state = { code: "", currentSlide: 0 };
+  state = {
+    code: "",
+    currentSlide: 0,
+    title: "Join me on Foxtail",
+    shareUrl: ""
+  };
 
   handleTextChange = event => {
     this.setState({ code: event.target.value });
@@ -52,27 +53,28 @@ class CoupleModal extends Component {
     return this.showLikeModal(visible, close, code);
   }
 
-  updateCouple = (cache, { data: { linkProfile } }) => {
-    console.log(cache);
-    const { getSettings } = cache.readQuery({ query: GET_SETTINGS });
+  // updateCouple = (cache, { data: { linkProfile } }) => {
+  //   console.log(cache);
+  //   const { getSettings } = cache.readQuery({ query: GET_SETTINGS });
 
-    if (linkProfile) {
-      getSettings.couplePartner = linkProfile;
-    } else {
-      getSettings.couplePartner = null;
-    }
-    console.log("send to", getSettings);
-    cache.writeQuery({
-      query: GET_SETTINGS,
-      data: {
-        getSettings: {
-          ...getSettings
-        }
-      }
-    });
-  };
+  //   if (linkProfile) {
+  //     getSettings.couplePartner = linkProfile;
+  //   } else {
+  //     getSettings.couplePartner = null;
+  //   }
+  //   console.log("send to", getSettings);
+  //   cache.writeQuery({
+  //     query: GET_SETTINGS,
+  //     data: {
+  //       getSettings: {
+  //         ...getSettings
+  //       }
+  //     }
+  //   });
+  // };
 
   showLikeModal(visible, close, code) {
+    const { title } = this.state;
     const settings = {
       dots: false,
       speed: 500,
@@ -143,6 +145,14 @@ class CoupleModal extends Component {
                     <Checkbox>
                       Include Messages and Events in Couple Profile?
                     </Checkbox>
+                    <EmailShareButton
+                      url={code}
+                      subject={title}
+                      body={title + ". Check out more details here:" + code}
+                      className="Demo__some-network__share-button"
+                    >
+                      <EmailIcon size={32} round />
+                    </EmailShareButton>
                   </div>
                 </div>
               );
@@ -163,7 +173,6 @@ class CoupleModal extends Component {
               variables={{
                 code
               }}
-              update={this.updateCouple}
             >
               {(linkProfile, { dataMut, loading, error }) => (
                 <Button
@@ -182,7 +191,7 @@ class CoupleModal extends Component {
 
   showDeleteConfirm(visible, close, username, unlinkProfile) {
     return (
-      <Mutation mutation={UNLINK_PROFILE} update={this.updateCouple}>
+      <Mutation mutation={UNLINK_PROFILE}>
         {(unlinkProfile, { dataMut, loading, error }) => {
           if (loading) {
             return <div>Loading</div>;
