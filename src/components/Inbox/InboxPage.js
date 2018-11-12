@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { Query } from "react-apollo";
 import { GET_INBOX } from "../../queries";
-import { Tabs, List, Avatar } from "antd";
+import { List, Avatar, Badge, Divider } from "antd";
 import Waypoint from "react-waypoint";
 import Chatroom from "../Chat/Chatroom";
-import moment from "moment";
+import TimeAgo from "../common/TimeAgo";
 
-const TabPane = Tabs.TabPane;
 const LIMIT = 10;
 
 class InboxPage extends Component {
@@ -71,32 +70,39 @@ class InboxPage extends Component {
     }
   };
 
-  renderItem = item => {
+  renderItem = (item, timeAgo) => {
     return (
       <List.Item key={item.id}>
         <List.Item.Meta
           avatar={
-            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            <Badge dot={timeAgo === "Online"}>
+              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            </Badge>
           }
           title={
             <a onClick={e => this.setChatID(e, item.chatID)}>{item.fromUser}</a>
           }
           description={item.text}
         />
-        <div>
-          {moment(item.createdAt)
-            .format("MMM Do")
-            .toString()}
-        </div>
+        <div>{timeAgo}</div>
       </List.Item>
     );
   };
 
-  renderMsgList = messages => {
+  renderMsgList = ({ messages, onlineOnly }) => {
     return (
       <Fragment>
         {messages.map(message => {
-          return this.renderItem(message);
+          var timeAgo = TimeAgo(message);
+          if (onlineOnly) {
+            if (timeAgo === "Online") {
+              return this.renderItem(message, timeAgo);
+            }
+            return null;
+          } else if (timeAgo !== "Online") {
+            return this.renderItem(message, timeAgo);
+          }
+          return null;
         })}
       </Fragment>
     );
@@ -117,7 +123,7 @@ class InboxPage extends Component {
             }
 
             const messages = data.getInbox;
-            console.log("SHOU", messages, "CHH", chatID);
+
             if (messages === undefined || messages.length === 0) {
               return <div>No Messages Available</div>;
             }
@@ -140,15 +146,10 @@ class InboxPage extends Component {
                       padding: "10px"
                     }}
                   >
-                    <Tabs defaultActiveKey="1">
-                      <TabPane tab="All" key="1">
-                        {this.renderMsgList(messages)}
-                      </TabPane>
-                      <TabPane tab="Online" key="2">
-                        Online
-                      </TabPane>
-                    </Tabs>
-
+                    <Divider orientation="left">Online</Divider>
+                    {this.renderMsgList({ messages, onlineOnly: true })}
+                    <Divider />
+                    {this.renderMsgList({ messages, onlineOnly: false })}
                     {/* <Waypoint
                       onEnter={({ previousPosition }) =>
                         this.handleEnd(previousPosition, fetchMore)

@@ -297,6 +297,12 @@ export const GET_INBOX = gql`
       fromUser
       profilePic
       createdAt
+      participants {
+        profileName
+        updatedAt
+        profilePic
+        _id
+      }
     }
   }
 `;

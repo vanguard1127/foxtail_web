@@ -1,12 +1,10 @@
 import React, { Component, Fragment } from "react";
 import Waypoint from "react-waypoint";
 import Message from "./Message.js";
+import { message } from "antd";
+import { moment } from "moment";
 
 class MessageList extends Component {
-  constructor(props) {
-    super(props);
-    this.messagesEnd = React.createRef();
-  }
   componentDidMount() {
     this.scrollToBot();
   }
@@ -15,24 +13,53 @@ class MessageList extends Component {
     this.scrollToBot();
   }
   scrollToBot() {
-    this.messagesEnd.current.scrollTop = this.messagesEnd.current.scrollHeight;
+    this.props.messagesRef.current.scrollTop = this.props.messagesRef.current.scrollHeight;
   }
+
+  UNSAFE_componentWillReceiveProps({ messages }) {
+    if (
+      this.props.messagesRef &&
+      this.props.messagesRef.current.scrollTop < 100 &&
+      this.props.messages &&
+      messages &&
+      this.props.messages.length !== messages.length
+    ) {
+      // 35 items
+      const heightBeforeRender = this.props.messagesRef.current.scrollHeight;
+      // wait for 70 items to render
+      setTimeout(() => {
+        this.props.messagesRef.current.scrollTop =
+          this.props.messagesRef.current.scrollHeight - heightBeforeRender;
+      }, 120);
+    }
+  }
+  info = () => {
+    message.info(
+      moment(
+        this.props.messages[this.props.messages.length - 1].createdAt
+      ).format("dddd, MMMM Do YYYY")
+    );
+  };
   render() {
-    const { data, fetchMore, handleEnd } = this.props;
+    const { messages, fetchMore, handleEnd, messagesRef } = this.props;
     return (
       <Fragment>
-        <Waypoint
-          onEnter={({ previousPosition }) =>
-            handleEnd(
-              previousPosition,
-              fetchMore,
-              data.getMessages.messages[data.getMessages.messages.length - 1]
-                .createdAt
-            )
-          }
-        />
-        <div className="chats" ref={this.messagesEnd}>
-          {data.getMessages.messages.map(message => (
+        <div
+          className="chats"
+          ref={messagesRef}
+          style={{ backgroundColor: "#eee" }}
+        >
+          <Waypoint
+            onEnter={({ previousPosition, currentPosition }) =>
+              handleEnd(
+                previousPosition,
+                currentPosition,
+                fetchMore,
+                messages[messages.length - 1].createdAt
+              )
+            }
+          />
+          {[...messages].reverse().map(message => (
             <Message key={message.id} message={message} />
           ))}
         </div>

@@ -179,7 +179,15 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
 
       <Navbar session={session} />
     </Header>
-    <Content style={{ padding: "0 50px" }}>
+    <Content
+      style={{
+        padding: "0 50px",
+        minHeight: "86vh",
+        display: "flex",
+        flex: "1",
+        flexDirection: "column"
+      }}
+    >
       {breadcrumbItems && <Breadcrumb>{breadcrumbItems}</Breadcrumb>}
       <Switch>
         <Route path="/" component={App} exact />

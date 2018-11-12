@@ -3,6 +3,7 @@ import CardsList from "./CardsList";
 import { SEARCH_PROFILES } from "../../queries";
 import Waypoint from "react-waypoint";
 import { graphql } from "react-apollo";
+import Spinner from "../common/Spinner";
 
 const LIMIT = 6;
 class ProfileSearch extends Component {
@@ -44,7 +45,7 @@ class ProfileSearch extends Component {
 
   render() {
     if (this.state.loading) {
-      return <div>loading</div>;
+      return <Spinner message="Loading Members..." size="large" />;
     } else if (this.props.data.searchProfiles === undefined) {
       return <div>No members near you</div>;
     }
