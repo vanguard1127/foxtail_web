@@ -9,10 +9,6 @@ import moment from "moment";
 const LIMIT = 6;
 
 class Chatroom extends Component {
-  constructor(props) {
-    super(props);
-    this.messagesRef = React.createRef();
-  }
   state = {
     loading: false,
     cursor: null,
@@ -30,14 +26,35 @@ class Chatroom extends Component {
         (!previousPosition && currentPosition === Waypoint.inside) ||
         previousPosition === Waypoint.above
       ) {
-        console.log(
-          "END CALLED",
-          "PREV",
-          previousPosition,
-          "CURR",
-          currentPosition
-        );
-        this.fetchData(fetchMore, cursor);
+        const { chatID } = this.props;
+        this.setState({ loading: true });
+        fetchMore({
+          variables: {
+            chatID,
+            limit: LIMIT,
+            cursor
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            if (!fetchMoreResult) {
+              return previousResult;
+            }
+
+            if (fetchMoreResult.getMessages.messages < LIMIT) {
+              this.setState({ hasMoreItems: false });
+            }
+            console.log("NEW", ...fetchMoreResult.getMessages.messages);
+            console.log("OLD", ...previousResult.getMessages.messages);
+            previousResult.getMessages.messages = [
+              ...previousResult.getMessages.messages,
+              ...fetchMoreResult.getMessages.messages
+            ];
+
+            return previousResult;
+          }
+        });
+        this.setState({
+          loading: false
+        });
       }
     }
   };
@@ -121,10 +138,11 @@ class Chatroom extends Component {
               <Fragment>
                 {/* <Affix>{chatDate}</Affix> */}
                 <MessageList
+                  chatID={chatID}
                   messages={data.getMessages.messages}
                   handleEnd={this.handleEnd}
                   fetchMore={fetchMore}
-                  messagesRef={this.messagesRef}
+                  limit={LIMIT}
                 />
               </Fragment>
             );
