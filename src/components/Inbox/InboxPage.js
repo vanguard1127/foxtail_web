@@ -12,7 +12,6 @@ class InboxPage extends Component {
   state = { chatID: null };
 
   fetchData = fetchMore => {
-    this.setState({ loading: true });
     fetchMore({
       variables: {
         limit: LIMIT,
@@ -41,6 +40,9 @@ class InboxPage extends Component {
           //remove the pushed events from the fetch list
           fetchMoreResult.searchEvents.pop();
         }
+        if(!this.state.chatID) {
+
+        }
 
         return {
           searchEvents: [
@@ -51,9 +53,6 @@ class InboxPage extends Component {
       }
     });
 
-    this.setState({
-      loading: false
-    });
   };
 
   setChatID = (e, chatID) => {
@@ -70,9 +69,10 @@ class InboxPage extends Component {
     }
   };
 
-  renderItem = (item, timeAgo) => {
+  renderItem = (item, timeAgo, isCurrentChat) => {
+
     return (
-      <List.Item key={item.id}>
+      <List.Item key={item.id} style={{backgroundColor: isCurrentChat ? '#ffffff20': ''}}>
         <List.Item.Meta
           avatar={
             <Badge dot={timeAgo === "Online"}>
@@ -92,15 +92,21 @@ class InboxPage extends Component {
   renderMsgList = ({ messages, onlineOnly }) => {
     return (
       <Fragment>
-        {messages.map(message => {
+        {messages.map((message, i) => {
           var timeAgo = TimeAgo(message);
+          let isCurrentChat = false;
+          if(this.state.chatID === message.chatID) {
+            isCurrentChat = true;
+          } else if(!this.state.chatID) {
+            isCurrentChat = i === 0;
+          }
           if (onlineOnly) {
             if (timeAgo === "Online") {
-              return this.renderItem(message, timeAgo);
+              return this.renderItem(message, timeAgo, isCurrentChat);
             }
             return null;
           } else if (timeAgo !== "Online") {
-            return this.renderItem(message, timeAgo);
+            return this.renderItem(message, timeAgo, isCurrentChat);
           }
           return null;
         })}
@@ -109,7 +115,6 @@ class InboxPage extends Component {
   };
 
   render() {
-    const { chatID } = this.state;
     return (
       <div style={{ display: "flex", flex: 1, flexDirection: "horizontal" }}>
         <Query query={GET_INBOX} fetchPolicy="cache-and-network">
@@ -123,6 +128,27 @@ class InboxPage extends Component {
             }
 
             const messages = data.getInbox;
+
+            // If a chat has not been selected. Default to first chat if any
+            let chatID = this.state.chatID;
+            if(!chatID && messages.length > 0){
+              chatID = messages[0].chatID;
+            }
+            const currentChat = messages.reduce((res,cur) => {
+              if(cur.chatID === chatID){ 
+                return cur;
+              }
+              return res;
+            }, messages[0]);
+            let chatTitle = "No chats available";
+            let chatLastSeen = '';
+            if(currentChat) {
+              chatTitle = `${currentChat.participants[0].profileName}`;
+              chatLastSeen = TimeAgo(currentChat);
+              if(currentChat.length > 2) {
+                chatTitle = `${chatTitle} + ${currentChat.participants.length - 2} particimants`
+              }
+            }
 
             if (messages === undefined || messages.length === 0) {
               return <div>No Messages Available</div>;
@@ -172,7 +198,9 @@ class InboxPage extends Component {
                       flex: 1,
                       flexDirection: "column"
                     }}
-                    chatID={chatID !== null ? chatID : messages[0].chatID}
+                    title={chatTitle}
+                    lastSeen={chatLastSeen}
+                    chatID={chatID}
                   />
                 </div>
               </div>

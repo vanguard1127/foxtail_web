@@ -336,6 +336,7 @@ export const GET_MESSAGES = gql`
         profileName
         users {
           username
+          id
         }
       }
     }

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Query, Mutation } from "react-apollo";
-import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
+import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB, GET_CURRENT_USER } from "../../queries";
 import { Form, Input, Button, Affix } from "antd";
 import Waypoint from "react-waypoint";
 import MessageList from "./MessageList.js";
@@ -60,6 +60,7 @@ class Chatroom extends Component {
   };
 
   fetchData = async (fetchMore, cursor) => {
+    // not beign used
     const { chatID } = this.props;
     this.setState({ loading: true });
     fetchMore({
@@ -92,20 +93,23 @@ class Chatroom extends Component {
   };
 
   render() {
-    const { style, chatID, chatTitle } = this.props;
+    const { style, chatID, title, lastSeen } = this.props;
     const { cursor } = this.state;
 
     let unsubscribe = null;
 
     return (
-      <div className="chatroom" style={style}>
-        <h3>{chatTitle}</h3>
-        <Query
+      <div className="chatroom" style={{position: 'relative',...style}}>
+              <h3>{title}
+              <div>{lastSeen}</div>
+              </h3>
+      <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit: LIMIT, cursor }}
           fetchPolicy="network-only"
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
+
             if (loading) {
               return <div style={{ height: "100%" }}>Loading</div>;
             }
@@ -133,12 +137,12 @@ class Chatroom extends Component {
                 }
               });
             }
-
             return (
               <Fragment>
-                {/* <Affix>{chatDate}</Affix> */}
+                <Affix style={{position: 'absolute', top:'0'}}>{'test'}</Affix>
                 <MessageList
                   chatID={chatID}
+                  ref={this.MessageList}
                   messages={data.getMessages.messages}
                   handleEnd={this.handleEnd}
                   fetchMore={fetchMore}
@@ -148,13 +152,17 @@ class Chatroom extends Component {
             );
           }}
         </Query>
+      
 
-        <InputForm chatID={chatID} />
+        <InputForm chatID={chatID}/>
       </div>
     );
   }
 }
 
+function log(...params) {
+  console.log(params);
+} 
 class InputFormTemplate extends Component {
   submitMessage(e, sendMessage) {
     e.preventDefault();
