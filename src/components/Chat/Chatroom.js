@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Query, Mutation } from "react-apollo";
-import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB, GET_CURRENT_USER } from "../../queries";
+import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
 import { Form, Input, Button, Affix } from "antd";
 import Waypoint from "react-waypoint";
 import MessageList from "./MessageList.js";
-import moment from "moment";
 
 const LIMIT = 6;
 
@@ -93,16 +92,18 @@ class Chatroom extends Component {
   };
 
   render() {
-    const { style, chatID, title, lastSeen } = this.props;
+    const { style, chatID, title, lastSeen, titleExtra } = this.props;
     const { cursor } = this.state;
 
     let unsubscribe = null;
 
     return (
       <div className="chatroom" style={{position: 'relative',...style}}>
-              <h3>{title}
-              <div>{lastSeen}</div>
-              </h3>
+      <div className="chatroom-header">
+              
+              <h3 className="chatroom-title">{title}<span className="chatroom-titleExtra">{titleExtra}</span></h3>
+              <h4 className="chatroom-date">{lastSeen}</h4>
+              </div>
       <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit: LIMIT, cursor }}
@@ -139,7 +140,7 @@ class Chatroom extends Component {
             }
             return (
               <Fragment>
-                <Affix style={{position: 'absolute', top:'0'}}>{'test'}</Affix>
+                { /*<Affix style={{position: 'absolute', top:'0'}}>{'test'}</Affix>*/}
                 <MessageList
                   chatID={chatID}
                   ref={this.MessageList}
@@ -160,9 +161,6 @@ class Chatroom extends Component {
   }
 }
 
-function log(...params) {
-  console.log(params);
-} 
 class InputFormTemplate extends Component {
   submitMessage(e, sendMessage) {
     e.preventDefault();

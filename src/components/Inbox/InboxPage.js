@@ -72,7 +72,11 @@ class InboxPage extends Component {
   renderItem = (item, timeAgo, isCurrentChat) => {
 
     return (
-      <List.Item key={item.id} style={{backgroundColor: isCurrentChat ? '#ffffff20': ''}}>
+      <List.Item key={item.id} style={{backgroundColor: isCurrentChat ? '#ffffff40': '', 
+      
+        margin: "0 -10px",
+        paddingLeft: "10px",
+        paddingRight: "10px"}}>
         <List.Item.Meta
           avatar={
             <Badge dot={timeAgo === "Online"}>
@@ -128,7 +132,6 @@ class InboxPage extends Component {
             }
 
             const messages = data.getInbox;
-
             // If a chat has not been selected. Default to first chat if any
             let chatID = this.state.chatID;
             if(!chatID && messages.length > 0){
@@ -141,12 +144,15 @@ class InboxPage extends Component {
               return res;
             }, messages[0]);
             let chatTitle = "No chats available";
+            let chatTitleExtra = ""
             let chatLastSeen = '';
+            console.log(currentChat)
             if(currentChat) {
               chatTitle = `${currentChat.participants[0].profileName}`;
               chatLastSeen = TimeAgo(currentChat);
-              if(currentChat.length > 2) {
-                chatTitle = `${chatTitle} + ${currentChat.participants.length - 2} particimants`
+              if(currentChat.participants.length > 2) {
+                chatTitleExtra = ` + ${currentChat.participants.length - 2} participants`
+                chatTitle = `${chatTitle}`
               }
             }
 
@@ -172,7 +178,7 @@ class InboxPage extends Component {
                       padding: "10px"
                     }}
                   >
-                    <Divider orientation="left">Online</Divider>
+                    <Divider className="chatList-divider" orientation="left">Online</Divider>
                     {this.renderMsgList({ messages, onlineOnly: true })}
                     <Divider />
                     {this.renderMsgList({ messages, onlineOnly: false })}
@@ -199,6 +205,7 @@ class InboxPage extends Component {
                       flexDirection: "column"
                     }}
                     title={chatTitle}
+                    titleExtra={chatTitleExtra}
                     lastSeen={chatLastSeen}
                     chatID={chatID}
                   />

@@ -1,16 +1,55 @@
 import React, { Component, Fragment } from "react";
 import Waypoint from "react-waypoint";
 import Message from "./Message.js";
-import { message, List } from "antd";
+import { List } from "antd";
 import moment from "moment";
 
-const THRESHOLD = 200;
-function log(...params) {
-  console.log(params);
-} 
-function lr(ref,key){
-  console.log(ref.current[key]);
+
+// Waypoint needs a component to pass innerRef
+const DateInner = ({ style, ...props})=>{
+  return (<div style={{ margin: "0 -20px 0 -20px",background: "#ffffff70", padding: '20px 0', textAlign: 'center', ...style }} {...props} />);
 }
+class DateItem extends Component {
+  state = {
+    stick: false,
+  }
+  onEnter = ({previousPosition, currentPosition}) => {
+    if(currentPosition === Waypoint.inside) {
+      this.setState({
+        stick: false,
+      })
+    }
+  }
+  onLeave = ({previousPosition, currentPosition}) => {
+    console.log('leave', currentPosition)
+    if(currentPosition === Waypoint.above) {
+      this.setState({
+        stick: true,
+      })
+    }
+  }
+  render(){
+    const { stickZIndex, ...props } = this.props;
+    const { stick } = this.state;
+    const stickStyles = {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: stickZIndex || 10,
+      backgroundColor: '#add8e6',
+      padding: "20px 37px 20px 20px",
+      margin: 0,
+    }
+    return (<Fragment>
+      <Waypoint bottom="100%" onEnter={this.onEnter} onLeave={this.onLeave} />
+      <DateInner {...props}/>
+      { stick ? <DateInner style={stickStyles} {...props}/> : null}
+    </Fragment>
+ )
+  }
+} 
+
 class MessageList extends Component {
   constructor(props) {
     super(props);
@@ -173,15 +212,29 @@ class MessageList extends Component {
     const sortedMessages = messages.slice().sort((a,b) => {
       const aDate = moment(a.createdAt);
       const bDate = moment(b.createdAt);
-      return bDate.diff(aDate);
-    })
-    
+      return aDate.diff(bDate);
+    });
+    console.log(sortedMessages)
+    const MessageElements = sortedMessages.reduce((res, message, i)=>{
+
+      let newElements = [<Message key={message.id} message={message} />]   
+      const messageDate = moment(message.createdAt);
+      // day of the month
+      const dayOfTheMonth = messageDate.date(); 
+      if(res.lastDayOfTheMonth !== dayOfTheMonth) {
+        newElements = [<DateItem stickZIndex={i + 10}>{messageDate.format("dddd, MMMM Do YYYY")}</DateItem>].concat(newElements);
+      }
+
+      return { lastDayOfTheMonth: dayOfTheMonth, elements: res.elements.concat(newElements)}
+    }, { lastDayOfTheMonth: null, elements: []});
+    console.log('d',MessageElements)
     return (
       <Fragment>
+      <div style={{position: 'relative', display: 'flex', flexDirection: "column"}}>
         <div
           className="chats"
           ref={this.messagesRef}
-          style={{ backgroundColor: "#eee" }}
+          style={{ backgroundColor: "#eee", height: '100%' }}
           onScroll={this.onScroll}
         >
         {this.renderTopMessage(topMessage)}
@@ -194,11 +247,10 @@ class MessageList extends Component {
               )
             }
           />
-          {sortedMessages.slice().reverse().map(message => (
-            <Message key={message.id} message={message} />
-          ))}
+          {MessageElements.elements}
         </div>
         {children}
+        </div>
       </Fragment>
     );
   }

@@ -20,6 +20,7 @@
   background: black;
   color: #fff;
 }
+
 /* Medium screens */
 @media all and (min-width: 600px) {
   /* We tell both sidebars to share a row */
@@ -36,18 +37,22 @@
   .main {
     flex: 2 0px;
   }
+
   .aside-1 {
     order: 1;
     flex-grow: inherit;
   }
+
   .main {
     order: 2;
     flex-grow: 2;
     padding: 20px;
   }
+
   .aside-2 {
     order: 3;
   }
+
   .footer {
     order: 4;
   }
@@ -74,12 +79,14 @@
   display: flex;
   flex: 1;
 }
+
 .leftRow {
   justify-content: left;
   align-items: left;
   display: flex;
   flex: 1;
 }
+
 .centerColumn {
   justify-content: center;
   align-items: center;
@@ -126,6 +133,7 @@
   justify-content: space-evenly;
   margin-bottom: 10px;
 }
+
 .App {
   text-align: center;
 }
@@ -230,30 +238,68 @@ textarea {
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
 }
 
-.chatroom h3 {
-  background-color: #fff;
-  color: #666;
-  height: 62px;
-  font-size: 30px;
+.chatroom-header {
   padding-left: 15px;
-  display: -ms-flexbox;
+  border-bottom: 2px solid #eee;
   display: flex;
   -ms-flex-align: center;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   -ms-flex-pack: center;
-  border-bottom: 2px solid #eee;
-  justify-content: baseline;
+  justify-content: center;
+  min-height: 62px;
+  padding: 1em;
+}
+
+.chatroom-title {
+  background-color: #fff;
+  color: #282838;
+  font-size: 2.75rem;
+  font-weight: 500;
+  display: -ms-flexbox;
+  line-height: 1.2em;
+  text-transform: capitalize;
+  margin: 0;
+}
+.chatroom-titleExtra {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.075rem;
+  font-weight: 600;
+}
+
+.chatroom-titleInfo {
+  font-size: 1rem;
+}
+
+.chatroom-date {
+  color: #aaaabb;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .chatroom .chats {
   box-sizing: border-box;
   padding: 0 20px;
-  margin: 10px 0 0;
   height: 91vh;
   overflow-y: auto;
 }
 
-.chatroom .chats .chat {
+.chatList-item {
+  margin: 0 -10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.chatList-divider::before,
+.chatList-divider::after {
+  border-color: #00000050;
+}
+
+.chatList- .chat .chatroom .chats .chat {
   background: rgba(115, 164, 255, 0.8);
   position: relative;
   padding: 5px 13px;
