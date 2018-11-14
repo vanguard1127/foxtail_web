@@ -37,12 +37,12 @@ import { withClientState } from "apollo-link-state";
 
 const { Header, Content } = Layout;
 //http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
-const wsurl =
-  "ws://production-151896178.us-west-2.elb.amazonaws.com/subscriptions";
-const httpurl =
-  "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
-// const wsurl = "ws://localhost:4444/subscriptions";
-// const httpurl = "http://localhost:4444/graphql";
+// const wsurl =
+//   "ws://production-151896178.us-west-2.elb.amazonaws.com/subscriptions";
+// const httpurl =
+//   "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
+const wsurl = "ws://localhost:4444/subscriptions";
+const httpurl = "http://localhost:4444/graphql";
 
 const wsLink = new WebSocketLink({
   uri: wsurl,

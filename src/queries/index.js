@@ -54,6 +54,15 @@ export const UNLINK_PROFILE = gql`
   }
 `;
 
+export const DELETE_PHOTO = gql`
+  mutation($publicPhotoList: [String], $privatePhotoList: [String]) {
+    deletePhoto(
+      publicPhotoList: $publicPhotoList
+      privatePhotoList: $privatePhotoList
+    )
+  }
+`;
+
 export const SEND_MESSAGE = gql`
   mutation($chatID: ID, $text: String!, $invitedProfile: ID) {
     sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile)
@@ -175,19 +184,29 @@ export const FB_RESOLVE = gql`
 
 export const UPLOAD_PHOTO = gql`
   mutation($order: Int!, $url: String!) {
-    uploadPhoto(order: $order, url: $url) {
-      id
-    }
+    uploadPhoto(order: $order, url: $url)
+  }
+`;
+
+export const UPLOAD_PHOTOLIST = gql`
+  mutation($photoList: [String]!, $isPrivate: Boolean) {
+    uploadPhotoList(photoList: $photoList, isPrivate: $isPrivate)
   }
 `;
 
 export const UPDATE_PROFILE = gql`
-  mutation($desires: [String], $about: String) {
-    updateProfile(desires: $desires, about: $about) {
-      desires
-      about
-      id
-    }
+  mutation(
+    $desires: [String]
+    $about: String
+    $publicPhotoList: [String]
+    $privatePhotoList: [String]
+  ) {
+    updateProfile(
+      desires: $desires
+      about: $about
+      publicPhotoList: $publicPhotoList
+      privatePhotoList: $privatePhotoList
+    )
   }
 `;
 

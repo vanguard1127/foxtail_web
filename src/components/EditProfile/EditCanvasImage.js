@@ -12,7 +12,6 @@ class EditCanvasImage extends React.Component {
   };
 
   state = {
-    imageSrc: null,
     width: 400,
     height: 400,
     selectedShapeName: "",
@@ -54,53 +53,27 @@ class EditCanvasImage extends React.Component {
   handleUpload = async file => {
     const {
       signS3,
-      uploadPhoto,
-      setPhotoDetails,
+      handlePhotoListChange,
+      setS3PhotoParams,
       uploadToS3,
-      fileList,
-      setProfilePicDetails
+      fileList
     } = this.props;
-
-    await setPhotoDetails(file.filename, file.filetype);
+    await setS3PhotoParams(file.filename, file.filetype);
     //format name on backend
     //filename: this.formatFilename(file.name),
     await signS3().then(async ({ data }) => {
       const { signedRequest, key } = data.signS3;
       await uploadToS3(file.filebody, signedRequest);
-      if (this.props.private) {
-        await setProfilePicDetails({
-          photoUrl: key,
-          order: fileList.length + 3
-        });
-      } else {
-        await setProfilePicDetails({
-          photoUrl: key,
-          order: fileList.length - 1
-        });
-      }
 
-      try {
-        await uploadPhoto().then(async ({ data }) => {
-          this.setState({
-            previewImage: "https://ft-img-bucket.s3.amazonaws.com/" + key,
-            previewVisible: true
-          });
-          console.log("Response:", data);
-        });
-      } catch (e) {
-        console.log("Error", e);
-      }
+      var foundIndex = fileList.findIndex(x => x.name == file.filename);
+      fileList[foundIndex] = {
+        uid: Date.now(),
+        url: key
+      };
+
+      await handlePhotoListChange({ file, fileList });
     });
   };
-
-  downloadURI(uri, name) {
-    const link = window.document.createElement("a");
-    link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
 
   handleDragStart = e => {
     const shapeName = e.target.attrs.name;
@@ -126,6 +99,14 @@ class EditCanvasImage extends React.Component {
   };
 
   render() {
+    const {
+      konvaImageList,
+      width,
+      height,
+      hideTransformer,
+      selectedShapeName
+    } = this.state;
+
     const Sticker = props => (
       <div
         {...props}
@@ -143,8 +124,8 @@ class EditCanvasImage extends React.Component {
       <div style={{ width: "fit-content" }}>
         <Stage
           style={{ backgroundColor: "gray" }}
-          width={this.state.width}
-          height={this.state.height}
+          width={width}
+          height={height}
           onClick={this.handleStageClick}
           ref={node => {
             this.stageRef = node;
@@ -158,8 +139,8 @@ class EditCanvasImage extends React.Component {
                 sourceImageObject={this.props.imageObject}
               />
             )}
-            {this.state.konvaImageList.length > 0 &&
-              this.state.konvaImageList.map(img => (
+            {konvaImageList.length > 0 &&
+              konvaImageList.map(img => (
                 <KonvaImage
                   src={img.src}
                   key={img.id}
@@ -169,10 +150,8 @@ class EditCanvasImage extends React.Component {
                   name={img.name}
                 />
               ))}
-            {this.state.hideTransformer === false && (
-              <TransformerHandler
-                selectedShapeName={this.state.selectedShapeName}
-              />
+            {hideTransformer === false && (
+              <TransformerHandler selectedShapeName={selectedShapeName} />
             )}
           </Layer>
         </Stage>
@@ -189,7 +168,7 @@ class EditCanvasImage extends React.Component {
           style={{
             display: "flex",
             height: 70,
-            width: this.state.width,
+            width: width,
             border: "1px solid silver",
             marginTop: 5,
             overflowY: "auto"

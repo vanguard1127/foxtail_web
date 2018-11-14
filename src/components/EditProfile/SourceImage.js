@@ -14,13 +14,12 @@ class SourceImage extends React.Component {
     imageBase64: ""
   };
 
-  // componentDidMount() {
-  //   this.readFile();
-  // }
-
-  UNSAFE_componentWillReceiveProps() {
+  componentDidMount() {
     this.readFile();
   }
+  // UNSAFE_componentWillReceiveProps() {
+  //   this.readFile();
+  // }
 
   readFile = () => {
     const file = this.props.sourceImageObject.originFileObj;

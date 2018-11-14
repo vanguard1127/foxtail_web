@@ -2,9 +2,10 @@ import React from "react";
 import "antd/dist/antd.css";
 import { Icon, Modal, Upload } from "antd";
 import { Mutation } from "react-apollo";
-import { SIGNS3, UPLOAD_PHOTO } from "queries";
+import { SIGNS3 } from "queries";
 import axios from "axios";
 import EditCanvasImage from "components/EditProfile/EditCanvasImage";
+import PhotoModal from "../common/PhotoModal";
 
 const dummyRequest = ({ file, onSuccess }) => {
   setTimeout(() => {
@@ -14,53 +15,45 @@ const dummyRequest = ({ file, onSuccess }) => {
 
 class PhotoWall extends React.Component {
   state = {
+    editorVisible: false,
     previewVisible: false,
     previewImage: "",
     fileList: [],
     fileToLoad: null,
     filename: "",
     filetype: "",
+    file: null,
     order: "0",
-    photoUrl: ""
+    photoUrl: "",
+    photoID: null
   };
 
-  handleCancel = () => this.setState({ previewVisible: false });
+  handleCancel = resetFilelist => {
+    //TODO: figure out why clearing file here fixes flash issue but causes unmounted error
+    this.setState({ editorVisible: false, previewVisible: false });
+    if (resetFilelist) {
+      this.loadSavedPics();
+    }
+  };
 
   handlePreview = file => {
-    console.log("PRE", file);
     this.setState({
-      file,
+      previewImage: file.url || file.thumbUrl,
       previewVisible: true
     });
   };
 
-  handleChange = (file, fileList) => {
+  handleShowImage() {
     this.setState({
-      file,
-      fileList
-    });
-  };
-
-  handleShowImage(fileToLoad) {
-    this.setState({
-      fileToLoad,
-      previewImage: URL.createObjectURL(fileToLoad),
-      previewVisible: true
+      file: null,
+      editorVisible: true
     });
   }
 
-  setPhotoDetails = (name, type) => {
+  setS3PhotoParams = (name, type) => {
     this.setState({
       filename: name,
       filetype: type
-    });
-  };
-
-  setProfilePicDetails = ({ photoUrl, order }) => {
-    console.log("order", order, "filelist", this.state.fileList);
-    this.setState({
-      photoUrl,
-      order
     });
   };
 
@@ -72,7 +65,6 @@ class PhotoWall extends React.Component {
           "Content-Type": file.type
         }
       };
-
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status === 200) {
         console.log("upload ok");
@@ -85,33 +77,68 @@ class PhotoWall extends React.Component {
   };
 
   componentDidMount() {
+    this.loadSavedPics();
+  }
+
+  loadSavedPics = async () => {
     var filearray = [];
 
-    for (var i = 0; i < this.props.fileList.length; i++) {
-      if (this.props.fileList[i].url !== "x") {
+    for (var i = 0; i < this.props.photos.length; i++) {
+      if (this.props.photos[i].url !== "x") {
         filearray.push({
-          uid: this.props.fileList[i].id,
+          uid: this.props.photos[i].id,
           url:
-            "https://ft-img-bucket.s3.amazonaws.com/" +
-            this.props.fileList[i].url
+            "https://ft-img-bucket.s3.amazonaws.com/" + this.props.photos[i].url
         });
       }
     }
-    this.setState({
-      fileList: filearray
-    });
-  }
+    this.setState(
+      {
+        fileList: filearray
+      },
+      async () =>
+        await this.props.handlePhotoListChange(
+          this.state.fileList,
+          this.props.privatePic
+        )
+    );
+  };
 
+  handleChange = async (file, fileList, isUpload, handlePhotoListChange) => {
+    if (file.status === "removed") {
+      await handlePhotoListChange(fileList, this.props.privatePic);
+    }
+
+    if (isUpload) {
+      const fileArray = [...this.state.fileList];
+      fileArray[fileArray.length - 1].url =
+        "https://ft-img-bucket.s3.amazonaws.com/" +
+        fileArray[fileArray.length - 1].url;
+
+      this.setState({
+        fileList: fileArray
+      });
+
+      await handlePhotoListChange(fileList, this.props.privatePic);
+      this.handleCancel(false);
+    } else {
+      this.setState({
+        file,
+        fileList
+      });
+    }
+  };
   render() {
     const {
-      order,
-      photoUrl,
       filename,
       filetype,
+      editorVisible,
       previewVisible,
+      previewImage,
       fileList,
       file
     } = this.state;
+    const { handlePhotoListChange } = this.props;
 
     const uploadButton = (
       <div>
@@ -133,42 +160,51 @@ class PhotoWall extends React.Component {
     }
 
     return (
-      <Mutation mutation={UPLOAD_PHOTO} variables={{ order, url: photoUrl }}>
-        {(uploadPhoto, { data, loading, error }) => (
-          <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
-            {(signS3, { data, loading, error }) => (
-              <div className="clearfix">
-                <Upload
-                  data={file => this.handleShowImage(file)}
-                  listType="picture-card"
+      <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
+        {(signS3, { data, loading, error }) => (
+          <div className="clearfix">
+            <Upload
+              data={() => this.handleShowImage()}
+              listType="picture-card"
+              fileList={fileList}
+              beforeUpload={beforeUpload}
+              onPreview={file => this.handlePreview(file)}
+              onChange={({ file, fileList }) =>
+                this.handleChange(file, fileList, false, handlePhotoListChange)
+              }
+              customRequest={dummyRequest}
+            >
+              {fileList.length >= 4 ? null : uploadButton}
+            </Upload>
+            <Modal
+              visible={editorVisible}
+              footer={null}
+              onCancel={() => this.handleCancel(true)}
+            >
+              {editorVisible && (
+                <EditCanvasImage
+                  imageObject={file}
+                  signS3={signS3}
+                  setS3PhotoParams={this.setS3PhotoParams}
+                  uploadToS3={this.uploadToS3}
                   fileList={fileList}
-                  beforeUpload={beforeUpload}
-                  onPreview={this.handlePreview}
-                  onChange={({ file, fileList }) =>
-                    this.handleChange(file, fileList)
+                  handlePhotoListChange={({ file, fileList }) =>
+                    this.handleChange(
+                      file,
+                      fileList,
+                      true,
+                      handlePhotoListChange
+                    )
                   }
-                  customRequest={dummyRequest}
-                >
-                  {fileList.length >= 4 ? null : uploadButton}
-                </Upload>
-                <Modal
-                  visible={previewVisible}
-                  footer={null}
-                  onCancel={this.handleCancel}
-                >
-                  <EditCanvasImage
-                    imageObject={file}
-                    signS3={signS3}
-                    uploadPhoto={uploadPhoto}
-                    setPhotoDetails={this.setPhotoDetails}
-                    uploadToS3={this.uploadToS3}
-                    fileList={fileList}
-                    setProfilePicDetails={this.setProfilePicDetails}
-                  />
-                </Modal>
-              </div>
-            )}
-          </Mutation>
+                />
+              )}
+            </Modal>
+            <PhotoModal
+              previewVisible={previewVisible}
+              previewImage={previewImage}
+              handleCancel={() => this.handleCancel(false)}
+            />
+          </div>
         )}
       </Mutation>
     );

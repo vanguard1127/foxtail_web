@@ -5,6 +5,7 @@ class PhotoGrid extends Component {
   state = {};
 
   render() {
+    const { handlePhotoListChange } = this.props;
     const photos = this.props.photos;
     const publicPics = photos.slice(0, 4);
     const privatePics = photos.slice(4, 8);
@@ -16,7 +17,11 @@ class PhotoGrid extends Component {
           </tr>
           <tr>
             <td>
-              <PhotoWall fileList={publicPics} private={false} />
+              <PhotoWall
+                photos={publicPics}
+                privatePic={false}
+                handlePhotoListChange={handlePhotoListChange}
+              />
             </td>
           </tr>
           <tr>
@@ -26,7 +31,11 @@ class PhotoGrid extends Component {
           </tr>
           <tr>
             <td>
-              <PhotoWall fileList={privatePics} private={true} />
+              <PhotoWall
+                photos={privatePics}
+                privatePic={true}
+                handlePhotoListChange={handlePhotoListChange}
+              />
             </td>
           </tr>
         </tbody>
