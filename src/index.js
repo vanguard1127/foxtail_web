@@ -63,6 +63,7 @@ const AuthLink = new ApolloLink((operation, forward) => {
     headers: {
       ...context.headers,
       authorization: `Bearer ${token}`,
+      authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmU5ZDUwMjdmM2I4NzAwMjlhNjNhYzIiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTQyMDUxMDc1LCJleHAiOjE1NDI2NTU4NzV9.dqVFfoyyo6P-Pm4XuNlAcUvzZTLFHGf8oFkiu5dhAcM`
       
     }
   }));

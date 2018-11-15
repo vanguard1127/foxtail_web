@@ -4,33 +4,46 @@ import Message from "./Message.js";
 import { List } from "antd";
 import moment from "moment";
 
-
 // Waypoint needs a component to pass innerRef
 const DateInner = ({ style, ...props})=>{
   return (<div style={{ margin: "0 -20px 0 -20px",background: "#ffffff70", padding: '20px 0', textAlign: 'center', ...style }} {...props} />);
 }
 class DateItem extends Component {
   state = {
-    stick: false,
+    position: null
+  }
+  componentDidMount(){
+    if(!this.state.position){
+      this.setState({
+        position: 'above'
+      })
+      if(this.props.onAbove)
+      this.props.onAbove();
+    }
   }
   onEnter = ({previousPosition, currentPosition}) => {
     if(currentPosition === Waypoint.inside) {
       this.setState({
-        stick: false,
+        position: 'inside'
       })
+      if(this.props.onInside)
+      this.props.onInside();
     }
   }
   onLeave = ({previousPosition, currentPosition}) => {
-    console.log('leave', currentPosition)
     if(currentPosition === Waypoint.above) {
       this.setState({
-        stick: true,
+        position: 'above'
       })
+      if(this.props.onAbove)
+      this.props.onAbove();
     }
   }
+  shouldComponentUpdate(){
+    return true;
+  }
   render(){
-    const { stickZIndex, ...props } = this.props;
-    const { stick } = this.state;
+    const { stickZIndex, showDate, onAbove, onInside, ...props } = this.props;
     const stickStyles = {
       position: 'absolute',
       top: 0,
@@ -44,12 +57,11 @@ class DateItem extends Component {
     return (<Fragment>
       <Waypoint bottom="100%" onEnter={this.onEnter} onLeave={this.onLeave} />
       <DateInner {...props}/>
-      { stick ? <DateInner style={stickStyles} {...props}/> : null}
+      { showDate ? <DateInner style={stickStyles} {...props}/> : null}
     </Fragment>
  )
   }
 } 
-
 class MessageList extends Component {
   constructor(props) {
     super(props);
@@ -59,18 +71,17 @@ class MessageList extends Component {
     loading: false,
     restoreScroll: false,
     hasMoreItems: true,
-    previousScrollheightMinusTop: null
+    previousScrollheightMinusTop: null,
+    dateWaypoints: [],
   };
 
   componentDidMount() {
+    this.checkScrollTopToFetch(10)
     this.scrollToBot();
   }
-
   componentDidUpdate(prevProps, prevState) {
-
     if(prevProps.messages !== this.props.messages){
-      console.log('New messages')
-      if(!this.state.hasScrolledBottomInitial || !this.state.restoreScroll) {
+      if(!this.state.hasScrolledBottomInitial) {
         // ComponentDidMount does not scrolls to bottom on initial mount. Since on
         // initial mount there are only 6 items, not enough to scroll. And since waypoint
         // is on view, because everything is on view, more messages get fetched, 
@@ -83,7 +94,7 @@ class MessageList extends Component {
           console.log("New messages from outside")
         }
         this.scrollToBot();
-      } else {
+      } else if(this.state.restoreScroll) {
         // When loading items, we dont want to have the scroll not move up or down. 
         // We want the user to view the same items, without the scroll moving all over the place
         // So we restore it
@@ -117,19 +128,6 @@ class MessageList extends Component {
       })
     }
   }
-
-  onEnter = (previousPosition, currentPosition) => {
-    if (
-      this.messagesRef &&
-      this.messagesRef.current.scrollTop < 100
-    ) {
-      if (currentPosition === Waypoint.inside ||
-        previousPosition === Waypoint.above
-      ) {
-        this.fetchMore();
-      }
-    }
-  }
     fetchMore = () => {
         const { chatID, limit, messages, fetchMore } = this.props;
         // Doesn't repeat because frist we are setting loading =  true
@@ -151,8 +149,8 @@ class MessageList extends Component {
             if (fetchMoreResult.getMessages.messages < this.props.limit) {
               this.setState({ hasMoreItems: false });
             }
-            console.log("NEW", fetchMoreResult.getMessages.messages);
-            console.log("PREVIOUS", previousResult.getMessages.messages);
+            // console.log("NEW", fetchMoreResult.getMessages.messages);
+            // console.log("PREVIOUS", previousResult.getMessages.messages);
             previousResult.getMessages.messages = [
               ...previousResult.getMessages.messages,
               ...fetchMoreResult.getMessages.messages
@@ -160,6 +158,7 @@ class MessageList extends Component {
             this.setState({
               loading: false,
               restoreScroll: true,
+              dateWaypoints: []
             });
 
             return previousResult;
@@ -199,6 +198,25 @@ class MessageList extends Component {
       </List.Item>
     )
   }
+  onDateWaypointPostion = (i, position)=>{
+    if(this.state.dateWaypoints[i] === position) return;
+    // Perhaps find another way to tell the parent children position
+    // parent needs children position to tell the alst above item to render as absolute
+    const newDateWaypoints = this.state.dateWaypoints;
+    newDateWaypoints[i] = position;
+    this.setState({
+      dateWaypoints: newDateWaypoints,
+    })
+  }
+  onScroll = (ev)=>{
+    this.checkScrollTopToFetch(100)
+  }
+  checkScrollTopToFetch(THRESHOLD){
+    
+    if(this.messagesRef.current.scrollTop < THRESHOLD){
+      this.fetchMore();
+    }
+  }
   render() {
     //LOADING CAUSED INFINITE LOOP
     const { loading } = this.state;
@@ -214,23 +232,32 @@ class MessageList extends Component {
       const bDate = moment(b.createdAt);
       return aDate.diff(bDate);
     });
-    console.log(sortedMessages)
+    const lastAboveDateWaypointIndex = this.state.dateWaypoints.reduce((res,cur,i)=>{
+      if(cur === 'above') return i;
+      return res;
+    }, null)
     const MessageElements = sortedMessages.reduce((res, message, i)=>{
-
       let newElements = [<Message key={message.id} message={message} />]   
       const messageDate = moment(message.createdAt);
       // day of the month
       const dayOfTheMonth = messageDate.date(); 
-      if(res.lastDayOfTheMonth !== dayOfTheMonth) {
-        newElements = [<DateItem stickZIndex={i + 10}>{messageDate.format("dddd, MMMM Do YYYY")}</DateItem>].concat(newElements);
+      const lastDayOfTheMonth = res.lastDate && res.lastDate.date();
+      const isSameDay = lastDayOfTheMonth === dayOfTheMonth
+      if(!isSameDay) {
+        newElements = [<DateItem
+        stickZIndex={i + 10}
+        onAbove={()=>{ this.onDateWaypointPostion(res.nDate, 'above')}}
+        onInside={()=>{ this.onDateWaypointPostion(res.nDate, 'inside')}}
+        showDate={lastAboveDateWaypointIndex === res.nDate}
+        key={messageDate.format()}
+        
+        >{messageDate.format("dddd, MMMM Do YYYY")}</DateItem>].concat(newElements);
       }
-
-      return { lastDayOfTheMonth: dayOfTheMonth, elements: res.elements.concat(newElements)}
-    }, { lastDayOfTheMonth: null, elements: []});
-    console.log('d',MessageElements)
+      return { lastDate: messageDate, nDate: isSameDay ? res.nDate : res.nDate + 1 ,elements: res.elements.concat(newElements)}
+    }, { lastDayOfTheMonth: null, nDate: 0, elements: []});
     return (
       <Fragment>
-      <div style={{position: 'relative', display: 'flex', flexDirection: "column"}}>
+      <div style={{position: 'relative', display: 'flex', flexDirection: "column", height: '100%'}}>
         <div
           className="chats"
           ref={this.messagesRef}
@@ -238,15 +265,6 @@ class MessageList extends Component {
           onScroll={this.onScroll}
         >
         {this.renderTopMessage(topMessage)}
-          <Waypoint
-          topOffset={"-5%"}
-            onEnter={({ previousPosition, currentPosition }) =>
-              this.onEnter(
-                previousPosition,
-                currentPosition
-              )
-            }
-          />
           {MessageElements.elements}
         </div>
         {children}
