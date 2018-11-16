@@ -84,9 +84,8 @@ class MessageList extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.messages !== this.props.messages){
-      // Remove last item 
+      // If the user is on the bottom waiting for new messages, scroll him whenever one gets received
       const isUserOnBottom = this.messagesRef.current.clientHeight + this.messagesRef.current.scrollTop > this.messagesRef.current.scrollHeight - this.lastMessageRef.current.clientHeight - 20;
-      // const isUserOnBottom = previousClientHeight + previousScrollTop > previousScrollHeight - 20; 
       if(!this.state.hasScrolledBottomInitial || isUserOnBottom ) {
         // ComponentDidMount does not scrolls to bottom on initial mount. Since on
         // initial mount there are only 6 items, not enough to scroll. And since waypoint
@@ -109,7 +108,6 @@ class MessageList extends Component {
   }
   restoreScroll(){
     this.messagesRef.current.scrollTop = this.state.previousScrollTop + (this.messagesRef.current.scrollHeight - this.state.previousScrollHeight)
-    // this.messagesRef.current.scrollHeight - this.state.previousScrollheight
     
     this.setState({
       previousScrollHeight: this.messagesRef.current.scrollHeight,
@@ -248,7 +246,7 @@ class MessageList extends Component {
     const lastAboveDateWaypointIndex = this.state.dateWaypoints.reduce((res,cur,i)=>{
       if(cur === 'above') return i;
       return res;
-    }, null)
+    }, 0) // default to first item
     const MessageElements = sortedMessages.reduce((res, message, i)=>{
       let extraProps = {}
       if(i > sortedMessages.length - 2 ) {
