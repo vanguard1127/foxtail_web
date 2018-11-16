@@ -160,7 +160,7 @@ class InboxPage extends Component {
               return <div>No Messages Available</div>;
             }
             return (
-              <div style={{ display: "contents" }}>
+              <Fragment>
                 <div
                   style={{
                     display: "flex",
@@ -210,7 +210,7 @@ class InboxPage extends Component {
                     chatID={chatID}
                   />
                 </div>
-              </div>
+              </Fragment>
             );
           }}
         </Query>

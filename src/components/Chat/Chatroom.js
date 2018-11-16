@@ -193,11 +193,12 @@ class InputFormTemplate extends Component {
       >
         {(sendMessage, { data, loading, error }) => (
           <Form className="input">
-            <Form.Item style={{ marginBottom: "0px" }}>
-              {getFieldDecorator("text")(<Input type="text" />)}
+            <Form.Item style={{ marginBottom: "0px", flexGrow: 1 }}>
+              {getFieldDecorator("text")(<Input type="text" style={{width: '100%'}} />)}
             </Form.Item>
             <Button
               type="submit"
+              style={{ marginLeft: '16px' }}
               onClick={e => this.submitMessage(e, sendMessage)}
             >
               Send

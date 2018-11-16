@@ -66,22 +66,28 @@ class MessageList extends Component {
   constructor(props) {
     super(props);
     this.messagesRef = React.createRef();
+    this.lastMessageRef = React.createRef();
   }
   state = {
     loading: false,
     restoreScroll: false,
     hasMoreItems: true,
-    previousScrollheightMinusTop: null,
+    previousClientHeight: null,
+    previousScrollHeight: null,
+    previousScrollTop: null,
     dateWaypoints: [],
   };
 
   componentDidMount() {
-    this.checkScrollTopToFetch(10)
+    this.checkScrollTopToFetch(10);
     this.scrollToBot();
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.messages !== this.props.messages){
-      if(!this.state.hasScrolledBottomInitial) {
+      // Remove last item 
+      const isUserOnBottom = this.messagesRef.current.clientHeight + this.messagesRef.current.scrollTop > this.messagesRef.current.scrollHeight - this.lastMessageRef.current.clientHeight - 20;
+      // const isUserOnBottom = previousClientHeight + previousScrollTop > previousScrollHeight - 20; 
+      if(!this.state.hasScrolledBottomInitial || isUserOnBottom ) {
         // ComponentDidMount does not scrolls to bottom on initial mount. Since on
         // initial mount there are only 6 items, not enough to scroll. And since waypoint
         // is on view, because everything is on view, more messages get fetched, 
@@ -90,8 +96,6 @@ class MessageList extends Component {
         // either this or fetching more items initial mount
         if(!this.state.hasScrolledBottomInitial) {
           console.log("Initial Scroll Bottom")
-        } else {
-          console.log("New messages from outside")
         }
         this.scrollToBot();
       } else if(this.state.restoreScroll) {
@@ -104,10 +108,12 @@ class MessageList extends Component {
     
   }
   restoreScroll(){
-    console.log('Restoring scroll')
-    this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight - this.state.previousScrollheightMinusTop
+    this.messagesRef.current.scrollTop = this.state.previousScrollTop + (this.messagesRef.current.scrollHeight - this.state.previousScrollHeight)
+    // this.messagesRef.current.scrollHeight - this.state.previousScrollheight
+    
     this.setState({
-      previousScrollheightMinusTop: this.messagesRef.current.scrollHeight,
+      previousScrollHeight: this.messagesRef.current.scrollHeight,
+      previousScrollTop: this.messagesRef.current.scrollTop,
       restoreScroll: false,
     })
   }
@@ -116,11 +122,13 @@ class MessageList extends Component {
     console.log('Scrolling to Bottom')
     
     this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
+    this.setState({
+      previousClientHeight: this.messagesRef.current.clientHeight,
+      previousScrollHeight: this.messagesRef.current.scrollHeight,
+      previousScrollTop: this.messagesRef.current.scrollTop
+    })
     // We should get the scrollHeight before adding the items. But for now, this works
     // The problem is that a threshold can be added right now
-    this.setState({
-      previousScrollheightMinusTop: this.messagesRef.current.scrollHeight
-    })
     // So view allways starts at the bottom. Maybe this can be moved to cDM
     if(!hasScrolledBottomInitial && this.messagesRef.current.scrollTop !== 0) {
       this.setState({
@@ -133,7 +141,8 @@ class MessageList extends Component {
         // Doesn't repeat because frist we are setting loading =  true
         // And on updateQuary, when the fetch it done. We set loading = false
         console.log('Can i fetch?', !this.state.loading && this.state.hasMoreItems);
-        if(this.state.loading || !this.state.hasMoreItems) return;
+        // Wait for restoreScroll to take place, then do your thing
+        if(this.state.loading || !this.state.hasMoreItems || this.state.restoreScroll) return;
         const cursor = messages[messages.length - 1].createdAt;
         this.setState({ loading: true });
         fetchMore({
@@ -155,9 +164,10 @@ class MessageList extends Component {
               ...previousResult.getMessages.messages,
               ...fetchMoreResult.getMessages.messages
             ];
+            console.log("Fetch Done")
             this.setState({
               loading: false,
-              restoreScroll: true,
+              restoreScroll: this.messagesRef.current.scrollHeight > this.messagesRef.current.clientHeight,
               dateWaypoints: []
             });
 
@@ -212,6 +222,9 @@ class MessageList extends Component {
     this.checkScrollTopToFetch(100)
   }
   checkScrollTopToFetch(THRESHOLD){
+    this.setState({
+        previousScrollTop: this.messagesRef.current.scrollTop
+    })
     
     if(this.messagesRef.current.scrollTop < THRESHOLD){
       this.fetchMore();
@@ -237,7 +250,11 @@ class MessageList extends Component {
       return res;
     }, null)
     const MessageElements = sortedMessages.reduce((res, message, i)=>{
-      let newElements = [<Message key={message.id} message={message} />]   
+      let extraProps = {}
+      if(i > sortedMessages.length - 2 ) {
+        extraProps.ref = this.lastMessageRef;
+      }
+      let newElements = [<Message key={message.id} message={message} {...extraProps} />]   
       const messageDate = moment(message.createdAt);
       // day of the month
       const dayOfTheMonth = messageDate.date(); 
@@ -257,7 +274,7 @@ class MessageList extends Component {
     }, { lastDayOfTheMonth: null, nDate: 0, elements: []});
     return (
       <Fragment>
-      <div style={{position: 'relative', display: 'flex', flexDirection: "column", height: '100%'}}>
+      <div style={{position: 'relative', display: 'flex', flexDirection: "column", height: '100%', overflow: 'hidden'}}>
         <div
           className="chats"
           ref={this.messagesRef}
