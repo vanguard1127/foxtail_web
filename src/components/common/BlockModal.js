@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Select, Input, message } from "antd";
+import { Modal, Select, Input } from "antd";
 import { BLOCK_PROFILE, FLAG_ITEM } from "../../queries";
 import { Mutation } from "react-apollo";
 const Option = Select.Option;
@@ -54,9 +54,6 @@ class BlockModal extends Component {
 
         //TODO: send errors to analytics from here
         this.setState({ errors });
-        message.warn(
-          "An error has occured. We will have it fixed soon. Thanks for your patience."
-        );
       });
   };
 

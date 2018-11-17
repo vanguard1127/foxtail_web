@@ -4,7 +4,7 @@ import { Layer, Stage } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
-import { Button, message } from "antd";
+import { Button } from "antd";
 
 class EditCanvasImage extends React.Component {
   static propTypes = {
@@ -81,9 +81,6 @@ class EditCanvasImage extends React.Component {
 
         //TODO: send errors to analytics from here
         this.setState({ errors });
-        message.warn(
-          "An error has occured. We will have it fixed soon. Thanks for your patience."
-        );
       });
   };
 

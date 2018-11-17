@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Query, Mutation } from "react-apollo";
 import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button } from "antd";
 import Waypoint from "react-waypoint";
 import MessageList from "./MessageList.js";
 import Error from "../common/Error";
@@ -177,9 +177,6 @@ class InputFormTemplate extends Component {
 
           //TODO: send errors to analytics from here
           this.setState({ errors });
-          message.warn(
-            "An error has occured. We will have it fixed soon. Thanks for your patience."
-          );
         });
     });
   }

@@ -24,7 +24,7 @@ import withSession from "./components/withSession";
 import Footer from "./components/Footer";
 
 import { ApolloProvider } from "react-apollo";
-import { Breadcrumb, Layout } from "antd";
+import { Breadcrumb, Layout, message as popmsg } from "antd";
 import ApolloClient from "apollo-client";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
@@ -99,7 +99,12 @@ const errorLink = onError(
       graphQLErrors.map(({ message, path }) => {
         if (~message.indexOf("Client")) {
           response.errors = null;
+          popmsg.warn(message.replace("Client:", "").trim());
           return null;
+        } else {
+          popmsg.warn(
+            "An error has occured. We will have it fixed soon. Thanks for your patience."
+          );
         }
         //TODO: Only allow this in dev mode
         notification["error"]({
@@ -109,6 +114,7 @@ const errorLink = onError(
         });
         return null;
       });
+    //TODO:Decipher btwn 500 and 400 errors
     if (networkError)
       notification["warn"]({
         message: "Check you network",

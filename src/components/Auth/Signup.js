@@ -12,8 +12,7 @@ import {
   Icon,
   Form,
   Select,
-  Radio,
-  message
+  Radio
 } from "antd";
 import { sexOptions } from "../../docs/data";
 // import Moustache from "../../images/moustache.svg"; // path to your '*.svg' file.
@@ -87,9 +86,6 @@ class SignupForm extends React.Component {
 
             //TODO: send errors to analytics from here
             this.setState({ errors });
-            message.warn(
-              "An error has occured. We will have it fixed soon. Thanks for your patience."
-            );
           });
       }
     );

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import withSession from "../withSession";
 import { Mutation } from "react-apollo";
 import { TOGGLE_EVENT_ATTEND, GET_EVENT } from "../../queries";
-import { message } from "antd";
 
 class AttendEvent extends Component {
   state = {
@@ -33,9 +32,6 @@ class AttendEvent extends Component {
 
         //TODO: send errors to analytics from here
         this.setState({ errors });
-        message.warn(
-          "An error has occured. We will have it fixed soon. Thanks for your patience."
-        );
       });
   };
 

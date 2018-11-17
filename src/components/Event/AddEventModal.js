@@ -113,9 +113,6 @@ const AddEventModal = Form.create()(
 
           //TODO: send errors to analytics from here
           this.setState({ errors });
-          message.warn(
-            "An error has occured. We will have it fixed soon. Thanks for your patience."
-          );
         });
     };
 
@@ -179,9 +176,6 @@ const AddEventModal = Form.create()(
 
           //TODO: send errors to analytics from here
           this.setState({ errors });
-          message.warn(
-            "An error has occured. We will have it fixed soon. Thanks for your patience."
-          );
         });
     };
 

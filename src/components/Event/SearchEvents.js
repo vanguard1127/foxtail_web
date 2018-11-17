@@ -6,7 +6,7 @@ import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
-import { Button, message } from "antd";
+import { Button } from "antd";
 import AddEventModal from "./AddEventModal";
 import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
@@ -88,9 +88,6 @@ class SearchEvents extends Component {
 
           //TODO: send errors to analytics from here
           this.setState({ errors });
-          message.warn(
-            "An error has occured. We will have it fixed soon. Thanks for your patience."
-          );
         });
     });
   };

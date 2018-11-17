@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ImageCarousel from "./ImageCarousel";
 import NamePlate from "./NamePlate";
 import DesiresList from "../Desire/DesiresList";
-import { Card, Icon, message } from "antd";
+import { Card, Icon } from "antd";
 import { LIKE_PROFILE } from "../../queries";
 import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
@@ -27,9 +27,6 @@ class ProfileCard extends Component {
 
         //TODO: send errors to analytics from here
         this.setState({ errors });
-        message.warn(
-          "An error has occured. We will have it fixed soon. Thanks for your patience."
-        );
       });
   };
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
-import { Dropdown, Menu, Icon, message } from "antd";
+import { Dropdown, Menu, Icon } from "antd";
 import AttendEvent from "./AttendEvent";
 import Chatroom from "../Chat/Chatroom";
 import moment from "moment";
@@ -29,9 +29,6 @@ class EventPage extends Component {
 
           //TODO: send errors to analytics from here
           this.setState({ errors });
-          message.warn(
-            "An error has occured. We will have it fixed soon. Thanks for your patience."
-          );
         });
     }
   };
@@ -69,9 +66,6 @@ class EventPage extends Component {
 
           //TODO: send errors to analytics from here
           this.setState({ errors });
-          message.warn(
-            "An error has occured. We will have it fixed soon. Thanks for your patience."
-          );
         });
     });
   };

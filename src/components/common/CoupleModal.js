@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { GENERATE_CODE, LINK_PROFILE, UNLINK_PROFILE } from "../../queries";
 import { Query, Mutation } from "react-apollo";
-import {
-  Modal,
-  Input,
-  Divider,
-  Button,
-  Checkbox,
-  Carousel,
-  message
-} from "antd";
+import { Modal, Input, Divider, Button, Checkbox, Carousel } from "antd";
 import { EmailShareButton, EmailIcon } from "react-share";
 import Error from "../common/Error";
 import Spinner from "../common/Spinner";
@@ -40,9 +32,6 @@ class CoupleModal extends Component {
 
           //TODO: send errors to analytics from here
           this.setState({ errors });
-          message.warn(
-            "An error has occured. We will have it fixed soon. Thanks for your patience."
-          );
         });
     }
   };
@@ -69,9 +58,6 @@ class CoupleModal extends Component {
 
         //TODO: send errors to analytics from here
         this.setState({ errors });
-        message.warn(
-          "An error has occured. We will have it fixed soon. Thanks for your patience."
-        );
       });
   };
 

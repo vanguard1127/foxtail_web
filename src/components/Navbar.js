@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, message } from "antd";
+import { Menu } from "antd";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { LOGIN, FB_RESOLVE } from "../queries";
@@ -44,9 +44,6 @@ class NavbarUnAuth extends Component {
 
             //TODO: send errors to analytics from here
             this.setState({ errors });
-            message.warn(
-              "An error has occured. We will have it fixed soon. Thanks for your patience."
-            );
           });
       })
       .catch(res => {
@@ -54,9 +51,6 @@ class NavbarUnAuth extends Component {
           return error.message;
         });
         this.setState({ errors });
-        message.warn(
-          "An error has occured. We will have it fixed soon. Thanks for your patience."
-        );
       });
   };
 
