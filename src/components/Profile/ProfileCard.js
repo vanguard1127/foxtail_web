@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import ImageCarousel from "./ImageCarousel";
 import NamePlate from "./NamePlate";
 import DesiresList from "../Desire/DesiresList";
-import { Card, Icon } from "antd";
+import { Card, Icon, message } from "antd";
 import { LIKE_PROFILE } from "../../queries";
 import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
+import Error from "../common/Error";
 
 const { Meta } = Card;
 
@@ -13,12 +14,23 @@ class ProfileCard extends Component {
   state = {};
 
   handleSubmit = likeProfile => {
-    const { id } = this.props.profile;
+    //const { id } = this.props.profile;
     likeProfile()
       .then(({ data }) => {
-        this.props.removeProfile(id);
+        // this.props.removeProfile(id);
       })
-      .catch(e => console.log(e.message));
+
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+        message.warn(
+          "An error has occured. We will have it fixed soon. Thanks for your patience."
+        );
+      });
   };
 
   render() {
@@ -31,79 +43,114 @@ class ProfileCard extends Component {
           toProfileID: id
         }}
       >
-        {(likeProfile, { data, loading, error }) => (
-          <Card
-            style={{
-              width: "25%",
-              display: "inline-block",
-              border: "2px solid #eee",
-              borderRadius: "5px",
-              margin: "20px"
-            }}
-            cover={
-              <div>
-                <ImageCarousel photos={photos} showThumbs={false} />
-                <Icon
-                  style={{
-                    float: "right",
-                    padding: "7px",
-                    fontSize: "20px",
-                    cursor: "pointer"
-                  }}
-                  type="info-circle"
-                  onClick={() =>
-                    this.props.history.push("/profile/" + profile.id)
-                  }
-                />
-              </div>
-            }
-            actions={[
-              <Icon
-                type="heart"
-                style={{ fontSize: "25px" }}
-                theme="twoTone"
-                twoToneColor="#eb2f96"
-                onClick={() => this.handleSubmit(likeProfile)}
-              />,
-              <Icon
-                type="message"
-                style={{ fontSize: "25px" }}
-                theme="twoTone"
-                twoToneColor="#1A63FF"
-              />,
-              <Icon
-                type="share-alt"
-                style={{ fontSize: "25px" }}
-                onClick={() => this.props.showShareModal(true, profile)}
-              />,
-              <Icon
-                type="flag"
-                style={{ fontSize: "20px", color: "#E84D3B" }}
-                onClick={() => this.props.showBlockModal(true, profile)}
-              />
-            ]}
-          >
-            <Meta
+        {(likeProfile, { data, loading, error }) => {
+          //TODO:Maybe a liking loader?
+          console.log("RETURN", data);
+          if (error) {
+            return <Error error={error} />;
+          }
+          return (
+            <Card
               style={{
-                height: "5vh"
+                width: "25%",
+                display: "inline-block",
+                border: "2px solid #eee",
+                borderRadius: "5px",
+                margin: "20px"
               }}
-              title={
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  {users.map(user => (
-                    <div key={user.id}>
-                      <NamePlate user={user} />
-                    </div>
-                  ))}
+              cover={
+                <div
+                  // TODO: Add settime out and message to this so user know they liked
+                  style={
+                    loading
+                      ? {
+                          backgroundColor: "red",
+                          width: "100%",
+                          height: "100%",
+                          opacity: "0.50",
+                          MozOpacity: "50%",
+                          WebkitOpacity: "50%",
+                          zIndex: "2"
+                        }
+                      : null
+                  }
+                >
+                  <div>
+                    <ImageCarousel photos={photos} showThumbs={false} />
+                    <Icon
+                      style={{
+                        float: "right",
+                        padding: "7px",
+                        fontSize: "20px",
+                        cursor: "pointer"
+                      }}
+                      type="info-circle"
+                      onClick={() =>
+                        this.props.history.push("/profile/" + profile.id)
+                      }
+                    />
+                  </div>
                 </div>
               }
-              description={
-                <div>
-                  <DesiresList desires={desires} />
-                </div>
-              }
-            />
-          </Card>
-        )}
+              actions={[
+                <Icon
+                  type="heart"
+                  style={{ fontSize: "25px" }}
+                  theme="twoTone"
+                  twoToneColor={!data || !data.likeProfile ? "#eb2f96" : "#666"}
+                  onClick={() => this.handleSubmit(likeProfile)}
+                  key="like"
+                />,
+                <Icon
+                  type="message"
+                  style={{ fontSize: "25px" }}
+                  theme="twoTone"
+                  twoToneColor="#1A63FF"
+                  key="message"
+                />,
+                <Icon
+                  type="share-alt"
+                  style={{ fontSize: "25px" }}
+                  onClick={() => this.props.showShareModal(true, profile)}
+                  key="share"
+                />,
+                <Icon
+                  type="flag"
+                  style={{ fontSize: "20px", color: "#E84D3B" }}
+                  onClick={() => this.props.showBlockModal(true, profile)}
+                  key="flag"
+                />
+              ]}
+            >
+              <Meta
+                style={{
+                  height: "5vh"
+                }}
+                title={
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    {users.map(user => (
+                      <div key={user.id}>
+                        <a
+                          onClick={() =>
+                            this.props.history.push("/profile/" + profile.id)
+                          }
+                        >
+                          {" "}
+                          <NamePlate user={user} />
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                }
+                description={
+                  <div>
+                    <DesiresList desires={desires} />
+                  </div>
+                }
+              />
+            </Card>
+          );
+        }}
       </Mutation>
     );
   }

@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Waypoint from "react-waypoint";
 import Message from "./Message.js";
-import { message } from "antd";
-import { moment } from "moment";
 
 class MessageList extends Component {
   constructor(props) {
@@ -96,7 +94,6 @@ class MessageList extends Component {
   // };
   render() {
     //LOADING CAUSED INFINITE LOOP
-    const { loading } = this.state;
     const { messages, fetchMore } = this.props;
     return (
       <Fragment>

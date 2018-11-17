@@ -2,16 +2,18 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import { GET_MY_PROFILE } from "../../queries";
+import Error from "../common/Error";
+import Spinner from "../common/Spinner";
 
 const MyProfileInfo = ({ session }) => {
   return (
     <Query query={GET_MY_PROFILE}>
       {({ data, loading, error }) => {
         if (loading) {
-          return <div>Loading</div>;
+          return <Spinner message="Loading..." size="large" />;
         }
         if (error) {
-          return <div>Error</div>;
+          return <Error error={error} />;
         }
 
         return (

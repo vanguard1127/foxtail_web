@@ -6,11 +6,13 @@ import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import AddEventModal from "./AddEventModal";
 import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
 import MyEvents from "./MyEvents";
+import Error from "../common/Error";
+import Spinner from "../common/Spinner";
 
 const LIMIT = 3;
 //TODO: fix moment date format issue
@@ -20,7 +22,7 @@ class SearchEvents extends Component {
     visible: false,
     blockModalVisible: false,
     shareModalVisible: false,
-    event: {},
+    event: null,
     lat: 0,
     long: 0,
     all: true
@@ -47,17 +49,17 @@ class SearchEvents extends Component {
   };
 
   handleCancel = () => {
-    this.setState({ event: {}, visible: false });
+    this.setState({ event: null, visible: false });
   };
 
   setShareModalVisible = (shareModalVisible, event) => {
     if (event) this.setState({ event, shareModalVisible });
-    else this.setState({ shareModalVisible });
+    else this.setState({ event: null, shareModalVisible });
   };
 
   setBlockModalVisible = (blockModalVisible, event) => {
     if (event) this.setState({ event, blockModalVisible });
-    else this.setState({ blockModalVisible });
+    else this.setState({ event: null, blockModalVisible });
   };
 
   handleSubmit = (e, createEvent) => {
@@ -79,7 +81,17 @@ class SearchEvents extends Component {
         .then(({ data }) => {
           this.props.history.push("/events/" + data.createEvent.id);
         })
-        .catch(e => console.log(e.message));
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+          message.warn(
+            "An error has occured. We will have it fixed soon. Thanks for your patience."
+          );
+        });
     });
   };
 
@@ -210,16 +222,14 @@ class SearchEvents extends Component {
         >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
-              return <div>loading</div>;
-            } else if (
-              data.searchEvents === undefined ||
-              data.searchEvents.length === 0
-            ) {
-              return <div>No Events Available</div>;
+              return <Spinner message="Loading Events..." size="large" />;
             }
 
             if (error) {
-              return <div>Error: {error.message}</div>;
+              return <Error error={error} />;
+            }
+            if (!data.searchEvents || data.searchEvents.length === 0) {
+              return <div>No Events Available</div>;
             }
             return (
               <div>
@@ -237,17 +247,21 @@ class SearchEvents extends Component {
             );
           }}
         </Query>
-        <BlockModal
-          event={event}
-          id={event.id}
-          visible={blockModalVisible}
-          close={() => this.setBlockModalVisible(false)}
-        />
-        <ShareModal
-          event={event}
-          visible={shareModalVisible}
-          close={() => this.setShareModalVisible(false)}
-        />
+        {event && (
+          <BlockModal
+            event={event}
+            id={event.id}
+            visible={blockModalVisible}
+            close={() => this.setBlockModalVisible(false)}
+          />
+        )}
+        {event && (
+          <ShareModal
+            event={event}
+            visible={shareModalVisible}
+            close={() => this.setShareModalVisible(false)}
+          />
+        )}
       </div>
     );
   }

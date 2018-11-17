@@ -12,7 +12,8 @@ import {
   Icon,
   Form,
   Select,
-  Radio
+  Radio,
+  message
 } from "antd";
 import { sexOptions } from "../../docs/data";
 // import Moustache from "../../images/moustache.svg"; // path to your '*.svg' file.
@@ -39,6 +40,12 @@ const initialState = {
 class SignupForm extends React.Component {
   state = { ...initialState };
 
+  componentDidMount() {
+    if (localStorage.getItem("token") !== null) {
+      this.props.history.push("/members");
+    }
+  }
+
   clearState = () => {
     this.setState({ ...initialState });
   };
@@ -63,25 +70,57 @@ class SignupForm extends React.Component {
         code
       },
       () => {
-        fbResolve().then(({ data }) => {
-          this.setState({ phone: data.fbResolve });
-          createUser().then(async ({ data }) => {
-            localStorage.setItem("token", data.createUser.token);
-            //    await this.props.refetch();
-            this.clearState();
-            this.props.history.push("/editprofile");
+        fbResolve()
+          .then(({ data }) => {
+            this.setState({ phone: data.fbResolve });
+            createUser().then(async ({ data }) => {
+              localStorage.setItem("token", data.createUser.token);
+              //    await this.props.refetch();
+              this.clearState();
+              this.props.history.push("/editprofile");
+            });
+          })
+          .catch(res => {
+            const errors = res.graphQLErrors.map(error => {
+              return error.message;
+            });
+
+            //TODO: send errors to analytics from here
+            this.setState({ errors });
+            message.warn(
+              "An error has occured. We will have it fixed soon. Thanks for your patience."
+            );
           });
-        });
       }
     );
   };
 
   validateForm = () => {
-    const { username, email, dob, interestedIn, gender } = this.state;
+    const {
+      username,
+      email,
+      dob,
+      interestedIn,
+      gender
+    } = this.props.form.getFieldsValue();
+    const isLengthZero = interestedIn ? interestedIn.length === 0 : true;
 
-    const isInvalid = !username || !email || !dob || !interestedIn || !gender;
+    const isInvalid =
+      !username || !email || !dob || !interestedIn || !gender || isLengthZero;
 
     return isInvalid;
+  };
+
+  disabledDate = current => {
+    // Can not select days before today and today
+    console.log("current", current - 18);
+    return (
+      current &&
+      current >
+        moment()
+          .endOf("day")
+          .subtract(18, "years")
+    );
   };
 
   render() {
@@ -105,7 +144,7 @@ class SignupForm extends React.Component {
       <div className="centerColumn fullHeight">
         <h2 className="App">Become a Foxtail Member</h2>{" "}
         <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
-          {(fbResolve, { data, loading, error }) => {
+          {fbResolve => {
             return (
               <Mutation
                 mutation={CREATE_USER}
@@ -118,7 +157,7 @@ class SignupForm extends React.Component {
                   gender
                 }}
               >
-                {(createUser, { data, loading, error }) => {
+                {(createUser, { loading }) => {
                   return (
                     <div>
                       <Form
@@ -128,9 +167,17 @@ class SignupForm extends React.Component {
                           flexDirection: "column",
                           justifyContent: "space-around"
                         }}
+                        hideRequiredMark={true}
                       >
                         <FormItem {...formItemLayout} label={" "} colon={false}>
-                          {getFieldDecorator("username")(
+                          {getFieldDecorator("username", {
+                            rules: [
+                              {
+                                required: true,
+                                message: "Please select a user name!"
+                              }
+                            ]
+                          })(
                             <Input
                               placeholder="Username"
                               name="username"
@@ -139,7 +186,15 @@ class SignupForm extends React.Component {
                           )}
                         </FormItem>
                         <FormItem {...formItemLayout} label={" "} colon={false}>
-                          {getFieldDecorator("email")(
+                          {getFieldDecorator("email", {
+                            rules: [
+                              {
+                                required: true,
+                                type: "email",
+                                message: "Please enter a valid email"
+                              }
+                            ]
+                          })(
                             <Input
                               placeholder="Email"
                               name="email"
@@ -153,21 +208,40 @@ class SignupForm extends React.Component {
                           colon={false}
                         >
                           {getFieldDecorator("dob", {
-                            initialValue: dob
-                              ? moment({ dob })
-                              : moment(
-                                  new Date().setFullYear(
-                                    new Date().getFullYear() - 18
-                                  )
-                                )
-                          })(<DatePicker onChange={this.onChangeDate} />)}
+                            rules: [
+                              {
+                                required: true,
+                                message: "Please enter your birthday"
+                              }
+                            ],
+                            initialValue: moment()
+                              .endOf("day")
+                              .subtract(18, "years")
+                          })(
+                            <DatePicker
+                              disabledDate={this.disabledDate}
+                              onChange={this.onChangeDate}
+                              showTime={false}
+                              showToday={false}
+                              format="YYYY-MM-DD"
+                            />
+                          )}
                         </FormItem>
                         <FormItem
                           {...formItemLayout}
                           label="Gender"
                           colon={false}
                         >
-                          {getFieldDecorator("gender")(
+                          {getFieldDecorator("gender", {
+                            rules: [
+                              {
+                                required: true,
+                                type: "enum",
+                                enum: ["M", "F", "T"],
+                                message: "Please select your gender"
+                              }
+                            ]
+                          })(
                             <RadioGroup
                               onClick={this.handleChange}
                               selected={gender}
@@ -216,6 +290,7 @@ class SignupForm extends React.Component {
                         </FormItem>
                       </Form>
                       <AccountKit
+                        disabled={loading || this.validateForm()}
                         appId="172075056973555" // Update this!
                         version="v1.1" // Version must be in form v{major}.{minor}
                         onResponse={resp => {
@@ -228,12 +303,7 @@ class SignupForm extends React.Component {
                       >
                         {p => (
                           <div>
-                            <Button
-                              size="large"
-                              disabled={loading || this.validateForm()}
-                              {...p}
-                              htmlType="submit"
-                            >
+                            <Button size="large" {...p} htmlType="submit">
                               {" "}
                               <Icon
                                 type="check-circle"

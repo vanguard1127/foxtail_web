@@ -4,24 +4,37 @@ import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
-import { Input, Button, Icon, Select } from "antd";
+import { Input, Button, Icon, Select, message, Form } from "antd";
 import { desireOptions } from "../../docs/data";
+import Error from "../common/Error";
+import Spinner from "../common/Spinner";
 
 const { TextArea } = Input;
 const Option = Select.Option;
+const FormItem = Form.Item;
+const formItemLayout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 15 }
+};
 
 const initialState = {
-  desires: [],
-  about: "",
   publicPhotoList: [],
   privatePhotoList: []
 };
 
-class EditProfile extends Component {
+class EditProfileForm extends Component {
   state = { ...initialState };
 
   clearState = () => {
     this.setState({ ...initialState });
+  };
+
+  validateForm = () => {
+    const { publicPhotoList } = this.state;
+
+    const isInvalid = publicPhotoList.length === 0;
+
+    return isInvalid;
   };
 
   handlePhotoListChange = (fileList, isPrivate) => {
@@ -45,123 +58,189 @@ class EditProfile extends Component {
       file.url = "https://ft-img-bucket.s3.amazonaws.com/" + file.url;
       return file;
     });
-    console.log(
-      "public list",
-      this.state.publicPhotoList,
-      "private list",
-      this.state.privatePhotoList
-    );
   };
 
   handleChangeSelect = value => {
     this.setState({ desires: value });
   };
 
-  handleSubmit = updateProfile => {
-    updateProfile()
-      .then(({ data }) => {
-        console.log("done", data);
-        //TODO: use data to alter search...
-        this.clearState();
-        if (this.props.intro) {
-          this.props.history.push("/search");
-        }
-      })
-      .catch(e => console.log(e.message));
-  };
+  handleSubmit = (e, updateProfile, aboutTest) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      console.log("Received values of form: ", values);
 
-  handleChange = event => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+      updateProfile()
+        .then(({ data }) => {
+          if (data.updateProfile) {
+            message.success("Settings have been saved");
+          } else {
+            message.error("Error saving settings. Please contact support.");
+          }
+          //TODO: use data to alter search...
+          this.clearState();
+          if (aboutTest === "") {
+            this.props.history.push("/search");
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+          message.warn(
+            "An error has occured. We will have it fixed soon. Thanks for your patience."
+          );
+        });
+    });
   };
 
   render() {
-    const { desires, about, publicPhotoList, privatePhotoList } = this.state;
+    const { getFieldDecorator } = this.props.form;
+    const { publicPhotoList, privatePhotoList } = this.state;
+
     return (
-      <Mutation
-        mutation={UPDATE_PROFILE}
-        variables={{
-          about,
-          desires,
-          publicPhotoList,
-          privatePhotoList
-        }}
-      >
-        {(updateProfile, { data, loading, error }) => (
-          <Query query={GET_MY_PROFILE}>
-            {({ data, loading, error }) => {
-              if (loading) {
-                return <div>Loading</div>;
-              }
-              if (error) {
-                return <div>Error</div>;
-              }
-              const { users, photos } = data.getMyProfile;
-              return (
-                <div>
-                  <h4>Edit Profile: {users.map(user => user.username)}</h4>
-                  <div className="centerColumn">
-                    <PhotoGrid
-                      photos={photos}
-                      handlePhotoListChange={this.handlePhotoListChange}
-                    />
-                    <div
+      <Query query={GET_MY_PROFILE}>
+        {({ data, loading, error }) => {
+          if (loading) {
+            return <Spinner message="Loading..." size="large" />;
+          }
+          if (error) {
+            return <Error error={error} />;
+          }
+
+          const { users, photos, about, desires } = data.getMyProfile;
+
+          return (
+            <Mutation
+              mutation={UPDATE_PROFILE}
+              variables={{
+                about: this.props.form.getFieldValue("about"),
+                desires: this.props.form.getFieldValue("desires"),
+                publicPhotoList,
+                privatePhotoList
+              }}
+            >
+              {(updateProfile, { loading }) => {
+                return (
+                  <div>
+                    <h4>Edit Profile: {users.map(user => user.username)}</h4>
+                    <Form
                       className="centerColumn"
                       style={{
-                        width: "30vw",
-                        height: "35vh",
-                        justifyContent: "space-between"
+                        display: "flex"
                       }}
+                      onSubmit={e => this.handleSubmit(e, updateProfile, about)}
                     >
-                      Desires:
-                      <Select
-                        mode="multiple"
-                        placeholder="Interested In"
-                        style={{ width: "100%" }}
-                        onChange={this.handleChangeSelect}
-                        defaultValue={data.getMyProfile.desires}
+                      <FormItem
+                        {...formItemLayout}
+                        label={" "}
+                        colon={false}
+                        validateStatus={
+                          publicPhotoList.length === 0 ? "error" : ""
+                        }
+                        help={
+                          publicPhotoList.length === 0 &&
+                          "Please upload at least 1 public image of yourself."
+                        }
                       >
-                        {desireOptions.map(option => (
-                          <Option key={option.value}>{option.label}</Option>
-                        ))}
-                      </Select>
-                      Bio:
-                      <TextArea
-                        rows={4}
-                        placeholder="About you"
-                        defaultValue={data.getMyProfile.about}
-                        name="about"
-                        onChange={this.handleChange}
-                      />
-                      Verifications (Verified members get more responses):
-                      <div
-                        style={{
-                          justifyContent: "space-between",
-                          display: "flex",
-                          width: "45%"
-                        }}
-                      >
-                        <Button>Photo Verify</Button>
-                        <Button>STD Verify</Button>
-                      </div>
-                      <Button
-                        size="large"
-                        style={{ margin: "10px" }}
-                        onClick={() => this.handleSubmit(updateProfile)}
-                      >
-                        Find Members Nearby <Icon type="search" />
-                      </Button>
-                    </div>
+                        <PhotoGrid
+                          photos={photos}
+                          handlePhotoListChange={this.handlePhotoListChange}
+                          gridStyle={{ width: "33vw" }}
+                        />
+                      </FormItem>
+                      Desires
+                      <FormItem label={""} colon={false}>
+                        {getFieldDecorator("desires", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please select at least 1 desire"
+                            }
+                          ],
+                          initialValue: desires ? desires : []
+                        })(
+                          <Select
+                            mode="multiple"
+                            placeholder="Interested In"
+                            style={{ width: "33vw" }}
+                            onChange={this.handleChangeSelect}
+                            currentvalue={this.props.form.getFieldValue(
+                              "desires"
+                            )}
+                          >
+                            {desireOptions.map(option => (
+                              <Option key={option.value}>{option.label}</Option>
+                            ))}
+                          </Select>
+                        )}
+                      </FormItem>
+                      Bio
+                      <FormItem {...formItemLayout} label={""} colon={false}>
+                        {getFieldDecorator("about", {
+                          initialValue: about ? about : "",
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please write a short bio"
+                            },
+                            {
+                              max: 1000,
+                              min: 20,
+                              message:
+                                "Please keep your bio between 20 and 1000 characters"
+                            }
+                          ]
+                        })(
+                          <TextArea
+                            rows={4}
+                            placeholder="About you"
+                            style={{ width: "33vw" }}
+                          />
+                        )}
+                      </FormItem>
+                      Verifications (Verified members get more responses)
+                      <FormItem {...formItemLayout} label={""} colon={false}>
+                        <div style={{ width: "33vw" }}>
+                          <Button>Photo Verify</Button>
+                          <Button>STD Verify</Button>
+                        </div>
+                      </FormItem>
+                      <FormItem {...formItemLayout} label={""} colon={false}>
+                        <Button
+                          size="large"
+                          type="primary"
+                          htmlType="submit"
+                          style={{ margin: "10px" }}
+                          disabled={loading || this.validateForm()}
+                        >
+                          {about === "" ? (
+                            <span>
+                              Find Members Nearby <Icon type="search" />
+                            </span>
+                          ) : (
+                            "Save"
+                          )}
+                        </Button>
+                      </FormItem>
+                    </Form>
                   </div>
-                </div>
-              );
-            }}
-          </Query>
-        )}
-      </Mutation>
+                );
+              }}
+            </Mutation>
+          );
+        }}
+      </Query>
     );
   }
 }
+
+const EditProfile = Form.create()(EditProfileForm);
 
 export default withAuth(session => session && session.currentuser)(
   withRouter(EditProfile)

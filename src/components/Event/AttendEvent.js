@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import withSession from "../withSession";
 import { Mutation } from "react-apollo";
 import { TOGGLE_EVENT_ATTEND, GET_EVENT } from "../../queries";
+import { message } from "antd";
 
 class AttendEvent extends Component {
   state = {
@@ -21,9 +22,21 @@ class AttendEvent extends Component {
   }
 
   handleAttend = toggleAttend => {
-    toggleAttend().then(async ({ data }) => {
-      await this.props.refetch();
-    });
+    toggleAttend()
+      .then(async ({ data }) => {
+        await this.props.refetch();
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+        message.warn(
+          "An error has occured. We will have it fixed soon. Thanks for your patience."
+        );
+      });
   };
 
   handleClick = toggleAttend => {
@@ -61,13 +74,15 @@ class AttendEvent extends Component {
         variables={{ eventID: id }}
         update={this.updateAttend}
       >
-        {toggleAttendEvent =>
-          username && (
-            <button onClick={() => this.handleClick(toggleAttendEvent)}>
-              {isGoing ? "Not Going" : "Going"}
-            </button>
-          )
-        }
+        {(toggleAttendEvent, { loading }) => {
+          return (
+            username && (
+              <button onClick={() => this.handleClick(toggleAttendEvent)}>
+                {isGoing ? "Not Going" : "Going"}
+              </button>
+            )
+          );
+        }}
       </Mutation>
     );
   }

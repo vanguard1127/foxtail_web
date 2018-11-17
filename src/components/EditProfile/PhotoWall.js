@@ -161,51 +161,58 @@ class PhotoWall extends React.Component {
 
     return (
       <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
-        {(signS3, { data, loading, error }) => (
-          <div className="clearfix">
-            <Upload
-              data={() => this.handleShowImage()}
-              listType="picture-card"
-              fileList={fileList}
-              beforeUpload={beforeUpload}
-              onPreview={file => this.handlePreview(file)}
-              onChange={({ file, fileList }) =>
-                this.handleChange(file, fileList, false, handlePhotoListChange)
-              }
-              customRequest={dummyRequest}
-            >
-              {fileList.length >= 4 ? null : uploadButton}
-            </Upload>
-            <Modal
-              visible={editorVisible}
-              footer={null}
-              onCancel={() => this.handleCancel(true)}
-            >
-              {editorVisible && (
-                <EditCanvasImage
-                  imageObject={file}
-                  signS3={signS3}
-                  setS3PhotoParams={this.setS3PhotoParams}
-                  uploadToS3={this.uploadToS3}
-                  fileList={fileList}
-                  handlePhotoListChange={({ file, fileList }) =>
-                    this.handleChange(
-                      file,
-                      fileList,
-                      true,
-                      handlePhotoListChange
-                    )
-                  }
-                />
-              )}
-            </Modal>
-            <PhotoModal
-              previewVisible={previewVisible}
-              previewImage={previewImage}
-              handleCancel={() => this.handleCancel(false)}
-            />
-          </div>
-        )}
+        {signS3 => {
+          return (
+            <div className="clearfix">
+              <Upload
+                data={() => this.handleShowImage()}
+                listType="picture-card"
+                fileList={fileList}
+                beforeUpload={beforeUpload}
+                onPreview={file => this.handlePreview(file)}
+                onChange={({ file, fileList }) =>
+                  this.handleChange(
+                    file,
+                    fileList,
+                    false,
+                    handlePhotoListChange
+                  )
+                }
+                customRequest={dummyRequest}
+              >
+                {fileList.length >= 4 ? null : uploadButton}
+              </Upload>
+              <Modal
+                visible={editorVisible}
+                footer={null}
+                onCancel={() => this.handleCancel(true)}
+              >
+                {editorVisible && (
+                  <EditCanvasImage
+                    imageObject={file}
+                    signS3={signS3}
+                    setS3PhotoParams={this.setS3PhotoParams}
+                    uploadToS3={this.uploadToS3}
+                    fileList={fileList}
+                    handlePhotoListChange={({ file, fileList }) =>
+                      this.handleChange(
+                        file,
+                        fileList,
+                        true,
+                        handlePhotoListChange
+                      )
+                    }
+                  />
+                )}
+              </Modal>
+              <PhotoModal
+                previewVisible={previewVisible}
+                previewImage={previewImage}
+                handleCancel={() => this.handleCancel(false)}
+              />
+            </div>
+          );
+        }}
       </Mutation>
     );
   }

@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { Query, Mutation } from "react-apollo";
 import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
-import { Form, Input, Button, Affix } from "antd";
+import { Form, Input, Button, message } from "antd";
 import Waypoint from "react-waypoint";
 import MessageList from "./MessageList.js";
-import moment from "moment";
+import Error from "../common/Error";
+import Spinner from "../common/Spinner";
 
 const LIMIT = 6;
 
@@ -107,11 +108,10 @@ class Chatroom extends Component {
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (loading) {
-              return <div style={{ height: "100%" }}>Loading</div>;
+              return <Spinner message="Loading..." size="large" />;
             }
-
             if (error) {
-              return <div>Error: {error.message}</div>;
+              return <Error error={error} />;
             }
 
             if (!unsubscribe) {
@@ -170,7 +170,17 @@ class InputFormTemplate extends Component {
         .then(({ data }) => {
           console.log(data);
         })
-        .catch(e => console.log(e.message));
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+          message.warn(
+            "An error has occured. We will have it fixed soon. Thanks for your patience."
+          );
+        });
     });
   }
 
@@ -185,19 +195,22 @@ class InputFormTemplate extends Component {
           text: this.props.form.getFieldValue("text")
         }}
       >
-        {(sendMessage, { data, loading, error }) => (
-          <Form className="input">
-            <Form.Item style={{ marginBottom: "0px" }}>
-              {getFieldDecorator("text")(<Input type="text" />)}
-            </Form.Item>
-            <Button
-              type="submit"
-              onClick={e => this.submitMessage(e, sendMessage)}
-            >
-              Send
-            </Button>
-          </Form>
-        )}
+        {(sendMessage, { loading }) => {
+          return (
+            <Form className="input">
+              <Form.Item style={{ marginBottom: "0px" }}>
+                {getFieldDecorator("text")(<Input type="text" />)}
+              </Form.Item>
+              <Button
+                type="submit"
+                onClick={e => this.submitMessage(e, sendMessage)}
+                disabled={loading}
+              >
+                Send
+              </Button>
+            </Form>
+          );
+        }}
       </Mutation>
     );
   }

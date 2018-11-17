@@ -6,6 +6,7 @@ import { graphql } from "react-apollo";
 import Spinner from "../common/Spinner";
 
 const LIMIT = 6;
+
 class ProfileSearch extends Component {
   state = {
     skip: 0,
@@ -63,11 +64,25 @@ class ProfileSearch extends Component {
     );
   }
 }
-
+//TODO:FIX SOMETIMES LAT AND LONG NOT SENDINF
+let long;
+let lat;
+if (!navigator.geolocation) {
+  alert("Geolocation is not supported by this browser");
+}
+navigator.geolocation.getCurrentPosition(
+  position => {
+    long = position.coords.longitude;
+    lat = position.coords.latitude;
+  },
+  err => {
+    alert("Unable to fetch location");
+  }
+);
 export default graphql(SEARCH_PROFILES, {
   options(ownProps) {
     return {
-      variables: { long: 170.0, lat: -23.0, limit: LIMIT }
+      variables: { long, lat, limit: LIMIT }
     };
   }
 })(ProfileSearch);

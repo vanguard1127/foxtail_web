@@ -5,8 +5,11 @@ import { GET_PROFILE } from "../../queries";
 import moment from "moment";
 import ImageCarousel from "./ImageCarousel";
 import DesiresList from "../Desire/DesiresList";
+import Error from "../common/Error";
+import Spinner from "../common/Spinner";
 import { Icon, Button } from "antd";
 const ButtonGroup = Button.Group;
+
 class ProfilePage extends Component {
   state = {
     selectedPhoto: 0
@@ -24,10 +27,10 @@ class ProfilePage extends Component {
       <Query query={GET_PROFILE} variables={{ id }}>
         {({ data, loading, error }) => {
           if (loading) {
-            return <div>Loading</div>;
+            return <Spinner message="Loading..." size="large" />;
           }
           if (error) {
-            return <div>Error: {error.message}</div>;
+            return <Error error={error} />;
           }
           const { users, photos, desires, about } = data.profile;
           const publicPics = photos.slice(0, 4);

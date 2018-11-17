@@ -5,6 +5,8 @@ import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import { GET_MY_EVENTS } from "../../queries";
 import moment from "moment";
+import Error from "../common/Error";
+import Spinner from "../common/Spinner";
 
 const Panel = Collapse.Panel;
 const LIMIT = 3;
@@ -98,16 +100,15 @@ class MyEvents extends Component {
           >
             {({ data, loading, error, fetchMore }) => {
               if (loading) {
-                return <div>loading</div>;
-              } else if (
-                data.getMyEvents === undefined ||
-                data.getMyEvents.docs.length === 0
-              ) {
-                return <div>You Have No Upcoming Events</div>;
+                return <Spinner message="Loading My Events..." size="small" />;
               }
 
               if (error) {
-                return <div>Error: {error.message}</div>;
+                return <Error error={error} />;
+              }
+
+              if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
+                return <div>You Have No Upcoming Events</div>;
               }
               return (
                 <div>

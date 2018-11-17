@@ -1,8 +1,18 @@
 import React, { Component } from "react";
 import { GENERATE_CODE, LINK_PROFILE, UNLINK_PROFILE } from "../../queries";
 import { Query, Mutation } from "react-apollo";
-import { Modal, Input, Divider, Button, Checkbox, Carousel } from "antd";
+import {
+  Modal,
+  Input,
+  Divider,
+  Button,
+  Checkbox,
+  Carousel,
+  message
+} from "antd";
 import { EmailShareButton, EmailIcon } from "react-share";
+import Error from "../common/Error";
+import Spinner from "../common/Spinner";
 
 class CoupleModal extends Component {
   state = {
@@ -18,30 +28,51 @@ class CoupleModal extends Component {
 
   handleLink = (linkProfile, close) => {
     if (this.state.code !== "") {
-      linkProfile().then(({ data }) => {
-        close();
-        this.props.setPartnerID(data.linkProfile.partnerName);
-      });
+      linkProfile()
+        .then(({ data }) => {
+          close();
+          this.props.setPartnerID(data.linkProfile.partnerName);
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+          message.warn(
+            "An error has occured. We will have it fixed soon. Thanks for your patience."
+          );
+        });
     }
   };
 
   next() {
     this.slider.next();
-    console.log(this.state.currentSlide);
   }
 
   prev() {
     this.slider.prev();
-    console.log(this.state.currentSlide);
   }
 
   handleUnLink = async (unlinkProfile, close) => {
-    console.log("TEST");
-    await unlinkProfile().then(({ data }) => {
-      //switch to new screen for do u want to edit?
-      close();
-      this.props.setPartnerID("Add Partner");
-    });
+    await unlinkProfile()
+      .then(({ data }) => {
+        //switch to new screen for do u want to edit?
+        close();
+        this.props.setPartnerID("Add Partner");
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+        message.warn(
+          "An error has occured. We will have it fixed soon. Thanks for your patience."
+        );
+      });
   };
 
   render() {
@@ -52,26 +83,6 @@ class CoupleModal extends Component {
     }
     return this.showLikeModal(visible, close, code);
   }
-
-  // updateCouple = (cache, { data: { linkProfile } }) => {
-  //   console.log(cache);
-  //   const { getSettings } = cache.readQuery({ query: GET_SETTINGS });
-
-  //   if (linkProfile) {
-  //     getSettings.couplePartner = linkProfile;
-  //   } else {
-  //     getSettings.couplePartner = null;
-  //   }
-  //   console.log("send to", getSettings);
-  //   cache.writeQuery({
-  //     query: GET_SETTINGS,
-  //     data: {
-  //       getSettings: {
-  //         ...getSettings
-  //       }
-  //     }
-  //   });
-  // };
 
   showLikeModal(visible, close, code) {
     const { title } = this.state;
@@ -96,10 +107,10 @@ class CoupleModal extends Component {
           <Query query={GENERATE_CODE} fetchPolicy="cache-first">
             {({ data, loading, error }) => {
               if (loading) {
-                return <div>Loading</div>;
+                return <Spinner message="Loading..." size="large" />;
               }
               if (error) {
-                return <div>Error: {error.message}</div>;
+                return <Error error={error} />;
               }
               return (
                 <div>
@@ -174,7 +185,7 @@ class CoupleModal extends Component {
                 code
               }}
             >
-              {(linkProfile, { dataMut, loading, error }) => (
+              {(linkProfile, { loading }) => (
                 <Button
                   disabled={this.state.code !== "" ? false : true}
                   onClick={() => this.handleLink(linkProfile, close)}
@@ -192,12 +203,10 @@ class CoupleModal extends Component {
   showDeleteConfirm(visible, close, username, unlinkProfile) {
     return (
       <Mutation mutation={UNLINK_PROFILE}>
-        {(unlinkProfile, { dataMut, loading, error }) => {
+        {(unlinkProfile, { loading }) => {
           if (loading) {
-            return <div>Loading</div>;
-          }
-          if (error) {
-            return <div>Error: {error.message}</div>;
+            //TODO: nice unlinking message
+            return <Spinner message="UNlinking..." size="large" />;
           }
           return (
             <Modal

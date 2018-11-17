@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Select, Input } from "antd";
+import { Modal, Select, Input, message } from "antd";
 import { BLOCK_PROFILE, FLAG_ITEM } from "../../queries";
 import { Mutation } from "react-apollo";
 const Option = Select.Option;
@@ -30,6 +30,7 @@ class BlockModal extends Component {
     this.setState({ type });
   };
 
+  //TODO:Finish BLock
   handleSubmit = (blockProfile, flagItem) => {
     flagItem()
       .then(({ data }) => {
@@ -46,7 +47,17 @@ class BlockModal extends Component {
         // }
       })
       .then(() => {})
-      .catch(e => console.log(e.message));
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+        message.warn(
+          "An error has occured. We will have it fixed soon. Thanks for your patience."
+        );
+      });
   };
 
   menu = () => {
@@ -100,47 +111,55 @@ class BlockModal extends Component {
           targetID: id
         }}
       >
-        {(flagItem, { data, loading, error }) => (
-          <Mutation
-            mutation={BLOCK_PROFILE}
-            variables={{
-              blockedProfileID: id
-            }}
-          >
-            {(blockProfile, { data, loading, error }) => (
-              <Modal
-                title={
-                  profile
-                    ? "Report/Block " +
-                      profile.users.map((user, index) => {
-                        if (index === 0) return user.username;
-                        else return +" & " + user.username;
-                      }) +
-                      "?"
-                    : "Report"
+        {flagItem => {
+          return (
+            <Mutation
+              mutation={BLOCK_PROFILE}
+              variables={{
+                blockedProfileID: id
+              }}
+            >
+              {(blockProfile, { loading }) => {
+                if (loading) {
+                  //TODO: Make nice popup saving
+                  return <div>SAVING...</div>;
                 }
-                centered
-                visible={visible}
-                onOk={() => this.handleSubmit(blockProfile, flagItem)}
-                onCancel={close}
-                okButtonProps={{ disabled: reason === "" }}
-              >
-                Select a Reason: {blockMenu}
-                <div
-                  style={{
-                    display: other ? "block" : "none"
-                  }}
-                >
-                  <Input
-                    placeholder="Basic usage"
-                    onChange={this.handleTextChange}
-                    value={reason}
-                  />
-                </div>
-              </Modal>
-            )}
-          </Mutation>
-        )}
+                return (
+                  <Modal
+                    title={
+                      profile
+                        ? "Report/Block " +
+                          profile.users.map((user, index) => {
+                            if (index === 0) return user.username;
+                            else return +" & " + user.username;
+                          }) +
+                          "?"
+                        : "Report"
+                    }
+                    centered
+                    visible={visible}
+                    onOk={() => this.handleSubmit(blockProfile, flagItem)}
+                    onCancel={close}
+                    okButtonProps={{ disabled: reason === "" || loading }}
+                  >
+                    Select a Reason: {blockMenu}
+                    <div
+                      style={{
+                        display: other ? "block" : "none"
+                      }}
+                    >
+                      <Input
+                        placeholder="Basic usage"
+                        onChange={this.handleTextChange}
+                        value={reason}
+                      />
+                    </div>
+                  </Modal>
+                );
+              }}
+            </Mutation>
+          );
+        }}
       </Mutation>
     );
   }

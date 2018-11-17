@@ -4,7 +4,7 @@ import { Mutation } from "react-apollo";
 import { LOGIN, FB_RESOLVE } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
 import { Button, Icon } from "antd";
-import Error from "../Error";
+import Error from "../../components/common/Error";
 
 const initialState = {
   csrf: "",
@@ -23,7 +23,6 @@ class Signin extends React.Component {
     fbResolve().then(({ data }) => {
       this.setState({ phone: data.fbResolve });
       login().then(async ({ data }) => {
-        console.log(data.login.token);
         localStorage.setItem("token", data.login.token);
         //await this.props.refetch();
         this.props.history.push("/search");
@@ -38,11 +37,17 @@ class Signin extends React.Component {
       <div className="centerColumn fullHeight">
         <h2 className="App">Signin</h2>
         <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
-          {(fbResolve, { data, loading, error }) => {
+          {(fbResolve, { error }) => {
+            if (error) {
+              return <Error error={error} />;
+            }
             return (
               <div>
                 <Mutation mutation={LOGIN} variables={{ phone }}>
-                  {(login, { data, loading, error }) => {
+                  {(login, { loading, error }) => {
+                    if (error) {
+                      return <Error error={error} />;
+                    }
                     return (
                       <AccountKit
                         appId="172075056973555" // Update this!
@@ -57,7 +62,7 @@ class Signin extends React.Component {
                       >
                         {p => (
                           <div>
-                            <Button size="large" {...p}>
+                            <Button size="large" disabled={loading} {...p}>
                               {" "}
                               <Icon
                                 type="check-circle"

@@ -4,7 +4,7 @@ import { Layer, Stage } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
-import { Button } from "antd";
+import { Button, message } from "antd";
 
 class EditCanvasImage extends React.Component {
   static propTypes = {
@@ -61,18 +61,30 @@ class EditCanvasImage extends React.Component {
     await setS3PhotoParams(file.filename, file.filetype);
     //format name on backend
     //filename: this.formatFilename(file.name),
-    await signS3().then(async ({ data }) => {
-      const { signedRequest, key } = data.signS3;
-      await uploadToS3(file.filebody, signedRequest);
+    await signS3()
+      .then(async ({ data }) => {
+        const { signedRequest, key } = data.signS3;
+        await uploadToS3(file.filebody, signedRequest);
 
-      var foundIndex = fileList.findIndex(x => x.name == file.filename);
-      fileList[foundIndex] = {
-        uid: Date.now(),
-        url: key
-      };
+        var foundIndex = fileList.findIndex(x => x.name === file.filename);
+        fileList[foundIndex] = {
+          uid: Date.now(),
+          url: key
+        };
 
-      await handlePhotoListChange({ file, fileList });
-    });
+        await handlePhotoListChange({ file, fileList });
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+        message.warn(
+          "An error has occured. We will have it fixed soon. Thanks for your patience."
+        );
+      });
   };
 
   handleDragStart = e => {

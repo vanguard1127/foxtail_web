@@ -10,7 +10,7 @@ class PhotoGrid extends Component {
     const publicPics = photos.slice(0, 4);
     const privatePics = photos.slice(4, 8);
     return (
-      <table style={{ width: "30vw" }}>
+      <table style={{ ...this.props.gridStyle }}>
         <tbody>
           <tr>
             <th colSpan="4"> Public Photos (No nudity please)</th>

@@ -10,13 +10,11 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import App from "./components/App";
-//import App from "./components/Test";
 import Navbar from "./components/Navbar";
 import ProfileSearch from "./components/Profile/ProfileSearch";
 import Settings from "./components/Account/Settings";
 import EventPage from "./components/Event/EventPage";
 import ProfilePage from "./components/Profile/ProfilePage";
-import ChatPage from "./components/Chat/ChatPage";
 import InboxPage from "./components/Inbox/InboxPage";
 import SearchEvents from "./components/Event/SearchEvents";
 import EditProfile from "./components/EditProfile/EditProfilePage";
@@ -30,10 +28,12 @@ import { Breadcrumb, Layout } from "antd";
 import ApolloClient from "apollo-client";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
+import { onError } from "apollo-link-error";
 import { ApolloLink, split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
+import { notification } from "antd";
 
 const { Header, Content } = Layout;
 //http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
@@ -93,24 +93,41 @@ const stateLink = withClientState({
   defaults: defaultState
 });
 
-const link = ApolloLink.from([stateLink, AuthLink, splitlink]);
+const errorLink = onError(
+  ({ graphQLErrors, networkError, response, operation }) => {
+    if (graphQLErrors)
+      graphQLErrors.map(({ message, path }) => {
+        if (~message.indexOf("Client")) {
+          response.errors = null;
+          return null;
+        }
+        //TODO: Only allow this in dev mode
+        notification["error"]({
+          message: "Oops an Error",
+          placement: "bottomLeft",
+          description: `Message: ${message}, Path: ${path}. Please report this issue so we can fix it.`
+        });
+        return null;
+      });
+    if (networkError)
+      notification["warn"]({
+        message: "Check you network",
+        placement: "bottomLeft",
+        description: `[Network error]: ${networkError}`
+      });
+    return null;
+  }
+);
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
+const link = errorLink.concat(
+  ApolloLink.from([stateLink, AuthLink, splitlink])
+);
 
 const client = new ApolloClient({
   link,
-  cache,
-  onError: ({ networkError }) => {
-    if (networkError) {
-      console.log("Network Error:::", networkError);
-
-      //TODO: what to do with errors here
-      // if(networkError.statusCode === 401){
-      //   localStorage.removeItem('token');
-      // }
-    }
-  }
+  cache
 });
 
 const Root = ({ refetch, session }) => (
@@ -121,10 +138,8 @@ const Root = ({ refetch, session }) => (
 
 const breadcrumbNameMap = {
   "/": "Home",
-  "/signup": "Sign-Up",
   "/members": "Search Members",
   "/events": "Search Events",
-  "/signin": "Sign-In",
   "/editprofile": "Edit Profile",
   "/events/:id": "Event",
   "/chat/:id": "Chat Num",
@@ -176,7 +191,6 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
   <Layout className="layout">
     <Header>
       <div className="logo" />
-
       <Navbar session={session} />
     </Header>
     <Content
@@ -190,9 +204,9 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
     >
       {breadcrumbItems && <Breadcrumb>{breadcrumbItems}</Breadcrumb>}
       <Switch>
+        <Route path="/members" component={ProfileSearch} exact />
         <Route path="/" component={App} exact />
         <Route path="/signup" render={() => <Signup refetch={refetch} />} />
-        <Route path="/members" component={ProfileSearch} exact />
         <Route path="/events" component={SearchEvents} exact />
         <Route path="/signin" render={() => <Signin refetch={refetch} />} />
         <Route
@@ -201,7 +215,6 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
         />
         <Route path="/events/:id" component={EventPage} />
         <Route path="/members/:id" component={ProfilePage} />
-        <Route path="/chat/:id" component={ChatPage} />
         <Route path="/inbox" component={InboxPage} />
         <Route path="/settings" render={() => <Settings session={session} />} />
 

@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
-import { Dropdown, Menu, Icon } from "antd";
+import { Dropdown, Menu, Icon, message } from "antd";
 import AttendEvent from "./AttendEvent";
 import Chatroom from "../Chat/Chatroom";
 import moment from "moment";
+import Error from "../common/Error";
+import Spinner from "../common/Spinner";
 
 import AddEventModal from "./AddEventModal";
 
@@ -16,9 +18,21 @@ class EventPage extends Component {
       "Are you sure you want to delete this event?"
     );
     if (confirmDelete) {
-      deleteEvent().then(({ data }) => {
-        console.log(data);
-      });
+      deleteEvent()
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+          message.warn(
+            "An error has occured. We will have it fixed soon. Thanks for your patience."
+          );
+        });
     }
   };
 
@@ -47,7 +61,18 @@ class EventPage extends Component {
         .then(({ data }) => {
           this.setState({ visible: false });
         })
-        .catch(e => console.log(e.message));
+
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+          message.warn(
+            "An error has occured. We will have it fixed soon. Thanks for your patience."
+          );
+        });
     });
   };
 
@@ -97,10 +122,10 @@ class EventPage extends Component {
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error }) => {
           if (loading) {
-            return <div>Loading</div>;
+            return <Spinner message="Loading..." size="large" />;
           }
           if (error) {
-            return <div>Error</div>;
+            return <Error error={error} />;
           }
 
           const { event } = data;
@@ -127,7 +152,7 @@ class EventPage extends Component {
                   }
                 ]}
               >
-                {(deleteEvent, attrs = {}) => {
+                {(deleteEvent, { loading }) => {
                   const menu = (
                     <Menu>
                       <Menu.Item key="0" onClick={() => this.handleEdit(event)}>
@@ -148,7 +173,7 @@ class EventPage extends Component {
                         href={null}
                         style={{ float: "right" }}
                       >
-                        {attrs.loading ? (
+                        {loading ? (
                           "deleting..."
                         ) : (
                           <Icon
