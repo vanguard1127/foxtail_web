@@ -5,7 +5,6 @@ import ShareModal from "../common/ShareModal";
 
 class CardsList extends Component {
   state = {
-    searchProfiles: this.props.searchProfiles,
     shareModalVisible: false,
     blockModalVisible: false,
     profile: ""
@@ -28,7 +27,8 @@ class CardsList extends Component {
   };
 
   render() {
-    const { searchProfiles, profile } = this.state;
+    const { searchProfiles } = this.props;
+    const { profile } = this.state;
     if (!searchProfiles) {
       return <div>Nothing</div>;
     }
@@ -54,7 +54,6 @@ class CardsList extends Component {
           close={() => this.setShareModalVisible(false)}
           removeProfile={this.removeProfile}
         />
-
         {searchProfiles.map(profile => (
           <ProfileCard
             key={profile.id}

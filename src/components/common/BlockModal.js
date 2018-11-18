@@ -34,7 +34,6 @@ class BlockModal extends Component {
   handleSubmit = (blockProfile, flagItem) => {
     flagItem()
       .then(({ data }) => {
-        console.log("flagitem", data);
         this.props.close();
       })
       .then(() => {

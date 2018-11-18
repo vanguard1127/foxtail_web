@@ -31,7 +31,6 @@ class SettingsForm extends Component {
       if (err) {
         return;
       }
-      console.log("Received values of form: ", values);
 
       updateSettings()
         .then(({ data }) => {
@@ -40,7 +39,6 @@ class SettingsForm extends Component {
           } else {
             message.error("Error saving settings. Please contact support.");
           }
-          console.log(data);
         })
         .catch(res => {
           const errors = res.graphQLErrors.map(error => {

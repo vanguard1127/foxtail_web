@@ -3,14 +3,14 @@ import PlacesAutocomplete from "react-places-autocomplete";
 
 export default class AddressSearch extends React.Component {
   render() {
-    const { value, onChange, onSelect, style } = this.props;
+    const { value, onChange, onSelect, style, type } = this.props;
     return (
       <PlacesAutocomplete
         value={value}
         onChange={onChange}
         onSelect={onSelect}
         searchOptions={{
-          types: ["address"]
+          types: [type]
         }}
         shouldFetchSuggestions={value.length > 3}
       >

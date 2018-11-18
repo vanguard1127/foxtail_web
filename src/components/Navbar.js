@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu } from "antd";
+import { Menu, message } from "antd";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { LOGIN, FB_RESOLVE } from "../queries";
@@ -30,6 +30,10 @@ class NavbarUnAuth extends Component {
     });
     fbResolve()
       .then(({ data }) => {
+        if (data.fbResolve === null) {
+          message.warn("Login failed.");
+          return;
+        }
         this.setState({ phone: data.fbResolve });
         login()
           .then(async ({ data }) => {

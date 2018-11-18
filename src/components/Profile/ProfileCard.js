@@ -42,7 +42,6 @@ class ProfileCard extends Component {
       >
         {(likeProfile, { data, loading, error }) => {
           //TODO:Maybe a liking loader?
-          console.log("RETURN", data);
           if (error) {
             return <Error error={error} />;
           }

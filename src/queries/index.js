@@ -71,16 +71,18 @@ export const SEND_MESSAGE = gql`
 
 export const UPDATE_SETTINGS = gql`
   mutation(
-    $distance: Int!
-    $distanceMetric: String!
-    $ageRange: [Int]!
-    $interestedIn: [String]!
+    $distance: Int
+    $distanceMetric: String
+    $ageRange: [Int]
+    $interestedIn: [String]
     $locationLock: String
-    $visible: Boolean!
-    $newMsgNotify: Boolean!
-    $emailNotify: Boolean!
-    $showOnline: Boolean!
-    $likedOnly: Boolean!
+    $lat: Float
+    $long: Float
+    $visible: Boolean
+    $newMsgNotify: Boolean
+    $emailNotify: Boolean
+    $showOnline: Boolean
+    $likedOnly: Boolean
     $vibrateNotify: Boolean
   ) {
     updateSettings(
@@ -89,6 +91,8 @@ export const UPDATE_SETTINGS = gql`
       ageRange: $ageRange
       interestedIn: $interestedIn
       locationLock: $locationLock
+      lat: $lat
+      long: $long
       visible: $visible
       newMsgNotify: $newMsgNotify
       emailNotify: $emailNotify

@@ -12,7 +12,8 @@ import {
   Icon,
   Form,
   Select,
-  Radio
+  Radio,
+  message
 } from "antd";
 import { sexOptions } from "../../docs/data";
 // import Moustache from "../../images/moustache.svg"; // path to your '*.svg' file.
@@ -39,6 +40,7 @@ const initialState = {
 class SignupForm extends React.Component {
   state = { ...initialState };
 
+  //TODO: Figure out how to unmount before moving to prevent error
   componentDidMount() {
     if (localStorage.getItem("token") !== null) {
       this.props.history.push("/members");
@@ -63,32 +65,54 @@ class SignupForm extends React.Component {
   };
 
   handleFBReturn = ({ state, code }, fbResolve, createUser) => {
-    this.setState(
-      {
-        csrf: state,
-        code
-      },
-      () => {
-        fbResolve()
-          .then(({ data }) => {
-            this.setState({ phone: data.fbResolve });
-            createUser().then(async ({ data }) => {
-              localStorage.setItem("token", data.createUser.token);
-              //    await this.props.refetch();
-              this.clearState();
-              this.props.history.push("/editprofile");
-            });
-          })
-          .catch(res => {
-            const errors = res.graphQLErrors.map(error => {
-              return error.message;
-            });
-
-            //TODO: send errors to analytics from here
-            this.setState({ errors });
-          });
+    this.props.form.validateFields((err, values) => {
+      if (err) {
+        return;
       }
-    );
+
+      this.setState(
+        {
+          ...values,
+          csrf: state,
+          code
+        },
+        () => {
+          fbResolve()
+            .then(({ data }) => {
+              if (data.fbResolve === null) {
+                message.warn("Signup failed.");
+                return;
+              }
+              this.setState({ phone: data.fbResolve });
+              createUser()
+                .then(async ({ data }) => {
+                  if (data.createUser === null) {
+                    message.warn("Signup failed.");
+                    return;
+                  }
+                  localStorage.setItem("token", data.createUser.token);
+                  //    await this.props.refetch();
+                  this.clearState();
+                  this.props.history.push("/editprofile");
+                })
+                .catch(res => {
+                  const errors = res.graphQLErrors.map(error => {
+                    return error.message;
+                  });
+                  //TODO: send errors to analytics from here
+                  this.setState({ errors });
+                });
+            })
+            .catch(res => {
+              const errors = res.graphQLErrors.map(error => {
+                return error.message;
+              });
+              //TODO: send errors to analytics from here
+              this.setState({ errors });
+            });
+        }
+      );
+    });
   };
 
   validateForm = () => {
@@ -108,8 +132,7 @@ class SignupForm extends React.Component {
   };
 
   disabledDate = current => {
-    // Can not select days before today and today
-    console.log("current", current - 18);
+    // Can not select days before 18 years
     return (
       current &&
       current >
@@ -127,14 +150,15 @@ class SignupForm extends React.Component {
     };
 
     const {
+      csrf,
+      code,
+      phone,
       username,
       email,
       dob,
       interestedIn,
       gender
-    } = this.props.form.getFieldsValue();
-
-    const { csrf, code, phone } = this.state;
+    } = this.state;
 
     return (
       <div className="centerColumn fullHeight">

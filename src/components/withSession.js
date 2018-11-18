@@ -11,9 +11,9 @@ const withSession = Component => props => (
         return null;
       }
 
-      if (data.currentuser === null) {
-        return <Component {...props} refetch={refetch} />;
-      }
+      // if (data.currentuser === null) {
+      //   return <Component {...props} refetch={refetch} />;
+      // }
       return <Component {...props} refetch={refetch} session={data} />;
     }}
   </Query>

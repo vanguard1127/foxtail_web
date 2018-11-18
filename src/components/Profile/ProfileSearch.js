@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import CardsList from "./CardsList";
 import { SEARCH_PROFILES } from "../../queries";
 import Waypoint from "react-waypoint";
-import { graphql } from "react-apollo";
 import Spinner from "../common/Spinner";
+import { Query } from "react-apollo";
+import withLocation from "../withLocation";
 
 const LIMIT = 6;
 
@@ -13,9 +14,9 @@ class ProfileSearch extends Component {
     loading: false
   };
 
-  fetchData = async () => {
+  fetchData = async fetchMore => {
     this.setState({ loading: true });
-    this.props.data.fetchMore({
+    fetchMore({
       variables: {
         limit: LIMIT,
         skip: this.state.skip
@@ -37,52 +38,46 @@ class ProfileSearch extends Component {
     });
   };
 
-  handleEnd = () => {
-    this.setState(
-      state => ({ skip: this.state.skip + LIMIT }),
-      () => this.fetchData()
-    );
+  handleEnd = (previousPosition, fetchMore) => {
+    if (previousPosition === Waypoint.below) {
+      this.setState(
+        state => ({ skip: this.state.skip + LIMIT }),
+        () => this.fetchData(fetchMore)
+      );
+    }
   };
 
   render() {
-    if (this.state.loading) {
-      return <Spinner message="Loading Members..." size="large" />;
-    } else if (this.props.data.searchProfiles === undefined) {
-      return <div>No members near you</div>;
-    }
-
-    const data = this.props.data.searchProfiles;
-
+    const { long, lat } = this.props.location;
     return (
-      <div>
-        {/* <select>
-          <option>Nearby</option>
-        </select> */}
-        <CardsList searchProfiles={data} />
-        <Waypoint onEnter={this.handleEnd} />
-      </div>
+      <Fragment>
+        <Query
+          query={SEARCH_PROFILES}
+          variables={{ long, lat, limit: LIMIT }}
+          fetchPolicy="cache-first"
+        >
+          {({ data, loading, error, fetchMore }) => {
+            if (loading) {
+              return <Spinner message="Loading Members..." size="large" />;
+            } else if (data && data.searchProfiles === undefined) {
+              return <div>No members near you</div>;
+            }
+
+            return (
+              <div>
+                <CardsList searchProfiles={data.searchProfiles} />
+                <Waypoint
+                  onEnter={({ previousPosition }) =>
+                    this.handleEnd(previousPosition, fetchMore)
+                  }
+                />
+              </div>
+            );
+          }}
+        </Query>{" "}
+      </Fragment>
     );
   }
 }
-//TODO:FIX SOMETIMES LAT AND LONG NOT SENDINF
-let long;
-let lat;
-if (!navigator.geolocation) {
-  alert("Geolocation is not supported by this browser");
-}
-navigator.geolocation.getCurrentPosition(
-  position => {
-    long = position.coords.longitude;
-    lat = position.coords.latitude;
-  },
-  err => {
-    alert("Unable to fetch location");
-  }
-);
-export default graphql(SEARCH_PROFILES, {
-  options(ownProps) {
-    return {
-      variables: { long, lat, limit: LIMIT }
-    };
-  }
-})(ProfileSearch);
+
+export default withLocation(ProfileSearch);

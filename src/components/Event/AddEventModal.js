@@ -316,6 +316,7 @@ const AddEventModal = Form.create()(
                             this.setState({ validating: "validating" });
                           this.props.form.setFieldsValue({ address: value });
                         }}
+                        type={"address"}
                       />
                     )}
                   </FormItem>
