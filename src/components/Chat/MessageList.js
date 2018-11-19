@@ -5,9 +5,7 @@ import { List } from "antd";
 import moment from "moment";
 
 // Waypoint needs a component to pass innerRef
-const DateInner = ({ style, ...props})=>{
-  return (<div style={{ margin: "0 -20px 0 -20px",background: "#ffffff70", padding: '20px 0', textAlign: 'center', ...style }} {...props} />);
-}
+
 class DateItem extends Component {
   state = {
     position: null
@@ -39,11 +37,24 @@ class DateItem extends Component {
       this.props.onAbove();
     }
   }
-  shouldComponentUpdate(){
-    return true;
+  // shouldComponentUpdate(){
+  //   return true;
+  // }
+  renderDate({style = {},children}){
+    return (<div 
+      style={{
+        margin: "0 -20px 0 -20px",
+        background: "#ffffff70",
+        padding: '20px 0',
+        textAlign: 'center',
+        ...style }}
+      >
+      {children}
+      </div>
+    );
   }
   render(){
-    const { stickZIndex, showDate, onAbove, onInside, ...props } = this.props;
+    const { stickZIndex, showDate, children } = this.props;
     const stickStyles = {
       position: 'absolute',
       top: 0,
@@ -52,12 +63,12 @@ class DateItem extends Component {
       zIndex: stickZIndex || 10,
       backgroundColor: '#add8e6',
       padding: "20px 37px 20px 20px",
-      margin: 0,
+      margin: '0 17px 0 0',
     }
     return (<Fragment>
       <Waypoint bottom="100%" onEnter={this.onEnter} onLeave={this.onLeave} />
-      <DateInner {...props}/>
-      { showDate ? <DateInner style={stickStyles} {...props}/> : null}
+      {this.renderDate({style:{},children})}
+      { showDate ? this.renderDate({style: stickStyles, children}) : null}
     </Fragment>
  )
   }
@@ -220,6 +231,9 @@ class MessageList extends Component {
     this.checkScrollTopToFetch(100)
   }
   checkScrollTopToFetch(THRESHOLD){
+    if(this.state.loading){
+      this.messagesRef.current.scrollTop = this.state.previousScrollTop
+    }
     this.setState({
         previousScrollTop: this.messagesRef.current.scrollTop
     })
@@ -253,8 +267,9 @@ class MessageList extends Component {
         extraProps.ref = this.lastMessageRef;
       }
       let newElements = [<Message key={message.id} message={message} {...extraProps} />]   
+      // Check if last message's date is different current message's date
+      // to determine if a dateItem is inserted
       const messageDate = moment(message.createdAt);
-      // day of the month
       const dayOfTheMonth = messageDate.date(); 
       const lastDayOfTheMonth = res.lastDate && res.lastDate.date();
       const isSameDay = lastDayOfTheMonth === dayOfTheMonth
