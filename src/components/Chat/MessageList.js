@@ -4,13 +4,14 @@ import Message from "./Message.js";
 import { List } from "antd";
 import moment from "moment";
 
-// Waypoint needs a component to pass innerRef
 
 class DateItem extends Component {
   state = {
     position: null
   }
   componentDidMount(){
+    // When Waypoint mountsit only calls waypoints on screen. But the parent needs
+    // to know everyone's position. So we asume position = above if waypoint did called
     if(!this.state.position){
       this.setState({
         position: 'above'
@@ -37,9 +38,6 @@ class DateItem extends Component {
       this.props.onAbove();
     }
   }
-  // shouldComponentUpdate(){
-  //   return true;
-  // }
   renderDate({style = {},children}){
     return (<div 
       style={{
@@ -76,7 +74,7 @@ class DateItem extends Component {
 class MessageList extends Component {
   constructor(props) {
     super(props);
-    this.messagesRef = React.createRef();
+    this.scrollWrapperRef = React.createRef();
     this.lastMessageRef = React.createRef();
   }
   state = {
@@ -96,7 +94,7 @@ class MessageList extends Component {
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.messages !== this.props.messages){
       // If the user is on the bottom waiting for new messages, scroll him whenever one gets received
-      const isUserOnBottom = this.messagesRef.current.clientHeight + this.messagesRef.current.scrollTop > this.messagesRef.current.scrollHeight - this.lastMessageRef.current.clientHeight - 20;
+      const isUserOnBottom = this.scrollWrapperRef.current.clientHeight + this.scrollWrapperRef.current.scrollTop > this.scrollWrapperRef.current.scrollHeight - this.lastMessageRef.current.clientHeight - 20;
       if(!this.state.hasScrolledBottomInitial || isUserOnBottom ) {
         // ComponentDidMount does not scrolls to bottom on initial mount. Since on
         // initial mount there are only 6 items, not enough to scroll. And since waypoint
@@ -118,11 +116,12 @@ class MessageList extends Component {
     
   }
   restoreScroll(){
-    this.messagesRef.current.scrollTop = this.state.previousScrollTop + (this.messagesRef.current.scrollHeight - this.state.previousScrollHeight)
+    console.log('restoring');
+    this.scrollWrapperRef.current.scrollTop = this.state.previousScrollTop + (this.scrollWrapperRef.current.scrollHeight - this.state.previousScrollHeight)
     
     this.setState({
-      previousScrollHeight: this.messagesRef.current.scrollHeight,
-      previousScrollTop: this.messagesRef.current.scrollTop,
+      previousScrollHeight: this.scrollWrapperRef.current.scrollHeight,
+      previousScrollTop: this.scrollWrapperRef.current.scrollTop,
       restoreScroll: false,
     })
   }
@@ -130,16 +129,20 @@ class MessageList extends Component {
     const { hasScrolledBottomInitial } = this.props;
     console.log('Scrolling to Bottom')
     
-    this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
+    this.scrollWrapperRef.current.scrollTop = this.scrollWrapperRef.current.scrollHeight;
     this.setState({
-      previousClientHeight: this.messagesRef.current.clientHeight,
-      previousScrollHeight: this.messagesRef.current.scrollHeight,
-      previousScrollTop: this.messagesRef.current.scrollTop
+      previousClientHeight: this.scrollWrapperRef.current.clientHeight,
+      previousScrollHeight: this.scrollWrapperRef.current.scrollHeight,
+      previousScrollTop: this.scrollWrapperRef.current.scrollTop
     })
-    // We should get the scrollHeight before adding the items. But for now, this works
-    // The problem is that a threshold can be added right now
-    // So view allways starts at the bottom. Maybe this can be moved to cDM
-    if(!hasScrolledBottomInitial && this.messagesRef.current.scrollTop !== 0) {
+
+    // So view always should start at the bottom. 
+    // The idea is to scroll to bottom when the component is rendered with the messages
+    // But, in componentDidMount all initial messages are not loaded yet.
+    // So we fetch until all intial messages are loaded. Stoping when messages cover all the scrollview
+    // or when there are not more messages. Then on componentDidUpdate, this gets 
+    // executed to scroll to bottom
+    if(!hasScrolledBottomInitial && this.scrollWrapperRef.current.scrollTop !== 0) {
       this.setState({
         hasScrolledBottomInitial: true
       })
@@ -150,7 +153,8 @@ class MessageList extends Component {
         // Doesn't repeat because frist we are setting loading =  true
         // And on updateQuary, when the fetch it done. We set loading = false
         console.log('Can i fetch?', !this.state.loading && this.state.hasMoreItems);
-        // Wait for restoreScroll to take place, then do your thing
+        // Wait for restoreScroll to take place, then do the call.
+        // If not,things are going to play over each other.
         if(this.state.loading || !this.state.hasMoreItems || this.state.restoreScroll) return;
         const cursor = messages[messages.length - 1].createdAt;
         this.setState({ loading: true });
@@ -163,20 +167,23 @@ class MessageList extends Component {
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (!fetchMoreResult) {
             }
-
-            if (fetchMoreResult.getMessages.messages < this.props.limit) {
+            
+            const noMessagesLeft = fetchMoreResult.getMessages.messages < this.props.limit
+            if (noMessagesLeft) {
               this.setState({ hasMoreItems: false });
             }
-            // console.log("NEW", fetchMoreResult.getMessages.messages);
-            // console.log("PREVIOUS", previousResult.getMessages.messages);
+            console.log('more',fetchMoreResult.getMessages.messages < this.props.limit)
             previousResult.getMessages.messages = [
               ...previousResult.getMessages.messages,
               ...fetchMoreResult.getMessages.messages
             ];
-            console.log("Fetch Done")
+            console.log("Fetch done")
+            
             this.setState({
               loading: false,
-              restoreScroll: this.messagesRef.current.scrollHeight > this.messagesRef.current.clientHeight,
+              // When no more messages don't restore. It is not needed and it caused 
+              // the chat to restore on the next componentDidUpdate
+              restoreScroll: !noMessagesLeft && this.scrollWrapperRef.current.scrollHeight > this.scrollWrapperRef.current.clientHeight,
               dateWaypoints: []
             });
 
@@ -185,31 +192,6 @@ class MessageList extends Component {
         });
 
     }
-
-  // UNSAFE_componentWillReceiveProps({ messages }) {
-  //   if (
-  //     this.props.messagesRef &&
-  //     this.props.messagesRef.current.scrollTop < 100 &&
-  //     this.props.messages &&
-  //     messages &&
-  //     this.props.messages.length !== messages.length
-  //   ) {
-  //     // 35 items
-  //     const heightBeforeRender = this.props.messagesRef.current.scrollHeight;
-  //     // wait for 70 items to render
-  //     setTimeout(() => {
-  //       this.props.messagesRef.current.scrollTop =
-  //         this.props.messagesRef.current.scrollHeight - heightBeforeRender;
-  //     }, 120);
-  //   }
-  // }
-  // info = () => {
-  //   message.info(
-  //     moment(
-  //       this.props.messages[this.props.messages.length - 1].createdAt
-  //     ).format("dddd, MMMM Do YYYY")
-  //   );
-  // };
   renderTopMessage = (message)=>{
     return (
       <List.Item style={{color: 'blue'}}>
@@ -219,6 +201,7 @@ class MessageList extends Component {
   }
   onDateWaypointPostion = (i, position)=>{
     if(this.state.dateWaypoints[i] === position) return;
+    // 
     // Perhaps find another way to tell the parent children position
     // parent needs children position to tell the alst above item to render as absolute
     const newDateWaypoints = this.state.dateWaypoints;
@@ -228,22 +211,24 @@ class MessageList extends Component {
     })
   }
   onScroll = (ev)=>{
+    // Create scroll event handler here instead of on render for better performance.
     this.checkScrollTopToFetch(100)
   }
   checkScrollTopToFetch(THRESHOLD){
+    // Dont allow the user to scroll if loading more messages
     if(this.state.loading){
-      this.messagesRef.current.scrollTop = this.state.previousScrollTop
+      this.scrollWrapperRef.current.scrollTop = this.state.previousScrollTop
     }
+    // Keep around the scrollTop around to use later on restoreScroll & scrolltoBottom
     this.setState({
-        previousScrollTop: this.messagesRef.current.scrollTop
+        previousScrollTop: this.scrollWrapperRef.current.scrollTop
     })
-    
-    if(this.messagesRef.current.scrollTop < THRESHOLD){
+    // If is close to the top, then fetch 
+    if(this.scrollWrapperRef.current.scrollTop < THRESHOLD){
       this.fetchMore();
     }
   }
   render() {
-    //LOADING CAUSED INFINITE LOOP
     const { loading } = this.state;
     const { messages, hasMoreItems, children } = this.props;
     let topMessage = "default";
@@ -252,45 +237,56 @@ class MessageList extends Component {
     } else if(!hasMoreItems) {
       topMessage ="Looks like there is nothing else to see here"
     }
-    const sortedMessages = messages.slice().sort((a,b) => {
+    // Messages already come in order. Just in case.
+    const messagesSortedByDate = messages.slice().sort((a,b) => {
       const aDate = moment(a.createdAt);
       const bDate = moment(b.createdAt);
       return aDate.diff(bDate);
     });
+    // Every DateItem reports its position and this function
+    // finds the last DateItem that is above. Meaning, the one right above the scrollView
     const lastAboveDateWaypointIndex = this.state.dateWaypoints.reduce((res,cur,i)=>{
       if(cur === 'above') return i;
       return res;
-    }, 0) // default to first item
-    const MessageElements = sortedMessages.reduce((res, message, i)=>{
+    }, 0) // default to first item when none are above.
+
+    // Using Reduce so we can insert DateItem
+    // Subject to change, messages could be formated in a better way in the futurue
+    const MessageElements = messagesSortedByDate.reduce((res, message, i)=>{
+      // This gives a ref to the item on the bottom of the chat
+      // With that, we can measure it and determine if we should scroll 
+      // to bottom on new message
       let extraProps = {}
-      if(i > sortedMessages.length - 2 ) {
+      if(i > messagesSortedByDate.length - 2 ) {
         extraProps.ref = this.lastMessageRef;
       }
-      let newElements = [<Message key={message.id} message={message} {...extraProps} />]   
+      let elements = [<Message key={message.id} message={message} {...extraProps} />]   
       // Check if last message's date is different current message's date
-      // to determine if a dateItem is inserted
+      // to figure out if a dateItem sould be inserted
       const messageDate = moment(message.createdAt);
       const dayOfTheMonth = messageDate.date(); 
       const lastDayOfTheMonth = res.lastDate && res.lastDate.date();
       const isSameDay = lastDayOfTheMonth === dayOfTheMonth
       if(!isSameDay) {
-        newElements = [<DateItem
+        elements = [<DateItem
         stickZIndex={i + 10}
         onAbove={()=>{ this.onDateWaypointPostion(res.nDate, 'above')}}
         onInside={()=>{ this.onDateWaypointPostion(res.nDate, 'inside')}}
         showDate={lastAboveDateWaypointIndex === res.nDate}
+        // Keys won't collied because DateItems's dates are days appart from each other 
         key={messageDate.format()}
         
-        >{messageDate.format("dddd, MMMM Do YYYY")}</DateItem>].concat(newElements);
+        >{messageDate.format("dddd, MMMM Do YYYY")}</DateItem>].concat(elements);
       }
-      return { lastDate: messageDate, nDate: isSameDay ? res.nDate : res.nDate + 1 ,elements: res.elements.concat(newElements)}
+      // Keep the last date around so we can compare to it on next iteration
+      return { lastDate: messageDate, nDate: isSameDay ? res.nDate : res.nDate + 1 ,elements: res.elements.concat(elements)}
     }, { lastDayOfTheMonth: null, nDate: 0, elements: []});
     return (
       <Fragment>
       <div style={{position: 'relative', display: 'flex', flexDirection: "column", height: '100%', overflow: 'hidden'}}>
         <div
           className="chats"
-          ref={this.messagesRef}
+          ref={this.scrollWrapperRef}
           style={{ backgroundColor: "#eee", height: '100%' }}
           onScroll={this.onScroll}
         >
