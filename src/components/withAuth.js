@@ -5,7 +5,6 @@ import { Query } from "react-apollo";
 import { Redirect } from "react-router-dom";
 
 import { GET_CURRENT_USER } from "../queries";
-
 const withAuth = conditionFunc => Component => props => (
   <Query query={GET_CURRENT_USER}>
     {({ data, loading, refetch }) => {
@@ -14,6 +13,7 @@ const withAuth = conditionFunc => Component => props => (
       }
 
       if (conditionFunc(data)) {
+        this.isProfileOK = data.currentuser.isProfileOK;
         if (
           !data.currentuser.isProfileOK &&
           ~window.location.href.indexOf("/editprofile") === 0

@@ -61,7 +61,7 @@ class ProfileSearch extends Component {
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return <Spinner message="Loading Members..." size="large" />;
-            } else if (data && data.searchProfiles === undefined) {
+            } else if (data && data.searchProfiles.length === 0) {
               return <div>No members near you</div>;
             }
 

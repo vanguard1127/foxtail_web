@@ -86,8 +86,12 @@ class EditProfileForm extends Component {
           }
           //TODO: use data to alter search...
           this.clearState();
+          console.log("1", aboutTest);
+          this.props.refetch();
+          console.log("#######33333");
           if (aboutTest === "") {
-            this.props.history.push("/search");
+            console.log("2");
+            this.props.history.push("/members");
           }
         })
         .catch(res => {
@@ -115,7 +119,8 @@ class EditProfileForm extends Component {
           }
 
           const { users, photos, about, desires } = data.getMyProfile;
-
+          const needPics =
+            photos[0].url === "x" && publicPhotoList.length === 0;
           return (
             <Mutation
               mutation={UPDATE_PROFILE}
@@ -141,11 +146,9 @@ class EditProfileForm extends Component {
                         {...formItemLayout}
                         label={" "}
                         colon={false}
-                        validateStatus={
-                          publicPhotoList.length === 0 ? "error" : ""
-                        }
+                        validateStatus={needPics ? "error" : ""}
                         help={
-                          publicPhotoList.length === 0 &&
+                          needPics &&
                           "Please upload at least 1 public image of yourself."
                         }
                       >

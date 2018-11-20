@@ -6,7 +6,6 @@ import { Card, Icon } from "antd";
 import { LIKE_PROFILE } from "../../queries";
 import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
-import Error from "../common/Error";
 
 const { Meta } = Card;
 
@@ -14,12 +13,8 @@ class ProfileCard extends Component {
   state = {};
 
   handleSubmit = likeProfile => {
-    //const { id } = this.props.profile;
     likeProfile()
-      .then(({ data }) => {
-        // this.props.removeProfile(id);
-      })
-
+      .then()
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
           return error.message;
@@ -40,11 +35,9 @@ class ProfileCard extends Component {
           toProfileID: id
         }}
       >
-        {(likeProfile, { data, loading, error }) => {
-          //TODO:Maybe a liking loader?
-          if (error) {
-            return <Error error={error} />;
-          }
+        {(likeProfile, { data, loading }) => {
+          //TODO: Create finalized trigger like reaction. Started below
+
           return (
             <Card
               style={{

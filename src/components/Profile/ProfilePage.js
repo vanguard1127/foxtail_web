@@ -5,7 +5,6 @@ import { GET_PROFILE } from "../../queries";
 import moment from "moment";
 import ImageCarousel from "./ImageCarousel";
 import DesiresList from "../Desire/DesiresList";
-import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 import { Icon, Button } from "antd";
 import withAuth from "../withAuth";
@@ -29,10 +28,12 @@ class ProfilePage extends Component {
         {({ data, loading, error }) => {
           if (loading) {
             return <Spinner message="Loading..." size="large" />;
+          } else if (!data || !data.profile) {
+            return (
+              <div>This profile either never existed or it no longer does.</div>
+            );
           }
-          if (error) {
-            return <Error error={error} />;
-          }
+
           const { users, photos, desires, about } = data.profile;
           const publicPics = photos.slice(0, 4);
           const privatePics = photos.slice(4, 8);

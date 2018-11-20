@@ -12,7 +12,8 @@ class NamePlate extends Component {
           {user.username},{moment().diff(user.dob, "years")} {user.gender}
         </div>
         <div style={{ marginLeft: "5px", float: "left" }}>
-          <Badge />
+          <Badge type={!user.verifications.std && "STD"} />
+          <Badge type={user.verifications.photo && "Photo"} />
         </div>
       </div>
     );

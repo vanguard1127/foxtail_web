@@ -415,7 +415,7 @@ export const GET_MY_PROFILE = gql`
 `;
 
 export const GET_PROFILE = gql`
-  query($id: String!) {
+  query($id: ID!) {
     profile(id: $id) {
       id
       about

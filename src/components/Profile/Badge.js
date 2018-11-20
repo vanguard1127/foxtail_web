@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { Icon } from "antd";
 
 class Badge extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   render() {
-    return <Icon type="safety-certificate" theme="twoTone" />;
+    if (this.props.type === "STD") {
+      return <Icon type="safety-certificate" theme="twoTone" />;
+    } else if (this.props.type === "Photo") {
+      return <Icon type="camera" theme="twoTone" />;
+    }
+    return null;
   }
 }
 
