@@ -5,6 +5,8 @@ import Waypoint from "react-waypoint";
 import Spinner from "../common/Spinner";
 import { Query } from "react-apollo";
 import withLocation from "../withLocation";
+import withAuth from "../withAuth";
+import { withRouter } from "react-router-dom";
 
 const LIMIT = 6;
 
@@ -80,4 +82,6 @@ class ProfileSearch extends Component {
   }
 }
 
-export default withLocation(ProfileSearch);
+export default withAuth(session => session && session.currentuser)(
+  withRouter(withLocation(ProfileSearch))
+);

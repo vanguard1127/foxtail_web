@@ -7,6 +7,7 @@ import Chatroom from "../Chat/Chatroom";
 import TimeAgo from "../common/TimeAgo";
 import Error from "../common/Error";
 import Spinner from "../common/Spinner";
+import withAuth from "../withAuth";
 
 const LIMIT = 10;
 
@@ -185,4 +186,4 @@ class InboxPage extends Component {
   }
 }
 
-export default InboxPage;
+export default withAuth(session => session && session.currentuser)(InboxPage);

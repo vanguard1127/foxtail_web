@@ -13,6 +13,8 @@ import ShareModal from "../common/ShareModal";
 import MyEvents from "./MyEvents";
 import Error from "../common/Error";
 import Spinner from "../common/Spinner";
+import withLocation from "../withLocation";
+import withAuth from "../withAuth";
 
 const LIMIT = 3;
 //TODO: fix moment date format issue
@@ -27,18 +29,6 @@ class SearchEvents extends Component {
     long: 0,
     all: true
   };
-
-  // if (!navigator.geolocation) {
-  //   alert("Geolocation is not supported by this browser");
-  // }
-  // navigator.geolocation.getCurrentPosition(
-  //   position => {
-  //     console.log(position);
-  //   },
-  //   err => {
-  //     alert("Unable to fetch location");
-  //   }
-  // );
 
   showModal = () => {
     this.setState({ visible: true });
@@ -170,10 +160,9 @@ class SearchEvents extends Component {
       visible,
       blockModalVisible,
       shareModalVisible,
-      lat,
-      long,
       all
     } = this.state;
+    const { long, lat } = this.props.location;
 
     const AddModalFrag = (
       <div
@@ -264,4 +253,6 @@ class SearchEvents extends Component {
   }
 }
 
-export default withRouter(SearchEvents);
+export default withAuth(session => session && session.currentuser)(
+  withRouter(withLocation(SearchEvents))
+);

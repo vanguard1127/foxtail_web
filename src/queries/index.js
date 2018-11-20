@@ -186,18 +186,6 @@ export const FB_RESOLVE = gql`
   }
 `;
 
-export const UPLOAD_PHOTO = gql`
-  mutation($order: Int!, $url: String!) {
-    uploadPhoto(order: $order, url: $url)
-  }
-`;
-
-export const UPLOAD_PHOTOLIST = gql`
-  mutation($photoList: [String]!, $isPrivate: Boolean) {
-    uploadPhotoList(photoList: $photoList, isPrivate: $isPrivate)
-  }
-`;
-
 export const UPDATE_PROFILE = gql`
   mutation(
     $desires: [String]
@@ -371,6 +359,15 @@ export const GET_CURRENT_USER = gql`
       username
       userID
       profileID
+      blackMember
+      isProfileOK
+      locationLock {
+        city
+        crds {
+          lat
+          long
+        }
+      }
     }
   }
 `;

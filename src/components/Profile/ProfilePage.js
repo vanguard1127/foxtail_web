@@ -8,6 +8,7 @@ import DesiresList from "../Desire/DesiresList";
 import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 import { Icon, Button } from "antd";
+import withAuth from "../withAuth";
 const ButtonGroup = Button.Group;
 
 class ProfilePage extends Component {
@@ -257,4 +258,6 @@ class ProfilePage extends Component {
   }
 }
 
-export default withRouter(ProfilePage);
+export default withAuth(session => session && session.currentuser)(
+  withRouter(ProfilePage)
+);

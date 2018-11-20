@@ -17,7 +17,13 @@ class SetLocationModal extends Component {
     updateSettings()
       .then(({ data }) => {
         if (data.updateSettings) {
-          message.success("Location set to:" + this.state.locationLock);
+          this.props.setLocation({
+            coords: {
+              longitude: this.state.long,
+              latitude: this.state.lat
+            }
+          });
+          message.success("Location set to: " + this.state.locationLock);
           this.props.close();
         } else {
           message.error("Location not set! Please contact support.");
@@ -58,7 +64,6 @@ class SetLocationModal extends Component {
     const { visible, close } = this.props;
 
     const { locationLock, lat, long } = this.state;
-    console.log(locationLock, lat, long);
     return (
       <Mutation
         mutation={UPDATE_SETTINGS}

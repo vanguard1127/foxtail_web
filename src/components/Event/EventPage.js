@@ -8,6 +8,7 @@ import Chatroom from "../Chat/Chatroom";
 import moment from "moment";
 import Error from "../common/Error";
 import Spinner from "../common/Spinner";
+import withAuth from "../withAuth";
 
 import AddEventModal from "./AddEventModal";
 
@@ -210,4 +211,6 @@ class EventPage extends Component {
   }
 }
 
-export default withRouter(EventPage);
+export default withAuth(session => session && session.currentuser)(
+  withRouter(EventPage)
+);

@@ -18,7 +18,6 @@ import ProfilePage from "./components/Profile/ProfilePage";
 import InboxPage from "./components/Inbox/InboxPage";
 import SearchEvents from "./components/Event/SearchEvents";
 import EditProfile from "./components/EditProfile/EditProfilePage";
-import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
 import Footer from "./components/Footer";
@@ -214,7 +213,6 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
         <Route path="/" component={App} exact />
         <Route path="/signup" render={() => <Signup refetch={refetch} />} />
         <Route path="/events" component={SearchEvents} exact />
-        <Route path="/signin" render={() => <Signin refetch={refetch} />} />
         <Route
           path="/editprofile"
           render={() => <EditProfile session={session} />}

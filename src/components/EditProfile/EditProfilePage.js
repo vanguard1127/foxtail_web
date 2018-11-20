@@ -25,6 +25,11 @@ const initialState = {
 class EditProfileForm extends Component {
   state = { ...initialState };
 
+  componentDidMount() {
+    if (this.props.location.state) {
+      message.warn(this.props.location.state.alert);
+    }
+  }
   clearState = () => {
     this.setState({ ...initialState });
   };
@@ -99,7 +104,6 @@ class EditProfileForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { publicPhotoList, privatePhotoList } = this.state;
-
     return (
       <Query query={GET_MY_PROFILE}>
         {({ data, loading, error }) => {

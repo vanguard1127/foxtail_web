@@ -40,7 +40,6 @@ const initialState = {
 class SignupForm extends React.Component {
   state = { ...initialState };
 
-  //TODO: Figure out how to unmount before moving to prevent error
   componentDidMount() {
     if (localStorage.getItem("token") !== null) {
       this.props.history.push("/members");

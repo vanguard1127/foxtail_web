@@ -5,6 +5,7 @@ import { UPDATE_SETTINGS, GET_SETTINGS } from "../../queries";
 import { sexOptions } from "../../docs/data";
 import Error from "../common/Error";
 import Spinner from "../common/Spinner";
+import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
 import {
   Form,
@@ -366,4 +367,6 @@ class SettingsForm extends Component {
 
 const Settings = Form.create()(SettingsForm);
 
-export default withRouter(Settings);
+export default withAuth(session => session && session.currentuser)(
+  withRouter(Settings)
+);
