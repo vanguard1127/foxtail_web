@@ -6,12 +6,11 @@ import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import AddEventModal from "./AddEventModal";
 import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
 import MyEvents from "./MyEvents";
-import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
@@ -54,21 +53,14 @@ class SearchEvents extends Component {
 
   handleSubmit = (e, createEvent) => {
     e.preventDefault();
-
     this.formRef.props.form.validateFields((err, fieldsValue) => {
       if (err) {
         return;
       }
-      // Should format date value before submit.
-      // const dateTimeValue = fieldsValue["time"].format("YYYY-MM-DD HH:mm a");
-      // const values = {
-      //   ...fieldsValue,
-      //   dateTimeValue
-      // };
-      // console.log("Received values of form: ", values);
 
       createEvent()
         .then(({ data }) => {
+          message.success("Event created successfully! Share to get attendees");
           this.props.history.push("/events/" + data.createEvent.id);
         })
         .catch(res => {
@@ -211,9 +203,6 @@ class SearchEvents extends Component {
               return <Spinner message="Loading Events..." size="large" />;
             }
 
-            if (error) {
-              return <Error error={error} />;
-            }
             if (!data.searchEvents || data.searchEvents.length === 0) {
               return <div>No Events Available</div>;
             }

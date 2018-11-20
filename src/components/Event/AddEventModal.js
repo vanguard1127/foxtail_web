@@ -50,6 +50,12 @@ const initialState = {
   eventname: ""
 };
 
+const dummyRequest = ({ file, onSuccess }) => {
+  setTimeout(() => {
+    onSuccess("ok");
+  }, 0);
+};
+
 const AddEventModal = Form.create()(
   class extends React.Component {
     state = {
@@ -72,9 +78,6 @@ const AddEventModal = Form.create()(
         this.props.form.resetFields("upload");
         message.success(`${info.file.name} file removed successfully.`);
         return;
-      }
-      if (info.file.status !== "uploading") {
-        console.log("loading");
       }
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -270,7 +273,7 @@ const AddEventModal = Form.create()(
                     {getFieldDecorator("time", {
                       rules: [
                         {
-                          type: "date",
+                          type: "object",
                           required: true,
                           message: "Please select time!"
                         }
@@ -364,12 +367,19 @@ const AddEventModal = Form.create()(
                                   : false
                               }
                               name="file"
-                              action="//jsonplaceholder.typicode.com/posts/"
+                              customRequest={dummyRequest}
                               onChange={this.handlePhotoChange}
                               file={this.props.form.upload}
                               data={file => this.handleUpload(file, signS3)}
                             >
-                              <Button disabled={loading}>
+                              <Button
+                                disabled={
+                                  loading ||
+                                  this.props.form.getFieldValue("upload")
+                                    ? true
+                                    : false
+                                }
+                              >
                                 <Icon type="upload" /> Click to Upload
                               </Button>
                             </Upload>

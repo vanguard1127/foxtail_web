@@ -279,7 +279,7 @@ export const SEARCH_DESIRES = gql`
 `;
 
 export const GET_EVENT = gql`
-  query($id: String!) {
+  query($id: ID!) {
     event(id: $id) {
       id
       eventname

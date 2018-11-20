@@ -6,7 +6,6 @@ import { Dropdown, Menu, Icon } from "antd";
 import AttendEvent from "./AttendEvent";
 import Chatroom from "../Chat/Chatroom";
 import moment from "moment";
-import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 
@@ -118,9 +117,10 @@ class EventPage extends Component {
         {({ data, loading, error }) => {
           if (loading) {
             return <Spinner message="Loading..." size="large" />;
-          }
-          if (error) {
-            return <Error error={error} />;
+          } else if (!data || !data.event) {
+            return (
+              <div>This event either never existed or it no longer does.</div>
+            );
           }
 
           const { event } = data;
