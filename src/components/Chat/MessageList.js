@@ -3,6 +3,7 @@ import Waypoint from "react-waypoint";
 import Message from "./Message.js";
 import { List } from "antd";
 import moment from "moment";
+import  _ from 'lodash'
 
 
 class DateItem extends Component {
@@ -237,50 +238,81 @@ class MessageList extends Component {
     } else if(!hasMoreItems) {
       topMessage ="Looks like there is nothing else to see here"
     }
+    // DELETE if new solutions is ok
     // Messages already come in order. Just in case.
-    const messagesSortedByDate = messages.slice().sort((a,b) => {
-      const aDate = moment(a.createdAt);
-      const bDate = moment(b.createdAt);
-      return aDate.diff(bDate);
-    });
-    // Every DateItem reports its position and this function
-    // finds the last DateItem that is above. Meaning, the one right above the scrollView
+    // const messagesSortedByDate = messages.slice().sort((a,b) => {
+    //   const aDate = moment(a.createdAt);
+    //   const bDate = moment(b.createdAt);
+    //   return aDate.diff(bDate);
+    // });
+
     const lastAboveDateWaypointIndex = this.state.dateWaypoints.reduce((res,cur,i)=>{
       if(cur === 'above') return i;
       return res;
     }, 0) // default to first item when none are above.
 
-    // Using Reduce so we can insert DateItem
-    // Subject to change, messages could be formated in a better way in the futurue
-    const MessageElements = messagesSortedByDate.reduce((res, message, i)=>{
-      // This gives a ref to the item on the bottom of the chat
-      // With that, we can measure it and determine if we should scroll 
-      // to bottom on new message
-      let extraProps = {}
-      if(i > messagesSortedByDate.length - 2 ) {
-        extraProps.ref = this.lastMessageRef;
-      }
-      let elements = [<Message key={message.id} message={message} {...extraProps} />]   
-      // Check if last message's date is different current message's date
-      // to figure out if a dateItem sould be inserted
-      const messageDate = moment(message.createdAt);
-      const dayOfTheMonth = messageDate.date(); 
-      const lastDayOfTheMonth = res.lastDate && res.lastDate.date();
-      const isSameDay = lastDayOfTheMonth === dayOfTheMonth
-      if(!isSameDay) {
-        elements = [<DateItem
-        stickZIndex={i + 10}
-        onAbove={()=>{ this.onDateWaypointPostion(res.nDate, 'above')}}
-        onInside={()=>{ this.onDateWaypointPostion(res.nDate, 'inside')}}
-        showDate={lastAboveDateWaypointIndex === res.nDate}
+    const messageElements = _.flatten(_.chain(messages)
+    .groupBy(datum => moment(datum.createdAt).format("dddd, MMMM Do YYYY").toLocaleUpperCase() )
+    .map((messages, date) => ({date, messages})) //using ES6 shorthand to generate the objects
+    .reverse() // Reverse so latest date is on the bottom
+    .map((item,index, groupList)=> { 
+      const messageElements = item.messages.map(
+        (message, j, messageList) => {
+            let props = {
+              key: message.id,
+              message,
+            };
+            if(j === messageList.length - 1 && index === groupList.length - 1) {
+              // Attach a ref to the last element for later measurement
+              props.ref = this.lastMessageRef;
+            }
+            return (<Message {...props} />)
+          }
+        )
+      // At the start of every date group insert a date element. 
+      const dateElement = <DateItem
+        stickZIndex={index + 10}
+        onAbove={()=>{ this.onDateWaypointPostion(index, 'above')}}
+        onInside={()=>{ this.onDateWaypointPostion(index, 'inside')}}
+        showDate={lastAboveDateWaypointIndex === index}
         // Keys won't collied because DateItems's dates are days appart from each other 
-        key={messageDate.format()}
+        key={`messageDate-${item.date}`}
         
-        >{messageDate.format("dddd, MMMM Do YYYY")}</DateItem>].concat(elements);
-      }
-      // Keep the last date around so we can compare to it on next iteration
-      return { lastDate: messageDate, nDate: isSameDay ? res.nDate : res.nDate + 1 ,elements: res.elements.concat(elements)}
-    }, { lastDayOfTheMonth: null, nDate: 0, elements: []});
+        >{item.date}</DateItem>
+      return [dateElement].concat(messageElements);
+      })
+    .value());
+
+    // DELETE if new solutions is ok
+    // const MessageElements = messagesSortedByDate.reduce((res, message, i)=>{
+    //   // This gives a ref to the item on the bottom of the chat
+    //   // With that, we can measure it and determine if we should scroll 
+    //   // to bottom on new message
+    //   let extraProps = {}
+    //   if(i > messagesSortedByDate.length - 2 ) {
+    //     extraProps.ref = this.lastMessageRef;
+    //   }
+    //   let elements = [<Message key={message.id} message={message} {...extraProps} />]   
+    //   // Check if last message's date is different current message's date
+    //   // to figure out if a dateItem sould be inserted
+    //   const messageDate = moment(message.createdAt);
+    //   const dayOfTheMonth = messageDate.date(); 
+    //   const lastDayOfTheMonth = res.lastDate && res.lastDate.date();
+    //   const isSameDay = lastDayOfTheMonth === dayOfTheMonth
+    //   if(!isSameDay) {
+    //     elements = [<DateItem
+    //     stickZIndex={i + 10}
+    //     onAbove={()=>{ this.onDateWaypointPostion(res.nDate, 'above')}}
+    //     onInside={()=>{ this.onDateWaypointPostion(res.nDate, 'inside')}}
+    //     showDate={lastAboveDateWaypointIndex === res.nDate}
+    //     // Keys won't collied because DateItems's dates are days appart from each other 
+    //     key={messageDate.format()}
+        
+    //     >{messageDate.format("dddd, MMMM Do YYYY")}</DateItem>].concat(elements);
+    //   }
+    //   // Keep the last date around so we can compare to it on next iteration
+    //   return { lastDate: messageDate, nDate: isSameDay ? res.nDate : res.nDate + 1 ,elements: res.elements.concat(elements)}
+    // }, { lastDayOfTheMonth: null, nDate: 0, elements: []});
     return (
       <Fragment>
       <div style={{position: 'relative', display: 'flex', flexDirection: "column", height: '100%', overflow: 'hidden'}}>
@@ -291,7 +323,7 @@ class MessageList extends Component {
           onScroll={this.onScroll}
         >
         {this.renderTopMessage(topMessage)}
-          {MessageElements.elements}
+          {messageElements}
         </div>
         {children}
         </div>
