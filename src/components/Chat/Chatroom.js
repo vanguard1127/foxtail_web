@@ -4,6 +4,7 @@ import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
 import { Form, Input, Button } from "antd";
 import Waypoint from "react-waypoint";
 import MessageList from "./MessageList.js";
+import Spinner from "../common/Spinner";
 
 const LIMIT = 6;
 
@@ -98,19 +99,20 @@ class Chatroom extends Component {
     let unsubscribe = null;
 
     return (
-      <div className="chatroom" style={{position: 'relative',...style}}>
-      <div className="chatroom-header">
-
-              <h3 className="chatroom-title">{title}<span className="chatroom-titleExtra">{titleExtra}</span></h3>
-              <h4 className="chatroom-date">{lastSeen}</h4>
-              </div>
-      <Query
+      <div className="chatroom" style={{ position: "relative", ...style }}>
+        <div className="chatroom-header">
+          <h3 className="chatroom-title">
+            {title}
+            <span className="chatroom-titleExtra">{titleExtra}</span>
+          </h3>
+          <h4 className="chatroom-date">{lastSeen}</h4>
+        </div>
+        <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit: LIMIT, cursor }}
           fetchPolicy="network-only"
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
-
             if (loading) {
               return <Spinner message="Loading..." size="large" />;
             }
@@ -139,7 +141,7 @@ class Chatroom extends Component {
             }
             return (
               <Fragment>
-                { /*<Affix style={{position: 'absolute', top:'0'}}>{'test'}</Affix>*/}
+                {/*<Affix style={{position: 'absolute', top:'0'}}>{'test'}</Affix>*/}
                 <MessageList
                   chatID={chatID}
                   ref={this.MessageList}
@@ -153,8 +155,7 @@ class Chatroom extends Component {
           }}
         </Query>
 
-
-        <InputForm chatID={chatID}/>
+        <InputForm chatID={chatID} />
       </div>
     );
   }
@@ -200,11 +201,13 @@ class InputFormTemplate extends Component {
         {(sendMessage, { data, loading, error }) => (
           <Form className="input">
             <Form.Item style={{ marginBottom: "0px", flexGrow: 1 }}>
-              {getFieldDecorator("text")(<Input type="text" style={{width: '100%'}} />)}
+              {getFieldDecorator("text")(
+                <Input type="text" style={{ width: "100%" }} />
+              )}
             </Form.Item>
             <Button
               type="submit"
-              style={{ marginLeft: '16px' }}
+              style={{ marginLeft: "16px" }}
               onClick={e => this.submitMessage(e, sendMessage)}
             >
               Send

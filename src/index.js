@@ -199,7 +199,7 @@ const breadcrumbNameMap = {
   "/editprofile": "Edit Profile",
   "/events/:id": "Event",
   "/chat/:id": "Chat Num",
-  "/profile/:id": "Profile Num",
+  "/members/:id": "Profile Num",
   "/myaccount": "My Account"
 };
 

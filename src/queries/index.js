@@ -298,6 +298,7 @@ export const GET_EVENT = gql`
       long
       address
       time
+      chatID
       invited {
         id
       }

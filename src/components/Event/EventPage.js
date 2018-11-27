@@ -117,6 +117,7 @@ class EventPage extends Component {
           }
 
           const { event } = data;
+          console.log("event", event);
           const queryParams = JSON.parse(
             sessionStorage.getItem("searchEventQuery")
           );

@@ -42,6 +42,7 @@ class SignupForm extends React.Component {
 
   componentDidMount() {
     if (localStorage.getItem("token") !== null) {
+      //TODO: Check somehow if user active...Possibly use session.
       this.props.history.push("/members");
     }
   }

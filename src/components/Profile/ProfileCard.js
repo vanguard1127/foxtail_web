@@ -75,7 +75,7 @@ class ProfileCard extends Component {
                       }}
                       type="info-circle"
                       onClick={() =>
-                        this.props.history.push("/profile/" + profile.id)
+                        this.props.history.push("/members/" + profile.id)
                       }
                     />
                   </div>
@@ -121,7 +121,7 @@ class ProfileCard extends Component {
                       <div key={user.id}>
                         <a
                           onClick={() =>
-                            this.props.history.push("/profile/" + profile.id)
+                            this.props.history.push("/members/" + profile.id)
                           }
                         >
                           {" "}
