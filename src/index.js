@@ -59,14 +59,8 @@ const AuthLink = new ApolloLink((operation, forward) => {
     ...context,
     headers: {
       ...context.headers,
-<<<<<<< HEAD
       authorization: `Bearer ${localStorage.getItem("token")}`,
       "x-refresh-token": localStorage.getItem("refreshToken")
-=======
-      authorization: `Bearer ${token}`,
-      authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmU5ZDUwMjdmM2I4NzAwMjlhNjNhYzIiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTQyNzI5NTU1LCJleHAiOjE1NDMzMzQzNTV9.qXnQqd1Xhlzlyr0VKk-stslLX0Qa6QRliXJ3n-xJrnY`
-      
->>>>>>> origin/chatroom-fix-and-other-tweaks
     }
   }));
   return forward(operation);
