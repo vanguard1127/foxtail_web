@@ -83,7 +83,6 @@ class SettingsForm extends Component {
           if (error) {
             return <div>{error.message}</div>;
           }
-          console.log("DATA IN SETT", data);
           if (!data.getSettings) {
             return <div>Error occured. Please contact support!</div>;
           }

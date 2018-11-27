@@ -41,9 +41,9 @@ class SignupForm extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
-    // if (localStorage.getItem("token") !== null) {
-    //   this.props.history.push("/members");
-    // }
+    if (localStorage.getItem("token") !== null) {
+      this.props.history.push("/members");
+    }
   }
 
   clearState = () => {

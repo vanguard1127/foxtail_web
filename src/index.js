@@ -72,7 +72,6 @@ const afterwareLink = new ApolloLink((operation, forward) => {
       response: { headers }
     } = operation.getContext();
     if (headers) {
-      console.log("test:", headers.get("x-token"));
       const token = headers.get("authorization");
       const refreshToken = headers.get("x-refresh-token");
 
@@ -119,13 +118,11 @@ const errorLink = onError(
   ({ graphQLErrors, networkError, response, operation, forward }) => {
     if (graphQLErrors)
       graphQLErrors.map(({ message, path }) => {
-        console.log(message);
         if (~message.indexOf("Client")) {
           response.errors = null;
           popmsg.warn(message.replace("Client:", "").trim());
           return null;
         } else if (~message.indexOf("authenticated")) {
-          console.log("PPO");
           const axios = require("axios");
           const refreshToken = localStorage.getItem("refreshToken");
 
@@ -135,7 +132,6 @@ const errorLink = onError(
             })
             .then(function(response) {
               const newTokens = response.data;
-              console.log("NEW TOKENS", newTokens);
               if (newTokens) {
                 localStorage.setItem("token", newTokens.refresh);
                 localStorage.setItem("refreshToken", newTokens.refresh);
@@ -153,7 +149,7 @@ const errorLink = onError(
             })
             .catch(function(error) {
               // handle error
-              console.log("ERROR in token refresh:", error);
+              console.log("Token Refresh Error:", error);
             });
         } else {
           popmsg.warn(

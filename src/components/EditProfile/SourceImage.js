@@ -17,13 +17,9 @@ class SourceImage extends React.Component {
   componentDidMount() {
     this.readFile();
   }
-  // UNSAFE_componentWillReceiveProps() {
-  //   this.readFile();
-  // }
 
   readFile = () => {
     const file = this.props.sourceImageObject.originFileObj;
-    // console.log("SourceIMage", file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = e => {
