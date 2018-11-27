@@ -18,7 +18,6 @@ import { Mutation } from "react-apollo";
 import { SIGNS3, CREATE_EVENT, SEARCH_EVENTS } from "../../queries";
 import moment from "moment";
 import { desireOptions } from "../../docs/data";
-import Error from "../common/Error";
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -357,7 +356,9 @@ const AddEventModal = Form.create()(
                       >
                         {(signS3, { loading, error }) => {
                           if (error) {
-                            return <Error error={error} />;
+                            message.error(
+                              "Error uploading image. Please try again later"
+                            );
                           }
                           return (
                             <Upload

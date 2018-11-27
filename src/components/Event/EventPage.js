@@ -46,13 +46,6 @@ class EventPage extends Component {
       if (err) {
         return;
       }
-      // Should format date value before submit.
-      const dateTimeValue = fieldsValue["time"].format("YYYY-MM-DD HH:mm a");
-      const values = {
-        ...fieldsValue,
-        dateTimeValue
-      };
-      console.log("Received values of form: ", values);
 
       createEvent()
         .then(({ data }) => {

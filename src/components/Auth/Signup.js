@@ -41,9 +41,9 @@ class SignupForm extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
-    if (localStorage.getItem("token") !== null) {
-      this.props.history.push("/members");
-    }
+    // if (localStorage.getItem("token") !== null) {
+    //   this.props.history.push("/members");
+    // }
   }
 
   clearState = () => {
@@ -89,7 +89,11 @@ class SignupForm extends React.Component {
                     message.warn("Signup failed.");
                     return;
                   }
-                  localStorage.setItem("token", data.createUser.token);
+                  localStorage.setItem("token", data.createUser.token[0]);
+                  localStorage.setItem(
+                    "refreshToken",
+                    data.createUser.token[1]
+                  );
                   //    await this.props.refetch();
                   this.clearState();
                   this.props.history.push("/editprofile");

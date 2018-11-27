@@ -5,7 +5,6 @@ import { List, Avatar, Badge, Divider } from "antd";
 import Waypoint from "react-waypoint";
 import Chatroom from "../Chat/Chatroom";
 import TimeAgo from "../common/TimeAgo";
-import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 
@@ -120,8 +119,8 @@ class InboxPage extends Component {
             if (loading) {
               return <Spinner message="Loading..." size="large" />;
             }
-            if (error) {
-              return <Error error={error} />;
+            if (!data.getInbox) {
+              return <div>No messages</div>;
             }
 
             const messages = data.getInbox;

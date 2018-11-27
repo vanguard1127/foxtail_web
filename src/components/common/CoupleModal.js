@@ -3,7 +3,6 @@ import { GENERATE_CODE, LINK_PROFILE, UNLINK_PROFILE } from "../../queries";
 import { Query, Mutation } from "react-apollo";
 import { Modal, Input, Divider, Button, Checkbox, Carousel } from "antd";
 import { EmailShareButton, EmailIcon } from "react-share";
-import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 
 class CoupleModal extends Component {
@@ -95,8 +94,8 @@ class CoupleModal extends Component {
               if (loading) {
                 return <Spinner message="Loading..." size="large" />;
               }
-              if (error) {
-                return <Error error={error} />;
+              if (!data.generateCode) {
+                return <div>Error has occured. Please contact support</div>;
               }
               return (
                 <div>
@@ -173,7 +172,7 @@ class CoupleModal extends Component {
             >
               {(linkProfile, { loading }) => (
                 <Button
-                  disabled={this.state.code !== "" ? false : true}
+                  disabled={loading || this.state.code !== "" ? false : true}
                   onClick={() => this.handleLink(linkProfile, close)}
                 >
                   Link
@@ -192,7 +191,7 @@ class CoupleModal extends Component {
         {(unlinkProfile, { loading }) => {
           if (loading) {
             //TODO: nice unlinking message
-            return <Spinner message="UNlinking..." size="large" />;
+            return <Spinner message="Unlinking..." size="large" />;
           }
           return (
             <Modal

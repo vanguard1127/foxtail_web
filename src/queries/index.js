@@ -39,6 +39,12 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const GENERATE_TOKEN = gql`
+  mutation {
+    generateToken
+  }
+`;
+
 export const LINK_PROFILE = gql`
   mutation($code: String!) {
     linkProfile(code: $code) {
@@ -363,10 +369,6 @@ export const GET_CURRENT_USER = gql`
       isProfileOK
       locationLock {
         city
-        crds {
-          lat
-          long
-        }
       }
     }
   }
@@ -379,7 +381,9 @@ export const GET_SETTINGS = gql`
       distanceMetric
       ageRange
       interestedIn
-      locationLock
+      locationLock {
+        city
+      }
       visible
       newMsgNotify
       emailNotify

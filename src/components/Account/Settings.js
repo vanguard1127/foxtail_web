@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS } from "../../queries";
 import { sexOptions } from "../../docs/data";
-import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
@@ -82,7 +81,11 @@ class SettingsForm extends Component {
             return <Spinner message="Loading..." size="large" />;
           }
           if (error) {
-            return <Error error={error} />;
+            return <div>{error.message}</div>;
+          }
+          console.log("DATA IN SETT", data);
+          if (!data.getSettings) {
+            return <div>Error occured. Please contact support!</div>;
           }
 
           let settings;
@@ -213,7 +216,7 @@ class SettingsForm extends Component {
                         }
                       >
                         {getFieldDecorator("locationLock", {
-                          initialValue: settings.locationLock
+                          initialValue: settings.locationLock.city
                         })(<Input style={{ width: "50%" }} disabled />)}
                       </FormItem>
                       <div>

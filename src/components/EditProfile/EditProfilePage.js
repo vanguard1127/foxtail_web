@@ -6,7 +6,6 @@ import { Query, Mutation } from "react-apollo";
 import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
 import { Input, Button, Icon, Select, message, Form } from "antd";
 import { desireOptions } from "../../docs/data";
-import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 
 const { TextArea } = Input;
@@ -75,7 +74,6 @@ class EditProfileForm extends Component {
       if (err) {
         return;
       }
-      console.log("Received values of form: ", values);
 
       updateProfile()
         .then(({ data }) => {
@@ -84,13 +82,11 @@ class EditProfileForm extends Component {
           } else {
             message.error("Error saving settings. Please contact support.");
           }
-          //TODO: use data to alter search...
+          //TODO: use data to alter search...Possible <redirect state></redirect>
           this.clearState();
-          console.log("1", aboutTest);
+
           this.props.refetch();
-          console.log("#######33333");
           if (aboutTest === "") {
-            console.log("2");
             this.props.history.push("/members");
           }
         })
@@ -114,8 +110,9 @@ class EditProfileForm extends Component {
           if (loading) {
             return <Spinner message="Loading..." size="large" />;
           }
-          if (error) {
-            return <Error error={error} />;
+
+          if (!data.getMyProfile) {
+            return <div>An error has occured. Please contact support!</div>;
           }
 
           const { users, photos, about, desires } = data.getMyProfile;

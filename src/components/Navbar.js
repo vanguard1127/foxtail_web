@@ -37,7 +37,8 @@ class NavbarUnAuth extends Component {
         this.setState({ phone: data.fbResolve });
         login()
           .then(async ({ data }) => {
-            localStorage.setItem("token", data.login.token);
+            localStorage.setItem("token", data.login.token[0]);
+            localStorage.setItem("refreshToken", data.login.token[0]);
             //await this.props.refetch();
             this.props.history.push("/search");
           })

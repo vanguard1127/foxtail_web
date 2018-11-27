@@ -4,7 +4,6 @@ import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
 import { Form, Input, Button } from "antd";
 import Waypoint from "react-waypoint";
 import MessageList from "./MessageList.js";
-import Error from "../common/Error";
 import Spinner from "../common/Spinner";
 
 const LIMIT = 6;
@@ -110,8 +109,8 @@ class Chatroom extends Component {
             if (loading) {
               return <Spinner message="Loading..." size="large" />;
             }
-            if (error) {
-              return <Error error={error} />;
+            if (!data.getMessages) {
+              return <div>No messages</div>;
             }
 
             if (!unsubscribe) {

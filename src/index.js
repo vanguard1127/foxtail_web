@@ -42,6 +42,7 @@ const { Header, Content } = Layout;
 //   "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
 const wsurl = "ws://localhost:4444/subscriptions";
 const httpurl = "http://localhost:4444/graphql";
+const httpurlNonGraphQL = "http://localhost:4444";
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
@@ -49,25 +50,46 @@ const wsLink = new WebSocketLink({
     reconnect: true
   }
 });
-
 const httpLink = new HttpLink({
   uri: httpurl
 });
 
 const AuthLink = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem("token");
-
   operation.setContext(context => ({
     ...context,
     headers: {
       ...context.headers,
-      authorization: `Bearer ${token}`
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+      "x-refresh-token": localStorage.getItem("refreshToken")
     }
   }));
-
   return forward(operation);
 });
 
+const afterwareLink = new ApolloLink((operation, forward) => {
+  return forward(operation).map(response => {
+    const {
+      response: { headers }
+    } = operation.getContext();
+    if (headers) {
+      console.log("test:", headers.get("x-token"));
+      const token = headers.get("authorization");
+      const refreshToken = headers.get("x-refresh-token");
+
+      if (token) {
+        localStorage.setItem("token", token.replace("Bearer", "").trim());
+      }
+
+      if (refreshToken) {
+        localStorage.setItem("refreshToken", refreshToken);
+      }
+    }
+
+    return response;
+  });
+});
+
+const httpLinkWithMiddleware = afterwareLink.concat(AuthLink.concat(httpLink));
 const splitlink = split(
   // split based on operation type
   ({ query }) => {
@@ -75,7 +97,7 @@ const splitlink = split(
     return kind === "OperationDefinition" && operation === "subscription";
   },
   wsLink,
-  httpLink
+  httpLinkWithMiddleware
 );
 
 const cache = new InMemoryCache();
@@ -92,14 +114,47 @@ const stateLink = withClientState({
   defaults: defaultState
 });
 
+//TODO: find what used the UNAUTH erro and remvoe that package
 const errorLink = onError(
-  ({ graphQLErrors, networkError, response, operation }) => {
+  ({ graphQLErrors, networkError, response, operation, forward }) => {
     if (graphQLErrors)
       graphQLErrors.map(({ message, path }) => {
+        console.log(message);
         if (~message.indexOf("Client")) {
           response.errors = null;
           popmsg.warn(message.replace("Client:", "").trim());
           return null;
+        } else if (~message.indexOf("authenticated")) {
+          console.log("PPO");
+          const axios = require("axios");
+          const refreshToken = localStorage.getItem("refreshToken");
+
+          axios
+            .post(httpurlNonGraphQL + "/refresh", {
+              refreshToken
+            })
+            .then(function(response) {
+              const newTokens = response.data;
+              console.log("NEW TOKENS", newTokens);
+              if (newTokens) {
+                localStorage.setItem("token", newTokens.refresh);
+                localStorage.setItem("refreshToken", newTokens.refresh);
+                operation.setContext(context => ({
+                  ...context,
+                  headers: {
+                    ...context.headers,
+                    authorization: `Bearer ${newTokens.token}`,
+                    "x-refresh-token": newTokens.refresh
+                  }
+                }));
+              }
+
+              return forward(operation);
+            })
+            .catch(function(error) {
+              // handle error
+              console.log("ERROR in token refresh:", error);
+            });
         } else {
           popmsg.warn(
             "An error has occured. We will have it fixed soon. Thanks for your patience."
