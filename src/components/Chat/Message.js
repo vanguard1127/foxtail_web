@@ -2,7 +2,8 @@ import React from "react";
 import { List, Avatar, Icon } from "antd";
 import moment from "moment";
 
-const Message = ({ message }) => (
+const Message = React.forwardRef(({ message },ref) => (
+  <div ref={ref}>
   <List.Item>
     <List.Item.Meta
       avatar={<Avatar src={message.profilePic} />}
@@ -21,6 +22,7 @@ const Message = ({ message }) => (
       <Icon type="ellipsis" theme="outlined" />
     </div>
   </List.Item>
-);
+  </div>
+));
 
 export default Message;
