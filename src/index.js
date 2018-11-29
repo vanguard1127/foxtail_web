@@ -36,13 +36,16 @@ import { notification } from "antd";
 
 const { Header, Content } = Layout;
 //http://develop-133124268.us-west-2.elb.amazonaws.com/graphql
-// const wsurl =
-//   "ws://production-151896178.us-west-2.elb.amazonaws.com/subscriptions";
-// const httpurl =
-//   "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
-const wsurl = "ws://localhost:4444/subscriptions";
-const httpurl = "http://localhost:4444/graphql";
-const httpurlNonGraphQL = "http://localhost:4444";
+const wsurl =
+  "ws://production-151896178.us-west-2.elb.amazonaws.com/subscriptions";
+const httpurl =
+  "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
+const httpurlNonGraphQL =
+  "http://production-151896178.us-west-2.elb.amazonaws.com";
+
+// const wsurl = "ws://localhost:4444/subscriptions";
+// const httpurl = "http://localhost:4444/graphql";
+// const httpurlNonGraphQL = "http://localhost:4444";
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
@@ -125,7 +128,7 @@ const errorLink = onError(
         } else if (~message.indexOf("authenticated")) {
           const axios = require("axios");
           const refreshToken = localStorage.getItem("refreshToken");
-
+          console.log("TOKEN REFREHS");
           axios
             .post(httpurlNonGraphQL + "/refresh", {
               refreshToken
@@ -247,7 +250,7 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
   <Layout className="layout">
     <Header>
       <div className="logo" />
-      <Navbar session={session} />
+      <Navbar session={session} refetch={refetch} />
     </Header>
     <Content
       style={{

@@ -41,10 +41,10 @@ class SignupForm extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
-    if (localStorage.getItem("token") !== null) {
-      //TODO: Check somehow if user active...Possibly use session.
-      this.props.history.push("/members");
-    }
+    // if (localStorage.getItem("token") !== null) {
+    //   //TODO: Check somehow if user active...Possibly use session.
+    //   this.props.history.push("/members");
+    // }
   }
 
   clearState = () => {
@@ -80,7 +80,7 @@ class SignupForm extends React.Component {
           fbResolve()
             .then(({ data }) => {
               if (data.fbResolve === null) {
-                message.warn("Signup failed.");
+                message.warn("Phone verification failed.");
                 return;
               }
               this.setState({ phone: data.fbResolve });
@@ -90,10 +90,14 @@ class SignupForm extends React.Component {
                     message.warn("Signup failed.");
                     return;
                   }
-                  localStorage.setItem("token", data.createUser.token[0]);
+                  localStorage.setItem(
+                    "token",
+                    data.createUser.find(token => token.access === "auth").token
+                  );
                   localStorage.setItem(
                     "refreshToken",
-                    data.createUser.token[1]
+                    data.createUser.find(token => token.access === "refresh")
+                      .token
                   );
                   //    await this.props.refetch();
                   this.clearState();
@@ -322,8 +326,8 @@ class SignupForm extends React.Component {
                         }}
                         csrf={"889306f7553962e44db6ed508b4e8266"} // Required for security
                         countryCode={"+1"} // eg. +60
-                        phoneNumber={"1111116711"} // eg. 12345678
-                        emailAddress={"trses@dofo.com"} // eg. me@site.com
+                        phoneNumber={""} // eg. 12345678
+                        emailAddress={""} // eg. me@site.com
                       >
                         {p => (
                           <div>

@@ -35,6 +35,7 @@ export const CREATE_USER = gql`
       dob: $dob
     ) {
       token
+      access
     }
   }
 `;
@@ -130,6 +131,7 @@ export const LOGIN = gql`
   mutation($phone: String!) {
     login(phone: $phone) {
       token
+      access
     }
   }
 `;

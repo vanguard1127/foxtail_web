@@ -6,6 +6,7 @@ import { SIGNS3 } from "queries";
 import axios from "axios";
 import EditCanvasImage from "components/EditProfile/EditCanvasImage";
 import PhotoModal from "../common/PhotoModal";
+import { s3url } from "../../docs/data";
 
 const dummyRequest = ({ file, onSuccess }) => {
   setTimeout(() => {
@@ -87,8 +88,7 @@ class PhotoWall extends React.Component {
       if (this.props.photos[i].url !== "x") {
         filearray.push({
           uid: this.props.photos[i].id,
-          url:
-            "https://ft-img-bucket.s3.amazonaws.com/" + this.props.photos[i].url
+          url: s3url + this.props.photos[i].url
         });
       }
     }
@@ -112,8 +112,7 @@ class PhotoWall extends React.Component {
     if (isUpload) {
       const fileArray = [...this.state.fileList];
       fileArray[fileArray.length - 1].url =
-        "https://ft-img-bucket.s3.amazonaws.com/" +
-        fileArray[fileArray.length - 1].url;
+        s3url + fileArray[fileArray.length - 1].url;
 
       this.setState({
         fileList: fileArray

@@ -1,22 +1,23 @@
 import React, { Fragment, Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, message } from "antd";
+import { Menu, message, Button } from "antd";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { LOGIN, FB_RESOLVE } from "../queries";
 import AccountKit from "react-facebook-account-kit";
+import Signout from "../components/Auth/Signout";
 
 const initialState = {
   csrf: "",
   code: "",
   phone: ""
 };
-const Navbar = ({ session }) => (
+const Navbar = ({ session, history, refetch }) => (
   <Fragment>
     {session && session.currentuser ? (
       <NavbarAuth session={session} />
     ) : (
-      <NavbarUnAuth />
+      <NavbarUnAuth history={history} refetch={refetch} />
     )}
   </Fragment>
 );
@@ -37,10 +38,21 @@ class NavbarUnAuth extends Component {
         this.setState({ phone: data.fbResolve });
         login()
           .then(async ({ data }) => {
-            localStorage.setItem("token", data.login.token[0]);
-            localStorage.setItem("refreshToken", data.login.token[0]);
-            //await this.props.refetch();
-            this.props.history.push("/search");
+            if (data.login === null) {
+              message.warn("User doesn't exist.");
+              return;
+            }
+
+            localStorage.setItem(
+              "token",
+              data.login.find(token => token.access === "auth").token
+            );
+            localStorage.setItem(
+              "refreshToken",
+              data.login.find(token => token.access === "refresh").token
+            );
+            await this.props.refetch();
+            this.props.history.push("/members");
           })
           .catch(res => {
             const errors = res.graphQLErrors.map(error => {
@@ -59,6 +71,34 @@ class NavbarUnAuth extends Component {
       });
   };
 
+  handleLogin = login => {
+    login()
+      .then(async ({ data }) => {
+        if (data.login === null) {
+          message.warn("User doesn't exist.");
+          return;
+        }
+
+        localStorage.setItem(
+          "token",
+          data.login.find(token => token.access === "auth").token
+        );
+        localStorage.setItem(
+          "refreshToken",
+          data.login.find(token => token.access === "refresh").token
+        );
+        await this.props.refetch();
+        this.props.history.push("/members");
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+      });
+  };
   render() {
     const { csrf, code, phone } = this.state;
     return (
@@ -84,7 +124,7 @@ class NavbarUnAuth extends Component {
                           }}
                           csrf={"889306f7553962e44db6ed508b4e8266"} // Required for security
                           countryCode={"+1"} // eg. +60
-                          phoneNumber={"1111116711"} // eg. 12345678
+                          phoneNumber={""} // eg. 12345678
                           emailAddress={"trses@dofo.com"} // eg. me@site.com
                         >
                           {p => (
@@ -108,6 +148,27 @@ class NavbarUnAuth extends Component {
               );
             }}
           </Mutation>
+        </Menu.Item>
+        <Menu.Item>
+          <Mutation mutation={LOGIN} variables={{ phone: "039322" }}>
+            {(login, { loading, error }) => {
+              return (
+                <Button onClick={() => this.handleLogin(login)}>User 1</Button>
+              );
+            }}
+          </Mutation>
+        </Menu.Item>
+        <Menu.Item>
+          <Mutation mutation={LOGIN} variables={{ phone: "0353922" }}>
+            {(login, { loading, error }) => {
+              return (
+                <Button onClick={() => this.handleLogin(login)}>User 2</Button>
+              );
+            }}
+          </Mutation>
+        </Menu.Item>
+        <Menu.Item>
+          <Signout />
         </Menu.Item>
       </Menu>
     );
@@ -142,6 +203,8 @@ class NavbarAuth extends Component {
         <Menu.Item key="/settings">
           <NavLink to="/settings">Settings</NavLink>
         </Menu.Item>
+
+        <Signout />
       </Menu>
     );
   }

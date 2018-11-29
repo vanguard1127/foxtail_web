@@ -34,7 +34,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "cd C:/Users/cecil/Documents/FoxtailRepo/FT_Graph_Draft && npm start"
+    "server": "cd C:/Users/cecil/Documents/FoxtailRepo/FT_Graph_Draft && npm start",
+    "deploytest": "cd build && surge"
   },
   "devDependencies": {
     "@svgr/webpack": "^4.0.3",

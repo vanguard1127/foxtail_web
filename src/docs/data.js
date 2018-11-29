@@ -16,3 +16,5 @@ export const sexOptions = [
   { value: "ft", label: "Female + Trans" },
   { value: "mt", label: "Male + Trans" }
 ];
+
+export const s3url = "https://prod-ft-img-bucket.s3.amazonaws.com/";

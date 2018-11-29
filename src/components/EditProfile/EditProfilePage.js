@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
 import { Input, Button, Icon, Select, message, Form } from "antd";
-import { desireOptions } from "../../docs/data";
+import { desireOptions, s3url } from "../../docs/data";
 import Spinner from "../common/Spinner";
 
 const { TextArea } = Input;
@@ -43,10 +43,7 @@ class EditProfileForm extends Component {
 
   handlePhotoListChange = (fileList, isPrivate) => {
     const cleanfileList = fileList.map(file => {
-      file.url = file.url.replace(
-        "https://ft-img-bucket.s3.amazonaws.com/",
-        ""
-      );
+      file.url = file.url.replace(s3url, "");
       return file;
     });
     if (isPrivate) {
@@ -59,7 +56,7 @@ class EditProfileForm extends Component {
       });
     }
     fileList.map(file => {
-      file.url = "https://ft-img-bucket.s3.amazonaws.com/" + file.url;
+      file.url = s3url + file.url;
       return file;
     });
   };
