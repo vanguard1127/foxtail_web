@@ -47,7 +47,6 @@ class BlockModal extends Component {
           });
         }
       })
-      .then(() => {})
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
           return error.message;

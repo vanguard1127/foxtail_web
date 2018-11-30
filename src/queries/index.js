@@ -61,6 +61,12 @@ export const UNLINK_PROFILE = gql`
   }
 `;
 
+export const SUBMIT_PHOTO_REVIEW = gql`
+  mutation($reason: String!, $photo: String!) {
+    submitPhotoReview(reason: $reason, photo: $photo)
+  }
+`;
+
 export const DELETE_PHOTO = gql`
   mutation($publicPhotoList: [String], $privatePhotoList: [String]) {
     deletePhoto(

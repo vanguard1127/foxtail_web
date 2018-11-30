@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom";
 
 import { GET_CURRENT_USER } from "../queries";
 const withAuth = conditionFunc => Component => props => (
-  <Query query={GET_CURRENT_USER} fetchPolicy="network-only">
+  <Query query={GET_CURRENT_USER}>
     {({ data, loading, refetch }) => {
       if (loading) {
         return null;

@@ -7,6 +7,7 @@ import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
 import { Input, Button, Icon, Select, message, Form } from "antd";
 import { desireOptions, s3url } from "../../docs/data";
 import Spinner from "../common/Spinner";
+import PhotoVerModal from "../common/PhotoVerModal";
 
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -18,7 +19,8 @@ const formItemLayout = {
 
 const initialState = {
   publicPhotoList: [],
-  privatePhotoList: []
+  privatePhotoList: [],
+  photoVerModalVisible: false
 };
 
 class EditProfileForm extends Component {
@@ -39,6 +41,10 @@ class EditProfileForm extends Component {
     const isInvalid = publicPhotoList.length === 0;
 
     return isInvalid;
+  };
+
+  setPhotoVerModalVisible = photoVerModalVisible => {
+    this.setState({ photoVerModalVisible });
   };
 
   handlePhotoListChange = (fileList, isPrivate) => {
@@ -100,7 +106,11 @@ class EditProfileForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { publicPhotoList, privatePhotoList } = this.state;
+    const {
+      publicPhotoList,
+      privatePhotoList,
+      photoVerModalVisible
+    } = this.state;
     return (
       <Query query={GET_MY_PROFILE}>
         {({ data, loading, error }) => {
@@ -205,7 +215,11 @@ class EditProfileForm extends Component {
                       Verifications (Verified members get more responses)
                       <FormItem {...formItemLayout} label={""} colon={false}>
                         <div style={{ width: "33vw" }}>
-                          <Button>Photo Verify</Button>
+                          <Button
+                            onClick={() => this.setPhotoVerModalVisible(true)}
+                          >
+                            Photo Verify
+                          </Button>
                           <Button>STD Verify</Button>
                         </div>
                       </FormItem>
@@ -227,6 +241,11 @@ class EditProfileForm extends Component {
                         </Button>
                       </FormItem>
                     </Form>
+                    <PhotoVerModal
+                      visible={photoVerModalVisible}
+                      close={() => this.setPhotoVerModalVisible(false)}
+                      reason={"Submit Photo Verification"}
+                    />
                   </div>
                 );
               }}
