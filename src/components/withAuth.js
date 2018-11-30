@@ -26,6 +26,7 @@ const withAuth = conditionFunc => Component => props => (
             />
           );
         }
+
         return <Component {...props} session={data} refetch={refetch} />;
       } else {
         return <Redirect to="/" />;

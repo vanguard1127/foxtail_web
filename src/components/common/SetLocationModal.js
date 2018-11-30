@@ -12,7 +12,6 @@ class SetLocationModal extends Component {
     this.setState({ locationLock });
   };
 
-  //TODO:Finish BLock
   handleSubmit = updateSettings => {
     updateSettings()
       .then(({ data }) => {
@@ -24,12 +23,14 @@ class SetLocationModal extends Component {
             }
           });
           message.success("Location set to: " + this.state.locationLock);
+          this.props.refetch();
           this.props.close();
         } else {
           message.error("Location not set! Please contact support.");
         }
       })
       .catch(res => {
+        console.log(res);
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });

@@ -6,7 +6,7 @@ import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
-import { Button, message } from "antd";
+import { Button, message, BackTop } from "antd";
 import AddEventModal from "./AddEventModal";
 import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
@@ -154,6 +154,7 @@ class SearchEvents extends Component {
       shareModalVisible,
       all
     } = this.state;
+
     const { long, lat } = this.props.location;
 
     const AddModalFrag = (
@@ -202,12 +203,12 @@ class SearchEvents extends Component {
             if (loading) {
               return <Spinner message="Loading Events..." size="large" />;
             }
-
             if (!data.searchEvents || data.searchEvents.length === 0) {
               return <div>No Events Available</div>;
             }
             return (
               <div>
+                <BackTop />
                 <Fragment>
                   {data.searchEvents.map(eventdate => {
                     return this.handleEventCard(eventdate);

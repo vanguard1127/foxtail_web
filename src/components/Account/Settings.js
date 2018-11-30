@@ -75,7 +75,7 @@ class SettingsForm extends Component {
       wrapperCol: { span: 14 }
     };
     return (
-      <Query query={GET_SETTINGS}>
+      <Query query={GET_SETTINGS} fetchPolicy="network-only">
         {({ data, loading, error }) => {
           if (loading) {
             return <Spinner message="Loading..." size="large" />;
@@ -215,7 +215,7 @@ class SettingsForm extends Component {
                         }
                       >
                         {getFieldDecorator("locationLock", {
-                          initialValue: settings.locationLock.city
+                          initialValue: settings.locationLock || ""
                         })(<Input style={{ width: "50%" }} disabled />)}
                       </FormItem>
                       <div>

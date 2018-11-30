@@ -45,9 +45,6 @@ const withLocation = PassedComponent =>
       }
 
       navigator.geolocation.getCurrentPosition(setLocation, err => {
-        message.warn(
-          "Location services not enabled. Please enable to find members nearby."
-        );
         const session = this.props.session;
         if (session) {
           const user = session.currentuser;
@@ -57,7 +54,6 @@ const withLocation = PassedComponent =>
             user.locationLock.crds.lat !== null &&
             user.locationLock.crds.long !== null
           ) {
-            message.success("Using Last Saved city: " + user.locationLock.city);
             return this.setLocation({
               coords: {
                 longitude: user.locationLock.crds.long,
@@ -108,6 +104,7 @@ const withLocation = PassedComponent =>
 
     render() {
       const { lat, long } = this.state;
+
       return (
         <Fragment>
           {lat !== null && (
@@ -117,6 +114,7 @@ const withLocation = PassedComponent =>
             visible={this.state.locModalVisible}
             close={() => this.setLocModalVisible(false)}
             setLocation={() => this.setLocation}
+            refetch={() => this.props.refetch}
           />
         </Fragment>
       );

@@ -7,7 +7,8 @@ class CardsList extends Component {
   state = {
     shareModalVisible: false,
     blockModalVisible: false,
-    profile: ""
+    profile: "",
+    searchProfiles: []
   };
 
   setShareModalVisible = (shareModalVisible, profile) => {
@@ -22,15 +23,19 @@ class CardsList extends Component {
 
   removeProfile = id => {
     this.setState(prevState => ({
-      searchProfiles: prevState.searchProfiles.filter(el => el.id !== id)
+      searchProfiles: this.props.searchProfiles.filter(el => el.id !== id)
     }));
   };
 
+  componentWillMount() {
+    this.setState({ searchProfiles: this.props.searchProfiles });
+  }
+
   render() {
-    const { searchProfiles } = this.props;
-    const { profile } = this.state;
+    const { searchProfiles, profile } = this.state;
+
     if (!searchProfiles) {
-      return <div>Nothing</div>;
+      return <div>No one near you. Check back later</div>;
     }
     return (
       <div
@@ -52,13 +57,11 @@ class CardsList extends Component {
           profile={profile}
           visible={this.state.shareModalVisible}
           close={() => this.setShareModalVisible(false)}
-          removeProfile={this.removeProfile}
         />
         {searchProfiles.map(profile => (
           <ProfileCard
             key={profile.id}
             profile={profile}
-            removeProfile={this.removeProfile}
             showBlockModal={this.setBlockModalVisible}
             showShareModal={this.setShareModalVisible}
           />

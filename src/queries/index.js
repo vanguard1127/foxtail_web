@@ -373,6 +373,10 @@ export const GET_CURRENT_USER = gql`
       isProfileOK
       locationLock {
         city
+        crds {
+          long
+          lat
+        }
       }
     }
   }
@@ -385,9 +389,7 @@ export const GET_SETTINGS = gql`
       distanceMetric
       ageRange
       interestedIn
-      locationLock {
-        city
-      }
+      locationLock
       visible
       newMsgNotify
       emailNotify

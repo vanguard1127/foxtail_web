@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Select, Input } from "antd";
+import { Modal, Select, Input, message } from "antd";
 import { BLOCK_PROFILE, FLAG_ITEM } from "../../queries";
 import { Mutation } from "react-apollo";
 const Option = Select.Option;
@@ -37,13 +37,15 @@ class BlockModal extends Component {
         this.props.close();
       })
       .then(() => {
-        // if (this.props.profile) {
-        //   const { id } = this.props.profile;
-        //   blockProfile().then(({ data }) => {
-        //     console.log("inside", data);
-        //     this.props.removeProfile(id);
-        //   });
-        // }
+        if (this.props.profile) {
+          const { id } = this.props.profile;
+          blockProfile().then(({ data }) => {
+            if (data.blockProfile) {
+              message.success("Selected profile has been reported. Thanks.");
+              this.props.removeProfile(id);
+            }
+          });
+        }
       })
       .then(() => {})
       .catch(res => {
