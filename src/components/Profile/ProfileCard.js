@@ -65,7 +65,11 @@ class ProfileCard extends Component {
                   }
                 >
                   <div>
-                    <ImageCarousel photos={photos} showThumbs={false} />
+                    <ImageCarousel
+                      photos={photos}
+                      showThumbs={false}
+                      showImageModal={this.props.showImageModal}
+                    />
                     <Icon
                       style={{
                         float: "right",

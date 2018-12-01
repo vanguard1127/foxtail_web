@@ -1,5 +1,6 @@
 import React from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
+import { Input } from "antd";
 
 export default class AddressSearch extends React.Component {
   render() {
@@ -16,7 +17,7 @@ export default class AddressSearch extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <input
+            <Input
               style={{ ...style }}
               {...getInputProps({
                 placeholder: "Search Places ...",

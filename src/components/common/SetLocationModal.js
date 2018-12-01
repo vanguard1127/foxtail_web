@@ -6,15 +6,15 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AddressSearch from "../common/AddressSearch";
 
 class SetLocationModal extends Component {
-  state = { locationLock: "", long: null, lat: null };
+  state = { city: "", long: null, lat: null };
 
-  handleTextChange = locationLock => {
-    this.setState({ locationLock });
+  handleTextChange = city => {
+    this.setState({ city });
   };
 
   handleSubmit = updateSettings => {
     updateSettings()
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         if (data.updateSettings) {
           this.props.setLocation({
             coords: {
@@ -22,8 +22,7 @@ class SetLocationModal extends Component {
               latitude: this.state.lat
             }
           });
-          message.success("Location set to: " + this.state.locationLock);
-          this.props.refetch();
+          message.success("Location set to: " + this.state.city);
           this.props.close();
         } else {
           message.error("Location not set! Please contact support.");
@@ -48,8 +47,7 @@ class SetLocationModal extends Component {
         this.setState({
           lat: latLng.lat,
           long: latLng.lng,
-          validating: "success",
-          locationLock: address
+          city: address
         });
       })
       .catch(res => {
@@ -64,12 +62,12 @@ class SetLocationModal extends Component {
   render() {
     const { visible, close } = this.props;
 
-    const { locationLock, lat, long } = this.state;
+    const { city, lat, long } = this.state;
     return (
       <Mutation
         mutation={UPDATE_SETTINGS}
         variables={{
-          locationLock,
+          locationLock: city,
           lat,
           long
         }}
@@ -89,7 +87,7 @@ class SetLocationModal extends Component {
                 style={{ width: "100%" }}
                 onSelect={this.handleSelect}
                 onChange={this.handleTextChange}
-                value={locationLock}
+                value={city}
                 type={"(cities)"}
               />
               <small>

@@ -7,13 +7,16 @@ import { Query } from "react-apollo";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
+import PhotoModal from "../common/PhotoModal";
 
 const LIMIT = 6;
 
 class ProfileSearch extends Component {
   state = {
     skip: 0,
-    loading: false
+    loading: false,
+    previewVisible: false,
+    previewImage: ""
   };
 
   fetchData = async fetchMore => {
@@ -49,8 +52,20 @@ class ProfileSearch extends Component {
     }
   };
 
+  handleCancel = () => {
+    this.setState({ previewVisible: false });
+  };
+
+  showImageModal = url => {
+    this.setState({
+      previewImage: url,
+      previewVisible: true
+    });
+  };
+
   render() {
     const { long, lat } = this.props.location;
+    const { previewVisible, previewImage } = this.state;
     return (
       <Fragment>
         <Query
@@ -67,7 +82,10 @@ class ProfileSearch extends Component {
 
             return (
               <div>
-                <CardsList searchProfiles={data.searchProfiles} />
+                <CardsList
+                  searchProfiles={data.searchProfiles}
+                  showImageModal={this.showImageModal}
+                />
                 <Waypoint
                   onEnter={({ previousPosition }) =>
                     this.handleEnd(previousPosition, fetchMore)
@@ -77,6 +95,11 @@ class ProfileSearch extends Component {
             );
           }}
         </Query>{" "}
+        <PhotoModal
+          previewVisible={previewVisible}
+          previewImage={previewImage}
+          handleCancel={() => this.handleCancel()}
+        />
       </Fragment>
     );
   }

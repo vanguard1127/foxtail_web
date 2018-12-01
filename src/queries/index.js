@@ -230,6 +230,7 @@ export const SEARCH_EVENTS = gql`
   query(
     $long: Float!
     $lat: Float!
+    $maxDistance: Int
     $desires: [String]
     $limit: Int
     $skip: Int
@@ -238,6 +239,7 @@ export const SEARCH_EVENTS = gql`
     searchEvents(
       long: $long
       lat: $lat
+      maxDistance: $maxDistance
       desires: $desires
       limit: $limit
       skip: $skip

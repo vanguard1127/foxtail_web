@@ -6,7 +6,7 @@ import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
-import { Button, message, BackTop } from "antd";
+import { Button, message, BackTop, Input, Select, Tooltip } from "antd";
 import AddEventModal from "./AddEventModal";
 import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
@@ -14,6 +14,9 @@ import MyEvents from "./MyEvents";
 import Spinner from "../common/Spinner";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
+import AddressSearch from "../common/AddressSearch";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+const Option = Select.Option;
 
 const LIMIT = 3;
 //TODO: fix moment date format issue
@@ -24,8 +27,10 @@ class SearchEvents extends Component {
     blockModalVisible: false,
     shareModalVisible: false,
     event: null,
-    lat: 0,
-    long: 0,
+    lat: this.props.location.lat,
+    long: this.props.location.long,
+    maxDistance: 50,
+    city: "My Location",
     all: true
   };
 
@@ -49,6 +54,10 @@ class SearchEvents extends Component {
   setBlockModalVisible = (blockModalVisible, event) => {
     if (event) this.setState({ event, blockModalVisible });
     else this.setState({ event: null, blockModalVisible });
+  };
+
+  handleChangeSelect = value => {
+    this.setState({ maxDistance: value });
   };
 
   handleSubmit = (e, createEvent) => {
@@ -146,16 +155,44 @@ class SearchEvents extends Component {
     );
   };
 
+  handleTextChange = city => {
+    this.setState({ city });
+  };
+
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => {
+        return getLatLng(results[0]);
+      })
+      .then(latLng => {
+        this.setState({
+          lat: latLng.lat,
+          long: latLng.lng,
+          city: address
+        });
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+      });
+  };
+
   render() {
     const {
       event,
       visible,
       blockModalVisible,
       shareModalVisible,
-      all
+      all,
+      lat,
+      long,
+      maxDistance,
+      city
     } = this.state;
-
-    const { long, lat } = this.props.location;
 
     const AddModalFrag = (
       <div
@@ -186,17 +223,17 @@ class SearchEvents extends Component {
         lat,
         long,
         all,
-        limit: LIMIT
+        limit: LIMIT,
+        maxDistance
       })
     );
-
     return (
       <div>
         <MyEvents />
         {AddModalFrag}
         <Query
           query={SEARCH_EVENTS}
-          variables={{ lat, long, all, limit: LIMIT }}
+          variables={{ lat, long, maxDistance, all, limit: LIMIT }}
           fetchPolicy="cache-first"
         >
           {({ data, loading, error, fetchMore }) => {
@@ -206,8 +243,58 @@ class SearchEvents extends Component {
             if (!data.searchEvents || data.searchEvents.length === 0) {
               return <div>No Events Available</div>;
             }
+            let LocationInput;
+            if (true) {
+              LocationInput = (
+                <AddressSearch
+                  style={{ width: 150 }}
+                  onSelect={this.handleSelect}
+                  onChange={this.handleTextChange}
+                  value={city}
+                  type={"(cities)"}
+                />
+              );
+            } else {
+              LocationInput = (
+                <Tooltip title="Black Members only">
+                  <Input
+                    style={{ width: 150 }}
+                    placeholder="My Location"
+                    disabled
+                  />
+                </Tooltip>
+              );
+            }
             return (
               <div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end"
+                  }}
+                >
+                  <span style={{ marginRight: "1vw" }}>Events located</span>
+                  <Select
+                    style={{ width: 220 }}
+                    onChange={this.handleChangeSelect}
+                    value={maxDistance}
+                  >
+                    <Option value={5}>5 miles</Option>
+                    <Option value={10}>10 miles</Option>
+                    <Option value={20}>20 miles</Option>
+                    <Option value={50}>50 miles</Option>
+                    <Option value="all" disabled>
+                      <Tooltip title="Black Members only">
+                        <span>Everywhere.</span>
+                      </Tooltip>
+                    </Option>
+                  </Select>
+                  <span style={{ marginRight: "1vw", marginLeft: "1vw" }}>
+                    from
+                  </span>
+                  {LocationInput}
+                </div>
                 <BackTop />
                 <Fragment>
                   {data.searchEvents.map(eventdate => {

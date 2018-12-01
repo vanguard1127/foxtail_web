@@ -43,11 +43,12 @@ const withLocation = PassedComponent =>
         }
         this.showConfirm(setLocModalVisible, caller);
       }
-
+      //Location needs to be enabled or set
       navigator.geolocation.getCurrentPosition(setLocation, err => {
         const session = this.props.session;
         if (session) {
           const user = session.currentuser;
+          console.log(user);
           if (
             user &&
             user.locationLock.crds &&
@@ -69,12 +70,14 @@ const withLocation = PassedComponent =>
     setLocModalVisible = visible => {
       this.setState({ locModalVisible: visible });
     };
-    setLocation = pos => {
+    setLocation = async pos => {
+      console.log("SACE", pos);
       var crd = pos.coords;
       const { long, lat } = this.state;
       if (long !== crd.longitude && lat !== crd.latitude) {
         this.setState({ long: crd.longitude, lat: crd.latitude });
       }
+      await this.props.refetch();
     };
 
     componentDidMount() {
@@ -113,8 +116,7 @@ const withLocation = PassedComponent =>
           <SetLocationModal
             visible={this.state.locModalVisible}
             close={() => this.setLocModalVisible(false)}
-            setLocation={() => this.setLocation}
-            refetch={() => this.props.refetch}
+            setLocation={this.setLocation}
           />
         </Fragment>
       );
