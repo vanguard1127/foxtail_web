@@ -99,6 +99,7 @@ class ProfileCard extends Component {
                   style={{ fontSize: "25px" }}
                   theme="twoTone"
                   twoToneColor="#1A63FF"
+                  onClick={() => this.props.showMsgModal(true, profile)}
                   key="message"
                 />,
                 <Icon

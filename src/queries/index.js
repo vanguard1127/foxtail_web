@@ -269,6 +269,7 @@ export const SEARCH_PROFILES = gql`
       id
       about
       desires
+      profileName
       photos {
         url
         private
