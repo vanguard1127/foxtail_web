@@ -3,11 +3,12 @@ import CardsList from "./CardsList";
 import { SEARCH_PROFILES } from "../../queries";
 import Waypoint from "react-waypoint";
 import Spinner from "../common/Spinner";
-import { Query } from "react-apollo";
+import { Query, ApolloConsumer } from "react-apollo";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
 import PhotoModal from "../common/PhotoModal";
+import SearchCriteriaPanel from "./SearchCriteriaPanel";
 
 const LIMIT = 6;
 
@@ -66,6 +67,7 @@ class ProfileSearch extends Component {
   render() {
     const { long, lat } = this.props.location;
     const { previewVisible, previewImage } = this.state;
+
     return (
       <Fragment>
         <Query
@@ -73,15 +75,27 @@ class ProfileSearch extends Component {
           variables={{ long, lat, limit: LIMIT }}
           fetchPolicy="cache-first"
         >
-          {({ data, loading, error, fetchMore }) => {
+          {({ data, loading, fetchMore }) => {
+            const searchPanel = (
+              <ApolloConsumer>
+                {client => (
+                  <SearchCriteriaPanel
+                    queryParams={{ long, lat, limit: LIMIT }}
+                    client={client}
+                  />
+                )}
+              </ApolloConsumer>
+            );
+
             if (loading) {
               return <Spinner message="Loading Members..." size="large" />;
             } else if (data && data.searchProfiles.length === 0) {
-              return <div>No members near you</div>;
+              return <div>{searchPanel} No members near you</div>;
             }
 
             return (
               <div>
+                {searchPanel}
                 <CardsList
                   searchProfiles={data.searchProfiles}
                   showImageModal={this.showImageModal}

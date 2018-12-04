@@ -1,5 +1,6 @@
 import moment from "moment";
 
+//TODO: is this the best way to get most recent user
 function TimeAgo(item) {
   var duration = moment.duration(
     moment(Date.now()).diff(moment(item.participants[0].updatedAt))

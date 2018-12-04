@@ -48,7 +48,6 @@ const withLocation = PassedComponent =>
         const session = this.props.session;
         if (session) {
           const user = session.currentuser;
-          console.log(user);
           if (
             user &&
             user.locationLock.crds &&
@@ -71,7 +70,6 @@ const withLocation = PassedComponent =>
       this.setState({ locModalVisible: visible });
     };
     setLocation = async pos => {
-      console.log("SACE", pos);
       var crd = pos.coords;
       const { long, lat } = this.state;
       if (long !== crd.longitude && lat !== crd.latitude) {

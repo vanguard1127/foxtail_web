@@ -51,12 +51,12 @@ class SettingsForm extends Component {
     });
   };
 
-  onSwitch = (value, name) => {
-    this.props.form.setFieldsValue({ [name]: value });
-  };
-
   handleChangeSelect = value => {
     this.props.form.setFieldsValue({ interestedIn: value });
+  };
+
+  onSwitch = (value, name) => {
+    this.props.form.setFieldsValue({ [name]: value });
   };
 
   setCoupleModalVisible = coupleModalVisible => {

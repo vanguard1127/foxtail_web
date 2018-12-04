@@ -3,7 +3,7 @@ import { gql } from "apollo-boost";
 
 /* Subscriptions */
 export const NEW_MESSAGE_SUB = gql`
-  subscription($chatID: ID!) {
+  subscription($chatID: ID) {
     newMessageSubscribe(chatID: $chatID) {
       id
       text
