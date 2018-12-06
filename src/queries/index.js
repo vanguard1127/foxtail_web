@@ -40,6 +40,24 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const CREATE_SUBSCRIPTION = gql`
+  mutation($token: String!, $ccLast4: String!) {
+    createSubcription(token: $token, ccLast4: $ccLast4)
+  }
+`;
+
+export const UPDATE_SUBSCRIPTION = gql`
+  mutation($token: String!, $ccLast4: String!) {
+    updateSubcription(token: $token, ccLast4: $ccLast4)
+  }
+`;
+
+export const CANCEL_SUBSCRIPTION = gql`
+  mutation {
+    cancelSubcription
+  }
+`;
+
 export const GENERATE_TOKEN = gql`
   mutation {
     generateToken
@@ -378,7 +396,11 @@ export const GET_CURRENT_USER = gql`
       username
       userID
       profileID
-      blackMember
+      blackMember {
+        active
+        renewalDate
+      }
+      ccLast4
       isProfileOK
       locationLock {
         city

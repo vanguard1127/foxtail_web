@@ -45,7 +45,7 @@ class MyEvents extends Component {
             >
               <div>
                 Date:
-                {moment(item.time).format("MMM Dd YYYY")}{" "}
+                {moment(item.time).format("MMM DD YYYY")}{" "}
               </div>
               <div>
                 {" "}

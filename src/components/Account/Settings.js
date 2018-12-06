@@ -7,6 +7,8 @@ import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
 import BlackMemberModal from "../common/BlackMemberModal";
+import BlkSubscribeBtn from "../common/BlkSubscribeBtn";
+
 import {
   Form,
   Input,
@@ -101,7 +103,7 @@ class SettingsForm extends Component {
           } else {
             settings = data.getSettings;
           }
-
+          console.log("PASSS", blkMemberModalVisible);
           const {
             distance,
             distanceMetric,
@@ -334,13 +336,12 @@ class SettingsForm extends Component {
                       </div>
 
                       <FormItem wrapperCol={{ span: 12, offset: 6 }}>
-                        <Button
-                          type="primary"
-                          htmlType="submit"
-                          onClick={() => this.setBlkMemberModalVisible(true)}
-                        >
-                          BECOME A BLACK MEMBER
-                        </Button>
+                        <BlkSubscribeBtn
+                          blkMemberInfo={session.currentuser.blackMember}
+                          visible={() => this.setBlkMemberModalVisible(true)}
+                          ccLast4={session.currentuser.ccLast4}
+                          refetchUser={this.props.refetch}
+                        />
                       </FormItem>
 
                       <FormItem wrapperCol={{ span: 12, offset: 6 }}>
@@ -368,11 +369,14 @@ class SettingsForm extends Component {
                           : null
                       }
                     />
-                    <BlackMemberModal
-                      visible={blkMemberModalVisible}
-                      close={() => this.setBlkMemberModalVisible(false)}
-                      userID={session.currentuser.userID}
-                    />
+                    {session.currentuser.blackMember && (
+                      <BlackMemberModal
+                        visible={blkMemberModalVisible}
+                        close={() => this.setBlkMemberModalVisible(false)}
+                        userID={session.currentuser.userID}
+                        refetchUser={this.props.refetch}
+                      />
+                    )}
                   </Fragment>
                 );
               }}

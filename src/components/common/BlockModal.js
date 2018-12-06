@@ -30,7 +30,6 @@ class BlockModal extends Component {
     this.setState({ type });
   };
 
-  //TODO:Finish BLock
   handleSubmit = (blockProfile, flagItem) => {
     flagItem()
       .then(({ data }) => {
