@@ -14,6 +14,24 @@ export const NEW_MESSAGE_SUB = gql`
   }
 `;
 
+export const NEW_INBOX_SUB = gql`
+  query {
+    getInbox {
+      id
+      chatID
+      text
+      fromUser
+      profilePic
+      createdAt
+      participants {
+        profileName
+        updatedAt
+        profilePic
+        _id
+      }
+    }
+  }
+`;
 /* Mutations */
 //TODO: fix App version issue
 export const CREATE_USER = gql`
@@ -224,7 +242,11 @@ export const SIGNS3 = gql`
     }
   }
 `;
-
+export const REMOVE_SELF = gql`
+  mutation($chatID: String!) {
+    removeSelf(chatID: $chatID)
+  }
+`;
 /* Queries */
 export const SEARCH_EVENTS = gql`
   query(

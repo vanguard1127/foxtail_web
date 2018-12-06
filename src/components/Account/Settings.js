@@ -14,16 +14,25 @@ import {
   Button,
   Icon,
   Tooltip,
+  Radio,
   Select,
   message
 } from "antd";
 
+const milesToKilometers = miles => miles / 0.621371;
+const kilometersToMiles = kilometers => kilometers * 0.621371;
 const Option = Select.Option;
 const FormItem = Form.Item;
 
 class SettingsForm extends Component {
   state = {
-    coupleModalVisible: false
+    coupleModalVisible: false,
+    newDistanceMetric: null
+  };
+  convertDistance = () => {
+    // const { newDistanceMetric } = this.state;
+    // miles = km * 0.621371;
+    // km = miles * 0.621371;
   };
   handleSubmit = (e, updateSettings) => {
     e.preventDefault();
@@ -93,7 +102,7 @@ class SettingsForm extends Component {
           } else {
             settings = data.getSettings;
           }
-
+          const initialDistanceMetric = data.getSettings.distanceMetric;
           const {
             distance,
             distanceMetric,
@@ -108,12 +117,25 @@ class SettingsForm extends Component {
             vibrateNotify,
             couplePartner
           } = settings;
-
+          console.log(
+            distance,
+            settings.distanceMetric,
+            data.getSettings.distanceMetric
+          );
+          const convertFunction =
+            "mi" === distanceMetric ? kilometersToMiles : milesToKilometers;
+          // The input uses original metric
+          // But displays and sends the selected metric
+          let convertedDistance = distance;
+          if (distanceMetric !== initialDistanceMetric) {
+            convertedDistance = Math.floor(convertFunction(distance));
+          }
+          console.log("d1", distance, "d2", convertedDistance, distanceMetric);
           return (
             <Mutation
               mutation={UPDATE_SETTINGS}
               variables={{
-                distance,
+                distance: convertedDistance,
                 distanceMetric,
                 ageRange,
                 interestedIn,
@@ -127,6 +149,17 @@ class SettingsForm extends Component {
               }}
             >
               {(updateSettings, { loading }) => {
+                // The input always uses the first metric it was given
+                // And sends a transformed metric if the user changed it
+                const initialDistanceSliderMax =
+                  initialDistanceMetric === "mi"
+                    ? 100
+                    : Math.floor(milesToKilometers(100));
+
+                const distanceSliderMax =
+                  distanceMetric === "mi"
+                    ? 100
+                    : Math.floor(milesToKilometers(100));
                 return (
                   <Fragment>
                     <Form onSubmit={e => this.handleSubmit(e, updateSettings)}>
@@ -135,22 +168,39 @@ class SettingsForm extends Component {
                         {getFieldDecorator("distance", {
                           initialValue: settings.distance
                         })(
+                          // Minimum of 1 miles/kilometers
                           <Slider
-                            min={0}
-                            max={100}
-                            marks={{ 0: "<1 " + distanceMetric, 100: "100+" }}
+                            min={1}
+                            max={initialDistanceSliderMax}
+                            tipFormatter={val => {
+                              if (distanceMetric !== initialDistanceMetric) {
+                                return (
+                                  Math.floor(convertFunction(val)) +
+                                  distanceMetric
+                                );
+                              }
+                              return val + distanceMetric;
+                            }}
+                            marks={{
+                              0: `<1 ${distanceMetric.toUpperCase()}`,
+                              [initialDistanceSliderMax]: `${distanceSliderMax}+ ${distanceMetric.toUpperCase()}`
+                            }}
                           />
                         )}
                       </FormItem>
+                      {/*<Switch
+                            checkedChildren="mi"
+                            unCheckedChildren="km"
+                            defaultChecked
+                          />*/}
                       <FormItem {...formItemLayout} label={" "} colon={false}>
                         {getFieldDecorator("distanceMetric", {
                           initialValue: settings.distanceMetric
                         })(
-                          <Switch
-                            checkedChildren="mi"
-                            unCheckedChildren="km"
-                            defaultChecked
-                          />
+                          <Radio.Group>
+                            <Radio value="mi">miles</Radio>
+                            <Radio value="km">Kilometers</Radio>
+                          </Radio.Group>
                         )}
                       </FormItem>
                       <FormItem {...formItemLayout} label="Age">

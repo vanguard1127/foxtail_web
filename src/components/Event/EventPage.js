@@ -194,8 +194,9 @@ class EventPage extends Component {
                   flex: 1,
                   flexDirection: "column"
                 }}
+                participants={event.participants}
                 chatID={event.chatID}
-                chatTitle={event.eventname}
+                title={event.eventname}
               />
             </div>
           );

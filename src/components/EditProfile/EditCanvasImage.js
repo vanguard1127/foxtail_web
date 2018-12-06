@@ -143,8 +143,8 @@ class EditCanvasImage extends React.Component {
           <Layer>
             {this.props.imageObject && (
               <SourceImage
-                width={400}
-                height={400}
+                width={width}
+                height={height}
                 sourceImageObject={this.props.imageObject}
               />
             )}

@@ -123,6 +123,7 @@ class InboxPage extends Component {
   };
 
   render() {
+    let unsubscribe = null;
     return (
       <div style={{ display: "flex", flex: 1, flexDirection: "horizontal" }}>
         <Query query={GET_INBOX} fetchPolicy="cache-and-network">
@@ -132,6 +133,24 @@ class InboxPage extends Component {
             }
             if (!data.getInbox) {
               return <div>No messages</div>;
+            }
+
+            if (!unsubscribe && false) {
+              // unsubscribe = subscribeToMore({
+              //   document: NEW_MESSAGE_SUB,
+              //   updateQuery: (prev, { subscriptionData }) => {
+              //     const { newMessageSubscribe } = subscriptionData.data;
+              //     console.log("SUBSCRIBE EXECUTED");
+              //     if (!newMessageSubscribe) {
+              //       return prev;
+              //     }
+              //     prev.getInbox.messages = [
+              //       newMessageSubscribe,
+              //       ...prev.getInbox.messages
+              //     ];
+              //     return prev;
+              //   }
+              // });
             }
 
             const messages = data.getInbox;
@@ -210,8 +229,7 @@ class InboxPage extends Component {
                       flex: 1,
                       flexDirection: "column"
                     }}
-                    title={chatTitle}
-                    titleExtra={chatTitleExtra}
+                    participants={currentChat.participants}
                     lastSeen={chatLastSeen}
                     chatID={chatID}
                   />

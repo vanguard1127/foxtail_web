@@ -93,19 +93,36 @@ class Chatroom extends Component {
   };
 
   render() {
-    const { style, chatID, title, lastSeen, titleExtra } = this.props;
+    const {
+      style,
+      chatID,
+      title,
+      lastSeen,
+      titleExtra,
+      participants
+    } = this.props;
     const { cursor } = this.state;
 
     let unsubscribe = null;
+    let titleText = "";
+    let participantText = "";
+    console.log("p", participants);
+    if (participants) {
+      titleText = `${participants[0].profileName}`;
+      if (participants.length > 2) {
+        participantText = ` + ${participants.length - 2} participants`;
+      }
+    }
 
     return (
       <div className="chatroom" style={{ position: "relative", ...style }}>
         <div className="chatroom-header">
           <h3 className="chatroom-title">
-            {title}
-            <span className="chatroom-titleExtra">{titleExtra}</span>
+            {title || titleText}
+            <span className="chatroom-titleExtra">{participantText}</span>
           </h3>
           <h4 className="chatroom-date">{lastSeen}</h4>
+          <h2>Leave</h2>
         </div>
         <Query
           query={GET_MESSAGES}
@@ -116,11 +133,13 @@ class Chatroom extends Component {
             if (loading) {
               return <Spinner message="Loading..." size="large" />;
             }
-            if (!data.getMessages) {
-              return <div>No messages</div>;
-            }
+            // if (!data.getMessages) {
+            //   console.log(data);
+            //   return <div>No messages</div>;
+            // }
 
             if (!unsubscribe) {
+              console.log(unsubscribe);
               unsubscribe = subscribeToMore({
                 document: NEW_MESSAGE_SUB,
                 variables: { chatID },
@@ -138,6 +157,7 @@ class Chatroom extends Component {
                   return prev;
                 }
               });
+              console.log(unsubscribe);
             }
             return (
               <Fragment>
@@ -145,7 +165,7 @@ class Chatroom extends Component {
                 <MessageList
                   chatID={chatID}
                   ref={this.MessageList}
-                  messages={data.getMessages.messages}
+                  messages={data.getMessages ? data.getMessages.messages : []}
                   handleEnd={this.handleEnd}
                   fetchMore={fetchMore}
                   limit={LIMIT}
