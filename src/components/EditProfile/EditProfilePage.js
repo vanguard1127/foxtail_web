@@ -8,6 +8,7 @@ import { Input, Button, Icon, Select, message, Form } from "antd";
 import { desireOptions, s3url } from "../../docs/data";
 import Spinner from "../common/Spinner";
 import PhotoVerModal from "../common/PhotoVerModal";
+import STDVerModal from "../common/STDVerModal";
 
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -20,7 +21,8 @@ const formItemLayout = {
 const initialState = {
   publicPhotoList: [],
   privatePhotoList: [],
-  photoVerModalVisible: false
+  photoVerModalVisible: false,
+  stdVerModalVisible: false
 };
 
 class EditProfileForm extends Component {
@@ -47,6 +49,10 @@ class EditProfileForm extends Component {
     this.setState({ photoVerModalVisible });
   };
 
+  setSTDVerModalVisible = stdVerModalVisible => {
+    this.setState({ stdVerModalVisible });
+  };
+
   handlePhotoListChange = (fileList, isPrivate) => {
     const cleanfileList = fileList.map(file => {
       file.url = file.url.replace(s3url, "");
@@ -71,7 +77,7 @@ class EditProfileForm extends Component {
     this.setState({ desires: value });
   };
 
-  handleSubmit = (e, updateProfile, aboutTest) => {
+  handleSubmit = ({ e, updateProfile, refetch, about }) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (err) {
@@ -79,17 +85,18 @@ class EditProfileForm extends Component {
       }
 
       updateProfile()
-        .then(({ data }) => {
+        .then(async ({ data }) => {
           if (data.updateProfile) {
             message.success("Settings have been saved");
           } else {
             message.error("Error saving settings. Please contact support.");
           }
           //TODO: use data to alter search...Possible <redirect state></redirect>
-          this.clearState();
-
-          this.props.refetch();
-          if (aboutTest === "") {
+          await refetch();
+          await this.props.refetch();
+        })
+        .then(() => {
+          if (about === "") {
             this.props.history.push("/members");
           }
         })
@@ -109,11 +116,12 @@ class EditProfileForm extends Component {
     const {
       publicPhotoList,
       privatePhotoList,
-      photoVerModalVisible
+      photoVerModalVisible,
+      stdVerModalVisible
     } = this.state;
     return (
       <Query query={GET_MY_PROFILE}>
-        {({ data, loading, error }) => {
+        {({ data, loading, error, refetch }) => {
           if (loading) {
             return <Spinner message="Loading..." size="large" />;
           }
@@ -144,7 +152,9 @@ class EditProfileForm extends Component {
                       style={{
                         display: "flex"
                       }}
-                      onSubmit={e => this.handleSubmit(e, updateProfile, about)}
+                      onSubmit={e =>
+                        this.handleSubmit({ e, updateProfile, refetch, about })
+                      }
                     >
                       <FormItem
                         {...formItemLayout}
@@ -220,7 +230,11 @@ class EditProfileForm extends Component {
                           >
                             Photo Verify
                           </Button>
-                          <Button>STD Verify</Button>
+                          <Button
+                            onClick={() => this.setSTDVerModalVisible(true)}
+                          >
+                            STD Verify
+                          </Button>
                         </div>
                       </FormItem>
                       <FormItem {...formItemLayout} label={""} colon={false}>
@@ -245,6 +259,10 @@ class EditProfileForm extends Component {
                       visible={photoVerModalVisible}
                       close={() => this.setPhotoVerModalVisible(false)}
                       reason={"Submit Photo Verification"}
+                    />
+                    <STDVerModal
+                      visible={stdVerModalVisible}
+                      close={() => this.setSTDVerModalVisible(false)}
                     />
                   </div>
                 );

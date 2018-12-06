@@ -5,6 +5,7 @@ import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
 import { Dropdown, Menu, Icon } from "antd";
 import AttendEvent from "./AttendEvent";
 import Chatroom from "../Chat/Chatroom";
+import BlockModal from "../common/BlockModal";
 import moment from "moment";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
@@ -12,7 +13,13 @@ import withAuth from "../withAuth";
 import AddEventModal from "./AddEventModal";
 
 class EventPage extends Component {
-  state = { visible: false };
+  state = { visible: false, blockModalVisible: false };
+
+  setBlockModalVisible = (blockModalVisible, event) => {
+    if (event) this.setState({ event, blockModalVisible });
+    else this.setState({ event: null, blockModalVisible });
+  };
+
   handleDelete = deleteEvent => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this event?"
@@ -103,7 +110,7 @@ class EventPage extends Component {
 
   render() {
     const { id } = this.props.match.params;
-    const { visible } = this.state;
+    const { visible, blockModalVisible } = this.state;
 
     return (
       <Query query={GET_EVENT} variables={{ id }}>
@@ -117,7 +124,6 @@ class EventPage extends Component {
           }
 
           const { event } = data;
-          console.log("event", event);
           const queryParams = JSON.parse(
             sessionStorage.getItem("searchEventQuery")
           );
@@ -169,7 +175,7 @@ class EventPage extends Component {
                             type="edit"
                             style={{
                               fontSize: "24px",
-                              color: "#FFF"
+                              color: "#e657"
                             }}
                           />
                         )}
@@ -178,6 +184,17 @@ class EventPage extends Component {
                   );
                 }}
               </Mutation>
+              <Icon
+                type="flag"
+                style={{
+                  fontSize: "20px",
+                  color: "#E84D3B",
+                  float: "right",
+                  cursor: "pointer"
+                }}
+                onClick={() => this.setBlockModalVisible(true)}
+                key="flag"
+              />
               <h2>{event.eventname}</h2>
               <p>{event.time}</p>
               <p>{event.description}</p>
@@ -197,6 +214,12 @@ class EventPage extends Component {
                 participants={event.participants}
                 chatID={event.chatID}
                 title={event.eventname}
+              />
+              <BlockModal
+                event={event}
+                id={event.id}
+                visible={blockModalVisible}
+                close={() => this.setBlockModalVisible(false)}
               />
             </div>
           );

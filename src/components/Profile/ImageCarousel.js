@@ -4,10 +4,17 @@ import { Carousel } from "react-responsive-carousel";
 import { s3url } from "../../docs/data";
 
 class ImageCarousel extends Component {
+  state = { selectedItem: this.props.selectedItem };
+  handleImageClick = e => {
+    this.props.showImageModal(e.target.querySelector("img").src);
+  };
+  selectItem = itemNum => {
+    this.setState({ selectedItem: itemNum });
+  };
   render() {
     //const { photos,showThumb } = this.props;
-
-    const { showThumbs, autoPlay, selectedItem, photos } = this.props;
+    const { selectedItem } = this.state;
+    const { showThumbs, autoPlay, photos } = this.props;
     return (
       // <Carousel showThumbs={false} showStatus={false}>
       //   {photos.map(photo => (
@@ -22,12 +29,12 @@ class ImageCarousel extends Component {
       // </Carousel>
 
       <Carousel
-        emulateTouch
         showThumbs={showThumbs}
         showStatus={false}
         width="100%"
         autoPlay={autoPlay}
         selectedItem={selectedItem}
+        onClickItem={e => this.selectItem(e)}
       >
         {photos.map((photo, i) => (
           <div key={i + Math.random()}>

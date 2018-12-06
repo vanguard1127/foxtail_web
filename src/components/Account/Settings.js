@@ -6,6 +6,7 @@ import { sexOptions } from "../../docs/data";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
+import BlackMemberModal from "../common/BlackMemberModal";
 import {
   Form,
   Input,
@@ -27,12 +28,8 @@ const FormItem = Form.Item;
 class SettingsForm extends Component {
   state = {
     coupleModalVisible: false,
-    newDistanceMetric: null
-  };
-  convertDistance = () => {
-    // const { newDistanceMetric } = this.state;
-    // miles = km * 0.621371;
-    // km = miles * 0.621371;
+    newDistanceMetric: null,
+    blkMemberModalVisible: false
   };
   handleSubmit = (e, updateSettings) => {
     e.preventDefault();
@@ -60,16 +57,20 @@ class SettingsForm extends Component {
     });
   };
 
-  onSwitch = (value, name) => {
-    this.props.form.setFieldsValue({ [name]: value });
-  };
-
   handleChangeSelect = value => {
     this.props.form.setFieldsValue({ interestedIn: value });
   };
 
+  onSwitch = (value, name) => {
+    this.props.form.setFieldsValue({ [name]: value });
+  };
+
   setCoupleModalVisible = coupleModalVisible => {
     this.setState({ coupleModalVisible });
+  };
+
+  setBlkMemberModalVisible = blkMemberModalVisible => {
+    this.setState({ blkMemberModalVisible });
   };
 
   setPartnerID = id => {
@@ -78,7 +79,9 @@ class SettingsForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { coupleModalVisible } = this.state;
+    const { session } = this.props;
+    const { coupleModalVisible, blkMemberModalVisible } = this.state;
+
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 }
@@ -376,7 +379,11 @@ class SettingsForm extends Component {
                       </div>
 
                       <FormItem wrapperCol={{ span: 12, offset: 6 }}>
-                        <Button type="primary" htmlType="submit">
+                        <Button
+                          type="primary"
+                          htmlType="submit"
+                          onClick={() => this.setBlkMemberModalVisible(true)}
+                        >
                           BECOME A BLACK MEMBER
                         </Button>
                       </FormItem>
@@ -405,6 +412,11 @@ class SettingsForm extends Component {
                           ? this.props.form.getFieldValue("couplePartner")
                           : null
                       }
+                    />
+                    <BlackMemberModal
+                      visible={blkMemberModalVisible}
+                      close={() => this.setBlkMemberModalVisible(false)}
+                      userID={session.currentuser.userID}
                     />
                   </Fragment>
                 );

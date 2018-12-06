@@ -65,7 +65,11 @@ class ProfileCard extends Component {
                   }
                 >
                   <div>
-                    <ImageCarousel photos={photos} showThumbs={false} />
+                    <ImageCarousel
+                      photos={photos}
+                      showThumbs={false}
+                      showImageModal={this.props.showImageModal}
+                    />
                     <Icon
                       style={{
                         float: "right",
@@ -95,6 +99,7 @@ class ProfileCard extends Component {
                   style={{ fontSize: "25px" }}
                   theme="twoTone"
                   twoToneColor="#1A63FF"
+                  onClick={() => this.props.showMsgModal(true, profile)}
                   key="message"
                 />,
                 <Icon

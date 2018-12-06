@@ -36,23 +36,30 @@ import { notification } from "antd";
 
 const { Header, Content } = Layout;
 
-const wsurl =
-  "ws://production-151896178.us-west-2.elb.amazonaws.com/subscriptions";
-const httpurl =
-  "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
-const httpurlNonGraphQL =
-  "http://production-151896178.us-west-2.elb.amazonaws.com";
-
-// const wsurl = "ws://localhost:4444/subscriptions";
-// const httpurl = "http://localhost:4444/graphql";
-// const httpurlNonGraphQL = "http://localhost:4444";
+let wsurl;
+let httpurl;
+let httpurlNonGraphQL;
+if (process.env.NODE_ENV === "production") {
+  wsurl = "ws://production-151896178.us-west-2.elb.amazonaws.com/subscriptions";
+  httpurl = "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
+  httpurlNonGraphQL = "http://production-151896178.us-west-2.elb.amazonaws.com";
+} else {
+  wsurl = "ws://localhost:4444/subscriptions";
+  httpurl = "http://localhost:4444/graphql";
+  httpurlNonGraphQL = "http://localhost:4444";
+}
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
   options: {
-    reconnect: true
+    reconnect: true,
+    connectionParams: {
+      token: localStorage.getItem("token"),
+      refreshToken: localStorage.getItem("refreshToken")
+    }
   }
 });
+
 const httpLink = new HttpLink({
   uri: httpurl
 });

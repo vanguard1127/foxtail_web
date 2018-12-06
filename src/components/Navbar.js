@@ -150,7 +150,11 @@ class NavbarUnAuth extends Component {
           </Mutation>
         </Menu.Item>
         <Menu.Item>
+<<<<<<< HEAD
           <Mutation mutation={LOGIN} variables={{ phone: "2247405464" }}>
+=======
+          <Mutation mutation={LOGIN} variables={{ phone: "1" }}>
+>>>>>>> 4d0a83c55649df1a5238e08c7b970d07f0e6ed95
             {(login, { loading, error }) => {
               return (
                 <Button onClick={() => this.handleLogin(login)}>User 1</Button>
@@ -159,10 +163,37 @@ class NavbarUnAuth extends Component {
           </Mutation>
         </Menu.Item>
         <Menu.Item>
-          <Mutation mutation={LOGIN} variables={{ phone: "0353922" }}>
+          <Mutation mutation={LOGIN} variables={{ phone: "2" }}>
             {(login, { loading, error }) => {
               return (
                 <Button onClick={() => this.handleLogin(login)}>User 2</Button>
+              );
+            }}
+          </Mutation>
+        </Menu.Item>
+        <Menu.Item>
+          <Mutation mutation={LOGIN} variables={{ phone: "3" }}>
+            {(login, { loading, error }) => {
+              return (
+                <Button onClick={() => this.handleLogin(login)}>User 3</Button>
+              );
+            }}
+          </Mutation>
+        </Menu.Item>
+        <Menu.Item>
+          <Mutation mutation={LOGIN} variables={{ phone: "4" }}>
+            {(login, { loading, error }) => {
+              return (
+                <Button onClick={() => this.handleLogin(login)}>User 4</Button>
+              );
+            }}
+          </Mutation>
+        </Menu.Item>
+        <Menu.Item>
+          <Mutation mutation={LOGIN} variables={{ phone: "5" }}>
+            {(login, { loading, error }) => {
+              return (
+                <Button onClick={() => this.handleLogin(login)}>User 5</Button>
               );
             }}
           </Mutation>

@@ -3,7 +3,7 @@ import { gql } from "apollo-boost";
 
 /* Subscriptions */
 export const NEW_MESSAGE_SUB = gql`
-  subscription($chatID: ID!) {
+  subscription($chatID: ID) {
     newMessageSubscribe(chatID: $chatID) {
       id
       text
@@ -252,6 +252,7 @@ export const SEARCH_EVENTS = gql`
   query(
     $long: Float!
     $lat: Float!
+    $maxDistance: Int
     $desires: [String]
     $limit: Int
     $skip: Int
@@ -260,6 +261,7 @@ export const SEARCH_EVENTS = gql`
     searchEvents(
       long: $long
       lat: $lat
+      maxDistance: $maxDistance
       desires: $desires
       limit: $limit
       skip: $skip
@@ -289,6 +291,7 @@ export const SEARCH_PROFILES = gql`
       id
       about
       desires
+      profileName
       photos {
         url
         private
