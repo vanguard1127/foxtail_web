@@ -7,7 +7,7 @@ import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
 import BlackMemberModal from "../common/BlackMemberModal";
-import BlkSubscribeBtn from "../common/BlkSubscribeBtn";
+import BlackStatus from "../common/BlackStatus";
 
 import {
   Form,
@@ -67,7 +67,8 @@ class SettingsForm extends Component {
     this.setState({ coupleModalVisible });
   };
 
-  setBlkMemberModalVisible = blkMemberModalVisible => {
+  setBlkMemberModalVisible = (e, blkMemberModalVisible) => {
+    e.preventDefault();
     this.setState({ blkMemberModalVisible });
   };
 
@@ -103,7 +104,6 @@ class SettingsForm extends Component {
           } else {
             settings = data.getSettings;
           }
-          console.log("PASSS", blkMemberModalVisible);
           const {
             distance,
             distanceMetric,
@@ -118,7 +118,6 @@ class SettingsForm extends Component {
             vibrateNotify,
             couplePartner
           } = settings;
-
           return (
             <Mutation
               mutation={UPDATE_SETTINGS}
@@ -226,12 +225,17 @@ class SettingsForm extends Component {
                       >
                         {getFieldDecorator("locationLock", {
                           initialValue: settings.locationLock || ""
-                        })(<Input style={{ width: "50%" }} disabled />)}
+                        })(
+                          <Input
+                            style={{ width: "50%" }}
+                            disabled={!session.currentuser.blackMember.active}
+                          />
+                        )}
                       </FormItem>
                       <div>
                         <FormItem {...formItemLayout} label={" "} colon={false}>
                           {getFieldDecorator("visible", {
-                            initialValue: settings.showOnline
+                            initialValue: settings.visible
                           })(
                             <div>
                               {" "}
@@ -296,7 +300,9 @@ class SettingsForm extends Component {
                                 checkedChildren={<Icon type="check" />}
                                 unCheckedChildren={<Icon type="close" />}
                                 defaultChecked={false}
-                                disabled
+                                disabled={
+                                  !session.currentuser.blackMember.active
+                                }
                                 onChange={e => this.onSwitch(e, "showOnline")}
                                 checked={settings.showOnline}
                               />
@@ -320,7 +326,9 @@ class SettingsForm extends Component {
                                 checkedChildren={<Icon type="check" />}
                                 unCheckedChildren={<Icon type="close" />}
                                 defaultChecked={false}
-                                disabled
+                                disabled={
+                                  !session.currentuser.blackMember.active
+                                }
                                 onChange={e => this.onSwitch(e, "likedOnly")}
                                 checked={settings.likedOnly}
                               />
@@ -336,9 +344,9 @@ class SettingsForm extends Component {
                       </div>
 
                       <FormItem wrapperCol={{ span: 12, offset: 6 }}>
-                        <BlkSubscribeBtn
+                        <BlackStatus
                           blkMemberInfo={session.currentuser.blackMember}
-                          visible={() => this.setBlkMemberModalVisible(true)}
+                          visible={e => this.setBlkMemberModalVisible(e, true)}
                           ccLast4={session.currentuser.ccLast4}
                           refetchUser={this.props.refetch}
                         />
@@ -372,7 +380,7 @@ class SettingsForm extends Component {
                     {session.currentuser.blackMember && (
                       <BlackMemberModal
                         visible={blkMemberModalVisible}
-                        close={() => this.setBlkMemberModalVisible(false)}
+                        close={e => this.setBlkMemberModalVisible(e, false)}
                         userID={session.currentuser.userID}
                         refetchUser={this.props.refetch}
                       />

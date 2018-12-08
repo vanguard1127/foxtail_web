@@ -7,7 +7,6 @@ import StripeCheckout from "react-stripe-checkout";
 class UpdateSubBtn extends Component {
   state = { token: "", ccLast4: "" };
   handleSubmit = ({ token, ccLast4, updateSubscription }) => {
-    console.log("TOKEN", token, "LALS", ccLast4);
     this.setState({ token, ccLast4 });
     updateSubscription()
       .then(({ data }) => {

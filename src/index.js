@@ -23,7 +23,7 @@ import withSession from "./components/withSession";
 import Footer from "./components/Footer";
 
 import { ApolloProvider } from "react-apollo";
-import { Breadcrumb, Layout, message as popmsg } from "antd";
+import { Layout, message as popmsg } from "antd";
 import ApolloClient from "apollo-client";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
@@ -84,13 +84,16 @@ const afterwareLink = new ApolloLink((operation, forward) => {
     if (headers) {
       const token = headers.get("authorization");
       const refreshToken = headers.get("x-refresh-token");
-
-      if (token) {
+      if (token && token !== undefined) {
         localStorage.setItem("token", token.replace("Bearer", "").trim());
+      } else {
+        localStorage.removeItem("token");
       }
 
-      if (refreshToken) {
+      if (refreshToken && token !== refreshToken) {
         localStorage.setItem("refreshToken", refreshToken);
+      } else {
+        localStorage.removeItem("refreshToken");
       }
     }
 
@@ -133,8 +136,11 @@ const errorLink = onError(
           popmsg.warn(message.replace("Client:", "").trim());
           return null;
         } else if (~message.indexOf("authenticated")) {
-          const axios = require("axios");
           const refreshToken = localStorage.getItem("refreshToken");
+          if (!refreshToken) {
+            return;
+          }
+          const axios = require("axios");
           console.log("TOKEN REFREHS");
           axios
             .post(httpurlNonGraphQL + "/refresh", {
@@ -142,8 +148,12 @@ const errorLink = onError(
             })
             .then(function(response) {
               const newTokens = response.data;
-              if (newTokens) {
-                localStorage.setItem("token", newTokens.refresh);
+              if (
+                newTokens &&
+                newTokens.token !== undefined &&
+                newTokens.refresh !== undefined
+              ) {
+                localStorage.setItem("token", newTokens.token);
                 localStorage.setItem("refreshToken", newTokens.refresh);
                 operation.setContext(context => ({
                   ...context,
@@ -153,6 +163,10 @@ const errorLink = onError(
                     "x-refresh-token": newTokens.refresh
                   }
                 }));
+              } else {
+                localStorage.removeItem("token");
+
+                localStorage.removeItem("refreshToken");
               }
 
               return forward(operation);
@@ -196,68 +210,27 @@ const client = new ApolloClient({
   cache
 });
 
-const Root = ({ refetch, session }) => (
+const Root = () => (
   <Router>
-    <Wrapper refetch={refetch} session={session} />
+    <Wrapper />
   </Router>
 );
 
-const breadcrumbNameMap = {
-  "/": "Home",
-  "/members": "Search Members",
-  "/events": "Search Events",
-  "/editprofile": "Edit Profile",
-  "/events/:id": "Event",
-  "/chat/:id": "Chat Num",
-  "/members/:id": "Profile Num",
-  "/myaccount": "My Account"
-};
-
 const Wrapper = withRouter(props => {
-  const { location, refetch, session } = props;
-  const pathSnippets = location.pathname.split("/").filter(i => i);
-  let breadcrumbItems;
-  if (pathSnippets.length !== 0) {
-    let directLink;
-    const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-      const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
-      if (url === "/events") {
-        directLink = "Event";
-      }
-      if (url === "/members") {
-        directLink = "Profile";
-      }
-      return (
-        <Breadcrumb.Item key={url}>
-          <Link to={url}>
-            {breadcrumbNameMap[url] ? breadcrumbNameMap[url] : directLink}
-          </Link>
-        </Breadcrumb.Item>
-      );
-    });
-    breadcrumbItems = [<Breadcrumb.Item key="home" />].concat(
-      extraBreadcrumbItems
-    );
-  } else {
-    breadcrumbItems = null;
-  }
-
   return (
     <div>
-      <Body
-        refetch={refetch}
-        session={session}
-        breadcrumbItems={breadcrumbItems}
-      />
+      <Body />
     </div>
   );
 });
 
-const Body = ({ refetch, session, breadcrumbItems }) => (
+const NavBarWithSession = withSession(Navbar);
+
+const Body = () => (
   <Layout className="layout">
     <Header>
       <div className="logo" />
-      <Navbar session={session} refetch={refetch} />
+      <NavBarWithSession />
     </Header>
     <Content
       style={{
@@ -268,20 +241,16 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
         flexDirection: "column"
       }}
     >
-      {breadcrumbItems && <Breadcrumb>{breadcrumbItems}</Breadcrumb>}
       <Switch>
         <Route path="/members" component={ProfileSearch} exact />
         <Route path="/" component={App} exact />
-        <Route path="/signup" render={() => <Signup refetch={refetch} />} />
+        <Route path="/signup" component={Signup} />
         <Route path="/events" component={SearchEvents} exact />
-        <Route
-          path="/editprofile"
-          render={() => <EditProfile session={session} />}
-        />
+        <Route path="/editprofile" component={EditProfile} />
         <Route path="/events/:id" component={EventPage} />
         <Route path="/members/:id" component={ProfilePage} />
         <Route path="/inbox" component={InboxPage} />
-        <Route path="/settings" render={() => <Settings session={session} />} />
+        <Route path="/settings" component={Settings} />
 
         <Redirect to="/" />
       </Switch>
@@ -292,11 +261,9 @@ const Body = ({ refetch, session, breadcrumbItems }) => (
   </Layout>
 );
 
-const RootWithSession = withSession(Root);
-
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <RootWithSession />
+    <Root />
   </ApolloProvider>,
   document.getElementById("root")
 );

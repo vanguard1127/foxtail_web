@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button } from "antd";
+import { Modal } from "antd";
 import CreateSubBtn from "../common/CreateSubBtn";
 
 class BlackMemberModal extends Component {
@@ -12,11 +12,7 @@ class BlackMemberModal extends Component {
         title={"Become a Black Member"}
         centered
         visible={visible}
-        footer={[
-          <Button key="submit" type="primary" onClick={close}>
-            OK
-          </Button>
-        ]}
+        footer={[]}
         onCancel={close}
       >
         <img

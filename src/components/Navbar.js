@@ -91,6 +91,7 @@ class NavbarUnAuth extends Component {
         this.props.history.push("/members");
       })
       .catch(res => {
+        console.log("ERR", res);
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });

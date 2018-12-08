@@ -1,10 +1,10 @@
 import React from "react";
 import { Button } from "antd";
 import moment from "moment";
-import UpdateSubBtn from "../common/UpdateSubBtn";
-import CancelSubBtn from "../common/CancelSubBtn";
+import UpdateSubBtn from "./UpdateSubBtn";
+import CancelSubBtn from "./CancelSubBtn";
 
-const BlkSubscribeBtn = ({
+const BlackStatus = ({
   blkMemberInfo,
   ccLast4,
   visible,
@@ -42,4 +42,4 @@ const BlkSubscribeBtn = ({
   }
 };
 
-export default BlkSubscribeBtn;
+export default BlackStatus;

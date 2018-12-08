@@ -58,12 +58,6 @@ export const CANCEL_SUBSCRIPTION = gql`
   }
 `;
 
-export const GENERATE_TOKEN = gql`
-  mutation {
-    generateToken
-  }
-`;
-
 export const LINK_PROFILE = gql`
   mutation($code: String!) {
     linkProfile(code: $code) {
@@ -303,6 +297,7 @@ export const SEARCH_PROFILES = gql`
         }
       }
       publicCode
+      showOnline
     }
   }
 `;
@@ -443,12 +438,17 @@ export const GET_MY_PROFILE = gql`
     getMyProfile {
       users {
         username
+        verifications {
+          photo
+          std
+        }
       }
       photos {
         url
         private
         id
       }
+
       about
       desires
     }

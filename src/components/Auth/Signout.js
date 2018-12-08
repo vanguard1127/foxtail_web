@@ -4,8 +4,10 @@ import { withRouter } from "react-router-dom";
 import { Button } from "antd";
 
 const handleSignout = (client, history) => {
-  localStorage.setItem("token", "");
-  localStorage.setItem("refreshToken", "");
+  //TODO: Prevent console error on logout
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+  sessionStorage.clear();
   client.resetStore();
   history.push("/");
 };

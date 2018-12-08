@@ -115,6 +115,7 @@ const withLocation = PassedComponent =>
             visible={this.state.locModalVisible}
             close={() => this.setLocModalVisible(false)}
             setLocation={this.setLocation}
+            isBlackMember={this.props.session.currentuser.blackMember.active}
           />
         </Fragment>
       );

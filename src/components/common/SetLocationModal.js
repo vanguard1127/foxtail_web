@@ -60,7 +60,7 @@ class SetLocationModal extends Component {
       });
   };
   render() {
-    const { visible, close } = this.props;
+    const { visible, close, isBlackMember } = this.props;
 
     const { city, lat, long } = this.state;
     return (
@@ -75,7 +75,7 @@ class SetLocationModal extends Component {
         {updateSettings => {
           return (
             <Modal
-              title={"Set Location - Courtesy"}
+              title={"Set Location"}
               centered
               visible={visible}
               onOk={() => this.handleSubmit(updateSettings)}
@@ -90,12 +90,14 @@ class SetLocationModal extends Component {
                 value={city}
                 type={"(cities)"}
               />
-              <small>
-                *You can only do this once since you do not have location
-                services enabled. <br />
-                To change your location in the future, you must either enable
-                location services or signup for Black membership.
-              </small>
+              {!isBlackMember && (
+                <small>
+                  *You can only do this once since you do not have location
+                  services enabled. <br />
+                  To change your location in the future, you must either enable
+                  location services or signup for Black membership.
+                </small>
+              )}
             </Modal>
           );
         }}

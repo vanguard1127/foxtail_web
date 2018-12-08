@@ -75,7 +75,7 @@ class ProfileSearch extends Component {
           variables={{ long, lat, limit: LIMIT }}
           fetchPolicy="cache-first"
         >
-          {({ data, loading, fetchMore }) => {
+          {({ data, loading, fetchMore, error }) => {
             const searchPanel = (
               <ApolloConsumer>
                 {client => (
@@ -91,6 +91,17 @@ class ProfileSearch extends Component {
               return <Spinner message="Loading Members..." size="large" />;
             } else if (data && data.searchProfiles.length === 0) {
               return <div>{searchPanel} No members near you</div>;
+            }
+            if (error) {
+              if (error.message.indexOf("invisible")) {
+                return (
+                  <div>
+                    You cannot see user profiles while invisible unless you're a
+                    Black Member. Please set your profile to visible under
+                    settings to see members.
+                  </div>
+                );
+              }
             }
 
             return (
