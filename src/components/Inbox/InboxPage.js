@@ -101,7 +101,7 @@ class InboxPage extends Component {
     return (
       <Fragment>
         {messages.map((message, i) => {
-          var timeAgo = TimeAgo(message);
+          var timeAgo = TimeAgo(message.participants[0].updatedAt);
           let isCurrentChat = false;
           if (this.state.chatID === message.chatID) {
             isCurrentChat = true;
@@ -168,10 +168,9 @@ class InboxPage extends Component {
             let chatTitle = "No chats available";
             let chatTitleExtra = "";
             let chatLastSeen = "";
-            console.log(currentChat);
             if (currentChat) {
               chatTitle = `${currentChat.participants[0].profileName}`;
-              chatLastSeen = TimeAgo(currentChat);
+              chatLastSeen = TimeAgo(currentChat.participants[0].updatedAt);
               if (currentChat.participants.length > 2) {
                 chatTitleExtra = ` + ${currentChat.participants.length -
                   2} participants`;

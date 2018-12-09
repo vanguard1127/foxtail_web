@@ -6,6 +6,7 @@ import { Card, Icon } from "antd";
 import { LIKE_PROFILE } from "../../queries";
 import { Mutation } from "react-apollo";
 import { withRouter } from "react-router-dom";
+import TimeAgo from "../common/TimeAgo";
 
 const { Meta } = Card;
 
@@ -28,6 +29,14 @@ class ProfileCard extends Component {
   render() {
     const { users, desires, photos, id } = this.props.profile;
     const { profile } = this.props;
+
+    let timeAgo = "";
+    if (profile.showOnline) {
+      timeAgo = TimeAgo(profile.updatedAt);
+      if (timeAgo !== "Online") {
+        timeAgo = "Last seen " + timeAgo;
+      }
+    }
     return (
       <Mutation
         mutation={LIKE_PROFILE}
@@ -138,6 +147,8 @@ class ProfileCard extends Component {
                 }
                 description={
                   <div>
+                    <div style={{ float: "right" }}>{timeAgo}</div>
+                    <br />
                     <DesiresList desires={desires} />
                   </div>
                 }

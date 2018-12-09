@@ -64,9 +64,21 @@ export const CREATE_USER = gql`
   }
 `;
 
-export const GENERATE_TOKEN = gql`
+export const CREATE_SUBSCRIPTION = gql`
+  mutation($token: String!, $ccLast4: String!) {
+    createSubcription(token: $token, ccLast4: $ccLast4)
+  }
+`;
+
+export const UPDATE_SUBSCRIPTION = gql`
+  mutation($token: String!, $ccLast4: String!) {
+    updateSubcription(token: $token, ccLast4: $ccLast4)
+  }
+`;
+
+export const CANCEL_SUBSCRIPTION = gql`
   mutation {
-    generateToken
+    cancelSubcription
   }
 `;
 
@@ -103,6 +115,12 @@ export const DELETE_PHOTO = gql`
 export const SEND_MESSAGE = gql`
   mutation($chatID: ID, $text: String!, $invitedProfile: ID) {
     sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile)
+  }
+`;
+
+export const REMOVE_LOCLOCK = gql`
+  mutation {
+    removeLocationLock
   }
 `;
 
@@ -313,6 +331,7 @@ export const SEARCH_PROFILES = gql`
         }
       }
       publicCode
+      showOnline
     }
   }
 `;
@@ -398,7 +417,11 @@ export const GET_CURRENT_USER = gql`
       username
       userID
       profileID
-      blackMember
+      blackMember {
+        active
+        renewalDate
+      }
+      ccLast4
       isProfileOK
       locationLock {
         city
@@ -441,12 +464,17 @@ export const GET_MY_PROFILE = gql`
     getMyProfile {
       users {
         username
+        verifications {
+          photo
+          std
+        }
       }
       photos {
         url
         private
         id
       }
+
       about
       desires
     }

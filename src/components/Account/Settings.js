@@ -7,6 +7,8 @@ import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
 import BlackMemberModal from "../common/BlackMemberModal";
+import BlackStatus from "../common/BlackStatus";
+
 import {
   Form,
   Input,
@@ -69,7 +71,8 @@ class SettingsForm extends Component {
     this.setState({ coupleModalVisible });
   };
 
-  setBlkMemberModalVisible = blkMemberModalVisible => {
+  setBlkMemberModalVisible = (e, blkMemberModalVisible) => {
+    e.preventDefault();
     this.setState({ blkMemberModalVisible });
   };
 
@@ -269,12 +272,17 @@ class SettingsForm extends Component {
                       >
                         {getFieldDecorator("locationLock", {
                           initialValue: settings.locationLock || ""
-                        })(<Input style={{ width: "50%" }} disabled />)}
+                        })(
+                          <Input
+                            style={{ width: "50%" }}
+                            disabled={!session.currentuser.blackMember.active}
+                          />
+                        )}
                       </FormItem>
                       <div>
                         <FormItem {...formItemLayout} label={" "} colon={false}>
                           {getFieldDecorator("visible", {
-                            initialValue: settings.showOnline
+                            initialValue: settings.visible
                           })(
                             <div>
                               {" "}
@@ -339,7 +347,9 @@ class SettingsForm extends Component {
                                 checkedChildren={<Icon type="check" />}
                                 unCheckedChildren={<Icon type="close" />}
                                 defaultChecked={false}
-                                disabled
+                                disabled={
+                                  !session.currentuser.blackMember.active
+                                }
                                 onChange={e => this.onSwitch(e, "showOnline")}
                                 checked={settings.showOnline}
                               />
@@ -363,7 +373,9 @@ class SettingsForm extends Component {
                                 checkedChildren={<Icon type="check" />}
                                 unCheckedChildren={<Icon type="close" />}
                                 defaultChecked={false}
-                                disabled
+                                disabled={
+                                  !session.currentuser.blackMember.active
+                                }
                                 onChange={e => this.onSwitch(e, "likedOnly")}
                                 checked={settings.likedOnly}
                               />
@@ -379,13 +391,12 @@ class SettingsForm extends Component {
                       </div>
 
                       <FormItem wrapperCol={{ span: 12, offset: 6 }}>
-                        <Button
-                          type="primary"
-                          htmlType="submit"
-                          onClick={() => this.setBlkMemberModalVisible(true)}
-                        >
-                          BECOME A BLACK MEMBER
-                        </Button>
+                        <BlackStatus
+                          blkMemberInfo={session.currentuser.blackMember}
+                          visible={e => this.setBlkMemberModalVisible(e, true)}
+                          ccLast4={session.currentuser.ccLast4}
+                          refetchUser={this.props.refetch}
+                        />
                       </FormItem>
 
                       <FormItem wrapperCol={{ span: 12, offset: 6 }}>
@@ -413,11 +424,14 @@ class SettingsForm extends Component {
                           : null
                       }
                     />
-                    <BlackMemberModal
-                      visible={blkMemberModalVisible}
-                      close={() => this.setBlkMemberModalVisible(false)}
-                      userID={session.currentuser.userID}
-                    />
+                    {session.currentuser.blackMember && (
+                      <BlackMemberModal
+                        visible={blkMemberModalVisible}
+                        close={e => this.setBlkMemberModalVisible(e, false)}
+                        userID={session.currentuser.userID}
+                        refetchUser={this.props.refetch}
+                      />
+                    )}
                   </Fragment>
                 );
               }}

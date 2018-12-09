@@ -131,6 +131,10 @@ class EditProfileForm extends Component {
           }
 
           const { users, photos, about, desires } = data.getMyProfile;
+          const myUser = users.find(
+            user => user.username === this.props.session.currentuser.username
+          );
+
           const needPics =
             photos[0].url === "x" && publicPhotoList.length === 0;
           return (
@@ -226,11 +230,13 @@ class EditProfileForm extends Component {
                       <FormItem {...formItemLayout} label={""} colon={false}>
                         <div style={{ width: "33vw" }}>
                           <Button
+                            disabled={myUser.verifications.photo}
                             onClick={() => this.setPhotoVerModalVisible(true)}
                           >
                             Photo Verify
                           </Button>
                           <Button
+                            disabled={myUser.verifications.std}
                             onClick={() => this.setSTDVerModalVisible(true)}
                           >
                             STD Verify

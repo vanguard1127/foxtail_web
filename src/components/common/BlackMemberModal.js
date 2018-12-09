@@ -1,21 +1,18 @@
 import React, { Component } from "react";
-import { Modal, Button } from "antd";
-
-import StripeCheckout from "react-stripe-checkout";
+import { Modal } from "antd";
+import CreateSubBtn from "../common/CreateSubBtn";
 
 class BlackMemberModal extends Component {
+  state = { token: "", ccLast4: "" };
+
   render() {
     const { visible, close, userID } = this.props;
     return (
       <Modal
-        title={"Submit STD Results"}
+        title={"Become a Black Member"}
         centered
         visible={visible}
-        footer={[
-          <Button key="submit" type="primary" onClick={close}>
-            OK
-          </Button>
-        ]}
+        footer={[]}
         onCancel={close}
       >
         <img
@@ -27,9 +24,9 @@ class BlackMemberModal extends Component {
         <div>
           <h4>{userID}</h4>
         </div>
-        <StripeCheckout
-          token={token => console.log(token)}
-          stripeKey={process.env.STRIPE_PUBLIC_KEY}
+        <CreateSubBtn
+          refetchUser={this.props.refetchUser}
+          close={this.props.close}
         />
       </Modal>
     );
