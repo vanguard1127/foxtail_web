@@ -10,6 +10,12 @@ export const NEW_MESSAGE_SUB = gql`
       fromUser
       profilePic
       createdAt
+      participants {
+        profileName
+        updatedAt
+        profilePic
+        _id
+      }
     }
   }
 `;
@@ -243,7 +249,7 @@ export const SIGNS3 = gql`
   }
 `;
 export const REMOVE_SELF = gql`
-  mutation($chatID: String!) {
+  mutation($chatID: String) {
     removeSelf(chatID: $chatID)
   }
 `;
@@ -381,14 +387,6 @@ export const GET_MESSAGES = gql`
         fromUser
         profilePic
         createdAt
-      }
-      participants {
-        profilePic
-        profileName
-        users {
-          username
-          id
-        }
       }
     }
   }

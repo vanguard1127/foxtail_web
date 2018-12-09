@@ -127,6 +127,7 @@ class EventPage extends Component {
           const queryParams = JSON.parse(
             sessionStorage.getItem("searchEventQuery")
           );
+          console.log(event);
           return (
             <div className="App">
               <AddEventModal

@@ -150,11 +150,7 @@ class NavbarUnAuth extends Component {
           </Mutation>
         </Menu.Item>
         <Menu.Item>
-<<<<<<< HEAD
-          <Mutation mutation={LOGIN} variables={{ phone: "2247405464" }}>
-=======
           <Mutation mutation={LOGIN} variables={{ phone: "1" }}>
->>>>>>> 4d0a83c55649df1a5238e08c7b970d07f0e6ed95
             {(login, { loading, error }) => {
               return (
                 <Button onClick={() => this.handleLogin(login)}>User 1</Button>
