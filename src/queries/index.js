@@ -124,6 +124,12 @@ export const REMOVE_LOCLOCK = gql`
   }
 `;
 
+export const DELETE_USER = gql`
+  mutation {
+    deleteUser
+  }
+`;
+
 export const UPDATE_SETTINGS = gql`
   mutation(
     $distance: Int

@@ -7,6 +7,7 @@ import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
 import BlackMemberModal from "../common/BlackMemberModal";
+import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import BlackStatus from "../common/BlackStatus";
 
 import {
@@ -410,7 +411,7 @@ class SettingsForm extends Component {
                       </FormItem>
 
                       <FormItem wrapperCol={{ span: 12, offset: 6 }}>
-                        <a href={null}>Delete Account</a>
+                        <DeactivateAcctBtn history={this.props.history} />
                       </FormItem>
                     </Form>
                     <CoupleModal

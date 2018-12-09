@@ -98,12 +98,7 @@ class ProfileSearch extends Component {
             if (loading) {
               return <Spinner message="Loading Members..." size="large" />;
             } else if (data && data.searchProfiles.length === 0) {
-              return (
-                <div>
-                  {searchPanel} No members near you{lat},,
-                  {long}
-                </div>
-              );
+              return <div>{searchPanel} No members near you</div>;
             }
             if (error) {
               if (error.message.indexOf("invisible")) {
