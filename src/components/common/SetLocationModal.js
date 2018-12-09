@@ -4,6 +4,7 @@ import { UPDATE_SETTINGS } from "../../queries";
 import { Mutation } from "react-apollo";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AddressSearch from "../common/AddressSearch";
+import { Thumbs } from "react-responsive-carousel";
 
 class SetLocationModal extends Component {
   state = { city: "", long: null, lat: null };
@@ -20,7 +21,8 @@ class SetLocationModal extends Component {
             coords: {
               longitude: this.state.long,
               latitude: this.state.lat
-            }
+            },
+            locationLock: this.state.city
           });
           message.success("Location set to: " + this.state.city);
           this.props.close();

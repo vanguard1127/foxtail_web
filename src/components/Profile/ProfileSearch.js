@@ -17,7 +17,9 @@ class ProfileSearch extends Component {
     skip: 0,
     loading: false,
     previewVisible: false,
-    previewImage: ""
+    previewImage: "",
+    lat: this.props.location.lat,
+    long: this.props.location.long
   };
 
   fetchData = async fetchMore => {
@@ -64,9 +66,13 @@ class ProfileSearch extends Component {
     });
   };
 
+  setLocation = ({ lat, long }) => {
+    this.setState({ long, lat });
+  };
+
   render() {
-    const { long, lat } = this.props.location;
-    const { previewVisible, previewImage } = this.state;
+    const { currentuser } = this.props.session;
+    const { previewVisible, previewImage, long, lat } = this.state;
 
     return (
       <Fragment>
@@ -82,6 +88,8 @@ class ProfileSearch extends Component {
                   <SearchCriteriaPanel
                     queryParams={{ long, lat, limit: LIMIT }}
                     client={client}
+                    isBlackMember={currentuser.blackMember.active}
+                    setQueryLoc={this.setLocation}
                   />
                 )}
               </ApolloConsumer>
@@ -90,7 +98,12 @@ class ProfileSearch extends Component {
             if (loading) {
               return <Spinner message="Loading Members..." size="large" />;
             } else if (data && data.searchProfiles.length === 0) {
-              return <div>{searchPanel} No members near you</div>;
+              return (
+                <div>
+                  {searchPanel} No members near you{lat},,
+                  {long}
+                </div>
+              );
             }
             if (error) {
               if (error.message.indexOf("invisible")) {

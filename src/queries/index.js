@@ -94,6 +94,12 @@ export const SEND_MESSAGE = gql`
   }
 `;
 
+export const REMOVE_LOCLOCK = gql`
+  mutation {
+    removeLocationLock
+  }
+`;
+
 export const UPDATE_SETTINGS = gql`
   mutation(
     $distance: Int
