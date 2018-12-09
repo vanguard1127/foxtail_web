@@ -77,10 +77,9 @@ class SearchCriteriaPanelForm extends Component {
       );
       return;
     });
-    console.log("FREE");
+
     removeLocationLock()
       .then(async ({ data }) => {
-        console.log("HEREH");
         this.props.form.setFieldsValue({ locationLock: CURRENT_LOC_LABEL });
       })
       .catch(res => {
