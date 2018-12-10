@@ -4,6 +4,7 @@ import {
   GET_MESSAGES,
   SEND_MESSAGE,
   NEW_MESSAGE_SUB,
+  NEW_MESSAGE_SUB_NO_CHAT,
   REMOVE_SELF
 } from "../../queries";
 import { Form, Input, Button } from "antd";
@@ -101,6 +102,35 @@ class Chatroom extends Component {
       .then(res => console.log(res) || res)
       .catch(res => console.warn(res));
   };
+  componentDidMount() {
+    console.log("mounting XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+  }
+  subscribeToMoreMessages = subscribeToMore => {
+    return subscribeToMore({
+      document: NEW_MESSAGE_SUB_NO_CHAT,
+      updateQuery: (prev, { subscriptionData }) => {
+        const { newMessageSubscribe } = subscriptionData.data;
+        console.log("SUBSCRIBE EXECUTED", prev, subscriptionData);
+        if (!newMessageSubscribe) {
+          return prev;
+        }
+        if (prev.getMessages) {
+          prev.getMessages.messages = [
+            newMessageSubscribe,
+            ...prev.getMessages.messages
+          ];
+        } else {
+          prev.getMessages = {
+            messages: [newMessageSubscribe],
+            __typename: "ChatType"
+          };
+        }
+        console.log(prev.getMessages);
+
+        return prev;
+      }
+    });
+  };
 
   render() {
     const {
@@ -165,32 +195,31 @@ class Chatroom extends Component {
             console.log("dat", data);
 
             if (!unsubscribe) {
-              console.log(unsubscribe);
-              unsubscribe = subscribeToMore({
-                document: NEW_MESSAGE_SUB,
-                updateQuery: (prev, { subscriptionData }) => {
-                  const { newMessageSubscribe } = subscriptionData.data;
-                  console.log("SUBSCRIBE EXECUTED", prev, subscriptionData);
-                  if (!newMessageSubscribe) {
-                    return prev;
-                  }
-                  if (prev.getMessages) {
-                    prev.getMessages.messages = [
-                      newMessageSubscribe,
-                      ...prev.getMessages.messages
-                    ];
-                  } else {
-                    prev.getMessages = {
-                      messages: [newMessageSubscribe],
-                      __typename: "ChatType"
-                    };
-                  }
-                  console.log(prev.getMessages);
-
-                  return prev;
-                }
-              });
-              console.log(unsubscribe);
+              // console.log(unsubscribe);
+              // unsubscribe = subscribeToMore({
+              //   document: NEW_MESSAGE_SUB_NO_CHAT,
+              //   updateQuery: (prev, { subscriptionData }) => {
+              //     const { newMessageSubscribe } = subscriptionData.data;
+              //     console.log("SUBSCRIBE EXECUTED", prev, subscriptionData);
+              //     if (!newMessageSubscribe) {
+              //       return prev;
+              //     }
+              //     if (prev.getMessages) {
+              //       prev.getMessages.messages = [
+              //         newMessageSubscribe,
+              //         ...prev.getMessages.messages
+              //       ];
+              //     } else {
+              //       prev.getMessages = {
+              //         messages: [newMessageSubscribe],
+              //         __typename: "ChatType"
+              //       };
+              //     }
+              //     console.log(prev.getMessages);
+              //     return prev;
+              //   }
+              // });
+              // console.log(unsubscribe);
             }
             return (
               <Fragment>
@@ -200,6 +229,36 @@ class Chatroom extends Component {
                   ref={this.MessageList}
                   messages={
                     data && data.getMessages ? data.getMessages.messages : []
+                  }
+                  subscribe={() =>
+                    subscribeToMore({
+                      document: NEW_MESSAGE_SUB_NO_CHAT,
+                      updateQuery: (prev, { subscriptionData }) => {
+                        const { newMessageSubscribe } = subscriptionData.data;
+                        console.log(
+                          "SUBSCRIBE EXECUTED",
+                          prev,
+                          subscriptionData
+                        );
+                        if (!newMessageSubscribe) {
+                          return prev;
+                        }
+                        if (prev.getMessages) {
+                          prev.getMessages.messages = [
+                            newMessageSubscribe,
+                            ...prev.getMessages.messages
+                          ];
+                        } else {
+                          prev.getMessages = {
+                            messages: [newMessageSubscribe],
+                            __typename: "ChatType"
+                          };
+                        }
+                        console.log(prev.getMessages);
+
+                        return prev;
+                      }
+                    })
                   }
                   handleEnd={this.handleEnd}
                   fetchMore={fetchMore}

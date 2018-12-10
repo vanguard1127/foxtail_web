@@ -86,10 +86,18 @@ class MessageList extends Component {
     previousScrollTop: null,
     dateWaypoints: []
   };
-
+  unsubscribe = null;
   componentDidMount() {
     this.checkScrollTopToFetch(10);
     this.scrollToBot();
+    if (this.props.subscribe) {
+      this.unsubscribe = this.props.subscribe();
+    }
+  }
+  componentWillUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.messages !== this.props.messages) {

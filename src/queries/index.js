@@ -15,6 +15,19 @@ export const NEW_MESSAGE_SUB = gql`
   }
 `;
 
+export const NEW_MESSAGE_SUB_NO_CHAT = gql`
+  subscription {
+    newMessageSubscribe {
+      id
+      text
+      fromUser
+      profilePic
+      chatID
+      type
+      createdAt
+    }
+  }
+`;
 export const NEW_INBOX_SUB = gql`
   query {
     getInbox {
