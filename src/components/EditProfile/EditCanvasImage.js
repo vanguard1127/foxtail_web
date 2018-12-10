@@ -165,7 +165,7 @@ class EditCanvasImage extends React.Component {
           </Layer>
         </Stage>
         <Button style={{ marginBottom: 5 }} onClick={this.handleExportClick}>
-          Save
+          Upload
         </Button>
         <Button
           style={{ marginBottom: 5 }}

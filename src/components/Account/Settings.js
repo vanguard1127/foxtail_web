@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS } from "../../queries";
-import { sexOptions } from "../../docs/data";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
@@ -10,19 +9,8 @@ import BlackMemberModal from "../common/BlackMemberModal";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import BlackStatus from "../common/BlackStatus";
 
-import {
-  Form,
-  Input,
-  Switch,
-  Slider,
-  Button,
-  Icon,
-  Tooltip,
-  Select,
-  message
-} from "antd";
+import { Form, Input, Switch, Button, Icon, Tooltip, message } from "antd";
 
-const Option = Select.Option;
 const FormItem = Form.Item;
 
 class SettingsForm extends Component {
@@ -30,6 +18,10 @@ class SettingsForm extends Component {
     coupleModalVisible: false,
     blkMemberModalVisible: false
   };
+  componentWillUnmount() {
+    //TODO: Get this working
+    console.log("Check here if settigns are different ask them to save");
+  }
   handleSubmit = (e, updateSettings) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -100,16 +92,14 @@ class SettingsForm extends Component {
           }
 
           let settings;
-          if (this.props.form.getFieldsValue().distance) {
+
+          if (Object.keys(this.props.form.getFieldsValue()).length !== 0) {
             settings = this.props.form.getFieldsValue();
           } else {
             settings = data.getSettings;
           }
+
           const {
-            distance,
-            distanceMetric,
-            ageRange,
-            interestedIn,
             locationLock,
             visible,
             newMsgNotify,
@@ -123,10 +113,6 @@ class SettingsForm extends Component {
             <Mutation
               mutation={UPDATE_SETTINGS}
               variables={{
-                distance,
-                distanceMetric,
-                ageRange,
-                interestedIn,
                 locationLock,
                 visible,
                 newMsgNotify,
@@ -141,64 +127,6 @@ class SettingsForm extends Component {
                   <Fragment>
                     <Form onSubmit={e => this.handleSubmit(e, updateSettings)}>
                       <h3 className="formItemLayout">Preferences</h3>
-                      <FormItem {...formItemLayout} label="Distance">
-                        {getFieldDecorator("distance", {
-                          initialValue: settings.distance
-                        })(
-                          <Slider
-                            min={0}
-                            max={100}
-                            marks={{ 0: "<1 " + distanceMetric, 100: "100+" }}
-                          />
-                        )}
-                      </FormItem>
-                      <FormItem {...formItemLayout} label={" "} colon={false}>
-                        {getFieldDecorator("distanceMetric", {
-                          initialValue: settings.distanceMetric
-                        })(
-                          <Switch
-                            checkedChildren="mi"
-                            unCheckedChildren="km"
-                            defaultChecked
-                          />
-                        )}
-                      </FormItem>
-                      <FormItem {...formItemLayout} label="Age">
-                        {getFieldDecorator("ageRange", {
-                          initialValue: settings.ageRange
-                        })(
-                          <Slider
-                            range
-                            min={18}
-                            max={80}
-                            marks={{ 18: "18 years", 80: "80+" }}
-                          />
-                        )}
-                      </FormItem>
-                      <FormItem {...formItemLayout} label="Interested In">
-                        {getFieldDecorator("interestedIn", {
-                          rules: [
-                            {
-                              required: true,
-                              message:
-                                "Please select what type of members interest you!",
-                              type: "array"
-                            }
-                          ],
-                          initialValue: settings.interestedIn
-                        })(
-                          <Select
-                            mode="multiple"
-                            style={{ width: "100%" }}
-                            placeholder="Interested In"
-                            onChange={this.handleChangeSelect}
-                          >
-                            {sexOptions.map(option => (
-                              <Option key={option.value}>{option.label}</Option>
-                            ))}
-                          </Select>
-                        )}
-                      </FormItem>
                       <FormItem {...formItemLayout} label="Couple Partner:">
                         {getFieldDecorator("couplePartner", {
                           initialValue: couplePartner
