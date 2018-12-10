@@ -372,7 +372,6 @@ class MessageList extends Component {
             position: "relative",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-end",
             flexWrap: "wrap",
             height: "100%",
             overflow: "hidden"
