@@ -97,41 +97,6 @@ class Chatroom extends Component {
       loading: false
     });
   };
-  leaveChat = leave => {
-    leave()
-      .then(res => console.log(res) || res)
-      .catch(res => console.warn(res));
-  };
-  componentDidMount() {
-    console.log("mounting XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-  }
-  subscribeToMoreMessages = subscribeToMore => {
-    return subscribeToMore({
-      document: NEW_MESSAGE_SUB_NO_CHAT,
-      updateQuery: (prev, { subscriptionData }) => {
-        const { newMessageSubscribe } = subscriptionData.data;
-        console.log("SUBSCRIBE EXECUTED", prev, subscriptionData);
-        if (!newMessageSubscribe) {
-          return prev;
-        }
-        if (prev.getMessages) {
-          prev.getMessages.messages = [
-            newMessageSubscribe,
-            ...prev.getMessages.messages
-          ];
-        } else {
-          prev.getMessages = {
-            messages: [newMessageSubscribe],
-            __typename: "ChatType"
-          };
-        }
-        console.log(prev.getMessages);
-
-        return prev;
-      }
-    });
-  };
-
   render() {
     const {
       style,
@@ -152,7 +117,6 @@ class Chatroom extends Component {
         participantText = ` + ${participants.length - 2} participants`;
       }
     }
-    console.log(participants);
     console.log("id", chatID);
     return (
       <div className="chatroom" style={{ position: "relative", ...style }}>
@@ -172,8 +136,7 @@ class Chatroom extends Component {
               }}
             >
               {(leaveChat, { data, error, loading }) => {
-                console.log("Chat leave is put off until later");
-                console.log(data, error, loading);
+                console.log("leaving");
                 return <h5 onClick={() => leaveChat()}>leave</h5>;
               }}
             </Mutation>
@@ -232,14 +195,13 @@ class Chatroom extends Component {
                   }
                   subscribe={() =>
                     subscribeToMore({
-                      document: NEW_MESSAGE_SUB_NO_CHAT,
+                      document: NEW_MESSAGE_SUB,
+                      variables: {
+                        chatID: chatID
+                      },
                       updateQuery: (prev, { subscriptionData }) => {
                         const { newMessageSubscribe } = subscriptionData.data;
-                        console.log(
-                          "SUBSCRIBE EXECUTED",
-                          prev,
-                          subscriptionData
-                        );
+                        console.log("SUBSCRIBE EXECUTED", subscriptionData);
                         if (!newMessageSubscribe) {
                           return prev;
                         }

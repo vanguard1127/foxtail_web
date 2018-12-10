@@ -9,28 +9,18 @@ export const NEW_MESSAGE_SUB = gql`
       text
       fromUser
       profilePic
+      participants {
+        profileName
+      }
       type
       createdAt
     }
   }
 `;
 
-export const NEW_MESSAGE_SUB_NO_CHAT = gql`
+export const NEW_INBOX_SUB = gql`
   subscription {
     newMessageSubscribe {
-      id
-      text
-      fromUser
-      profilePic
-      chatID
-      type
-      createdAt
-    }
-  }
-`;
-export const NEW_INBOX_SUB = gql`
-  query {
-    getInbox {
       id
       chatID
       text

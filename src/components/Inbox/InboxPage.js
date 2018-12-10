@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Query } from "react-apollo";
-import { GET_INBOX } from "../../queries";
+import { GET_INBOX, NEW_INBOX_SUB } from "../../queries";
 import { List, Avatar, Badge, Divider } from "antd";
 import Waypoint from "react-waypoint";
 import Chatroom from "../Chat/Chatroom";
@@ -10,6 +10,109 @@ import withAuth from "../withAuth";
 
 const LIMIT = 10;
 
+class InboxList extends Component {
+  unsubscribe = null;
+  componentDidMount() {
+    if (this.props.subscribe) {
+      this.unsubscribe = this.props.subscribe();
+    }
+  }
+  componentWillUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+  }
+  renderItem = (item, timeAgo, isCurrentChat) => {
+    const { setChatID } = this.props;
+    return (
+      <List.Item
+        key={item.id}
+        style={{
+          backgroundColor: isCurrentChat ? "#ffffff40" : "",
+
+          margin: "0 -10px",
+          paddingLeft: "10px",
+          paddingRight: "10px"
+        }}
+      >
+        <List.Item.Meta
+          avatar={
+            <Badge dot={timeAgo === "Online"}>
+              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            </Badge>
+          }
+          title={
+            <a onClick={e => setChatID(e, item.chatID)}>{item.fromUser}</a>
+          }
+          description={item.text}
+        />
+        <div>{timeAgo}</div>
+      </List.Item>
+    );
+  };
+  renderMsgList = ({ messages, onlineOnly }) => {
+    const { chatID } = this.props;
+    return (
+      <Fragment>
+        {messages.map((message, i) => {
+          var timeAgo = TimeAgo(message.participants[0].updatedAt);
+          let isCurrentChat = false;
+          if (chatID === message.chatID) {
+            isCurrentChat = true;
+          } else if (!chatID) {
+            isCurrentChat = i === 0;
+          }
+          if (onlineOnly) {
+            if (timeAgo === "Online") {
+              return this.renderItem(message, timeAgo, isCurrentChat);
+            }
+            return null;
+          } else if (timeAgo !== "Online") {
+            return this.renderItem(message, timeAgo, isCurrentChat);
+          }
+          return null;
+        })}
+      </Fragment>
+    );
+  };
+
+  render() {
+    const { messages } = this.props;
+
+    return (
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "horizontal",
+          backgroundColor: "red"
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            backgroundColor: "lightblue",
+            padding: "10px"
+          }}
+        >
+          <Divider className="chatList-divider" orientation="left">
+            Online
+          </Divider>
+          {this.renderMsgList({ messages, onlineOnly: true })}
+          <Divider />
+          {this.renderMsgList({ messages, onlineOnly: false })}
+          {/* <Waypoint
+                      onEnter={({ previousPosition }) =>
+                        this.handleEnd(previousPosition, fetchMore)
+                      }
+                    /> */}
+        </div>
+      </div>
+    );
+  }
+}
 class InboxPage extends Component {
   state = { chatID: null };
 
@@ -98,6 +201,7 @@ class InboxPage extends Component {
   };
 
   renderMsgList = ({ messages, onlineOnly }) => {
+    console.log("messages", messages);
     return (
       <Fragment>
         {messages.map((message, i) => {
@@ -183,36 +287,53 @@ class InboxPage extends Component {
             }
             return (
               <Fragment>
-                <div
-                  style={{
-                    display: "flex",
-                    flex: 1,
-                    flexDirection: "horizontal",
-                    backgroundColor: "red"
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      flex: 1,
-                      flexDirection: "column",
-                      backgroundColor: "lightblue",
-                      padding: "10px"
-                    }}
-                  >
-                    <Divider className="chatList-divider" orientation="left">
-                      Online
-                    </Divider>
-                    {this.renderMsgList({ messages, onlineOnly: true })}
-                    <Divider />
-                    {this.renderMsgList({ messages, onlineOnly: false })}
-                    {/* <Waypoint
-                      onEnter={({ previousPosition }) =>
-                        this.handleEnd(previousPosition, fetchMore)
+                <InboxList
+                  messages={messages}
+                  chatID={this.state.chatID}
+                  setChatID={this.setChatID}
+                  subscribe={() =>
+                    subscribeToMore({
+                      document: NEW_INBOX_SUB,
+                      updateQuery: (prev, { subscriptionData }) => {
+                        const { newMessageSubscribe } = subscriptionData.data;
+                        console.log(
+                          "SUBSCRIBE INBOX EXECUTED",
+                          subscriptionData,
+                          prev
+                        );
+                        if (!newMessageSubscribe) {
+                          return prev;
+                        }
+                        const chatObject = prev.getInbox.filter(
+                          chat => chat.chatID === newMessageSubscribe.chatID
+                        )[0];
+                        if (chatObject) {
+                          chatObject.text = newMessageSubscribe.text;
+                          chatObject.fromUser = newMessageSubscribe.fromUser;
+                          chatObject.id = newMessageSubscribe.id;
+                          chatObject.profilePic =
+                            newMessageSubscribe.profilePic;
+                        } else {
+                          // prev.push({ chatID: newMessageSubscribe });
+                        }
+                        // if (prev.getMessages) {
+                        //   prev.getMessages.messages = [
+                        //     newMessageSubscribe,
+                        //     ...prev.getMessages.messages
+                        //   ];
+                        // } else {
+                        //   prev.getMessages = {
+                        //     messages: [newMessageSubscribe],
+                        //     __typename: "ChatType"
+                        //   };
+                        // }
+                        // console.log(prev.getMessages);
+
+                        return prev;
                       }
-                    /> */}
-                  </div>
-                </div>
+                    })
+                  }
+                />
                 <div
                   style={{
                     display: "flex",
