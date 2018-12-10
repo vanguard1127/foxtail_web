@@ -9,13 +9,8 @@ export const NEW_MESSAGE_SUB = gql`
       text
       fromUser
       profilePic
+      type
       createdAt
-      participants {
-        profileName
-        updatedAt
-        profilePic
-        _id
-      }
     }
   }
 `;
@@ -272,8 +267,15 @@ export const SIGNS3 = gql`
     }
   }
 `;
+
+export const SEARCH_DESIRES = gql`
+  query($searchTerm: String!) {
+    searchDesires(searchTerm: $searchTerm)
+  }
+`;
+
 export const REMOVE_SELF = gql`
-  mutation($chatID: String) {
+  mutation($chatID: ID!) {
     removeSelf(chatID: $chatID)
   }
 `;
@@ -341,13 +343,6 @@ export const SEARCH_PROFILES = gql`
     }
   }
 `;
-
-export const SEARCH_DESIRES = gql`
-  query($searchTerm: String!) {
-    searchDesires(searchTerm: $searchTerm)
-  }
-`;
-
 export const GET_EVENT = gql`
   query($id: ID!) {
     event(id: $id) {
@@ -411,6 +406,7 @@ export const GET_MESSAGES = gql`
         text
         fromUser
         profilePic
+        type
         createdAt
       }
     }

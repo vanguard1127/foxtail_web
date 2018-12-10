@@ -61,6 +61,9 @@ const httpLink = new HttpLink({
 });
 
 const AuthLink = new ApolloLink((operation, forward) => {
+  console.log(
+    localStorage.getItem("token", localStorage.getItem("refreshToken"))
+  );
   operation.setContext(context => ({
     ...context,
     headers: {

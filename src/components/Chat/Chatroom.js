@@ -122,6 +122,7 @@ class Chatroom extends Component {
         participantText = ` + ${participants.length - 2} participants`;
       }
     }
+    console.log(participants);
     console.log("id", chatID);
     return (
       <div className="chatroom" style={{ position: "relative", ...style }}>
@@ -140,9 +141,10 @@ class Chatroom extends Component {
                 chatID: chatID
               }}
             >
-              {(leaveChat, { loading }) => {
-                console.log(loading, chatID);
-                return <h5 onClick={() => this.leaveChat(leaveChat)}>leave</h5>;
+              {(leaveChat, { data, error, loading }) => {
+                console.log("Chat leave is put off until later");
+                console.log(data, error, loading);
+                return <h5 onClick={() => leaveChat()}>leave</h5>;
               }}
             </Mutation>
           </div>
