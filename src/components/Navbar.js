@@ -6,6 +6,7 @@ import { Mutation } from "react-apollo";
 import { LOGIN, FB_RESOLVE } from "../queries";
 import AccountKit from "react-facebook-account-kit";
 import Signout from "../components/Auth/Signout";
+import NotificationsBtn from "../components/common/NotificationsBtn";
 
 const initialState = {
   csrf: "",
@@ -198,6 +199,7 @@ class NavbarUnAuth extends Component {
         <Menu.Item>
           <Signout />
         </Menu.Item>
+        <NotificationsBtn />
       </Menu>
     );
   }

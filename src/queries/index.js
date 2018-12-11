@@ -397,6 +397,31 @@ export const GET_MESSAGES = gql`
   }
 `;
 
+export const GET_CHAT = gql`
+  query($chatID: ID) {
+    chat(id: $chatID) {
+      id
+      updatedAt
+      messages {
+        id
+        text
+        fromUser
+        profilePic
+        createdAt
+      }
+      participants {
+        profilePic
+        profileName
+        updatedAt
+        users {
+          username
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const GET_CURRENT_USER = gql`
   query {
     currentuser {
