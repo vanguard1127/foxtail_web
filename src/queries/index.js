@@ -14,6 +14,24 @@ export const NEW_MESSAGE_SUB = gql`
   }
 `;
 
+export const NEW_NOTICE_SUB = gql`
+  subscription {
+    newNoticeSubscribe {
+      id
+      seen
+      read
+      type
+      text
+      topicID
+      date
+      fromProfile {
+        profilePic
+        profileName
+      }
+    }
+  }
+`;
+
 /* Mutations */
 //TODO: fix App version issue
 export const CREATE_USER = gql`
@@ -163,6 +181,12 @@ export const LOGIN = gql`
       token
       access
     }
+  }
+`;
+
+export const UPDATE_NOTIFICATIONS = gql`
+  mutation($notificationIDs: [String]!, $read: Boolean) {
+    updateNotifications(notificationIDs: $notificationIDs, read: $read)
   }
 `;
 
@@ -371,6 +395,24 @@ export const GET_MY_EVENTS = gql`
       }
       total
       offset
+    }
+  }
+`;
+
+export const GET_NOTIFICATIONS = gql`
+  query {
+    getNotifications {
+      id
+      seen
+      read
+      type
+      text
+      topicID
+      date
+      fromProfile {
+        profilePic
+        profileName
+      }
     }
   }
 `;

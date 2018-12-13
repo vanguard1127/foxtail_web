@@ -9,6 +9,7 @@ import { desireOptions, s3url } from "../../docs/data";
 import Spinner from "../common/Spinner";
 import PhotoVerModal from "../common/PhotoVerModal";
 import STDVerModal from "../common/STDVerModal";
+import DesiresTransfer from "../Desire/DesiresTransfer";
 
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -73,8 +74,8 @@ class EditProfileForm extends Component {
     });
   };
 
-  handleChangeSelect = value => {
-    this.setState({ desires: value });
+  handleDesireSelect = value => {
+    this.props.form.setFieldsValue({ desires: value });
   };
 
   handleSubmit = ({ e, updateProfile, refetch, about }) => {
@@ -187,19 +188,10 @@ class EditProfileForm extends Component {
                           ],
                           initialValue: desires ? desires : []
                         })(
-                          <Select
-                            mode="multiple"
-                            placeholder="Interested In"
-                            style={{ width: "33vw" }}
-                            onChange={this.handleChangeSelect}
-                            currentvalue={this.props.form.getFieldValue(
-                              "desires"
-                            )}
-                          >
-                            {desireOptions.map(option => (
-                              <Option key={option.value}>{option.label}</Option>
-                            ))}
-                          </Select>
+                          <DesiresTransfer
+                            chosen={this.props.form.getFieldValue("desires")}
+                            selectDesires={this.handleDesireSelect}
+                          />
                         )}
                       </FormItem>
                       Bio
