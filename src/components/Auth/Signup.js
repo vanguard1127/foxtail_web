@@ -32,7 +32,7 @@ const initialState = {
   dob: "",
   interestedIn: [],
   gender: "",
-  iscouple: false,
+  isCouple: false,
   csrf: "",
   code: ""
 };
@@ -79,6 +79,7 @@ class SignupForm extends React.Component {
         () => {
           fbResolve()
             .then(({ data }) => {
+              const { isCouple } = this.state;
               if (data.fbResolve === null) {
                 message.warn("Phone verification failed.");
                 return;
@@ -99,9 +100,14 @@ class SignupForm extends React.Component {
                     data.createUser.find(token => token.access === "refresh")
                       .token
                   );
-                  //    await this.props.refetch();
-                  this.clearState();
-                  this.props.history.push("/editprofile");
+
+                  if (isCouple) {
+                    this.clearState();
+                    await this.props.history.push("/editprofile/" + "couple");
+                  } else {
+                    this.clearState();
+                    await this.props.history.push("/editprofile");
+                  }
                 })
                 .catch(res => {
                   const errors = res.graphQLErrors.map(error => {
@@ -307,9 +313,11 @@ class SignupForm extends React.Component {
                           )}
                         </FormItem>
                         <FormItem {...formItemLayout} label={" "} colon={false}>
-                          {getFieldDecorator("iscouple")(
+                          {getFieldDecorator("isCouple", {
+                            initialValue: false
+                          })(
                             <Checkbox
-                              name="iscouple"
+                              name="isCouple"
                               onChange={this.handleChange}
                             >
                               Are you a couple?

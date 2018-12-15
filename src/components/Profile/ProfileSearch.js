@@ -34,10 +34,12 @@ class ProfileSearch extends Component {
           return previousResult;
         }
         return {
-          searchProfiles: [
-            ...previousResult.searchProfiles,
-            ...fetchMoreResult.searchProfiles
-          ]
+          searchProfiles: {
+            profiles: [
+              ...previousResult.searchProfiles,
+              ...fetchMoreResult.searchProfiles
+            ]
+          }
         };
       }
     });
@@ -97,7 +99,11 @@ class ProfileSearch extends Component {
 
             if (loading) {
               return <Spinner message="Loading Members..." size="large" />;
-            } else if (data && data.searchProfiles.length === 0) {
+            } else if (
+              data &&
+              data.searchProfiles.profiles.length === 0 &&
+              data.featuredProfiles.profiles.length === 0
+            ) {
               return <div>{searchPanel} No members near you</div>;
             }
             if (error) {

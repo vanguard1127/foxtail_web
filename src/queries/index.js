@@ -314,26 +314,50 @@ export const SEARCH_EVENTS = gql`
 export const SEARCH_PROFILES = gql`
   query($long: Float!, $lat: Float!, $limit: Int, $skip: Int) {
     searchProfiles(long: $long, lat: $lat, limit: $limit, skip: $skip) {
-      id
-      about
-      desires
-      profileName
-      photos {
-        url
-        private
-      }
-      users {
+      profiles {
         id
-        username
-        dob
-        gender
-        verifications {
-          std
-          photo
+        about
+        desires
+        profileName
+        photos {
+          url
+          private
         }
+        users {
+          id
+          username
+          dob
+          gender
+          verifications {
+            std
+            photo
+          }
+        }
+        publicCode
+        showOnline
       }
-      publicCode
-      showOnline
+      featuredProfiles {
+        id
+        about
+        desires
+        profileName
+        photos {
+          url
+          private
+        }
+        users {
+          id
+          username
+          dob
+          gender
+          verifications {
+            std
+            photo
+          }
+        }
+        publicCode
+        showOnline
+      }
     }
   }
 `;

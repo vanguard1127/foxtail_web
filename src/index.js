@@ -246,6 +246,7 @@ const Body = () => (
         <Route path="/" component={App} exact />
         <Route path="/signup" component={Signup} />
         <Route path="/events" component={SearchEvents} exact />
+        <Route path="/editprofile/:couple" component={EditProfile} />
         <Route path="/editprofile" component={EditProfile} />
         <Route path="/events/:id" component={EventPage} />
         <Route path="/members/:id" component={ProfilePage} />

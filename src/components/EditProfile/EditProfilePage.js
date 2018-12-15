@@ -4,15 +4,15 @@ import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
-import { Input, Button, Icon, Select, message, Form } from "antd";
+import { Input, Button, Icon, message, Form } from "antd";
 import { desireOptions, s3url } from "../../docs/data";
 import Spinner from "../common/Spinner";
 import PhotoVerModal from "../common/PhotoVerModal";
 import STDVerModal from "../common/STDVerModal";
 import DesiresTransfer from "../Desire/DesiresTransfer";
+import CoupleModal from "../common/CoupleModal";
 
 const { TextArea } = Input;
-const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -23,12 +23,17 @@ const initialState = {
   publicPhotoList: [],
   privatePhotoList: [],
   photoVerModalVisible: false,
-  stdVerModalVisible: false
+  stdVerModalVisible: false,
+  coupleModalVisible: false
 };
 
 class EditProfileForm extends Component {
-  state = { ...initialState };
+  constructor(props) {
+    super(props);
 
+    const { couple } = this.props.match.params;
+    this.state = { ...initialState, isCouple: couple };
+  }
   componentDidMount() {
     if (this.props.location.state) {
       message.warn(this.props.location.state.alert);
@@ -36,6 +41,10 @@ class EditProfileForm extends Component {
   }
   clearState = () => {
     this.setState({ ...initialState });
+  };
+
+  setCoupleModalVisible = coupleModalVisible => {
+    this.setState({ coupleModalVisible });
   };
 
   validateForm = () => {
@@ -80,6 +89,7 @@ class EditProfileForm extends Component {
 
   handleSubmit = ({ e, updateProfile, refetch, about }) => {
     e.preventDefault();
+    const { isCouple } = this.state;
     this.props.form.validateFields((err, values) => {
       if (err) {
         return;
@@ -94,10 +104,14 @@ class EditProfileForm extends Component {
           }
           //TODO: use data to alter search...Possible <redirect state></redirect>
           await refetch();
+          console.log(this.props);
           await this.props.refetch();
+          console.log("DONE");
         })
         .then(() => {
-          if (about === "") {
+          if (isCouple === "couple") {
+            this.setCoupleModalVisible(true);
+          } else if (about === "") {
             this.props.history.push("/members");
           }
         })
@@ -114,11 +128,14 @@ class EditProfileForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { isCouple } = this.state;
+
     const {
       publicPhotoList,
       privatePhotoList,
       photoVerModalVisible,
-      stdVerModalVisible
+      stdVerModalVisible,
+      coupleModalVisible
     } = this.state;
     return (
       <Query query={GET_MY_PROFILE}>
@@ -262,6 +279,22 @@ class EditProfileForm extends Component {
                       visible={stdVerModalVisible}
                       close={() => this.setSTDVerModalVisible(false)}
                     />
+                    {isCouple === "couple" && (
+                      <CoupleModal
+                        visible={coupleModalVisible}
+                        close={() => {
+                          this.setCoupleModalVisible(false);
+                          this.props.history.push("/members");
+                        }}
+                        setPartnerID={this.setPartnerID}
+                        username={
+                          this.props.form.getFieldValue("couplePartner") !==
+                          "Add Partner"
+                            ? this.props.form.getFieldValue("couplePartner")
+                            : null
+                        }
+                      />
+                    )}
                   </div>
                 );
               }}
