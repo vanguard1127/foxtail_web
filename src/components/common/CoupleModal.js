@@ -87,6 +87,7 @@ class CoupleModal extends Component {
             OK
           </Button>
         ]}
+        destroyOnClose
       >
         <Carousel ref={c => (this.slider = c)} {...settings}>
           <Query query={GENERATE_CODE} fetchPolicy="cache-first">

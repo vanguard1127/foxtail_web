@@ -14,6 +14,7 @@ class BlackMemberModal extends Component {
         visible={visible}
         footer={[]}
         onCancel={close}
+        destroyOnClose
       >
         <img
           alt="upload"

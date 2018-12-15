@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Prompt } from "react-router-dom";
 import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
@@ -16,12 +16,10 @@ const FormItem = Form.Item;
 class SettingsForm extends Component {
   state = {
     coupleModalVisible: false,
-    blkMemberModalVisible: false
+    blkMemberModalVisible: false,
+    isChanged: false
   };
-  componentWillUnmount() {
-    //TODO: Get this working
-    console.log("Check here if settigns are different ask them to save");
-  }
+
   handleSubmit = (e, updateSettings) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -50,10 +48,12 @@ class SettingsForm extends Component {
 
   handleChangeSelect = value => {
     this.props.form.setFieldsValue({ interestedIn: value });
+    this.handleFormChange();
   };
 
   onSwitch = (value, name) => {
     this.props.form.setFieldsValue({ [name]: value });
+    this.handleFormChange();
   };
 
   setCoupleModalVisible = coupleModalVisible => {
@@ -63,16 +63,22 @@ class SettingsForm extends Component {
   setBlkMemberModalVisible = (e, blkMemberModalVisible) => {
     e.preventDefault();
     this.setState({ blkMemberModalVisible });
+    this.handleFormChange();
   };
 
   setPartnerID = id => {
     this.props.form.setFieldsValue({ couplePartner: id });
   };
 
+  handleFormChange = () => {
+    console.log("ppp");
+    this.setState({ isChanged: true });
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { session } = this.props;
-    const { coupleModalVisible, blkMemberModalVisible } = this.state;
+    const { coupleModalVisible, blkMemberModalVisible, isChanged } = this.state;
 
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -314,6 +320,12 @@ class SettingsForm extends Component {
                         refetchUser={this.props.refetch}
                       />
                     )}
+                    <Prompt
+                      when={isChanged}
+                      message={location =>
+                        `Are you sure you want to leave without saving your changes?`
+                      }
+                    />
                   </Fragment>
                 );
               }}

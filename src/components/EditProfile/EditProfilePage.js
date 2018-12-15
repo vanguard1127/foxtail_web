@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PhotoGrid from "./PhotoGrid";
 import withAuth from "../withAuth";
-import { withRouter } from "react-router-dom";
+import { withRouter, Prompt } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_MY_PROFILE, UPDATE_PROFILE } from "../../queries";
 import { Input, Button, Icon, message, Form } from "antd";
@@ -24,7 +24,8 @@ const initialState = {
   privatePhotoList: [],
   photoVerModalVisible: false,
   stdVerModalVisible: false,
-  coupleModalVisible: false
+  coupleModalVisible: false,
+  isChanged: false
 };
 
 class EditProfileForm extends Component {
@@ -35,6 +36,7 @@ class EditProfileForm extends Component {
     this.state = { ...initialState, isCouple: couple };
   }
   componentDidMount() {
+    //TODO: what is this?
     if (this.props.location.state) {
       message.warn(this.props.location.state.alert);
     }
@@ -45,6 +47,10 @@ class EditProfileForm extends Component {
 
   setCoupleModalVisible = coupleModalVisible => {
     this.setState({ coupleModalVisible });
+  };
+
+  handleFormChange = () => {
+    this.setState({ isChanged: true });
   };
 
   validateForm = () => {
@@ -135,7 +141,8 @@ class EditProfileForm extends Component {
       privatePhotoList,
       photoVerModalVisible,
       stdVerModalVisible,
-      coupleModalVisible
+      coupleModalVisible,
+      isChanged
     } = this.state;
     return (
       <Query query={GET_MY_PROFILE}>
@@ -177,6 +184,7 @@ class EditProfileForm extends Component {
                       onSubmit={e =>
                         this.handleSubmit({ e, updateProfile, refetch, about })
                       }
+                      onChange={this.handleFormChange}
                     >
                       <FormItem
                         {...formItemLayout}
@@ -295,6 +303,12 @@ class EditProfileForm extends Component {
                         }
                       />
                     )}
+                    <Prompt
+                      when={isChanged}
+                      message={location =>
+                        `Are you sure you want to leave without saving your changes?`
+                      }
+                    />
                   </div>
                 );
               }}
