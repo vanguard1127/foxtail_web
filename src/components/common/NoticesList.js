@@ -1,94 +1,133 @@
 import React, { Component } from "react";
-import { Menu, Avatar } from "antd";
-import { UPDATE_NOTIFICATIONS, NEW_NOTICE_SUB } from "../../queries";
-import { Mutation } from "react-apollo";
+import { Menu, Avatar, Button } from "antd";
+import Waypoint from "react-waypoint";
 
+const LIMIT = 5;
 class NoticesDropdown extends Component {
   state = {
-    read: false,
-    notificationIDs: []
+    skip: 0
   };
 
-  // componentDidMount() {
-  //   this.props.subscribeToMore({
-  //     document: NEW_NOTICE_SUB,
-  //     updateQuery: (prev, { subscriptionData }) => {
-  //       const { newNoticeSubscribe } = subscriptionData.data;
-  //       const { notfications } = this.state;
-  //       console.log("SUBSCRIBE EXECUTED", newNoticeSubscribe);
-  //       console.log("PREV", prev);
-  //       slapAudio.play();
-  //       if (!newNoticeSubscribe) {
-  //         return;
-  //       }
-  //       const newNotificationsList = [...notfications, newNoticeSubscribe];
-  //       this.props.setCount(newNotificationsList.length);
-  //       this.setState({ notfications: newNotificationsList });
-  //       return;
-  //     }
-  //   });
-  // }
-
-  seeNotices = async ({ notfications, updateNotifications }) => {
+  seeNotices = async ({ notifications }) => {
     try {
-      if (notfications.length !== 0) {
-        this.setState({ read: true, notificationIDs: notfications }, () => {
-          updateNotifications().catch(res => {
-            const errors = res.graphQLErrors.map(error => {
-              return error.message;
-            });
-            //TODO: send errors to analytics from here
-            this.setState({ errors });
-          });
-        });
+      const { readNotices } = this.props;
+      if (notifications.length !== 0) {
+        await readNotices(notifications);
       }
     } catch (e) {
       console.error(e.message);
     }
   };
 
-  render() {
-    const { updateNotifications, notfications } = this.props;
-    return (
-      <Menu>
-        {notfications.map(notif => (
-          <Menu.Item key={notif.id}>
-            <div
-              style={{
-                display: "flex",
-                backgroundColor: notif.read ? "#eee" : "#f8e",
-                width: "35vw"
-              }}
-            >
-              {" "}
-              <div>
-                {" "}
-                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />{" "}
-              </div>
-              <div>
-                <div>{notif.text}</div>
+  handleEnd = previousPosition => {
+    //if totoal reach skip and show no more sign
+    const { total, setSkip } = this.props;
+    const { skip } = this.state;
+    if (total > skip * LIMIT) {
+      if (previousPosition === Waypoint.below) {
+        const { fetchMore } = this.props;
+        setSkip(skip + LIMIT);
+        this.setState(
+          state => ({ skip: skip + LIMIT }),
+          () => this.fetchData(fetchMore)
+        );
+      }
+    }
+  };
 
-                <div>
-                  <small>{notif.date}</small>
-                </div>
-              </div>
-              <div style={{ display: "flex", float: "right" }}>
-                <a
-                  href={null}
-                  onClick={() =>
-                    this.seeNotices({
-                      notfications: [notif.id],
-                      updateNotifications
-                    })
-                  }
-                >
-                  read
-                </a>
+  fetchData = fetchMore => {
+    this.setState({ loading: true });
+
+    fetchMore({
+      variables: {
+        skip: this.state.skip,
+        limit: LIMIT
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (
+          !fetchMoreResult ||
+          fetchMoreResult.getNotifications.notifications.length === 0
+        ) {
+          return previousResult;
+        }
+        previousResult.getNotifications.notifications = [
+          ...fetchMoreResult.getNotifications.notifications,
+          ...previousResult.getNotifications.notifications
+        ];
+
+        return previousResult;
+      }
+    });
+  };
+
+  handleNoticeMenu = ({ notifications }) => (
+    <Menu>
+      <Menu.Divider />
+      {notifications.map(notif => (
+        <Menu.Item key={notif.id}>
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: notif.read ? "#eee" : "#f8e",
+              width: "35vw"
+            }}
+          >
+            {" "}
+            <div>
+              {" "}
+              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />{" "}
+            </div>
+            <div>
+              <div>{notif.text}</div>
+
+              <div>
+                <small>{notif.date}</small>
               </div>
             </div>
-          </Menu.Item>
-        ))}
-      </Menu>
+            <div style={{ display: "flex", float: "right" }}>
+              <a
+                href={null}
+                onClick={() =>
+                  this.seeNotices({
+                    notifications: [notif.id]
+                  })
+                }
+              >
+                read
+              </a>
+            </div>
+          </div>
+        </Menu.Item>
+      ))}
+      <Waypoint
+        onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
+      />
+      <Menu.Item disabled>No more notifications :)</Menu.Item>
+    </Menu>
+  );
+
+  render() {
+    const { notifications } = this.props;
+    return (
+      <div>
+        <div>
+          Notifcations
+          <a href={null} style={{ float: "right" }}>
+            See All
+          </a>
+        </div>
+        <div
+          style={{
+            height: "19vh",
+            overflow: "hidden",
+            overflowY: "scroll",
+            backgroundColor: "#fff"
+          }}
+        >
+          {this.handleNoticeMenu({ notifications })}
+        </div>
+        <div style={{ height: "2vh", backgroundColor: "#fff" }}>See All</div>
+      </div>
     );
   }
 }

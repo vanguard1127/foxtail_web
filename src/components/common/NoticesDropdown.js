@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Dropdown, Menu, Icon, Avatar, Badge } from "antd";
+import _ from "lodash";
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
@@ -11,16 +12,33 @@ import NoticesList from "./NoticesList";
 var slapAudio = new Audio(require("../../docs/slap.wav"));
 
 let unsubscribe = null;
+const LIMIT = 5;
 class NoticesDropdown extends Component {
-  state = { read: false, notificationIDs: [], count: 0 };
+  state = { read: false, notificationIDs: [], count: 0, skip: 0 };
 
   setCount = value => {
     this.setState({ count: value });
   };
 
-  seeNotices = async ({ notfications, updateNotifications }) => {
+  setSkip = value => {
+    this.setState({ skip: value });
+  };
+
+  readNotices = (notificationIDs, updateNotifications) => {
+    this.setState({ notificationIDs, read: true }, () => {
+      updateNotifications().catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+      });
+    });
+  };
+
+  seeNotices = async ({ notifications, updateNotifications }) => {
     try {
-      const toBeSeen = await notfications.reduce(function(result, notice) {
+      const toBeSeen = await notifications.reduce(function(result, notice) {
         if (!notice.seen) {
           result.push(notice.id);
         }
@@ -42,6 +60,49 @@ class NoticesDropdown extends Component {
       console.error(e.message);
     }
   };
+
+  updateSeen = (cache, data) => {
+    const { notificationIDs, read } = this.state;
+
+    const {
+      getNotifications: { notifications }
+    } = cache.readQuery({
+      query: GET_NOTIFICATIONS,
+      variables: { limit: LIMIT }
+    });
+    if (!read) {
+      const toBeSeen = notifications.reduce(function(result, notice) {
+        if (!notice.seen) {
+          result.push(notice.id);
+        }
+        return result;
+      }, []);
+
+      cache.writeQuery({
+        query: GET_NOTIFICATIONS,
+        variables: { limit: LIMIT },
+        data: {
+          getNotifications: {
+            unseen: toBeSeen.length - notificationIDs.length
+          }
+        }
+      });
+    } else {
+      //TODO: Figure out how to update read without erros
+      // var index = _.findIndex(notifications, { id: notificationIDs[0].id });
+      // const readNotice = notifications[index];
+      // // Replace item at index using native splice
+      // notifications.splice(index, 1, { ...readNotice, read: true });
+      // cache.writeQuery({
+      //   query: GET_NOTIFICATIONS,
+      //   variables: { limit: LIMIT },
+      //   data: {
+      //     getNotifications: { notifications }
+      //   }
+      // });
+    }
+  };
+
   render() {
     const { read, notificationIDs, count } = this.state;
 
@@ -52,18 +113,26 @@ class NoticesDropdown extends Component {
           notificationIDs,
           read
         }}
+        update={this.updateSeen}
       >
         {(updateNotifications, { loading }) => {
           return (
-            <Query query={GET_NOTIFICATIONS} fetchPolicy="network-only">
-              {({ data, loading, error, subscribeToMore }) => {
+            <Query
+              query={GET_NOTIFICATIONS}
+              variables={{ limit: LIMIT }}
+              fetchPolicy="network-only"
+            >
+              {({ data, loading, error, subscribeToMore, fetchMore }) => {
                 if (loading) {
                   return <Spinner message="Loading..." size="large" />;
                 } else if (error) {
                   return <div>{error.message}</div>;
-                } else if (!data.getNotifications) {
+                } else if (
+                  !data.getNotifications ||
+                  !data.getNotifications.notifications
+                ) {
                   return <div>Error occured. Please contact support!</div>;
-                } else if (!data.getNotifications.length === 0) {
+                } else if (!data.getNotifications.notifications.length === 0) {
                   return <div>You are all caught up :)</div>;
                 }
 
@@ -72,13 +141,14 @@ class NoticesDropdown extends Component {
                     document: NEW_NOTICE_SUB,
                     updateQuery: (prev, { subscriptionData }) => {
                       const { newNoticeSubscribe } = subscriptionData.data;
-                      slapAudio.play();
+
                       if (!newNoticeSubscribe) {
                         return prev;
                       }
-                      prev.getNotifications = [
+                      slapAudio.play();
+                      prev.getNotifications.notifications = [
                         newNoticeSubscribe,
-                        ...prev.getNotifications
+                        ...prev.getNotifications.notifications
                       ];
 
                       return prev;
@@ -86,22 +156,28 @@ class NoticesDropdown extends Component {
                   });
                 }
 
-                const notfications = data.getNotifications;
+                const notifications = data.getNotifications.notifications;
                 const notficationCount =
-                  count > 0 ? count : notfications.length;
+                  count > 0 ? count : data.getNotifications.unseen;
                 return (
                   <Dropdown
                     overlay={
                       <NoticesList
-                        notfications={notfications}
+                        notifications={notifications}
                         setCount={this.setCount}
+                        setSkip={this.setSkip}
+                        fetchMore={fetchMore}
+                        total={data.getNotifications.total}
+                        readNotices={ids =>
+                          this.readNotices(ids, updateNotifications)
+                        }
                       />
                     }
                     trigger={["click"]}
                     placement="bottomRight"
                     onClick={() =>
                       this.seeNotices({
-                        notfications,
+                        notifications,
                         updateNotifications
                       })
                     }

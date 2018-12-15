@@ -400,19 +400,23 @@ export const GET_MY_EVENTS = gql`
 `;
 
 export const GET_NOTIFICATIONS = gql`
-  query {
-    getNotifications {
-      id
-      seen
-      read
-      type
-      text
-      topicID
-      date
-      fromProfile {
-        profilePic
-        profileName
+  query($limit: Int, $skip: Int) {
+    getNotifications(limit: $limit, skip: $skip) {
+      notifications {
+        id
+        seen
+        read
+        type
+        text
+        topicID
+        date
+        fromProfile {
+          profilePic
+          profileName
+        }
       }
+      total
+      unseen
     }
   }
 `;
