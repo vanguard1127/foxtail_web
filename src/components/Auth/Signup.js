@@ -156,6 +156,42 @@ class SignupForm extends React.Component {
     );
   };
 
+  testCreateUser = createUser => {
+    const { isCouple } = this.state;
+    createUser()
+      .then(async ({ data }) => {
+        if (data.createUser === null) {
+          message.warn("Signup failed.");
+          return;
+        }
+        localStorage.setItem(
+          "token",
+          data.createUser.find(token => token.access === "auth").token
+        );
+        localStorage.setItem(
+          "refreshToken",
+          data.createUser.find(token => token.access === "refresh").token
+        );
+
+        if (isCouple) {
+          this.clearState();
+          window.location.href = '/editprofile/couple';
+          //await this.props.history.push("/editprofile/" + "couple");
+        } else {
+          this.clearState();
+          window.location.href = '/editprofile';
+          //await this.props.history.push("/editprofile");
+        }
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+      });
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -179,16 +215,19 @@ class SignupForm extends React.Component {
         <h2 className="App">Become a Foxtail Member</h2>{" "}
         <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
           {fbResolve => {
+            const max = 1000;
+            const rand = Math.floor(Math.random() * max);
             return (
               <Mutation
                 mutation={CREATE_USER}
                 variables={{
-                  username,
-                  email,
-                  phone,
-                  dob,
-                  interestedIn,
-                  gender
+                  phone: rand.toString(),
+                  username: "TEST USER",
+                  email: rand.toString() + "@fjfj.com",
+                  dob: "12/12/1990",
+                  interestedIn: ["M"],
+                  gender: "M",
+                  isCouple: false
                 }}
               >
                 {(createUser, { loading }) => {
@@ -348,7 +387,11 @@ class SignupForm extends React.Component {
                               />
                               Verify your phone number to begin
                             </Button>
-
+                            <Button
+                              onClick={() => this.testCreateUser(createUser)}
+                            >
+                              Test Create
+                            </Button>
                             <small>
                               <br />
                               Phone number will be used for login and not
