@@ -1,20 +1,16 @@
 import React, { Component, Fragment } from "react";
-import { Badge, Avatar, List, Input, Divider } from "antd";
+import { Input } from "antd";
 import { GET_INBOX } from "../../queries";
 import { Query } from "react-apollo";
 import Spinner from "./Spinner";
-import TimeAgo from "./TimeAgo";
 import InboxList from "./InboxList";
 
 class InboxPanel extends Component {
-  state = { chatID: null };
-
   //Variables by text
   render() {
     const { setChatID } = this.props;
     return (
       <Fragment>
-        {" "}
         <Query query={GET_INBOX} fetchPolicy="cache-and-network">
           {({ data, loading, error, subscribeToMore }) => {
             if (loading) {
