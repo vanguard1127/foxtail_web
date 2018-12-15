@@ -14,6 +14,24 @@ export const NEW_MESSAGE_SUB = gql`
   }
 `;
 
+export const NEW_NOTICE_SUB = gql`
+  subscription {
+    newNoticeSubscribe {
+      id
+      seen
+      read
+      type
+      text
+      topicID
+      date
+      fromProfile {
+        profilePic
+        profileName
+      }
+    }
+  }
+`;
+
 /* Mutations */
 //TODO: fix App version issue
 export const CREATE_USER = gql`
@@ -166,6 +184,12 @@ export const LOGIN = gql`
   }
 `;
 
+export const UPDATE_NOTIFICATIONS = gql`
+  mutation($notificationIDs: [String]!, $read: Boolean) {
+    updateNotifications(notificationIDs: $notificationIDs, read: $read)
+  }
+`;
+
 export const CREATE_EVENT = gql`
   mutation(
     $eventname: String!
@@ -290,26 +314,50 @@ export const SEARCH_EVENTS = gql`
 export const SEARCH_PROFILES = gql`
   query($long: Float!, $lat: Float!, $limit: Int, $skip: Int) {
     searchProfiles(long: $long, lat: $lat, limit: $limit, skip: $skip) {
-      id
-      about
-      desires
-      profileName
-      photos {
-        url
-        private
-      }
-      users {
+      profiles {
         id
-        username
-        dob
-        gender
-        verifications {
-          std
-          photo
+        about
+        desires
+        profileName
+        photos {
+          url
+          private
         }
+        users {
+          id
+          username
+          dob
+          gender
+          verifications {
+            std
+            photo
+          }
+        }
+        publicCode
+        showOnline
       }
-      publicCode
-      showOnline
+      featuredProfiles {
+        id
+        about
+        desires
+        profileName
+        photos {
+          url
+          private
+        }
+        users {
+          id
+          username
+          dob
+          gender
+          verifications {
+            std
+            photo
+          }
+        }
+        publicCode
+        showOnline
+      }
     }
   }
 `;
@@ -371,6 +419,28 @@ export const GET_MY_EVENTS = gql`
       }
       total
       offset
+    }
+  }
+`;
+
+export const GET_NOTIFICATIONS = gql`
+  query($limit: Int, $skip: Int) {
+    getNotifications(limit: $limit, skip: $skip) {
+      notifications {
+        id
+        seen
+        read
+        type
+        text
+        topicID
+        date
+        fromProfile {
+          profilePic
+          profileName
+        }
+      }
+      total
+      unseen
     }
   }
 `;

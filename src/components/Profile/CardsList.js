@@ -30,7 +30,9 @@ class CardsList extends Component {
 
   removeProfile = id => {
     this.setState(prevState => ({
-      searchProfiles: this.props.searchProfiles.filter(el => el.id !== id)
+      searchProfiles: this.props.searchProfiles.profiles.filter(
+        el => el.id !== id
+      )
     }));
   };
 
@@ -74,7 +76,17 @@ class CardsList extends Component {
           visible={msgModalVisible}
           close={() => this.setMsdModalVisible(false)}
         />
-        {searchProfiles.map(profile => (
+        {searchProfiles.featuredProfiles.map(profile => (
+          <ProfileCard
+            key={profile.id}
+            profile={profile}
+            showBlockModal={this.setBlockModalVisible}
+            showShareModal={this.setShareModalVisible}
+            showMsgModal={this.setMsdModalVisible}
+            showImageModal={showImageModal}
+          />
+        ))}
+        {searchProfiles.profiles.map(profile => (
           <ProfileCard
             key={profile.id}
             profile={profile}
