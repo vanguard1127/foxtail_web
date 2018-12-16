@@ -15,7 +15,14 @@ class InboxPage extends Component {
     const { chatID } = this.state;
 
     return (
-      <div style={{ display: "flex", flex: 1, flexDirection: "horizontal" }}>
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "horizontal",
+          height: "86vh"
+        }}
+      >
         <Fragment>
           <InboxPanel setChatID={this.setChatID} />
           <ChatPanel chatID={chatID} />

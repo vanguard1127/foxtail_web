@@ -14,6 +14,18 @@ export const NEW_MESSAGE_SUB = gql`
   }
 `;
 
+export const NEW_INBOX_MSG_SUB = gql`
+  subscription {
+    newInboxMsgSubscribe {
+      id
+      text
+      fromUser
+      profilePic
+      createdAt
+    }
+  }
+`;
+
 export const NEW_NOTICE_SUB = gql`
   subscription {
     newNoticeSubscribe {

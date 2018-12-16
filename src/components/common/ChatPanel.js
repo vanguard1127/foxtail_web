@@ -4,7 +4,6 @@ import { Query } from "react-apollo";
 import Spinner from "../common/Spinner";
 import TimeAgo from "../common/TimeAgo";
 import Chatroom from "../Chat/Chatroom";
-
 class InboxList extends Component {
   //Variables by text
   render() {
@@ -22,7 +21,7 @@ class InboxList extends Component {
               return <Spinner message="Loading..." size="large" />;
             }
 
-            if (!data.chat) {
+            if (!data || !data.chat) {
               return <div>No chat</div>;
             }
 
@@ -59,7 +58,6 @@ class InboxList extends Component {
                     backgroundColor: "blue"
                   }}
                 >
-                  {" "}
                   <Chatroom
                     style={{
                       display: "flex",

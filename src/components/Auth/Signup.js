@@ -175,10 +175,12 @@ class SignupForm extends React.Component {
 
         if (isCouple) {
           this.clearState();
-          await this.props.history.push("/editprofile/" + "couple");
+          window.location.href = "/editprofile/couple";
+          //await this.props.history.push("/editprofile/" + "couple");
         } else {
           this.clearState();
-          await this.props.history.push("/editprofile");
+          window.location.href = "/editprofile";
+          //await this.props.history.push("/editprofile");
         }
       })
       .catch(res => {
