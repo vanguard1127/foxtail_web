@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
+import { withNamespaces } from "react-i18next";
 import {
   Button,
   DatePicker,
@@ -194,6 +195,7 @@ class SignupForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { t } = this.props;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 15 }
@@ -212,7 +214,7 @@ class SignupForm extends React.Component {
 
     return (
       <div className="centerColumn fullHeight">
-        <h2 className="App">Become a Foxtail Member</h2>{" "}
+        <h2 className="App">{t("Become a Foxtail Member")}</h2>{" "}
         <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
           {fbResolve => {
             const max = 1000;
@@ -412,4 +414,4 @@ class SignupForm extends React.Component {
   }
 }
 const Signup = Form.create()(SignupForm);
-export default withRouter(Signup);
+export default withNamespaces()(withRouter(Signup));

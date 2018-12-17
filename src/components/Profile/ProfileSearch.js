@@ -36,8 +36,8 @@ class ProfileSearch extends Component {
         return {
           searchProfiles: {
             profiles: [
-              ...previousResult.searchProfiles,
-              ...fetchMoreResult.searchProfiles
+              ...previousResult.searchProfiles.profiles,
+              ...fetchMoreResult.searchProfiles.profiles
             ]
           }
         };

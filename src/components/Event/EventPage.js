@@ -6,6 +6,7 @@ import { Dropdown, Menu, Icon } from "antd";
 import AttendEvent from "./AttendEvent";
 import Chatroom from "../Chat/Chatroom";
 import BlockModal from "../common/BlockModal";
+import FriendsDropdown from "../common/FriendsDropdown";
 import moment from "moment";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
@@ -200,6 +201,7 @@ class EventPage extends Component {
               <p>{event.description}</p>
               <p>{event.address}</p>
               <p>{event.desires}</p>
+              <FriendsDropdown />
               <p>
                 Going:
                 {event.participants.length}

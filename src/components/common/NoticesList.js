@@ -3,7 +3,7 @@ import { Menu, Avatar, Button } from "antd";
 import Waypoint from "react-waypoint";
 
 const LIMIT = 5;
-class NoticesDropdown extends Component {
+class NoticesList extends Component {
   state = {
     skip: 0
   };
@@ -132,4 +132,4 @@ class NoticesDropdown extends Component {
   }
 }
 
-export default NoticesDropdown;
+export default NoticesList;

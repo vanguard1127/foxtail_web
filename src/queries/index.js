@@ -202,6 +202,12 @@ export const UPDATE_NOTIFICATIONS = gql`
   }
 `;
 
+export const INVITE_PROFILES = gql`
+  mutation($chatID: String, $invitedProfiles: [String]) {
+    inviteProfile(chatID: $chatID, invitedProfiles: $invitedProfiles)
+  }
+`;
+
 export const CREATE_EVENT = gql`
   mutation(
     $eventname: String!
@@ -431,6 +437,16 @@ export const GET_MY_EVENTS = gql`
       }
       total
       offset
+    }
+  }
+`;
+
+export const GET_FRIENDS = gql`
+  query($limit: Int!, $skip: Int) {
+    getFriends(limit: $limit, skip: $skip) {
+      profilePic
+      profileName
+      id
     }
   }
 `;

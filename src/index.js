@@ -21,6 +21,7 @@ import EditProfile from "./components/EditProfile/EditProfilePage";
 import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
 import Footer from "./components/Footer";
+import "./i18n";
 
 import { ApolloProvider } from "react-apollo";
 import { Layout, message as popmsg } from "antd";
