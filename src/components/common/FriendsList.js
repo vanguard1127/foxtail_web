@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import { Menu, Avatar, Button } from "antd";
+import { Menu, Avatar, Button, Checkbox, message } from "antd";
 import Waypoint from "react-waypoint";
-import { INVITE_PROFILES } from "../../queries";
+import {
+  INVITE_PROFILES,
+  INVITE_PROFILES_EVENT,
+  REMOVE_PROFILES_EVENT
+} from "../../queries";
 import { Mutation } from "react-apollo";
 
 const LIMIT = 5;
 class FriendsList extends Component {
   state = {
     skip: 0,
-    chatID: null,
     invitedProfiles: []
   };
 
@@ -46,6 +49,87 @@ class FriendsList extends Component {
     });
   };
 
+  handleInvite = invite => {
+    const { isEvent } = this.props;
+    if (isEvent) {
+      invite()
+        .then(({ data }) => {
+          if (data.inviteProfileEvent) {
+            message.success("Inivtations sent");
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+        });
+    } else {
+      invite()
+        .then(({ data }) => {
+          if (data.inviteProfile) {
+            message.success("Inivtations sent");
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+        });
+    }
+  };
+
+  handleRemove = remove => {
+    const { isEvent } = this.props;
+    if (isEvent) {
+      remove()
+        .then(({ data }) => {
+          if (data.removeProfileEvent) {
+            message.success("Removed sent");
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+        });
+    } else {
+      remove()
+        .then(({ data }) => {
+          if (data.removeProfile) {
+            message.success("Removed profiles");
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+        });
+    }
+  };
+
+  handleChange = e => {
+    let { invitedProfiles } = this.state;
+    if (e.target.checked) {
+      invitedProfiles.push(e.target.value);
+    } else {
+      invitedProfiles = invitedProfiles.filter(pro => pro !== e.target.value);
+    }
+
+    this.setState({ invitedProfiles });
+  };
+
   handleFriendList = ({ friends }) => (
     <Menu>
       <Menu.Divider />
@@ -60,14 +144,13 @@ class FriendsList extends Component {
           >
             {" "}
             <div>
-              {" "}
+              <Checkbox onChange={this.handleChange} value={friend.id}>
+                Checkbox
+              </Checkbox>{" "}
               <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />{" "}
             </div>
             <div>
               <div>{friend.profileName}</div>
-            </div>
-            <div style={{ display: "flex", float: "right" }}>
-              <Button>Invite</Button>
             </div>
           </div>
         </Menu.Item>
@@ -78,29 +161,79 @@ class FriendsList extends Component {
       <Menu.Item disabled>No new friends :)</Menu.Item>
     </Menu>
   );
-  actionButton = () => {
-    const { chatID, invitedProfiles } = this.state;
-    return (
-      <Mutation
-        mutation={INVITE_PROFILES}
-        variables={{
-          chatID,
-          invitedProfiles
-        }}
-      >
-        {inviteProfile => {
-          return <Button onClick={inviteProfile}>Invite Members</Button>;
-        }}
-      </Mutation>
-    );
+  actionButton = ({ targetID, invitedProfiles, isEvent, isRemove }) => {
+    if (isEvent) {
+      if (!isRemove) {
+        return (
+          <Mutation
+            mutation={INVITE_PROFILES_EVENT}
+            variables={{
+              eventID: targetID,
+              invitedProfiles
+            }}
+          >
+            {inviteProfileEvent => {
+              return (
+                <Button onClick={() => this.handleInvite(inviteProfileEvent)}>
+                  Invite Members
+                </Button>
+              );
+            }}
+          </Mutation>
+        );
+      } else {
+        return (
+          <Mutation
+            mutation={REMOVE_PROFILES_EVENT}
+            variables={{
+              eventID: targetID,
+              removedProfiles: invitedProfiles
+            }}
+          >
+            {removeProfileEvent => {
+              return (
+                <Button onClick={() => this.handleRemove(removeProfileEvent)}>
+                  Remove Members
+                </Button>
+              );
+            }}
+          </Mutation>
+        );
+      }
+    } else {
+      return (
+        <Mutation
+          mutation={INVITE_PROFILES}
+          variables={{
+            chatID: targetID,
+            invitedProfiles
+          }}
+        >
+          {inviteProfile => {
+            return (
+              <Button onClick={() => this.handleInvite(inviteProfile)}>
+                Invite Members
+              </Button>
+            );
+          }}
+        </Mutation>
+      );
+    }
   };
 
   render() {
-    const { friends } = this.props;
+    const { friends, targetID, isEvent, isRemove } = this.props;
+    const { invitedProfiles } = this.state;
     const friendsList = this.handleFriendList({ friends });
+    const actionButton = this.actionButton({
+      targetID,
+      invitedProfiles,
+      isEvent,
+      isRemove
+    });
     return (
       <div>
-        <div>Invite Members</div>
+        <div>{isRemove ? "Remove Members" : "Invite Members"}</div>
         <div
           style={{
             height: "19vh",
@@ -112,7 +245,7 @@ class FriendsList extends Component {
           {friendsList}
           <div style={{ height: "2vh", backgroundColor: "#fff" }}>
             {" "}
-            {this.actionButton}
+            {actionButton}
           </div>
         </div>
       </div>

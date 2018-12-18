@@ -208,6 +208,18 @@ export const INVITE_PROFILES = gql`
   }
 `;
 
+export const INVITE_PROFILES_EVENT = gql`
+  mutation($eventID: String, $invitedProfiles: [String]) {
+    inviteProfileEvent(eventID: $eventID, invitedProfiles: $invitedProfiles)
+  }
+`;
+
+export const REMOVE_PROFILES_EVENT = gql`
+  mutation($eventID: ID, $removedProfiles: [ID]) {
+    removeProfileEvent(eventID: $eventID, removedProfiles: $removedProfiles)
+  }
+`;
+
 export const CREATE_EVENT = gql`
   mutation(
     $eventname: String!

@@ -5,6 +5,7 @@ import { Form, Input, Button } from "antd";
 import Waypoint from "react-waypoint";
 import MessageList from "./MessageList.js";
 import Spinner from "../common/Spinner";
+import FriendsDropdown from "../common/FriendsDropdown";
 
 const LIMIT = 6;
 
@@ -106,6 +107,7 @@ class Chatroom extends Component {
             <span className="chatroom-titleExtra">{titleExtra}</span>
           </h3>
           <h4 className="chatroom-date">{lastSeen}</h4>
+          <FriendsDropdown targetID={chatID} isEvent={false} />
         </div>
         <Query
           query={GET_MESSAGES}

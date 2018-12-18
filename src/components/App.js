@@ -13,14 +13,10 @@ const App = ({ t }) => {
   return (
     <div className="twocolumn">
       <div className="centerRow">
-        <button onClick={() => changeLanguage("de")}>de</button>
-        <button onClick={() => changeLanguage("en")}>en</button>
-        <h1>{t("Welcome to React")}</h1>
-        <h4>
-          #1 FREE community for alternative relationships.
-          <br /> Including polyamorus, cuddling, casual, threesomes,etc...
-          <br /> Anything but vanilla
-        </h4>
+        <p>
+          <h2>#1 FREE dating site alternative relationships.</h2>
+          <br /> <h4>Feed Your Sexuality</h4>
+        </p>
       </div>
       <div className="centerColumn">
         <Signup formStyle={{ width: "100%" }} />{" "}

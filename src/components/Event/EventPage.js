@@ -201,7 +201,16 @@ class EventPage extends Component {
               <p>{event.description}</p>
               <p>{event.address}</p>
               <p>{event.desires}</p>
-              <FriendsDropdown />
+              <FriendsDropdown
+                targetID={event.id}
+                isEvent={true}
+                isRemove={false}
+              />
+              <FriendsDropdown
+                targetID={event.id}
+                isEvent={true}
+                isRemove={true}
+              />
               <p>
                 Going:
                 {event.participants.length}

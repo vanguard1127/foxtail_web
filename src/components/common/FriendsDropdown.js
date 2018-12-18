@@ -27,7 +27,9 @@ class FriendsDropdown extends Component {
                 <FriendsList
                   friends={friends}
                   fetchMore={fetchMore}
-                  event={false}
+                  isEvent={this.props.isEvent}
+                  targetID={this.props.targetID}
+                  isRemove={this.props.isRemove}
                 />
               }
               trigger={["click"]}
@@ -37,7 +39,9 @@ class FriendsDropdown extends Component {
                 <Badge>
                   {" "}
                   <Icon
-                    type="usergroup-add"
+                    type={
+                      this.props.isRemove ? "usergroup-delete" : "usergroup-add"
+                    }
                     style={{ fontSize: "24px", color: "#934" }}
                   />
                 </Badge>
