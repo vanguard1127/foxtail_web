@@ -10,8 +10,6 @@ i18n
   .use(backend)
   .use(reactI18nextModule) // passes i18n down to react-i18next
   .init({
-    lng: "en",
-    debug: true,
     fallbackLng: "en", // use en if detected lng is not available
     keySeparator: false, // we do not use keys in form messages.welcome
     saveMissing: true, // send not translated keys to endpoint

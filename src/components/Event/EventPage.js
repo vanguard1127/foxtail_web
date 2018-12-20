@@ -4,9 +4,8 @@ import { Query, Mutation } from "react-apollo";
 import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
 import { Dropdown, Menu, Icon } from "antd";
 import AttendEvent from "./AttendEvent";
-import Chatroom from "../Chat/Chatroom";
 import BlockModal from "../common/BlockModal";
-import FriendsDropdown from "../common/FriendsDropdown";
+import MembersDropdown from "../common/MembersDropdown";
 import moment from "moment";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
@@ -201,30 +200,22 @@ class EventPage extends Component {
               <p>{event.description}</p>
               <p>{event.address}</p>
               <p>{event.desires}</p>
-              <FriendsDropdown
+              <MembersDropdown
                 targetID={event.id}
-                isEvent={true}
-                isRemove={false}
+                targetType={"event"}
+                listType={"friends"}
               />
-              <FriendsDropdown
+              <MembersDropdown
                 targetID={event.id}
-                isEvent={true}
-                isRemove={true}
+                targetType={"event"}
+                listType={"participants"}
               />
               <p>
                 Going:
                 {event.participants.length}
               </p>
               <AttendEvent id={event.id} participants={event.participants} />
-              <Chatroom
-                style={{
-                  display: "flex",
-                  flex: 1,
-                  flexDirection: "column"
-                }}
-                chatID={event.chatID}
-                chatTitle={event.eventname}
-              />
+
               <BlockModal
                 event={event}
                 id={event.id}

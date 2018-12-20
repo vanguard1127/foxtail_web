@@ -9,7 +9,7 @@ import {
 import { Mutation } from "react-apollo";
 
 const LIMIT = 5;
-class FriendsList extends Component {
+class MembersList extends Component {
   state = {
     skip: 0,
     invitedProfiles: []
@@ -36,12 +36,12 @@ class FriendsList extends Component {
         limit: LIMIT
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult || fetchMoreResult.getFriends.length === 0) {
+        if (!fetchMoreResult || fetchMoreResult.getMembers.length === 0) {
           return previousResult;
         }
-        previousResult.getFriends = [
-          ...fetchMoreResult.getFriends,
-          ...previousResult.getFriends
+        previousResult.getMembers = [
+          ...fetchMoreResult.getMembers,
+          ...previousResult.getMembers
         ];
 
         return previousResult;
@@ -50,8 +50,8 @@ class FriendsList extends Component {
   };
 
   handleInvite = invite => {
-    const { isEvent } = this.props;
-    if (isEvent) {
+    const { targetType } = this.props;
+    if (targetType === "event") {
       invite()
         .then(({ data }) => {
           if (data.inviteProfileEvent) {
@@ -85,12 +85,12 @@ class FriendsList extends Component {
   };
 
   handleRemove = remove => {
-    const { isEvent } = this.props;
-    if (isEvent) {
+    const { targetType } = this.props;
+    if (targetType === "event") {
       remove()
         .then(({ data }) => {
           if (data.removeProfileEvent) {
-            message.success("Removed sent");
+            message.success("Members removed");
           }
         })
         .catch(res => {
@@ -130,10 +130,10 @@ class FriendsList extends Component {
     this.setState({ invitedProfiles });
   };
 
-  handleFriendList = ({ friends }) => (
+  handleFriendList = ({ members }) => (
     <Menu>
       <Menu.Divider />
-      {friends.map(friend => (
+      {members.map(friend => (
         <Menu.Item key={friend.id}>
           <div
             style={{
@@ -158,48 +158,46 @@ class FriendsList extends Component {
       <Waypoint
         onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
       />
-      <Menu.Item disabled>No new friends :)</Menu.Item>
+      <Menu.Item disabled>No new members :)</Menu.Item>
     </Menu>
   );
-  actionButton = ({ targetID, invitedProfiles, isEvent, isRemove }) => {
-    if (isEvent) {
-      if (!isRemove) {
-        return (
-          <Mutation
-            mutation={INVITE_PROFILES_EVENT}
-            variables={{
-              eventID: targetID,
-              invitedProfiles
-            }}
-          >
-            {inviteProfileEvent => {
-              return (
-                <Button onClick={() => this.handleInvite(inviteProfileEvent)}>
-                  Invite Members
-                </Button>
-              );
-            }}
-          </Mutation>
-        );
-      } else {
-        return (
-          <Mutation
-            mutation={REMOVE_PROFILES_EVENT}
-            variables={{
-              eventID: targetID,
-              removedProfiles: invitedProfiles
-            }}
-          >
-            {removeProfileEvent => {
-              return (
-                <Button onClick={() => this.handleRemove(removeProfileEvent)}>
-                  Remove Members
-                </Button>
-              );
-            }}
-          </Mutation>
-        );
-      }
+  actionButton = ({ targetID, invitedProfiles, targetType, listType }) => {
+    if (targetType === "event" && listType === "friends") {
+      return (
+        <Mutation
+          mutation={INVITE_PROFILES_EVENT}
+          variables={{
+            eventID: targetID,
+            invitedProfiles
+          }}
+        >
+          {inviteProfileEvent => {
+            return (
+              <Button onClick={() => this.handleInvite(inviteProfileEvent)}>
+                Invite Members
+              </Button>
+            );
+          }}
+        </Mutation>
+      );
+    } else if (targetType === "event" && listType === "participants") {
+      return (
+        <Mutation
+          mutation={REMOVE_PROFILES_EVENT}
+          variables={{
+            eventID: targetID,
+            removedProfiles: invitedProfiles
+          }}
+        >
+          {removeProfileEvent => {
+            return (
+              <Button onClick={() => this.handleRemove(removeProfileEvent)}>
+                Remove Members
+              </Button>
+            );
+          }}
+        </Mutation>
+      );
     } else {
       return (
         <Mutation
@@ -222,18 +220,20 @@ class FriendsList extends Component {
   };
 
   render() {
-    const { friends, targetID, isEvent, isRemove } = this.props;
+    const { members, targetID, targetType, listType } = this.props;
     const { invitedProfiles } = this.state;
-    const friendsList = this.handleFriendList({ friends });
+    const membersList = this.handleFriendList({ members });
     const actionButton = this.actionButton({
       targetID,
       invitedProfiles,
-      isEvent,
-      isRemove
+      targetType,
+      listType
     });
     return (
       <div>
-        <div>{isRemove ? "Remove Members" : "Invite Members"}</div>
+        <div>
+          {listType === "participants" ? "Remove Members" : "Invite Members"}
+        </div>
         <div
           style={{
             height: "19vh",
@@ -242,7 +242,7 @@ class FriendsList extends Component {
             backgroundColor: "#fff"
           }}
         >
-          {friendsList}
+          {membersList}
           <div style={{ height: "2vh", backgroundColor: "#fff" }}>
             {" "}
             {actionButton}
@@ -253,4 +253,4 @@ class FriendsList extends Component {
   }
 }
 
-export default FriendsList;
+export default MembersList;

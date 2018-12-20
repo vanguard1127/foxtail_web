@@ -85,6 +85,12 @@ const afterwareLink = new ApolloLink((operation, forward) => {
     if (headers) {
       const token = headers.get("authorization");
       const refreshToken = headers.get("x-refresh-token");
+      const lang = headers.get("lang");
+
+      if (lang && lang !== undefined) {
+        localStorage.setItem("i18nextLng", lang);
+      }
+
       if (token && token !== undefined) {
         localStorage.setItem("token", token.replace("Bearer", "").trim());
       } else {

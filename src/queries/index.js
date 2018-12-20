@@ -34,7 +34,7 @@ export const NEW_NOTICE_SUB = gql`
       read
       type
       text
-      topicID
+      targetID
       date
       fromProfile {
         profilePic
@@ -54,6 +54,7 @@ export const CREATE_USER = gql`
     $gender: String
     $interestedIn: [String]
     $dob: String
+    $lang: String
   ) {
     createUser(
       username: $username
@@ -63,6 +64,7 @@ export const CREATE_USER = gql`
       gender: $gender
       interestedIn: $interestedIn
       dob: $dob
+      lang: $lang
     ) {
       token
       access
@@ -141,6 +143,7 @@ export const UPDATE_SETTINGS = gql`
     $distance: Int
     $distanceMetric: String
     $ageRange: [Int]
+    $lang: String
     $interestedIn: [String]
     $locationLock: String
     $lat: Float
@@ -156,6 +159,7 @@ export const UPDATE_SETTINGS = gql`
       distance: $distance
       distanceMetric: $distanceMetric
       ageRange: $ageRange
+      lang: $lang
       interestedIn: $interestedIn
       locationLock: $locationLock
       lat: $lat
@@ -248,7 +252,11 @@ export const CREATE_EVENT = gql`
       id
       eventname
       type
-      participants
+      participants {
+        profileName
+        profilePic
+        id
+      }
       description
       desires
       interestedIn
@@ -328,7 +336,11 @@ export const SEARCH_EVENTS = gql`
         id
         eventname
         type
-        participants
+        participants {
+          profileName
+          profilePic
+          id
+        }
         description
         desires
         interestedIn
@@ -404,7 +416,11 @@ export const GET_EVENT = gql`
       id
       eventname
       type
-      participants
+      participants {
+        profileName
+        profilePic
+        id
+      }
       description
       desires
       interestedIn
@@ -463,6 +479,30 @@ export const GET_FRIENDS = gql`
   }
 `;
 
+export const GET_CHAT_PARTICIPANTS = gql`
+  query($chatID: ID) {
+    chat(id: $chatID) {
+      participants {
+        profilePic
+        profileName
+        id
+      }
+    }
+  }
+`;
+
+export const GET_EVENT_PARTICIPANTS = gql`
+  query($eventID: ID) {
+    event(id: $eventID) {
+      participants {
+        profilePic
+        profileName
+        id
+      }
+    }
+  }
+`;
+
 export const GET_NOTIFICATIONS = gql`
   query($limit: Int, $skip: Int) {
     getNotifications(limit: $limit, skip: $skip) {
@@ -472,7 +512,7 @@ export const GET_NOTIFICATIONS = gql`
         read
         type
         text
-        topicID
+        targetID
         date
         fromProfile {
           profilePic
@@ -561,6 +601,7 @@ export const GET_SETTINGS = gql`
       distance
       distanceMetric
       ageRange
+      lang
       interestedIn
       locationLock
       visible

@@ -13,10 +13,10 @@ const App = ({ t }) => {
   return (
     <div className="twocolumn">
       <div className="centerRow">
-        <p>
-          <h2>#1 FREE dating site alternative relationships.</h2>
-          <br /> <h4>Feed Your Sexuality</h4>
-        </p>
+        <div>
+          #1 FREE dating site alternative relationships.
+          <br /> <small>Feed Your Sexuality</small>
+        </div>
       </div>
       <div className="centerColumn">
         <Signup formStyle={{ width: "100%" }} />{" "}

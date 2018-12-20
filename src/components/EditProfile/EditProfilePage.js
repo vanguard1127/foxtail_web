@@ -91,6 +91,7 @@ class EditProfileForm extends Component {
 
   handleDesireSelect = value => {
     this.props.form.setFieldsValue({ desires: value });
+    this.handleFormChange();
   };
 
   handleSubmit = ({ e, updateProfile, refetch, about }) => {

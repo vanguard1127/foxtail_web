@@ -8,6 +8,7 @@ import CoupleModal from "../common/CoupleModal";
 import BlackMemberModal from "../common/BlackMemberModal";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import BlackStatus from "../common/BlackStatus";
+import LangDropdown from "../common/LangDropdown";
 
 import { Form, Input, Switch, Button, Icon, Tooltip, message } from "antd";
 
@@ -17,7 +18,8 @@ class SettingsForm extends Component {
   state = {
     coupleModalVisible: false,
     blkMemberModalVisible: false,
-    isChanged: false
+    isChanged: false,
+    lang: "en"
   };
 
   handleSubmit = (e, updateSettings) => {
@@ -30,6 +32,7 @@ class SettingsForm extends Component {
       updateSettings()
         .then(({ data }) => {
           if (data.updateSettings) {
+            this.setState({ isChanged: false });
             message.success("Settings have been saved");
           } else {
             message.error("Error saving settings. Please contact support.");
@@ -44,6 +47,13 @@ class SettingsForm extends Component {
           this.setState({ errors });
         });
     });
+  };
+
+  //tried it the clever way using the form but it doesnt save the value properly
+  handleLangChange = value => {
+    this.setState({ lang: value });
+    this.props.form.setFieldsValue({ lang: value });
+    this.handleFormChange();
   };
 
   handleChangeSelect = value => {
@@ -71,7 +81,6 @@ class SettingsForm extends Component {
   };
 
   handleFormChange = () => {
-    console.log("ppp");
     this.setState({ isChanged: true });
   };
 
@@ -79,6 +88,7 @@ class SettingsForm extends Component {
     const { getFieldDecorator } = this.props.form;
     const { session } = this.props;
     const { coupleModalVisible, blkMemberModalVisible, isChanged } = this.state;
+    let { lang } = this.state;
 
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -103,6 +113,7 @@ class SettingsForm extends Component {
             settings = this.props.form.getFieldsValue();
           } else {
             settings = data.getSettings;
+            lang = data.getSettings.lang;
           }
 
           const {
@@ -115,6 +126,7 @@ class SettingsForm extends Component {
             vibrateNotify,
             couplePartner
           } = settings;
+
           return (
             <Mutation
               mutation={UPDATE_SETTINGS}
@@ -122,6 +134,7 @@ class SettingsForm extends Component {
                 locationLock,
                 visible,
                 newMsgNotify,
+                lang,
                 emailNotify,
                 showOnline,
                 likedOnly,
@@ -133,6 +146,12 @@ class SettingsForm extends Component {
                   <Fragment>
                     <Form onSubmit={e => this.handleSubmit(e, updateSettings)}>
                       <h3 className="formItemLayout">Preferences</h3>
+                      <FormItem {...formItemLayout} label="Language:">
+                        <LangDropdown
+                          onChange={this.handleLangChange}
+                          value={lang}
+                        />
+                      </FormItem>
                       <FormItem {...formItemLayout} label="Couple Partner:">
                         {getFieldDecorator("couplePartner", {
                           initialValue: couplePartner

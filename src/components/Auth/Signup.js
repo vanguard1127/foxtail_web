@@ -17,6 +17,7 @@ import {
   message
 } from "antd";
 import { sexOptions } from "../../docs/data";
+import LangDropdown from "../common/LangDropdown";
 // import Moustache from "../../images/moustache.svg"; // path to your '*.svg' file.
 // import LipsSvg from "../../images/lips.svg"; // path to your '*.svg' file.
 
@@ -35,7 +36,8 @@ const initialState = {
   gender: "",
   isCouple: false,
   csrf: "",
-  code: ""
+  code: "",
+  lang: "en"
 };
 
 class SignupForm extends React.Component {
@@ -193,6 +195,10 @@ class SignupForm extends React.Component {
       });
   };
 
+  handleLangChange = value => {
+    this.setState({ lang: value });
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { t } = this.props;
@@ -209,6 +215,7 @@ class SignupForm extends React.Component {
       email,
       dob,
       interestedIn,
+      lang,
       gender
     } = this.state;
 
@@ -229,7 +236,8 @@ class SignupForm extends React.Component {
                   dob: "12/12/1990",
                   interestedIn: ["M"],
                   gender: "M",
-                  isCouple: false
+                  isCouple: false,
+                  lang: "en"
                 }}
               >
                 {(createUser, { loading }) => {
@@ -402,6 +410,10 @@ class SignupForm extends React.Component {
                           </div>
                         )}
                       </AccountKit>
+                      <LangDropdown
+                        onChange={this.handleLangChange}
+                        value={lang}
+                      />
                     </div>
                   );
                 }}

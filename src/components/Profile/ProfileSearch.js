@@ -102,7 +102,7 @@ class ProfileSearch extends Component {
             } else if (
               data &&
               data.searchProfiles.profiles.length === 0 &&
-              data.featuredProfiles.profiles.length === 0
+              data.searchProfiles.featuredProfiles.length === 0
             ) {
               return <div>{searchPanel} No members near you</div>;
             }
