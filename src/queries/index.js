@@ -425,6 +425,7 @@ export const GET_EVENT = gql`
       desires
       interestedIn
       lat
+      photo
       long
       address
       time
