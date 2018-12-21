@@ -4,7 +4,8 @@ import Waypoint from "react-waypoint";
 import {
   INVITE_PROFILES,
   INVITE_PROFILES_EVENT,
-  REMOVE_PROFILES_EVENT
+  REMOVE_PROFILES_EVENT,
+  GET_EVENT
 } from "../../queries";
 import { Mutation } from "react-apollo";
 
@@ -85,11 +86,12 @@ class MembersList extends Component {
   };
 
   handleRemove = remove => {
-    const { targetType } = this.props;
+    const { targetType, close } = this.props;
     if (targetType === "event") {
       remove()
         .then(({ data }) => {
           if (data.removeProfileEvent) {
+            close();
             message.success("Members removed");
           }
         })
@@ -130,6 +132,29 @@ class MembersList extends Component {
     this.setState({ invitedProfiles });
   };
 
+  updateAttend = (cache, { data: { removeProfileEvent } }) => {
+    const { invitedProfiles } = this.state;
+    const { targetID } = this.props;
+
+    const { event } = cache.readQuery({
+      query: GET_EVENT,
+      variables: { id: targetID }
+    });
+
+    cache.writeQuery({
+      query: GET_EVENT,
+      variables: { id: targetID },
+      data: {
+        event: {
+          ...event,
+          participants: event.participants.filter(
+            member => !invitedProfiles.includes(member.id)
+          )
+        }
+      }
+    });
+  };
+
   handleFriendList = ({ members }) => (
     <Menu>
       <Menu.Divider />
@@ -155,10 +180,11 @@ class MembersList extends Component {
           </div>
         </Menu.Item>
       ))}
-      <Waypoint
-        onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
-      />
-      <Menu.Item disabled>No new members :)</Menu.Item>
+      {this.props.listType === "friends" && (
+        <Waypoint
+          onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
+        />
+      )}
     </Menu>
   );
   actionButton = ({ targetID, invitedProfiles, targetType, listType }) => {
@@ -188,6 +214,7 @@ class MembersList extends Component {
             eventID: targetID,
             removedProfiles: invitedProfiles
           }}
+          update={this.updateAttend}
         >
           {removeProfileEvent => {
             return (
@@ -243,10 +270,10 @@ class MembersList extends Component {
           }}
         >
           {membersList}
-          <div style={{ height: "2vh", backgroundColor: "#fff" }}>
-            {" "}
-            {actionButton}
-          </div>
+        </div>
+        <div style={{ height: "2vh", backgroundColor: "#fff" }}>
+          {" "}
+          {actionButton}
         </div>
       </div>
     );

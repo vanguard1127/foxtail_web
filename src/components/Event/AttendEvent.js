@@ -12,7 +12,10 @@ class AttendEvent extends Component {
   componentDidMount() {
     if (this.props.session.currentuser) {
       const { username, profileID } = this.props.session.currentuser;
-      const prevGoing = this.props.participants.indexOf(profileID) > -1;
+      const prevGoing = this.props.participants.some(
+        participant => participant.id === profileID
+      );
+
       this.setState({
         isGoing: prevGoing,
         username
@@ -23,7 +26,9 @@ class AttendEvent extends Component {
   handleAttend = toggleAttend => {
     toggleAttend()
       .then(async ({ data }) => {
-        await this.props.refetch();
+        if (data.toggleAttendEvent !== null) {
+          await this.props.refetch();
+        }
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -45,20 +50,36 @@ class AttendEvent extends Component {
   };
 
   updateAttend = (cache, { data: { toggleAttendEvent } }) => {
-    const { id } = this.props;
-    const { event } = cache.readQuery({ query: GET_EVENT, variables: { id } });
-    cache.writeQuery({
-      query: GET_EVENT,
-      variables: { id },
-      data: {
-        event: {
-          ...event,
-          participants: this.state.isGoing
-            ? [toggleAttendEvent, ...event.participants]
-            : event.participants.filter(member => member !== toggleAttendEvent)
+    if (toggleAttendEvent !== null) {
+      const { id } = this.props;
+      const { event } = cache.readQuery({
+        query: GET_EVENT,
+        variables: { id }
+      });
+
+      cache.writeQuery({
+        query: GET_EVENT,
+        variables: { id },
+        data: {
+          event: {
+            ...event,
+            participants: this.state.isGoing
+              ? [
+                  {
+                    id: toggleAttendEvent,
+                    profileName: "x",
+                    profilePic: "x",
+                    __typename: "ProfileType"
+                  },
+                  ...event.participants
+                ]
+              : event.participants.filter(
+                  member => member.id !== toggleAttendEvent
+                )
+          }
         }
-      }
-    });
+      });
+    }
   };
 
   render() {

@@ -35,12 +35,7 @@ class EditProfileForm extends Component {
     const { couple } = this.props.match.params;
     this.state = { ...initialState, isCouple: couple };
   }
-  componentDidMount() {
-    //TODO: what is this?
-    if (this.props.location.state) {
-      message.warn(this.props.location.state.alert);
-    }
-  }
+
   clearState = () => {
     this.setState({ ...initialState });
   };

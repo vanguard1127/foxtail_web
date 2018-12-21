@@ -111,7 +111,7 @@ class EventPage extends Component {
   render() {
     const { id } = this.props.match.params;
     const { visible, blockModalVisible } = this.state;
-
+    const { session } = this.props;
     return (
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error }) => {
@@ -124,6 +124,7 @@ class EventPage extends Component {
           }
 
           const { event } = data;
+
           const queryParams = JSON.parse(
             sessionStorage.getItem("searchEventQuery")
           );
@@ -205,11 +206,14 @@ class EventPage extends Component {
                 targetType={"event"}
                 listType={"friends"}
               />
-              <MembersDropdown
-                targetID={event.id}
-                targetType={"event"}
-                listType={"participants"}
-              />
+              {event.ownerProfile.id === session.currentuser.profileID && (
+                <MembersDropdown
+                  targetID={event.id}
+                  targetType={"event"}
+                  listType={"participants"}
+                />
+              )}
+
               <p>
                 Going:
                 {event.participants.length}

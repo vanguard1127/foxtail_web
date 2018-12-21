@@ -426,6 +426,11 @@ export const GET_EVENT = gql`
       interestedIn
       lat
       photo
+      ownerProfile {
+        profilePic
+        profileName
+        id
+      }
       long
       address
       time
