@@ -99,33 +99,19 @@ class Chatroom extends Component {
     });
   };
   render() {
-    const {
-      style,
-      chatID,
-      title,
-      lastSeen,
-      titleExtra,
-      participants
-    } = this.props;
+    const { style, chatID, title, lastSeen, titleExtra } = this.props;
     const { cursor } = this.state;
 
     let unsubscribe = null;
-    let titleText = "";
-    let participantText = "";
-    if (participants) {
-      titleText = `${participants[0].profileName}`;
-      if (participants.length > 2) {
-        participantText = ` + ${participants.length - 2} participants`;
-      }
-    }
+
     console.log("id", chatID);
     return (
       <div className="chatroom" style={{ position: "relative", ...style }}>
         <div className="chatroom-header">
           <div className="chatroom-headers">
             <h3 className="chatroom-title">
-              {title || titleText}
-              <span className="chatroom-titleExtra">{participantText}</span>
+              {title}
+              <span className="chatroom-titleExtra">{titleExtra}</span>
             </h3>
             <h4 className="chatroom-date">{lastSeen}</h4>
             <MembersDropdown

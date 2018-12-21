@@ -32,17 +32,19 @@ class InboxList extends Component {
             const messages = data.chat.messages;
 
             const currentChat = data.chat;
-            let chatTitle = "No chats available";
-            let chatTitleExtra = "";
+            let chatTitle = "Chat No Longer Available";
             let chatLastSeen = "";
+            let chatTitleExtra = "";
+
             if (currentChat) {
-              chatTitle = `${currentChat.participants[0].profileName}`;
-              chatLastSeen = TimeAgo(currentChat.participants[0].updatedAt);
+              chatTitle = `${currentChat.participants[0].profileName} `;
               if (currentChat.participants.length > 2) {
                 chatTitleExtra = ` + ${currentChat.participants.length -
                   2} participants`;
-                chatTitle = `${chatTitle}`;
+              } else {
+                chatTitle = `${currentChat.participants[0].profileName}`;
               }
+              chatLastSeen = TimeAgo(currentChat.participants[0].updatedAt);
             }
 
             if (!messages || messages.length === 0) {
