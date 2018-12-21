@@ -1,6 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { Query, Mutation } from "react-apollo";
-import { GET_MESSAGES, SEND_MESSAGE, NEW_MESSAGE_SUB } from "../../queries";
+import {
+  GET_MESSAGES,
+  SEND_MESSAGE,
+  NEW_MESSAGE_SUB,
+  NEW_MESSAGE_SUB_NO_CHAT,
+  REMOVE_SELF
+} from "../../queries";
 import { Form, Input, Button } from "antd";
 import Waypoint from "react-waypoint";
 import MessageList from "./MessageList.js";
@@ -92,26 +98,55 @@ class Chatroom extends Component {
       loading: false
     });
   };
-
   render() {
-    const { style, chatID, title, lastSeen, titleExtra } = this.props;
+    const {
+      style,
+      chatID,
+      title,
+      lastSeen,
+      titleExtra,
+      participants
+    } = this.props;
     const { cursor } = this.state;
 
     let unsubscribe = null;
-
+    let titleText = "";
+    let participantText = "";
+    if (participants) {
+      titleText = `${participants[0].profileName}`;
+      if (participants.length > 2) {
+        participantText = ` + ${participants.length - 2} participants`;
+      }
+    }
+    console.log("id", chatID);
     return (
       <div className="chatroom" style={{ position: "relative", ...style }}>
         <div className="chatroom-header">
-          <h3 className="chatroom-title">
-            {title}
-            <span className="chatroom-titleExtra">{titleExtra}</span>
-          </h3>
-          <h4 className="chatroom-date">{lastSeen}</h4>
-          <MembersDropdown
-            targetID={chatID}
-            targetType={"chat"}
-            listType={"friends"}
-          />
+          <div className="chatroom-headers">
+            <h3 className="chatroom-title">
+              {title || titleText}
+              <span className="chatroom-titleExtra">{participantText}</span>
+            </h3>
+            <h4 className="chatroom-date">{lastSeen}</h4>
+            <MembersDropdown
+              targetID={chatID}
+              targetType={"chat"}
+              listType={"friends"}
+            />
+          </div>
+          <div className="chatroom-leave">
+            <Mutation
+              mutation={REMOVE_SELF}
+              variables={{
+                chatID: chatID
+              }}
+            >
+              {(leaveChat, { data, error, loading }) => {
+                console.log("leaving");
+                return <h5 onClick={() => leaveChat()}>leave</h5>;
+              }}
+            </Mutation>
+          </div>
         </div>
         <Query
           query={GET_MESSAGES}
@@ -122,28 +157,38 @@ class Chatroom extends Component {
             if (loading) {
               return <Spinner message="Loading..." size="large" />;
             }
-            if (!data.getMessages) {
-              return <div>No messages</div>;
-            }
+            // if (!data.getMessages) {
+            //   console.log(data);
+            //   return <div>No messages</div>;
+            // }
+            console.log("dat", data);
 
             if (!unsubscribe) {
-              unsubscribe = subscribeToMore({
-                document: NEW_MESSAGE_SUB,
-                variables: { chatID },
-                updateQuery: (prev, { subscriptionData }) => {
-                  const { newMessageSubscribe } = subscriptionData.data;
-                  console.log("SUBSCRIBE EXECUTED");
-                  if (!newMessageSubscribe) {
-                    return prev;
-                  }
-                  prev.getMessages.messages = [
-                    newMessageSubscribe,
-                    ...prev.getMessages.messages
-                  ];
-
-                  return prev;
-                }
-              });
+              // console.log(unsubscribe);
+              // unsubscribe = subscribeToMore({
+              //   document: NEW_MESSAGE_SUB_NO_CHAT,
+              //   updateQuery: (prev, { subscriptionData }) => {
+              //     const { newMessageSubscribe } = subscriptionData.data;
+              //     console.log("SUBSCRIBE EXECUTED", prev, subscriptionData);
+              //     if (!newMessageSubscribe) {
+              //       return prev;
+              //     }
+              //     if (prev.getMessages) {
+              //       prev.getMessages.messages = [
+              //         newMessageSubscribe,
+              //         ...prev.getMessages.messages
+              //       ];
+              //     } else {
+              //       prev.getMessages = {
+              //         messages: [newMessageSubscribe],
+              //         __typename: "ChatType"
+              //       };
+              //     }
+              //     console.log(prev.getMessages);
+              //     return prev;
+              //   }
+              // });
+              // console.log(unsubscribe);
             }
             return (
               <Fragment>
@@ -151,7 +196,38 @@ class Chatroom extends Component {
                 <MessageList
                   chatID={chatID}
                   ref={this.MessageList}
-                  messages={data.getMessages.messages}
+                  messages={
+                    data && data.getMessages ? data.getMessages.messages : []
+                  }
+                  subscribe={() =>
+                    subscribeToMore({
+                      document: NEW_MESSAGE_SUB,
+                      variables: {
+                        chatID: chatID
+                      },
+                      updateQuery: (prev, { subscriptionData }) => {
+                        const { newMessageSubscribe } = subscriptionData.data;
+                        console.log("SUBSCRIBE EXECUTED", subscriptionData);
+                        if (!newMessageSubscribe) {
+                          return prev;
+                        }
+                        if (prev.getMessages) {
+                          prev.getMessages.messages = [
+                            newMessageSubscribe,
+                            ...prev.getMessages.messages
+                          ];
+                        } else {
+                          prev.getMessages = {
+                            messages: [newMessageSubscribe],
+                            __typename: "ChatType"
+                          };
+                        }
+                        console.log(prev.getMessages);
+
+                        return prev;
+                      }
+                    })
+                  }
                   handleEnd={this.handleEnd}
                   fetchMore={fetchMore}
                   limit={LIMIT}
@@ -180,7 +256,7 @@ class InputFormTemplate extends Component {
 
       sendMessage()
         .then(({ data }) => {
-          console.log(data);
+          console.log(data, "Was message sent", !!data.sendMessage);
         })
         .catch(res => {
           const errors = res.graphQLErrors.map(error => {

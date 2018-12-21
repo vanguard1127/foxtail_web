@@ -8,6 +8,7 @@ import DesiresList from "../Desire/DesiresList";
 import Spinner from "../common/Spinner";
 import { Icon, Button } from "antd";
 import withAuth from "../withAuth";
+import { s3url } from "../../docs/data";
 const ButtonGroup = Button.Group;
 
 class ProfilePage extends Component {
@@ -33,10 +34,15 @@ class ProfilePage extends Component {
               <div>This profile either never existed or it no longer does.</div>
             );
           }
+          console.log("test", data.profile.photos);
 
           const { users, photos, desires, about } = data.profile;
-          const publicPics = photos.slice(0, 4);
-          const privatePics = photos.slice(4, 8);
+          const publicPics = photos.filter(
+            photoObject => photoObject.url !== "x"
+          );
+          const privatePics = photos.filter(
+            photoObject => photoObject.url === "x"
+          );
           return (
             <div
               className="centerColumn"
@@ -195,7 +201,7 @@ class ProfilePage extends Component {
                   style={{ backgroundColor: "#eee" }}
                 >
                   <ImageCarousel
-                    photos={photos}
+                    photos={publicPics}
                     showThumbs={false}
                     autoPlay={true}
                     selectedItem={selectedPhoto}
@@ -203,12 +209,11 @@ class ProfilePage extends Component {
                   <ul style={{ display: "flex" }}>
                     {publicPics.map((photo, index) => {
                       return (
-                        <li>
+                        <li key={index + photo.url.charAt(0)}>
                           <img
-                            src={require("../../images/girl1.jpg")}
+                            src={s3url + photo.url}
                             name={index}
                             alt={index}
-                            key={index}
                             onClick={this.handleImageClick}
                             style={{
                               width: "10vw",
@@ -222,7 +227,7 @@ class ProfilePage extends Component {
                       );
                     })}
                   </ul>
-                  <ul style={{ display: "flex" }}>
+                  {/*<ul style={{ display: "flex" }}>
                     {privatePics.map((photo, index) => {
                       return (
                         <li>
@@ -243,7 +248,7 @@ class ProfilePage extends Component {
                         </li>
                       );
                     })}
-                  </ul>
+                  </ul>*/}
                 </div>
               </div>
 

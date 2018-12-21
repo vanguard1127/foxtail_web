@@ -3,6 +3,7 @@ import { withRouter, Prompt } from "react-router-dom";
 import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
+import { sexOptions } from "../../docs/data";
 import withAuth from "../withAuth";
 import CoupleModal from "../common/CoupleModal";
 import BlackMemberModal from "../common/BlackMemberModal";
@@ -10,8 +11,22 @@ import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import BlackStatus from "../common/BlackStatus";
 import LangDropdown from "../common/LangDropdown";
 
-import { Form, Input, Switch, Button, Icon, Tooltip, message } from "antd";
+import {
+  Form,
+  Input,
+  Switch,
+  Slider,
+  Button,
+  Icon,
+  Tooltip,
+  Radio,
+  Select,
+  message
+} from "antd";
 
+const milesToKilometers = miles => miles / 0.621371;
+const kilometersToMiles = kilometers => kilometers * 0.621371;
+const Option = Select.Option;
 const FormItem = Form.Item;
 
 class SettingsForm extends Component {
@@ -19,7 +34,8 @@ class SettingsForm extends Component {
     coupleModalVisible: false,
     blkMemberModalVisible: false,
     isChanged: false,
-    lang: "en"
+    lang: "en",
+    newDistanceMetric: null
   };
 
   handleSubmit = (e, updateSettings) => {
@@ -115,7 +131,7 @@ class SettingsForm extends Component {
             settings = data.getSettings;
             lang = data.getSettings.lang;
           }
-
+          const initialDistanceMetric = data.getSettings.distanceMetric;
           const {
             locationLock,
             visible,
@@ -124,13 +140,35 @@ class SettingsForm extends Component {
             showOnline,
             likedOnly,
             vibrateNotify,
-            couplePartner
+            couplePartner,
+            distance,
+            distanceMetric,
+            ageRange,
+            interestedIn
           } = settings;
 
+          console.log(
+            distance,
+            settings.distanceMetric,
+            data.getSettings.distanceMetric
+          );
+          const convertFunction =
+            "mi" === distanceMetric ? kilometersToMiles : milesToKilometers;
+          // The input uses original metric
+          // But displays and sends the selected metric
+          let convertedDistance = distance;
+          if (distanceMetric !== initialDistanceMetric) {
+            convertedDistance = Math.floor(convertFunction(distance));
+          }
+          console.log("d1", distance, "d2", convertedDistance, distanceMetric);
           return (
             <Mutation
               mutation={UPDATE_SETTINGS}
               variables={{
+                distance: convertedDistance,
+                distanceMetric,
+                ageRange,
+                interestedIn,
                 locationLock,
                 visible,
                 newMsgNotify,
@@ -142,15 +180,95 @@ class SettingsForm extends Component {
               }}
             >
               {(updateSettings, { loading }) => {
+                // The input always uses the first metric it was given
+                // And sends a transformed metric if the user changed it
+                const initialDistanceSliderMax =
+                  initialDistanceMetric === "mi"
+                    ? 100
+                    : Math.floor(milesToKilometers(100));
+
+                const distanceSliderMax =
+                  distanceMetric === "mi"
+                    ? 100
+                    : Math.floor(milesToKilometers(100));
                 return (
                   <Fragment>
+                    <LangDropdown
+                      onChange={this.handleLangChange}
+                      value={lang}
+                    />
                     <Form onSubmit={e => this.handleSubmit(e, updateSettings)}>
                       <h3 className="formItemLayout">Preferences</h3>
-                      <FormItem {...formItemLayout} label="Language:">
-                        <LangDropdown
-                          onChange={this.handleLangChange}
-                          value={lang}
-                        />
+
+                      <FormItem {...formItemLayout} label="Distance">
+                        {getFieldDecorator("distance", {
+                          initialValue: settings.distance
+                        })(
+                          // Minimum of 1 miles/kilometers
+                          <Slider
+                            min={1}
+                            max={initialDistanceSliderMax}
+                            tipFormatter={val => {
+                              if (distanceMetric !== initialDistanceMetric) {
+                                return (
+                                  Math.floor(convertFunction(val)) +
+                                  distanceMetric
+                                );
+                              }
+                              return val + distanceMetric;
+                            }}
+                            marks={{
+                              0: `<1 ${distanceMetric.toUpperCase()}`,
+                              [initialDistanceSliderMax]: `${distanceSliderMax}+ ${distanceMetric.toUpperCase()}`
+                            }}
+                          />
+                        )}
+                      </FormItem>
+                      <FormItem {...formItemLayout} label={" "} colon={false}>
+                        {getFieldDecorator("distanceMetric", {
+                          initialValue: settings.distanceMetric
+                        })(
+                          <Radio.Group>
+                            <Radio value="mi">miles</Radio>
+                            <Radio value="km">Kilometers</Radio>
+                          </Radio.Group>
+                        )}
+                      </FormItem>
+                      <FormItem {...formItemLayout} label="Age">
+                        {getFieldDecorator("ageRange", {
+                          initialValue: settings.ageRange
+                        })(
+                          <Slider
+                            range
+                            min={18}
+                            max={80}
+                            marks={{ 18: "18 years", 80: "80+" }}
+                          />
+                        )}
+                      </FormItem>
+                      <FormItem {...formItemLayout} label="Interested In">
+                        {getFieldDecorator("interestedIn", {
+                          rules: [
+                            {
+                              required: true,
+                              message:
+                                "Please select what type of members interest you!",
+                              type: "array"
+                            }
+                          ],
+                          initialValue: settings.interestedIn
+                        })(
+                          <Select
+                            mode="multiple"
+                            style={{ width: "100%" }}
+                            placeholder="Interested In"
+                            onChange={this.handleChangeSelect}
+                          >
+                            {sexOptions.map(option => (
+                              <Option key={option.value}>{option.label}</Option>
+                            ))}
+                          </Select>
+                        )}
                       </FormItem>
                       <FormItem {...formItemLayout} label="Couple Partner:">
                         {getFieldDecorator("couplePartner", {
@@ -186,117 +304,111 @@ class SettingsForm extends Component {
                           />
                         )}
                       </FormItem>
-                      <div>
-                        <FormItem {...formItemLayout} label={" "} colon={false}>
-                          {getFieldDecorator("visible", {
-                            initialValue: settings.visible
-                          })(
-                            <div>
-                              {" "}
-                              <Switch
-                                checkedChildren={<Icon type="check" />}
-                                unCheckedChildren={<Icon type="close" />}
-                                onChange={e => this.onSwitch(e, "visible")}
-                                checked={settings.visible}
-                              />
-                              <span style={{ marginLeft: "10px" }}>
-                                Show Me to Members
-                              </span>
-                            </div>
-                          )}
-                        </FormItem>
 
-                        <FormItem {...formItemLayout} label={" "} colon={false}>
-                          {getFieldDecorator("newMsgNotify", {
-                            initialValue: settings.newMsgNotify
-                          })(
-                            <div>
-                              {" "}
-                              <Switch
-                                checkedChildren={<Icon type="check" />}
-                                unCheckedChildren={<Icon type="close" />}
-                                onChange={e => this.onSwitch(e, "newMsgNotify")}
-                                checked={settings.newMsgNotify}
-                              />
-                              <span style={{ marginLeft: "10px" }}>
-                                Recieve Notifications
-                              </span>
-                            </div>
-                          )}
-                        </FormItem>
+                      <FormItem {...formItemLayout} label={" "} colon={false}>
+                        {getFieldDecorator("visible", {
+                          initialValue: settings.visible
+                        })(
+                          <div>
+                            {" "}
+                            <Switch
+                              checkedChildren={<Icon type="check" />}
+                              unCheckedChildren={<Icon type="close" />}
+                              onChange={e => this.onSwitch(e, "visible")}
+                              checked={settings.visible}
+                            />
+                            <span style={{ marginLeft: "10px" }}>
+                              Show Me to Members
+                            </span>
+                          </div>
+                        )}
+                      </FormItem>
 
-                        <FormItem {...formItemLayout} label={" "} colon={false}>
-                          {getFieldDecorator("emailNotify", {
-                            initialValue: settings.emailNotify
-                          })(
-                            <div>
-                              {" "}
-                              <Switch
-                                checkedChildren={<Icon type="check" />}
-                                unCheckedChildren={<Icon type="close" />}
-                                onChange={e => this.onSwitch(e, "emailNotify")}
-                                checked={settings.emailNotify}
-                              />
-                              <span style={{ marginLeft: "10px" }}>
-                                Email Notificatons
-                              </span>
-                            </div>
-                          )}
-                        </FormItem>
+                      <FormItem {...formItemLayout} label={" "} colon={false}>
+                        {getFieldDecorator("newMsgNotify", {
+                          initialValue: settings.newMsgNotify
+                        })(
+                          <div>
+                            {" "}
+                            <Switch
+                              checkedChildren={<Icon type="check" />}
+                              unCheckedChildren={<Icon type="close" />}
+                              onChange={e => this.onSwitch(e, "newMsgNotify")}
+                              checked={settings.newMsgNotify}
+                            />
+                            <span style={{ marginLeft: "10px" }}>
+                              Recieve Notifications
+                            </span>
+                          </div>
+                        )}
+                      </FormItem>
 
-                        <FormItem {...formItemLayout} label={" "} colon={false}>
-                          {getFieldDecorator("showOnline", {
-                            initialValue: settings.showOnline
-                          })(
-                            <div>
-                              {" "}
-                              <Switch
-                                checkedChildren={<Icon type="check" />}
-                                unCheckedChildren={<Icon type="close" />}
-                                defaultChecked={false}
-                                disabled={
-                                  !session.currentuser.blackMember.active
-                                }
-                                onChange={e => this.onSwitch(e, "showOnline")}
-                                checked={settings.showOnline}
-                              />
-                              <span style={{ marginLeft: "10px" }}>
-                                Show Online Status&nbsp;
-                                <Tooltip title="Black Members Only: No one will know when you're online">
-                                  <Icon type="question-circle-o" />
-                                </Tooltip>
-                              </span>
-                            </div>
-                          )}
-                        </FormItem>
+                      <FormItem {...formItemLayout} label={" "} colon={false}>
+                        {getFieldDecorator("emailNotify", {
+                          initialValue: settings.emailNotify
+                        })(
+                          <div>
+                            {" "}
+                            <Switch
+                              checkedChildren={<Icon type="check" />}
+                              unCheckedChildren={<Icon type="close" />}
+                              onChange={e => this.onSwitch(e, "emailNotify")}
+                              checked={settings.emailNotify}
+                            />
+                            <span style={{ marginLeft: "10px" }}>
+                              Email Notificatons
+                            </span>
+                          </div>
+                        )}
+                      </FormItem>
 
-                        <FormItem {...formItemLayout} label={" "} colon={false}>
-                          {getFieldDecorator("likedOnly", {
-                            initialValue: settings.likedOnly
-                          })(
-                            <div>
-                              {" "}
-                              <Switch
-                                checkedChildren={<Icon type="check" />}
-                                unCheckedChildren={<Icon type="close" />}
-                                defaultChecked={false}
-                                disabled={
-                                  !session.currentuser.blackMember.active
-                                }
-                                onChange={e => this.onSwitch(e, "likedOnly")}
-                                checked={settings.likedOnly}
-                              />
-                              <span style={{ marginLeft: "10px" }}>
-                                Show Me Only To Members I&#39;ve Liked&nbsp;
-                                <Tooltip title="Black Members Only: You can see them, You choose who sees you.">
-                                  <Icon type="question-circle-o" />
-                                </Tooltip>
-                              </span>
-                            </div>
-                          )}
-                        </FormItem>
-                      </div>
+                      <FormItem {...formItemLayout} label={" "} colon={false}>
+                        {getFieldDecorator("showOnline", {
+                          initialValue: settings.showOnline
+                        })(
+                          <div>
+                            {" "}
+                            <Switch
+                              checkedChildren={<Icon type="check" />}
+                              unCheckedChildren={<Icon type="close" />}
+                              defaultChecked={false}
+                              disabled={!session.currentuser.blackMember.active}
+                              onChange={e => this.onSwitch(e, "showOnline")}
+                              checked={settings.showOnline}
+                            />
+                            <span style={{ marginLeft: "10px" }}>
+                              Show Online Status&nbsp;
+                              <Tooltip title="Black Members Only: No one will know when you're online">
+                                <Icon type="question-circle-o" />
+                              </Tooltip>
+                            </span>
+                          </div>
+                        )}
+                      </FormItem>
 
+                      <FormItem {...formItemLayout} label={" "} colon={false}>
+                        {getFieldDecorator("likedOnly", {
+                          initialValue: settings.likedOnly
+                        })(
+                          <div>
+                            {" "}
+                            <Switch
+                              checkedChildren={<Icon type="check" />}
+                              unCheckedChildren={<Icon type="close" />}
+                              defaultChecked={false}
+                              disabled={!session.currentuser.blackMember.active}
+                              onChange={e => this.onSwitch(e, "likedOnly")}
+                              checked={settings.likedOnly}
+                            />
+                            <span style={{ marginLeft: "10px" }}>
+                              Show Me Only To Members I&#39;ve Liked&nbsp;
+                              <Tooltip title="Black Members Only: You can see them, You choose who sees you.">
+                                <Icon type="question-circle-o" />
+                              </Tooltip>
+                            </span>
+                          </div>
+                        )}
+                      </FormItem>
                       <FormItem wrapperCol={{ span: 12, offset: 6 }}>
                         <BlackStatus
                           blkMemberInfo={session.currentuser.blackMember}

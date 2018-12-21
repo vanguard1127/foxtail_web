@@ -37,18 +37,14 @@ import { notification } from "antd";
 
 const { Header, Content } = Layout;
 
-let wsurl;
-let httpurl;
-let httpurlNonGraphQL;
-if (process.env.NODE_ENV === "production") {
-  wsurl = "ws://production-151896178.us-west-2.elb.amazonaws.com/subscriptions";
-  httpurl = "http://production-151896178.us-west-2.elb.amazonaws.com/graphql";
-  httpurlNonGraphQL = "http://production-151896178.us-west-2.elb.amazonaws.com";
-} else {
-  wsurl = "ws://localhost:4444/subscriptions";
-  httpurl = "http://localhost:4444/graphql";
-  httpurlNonGraphQL = "http://localhost:4444";
+let server = "production-151896178.us-west-2.elb.amazonaws.com";
+if (process.env.REACT_APP_LOCAL_SERVER === "true") {
+  server = "localhost:4444";
 }
+
+let wsurl = `ws://${server}/subscriptions`;
+let httpurl = `http://${server}/graphql`;
+let httpurlNonGraphQL = `http://${server}`;
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
@@ -66,6 +62,9 @@ const httpLink = new HttpLink({
 });
 
 const AuthLink = new ApolloLink((operation, forward) => {
+  console.log(
+    localStorage.getItem("token", localStorage.getItem("refreshToken"))
+  );
   operation.setContext(context => ({
     ...context,
     headers: {

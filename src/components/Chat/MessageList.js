@@ -86,20 +86,31 @@ class MessageList extends Component {
     previousScrollTop: null,
     dateWaypoints: []
   };
-
+  unsubscribe = null;
   componentDidMount() {
     this.checkScrollTopToFetch(10);
     this.scrollToBot();
+    if (this.props.subscribe) {
+      this.unsubscribe = this.props.subscribe();
+    }
+  }
+  componentWillUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.messages !== this.props.messages) {
-      // If the user is on the bottom waiting for new messages, scroll him whenever one gets received
-      const isUserOnBottom =
-        this.scrollWrapperRef.current.clientHeight +
-          this.scrollWrapperRef.current.scrollTop >
-        this.scrollWrapperRef.current.scrollHeight -
-          this.lastMessageRef.current.clientHeight -
-          20;
+      let isUserOnBottom = null;
+      if (this.lastMessageRef.current) {
+        // If the user is on the bottom waiting for new messages, scroll him whenever one gets received
+        isUserOnBottom =
+          this.scrollWrapperRef.current.clientHeight +
+            this.scrollWrapperRef.current.scrollTop >
+          this.scrollWrapperRef.current.scrollHeight -
+            this.lastMessageRef.current.clientHeight -
+            20;
+      }
       if (!this.state.hasScrolledBottomInitial || isUserOnBottom) {
         // ComponentDidMount does not scrolls to bottom on initial mount. Since on
         // initial mount there are only 6 items, not enough to scroll. And since waypoint
@@ -171,7 +182,9 @@ class MessageList extends Component {
       this.state.restoreScroll
     )
       return;
-    const cursor = messages[messages.length - 1].createdAt;
+    const cursor =
+      messages.length > 0 ? messages[messages.length - 1].createdAt : null;
+    console.log("c", messages, cursor);
     this.setState({ loading: true });
     fetchMore({
       variables: {
@@ -180,22 +193,22 @@ class MessageList extends Component {
         cursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-        }
-
+        console.log(previousResult, fetchMoreResult);
         const noMessagesLeft =
+          fetchMoreResult.getMessages &&
           fetchMoreResult.getMessages.messages < this.props.limit;
         if (noMessagesLeft) {
           this.setState({ hasMoreItems: false });
         }
-        console.log(
-          "more",
-          fetchMoreResult.getMessages.messages < this.props.limit
-        );
-        previousResult.getMessages.messages = [
-          ...previousResult.getMessages.messages,
-          ...fetchMoreResult.getMessages.messages
-        ];
+        console.log("more", noMessagesLeft);
+        if (previousResult.getMessages) {
+          previousResult.getMessages.messages = [
+            ...previousResult.getMessages.messages,
+            ...fetchMoreResult.getMessages.messages
+          ];
+        } else {
+          previousResult.getMessages = fetchMoreResult.getMessages;
+        }
         console.log("Fetch done");
 
         this.setState({
@@ -280,8 +293,8 @@ class MessageList extends Component {
         .map((messages, date) => ({ date, messages })) //using ES6 shorthand to generate the objects
         .reverse() // Reverse so latest date is on the bottom
         .map((item, index, groupList) => {
-          const messageElements = item.messages.map(
-            (message, j, messageList) => {
+          const messageElements = item.messages
+            .map((message, j, messageList) => {
               let props = {
                 key: message.id,
                 message
@@ -293,9 +306,9 @@ class MessageList extends Component {
                 // Attach a ref to the last element for later measurement
                 props.ref = this.lastMessageRef;
               }
-              return <Message {...props} />;
-            }
-          );
+              return <Message key={message.id} {...props} />;
+            })
+            .reverse();
           // At the start of every date group insert a date element.
           const dateElement = (
             <DateItem
@@ -317,44 +330,17 @@ class MessageList extends Component {
         })
         .value()
     );
+    console.log(messages);
 
-    // DELETE if new solutions is ok
-    // const MessageElements = messagesSortedByDate.reduce((res, message, i)=>{
-    //   // This gives a ref to the item on the bottom of the chat
-    //   // With that, we can measure it and determine if we should scroll
-    //   // to bottom on new message
-    //   let extraProps = {}
-    //   if(i > messagesSortedByDate.length - 2 ) {
-    //     extraProps.ref = this.lastMessageRef;
-    //   }
-    //   let elements = [<Message key={message.id} message={message} {...extraProps} />]
-    //   // Check if last message's date is different current message's date
-    //   // to figure out if a dateItem sould be inserted
-    //   const messageDate = moment(message.createdAt);
-    //   const dayOfTheMonth = messageDate.date();
-    //   const lastDayOfTheMonth = res.lastDate && res.lastDate.date();
-    //   const isSameDay = lastDayOfTheMonth === dayOfTheMonth
-    //   if(!isSameDay) {
-    //     elements = [<DateItem
-    //     stickZIndex={i + 10}
-    //     onAbove={()=>{ this.onDateWaypointPostion(res.nDate, 'above')}}
-    //     onInside={()=>{ this.onDateWaypointPostion(res.nDate, 'inside')}}
-    //     showDate={lastAboveDateWaypointIndex === res.nDate}
-    //     // Keys won't collied because DateItems's dates are days appart from each other
-    //     key={messageDate.format()}
-
-    //     >{messageDate.format("dddd, MMMM Do YYYY")}</DateItem>].concat(elements);
-    //   }
-    //   // Keep the last date around so we can compare to it on next iteration
-    //   return { lastDate: messageDate, nDate: isSameDay ? res.nDate : res.nDate + 1 ,elements: res.elements.concat(elements)}
-    // }, { lastDayOfTheMonth: null, nDate: 0, elements: []});
     return (
       <Fragment>
+        {/** Parent for abs position elements because scroll does weird things for abs items */}
         <div
           style={{
             position: "relative",
             display: "flex",
             flexDirection: "column",
+            flexWrap: "wrap",
             height: "100%",
             overflow: "hidden"
           }}
@@ -362,7 +348,12 @@ class MessageList extends Component {
           <div
             className="chats"
             ref={this.scrollWrapperRef}
-            style={{ backgroundColor: "#eee", height: "100%" }}
+            style={{
+              backgroundColor: "#eee",
+              height: "auto",
+              maxHeight: "100%",
+              width: "100%"
+            }}
             onScroll={this.onScroll}
           >
             {this.renderTopMessage(topMessage)}

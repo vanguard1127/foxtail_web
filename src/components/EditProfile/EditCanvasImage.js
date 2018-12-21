@@ -1,22 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Layer, Stage } from "react-konva";
+import { Layer, Group, Stage } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
 import { Button } from "antd";
 
+import { WithCrop } from "./WithCrop";
+
 class EditCanvasImage extends React.Component {
+  constructor(props) {
+    super(props);
+    let width = 400;
+    let height = 400;
+    const initialCrop = {
+      x: [0, width],
+      y: [0, height]
+    };
+    this.state = {
+      width: width,
+      height: height,
+      selectedShapeName: "",
+      hideTransformer: false,
+      konvaImageList: [],
+      flipX: false,
+      flipY: false,
+      crop: initialCrop,
+      lastCrop: initialCrop,
+      isCropping: false
+    };
+  }
   static propTypes = {
     imageObject: PropTypes.object
-  };
-
-  state = {
-    width: 400,
-    height: 400,
-    selectedShapeName: "",
-    hideTransformer: false,
-    konvaImageList: []
   };
 
   handleStageClick = e => {
@@ -106,6 +121,44 @@ class EditCanvasImage extends React.Component {
     );
     this.setState({ konvaImageList: filteredList });
   };
+  handleFlipX = () => {
+    this.setState({
+      flipX: !this.state.flipX
+    });
+  };
+  handleFlipY = () => {
+    this.setState({
+      flipY: !this.state.flipY
+    });
+  };
+  // Crop Functions
+  onAcceptCrop = e => {
+    e.preventDefault();
+    this.setState({
+      isCropping: false,
+      lastCrop: this.state.crop
+    });
+  };
+  onCancelCrop = e => {
+    e.preventDefault();
+    console.log("last", this.state.lastCrop);
+    this.setState({
+      isCropping: false,
+      crop: this.state.lastCrop
+    });
+  };
+  onStartCrop = e => {
+    e.preventDefault();
+    this.setState({
+      isCropping: true
+    });
+  };
+  onCropChange = (Xs, Ys) => {
+    console.log(Xs, Ys);
+    this.setState({
+      crop: { x: Xs, y: Ys }
+    });
+  };
 
   render() {
     const {
@@ -113,8 +166,12 @@ class EditCanvasImage extends React.Component {
       width,
       height,
       hideTransformer,
-      selectedShapeName
+      selectedShapeName,
+      flipX,
+      flipY,
+      isCropping
     } = this.state;
+    console.log(flipX, flipY);
 
     const Sticker = props => (
       <div
@@ -131,39 +188,91 @@ class EditCanvasImage extends React.Component {
     );
     return (
       <div style={{ width: "fit-content" }}>
-        <Stage
-          style={{ backgroundColor: "gray" }}
-          width={width}
-          height={height}
-          onClick={this.handleStageClick}
-          ref={node => {
-            this.stageRef = node;
-          }}
-        >
-          <Layer>
-            {this.props.imageObject && (
-              <SourceImage
-                width={400}
-                height={400}
-                sourceImageObject={this.props.imageObject}
-              />
-            )}
-            {konvaImageList.length > 0 &&
-              konvaImageList.map(img => (
-                <KonvaImage
-                  src={img.src}
-                  key={img.id}
-                  onDragStart={this.handleDragStart}
-                  width={100}
-                  height={100}
-                  name={img.name}
-                />
-              ))}
-            {hideTransformer === false && (
-              <TransformerHandler selectedShapeName={selectedShapeName} />
-            )}
-          </Layer>
-        </Stage>
+        <div style={{ width, height, margin: "0 auto" }}>
+          <Stage
+            style={{ backgroundColor: "gray" }}
+            width={width}
+            height={height}
+            onClick={this.handleStageClick}
+            ref={node => {
+              this.stageRef = node;
+            }}
+          >
+            <Layer>
+              <WithCrop
+                width={width}
+                height={height}
+                onChange={this.onCropChange}
+                initialCrop={this.state.crop}
+                isCropping={isCropping}
+                keepAspectRatio
+              >
+                <Group
+                  scaleX={flipX ? -1 : 1}
+                  scaleY={flipY ? -1 : 1}
+                  x={flipX ? width : 0}
+                  y={flipY ? height : 0}
+                >
+                  {this.props.imageObject && (
+                    <SourceImage
+                      width={width}
+                      height={height}
+                      sourceImageObject={this.props.imageObject}
+                    />
+                  )}
+                  {konvaImageList.length > 0 &&
+                    konvaImageList.map(img => (
+                      <KonvaImage
+                        src={img.src}
+                        key={img.id}
+                        onDragStart={this.handleDragStart}
+                        width={100}
+                        height={100}
+                        name={img.name}
+                      />
+                    ))}
+                  {hideTransformer === false && (
+                    <TransformerHandler selectedShapeName={selectedShapeName} />
+                  )}
+                </Group>
+              </WithCrop>
+            </Layer>
+          </Stage>
+        </div>
+        {!isCropping ? (
+          <Button style={{ marginBottom: 5 }} onClick={this.onStartCrop}>
+            CROP
+          </Button>
+        ) : (
+          <React.Fragment>
+            <Button
+              style={{
+                border: "none",
+                backgroundColor: "lightgreen",
+                marginBottom: 5
+              }}
+              onClick={this.onAcceptCrop}
+            >
+              accept
+            </Button>
+            <Button
+              style={{
+                border: "none",
+                backgroundColor: "lightcoral",
+                marginBottom: 5
+              }}
+              onClick={this.onCancelCrop}
+            >
+              cancel
+            </Button>
+          </React.Fragment>
+        )}
+        <Button style={{ marginBottom: 5 }} onClick={this.handleFlipY}>
+          flipY
+        </Button>
+        <Button style={{ marginBottom: 5 }} onClick={this.handleFlipX}>
+          flipX
+        </Button>
         <Button style={{ marginBottom: 5 }} onClick={this.handleExportClick}>
           Upload
         </Button>

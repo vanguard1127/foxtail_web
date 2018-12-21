@@ -128,6 +128,7 @@ class EventPage extends Component {
           const queryParams = JSON.parse(
             sessionStorage.getItem("searchEventQuery")
           );
+          console.log(event);
           return (
             <div className="App">
               <AddEventModal
@@ -219,7 +220,6 @@ class EventPage extends Component {
                 {event.participants.length}
               </p>
               <AttendEvent id={event.id} participants={event.participants} />
-
               <BlockModal
                 event={event}
                 id={event.id}

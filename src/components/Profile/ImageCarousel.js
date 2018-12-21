@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import { s3url } from "../../docs/data";
 
 class ImageCarousel extends Component {
   state = { selectedItem: this.props.selectedItem };
@@ -13,7 +14,7 @@ class ImageCarousel extends Component {
   render() {
     //const { photos,showThumb } = this.props;
     const { selectedItem } = this.state;
-    const { showThumbs, autoPlay } = this.props;
+    const { showThumbs, autoPlay, photos } = this.props;
     return (
       // <Carousel showThumbs={false} showStatus={false}>
       //   {photos.map(photo => (
@@ -35,62 +36,15 @@ class ImageCarousel extends Component {
         selectedItem={selectedItem}
         onClickItem={e => this.selectItem(e)}
       >
-        <div onClick={e => this.handleImageClick(e)}>
-          <img
-            alt="photo1"
-            src={require("../../images/girl1.jpg")}
-            style={{ width: "23vw", height: "35vh" }}
-          />
-        </div>
-        <div onClick={e => this.handleImageClick(e)}>
-          <img
-            alt="photo2"
-            src={require("../../images/girl2.jpg")}
-            style={{ width: "23vw", height: "35vh" }}
-          />
-        </div>
-        <div onClick={e => this.handleImageClick(e)}>
-          <img
-            alt="photo3"
-            src={require("../../images/girl3.jpg")}
-            style={{ width: "23vw", height: "35vh" }}
-          />
-        </div>
-        <div onClick={e => this.handleImageClick(e)}>
-          <img
-            alt="photo4"
-            src={require("../../images/girl3.jpg")}
-            style={{ width: "23vw", height: "35vh" }}
-          />
-        </div>
-        <div onClick={e => this.handleImageClick(e)}>
-          <img
-            alt="photo1"
-            src={require("../../images/girl1.jpg")}
-            style={{ width: "23vw", height: "35vh" }}
-          />
-        </div>
-        <div onClick={e => this.handleImageClick(e)}>
-          <img
-            alt="photo2"
-            src={require("../../images/girl2.jpg")}
-            style={{ width: "23vw", height: "35vh" }}
-          />
-        </div>
-        <div onClick={e => this.handleImageClick(e)}>
-          <img
-            alt="photo3"
-            src={require("../../images/girl3.jpg")}
-            style={{ width: "23vw", height: "35vh" }}
-          />
-        </div>
-        <div onClick={e => this.handleImageClick(e)}>
-          <img
-            alt="photo4"
-            src={require("../../images/girl3.jpg")}
-            style={{ width: "23vw", height: "35vh" }}
-          />
-        </div>
+        {photos.map((photo, i) => (
+          <div key={i + Math.random()}>
+            <img
+              alt={i}
+              src={s3url + photo.url}
+              style={{ width: "23vw", height: "35vh" }}
+            />
+          </div>
+        ))}
       </Carousel>
     );
   }
