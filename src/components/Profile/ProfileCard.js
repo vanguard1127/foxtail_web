@@ -29,16 +29,16 @@ class ProfileCard extends Component {
   render() {
     const { users, desires, photos, id } = this.props.profile;
     const { profile } = this.props;
-
     let timeAgo = "";
-    console.log(photos);
     if (profile.showOnline) {
       timeAgo = TimeAgo(profile.updatedAt);
       if (timeAgo !== "Online") {
         timeAgo = "Last seen " + timeAgo;
       }
     }
-    const publicPics = photos.filter(photoObject => photoObject.url !== "x");
+    //TODO:Remvoe test
+    //const publicPics = photos.filter(photoObject => photoObject.url !== "x");
+    const publicPics = photos;
     return (
       <Mutation
         mutation={LIKE_PROFILE}
@@ -77,7 +77,7 @@ class ProfileCard extends Component {
                 >
                   <div>
                     <ImageCarousel
-                      photos={publicPics.length > 0 ? photos : []}
+                      photos={publicPics.length > 0 ? publicPics : []}
                       showThumbs={false}
                       showImageModal={this.props.showImageModal}
                     />

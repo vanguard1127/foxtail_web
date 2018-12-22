@@ -33,11 +33,17 @@ class ProfileSearch extends Component {
         if (!fetchMoreResult) {
           return previousResult;
         }
+
         return {
           searchProfiles: {
+            ...previousResult.searchProfiles,
             profiles: [
               ...previousResult.searchProfiles.profiles,
               ...fetchMoreResult.searchProfiles.profiles
+            ],
+            featuredProfiles: [
+              ...previousResult.searchProfiles.featuredProfiles,
+              ...fetchMoreResult.searchProfiles.featuredProfiles
             ]
           }
         };
@@ -71,6 +77,14 @@ class ProfileSearch extends Component {
   setLocation = ({ lat, long }) => {
     this.setState({ long, lat });
   };
+
+  // removeProfile = id => {
+  //   this.setState(prevState => ({
+  //     searchProfiles: this.props.searchProfiles.profiles.filter(
+  //       el => el.id !== id
+  //     )
+  //   }));
+  // };
 
   render() {
     const { currentuser } = this.props.session;
@@ -117,7 +131,7 @@ class ProfileSearch extends Component {
                 );
               }
             }
-
+            console.log("PASED", data.searchProfiles);
             return (
               <div>
                 {searchPanel}

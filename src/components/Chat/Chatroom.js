@@ -4,7 +4,7 @@ import {
   GET_MESSAGES,
   SEND_MESSAGE,
   NEW_MESSAGE_SUB,
-  NEW_MESSAGE_SUB_NO_CHAT,
+  NEW_INBOX_SUB,
   REMOVE_SELF
 } from "../../queries";
 import { Form, Input, Button } from "antd";
@@ -84,8 +84,7 @@ class Chatroom extends Component {
         if (fetchMoreResult.getMessages.messages < LIMIT) {
           this.setState({ hasMoreItems: false });
         }
-        console.log("NEW", ...fetchMoreResult.getMessages.messages);
-        console.log("OLD", ...previousResult.getMessages.messages);
+
         previousResult.getMessages.messages = [
           ...previousResult.getMessages.messages,
           ...fetchMoreResult.getMessages.messages
@@ -102,9 +101,6 @@ class Chatroom extends Component {
     const { style, chatID, title, lastSeen, titleExtra } = this.props;
     const { cursor } = this.state;
 
-    let unsubscribe = null;
-
-    console.log("id", chatID);
     return (
       <div className="chatroom" style={{ position: "relative", ...style }}>
         <div className="chatroom-header">
@@ -137,45 +133,17 @@ class Chatroom extends Component {
         <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit: LIMIT, cursor }}
-          fetchPolicy="network-only"
+          fetchPolicy="cache-first"
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (loading) {
               return <Spinner message="Loading..." size="large" />;
             }
-            // if (!data.getMessages) {
-            //   console.log(data);
-            //   return <div>No messages</div>;
-            // }
-            console.log("dat", data);
-
-            if (!unsubscribe) {
-              // console.log(unsubscribe);
-              // unsubscribe = subscribeToMore({
-              //   document: NEW_MESSAGE_SUB_NO_CHAT,
-              //   updateQuery: (prev, { subscriptionData }) => {
-              //     const { newMessageSubscribe } = subscriptionData.data;
-              //     console.log("SUBSCRIBE EXECUTED", prev, subscriptionData);
-              //     if (!newMessageSubscribe) {
-              //       return prev;
-              //     }
-              //     if (prev.getMessages) {
-              //       prev.getMessages.messages = [
-              //         newMessageSubscribe,
-              //         ...prev.getMessages.messages
-              //       ];
-              //     } else {
-              //       prev.getMessages = {
-              //         messages: [newMessageSubscribe],
-              //         __typename: "ChatType"
-              //       };
-              //     }
-              //     console.log(prev.getMessages);
-              //     return prev;
-              //   }
-              // });
-              // console.log(unsubscribe);
+            if (!data.getMessages) {
+              console.log(data);
+              return <div>No messages</div>;
             }
+
             return (
               <Fragment>
                 {/*<Affix style={{position: 'absolute', top:'0'}}>{'test'}</Affix>*/}

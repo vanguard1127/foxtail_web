@@ -1,14 +1,18 @@
 import React, { Component, Fragment } from "react";
-import { Badge, Avatar, List, Input, Divider } from "antd";
-import { GET_INBOX } from "../../queries";
-import { Query } from "react-apollo";
-import Spinner from "./Spinner";
+import { Badge, Avatar, List, Divider } from "antd";
 import TimeAgo from "./TimeAgo";
 
-class InboxPanel extends Component {
+class InboxList extends Component {
   state = { chatID: null };
 
   renderItem = (item, timeAgo, isCurrentChat) => {
+    const { currentUserID } = this.props;
+    let title;
+    if (item.fromUser.id === currentUserID && item.participants.length > 0) {
+      title = item.participants[0].profileName;
+    } else {
+      title = item.fromUser.username;
+    }
     return (
       <List.Item
         key={item.id}
@@ -27,9 +31,7 @@ class InboxPanel extends Component {
             </Badge>
           }
           title={
-            <a onClick={e => this.props.setChatID(e, item.chatID)}>
-              {item.fromUser}
-            </a>
+            <a onClick={e => this.props.setChatID(e, item.chatID)}>{title}</a>
           }
           description={item.text}
         />
@@ -42,7 +44,7 @@ class InboxPanel extends Component {
     return (
       <Fragment>
         {messages.map((message, i) => {
-          var timeAgo = TimeAgo(message.participants[0].updatedAt);
+          var timeAgo = TimeAgo(message.createdAt);
           let isCurrentChat = false;
           if (this.state.chatID === message.chatID) {
             isCurrentChat = true;
@@ -84,4 +86,4 @@ class InboxPanel extends Component {
   }
 }
 
-export default InboxPanel;
+export default InboxList;

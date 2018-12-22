@@ -12,8 +12,15 @@ class InboxPage extends Component {
   };
 
   render() {
-    const { chatID } = this.state;
-
+    let chatID;
+    const { currentuser } = this.props.session;
+    chatID = this.state.chatID;
+    if (chatID === null) {
+      chatID = this.props.match.params.chatID;
+      if (chatID === "null" || chatID === undefined) {
+        chatID = null;
+      }
+    }
     return (
       <div
         style={{
@@ -24,8 +31,11 @@ class InboxPage extends Component {
         }}
       >
         <Fragment>
-          <InboxPanel setChatID={this.setChatID} />
-          <ChatPanel chatID={chatID} />
+          <InboxPanel
+            setChatID={this.setChatID}
+            currentUserID={currentuser.userID}
+          />
+          <ChatPanel chatID={chatID} currentuser={currentuser} />
         </Fragment>
       </div>
     );

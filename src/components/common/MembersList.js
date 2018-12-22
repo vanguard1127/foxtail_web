@@ -51,15 +51,17 @@ class MembersList extends Component {
   };
 
   handleInvite = invite => {
-    const { targetType } = this.props;
+    const { targetType, close } = this.props;
     if (targetType === "event") {
       invite()
         .then(({ data }) => {
           if (data.inviteProfileEvent) {
-            message.success("Inivtations sent");
+            close();
+            message.success("Inivitations sent");
           }
         })
         .catch(res => {
+          console.error(res);
           const errors = res.graphQLErrors.map(error => {
             return error.message;
           });
@@ -71,7 +73,8 @@ class MembersList extends Component {
       invite()
         .then(({ data }) => {
           if (data.inviteProfile) {
-            message.success("Inivtations sent");
+            close();
+            message.success("Inivitations sent");
           }
         })
         .catch(res => {
@@ -107,6 +110,7 @@ class MembersList extends Component {
       remove()
         .then(({ data }) => {
           if (data.removeProfile) {
+            close();
             message.success("Removed profiles");
           }
         })

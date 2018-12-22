@@ -7,11 +7,11 @@ export const NEW_MESSAGE_SUB = gql`
     newMessageSubscribe(chatID: $chatID) {
       id
       text
-      fromUser
-      profilePic
-      participants {
-        profileName
+      fromUser {
+        username
+        id
       }
+      profilePic
       type
       createdAt
     }
@@ -20,13 +20,26 @@ export const NEW_MESSAGE_SUB = gql`
 
 export const NEW_INBOX_SUB = gql`
   subscription {
-    newMessageSubscribe {
+    newInboxMsgSubscribe {
       id
-      chatID
       text
-      fromUser
-      profilePic
+      fromUser {
+        username
+        id
+      }
       createdAt
+      profilePic
+      chatID
+      participants {
+        profileName
+        profilePic
+        id
+      }
+      invited {
+        profileName
+        profilePic
+        id
+      }
     }
   }
 `;
@@ -206,8 +219,12 @@ export const LOGIN = gql`
 `;
 
 export const UPDATE_NOTIFICATIONS = gql`
-  mutation($notificationIDs: [String]!, $read: Boolean) {
-    updateNotifications(notificationIDs: $notificationIDs, read: $read)
+  mutation($notificationIDs: [String]!, $read: Boolean, $seen: Boolean) {
+    updateNotifications(
+      notificationIDs: $notificationIDs
+      read: $read
+      seen: $seen
+    )
   }
 `;
 
@@ -380,6 +397,7 @@ export const SEARCH_PROFILES = gql`
         photos {
           url
           private
+          id
         }
         users {
           id
@@ -457,14 +475,16 @@ export const GET_INBOX = gql`
       id
       chatID
       text
-      fromUser
+      fromUser {
+        username
+        id
+      }
       profilePic
       createdAt
       participants {
         profileName
-        updatedAt
         profilePic
-        _id
+        id
       }
     }
   }
@@ -546,7 +566,10 @@ export const GET_MESSAGES = gql`
       messages {
         id
         text
-        fromUser
+        fromUser {
+          username
+          id
+        }
         profilePic
         type
         createdAt
@@ -563,11 +586,15 @@ export const GET_CHAT = gql`
       messages {
         id
         text
-        fromUser
+        fromUser {
+          username
+          id
+        }
         profilePic
         createdAt
       }
       participants {
+        id
         profilePic
         profileName
         updatedAt

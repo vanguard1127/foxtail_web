@@ -6,7 +6,7 @@ const Message = React.forwardRef(({ message }, ref) => {
   const messageText =
     message.type === "msg"
       ? message.text
-      : `${message.fromUser} has left the chat`;
+      : `${message.fromUser.username} has left the chat`;
 
   return (
     <div ref={ref}>
@@ -15,7 +15,7 @@ const Message = React.forwardRef(({ message }, ref) => {
           avatar={<Avatar src={message.profilePic} />}
           title={
             <a href="https://ant.design">
-              {message.fromUser}
+              {message.fromUser.username}
               {",  "}
               {moment(message.createdAt)
                 .format("MMM Do")

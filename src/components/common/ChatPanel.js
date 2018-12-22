@@ -14,7 +14,7 @@ class InboxList extends Component {
         <Query
           query={GET_CHAT}
           variables={{ chatID }}
-          fetchPolicy="cache-and-network"
+          fetchPolicy="cache-first"
         >
           {({ data, loading, error, subscribeToMore }) => {
             if (loading) {
@@ -29,6 +29,7 @@ class InboxList extends Component {
               return <div>No messages</div>;
             }
 
+            const { currentuser } = this.props;
             const messages = data.chat.messages;
 
             const currentChat = data.chat;
@@ -37,12 +38,17 @@ class InboxList extends Component {
             let chatTitleExtra = "";
 
             if (currentChat) {
-              chatTitle = `${currentChat.participants[0].profileName} `;
+              let notME = currentChat.participants.filter(
+                el => el.id.toString() !== currentuser.profileID
+              );
+              if (notME.length > 0) {
+                chatTitle = notME[0].profileName;
+              } else {
+                chatTitle = currentuser.username;
+              }
               if (currentChat.participants.length > 2) {
                 chatTitleExtra = ` + ${currentChat.participants.length -
                   2} participants`;
-              } else {
-                chatTitle = `${currentChat.participants[0].profileName}`;
               }
               chatLastSeen = TimeAgo(currentChat.participants[0].updatedAt);
             }

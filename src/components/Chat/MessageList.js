@@ -330,7 +330,6 @@ class MessageList extends Component {
         })
         .value()
     );
-    console.log(messages);
 
     return (
       <Fragment>

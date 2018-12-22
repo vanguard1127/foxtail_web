@@ -12,22 +12,10 @@ class ImageCarousel extends Component {
     this.setState({ selectedItem: itemNum });
   };
   render() {
-    //const { photos,showThumb } = this.props;
     const { selectedItem } = this.state;
     const { showThumbs, autoPlay, photos } = this.props;
-    return (
-      // <Carousel showThumbs={false} showStatus={false}>
-      //   {photos.map(photo => (
-      //     <div>
-      //       <img
-      //         alt={photo.order}
-      //         src={photo.url}
-      //         style={{ width: "100%", height: "35vh" }}
-      //       />
-      //     </div>
-      //   ))}
-      // </Carousel>
 
+    return (
       <Carousel
         showThumbs={showThumbs}
         showStatus={false}
@@ -37,10 +25,12 @@ class ImageCarousel extends Component {
         onClickItem={e => this.selectItem(e)}
       >
         {photos.map((photo, i) => (
-          <div key={i + Math.random()}>
+          <div key={photo.id}>
             <img
               alt={i}
-              src={s3url + photo.url}
+              //TODO: Remove test
+              // src={s3url + photo.url}
+              src={require("../../images/girl1.jpg")}
               style={{ width: "23vw", height: "35vh" }}
             />
           </div>

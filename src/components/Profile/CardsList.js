@@ -9,8 +9,7 @@ class CardsList extends Component {
     shareModalVisible: false,
     blockModalVisible: false,
     msgModalVisible: false,
-    profile: "",
-    searchProfiles: this.props.searchProfiles
+    profile: ""
   };
 
   setMsdModalVisible = (msgModalVisible, profile) => {
@@ -28,28 +27,20 @@ class CardsList extends Component {
     else this.setState({ blockModalVisible });
   };
 
-  removeProfile = id => {
-    this.setState(prevState => ({
-      searchProfiles: this.props.searchProfiles.profiles.filter(
-        el => el.id !== id
-      )
-    }));
-  };
-
   render() {
     const {
-      searchProfiles,
       profile,
       blockModalVisible,
       shareModalVisible,
       msgModalVisible
     } = this.state;
 
-    const { showImageModal } = this.props;
+    const { showImageModal, searchProfiles } = this.props;
 
     if (!searchProfiles) {
       return <div>No one near you. Check back later</div>;
     }
+
     return (
       <div
         style={{

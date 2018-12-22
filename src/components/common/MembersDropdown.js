@@ -41,10 +41,13 @@ class MembersDropdown extends Component {
                     listType={listType}
                     targetID={targetID}
                     targetType={targetType}
+                    close={() => this.handleVisibleChange(false)}
                   />
                 }
                 trigger={["click"]}
                 placement="bottomRight"
+                onVisibleChange={this.handleVisibleChange}
+                visible={this.state.visible}
               >
                 <a className="ant-dropdown-link" href="#">
                   <Badge>
@@ -83,10 +86,13 @@ class MembersDropdown extends Component {
                     targetID={targetID}
                     listType={listType}
                     targetType={targetType}
+                    close={() => this.handleVisibleChange(false)}
                   />
                 }
                 trigger={["click"]}
                 placement="bottomRight"
+                onVisibleChange={this.handleVisibleChange}
+                visible={this.state.visible}
               >
                 <a className="ant-dropdown-link" href="#">
                   <Badge>

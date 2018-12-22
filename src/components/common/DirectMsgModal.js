@@ -15,6 +15,7 @@ class DirectMsgModal extends Component {
       .then(async ({ data }) => {
         if (data.sendMessage) {
           message.success("Message Sent");
+          this.setState({ text: "" });
           this.props.close();
         } else {
           message.error("Message not sent.");

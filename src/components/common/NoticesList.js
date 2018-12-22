@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Menu, Avatar, Button } from "antd";
+import { withRouter } from "react-router-dom";
 import Waypoint from "react-waypoint";
 
 const LIMIT = 5;
@@ -8,11 +9,23 @@ class NoticesList extends Component {
     skip: 0
   };
 
-  seeNotices = async ({ notifications }) => {
+  readAndGo = async ({ notifications, targetID, type }) => {
     try {
-      const { readNotices } = this.props;
+      const { readNotices, close } = this.props;
       if (notifications.length !== 0) {
         await readNotices(notifications);
+
+        switch (type) {
+          case "chat":
+            await this.props.history.push("/inbox/" + targetID);
+            break;
+          case "event":
+            await this.props.history.push("/events/" + targetID);
+            break;
+          default:
+            break;
+        }
+        close();
       }
     } catch (e) {
       console.error(e.message);
@@ -88,8 +101,10 @@ class NoticesList extends Component {
               <a
                 href={null}
                 onClick={() =>
-                  this.seeNotices({
-                    notifications: [notif.id]
+                  this.readAndGo({
+                    notifications: [notif.id],
+                    targetID: notif.targetID,
+                    type: notif.type
                   })
                 }
               >
@@ -132,4 +147,4 @@ class NoticesList extends Component {
   }
 }
 
-export default NoticesList;
+export default withRouter(NoticesList);

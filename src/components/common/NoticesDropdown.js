@@ -13,9 +13,23 @@ var slapAudio = new Audio(require("../../docs/slap.wav"));
 
 let unsubscribe = null;
 const LIMIT = 5;
+const intialState = {
+  read: null,
+  seen: null,
+  notificationIDs: [],
+  count: 0,
+  skip: 0,
+  visible: false
+};
 class NoticesDropdown extends Component {
-  state = { read: false, notificationIDs: [], count: 0, skip: 0 };
+  state = { ...intialState };
 
+  clearState = () => {
+    this.setState({ ...intialState });
+  };
+  handleVisibleChange = flag => {
+    this.setState({ visible: flag });
+  };
   setCount = value => {
     this.setState({ count: value });
   };
@@ -26,13 +40,17 @@ class NoticesDropdown extends Component {
 
   readNotices = (notificationIDs, updateNotifications) => {
     this.setState({ notificationIDs, read: true }, () => {
-      updateNotifications().catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
+      updateNotifications()
+        .then(({ data }) => {
+          this.clearState();
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
         });
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
-      });
     });
   };
 
@@ -46,14 +64,19 @@ class NoticesDropdown extends Component {
       }, []);
 
       if (toBeSeen.length !== 0) {
-        this.setState({ read: false, notificationIDs: toBeSeen }, () => {
-          updateNotifications().catch(res => {
-            const errors = res.graphQLErrors.map(error => {
-              return error.message;
+        this.setState({ seen: true, notificationIDs: toBeSeen }, () => {
+          updateNotifications()
+            .then(({ data }) => {
+              // this.clearState();
+              this.setState({ seen: null });
+            })
+            .catch(res => {
+              const errors = res.graphQLErrors.map(error => {
+                return error.message;
+              });
+              //TODO: send errors to analytics from here
+              this.setState({ errors });
             });
-            //TODO: send errors to analytics from here
-            this.setState({ errors });
-          });
         });
       }
     } catch (e) {
@@ -65,6 +88,7 @@ class NoticesDropdown extends Component {
     const { notificationIDs, read } = this.state;
 
     const {
+      getNotifications,
       getNotifications: { notifications }
     } = cache.readQuery({
       query: GET_NOTIFICATIONS,
@@ -83,35 +107,38 @@ class NoticesDropdown extends Component {
         variables: { limit: LIMIT },
         data: {
           getNotifications: {
+            ...getNotifications,
             unseen: toBeSeen.length - notificationIDs.length
           }
         }
       });
     } else {
-      //TODO: Figure out how to update read without erros
-      // var index = _.findIndex(notifications, { id: notificationIDs[0].id });
-      // const readNotice = notifications[index];
-      // // Replace item at index using native splice
-      // notifications.splice(index, 1, { ...readNotice, read: true });
-      // cache.writeQuery({
-      //   query: GET_NOTIFICATIONS,
-      //   variables: { limit: LIMIT },
-      //   data: {
-      //     getNotifications: { notifications }
-      //   }
-      // });
+      const [id] = notificationIDs;
+      var index = _.findIndex(notifications, { id });
+      const readNotice = notifications[index];
+      // Replace item at index using native splice
+      notifications.splice(index, 1, { ...readNotice, read: true });
+
+      cache.writeQuery({
+        query: GET_NOTIFICATIONS,
+        variables: { limit: LIMIT },
+        data: {
+          getNotifications: { ...getNotifications, notifications }
+        }
+      });
     }
   };
 
   render() {
-    const { read, notificationIDs, count } = this.state;
+    const { read, seen, notificationIDs, count } = this.state;
 
     return (
       <Mutation
         mutation={UPDATE_NOTIFICATIONS}
         variables={{
           notificationIDs,
-          read
+          read,
+          seen
         }}
         update={this.updateSeen}
       >
@@ -137,6 +164,7 @@ class NoticesDropdown extends Component {
                 }
 
                 if (!unsubscribe) {
+                  console.log("ping");
                   unsubscribe = subscribeToMore({
                     document: NEW_NOTICE_SUB,
                     updateQuery: (prev, { subscriptionData }) => {
@@ -171,6 +199,7 @@ class NoticesDropdown extends Component {
                         readNotices={ids =>
                           this.readNotices(ids, updateNotifications)
                         }
+                        close={() => this.handleVisibleChange(false)}
                       />
                     }
                     trigger={["click"]}
@@ -181,6 +210,8 @@ class NoticesDropdown extends Component {
                         updateNotifications
                       })
                     }
+                    onVisibleChange={this.handleVisibleChange}
+                    visible={this.state.visible}
                   >
                     <a className="ant-dropdown-link" href="#">
                       <Badge count={notficationCount}>

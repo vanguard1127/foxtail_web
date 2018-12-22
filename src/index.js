@@ -37,10 +37,11 @@ import { notification } from "antd";
 
 const { Header, Content } = Layout;
 
-let server = "production-151896178.us-west-2.elb.amazonaws.com";
-if (process.env.REACT_APP_LOCAL_SERVER === "true") {
-  server = "localhost:4444";
-}
+let server = "localhost:4444";
+// console.log(process.env.REACT_APP_LOCAL_SERVER);
+// if (process.env.REACT_APP_LOCAL_SERVER === "true") {
+//   server = ;
+// }
 
 let wsurl = `ws://${server}/subscriptions`;
 let httpurl = `http://${server}/graphql`;
@@ -62,9 +63,6 @@ const httpLink = new HttpLink({
 });
 
 const AuthLink = new ApolloLink((operation, forward) => {
-  console.log(
-    localStorage.getItem("token", localStorage.getItem("refreshToken"))
-  );
   operation.setContext(context => ({
     ...context,
     headers: {
@@ -182,16 +180,17 @@ const errorLink = onError(
               console.log("Token Refresh Error:", error);
             });
         } else {
-          popmsg.warn(
-            "An error has occured. We will have it fixed soon. Thanks for your patience."
-          );
+          console.error(message);
+          // popmsg.warn(
+          //   "An error has occured. We will have it fixed soon. Thanks for your patience."
+          // );
         }
         //TODO: Only allow this in dev mode
-        notification["error"]({
-          message: "Oops an Error",
-          placement: "bottomLeft",
-          description: `Message: ${message}, Path: ${path}. Please report this issue so we can fix it.`
-        });
+        // notification["error"]({
+        //   message: "Oops an Error",
+        //   placement: "bottomLeft",
+        //   description: `Message: ${message}, Path: ${path}. Please report this issue so we can fix it.`
+        // });
         return null;
       });
     //TODO:Decipher btwn 500 and 400 errors
@@ -256,6 +255,7 @@ const Body = () => (
         <Route path="/editprofile" component={EditProfile} />
         <Route path="/events/:id" component={EventPage} />
         <Route path="/members/:id" component={ProfilePage} />
+        <Route path="/inbox/:chatID" component={InboxPage} />
         <Route path="/inbox" component={InboxPage} />
         <Route path="/settings" component={Settings} />
 
