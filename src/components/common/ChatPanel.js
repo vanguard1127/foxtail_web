@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { GET_CHAT } from "../../queries";
 import { Query } from "react-apollo";
 import Spinner from "../common/Spinner";
-import TimeAgo from "../common/TimeAgo";
+import TimeAgo from "../../utils/TimeAgo";
 import Chatroom from "../Chat/Chatroom";
 class InboxList extends Component {
   //Variables by text

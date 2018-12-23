@@ -10,8 +10,8 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import App from "./components/App";
-import Navbar from "./components/Navbar";
-import ProfileSearch from "./components/Profile/ProfileSearch";
+import Navbar from "./components/Navbar/";
+import ProfileSearch from "./components/SearchProfiles/ProfileSearch";
 import Settings from "./components/Account/Settings";
 import EventPage from "./components/Event/EventPage";
 import ProfilePage from "./components/Profile/ProfilePage";
@@ -20,8 +20,8 @@ import SearchEvents from "./components/Event/SearchEvents";
 import EditProfile from "./components/EditProfile/EditProfilePage";
 import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
-import Footer from "./components/Footer";
 import "./i18n";
+import Footer from "./components/Footer/";
 
 import { ApolloProvider } from "react-apollo";
 import { Layout, message as popmsg } from "antd";
@@ -233,19 +233,10 @@ const NavBarWithSession = withSession(Navbar);
 
 const Body = () => (
   <Layout className="layout">
-    <Header>
-      <div className="logo" />
+    <header>
       <NavBarWithSession />
-    </Header>
-    <Content
-      style={{
-        padding: "0 50px",
-        minHeight: "86vh",
-        display: "flex",
-        flex: "1",
-        flexDirection: "column"
-      }}
-    >
+    </header>
+    <main>
       <Switch>
         <Route path="/members" component={ProfileSearch} exact />
         <Route path="/" component={App} exact />
@@ -261,10 +252,8 @@ const Body = () => (
 
         <Redirect to="/" />
       </Switch>
-    </Content>
-    <Footer style={{ textAlign: "center" }}>
-      Ant Design ©2018 Created by Ant UED
-    </Footer>
+    </main>
+    <Footer />
   </Layout>
 );
 

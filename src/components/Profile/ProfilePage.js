@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import { GET_PROFILE } from "../../queries";
 import moment from "moment";
-import ImageCarousel from "./ImageCarousel";
+import ImageCarousel from "../SearchProfiles/ImageCarousel";
 import DesiresList from "../Desire/DesiresList";
 import Spinner from "../common/Spinner";
 import { Icon, Button } from "antd";

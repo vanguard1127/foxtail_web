@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Badge, Avatar, List, Divider } from "antd";
-import TimeAgo from "./TimeAgo";
+import TimeAgo from "../../utils/TimeAgo";
 
 class InboxList extends Component {
   state = { chatID: null };

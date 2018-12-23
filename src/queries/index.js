@@ -394,11 +394,7 @@ export const SEARCH_PROFILES = gql`
         about
         desires
         profileName
-        photos {
-          url
-          private
-          id
-        }
+        profilePic
         users {
           id
           username
@@ -411,16 +407,14 @@ export const SEARCH_PROFILES = gql`
         }
         publicCode
         showOnline
+        updatedAt
       }
       featuredProfiles {
         id
         about
         desires
         profileName
-        photos {
-          url
-          private
-        }
+        profilePic
         users {
           id
           username
@@ -433,6 +427,7 @@ export const SEARCH_PROFILES = gql`
         }
         publicCode
         showOnline
+        updatedAt
       }
     }
   }
