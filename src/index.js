@@ -2,20 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
-  Link,
   Redirect,
   Route,
   Switch,
   withRouter
 } from "react-router-dom";
-import "./index.css";
 import App from "./components/App";
 import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/ProfileSearch";
 import Settings from "./components/Account/Settings";
 import EventPage from "./components/Event/EventPage";
 import ProfilePage from "./components/Profile/ProfilePage";
-import InboxPage from "./components/Inbox/InboxPage";
+import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/Event/SearchEvents";
 import EditProfile from "./components/EditProfile/EditProfilePage";
 import Signup from "./components/Auth/Signup";
@@ -194,12 +192,13 @@ const errorLink = onError(
         return null;
       });
     //TODO:Decipher btwn 500 and 400 errors
-    if (networkError)
+    if (networkError) {
       notification["warn"]({
         message: "Check you network",
         placement: "bottomLeft",
         description: `[Network error]: ${networkError}`
       });
+    }
     return null;
   }
 );
@@ -222,16 +221,19 @@ const Root = () => (
 );
 
 const Wrapper = withRouter(props => {
+  let location = props.location;
+  let showFooter =
+    location.pathname && location.pathname.match(/^\/inbox/) === null;
   return (
     <div>
-      <Body />
+      <Body showFooter={showFooter} />
     </div>
   );
 });
 
 const NavBarWithSession = withSession(Navbar);
 
-const Body = () => (
+const Body = ({ showFooter }) => (
   <Layout className="layout">
     <header>
       <NavBarWithSession />
@@ -253,7 +255,7 @@ const Body = () => (
         <Redirect to="/" />
       </Switch>
     </main>
-    <Footer />
+    {showFooter && <Footer />}
   </Layout>
 );
 

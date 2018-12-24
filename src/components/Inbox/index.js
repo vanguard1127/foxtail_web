@@ -1,7 +1,10 @@
 import React, { Component, Fragment } from "react";
-import InboxPanel from "../common/InboxPanel";
-import ChatPanel from "../common/ChatPanel";
+
 import withAuth from "../withAuth";
+import InboxPanel from "./InboxPanel";
+import Header from "./Header";
+import ChatInfo from "./ChatInfo";
+import ChatWindow from "./ChatWindow";
 
 class InboxPage extends Component {
   state = { chatID: null };
@@ -22,21 +25,18 @@ class InboxPage extends Component {
       }
     }
     return (
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          flexDirection: "horizontal",
-          height: "86vh"
-        }}
-      >
-        <Fragment>
-          <InboxPanel
-            setChatID={this.setChatID}
-            currentUserID={currentuser.userID}
-          />
-          <ChatPanel chatID={chatID} currentuser={currentuser} />
-        </Fragment>
+      <div>
+        <Header />
+        <section className="inbox">
+          <div className="row no-gutters">
+            <InboxPanel
+              setChatID={this.setChatID}
+              currentUserID={currentuser.userID}
+            />
+            <ChatWindow chatID={chatID} currentuser={currentuser} />
+            <ChatInfo />
+          </div>
+        </section>
       </div>
     );
   }
