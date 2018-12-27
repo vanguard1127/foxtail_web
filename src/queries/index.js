@@ -146,7 +146,7 @@ export const SEND_MESSAGE = gql`
 
 export const REMOVE_LOCLOCK = gql`
   mutation {
-    removeLocationLock
+    removeLocation
   }
 `;
 
@@ -163,7 +163,7 @@ export const UPDATE_SETTINGS = gql`
     $ageRange: [Int]
     $lang: String
     $interestedIn: [String]
-    $locationLock: String
+    $location: String
     $lat: Float
     $long: Float
     $visible: Boolean
@@ -179,7 +179,7 @@ export const UPDATE_SETTINGS = gql`
       ageRange: $ageRange
       lang: $lang
       interestedIn: $interestedIn
-      locationLock: $locationLock
+      location: $location
       lat: $lat
       long: $long
       visible: $visible
@@ -614,7 +614,7 @@ export const GET_CURRENT_USER = gql`
       }
       ccLast4
       isProfileOK
-      locationLock {
+      location {
         city
         crds {
           long
@@ -633,7 +633,7 @@ export const GET_SETTINGS = gql`
       ageRange
       lang
       interestedIn
-      locationLock
+      location
       visible
       newMsgNotify
       emailNotify
@@ -679,6 +679,9 @@ export const GET_PROFILE = gql`
       id
       about
       desires
+      profilePic
+      profileName
+      interestedIn
       photos {
         url
         private
@@ -694,6 +697,8 @@ export const GET_PROFILE = gql`
         }
       }
       publicCode
+      distance
+      updatedAt
     }
   }
 `;

@@ -2,7 +2,7 @@ import React from "react";
 import ProfileInfoBox from "./ProfileInfoBox";
 import DesiresBlock from "./DesiresBlock";
 
-const ProfileInfoDiv = ({ profile }) => {
+const ProfileInfoDiv = ({ profile, history }) => {
   return (
     <div className="data">
       <ProfileInfoBox

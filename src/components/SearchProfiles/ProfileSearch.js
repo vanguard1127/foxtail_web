@@ -7,7 +7,6 @@ import { Query, Mutation, ApolloConsumer } from "react-apollo";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
-import PhotoModal from "../common/PhotoModal";
 import SearchCriteria from "./SearchCriteria";
 import FeaturedDiv from "./FeaturedDiv";
 import BlockModal from "../common/BlockModal";
@@ -34,7 +33,7 @@ class ProfileSearch extends Component {
     this.setState({ profile });
   };
 
-  setMsdModalVisible = (msgModalVisible, profile) => {
+  setMsgModalVisible = (msgModalVisible, profile) => {
     if (profile) this.setState({ profile, msgModalVisible });
     else this.setState({ msgModalVisible });
   };
@@ -50,7 +49,6 @@ class ProfileSearch extends Component {
   };
 
   handleLike = likeProfile => {
-    console.log("eee");
     likeProfile()
       .then(({ data }) => {
         console.log(data);
@@ -125,8 +123,6 @@ class ProfileSearch extends Component {
   render() {
     const { currentuser } = this.props.session;
     const {
-      previewVisible,
-      previewImage,
       long,
       lat,
       profile,
@@ -186,22 +182,24 @@ class ProfileSearch extends Component {
                 {(likeProfile, { loading }) => {
                   return (
                     <div>
-                      {/* {searchPanel} */}
+                      {searchPanel}
                       <FeaturedDiv
                         featuredProfiles={data.searchProfiles.featuredProfiles}
                         setProfile={this.setProfile}
-                        showMsgModal={() => this.setMsdModalVisible(true)}
+                        showMsgModal={() => this.setMsgModalVisible(true)}
                         showBlockModal={() => this.setBlockModalVisible(true)}
                         showShareModal={() => this.setShareModalVisible(true)}
                         likeProfile={() => this.handleLike(likeProfile)}
+                        history={this.props.history}
                       />
                       <ProfilesDiv
                         profiles={data.searchProfiles.profiles}
                         setProfile={this.setProfile}
-                        showMsgModal={() => this.setMsdModalVisible(true)}
+                        showMsgModal={() => this.setMsgModalVisible(true)}
                         showBlockModal={() => this.setBlockModalVisible(true)}
                         showShareModal={() => this.setShareModalVisible(true)}
                         likeProfile={() => this.handleLike(likeProfile)}
+                        history={this.props.history}
                       />
                       <Waypoint
                         onEnter={({ previousPosition }) =>
@@ -235,7 +233,7 @@ class ProfileSearch extends Component {
           <DirectMsgModal
             profile={profile}
             visible={msgModalVisible}
-            close={() => this.setMsdModalVisible(false)}
+            close={() => this.setMsgModalVisible(false)}
           />
         )}
       </Fragment>

@@ -57,4 +57,5 @@ url('../fonts/SanFranciscoDisplay-Bold.woff') format('woff');font-weight:bold;fo
 .icon-right-open:before { content: '\f006'; } /* '' */
 .icon-left-open:before { content: '\f007'; } /* '' */
 .icon-more:before { content: '\e81e'; } /* '' */
+.icon-location:before { content: '\f031'; } /* '' */
 .icon-calendar:before { content: '\f4c5'; } /* '' */

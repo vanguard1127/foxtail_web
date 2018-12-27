@@ -12,7 +12,8 @@ const ProfilesDiv = ({
   showMsgModal,
   showBlockModal,
   showShareModal,
-  likeProfile
+  likeProfile,
+  history
 }) => {
   return (
     <section className="members">
@@ -32,6 +33,7 @@ const ProfilesDiv = ({
                   showBlockModal={showBlockModal}
                   showShareModal={showShareModal}
                   likeProfile={likeProfile}
+                  history={history}
                 />
               );
             })}

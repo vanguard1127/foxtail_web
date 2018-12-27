@@ -1,8 +1,8 @@
 export const desireOptions = [
-  { value: "cuddling", label: "Cuddling" },
-  { value: "cooking", label: "Cooking" },
-  { value: "dating", label: "Dating" },
-  { value: "flirting", label: "Flirting" }
+  { key: "cuddling", value: "Cuddling" },
+  { key: "cooking", value: "Cooking" },
+  { key: "dating", value: "Dating" },
+  { key: "flirting", value: "Flirting" }
 ];
 
 export const sexOptions = [
@@ -15,6 +15,12 @@ export const sexOptions = [
   { value: "TT", label: "Trans + Trans" },
   { value: "FT", label: "Female + Trans" },
   { value: "MT", label: "Male + Trans" }
+];
+
+export const genderOptions = [
+  { key: "F", value: "Female" },
+  { key: "M", value: "Male" },
+  { key: "T", value: "Transgender" }
 ];
 
 export const s3url = "https://prod-ft-img-bucket.s3.amazonaws.com/";

@@ -10,7 +10,8 @@ const ProfileCard = ({
   showMsgModal,
   showBlockModal,
   showShareModal,
-  likeProfile
+  likeProfile,
+  history
 }) => {
   const stdCheck = profile.users.every(user => user.verifications.std === true);
   const photoCheck = profile.users.every(
@@ -23,12 +24,16 @@ const ProfileCard = ({
   return (
     <div className="col-md-6 col-lg-4">
       <div className={"card-item " + badge}>
-        <ProfilePic profilePic={profile.profilePic} />
+        <a href={null} onClick={() => history.push("/members/" + profile.id)}>
+          <ProfilePic profilePic={profile.profilePic} />
+        </a>
         <div className="info">
-          <ProfileInfoBox
-            users={profile.users}
-            lastOnline={profile.showOnline && profile.updatedAt}
-          />
+          <a href={null} onClick={() => history.push("/members/" + profile.id)}>
+            <ProfileInfoBox
+              users={profile.users}
+              lastOnline={profile.showOnline && profile.updatedAt}
+            />
+          </a>
           <DesiresBlock desires={profile.desires} />
           <ProfileActionBtns
             setProfile={setProfile}

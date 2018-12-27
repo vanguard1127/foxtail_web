@@ -3,6 +3,7 @@ import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS, REMOVE_LOCLOCK } from "../../queries";
 import { sexOptions } from "../../docs/data";
 import Spinner from "../common/Spinner";
+import AddressSearch from "../common/AddressSearch";
 import SetLocationModal from "../common/SetLocationModal";
 import {
   Form,
@@ -27,7 +28,7 @@ class SearchCriteria extends Component {
     lat: this.props.queryParams.lat,
     limit: this.props.queryParams.limit,
     locModalVisible: false,
-    locationLock: null
+    location: null
   };
 
   setLocModalVisible = visible => {
@@ -35,12 +36,12 @@ class SearchCriteria extends Component {
   };
   setLocation = async pos => {
     var crd = pos.coords;
-    var locationLock = pos.locationLock ? pos.locationLock : CURRENT_LOC_LABEL;
+    var location = pos.location ? pos.location : CURRENT_LOC_LABEL;
 
     const { long, lat } = this.state;
     if (long !== crd.longitude && lat !== crd.latitude) {
       this.setState({ long: crd.longitude, lat: crd.latitude });
-      this.props.form.setFieldsValue({ locationLock });
+      this.props.form.setFieldsValue({ location });
     }
   };
 
@@ -68,7 +69,7 @@ class SearchCriteria extends Component {
     });
   };
 
-  handleRemoveLocLock = (e, removeLocationLock) => {
+  handleRemoveLocLock = (e, removeLocation) => {
     e.preventDefault();
 
     navigator.geolocation.getCurrentPosition(this.setLocation, err => {
@@ -78,9 +79,9 @@ class SearchCriteria extends Component {
       return;
     });
 
-    removeLocationLock()
+    removeLocation()
       .then(async ({ data }) => {
-        this.props.form.setFieldsValue({ locationLock: CURRENT_LOC_LABEL });
+        this.props.form.setFieldsValue({ location: CURRENT_LOC_LABEL });
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -95,6 +96,12 @@ class SearchCriteria extends Component {
   handleChangeSelect = value => {
     this.props.form.setFieldsValue({ interestedIn: value });
   };
+
+  setLocationValues = ({ lat, long, address }) => {
+    console.log(lat, long, address);
+    this.setState({ lat, long, location: address });
+  };
+
   render() {
     const { lat, long } = this.state;
     return (
@@ -123,12 +130,12 @@ class SearchCriteria extends Component {
               distanceMetric,
               ageRange,
               interestedIn,
-              locationLock
+              location
             } = settings;
 
             return (
               <Mutation mutation={REMOVE_LOCLOCK}>
-                {(removeLocationLock, { loading }) => {
+                {(removeLocation, { loading }) => {
                   return (
                     <Mutation
                       mutation={UPDATE_SETTINGS}
@@ -137,130 +144,83 @@ class SearchCriteria extends Component {
                         distanceMetric,
                         ageRange,
                         interestedIn,
-                        locationLock,
+                        location,
                         lat,
                         long
                       }}
                     >
                       {(updateSettings, { loading }) => {
                         return (
-                          <Fragment>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column"
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  justifyContent: "space-around"
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flex: "1"
-                                  }}
-                                >
-                                  <a
-                                    href={null}
-                                    onClick={() =>
-                                      this.setLocModalVisible(true)
-                                    }
-                                    disabled={!this.props.isBlackMember}
-                                  >
-                                    {CURRENT_LOC_LABEL}
-                                  </a>
-                                  {locationLock !== CURRENT_LOC_LABEL && (
-                                    <Icon
-                                      type="close"
-                                      onClick={e =>
-                                        this.handleRemoveLocLock(
-                                          e,
-                                          removeLocationLock
-                                        )
-                                      }
+                          <section class="meet-filter">
+                            <div class="container">
+                              <div class="col-md-12">
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <AddressSearch
+                                      style={{ width: "100%" }}
+                                      setLocationValues={this.setLocationValues}
+                                      address={location}
+                                      type={"(cities)"}
                                     />
-                                  )}
-                                </div>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flex: "1"
-                                  }}
-                                >
-                                  <Select
-                                    mode="multiple"
-                                    style={{ width: "100%" }}
-                                    placeholder="Interested In"
-                                    onChange={this.handleChangeSelect}
-                                    defaultValue={interestedIn}
-                                  >
-                                    {sexOptions.map(option => (
-                                      <Option key={option.value}>
-                                        {option.label}
-                                      </Option>
-                                    ))}
-                                  </Select>
-                                </div>
-                              </div>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  justifyContent: "space-around"
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flex: "1"
-                                  }}
-                                >
-                                  {" "}
-                                  <Switch
-                                    checkedChildren="mi"
-                                    unCheckedChildren="km"
-                                    defaultChecked
-                                  />
-                                  <Slider
-                                    min={0}
-                                    max={100}
-                                    defaultValue={distance}
-                                    marks={{
-                                      0: "<1 " + distanceMetric,
-                                      100: "100+"
-                                    }}
-                                    style={{
-                                      display: "flex",
-                                      flex: "1"
-                                    }}
-                                  />
-                                </div>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flex: "1"
-                                  }}
-                                >
-                                  {" "}
-                                  <Slider
-                                    range
-                                    min={18}
-                                    max={80}
-                                    marks={{ 18: "18 years", 80: "80+" }}
-                                    defaultValue={ageRange}
-                                    style={{
-                                      display: "flex",
-                                      flex: "1"
-                                    }}
-                                  />
+                                    {/* <select
+                                        class="js-example-basic-single search"
+                                        name="located[]"
+                                      >
+                                        <option>United States</option>
+                                        <option>France</option>
+                                        <option>Turkey</option>
+                                      </select>
+                                      <label>Location:</label>
+                                    </div> */}
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="dropdown">
+                                      <select
+                                        class="js-example-basic-multiple"
+                                        name="genders[]"
+                                        multiple="multiple"
+                                      >
+                                        <option>Male</option>
+                                        <option selected>Female</option>
+                                        <option selected>Couple</option>
+                                      </select>
+                                      <label>Gender(s):</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="item">
+                                      <div class="range-head">Distance:</div>
+                                      <div class="range-con">
+                                        <div
+                                          id="pmd-slider-range-tooltip-distance"
+                                          class="pmd-range-tooltip"
+                                        />
+                                      </div>
+                                      <div class="limit">
+                                        <span>1 mil</span>
+                                        <span>100+ mil</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="item">
+                                      <div class="range-head">Age:</div>
+                                      <div class="range-con">
+                                        <div
+                                          id="pmd-slider-range-tooltip-age"
+                                          class="pmd-range-tooltip"
+                                        />
+                                      </div>
+                                      <div class="limit">
+                                        <span>18 years</span>
+                                        <span>80+ years</span>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </Fragment>
+                          </section>
                         );
                       }}
                     </Mutation>

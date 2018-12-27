@@ -12,7 +12,7 @@ class CardsList extends Component {
     profile: ""
   };
 
-  setMsdModalVisible = (msgModalVisible, profile) => {
+  setMsgModalVisible = (msgModalVisible, profile) => {
     if (profile) this.setState({ profile, msgModalVisible });
     else this.setState({ msgModalVisible });
   };
@@ -65,7 +65,7 @@ class CardsList extends Component {
         <DirectMsgModal
           profile={profile}
           visible={msgModalVisible}
-          close={() => this.setMsdModalVisible(false)}
+          close={() => this.setMsgModalVisible(false)}
         />
         {searchProfiles.featuredProfiles.map(profile => (
           <ProfileCard
@@ -73,7 +73,7 @@ class CardsList extends Component {
             profile={profile}
             showBlockModal={this.setBlockModalVisible}
             showShareModal={this.setShareModalVisible}
-            showMsgModal={this.setMsdModalVisible}
+            showMsgModal={this.setMsgModalVisible}
             showImageModal={showImageModal}
           />
         ))}
@@ -83,7 +83,7 @@ class CardsList extends Component {
             profile={profile}
             showBlockModal={this.setBlockModalVisible}
             showShareModal={this.setShareModalVisible}
-            showMsgModal={this.setMsdModalVisible}
+            showMsgModal={this.setMsgModalVisible}
             showImageModal={showImageModal}
           />
         ))}

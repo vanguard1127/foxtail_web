@@ -1,5 +1,5 @@
 import React from "react";
-const ChatInfo = () => {
+const ChatInfo = ({ profileID, chatID }) => {
   return (
     <div className="col-xl-2">
       <div className="right">

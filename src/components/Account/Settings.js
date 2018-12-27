@@ -133,7 +133,7 @@ class SettingsForm extends Component {
           }
           const initialDistanceMetric = data.getSettings.distanceMetric;
           const {
-            locationLock,
+            location,
             visible,
             newMsgNotify,
             emailNotify,
@@ -169,7 +169,7 @@ class SettingsForm extends Component {
                 distanceMetric,
                 ageRange,
                 interestedIn,
-                locationLock,
+                location,
                 visible,
                 newMsgNotify,
                 lang,
@@ -295,8 +295,8 @@ class SettingsForm extends Component {
                           </span>
                         }
                       >
-                        {getFieldDecorator("locationLock", {
-                          initialValue: settings.locationLock || ""
+                        {getFieldDecorator("location", {
+                          initialValue: settings.location || ""
                         })(
                           <Input
                             style={{ width: "50%" }}

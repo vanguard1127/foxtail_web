@@ -262,13 +262,13 @@ class MessageList extends Component {
   render() {
     const { loading } = this.state;
     const { messages, hasMoreItems, children, currentUserID } = this.props;
-    let topMessage = "default";
+    let topMessage = "";
     if (loading) {
       topMessage = "loading...";
-    } else if (!hasMoreItems) {
-      topMessage = "Looks like there is nothing else to see here";
     }
-
+    // else if (!hasMoreItems) {
+    //   topMessage = "Looks like there is nothing else to see here";
+    // }
     const lastAboveDateWaypointIndex = this.state.dateWaypoints.reduce(
       (res, cur, i) => {
         if (cur === "above") return i;
@@ -314,7 +314,7 @@ class MessageList extends Component {
               onInside={() => {
                 this.onDateWaypointPostion(index, "inside");
               }}
-              showDate={lastAboveDateWaypointIndex === index}
+              // showDate={lastAboveDateWaypointIndex === index}
               // Keys won't collied because DateItems's dates are days appart from each other
               key={`messageDate-${item.date}`}
             >

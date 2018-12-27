@@ -22,7 +22,7 @@ class SetLocationModal extends Component {
               longitude: this.state.long,
               latitude: this.state.lat
             },
-            locationLock: this.state.city
+            location: this.state.city
           });
           message.success("Location set to: " + this.state.city);
           this.props.close();
@@ -69,7 +69,7 @@ class SetLocationModal extends Component {
       <Mutation
         mutation={UPDATE_SETTINGS}
         variables={{
-          locationLock: city,
+          location: city,
           lat,
           long
         }}

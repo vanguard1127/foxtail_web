@@ -93,7 +93,10 @@ class ChatContent extends Component {
 
     const { cursor } = this.state;
     return (
-      <div className="content">
+      <div
+        className="content"
+        style={{ display: "flex", flexDirection: " column-reverse" }}
+      >
         {" "}
         <Query
           query={GET_MESSAGES}

@@ -33,11 +33,11 @@ const withLocation = PassedComponent =>
           "Geolocation is not supported by this browser, Please click 'No'"
         );
         const session = this.props.session;
-        if (session && session.locationLock) {
+        if (session && session.location) {
           this.setLocation({
             coords: {
-              longitude: session.locationLock.crds.log,
-              latitude: session.locationLock.crds.lat
+              longitude: session.location.crds.log,
+              latitude: session.location.crds.lat
             }
           });
         }
@@ -50,14 +50,14 @@ const withLocation = PassedComponent =>
           const user = session.currentuser;
           if (
             user &&
-            user.locationLock.crds &&
-            user.locationLock.crds.lat !== null &&
-            user.locationLock.crds.long !== null
+            user.location.crds &&
+            user.location.crds.lat !== null &&
+            user.location.crds.long !== null
           ) {
             return this.setLocation({
               coords: {
-                longitude: user.locationLock.crds.long,
-                latitude: user.locationLock.crds.lat
+                longitude: user.location.crds.long,
+                latitude: user.location.crds.lat
               }
             });
           }
@@ -88,12 +88,12 @@ const withLocation = PassedComponent =>
           this.props.session &&
           this.props.session.currentuser &&
           this.props.session.currentuser.blackMember &&
-          this.props.session.currentuser.locationLock.crds.lat
+          this.props.session.currentuser.location.crds.lat
         ) {
           return this.setLocation({
             coords: {
-              longitude: this.props.session.currentuser.locationLock.crds.long,
-              latitude: this.props.session.currentuser.locationLock.crds.lat
+              longitude: this.props.session.currentuser.location.crds.long,
+              latitude: this.props.session.currentuser.location.crds.lat
             }
           });
         }

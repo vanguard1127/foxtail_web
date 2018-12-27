@@ -403,7 +403,7 @@ const AddEventModal = Form.create()(
                         currentvalue={this.props.form.getFieldValue("desires")}
                       >
                         {desireOptions.map(option => (
-                          <Option key={option.value}>{option.label}</Option>
+                          <Option key={option.key}>{option.value}</Option>
                         ))}
                       </Select>
                     )}

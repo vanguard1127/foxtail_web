@@ -27,9 +27,7 @@ class ImageCarousel extends Component {
           <div key={i}>
             <img
               alt={i}
-              //TODO: Remove test
-              // src={s3url + photo.url}
-              src={require("../../images/girl1.jpg")}
+              src={s3url + photo.url}
               style={{ width: "23vw", height: "35vh" }}
             />
           </div>
