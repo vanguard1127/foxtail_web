@@ -6,8 +6,8 @@ import { Query } from "react-apollo";
 import { GET_MY_EVENTS } from "../../queries";
 import moment from "moment";
 import Spinner from "../common/Spinner";
-import EventCard from "./EventCard";
 
+const Panel = Collapse.Panel;
 const LIMIT = 3;
 
 class MyEvents extends Component {
@@ -86,42 +86,41 @@ class MyEvents extends Component {
       () => this.fetchData(fetchMore)
     );
   };
+
   render() {
     const { skip, current } = this.state;
     return (
-      <Query
-        query={GET_MY_EVENTS}
-        variables={{ skip }}
-        fetchPolicy="cache-and-network"
-      >
-        {({ data, loading, error, fetchMore }) => {
-          if (loading) {
-            return <Spinner message="Loading My Events..." size="small" />;
-          }
+      <Collapse bordered={false} defaultActiveKey={["1"]}>
+        <Panel header="My Events" key="1" style={{ overflow: "hidden" }}>
+          <Query
+            query={GET_MY_EVENTS}
+            variables={{ skip }}
+            fetchPolicy="cache-and-network"
+          >
+            {({ data, loading, error, fetchMore }) => {
+              if (loading) {
+                return <Spinner message="Loading My Events..." size="small" />;
+              }
 
-          if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
-            return <div>You Have No Upcoming Events</div>;
-          }
-          const myEvents = data.getMyEvents.docs;
-          return (
-            <div className="events-card-content my-events">
-              <div className="container">
-                <div className="col-md-12">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <span className="head">My Events</span>
-                    </div>
-
-                    {myEvents.map(event => (
-                      <EventCard key={event.id} event={event} />
-                    ))}
-                  </div>
+              if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
+                return <div>You Have No Upcoming Events</div>;
+              }
+              return (
+                <div>
+                  {this.events(data)}
+                  <Pagination
+                    current={current}
+                    onChange={page => this.handlePaginate(page, fetchMore)}
+                    size="small"
+                    total={data.getMyEvents.total}
+                    pageSize={LIMIT}
+                  />
                 </div>
-              </div>
-            </div>
-          );
-        }}
-      </Query>
+              );
+            }}
+          </Query>
+        </Panel>
+      </Collapse>
     );
   }
 }

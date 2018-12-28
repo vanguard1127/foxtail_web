@@ -16,9 +16,7 @@ import withLocation from "../withLocation";
 import withAuth from "../withAuth";
 import AddressSearch from "../common/AddressSearch";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import SearchEventToolbar from "./SearchEventToolbar";
-import Header from "./Header";
-import EventsList from "./EventsList";
+const Option = Select.Option;
 
 const LIMIT = 3;
 //TODO: fix moment date format issue
@@ -231,6 +229,8 @@ class SearchEvents extends Component {
     );
     return (
       <div>
+        <MyEvents />
+        {AddModalFrag}
         <Query
           query={SEARCH_EVENTS}
           variables={{ lat, long, maxDistance, all, limit: LIMIT }}
@@ -243,15 +243,69 @@ class SearchEvents extends Component {
             if (!data.searchEvents || data.searchEvents.length === 0) {
               return <div>No Events Available</div>;
             }
-
+            let LocationInput;
+            if (true) {
+              LocationInput = (
+                <AddressSearch
+                  style={{ width: 150 }}
+                  onSelect={this.handleSelect}
+                  onChange={this.handleTextChange}
+                  value={city}
+                  type={"(cities)"}
+                />
+              );
+            } else {
+              LocationInput = (
+                <Tooltip title="Black Members only">
+                  <Input
+                    style={{ width: 150 }}
+                    placeholder="My Location"
+                    disabled
+                  />
+                </Tooltip>
+              );
+            }
             return (
               <div>
-                <Header />
-                <section className="go-events">
-                  <SearchEventToolbar />
-                  <MyEvents />
-                  <EventsList events={data.searchEvents} />
-                </section>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end"
+                  }}
+                >
+                  <span style={{ marginRight: "1vw" }}>Events located</span>
+                  <Select
+                    style={{ width: 220 }}
+                    onChange={this.handleChangeSelect}
+                    value={maxDistance}
+                  >
+                    <Option value={5}>5 miles</Option>
+                    <Option value={10}>10 miles</Option>
+                    <Option value={20}>20 miles</Option>
+                    <Option value={50}>50 miles</Option>
+                    <Option value="all" disabled>
+                      <Tooltip title="Black Members only">
+                        <span>Everywhere.</span>
+                      </Tooltip>
+                    </Option>
+                  </Select>
+                  <span style={{ marginRight: "1vw", marginLeft: "1vw" }}>
+                    from
+                  </span>
+                  {LocationInput}
+                </div>
+                <BackTop />
+                <Fragment>
+                  {data.searchEvents.map(eventdate => {
+                    return this.handleEventCard(eventdate);
+                  })}
+                </Fragment>
+                <Waypoint
+                  onEnter={({ previousPosition }) =>
+                    this.handleEnd(previousPosition, fetchMore)
+                  }
+                />
               </div>
             );
           }}

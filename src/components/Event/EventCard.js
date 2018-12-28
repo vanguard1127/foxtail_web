@@ -1,70 +1,94 @@
 import React, { Component } from "react";
 import moment from "moment";
 import { Link, withRouter } from "react-router-dom";
+import EventDate from "./EventDate";
+import EventCreator from "./EventCreator";
 
 class EventCard extends Component {
   render() {
     const { event } = this.props;
-    const { id, eventname, desires, time, address, participants } = event;
+    const {
+      id,
+      eventname,
+      desires,
+      time,
+      address,
+      participants,
+      distance,
+      ownerProfile,
+      image
+    } = event;
 
     return (
-      <div>
-        <table>
-          <tbody>
-            <tr>
-              <td colSpan="3">
-                <div
-                  style={{
-                    backgroundImage:
-                      "url(" + require("../../images/party.jpg") + ")",
-                    backgroundSize: "cover",
-                    height: "25vh",
-                    width: "40vw"
-                  }}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div style={{ float: "left" }}>
-                  {moment(time).format("hh:mm a")}
-                </div>
-              </td>
-              <td>
-                <div style={{ display: "block" }}>
-                  <Link to={`/events/${id}`}>{eventname}</Link>
-                  <br />
-                  {address}
-                  <br />
-                  {"What to Expect: " + desires.map(desire => desire)}
-                  <br />
-                  {participants ? participants.length : "0"} attending
-                </div>
-              </td>
-              <td>
-                <div>
-                  <button
-                    onClick={() => this.props.history.push(`/events/${id}`)}
-                  >
-                    Open
-                  </button>
-                </div>
-                <div>
-                  <button
-                    onClick={() => this.props.showBlockModal(true, event)}
-                  >
-                    Flag
-                  </button>
-                  <button
-                    onClick={() => this.props.showShareModal(true, event)}
-                  >
-                    Share
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="col-md-12 col-lg-6" key={id}>
+        <div className="card-item">
+          <div className="thumbnail">
+            <EventDate time={time} />
+            <EventCreator ownerProfile={ownerProfile} id={id} />
+            <a
+              href={"null"}
+              onClick={() => this.props.history.push("/events/" + id)}
+            >
+              <img
+                src={
+                  image !== "" && image !== undefined && image !== null
+                    ? image
+                    : "assets/img/events/1001@2x.png"
+                }
+                alt=""
+              />
+            </a>
+          </div>
+          <div className="content">
+            <div className="event-name">
+              <a
+                href={"null"}
+                onClick={() => this.props.history.push("/events/" + id)}
+              >
+                {eventname}
+              </a>
+            </div>
+            <span className="distance">{distance} mil away</span>
+            <div className="goings">
+              <ul>
+                <li>
+                  <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+                </li>
+                <li>
+                  <img src="assets/img/usr/avatar/1002@2x.png" alt="" />
+                </li>
+                <li>
+                  <img src="assets/img/usr/avatar/1003@2x.png" alt="" />
+                </li>
+                <li>
+                  <img src="assets/img/usr/avatar/1004@2x.png" alt="" />
+                </li>
+                <li>
+                  <img src="assets/img/usr/avatar/1005@2x.png" alt="" />
+                </li>
+                <li>
+                  <img src="assets/img/usr/avatar/1006@2x.png" alt="" />
+                </li>
+              </ul>
+              <span className="stats">
+                <b>{participants.length} people</b> going
+              </span>
+            </div>
+            <div className="functions">
+              <div className="btn go-detail">
+                <a
+                  href={"null"}
+                  onClick={() => this.props.history.push("/events/" + id)}
+                >
+                  Event Detail
+                </a>
+              </div>
+              <div className="btn share">
+                <a href="#" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

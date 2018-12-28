@@ -3,18 +3,12 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
-import Select from "react-select";
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
-];
-export default class AddressSearch extends React.Component {
-  state = { address: this.props.address };
 
+export default class AddressSearch extends React.Component {
   handleChange = address => {
-    console.log("Addres", address);
-    this.setState({ address });
+    this.props.setLocationValues({
+      address
+    });
   };
 
   handleSelect = address => {
@@ -32,8 +26,7 @@ export default class AddressSearch extends React.Component {
   };
 
   render() {
-    const { address } = this.state;
-    const { type } = this.props;
+    const { type, address } = this.props;
     const onError = (status, clearSuggestions) => {
       console.log("Google Maps API returned error with status: ", status);
       clearSuggestions();
@@ -50,67 +43,37 @@ export default class AddressSearch extends React.Component {
         onError={onError}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
-          console.log(
-            suggestions.map(sug => ({
-              value: sug.description,
-              label: sug.description
-            }))
-          );
-
           return (
             <div className="dropdown">
-              {/* <select>
-              <option>United States</option>
-              <option>France</option>
-              <option>Turkey</option>
-            </select> */}
-              <Select
-                className="js-example-basic-single search"
-                name="located[]"
-                options={suggestions.map(sug => ({
-                  value: sug.description,
-                  label: sug.description
-                }))}
-              />
               <input
                 {...getInputProps({
                   placeholder: "Search Places ...",
                   className: "location-search-input"
                 })}
               />
+              <div className="autocomplete-dropdown-container">
+                {loading && <div>Loading...</div>}
+                {suggestions.map(suggestion => {
+                  const className = suggestion.active
+                    ? "suggestion-item--active"
+                    : "suggestion-item";
+                  // inline style for demonstration purpose
+                  const style = suggestion.active
+                    ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                    : { backgroundColor: "#ffffff", cursor: "pointer" };
+                  return (
+                    <div
+                      {...getSuggestionItemProps(suggestion, {
+                        className,
+                        style
+                      })}
+                    >
+                      <span>{suggestion.description}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-
-            // <div>
-            //   <input
-            //     style={{ ...style }}
-            //     {...getInputProps({
-            //       placeholder: "Search Places ...",
-            //       className: "location-search-input"
-            //     })}
-            //   />
-            //   <div className="autocomplete-dropdown-container">
-            //     {loading && <div>Loading...</div>}
-            //     {suggestions.map(suggestion => {
-            //       const className = suggestion.active
-            //         ? "suggestion-item--active"
-            //         : "suggestion-item";
-            //       // inline style for demonstration purpose
-            //       const style = suggestion.active
-            //         ? { backgroundColor: "#fafafa", cursor: "pointer" }
-            //         : { backgroundColor: "#ffffff", cursor: "pointer" };
-            //       return (
-            //         <div
-            //           {...getSuggestionItemProps(suggestion, {
-            //             className,
-            //             style
-            //           })}
-            //         >
-            //           <span>{suggestion.description}</span>
-            //         </div>
-            //       );
-            //     })}
-            //   </div>
-            // </div>
           );
         }}
       </PlacesAutocomplete>

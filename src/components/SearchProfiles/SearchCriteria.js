@@ -1,25 +1,14 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS, REMOVE_LOCLOCK } from "../../queries";
-import { sexOptions } from "../../docs/data";
 import Spinner from "../common/Spinner";
 import AddressSearch from "../common/AddressSearch";
 import SetLocationModal from "../common/SetLocationModal";
-import {
-  Form,
-  Switch,
-  Slider,
-  Button,
-  Icon,
-  Tooltip,
-  Select,
-  Collapse,
-  message
-} from "antd";
+import { message } from "antd";
+import DistanceSlider from "./DistanceSlider";
+import GenderDropdown from "./GenderDropdown";
+import AgeRange from "./AgeRange";
 
-const Panel = Collapse.Panel;
-const Option = Select.Option;
-const FormItem = Form.Item;
 const CURRENT_LOC_LABEL = "My Location";
 
 class SearchCriteria extends Component {
@@ -28,12 +17,18 @@ class SearchCriteria extends Component {
     lat: this.props.queryParams.lat,
     limit: this.props.queryParams.limit,
     locModalVisible: false,
-    location: null
+    location: null,
+    interestedIn: null,
+    distance: null,
+    distanceMetric: null,
+    ageRange: null
   };
 
   setLocModalVisible = visible => {
     this.setState({ locModalVisible: visible });
   };
+
+  //TODO: Refactor to use setValue
   setLocation = async pos => {
     var crd = pos.coords;
     var location = pos.location ? pos.location : CURRENT_LOC_LABEL;
@@ -93,17 +88,25 @@ class SearchCriteria extends Component {
       });
   };
 
-  handleChangeSelect = value => {
-    this.props.form.setFieldsValue({ interestedIn: value });
-  };
-
   setLocationValues = ({ lat, long, address }) => {
-    console.log(lat, long, address);
     this.setState({ lat, long, location: address });
   };
 
+  setValue = ({ name, value }) => {
+    console.log(name, value);
+    this.setState({ [name]: value });
+  };
+
   render() {
-    const { lat, long } = this.state;
+    let {
+      lat,
+      long,
+      location,
+      interestedIn,
+      distance,
+      distanceMetric,
+      ageRange
+    } = this.state;
     return (
       <div>
         <Query query={GET_SETTINGS} fetchPolicy="network-only">
@@ -118,20 +121,17 @@ class SearchCriteria extends Component {
               return <div>Error occured. Please contact support!</div>;
             }
 
-            let settings;
-            // if (this.props.form.getFieldsValue().distance) {
-            //   settings = this.props.form.getFieldsValue();
-            // } else {
-            settings = data.getSettings;
-            //}
-
-            const {
-              distance,
-              distanceMetric,
-              ageRange,
-              interestedIn,
-              location
-            } = settings;
+            distance = distance !== null ? distance : data.getSettings.distance;
+            distanceMetric =
+              distanceMetric !== null
+                ? distanceMetric
+                : data.getSettings.distanceMetric;
+            ageRange = ageRange !== null ? ageRange : data.getSettings.ageRange;
+            location = location !== null ? location : data.getSettings.location;
+            interestedIn =
+              interestedIn !== null
+                ? interestedIn
+                : data.getSettings.interestedIn;
 
             return (
               <Mutation mutation={REMOVE_LOCLOCK}>
@@ -157,65 +157,44 @@ class SearchCriteria extends Component {
                                 <div class="row">
                                   <div class="col-md-6">
                                     <AddressSearch
-                                      style={{ width: "100%" }}
+                                      style={{ width: 150 }}
                                       setLocationValues={this.setLocationValues}
                                       address={location}
                                       type={"(cities)"}
                                     />
-                                    {/* <select
-                                        class="js-example-basic-single search"
-                                        name="located[]"
-                                      >
-                                        <option>United States</option>
-                                        <option>France</option>
-                                        <option>Turkey</option>
-                                      </select>
-                                      <label>Location:</label>
-                                    </div> */}
                                   </div>
                                   <div class="col-md-6">
-                                    <div class="dropdown">
-                                      <select
-                                        class="js-example-basic-multiple"
-                                        name="genders[]"
-                                        multiple="multiple"
-                                      >
-                                        <option>Male</option>
-                                        <option selected>Female</option>
-                                        <option selected>Couple</option>
-                                      </select>
-                                      <label>Gender(s):</label>
-                                    </div>
+                                    <GenderDropdown
+                                      setValue={el =>
+                                        this.setValue({
+                                          name: "ageRange",
+                                          value: el
+                                        })
+                                      }
+                                      value={interestedIn}
+                                    />
                                   </div>
                                   <div class="col-md-6">
-                                    <div class="item">
-                                      <div class="range-head">Distance:</div>
-                                      <div class="range-con">
-                                        <div
-                                          id="pmd-slider-range-tooltip-distance"
-                                          class="pmd-range-tooltip"
-                                        />
-                                      </div>
-                                      <div class="limit">
-                                        <span>1 mil</span>
-                                        <span>100+ mil</span>
-                                      </div>
-                                    </div>
+                                    <DistanceSlider
+                                      value={distance}
+                                      setValue={el =>
+                                        this.setValue({
+                                          name: "distance",
+                                          value: el
+                                        })
+                                      }
+                                    />
                                   </div>
                                   <div class="col-md-6">
-                                    <div class="item">
-                                      <div class="range-head">Age:</div>
-                                      <div class="range-con">
-                                        <div
-                                          id="pmd-slider-range-tooltip-age"
-                                          class="pmd-range-tooltip"
-                                        />
-                                      </div>
-                                      <div class="limit">
-                                        <span>18 years</span>
-                                        <span>80+ years</span>
-                                      </div>
-                                    </div>
+                                    <AgeRange
+                                      value={ageRange}
+                                      setValue={el =>
+                                        this.setValue({
+                                          name: "ageRange",
+                                          value: el
+                                        })
+                                      }
+                                    />
                                   </div>
                                 </div>
                               </div>

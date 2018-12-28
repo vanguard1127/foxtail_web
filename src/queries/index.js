@@ -353,7 +353,6 @@ export const SEARCH_EVENTS = gql`
     $desires: [String]
     $limit: Int
     $skip: Int
-    $all: Boolean
   ) {
     searchEvents(
       long: $long
@@ -362,25 +361,26 @@ export const SEARCH_EVENTS = gql`
       desires: $desires
       limit: $limit
       skip: $skip
-      all: $all
     ) {
-      date
-      events {
+      id
+      eventname
+      type
+      image
+      participants {
+        profileName
+        profilePic
         id
-        eventname
-        type
-        participants {
-          profileName
-          profilePic
-          id
-        }
-        description
-        desires
-        interestedIn
-        lat
-        long
-        address
-        time
+      }
+      description
+      desires
+      interestedIn
+      address
+      time
+      distance
+      ownerProfile {
+        profilePic
+        profileName
+        id
       }
     }
   }
@@ -491,7 +491,24 @@ export const GET_MY_EVENTS = gql`
       docs {
         id
         eventname
+        type
+        image
+        participants {
+          profileName
+          profilePic
+          id
+        }
+        description
+        desires
+        interestedIn
+        address
         time
+        distance
+        ownerProfile {
+          profilePic
+          profileName
+          id
+        }
       }
       total
       offset
