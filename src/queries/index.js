@@ -282,10 +282,10 @@ export const CREATE_EVENT = gql`
       description
       desires
       interestedIn
-      lat
-      long
+      distance
       address
-      time
+      startTime
+      endTime
     }
   }
 `;
@@ -375,7 +375,7 @@ export const SEARCH_EVENTS = gql`
       desires
       interestedIn
       address
-      time
+      startTime
       distance
       ownerProfile {
         profilePic
@@ -438,6 +438,7 @@ export const GET_EVENT = gql`
       id
       eventname
       type
+      image
       participants {
         profileName
         profilePic
@@ -446,20 +447,21 @@ export const GET_EVENT = gql`
       description
       desires
       interestedIn
-      lat
       photo
       ownerProfile {
         profilePic
         profileName
         id
       }
-      long
       address
-      time
+      startTime
+      endTime
+      distance
       chatID
       invited {
         id
       }
+      createdAt
     }
   }
 `;
@@ -502,7 +504,8 @@ export const GET_MY_EVENTS = gql`
         desires
         interestedIn
         address
-        time
+        startTime
+        endTime
         distance
         ownerProfile {
           profilePic

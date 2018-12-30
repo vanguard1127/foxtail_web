@@ -16,7 +16,7 @@ class MembersDropdown extends Component {
     this.setState({ visible: flag });
   };
   render() {
-    const { targetType, targetID, listType } = this.props;
+    const { targetType, targetID, listType, clickComponent } = this.props;
     if (listType === "friends") {
       return (
         <Query query={GET_FRIENDS} variables={{ limit: LIMIT }}>
@@ -50,13 +50,7 @@ class MembersDropdown extends Component {
                 visible={this.state.visible}
               >
                 <a className="ant-dropdown-link" href="#">
-                  <Badge>
-                    {" "}
-                    <Icon
-                      type={"usergroup-add"}
-                      style={{ fontSize: "24px", color: "#934" }}
-                    />
-                  </Badge>
+                  {clickComponent}
                 </a>
               </Dropdown>
             );
@@ -95,13 +89,7 @@ class MembersDropdown extends Component {
                 visible={this.state.visible}
               >
                 <a className="ant-dropdown-link" href="#">
-                  <Badge>
-                    {" "}
-                    <Icon
-                      type={"usergroup-delete"}
-                      style={{ fontSize: "24px", color: "#934" }}
-                    />
-                  </Badge>
+                  {clickComponent}
                 </a>
               </Dropdown>
             );
@@ -140,13 +128,7 @@ class MembersDropdown extends Component {
                 visible={this.state.visible}
               >
                 <a className="ant-dropdown-link" href="#">
-                  <Badge>
-                    {" "}
-                    <Icon
-                      type={"usergroup-delete"}
-                      style={{ fontSize: "24px", color: "#934" }}
-                    />
-                  </Badge>
+                  {clickComponent}
                 </a>
               </Dropdown>
             );

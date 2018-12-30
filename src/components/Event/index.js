@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
-import { Dropdown, Menu, Icon } from "antd";
-import AttendEvent from "./AttendEvent";
 import BlockModal from "../common/BlockModal";
-import MembersDropdown from "../common/MembersDropdown";
 import moment from "moment";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
-
-import AddEventModal from "./AddEventModal";
+import Header from "./Header";
+import EventAbout from "./EventAbout";
+import EventInfoMobile from "./EventInfoMobile";
+import EventDiscussion from "./EventDiscussion";
+import EventInfo from "./EventInfo";
 
 class EventPage extends Component {
   state = { visible: false, blockModalVisible: false };
@@ -125,108 +125,41 @@ class EventPage extends Component {
 
           const { event } = data;
 
+          const { description, participants } = event;
           const queryParams = JSON.parse(
             sessionStorage.getItem("searchEventQuery")
           );
-          console.log(event);
-          return (
-            <div className="App">
-              <AddEventModal
-                wrappedComponentRef={this.saveFormRef}
-                visible={visible}
-                onCancel={this.handleCancel}
-                event={event}
-                handleSubmit={this.handleSubmit}
-                handleUpdate={this.updateEvent}
-              />
-              <Mutation
-                mutation={DELETE_EVENT}
-                variables={{ eventID: id }}
-                refetchQueries={() => [
-                  {
-                    query: SEARCH_EVENTS,
-                    variables: { ...queryParams }
-                  }
-                ]}
-              >
-                {(deleteEvent, { loading }) => {
-                  const menu = (
-                    <Menu>
-                      <Menu.Item key="0" onClick={() => this.handleEdit(event)}>
-                        Edit
-                      </Menu.Item>
-                      <Menu.Item
-                        key="1"
-                        onClick={() => this.handleDelete(deleteEvent)}
-                      >
-                        Delete
-                      </Menu.Item>
-                    </Menu>
-                  );
-                  return (
-                    <Dropdown overlay={menu} trigger={["click"]}>
-                      <a
-                        className="ant-dropdown-link"
-                        href={null}
-                        style={{ float: "right" }}
-                      >
-                        {loading ? (
-                          "deleting..."
-                        ) : (
-                          <Icon
-                            type="edit"
-                            style={{
-                              fontSize: "24px",
-                              color: "#e657"
-                            }}
-                          />
-                        )}
-                      </a>
-                    </Dropdown>
-                  );
-                }}
-              </Mutation>
-              <Icon
-                type="flag"
-                style={{
-                  fontSize: "20px",
-                  color: "#E84D3B",
-                  float: "right",
-                  cursor: "pointer"
-                }}
-                onClick={() => this.setBlockModalVisible(true)}
-                key="flag"
-              />
-              <h2>{event.eventname}</h2>
-              <p>{event.time}</p>
-              <p>{event.description}</p>
-              <p>{event.address}</p>
-              <p>{event.desires}</p>
-              <MembersDropdown
-                targetID={event.id}
-                targetType={"event"}
-                listType={"friends"}
-              />
-              {event.ownerProfile.id === session.currentuser.profileID && (
-                <MembersDropdown
-                  targetID={event.id}
-                  targetType={"event"}
-                  listType={"participants"}
-                />
-              )}
 
-              <p>
-                Going:
-                {event.participants.length}
-              </p>
-              <AttendEvent id={event.id} participants={event.participants} />
+          return (
+            <section className="event-detail">
+              <div className="container">
+                <div className="col-md-12">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <Header event={event} />
+                    </div>
+                    <div className="col-lg-9 col-md-12">
+                      <EventAbout
+                        id={id}
+                        participants={participants}
+                        description={description}
+                      />
+                      <EventInfoMobile event={event} />
+                      <EventDiscussion id={id} />
+                    </div>
+                    <div className="col-lg-3 col-md-12">
+                      <EventInfo event={event} />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <BlockModal
                 event={event}
-                id={event.id}
+                id={id}
                 visible={blockModalVisible}
                 close={() => this.setBlockModalVisible(false)}
               />
-            </div>
+            </section>
           );
         }}
       </Query>

@@ -1,23 +1,33 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
-const EventCreator = ({ ownerProfile, id }) => {
+import moment from "moment";
+const EventCreator = ({ ownerProfile, createdAt }) => {
   return (
     <div className="created">
-      <a href={"null"} onClick={() => this.props.history.push("/events/" + id)}>
-        <span className="avatar">
+      <span className="avatar">
+        <a href="#">
           <img
             src={
               ownerProfile.profilePic !== ""
                 ? ownerProfile.profilePic
-                : "assets/img/usr/avatar/1002@2x.png"
+                : "/assets/img/usr/avatar/1003@2x.png"
             }
             alt=""
           />
+        </a>
+      </span>
+      <div className="detail">
+        <span className="name">
+          <a href="#">{ownerProfile.profileName}</a>
         </span>
-        <span className="name">{ownerProfile.profileName}</span>
-      </a>
+        <span className="created-date">
+          Created on{" "}
+          {moment(createdAt)
+            .format("MMM Do")
+            .toString()}
+        </span>
+      </div>
     </div>
   );
 };
 
-export default withRouter(EventCreator);
+export default EventCreator;

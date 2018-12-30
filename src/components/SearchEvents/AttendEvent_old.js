@@ -67,8 +67,8 @@ class AttendEvent extends Component {
               ? [
                   {
                     id: toggleAttendEvent,
-                    profileName: "",
-                    profilePic: "",
+                    profileName: "x",
+                    profilePic: "x",
                     __typename: "ProfileType"
                   },
                   ...event.participants
@@ -91,17 +91,12 @@ class AttendEvent extends Component {
         variables={{ eventID: id }}
         update={this.updateAttend}
       >
-        {toggleAttendEvent => {
+        {(toggleAttendEvent, { loading }) => {
           return (
             username && (
-              <div class="join-event">
-                <a
-                  href={null}
-                  onClick={() => this.handleClick(toggleAttendEvent)}
-                >
-                  {isGoing ? "Not Going" : "Going"}
-                </a>
-              </div>
+              <button onClick={() => this.handleClick(toggleAttendEvent)}>
+                {isGoing ? "Not Going" : "Going"}
+              </button>
             )
           );
         }}

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-
+import PhotoUpload from "../../common/PhotoUpload";
 export default class CreateEvent extends Component {
   render() {
+    const { closePopup } = this.props;
     return (
-      <section className="popup-content">
+      <section className="popup-content show">
         <div className="container">
           <div className="col-md-12">
             <div className="row">
@@ -15,7 +16,7 @@ export default class CreateEvent extends Component {
                       It is a long established fact that a reader will be
                       distracted by the readable
                     </span>
-                    <a className="close" />
+                    <a className="close" onClick={() => closePopup()} />
                   </div>
                   <div className="m-body">
                     <div className="page">
@@ -39,11 +40,12 @@ export default class CreateEvent extends Component {
                             </div>
                           </div>
                           <div className="item nobottom">
-                            <input
+                            <PhotoUpload />
+                            {/* <input
                               type="file"
                               className="filepond eventPhoto"
                               name="filepond"
-                            />
+                            /> */}
                           </div>
                           <div className="item">
                             <div className="dropdown">

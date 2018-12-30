@@ -1,19 +1,21 @@
 import React from "react";
-const EventHeader = () => {
+import EventHeading from "./EventHeading";
+import EventDate from "../common/EventDate";
+import EventCreator from "./EventCreator";
+import EventShare from "./EventShare";
+
+const EventHeader = ({
+  event: { id, startTime, eventname, ownerProfile, createdAt }
+}) => {
   return (
-    <section className="breadcrumb">
-      <div className="container">
-        <div className="col-md-12">
-          <span className="head">
-            <a href="#">Go to Events</a>
-          </span>
-          <span className="title">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout.{" "}
-          </span>
-        </div>
+    <div className="header">
+      <EventDate time={startTime} />
+      <div className="info">
+        <EventHeading eventname={eventname} />
+        <EventCreator ownerProfile={ownerProfile} createdAt={createdAt} />
+        <EventShare id={id} />
       </div>
-    </section>
+    </div>
   );
 };
 

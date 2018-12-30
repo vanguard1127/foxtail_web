@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import { Link, withRouter } from "react-router-dom";
-import EventDate from "./EventDate";
+import EventDate from "../common/EventDate";
 import EventCreator from "./EventCreator";
 
 class EventCard extends Component {
@@ -26,7 +26,7 @@ class EventCard extends Component {
             <EventDate time={time} />
             <EventCreator ownerProfile={ownerProfile} id={id} />
             <a
-              href={"null"}
+              href={null}
               onClick={() => this.props.history.push("/events/" + id)}
             >
               <img
@@ -42,7 +42,7 @@ class EventCard extends Component {
           <div className="content">
             <div className="event-name">
               <a
-                href={"null"}
+                href={null}
                 onClick={() => this.props.history.push("/events/" + id)}
               >
                 {eventname}
@@ -77,7 +77,7 @@ class EventCard extends Component {
             <div className="functions">
               <div className="btn go-detail">
                 <a
-                  href={"null"}
+                  href={null}
                   onClick={() => this.props.history.push("/events/" + id)}
                 >
                   Event Detail
