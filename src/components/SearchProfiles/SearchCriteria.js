@@ -6,7 +6,7 @@ import AddressSearch from "../common/AddressSearch";
 import SetLocationModal from "../common/SetLocationModal";
 import { message } from "antd";
 import DistanceSlider from "./DistanceSlider";
-import GenderDropdown from "./GenderDropdown";
+import InterestedInDropdown from "../common/InterestedInDropdown";
 import AgeRange from "./AgeRange";
 
 const CURRENT_LOC_LABEL = "My Location";
@@ -93,7 +93,6 @@ class SearchCriteria extends Component {
   };
 
   setValue = ({ name, value }) => {
-    console.log(name, value);
     this.setState({ [name]: value });
   };
 
@@ -164,14 +163,15 @@ class SearchCriteria extends Component {
                                     />
                                   </div>
                                   <div class="col-md-6">
-                                    <GenderDropdown
+                                    <InterestedInDropdown
                                       setValue={el =>
                                         this.setValue({
-                                          name: "ageRange",
+                                          name: "interestedIn",
                                           value: el
                                         })
                                       }
                                       value={interestedIn}
+                                      placeholder={"Gender(s):"}
                                     />
                                   </div>
                                   <div class="col-md-6">

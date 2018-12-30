@@ -9,7 +9,7 @@ import CoupleModal from "../common/CoupleModal";
 import BlackMemberModal from "../common/BlackMemberModal";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import BlackStatus from "../common/BlackStatus";
-import LangDropdown from "../common/LangDropdown";
+import LangDropdown from "../common/LanguageControl/LangDropdown";
 
 import {
   Form,

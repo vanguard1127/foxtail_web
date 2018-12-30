@@ -222,8 +222,14 @@ const Root = () => (
 
 const Wrapper = withRouter(props => {
   let location = props.location;
+  let isLanding = location.pathname && location.pathname === "/";
+  console.log("islanding", location.pathname);
+  if (isLanding) {
+    return <App />;
+  }
   let showFooter =
     location.pathname && location.pathname.match(/^\/inbox/) === null;
+
   return (
     <div>
       <Body showFooter={showFooter} />
@@ -241,7 +247,6 @@ const Body = ({ showFooter }) => (
     <main>
       <Switch>
         <Route path="/members" component={ProfileSearch} exact />
-        <Route path="/" component={App} exact />
         <Route path="/signup" component={Signup} />
         <Route path="/events" component={SearchEvents} exact />
         <Route path="/editprofile/:couple" component={EditProfile} />

@@ -18,9 +18,10 @@ export const sexOptions = [
 ];
 
 export const genderOptions = [
-  { key: "F", value: "Female" },
-  { key: "M", value: "Male" },
-  { key: "T", value: "Transgender" }
+  { value: "F", label: "Female" },
+  { value: "M", label: "Male" },
+  { value: "T", label: "Transgender" },
+  { value: "N", label: "NonBinary" }
 ];
 
 export const s3url = "https://prod-ft-img-bucket.s3.amazonaws.com/";

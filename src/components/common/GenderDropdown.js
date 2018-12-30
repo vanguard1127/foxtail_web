@@ -1,19 +1,22 @@
 import React from "react";
-import { sexOptions } from "../../docs/data";
+import { genderOptions } from "../../docs/data";
 import Select from "react-select";
 
-const GenderDropdown = ({ setValue, value }) => {
+const GenderDropdown = ({ setValue, value, placeholder }) => {
   return (
     <div class="dropdown">
       <Select
-        defaultValue={value.map(val => sexOptions.find(el => el.value === val))}
+        defaultValue={value.map(val =>
+          genderOptions.find(el => el.value === val)
+        )}
         closeMenuOnSelect={false}
         onChange={el => setValue(el.map(e => e.value))}
-        options={sexOptions}
+        options={genderOptions}
         isMulti
         className="js-example-basic-multiple"
+        placeholder=""
       />
-      <label>Gender(s):</label>
+      <label>{placeholder}</label>
     </div>
   );
 };

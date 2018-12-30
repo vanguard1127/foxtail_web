@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Select } from "antd";
-import i18n from "../../i18n";
+import i18n from "../../../i18n";
 
 const Option = Select.Option;
 class LangDropdown extends Component {
