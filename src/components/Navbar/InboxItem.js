@@ -1,13 +1,14 @@
 import React from "react";
-import { Icon, Badge } from "antd";
+import { NavLink } from "react-router-dom";
 
 const InboxItem = () => {
   return (
-    <div>
-      <Badge count={5}>
-        <Icon type="mail" />
-      </Badge>
-      Inbox
+    <div className="inbox hidden-mobile">
+      <NavLink to="/inbox">
+        <span className="icon mail">
+          <span className="count">2</span>
+        </span>
+      </NavLink>
     </div>
   );
 };

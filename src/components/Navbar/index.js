@@ -129,29 +129,14 @@ class NavbarAuth extends Component {
             </div>
             <div className="col-md-5 flexible">
               <div className="function">
-                <div className="inbox hidden-mobile">
-                  <NavLink to="/inbox">
-                    <span className="icon mail">
-                      <span className="count">2</span>
-                    </span>
-                  </NavLink>
-                </div>
+                <InboxItem />
                 <div className="notification active">
                   <span className="icon alert">
                     <span className="count">2</span>
                   </span>
                 </div>
                 <div className="user hidden-mobile">
-                  <span className="avatar">
-                    <img
-                      src={
-                        process.env.PUBLIC_URL +
-                        "/assets/img/usr/avatar/1001@2x.png"
-                      }
-                      alt=""
-                    />
-                  </span>
-                  <span className="username">John Doe</span>
+                  <MyAccountItem />
                 </div>
               </div>
               <div className="toggle">

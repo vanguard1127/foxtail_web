@@ -1,13 +1,19 @@
 import React from "react";
-import { Icon, Avatar } from "antd";
+import { NavLink } from "react-router-dom";
 
 const MyAccountItem = () => {
   return (
-    <div>
-      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-      Uncle Phil
-      <Icon type="down" />
-    </div>
+    <span>
+      <span className="avatar">
+        <img
+          src={process.env.PUBLIC_URL + "/assets/img/usr/avatar/1001@2x.png"}
+          alt=""
+        />
+      </span>
+      <span className="username">
+        <NavLink to="/settings">John Doe</NavLink>
+      </span>
+    </span>
   );
 };
 

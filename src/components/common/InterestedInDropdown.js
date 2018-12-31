@@ -4,7 +4,7 @@ import Select from "react-select";
 
 const InterestedInDropdown = ({ setValue, value, placeholder }) => {
   return (
-    <div class="dropdown">
+    <div className="dropdown">
       <Select
         defaultValue={value.map(val => sexOptions.find(el => el.value === val))}
         closeMenuOnSelect={false}

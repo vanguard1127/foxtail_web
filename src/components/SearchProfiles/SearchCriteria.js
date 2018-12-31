@@ -5,9 +5,9 @@ import Spinner from "../common/Spinner";
 import AddressSearch from "../common/AddressSearch";
 import SetLocationModal from "../common/SetLocationModal";
 import { message } from "antd";
-import DistanceSlider from "./DistanceSlider";
+import DistanceSlider from "../common/DistanceSlider";
 import InterestedInDropdown from "../common/InterestedInDropdown";
-import AgeRange from "./AgeRange";
+import AgeRange from "../common/AgeRange";
 
 const CURRENT_LOC_LABEL = "My Location";
 
@@ -150,31 +150,37 @@ class SearchCriteria extends Component {
                     >
                       {(updateSettings, { loading }) => {
                         return (
-                          <section class="meet-filter">
-                            <div class="container">
-                              <div class="col-md-12">
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <AddressSearch
-                                      style={{ width: 150 }}
-                                      setLocationValues={this.setLocationValues}
-                                      address={location}
-                                      type={"(cities)"}
-                                    />
+                          <section className="meet-filter">
+                            <div className="container">
+                              <div className="col-md-12">
+                                <div className="row">
+                                  <div className="col-md-6">
+                                    <div className="item">
+                                      <AddressSearch
+                                        style={{ width: 150 }}
+                                        setLocationValues={
+                                          this.setLocationValues
+                                        }
+                                        address={location}
+                                        type={"(cities)"}
+                                      />
+                                    </div>
                                   </div>
-                                  <div class="col-md-6">
-                                    <InterestedInDropdown
-                                      setValue={el =>
-                                        this.setValue({
-                                          name: "interestedIn",
-                                          value: el
-                                        })
-                                      }
-                                      value={interestedIn}
-                                      placeholder={"Gender(s):"}
-                                    />
+                                  <div className="col-md-6">
+                                    <div className="item">
+                                      <InterestedInDropdown
+                                        setValue={el =>
+                                          this.setValue({
+                                            name: "interestedIn",
+                                            value: el
+                                          })
+                                        }
+                                        value={interestedIn}
+                                        placeholder={"Gender(s):"}
+                                      />
+                                    </div>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div className="col-md-6">
                                     <DistanceSlider
                                       value={distance}
                                       setValue={el =>
@@ -185,7 +191,7 @@ class SearchCriteria extends Component {
                                       }
                                     />
                                   </div>
-                                  <div class="col-md-6">
+                                  <div className="col-md-6">
                                     <AgeRange
                                       value={ageRange}
                                       setValue={el =>

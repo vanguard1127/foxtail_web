@@ -10,7 +10,7 @@ import {
 import App from "./components/App";
 import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/ProfileSearch";
-import Settings from "./components/Account/Settings";
+import Settings from "./components/Settings/Settings";
 import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/ProfilePage";
 import InboxPage from "./components/Inbox/";
@@ -35,7 +35,8 @@ import { notification } from "antd";
 
 const { Header, Content } = Layout;
 
-let server = "localhost:4444";
+//let server = "localhost:4444";
+let server = "production-151896178.us-west-2.elb.amazonaws.com";
 // console.log(process.env.REACT_APP_LOCAL_SERVER);
 // if (process.env.REACT_APP_LOCAL_SERVER === "true") {
 //   server = ;
@@ -223,7 +224,6 @@ const Root = () => (
 const Wrapper = withRouter(props => {
   let location = props.location;
   let isLanding = location.pathname && location.pathname === "/";
-  console.log("islanding", location.pathname);
   if (isLanding) {
     return <App />;
   }
