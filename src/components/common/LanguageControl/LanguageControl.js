@@ -9,7 +9,7 @@ class LanguageControl extends Component {
 
   state = {
     menuOpen: false,
-    selectedLang: "en",
+    selectedLang: localStorage.getItem("i18nextLng"),
     languages: ["en", "de"]
   };
 
@@ -46,7 +46,6 @@ class LanguageControl extends Component {
         >
           <i
             className={`flag ${this.state.selectedLang}`}
-            onClick={() => this.setLang("en")}
           />
         </div>
         <div
