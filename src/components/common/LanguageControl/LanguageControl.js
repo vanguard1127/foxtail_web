@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import i18n from "../../../i18n";
-import Menu, { SubMenu, MenuItem } from "rc-menu";
 
 class LanguageControl extends Component {
   constructor(props) {
@@ -54,16 +53,18 @@ class LanguageControl extends Component {
           className={`language-dropdown ${this.state.menuOpen ? "click" : ""}`}
         >
           <ul>
-            {this.state.languages.filter(x => this.state.selectedLang !== x).map(lang => (
-              <li key={lang}>
-                <a href="#">
-                  <i
-                    className={`flag ${lang}`}
-                    onClick={() => this.setLang(lang)}
-                  />
-                </a>
-              </li>
-            ))}
+            {this.state.languages
+              .filter(x => this.state.selectedLang !== x)
+              .map(lang => (
+                <li key={lang}>
+                  <a href="#">
+                    <i
+                      className={`flag ${lang}`}
+                      onClick={() => this.setLang(lang)}
+                    />
+                  </a>
+                </li>
+              ))}
           </ul>
         </div>
       </div>
