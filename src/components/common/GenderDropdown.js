@@ -4,7 +4,7 @@ import Select from "react-select";
 
 const GenderDropdown = ({ setValue, value, placeholder }) => {
   return (
-    <div class="dropdown">
+    <div className="dropdown">
       <Select
         defaultValue={value.map(val =>
           genderOptions.find(el => el.value === val)
