@@ -82,9 +82,9 @@ const App = () => {
                   <div className="left">
                     <div className="welcome-text">
                       <h1>
-                        {/* #1 FREE dating community for alternative relationships */}
+                        #1 FREE dating community for alternative relationships
                       </h1>
-                      {/* <span className="title">Feed Your Sexuality</span> */}
+                      <span className="title">Feed Your Sexuality</span>
                     </div>
                     <div className="stats">
                       <div className="head">

@@ -12,6 +12,7 @@ import { Formik, Field, Form } from "formik";
 // import LipsSvg from "../../images/lips.svg"; // path to your '*.svg' file.
 import InterestedInDropdown from "../common/InterestedInDropdown";
 import GenderDropdown from "../common/GenderDropdown";
+import BirthDatePicker from "./BirthDatePicker";
 
 const initialState = {
   username: "",
@@ -288,7 +289,7 @@ class Signup extends React.Component {
                               />
                             </div>
                             <div className="input birthday">
-                              <input id="datepicker" placeholder="Birthday" />
+                              <BirthDatePicker />
                             </div>
 
                             <GenderDropdown
