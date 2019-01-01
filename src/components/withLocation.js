@@ -83,6 +83,14 @@ const withLocation = PassedComponent =>
     }
 
     checkLocation() {
+      //TODO:Delete this:
+      return this.setLocation({
+        coords: {
+          longitude: 45,
+          latitude: 45
+        }
+      });
+
       try {
         if (
           this.props.session &&

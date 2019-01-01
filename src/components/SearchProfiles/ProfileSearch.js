@@ -155,14 +155,16 @@ class ProfileSearch extends Component {
             if (loading) {
               return <Spinner message="Loading Members..." size="large" />;
             } else if (
-              data &&
-              data.searchProfiles.profiles.length === 0 &&
-              data.searchProfiles.featuredProfiles.length === 0
+              (data &&
+                data.searchProfiles.profiles.length === 0 &&
+                data.searchProfiles.featuredProfiles.length === 0) ||
+              !data
             ) {
               return <div>{searchPanel} No members near you</div>;
             }
             if (error) {
-              if (error.message.indexOf("invisible")) {
+              console.log(error.message);
+              if (error.message.indexOf("invisible") > -1) {
                 return (
                   <div>
                     You cannot see user profiles while invisible unless you're a

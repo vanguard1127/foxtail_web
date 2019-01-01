@@ -216,7 +216,7 @@ class SearchEvents extends Component {
             if (loading) {
               return <Spinner message="Loading Events..." size="large" />;
             }
-            if (!data.searchEvents || data.searchEvents.length === 0) {
+            if (!data || !data.searchEvents || data.searchEvents.length === 0) {
               return <div>No Events Available</div>;
             }
 

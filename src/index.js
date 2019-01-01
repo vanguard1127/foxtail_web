@@ -33,10 +33,8 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 import { notification } from "antd";
 
-const { Header, Content } = Layout;
-
-//let server = "localhost:4444";
-let server = "production-151896178.us-west-2.elb.amazonaws.com";
+let server = "localhost:4444";
+//let server = "production-151896178.us-west-2.elb.amazonaws.com";
 // console.log(process.env.REACT_APP_LOCAL_SERVER);
 // if (process.env.REACT_APP_LOCAL_SERVER === "true") {
 //   server = ;

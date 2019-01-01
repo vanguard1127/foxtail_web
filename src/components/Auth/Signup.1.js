@@ -5,17 +5,17 @@ import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
 import { withNamespaces } from "react-i18next";
-import {
-  Button,
-  DatePicker,
-  Input,
-  Checkbox,
-  Icon,
-  Form,
-  Select,
-  Radio,
-  message
-} from "antd";
+// import {
+//   Button,
+//   DatePicker,
+//   Input,
+//   Checkbox,
+//   Icon,
+//   Form,
+//   Select,
+//   Radio,
+//   message
+// } from "antd";
 import { sexOptions } from "../../docs/data";
 
 // import Moustache from "../../images/moustache.svg"; // path to your '*.svg' file.

@@ -1,7 +1,6 @@
 import React from "react";
 import { ApolloConsumer } from "react-apollo";
 import { withRouter } from "react-router-dom";
-import { Button } from "antd";
 
 const handleSignout = (client, history) => {
   localStorage.removeItem("token");
@@ -14,9 +13,7 @@ const handleSignout = (client, history) => {
 const Signout = ({ history }) => (
   <ApolloConsumer>
     {client => {
-      return (
-        <Button onClick={() => handleSignout(client, history)}>Signout</Button>
-      );
+      return <div onClick={() => handleSignout(client, history)}>Signout</div>;
     }}
   </ApolloConsumer>
 );

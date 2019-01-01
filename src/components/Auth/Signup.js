@@ -5,27 +5,13 @@ import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE, LOGIN } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
 import { withNamespaces } from "react-i18next";
-import {
-  Button,
-  DatePicker,
-  Input,
-  Checkbox,
-  Icon,
-  Form,
-  Select,
-  Radio,
-  message
-} from "antd";
+// import { Form, Select, Radio, message } from "antd";
+import Message from "rc-message";
+import { Formik, Field, Form } from "formik";
 // import Moustache from "../../images/moustache.svg"; // path to your '*.svg' file.
 // import LipsSvg from "../../images/lips.svg"; // path to your '*.svg' file.
 import InterestedInDropdown from "../common/InterestedInDropdown";
 import GenderDropdown from "../common/GenderDropdown";
-
-const RadioGroup = Radio.Group;
-const RadioButton = Radio.Button;
-const Option = Select.Option;
-
-const FormItem = Form.Item;
 
 const initialState = {
   username: "",
@@ -40,7 +26,7 @@ const initialState = {
   lang: "en"
 };
 
-class SignupForm extends React.Component {
+class Signup extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
@@ -84,14 +70,14 @@ class SignupForm extends React.Component {
             .then(({ data }) => {
               const { isCouple } = this.state;
               if (data.fbResolve === null) {
-                message.warn("Phone verification failed.");
+                Message.warn("Phone verification failed.");
                 return;
               }
               this.setState({ phone: data.fbResolve });
               createUser()
                 .then(async ({ data }) => {
                   if (data.createUser === null) {
-                    message.warn("Signup failed.");
+                    Message.warn("Signup failed.");
                     return;
                   }
                   localStorage.setItem(
@@ -164,7 +150,7 @@ class SignupForm extends React.Component {
     createUser()
       .then(async ({ data }) => {
         if (data.createUser === null) {
-          message.warn("Signup failed.");
+          Message.warn("Signup failed.");
           return;
         }
         localStorage.setItem(
@@ -207,7 +193,7 @@ class SignupForm extends React.Component {
     login()
       .then(async ({ data }) => {
         if (data.login === null) {
-          message.warn("User doesn't exist.");
+          Message.warn("User doesn't exist.");
           return;
         }
 
@@ -234,12 +220,7 @@ class SignupForm extends React.Component {
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const { t } = this.props;
-    const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 15 }
-    };
 
     const {
       csrf,
@@ -278,125 +259,148 @@ class SignupForm extends React.Component {
                     <div className="head">
                       Become a <b>Foxtail</b> Member
                     </div>
-                    <form>
-                      <div className="form-content">
-                        <div className="input username">
-                          <input type="text" placeholder="Username" />
-                        </div>
-                        <div className="input email">
-                          <input type="text" placeholder="E-mail address" />
-                        </div>
-                        <div className="input birthday">
-                          <input id="datepicker" placeholder="Birthday" />
-                        </div>
+                    <Formik
+                      initialValues={{
+                        firstName: "",
+                        lastName: "",
+                        email: ""
+                      }}
+                      onSubmit={values => {
+                        setTimeout(() => {
+                          alert(JSON.stringify(values, null, 2));
+                        }, 500);
+                      }}
+                      render={() => (
+                        <Form>
+                          <div className="form-content">
+                            <div className="input username">
+                              <Field
+                                name="username"
+                                placeholder="Username"
+                                type="text"
+                              />
+                            </div>
+                            <div className="input email">
+                              <Field
+                                name="email"
+                                placeholder="E-mail address"
+                                type="email"
+                              />
+                            </div>
+                            <div className="input birthday">
+                              <input id="datepicker" placeholder="Birthday" />
+                            </div>
 
-                        <GenderDropdown
-                          setValue={el =>
-                            this.setValue({
-                              name: "interestedIn",
-                              value: el
-                            })
-                          }
-                          value={interestedIn}
-                          placeholder={"Gender:"}
-                        />
+                            <GenderDropdown
+                              setValue={el =>
+                                this.setValue({
+                                  name: "interestedIn",
+                                  value: el
+                                })
+                              }
+                              value={interestedIn}
+                              placeholder={"Gender:"}
+                            />
 
-                        <InterestedInDropdown
-                          setValue={el =>
-                            this.setValue({
-                              name: "interestedIn",
-                              value: el
-                            })
-                          }
-                          value={interestedIn}
-                          placeholder={"Interested In:"}
-                        />
-                        <div className="couple-choose">
-                          <div className="select-checkbox">
-                            <input type="checkbox" id="cbox" />
-                            <label for="cbox">
-                              <span />
-                              <b>Are you couple?</b>
-                            </label>
+                            <InterestedInDropdown
+                              setValue={el =>
+                                this.setValue({
+                                  name: "interestedIn",
+                                  value: el
+                                })
+                              }
+                              value={interestedIn}
+                              placeholder={"Interested In:"}
+                            />
+                            <div className="couple-choose">
+                              <div className="select-checkbox">
+                                <input type="checkbox" id="cbox" />
+                                <label for="cbox">
+                                  <span />
+                                  <b>Are you couple?</b>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="submit">
+                              <a className="btn" href="#">
+                                Get Started
+                              </a>
+                            </div>
+
+                            <div className="terms">
+                              By clicking “Get Started“ you agree with our
+                              <a href="#">Terms & Privacy</a> <br />
+                              <a
+                                href={null}
+                                onClick={() => this.testCreateUser(createUser)}
+                              >
+                                Test Create
+                              </a>
+                              <br />
+                              <br />
+                              Test Users:
+                              <Mutation mutation={LOGIN} variables={{ phone }}>
+                                {(login, { loading, error }) => {
+                                  return (
+                                    <div>
+                                      <a
+                                        href={null}
+                                        onClick={() => {
+                                          this.setState({ phone: "1" }, () => {
+                                            this.handleLogin(login);
+                                          });
+                                        }}
+                                      >
+                                        1
+                                      </a>{" "}
+                                      <a
+                                        href={null}
+                                        onClick={() => {
+                                          this.setState({ phone: "2" }, () => {
+                                            this.handleLogin(login);
+                                          });
+                                        }}
+                                      >
+                                        2
+                                      </a>{" "}
+                                      <a
+                                        href={null}
+                                        onClick={() => {
+                                          this.setState({ phone: "3" }, () => {
+                                            this.handleLogin(login);
+                                          });
+                                        }}
+                                      >
+                                        3
+                                      </a>{" "}
+                                      <a
+                                        href={null}
+                                        onClick={() => {
+                                          this.setState({ phone: "4" });
+                                          this.handleLogin(login);
+                                        }}
+                                      >
+                                        4
+                                      </a>
+                                      <a
+                                        href={null}
+                                        onClick={() => {
+                                          this.setState({ phone: "5" }, () => {
+                                            this.handleLogin(login);
+                                          });
+                                        }}
+                                      >
+                                        5
+                                      </a>
+                                    </div>
+                                  );
+                                }}
+                              </Mutation>
+                            </div>
                           </div>
-                        </div>
-                        <div className="submit">
-                          <a className="btn" href="#">
-                            Get Started
-                          </a>
-                        </div>
-                        <div className="terms">
-                          By clicking “Get Started“ you agree with our
-                          <a href="#">Terms & Privacy</a> <br />
-                          <a
-                            href={null}
-                            onClick={() => this.testCreateUser(createUser)}
-                          >
-                            Test Create
-                          </a>
-                          <br />
-                          <br />
-                          Test Users:
-                          <Mutation mutation={LOGIN} variables={{ phone }}>
-                            {(login, { loading, error }) => {
-                              return (
-                                <div>
-                                  <a
-                                    href={null}
-                                    onClick={() => {
-                                      this.setState({ phone: "1" }, () => {
-                                        this.handleLogin(login);
-                                      });
-                                    }}
-                                  >
-                                    1
-                                  </a>{" "}
-                                  <a
-                                    href={null}
-                                    onClick={() => {
-                                      this.setState({ phone: "2" }, () => {
-                                        this.handleLogin(login);
-                                      });
-                                    }}
-                                  >
-                                    2
-                                  </a>{" "}
-                                  <a
-                                    href={null}
-                                    onClick={() => {
-                                      this.setState({ phone: "3" }, () => {
-                                        this.handleLogin(login);
-                                      });
-                                    }}
-                                  >
-                                    3
-                                  </a>{" "}
-                                  <a
-                                    href={null}
-                                    onClick={() => {
-                                      this.setState({ phone: "4" });
-                                      this.handleLogin(login);
-                                    }}
-                                  >
-                                    4
-                                  </a>
-                                  <a
-                                    href={null}
-                                    onClick={() => {
-                                      this.setState({ phone: "5" }, () => {
-                                        this.handleLogin(login);
-                                      });
-                                    }}
-                                  >
-                                    5
-                                  </a>
-                                </div>
-                              );
-                            }}
-                          </Mutation>
-                        </div>
-                      </div>
-                    </form>
+                        </Form>
+                      )}
+                    />
                   </div>
                 );
               }}
@@ -407,5 +411,5 @@ class SignupForm extends React.Component {
     );
   }
 }
-const Signup = Form.create()(SignupForm);
+
 export default withNamespaces()(withRouter(Signup));

@@ -129,6 +129,8 @@ class NavbarAuth extends Component {
             </div>
             <div className="col-md-5 flexible">
               <div className="function">
+                {/* TODO:Delete this */}
+                <Signout />
                 <InboxItem />
                 <div className="notification active">
                   <span className="icon alert">

@@ -125,7 +125,7 @@ class EventPage extends Component {
 
           const { event } = data;
 
-          const { description, participants } = event;
+          const { description, participants, chatID } = event;
           const queryParams = JSON.parse(
             sessionStorage.getItem("searchEventQuery")
           );
@@ -145,7 +145,7 @@ class EventPage extends Component {
                         description={description}
                       />
                       <EventInfoMobile event={event} />
-                      <EventDiscussion id={id} />
+                      <EventDiscussion id={id} chatID={chatID} />
                     </div>
                     <div className="col-lg-3 col-md-12">
                       <EventInfo event={event} />
