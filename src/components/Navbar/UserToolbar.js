@@ -63,11 +63,12 @@ const UserToolbar = ({ currentuser }) => {
                 slapAudio.play();
 
                 if (
-                  sessionStorage.getItem("page") === "chat" &&
-                  sessionStorage.getItem("id") === newInboxMsgSubscribe.chatID
+                  sessionStorage.getItem("page") === "inbox" &&
+                  sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
                 ) {
                   return;
                 }
+
                 return (prev.getCounts.msgsCount += 1);
               }
             })

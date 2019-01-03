@@ -185,24 +185,30 @@ class ProfileSearch extends Component {
                   return (
                     <div>
                       {searchPanel}
-                      <FeaturedDiv
-                        featuredProfiles={data.searchProfiles.featuredProfiles}
-                        setProfile={this.setProfile}
-                        showMsgModal={() => this.setMsgModalVisible(true)}
-                        showBlockModal={() => this.setBlockModalVisible(true)}
-                        showShareModal={() => this.setShareModalVisible(true)}
-                        likeProfile={() => this.handleLike(likeProfile)}
-                        history={this.props.history}
-                      />
-                      <ProfilesDiv
-                        profiles={data.searchProfiles.profiles}
-                        setProfile={this.setProfile}
-                        showMsgModal={() => this.setMsgModalVisible(true)}
-                        showBlockModal={() => this.setBlockModalVisible(true)}
-                        showShareModal={() => this.setShareModalVisible(true)}
-                        likeProfile={() => this.handleLike(likeProfile)}
-                        history={this.props.history}
-                      />
+                      {data.searchProfiles.featuredProfiles.length !== 0 && (
+                        <FeaturedDiv
+                          featuredProfiles={
+                            data.searchProfiles.featuredProfiles
+                          }
+                          setProfile={this.setProfile}
+                          showMsgModal={() => this.setMsgModalVisible(true)}
+                          showBlockModal={() => this.setBlockModalVisible(true)}
+                          showShareModal={() => this.setShareModalVisible(true)}
+                          likeProfile={() => this.handleLike(likeProfile)}
+                          history={this.props.history}
+                        />
+                      )}
+                      {data.searchProfiles.profiles.length !== 0 && (
+                        <ProfilesDiv
+                          profiles={data.searchProfiles.profiles}
+                          setProfile={this.setProfile}
+                          showMsgModal={() => this.setMsgModalVisible(true)}
+                          showBlockModal={() => this.setBlockModalVisible(true)}
+                          showShareModal={() => this.setShareModalVisible(true)}
+                          likeProfile={() => this.handleLike(likeProfile)}
+                          history={this.props.history}
+                        />
+                      )}
                       <Waypoint
                         onEnter={({ previousPosition }) =>
                           this.handleEnd(previousPosition, fetchMore)

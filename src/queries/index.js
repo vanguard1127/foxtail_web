@@ -40,6 +40,7 @@ export const NEW_INBOX_SUB = gql`
         profilePic
         id
       }
+      unSeenCount
     }
   }
 `;
@@ -518,6 +519,7 @@ export const GET_INBOX = gql`
         profilePic
         id
       }
+      unSeenCount
     }
   }
 `;

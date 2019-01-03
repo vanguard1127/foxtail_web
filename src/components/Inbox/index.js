@@ -4,15 +4,15 @@ import withAuth from "../withAuth";
 import InboxPanel from "./InboxPanel";
 import Header from "./Header";
 import ChatInfo from "./ChatInfo";
-import { GET_COUNTS, READ_CHAT } from "../../queries";
+import { GET_COUNTS, READ_CHAT, GET_INBOX } from "../../queries";
 import { Mutation } from "react-apollo";
 import ChatWindow from "./ChatWindow";
 
 class InboxPage extends Component {
-  state = { chatID: null, chat: null };
+  state = { chatID: null, chat: null, unSeenCount: 0 };
 
-  handleChatClick = (chatID, readChat) => {
-    this.setState({ chatID }, () => {
+  handleChatClick = (chatID, unSeenCount, readChat) => {
+    this.setState({ chatID, unSeenCount }, () => {
       readChat()
         .then(({ data }) => {
           this.setState({ chat: data.readChat });
@@ -28,22 +28,44 @@ class InboxPage extends Component {
   };
 
   updateCount = cache => {
+    const { unSeenCount, chatID } = this.state;
+
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS
     });
-    //TODO: set to remove num of msgs
+    getCounts.msgsCount = getCounts.msgsCount - unSeenCount;
+
     cache.writeQuery({
       query: GET_COUNTS,
       data: {
-        getCounts: {
-          ...getCounts,
-          msgsCount: getCounts.msgsCount - 1
-        }
+        getCounts
       }
     });
+
+    const { getInbox } = cache.readQuery({
+      query: GET_INBOX
+    });
+
+    const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
+    if (chatIndex > -1) {
+      getInbox[chatIndex].unSeenCount = 0;
+
+      cache.writeQuery({
+        query: GET_INBOX,
+        data: {
+          getInbox
+        }
+      });
+    }
   };
 
+  componentWillUnmount() {
+    sessionStorage.setItem("page", null);
+    sessionStorage.setItem("pid", null);
+  }
+
   render() {
+    sessionStorage.setItem("page", "inbox");
     const { currentuser } = this.props.session;
     let { chatID, chat } = this.state;
     chatID = this.state.chatID;
@@ -62,7 +84,9 @@ class InboxPage extends Component {
         {readChat => {
           return (
             <InboxPanel
-              readChat={id => this.handleChatClick(id, readChat)}
+              readChat={(id, unSeenCount) =>
+                this.handleChatClick(id, unSeenCount, readChat)
+              }
               currentUserID={currentuser.userID}
             />
           );

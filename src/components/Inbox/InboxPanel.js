@@ -8,7 +8,7 @@ import InboxList from "./InboxList";
 const InboxPanel = ({ readChat, currentUserID }) => {
   let unsubscribe = null;
   return (
-    <Query query={GET_INBOX} fetchPolicy="cache-first">
+    <Query query={GET_INBOX} fetchPolicy="cache-and-network">
       {({ data, loading, error, subscribeToMore }) => {
         if (loading) {
           return <Spinner message="Loading..." size="large" />;
@@ -25,17 +25,21 @@ const InboxPanel = ({ readChat, currentUserID }) => {
               if (!newInboxMsgSubscribe) {
                 return prev;
               }
+
               if (prev.getInbox) {
+                const chatIndex = prev.getInbox.findIndex(
+                  el => el.chatID === newInboxMsgSubscribe.chatID
+                );
+
                 if (
-                  prev.getInbox.findIndex(
-                    el => el.chatID === newInboxMsgSubscribe.chatID
-                  ) > -1
+                  sessionStorage.getItem("page") === "inbox" &&
+                  sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
                 ) {
-                  prev.getInbox[
-                    prev.getInbox.findIndex(
-                      el => el.chatID === newInboxMsgSubscribe.chatID
-                    )
-                  ] = newInboxMsgSubscribe;
+                  newInboxMsgSubscribe.unSeenCount = 0;
+                }
+
+                if (chatIndex > -1) {
+                  prev.getInbox[chatIndex] = newInboxMsgSubscribe;
                 } else {
                   prev.getInbox = [newInboxMsgSubscribe, ...prev.getInbox];
                 }

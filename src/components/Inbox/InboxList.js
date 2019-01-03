@@ -13,9 +13,10 @@ class InboxList extends Component {
     } else {
       title = item.fromUser.username;
     }
+
     return (
       <div className="item unread" key={item.id}>
-        <a onClick={() => readChat(item.chatID)}>
+        <a onClick={() => readChat(item.chatID, item.unSeenCount)}>
           <span className="img">
             <img
               src={
@@ -30,7 +31,9 @@ class InboxList extends Component {
             <span className="name">{title}</span>
             <span className="time">{timeAgo}</span>
             <span className="msg">{item.text}</span>
-            <span className="notif">1</span>
+            {item.unSeenCount !== 0 && (
+              <span className="notif">{item.unSeenCount}</span>
+            )}
           </div>
         </a>
       </div>
