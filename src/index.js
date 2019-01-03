@@ -192,6 +192,7 @@ const errorLink = onError(
       });
     //TODO:Decipher btwn 500 and 400 errors
     if (networkError) {
+      console.error(networkError);
       notification["warn"]({
         message: "Check you network",
         placement: "bottomLeft",

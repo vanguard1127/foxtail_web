@@ -1,47 +1,28 @@
 import React, { Fragment, Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, message, Button } from "antd";
 import { withRouter } from "react-router-dom";
-import { Mutation } from "react-apollo";
+import { Query } from "react-apollo";
 import { LOGIN, FB_RESOLVE } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
-import Signout from "../Auth/Signout";
-import NoticesDropdown from "../common/NoticesDropdown";
-import InboxItem from "./InboxItem";
-import MyAccountItem from "./MyAccountItem";
+
+import UserToolbar from "./UserToolbar";
 
 const Navbar = ({ session, history, refetch }) => (
   <Fragment>
     {session && session.currentuser ? (
       <NavbarAuth session={session} />
     ) : (
-      <NavbarUnAuth history={history} refetch={refetch} />
+      history.push("/")
     )}
   </Fragment>
 );
-
-class NavbarUnAuth extends Component {
-  render() {
-    return (
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={["1"]}
-        style={{ lineHeight: "64px" }}
-      >
-        <Menu.Item>
-          <Signout />
-        </Menu.Item>
-      </Menu>
-    );
-  }
-}
 
 //TODO: check it not id and try to make recursive
 class NavbarAuth extends Component {
   render() {
     let href = window.location.href.split("/");
     href = href[3].concat(href[4] ? "/" + href[4] : "");
+    const { session } = this.props;
     return (
       // <Menu
       //   theme="dark"
@@ -128,19 +109,7 @@ class NavbarAuth extends Component {
               </div>
             </div>
             <div className="col-md-5 flexible">
-              <div className="function">
-                {/* TODO:Delete this */}
-                <Signout />
-                <InboxItem />
-                <div className="notification active">
-                  <span className="icon alert">
-                    <span className="count">2</span>
-                  </span>
-                </div>
-                <div className="user hidden-mobile">
-                  <MyAccountItem />
-                </div>
-              </div>
+              <UserToolbar currentuser={session.currentuser} />
               <div className="toggle">
                 <div className="notification">
                   <div className="item">

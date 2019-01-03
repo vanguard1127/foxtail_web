@@ -1,12 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const InboxItem = () => {
+const InboxItem = ({ count }) => {
   return (
-    <div className="inbox hidden-mobile">
+    <div
+      className={count > 0 ? "inbox new hidden-mobile" : "inbox hidden-mobile"}
+    >
       <NavLink to="/inbox">
         <span className="icon mail">
-          <span className="count">2</span>
+          <span className="count">{count}</span>
         </span>
       </NavLink>
     </div>

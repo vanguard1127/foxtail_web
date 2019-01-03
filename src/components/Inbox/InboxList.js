@@ -6,7 +6,7 @@ class InboxList extends Component {
   state = { chatID: null };
 
   renderItem = (item, timeAgo, isCurrentChat) => {
-    const { currentUserID, setChatID } = this.props;
+    const { currentUserID, readChat } = this.props;
     let title;
     if (item.fromUser.id === currentUserID && item.participants.length > 0) {
       title = item.participants[0].profileName;
@@ -15,7 +15,7 @@ class InboxList extends Component {
     }
     return (
       <div className="item unread" key={item.id}>
-        <a onClick={e => setChatID(e, item.chatID)}>
+        <a onClick={() => readChat(item.chatID)}>
           <span className="img">
             <img
               src={

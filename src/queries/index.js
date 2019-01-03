@@ -117,6 +117,35 @@ export const LINK_PROFILE = gql`
   }
 `;
 
+export const READ_CHAT = gql`
+  mutation($chatID: ID!) {
+    readChat(chatID: $chatID) {
+      id
+      updatedAt
+      messages {
+        id
+        text
+        fromUser {
+          username
+          id
+        }
+        profilePic
+        createdAt
+      }
+      participants {
+        id
+        profilePic
+        profileName
+        updatedAt
+        users {
+          username
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const UNLINK_PROFILE = gql`
   mutation {
     unlinkProfile
@@ -141,6 +170,12 @@ export const DELETE_PHOTO = gql`
 export const SEND_MESSAGE = gql`
   mutation($chatID: ID, $text: String!, $invitedProfile: ID) {
     sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile)
+  }
+`;
+
+export const POST_COMMENT = gql`
+  mutation($chatID: ID, $text: String!) {
+    postComment(chatID: $chatID, text: $text)
   }
 `;
 
@@ -593,34 +628,43 @@ export const GET_MESSAGES = gql`
   }
 `;
 
-export const GET_CHAT = gql`
-  query($chatID: ID) {
-    chat(id: $chatID) {
-      id
-      updatedAt
-      messages {
-        id
-        text
-        fromUser {
-          username
-          id
-        }
-        profilePic
-        createdAt
-      }
-      participants {
-        id
-        profilePic
-        profileName
-        updatedAt
-        users {
-          username
-          id
-        }
-      }
+export const GET_COUNTS = gql`
+  query {
+    getCounts {
+      msgsCount
+      noticesCount
     }
   }
 `;
+
+// export const GET_CHAT = gql`
+//   query($chatID: ID) {
+//     chat(id: $chatID) {
+//       id
+//       updatedAt
+//       messages {
+//         id
+//         text
+//         fromUser {
+//           username
+//           id
+//         }
+//         profilePic
+//         createdAt
+//       }
+//       participants {
+//         id
+//         profilePic
+//         profileName
+//         updatedAt
+//         users {
+//           username
+//           id
+//         }
+//       }
+//     }
+//   }
+// `;
 
 export const GET_CURRENT_USER = gql`
   query {

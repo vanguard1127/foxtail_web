@@ -136,7 +136,7 @@ class MembersList extends Component {
     this.setState({ invitedProfiles });
   };
 
-  updateAttend = (cache, { data: { removeProfileEvent } }) => {
+  updateAttend = cache => {
     const { invitedProfiles } = this.state;
     const { targetID } = this.props;
 

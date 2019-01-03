@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-import { SEND_MESSAGE } from "../../queries";
+import { POST_COMMENT } from "../../queries";
 
 class ChatPanel extends Component {
   state = {
     text: ""
   };
-  submitMessage(e, sendMessage) {
+  submitMessage(e, postComment) {
     e.preventDefault();
 
-    sendMessage()
+    postComment()
       .then(({ data }) => {
         this.setState({ text: "" });
       })
@@ -33,20 +33,20 @@ class ChatPanel extends Component {
 
     return (
       <Mutation
-        mutation={SEND_MESSAGE}
+        mutation={POST_COMMENT}
         variables={{
           chatID,
           text
         }}
       >
-        {(sendMessage, { data, loading, error }) => (
+        {(postComment, { data, loading, error }) => (
           <div className="send-message">
             <textarea
               value={text}
               onChange={e => this.setText(e)}
               placeholder="Now you can join the discussion by writing a message…"
             />
-            <button onClick={e => this.submitMessage(e, sendMessage)}>
+            <button onClick={e => this.submitMessage(e, postComment)}>
               Send Message
             </button>
           </div>
