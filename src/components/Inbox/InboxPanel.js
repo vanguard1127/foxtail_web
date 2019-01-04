@@ -4,17 +4,19 @@ import { GET_INBOX, NEW_INBOX_SUB } from "../../queries";
 import { Query } from "react-apollo";
 import Spinner from "../common/Spinner";
 import InboxList from "./InboxList";
-
+let unsubscribe = null;
 const InboxPanel = ({ readChat, currentUserID }) => {
-  let unsubscribe = null;
   return (
     <Query query={GET_INBOX} fetchPolicy="cache-and-network">
       {({ data, loading, error, subscribeToMore }) => {
         if (loading) {
           return <Spinner message="Loading..." size="large" />;
         }
-        if (!data.getInbox) {
-          return <div>No messages</div>;
+
+        const messages = data.getInbox;
+
+        if (!messages) {
+          return <div>Error occured.</div>;
         }
 
         if (!unsubscribe) {
@@ -47,11 +49,6 @@ const InboxPanel = ({ readChat, currentUserID }) => {
               return prev;
             }
           });
-        }
-
-        const messages = data.getInbox;
-        if (!messages || messages.length === 0) {
-          return <div>No Messages Available</div>;
         }
 
         return (

@@ -38,15 +38,12 @@ class LanguageControl extends Component {
 
   render() {
     return (
-      <div ref={this.wrapperRef}>
-        <a className="login-btn">Already member? Login</a>
+      <span ref={this.wrapperRef}>
         <div
           className="language-choose"
           onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}
         >
-          <i
-            className={`flag ${this.state.selectedLang}`}
-          />
+          <i className={`flag ${this.state.selectedLang}`} />
         </div>
         <div
           className={`language-dropdown ${this.state.menuOpen ? "click" : ""}`}
@@ -66,7 +63,7 @@ class LanguageControl extends Component {
               ))}
           </ul>
         </div>
-      </div>
+      </span>
     );
   }
 }

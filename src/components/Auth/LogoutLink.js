@@ -2,7 +2,7 @@ import React from "react";
 import { ApolloConsumer } from "react-apollo";
 import { withRouter } from "react-router-dom";
 
-const handleSignout = (client, history) => {
+const handleLogout = (client, history) => {
   localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
   sessionStorage.clear();
@@ -10,12 +10,12 @@ const handleSignout = (client, history) => {
   client.resetStore();
   history.push("/");
 };
-const Signout = ({ history }) => (
+const Logout = ({ history }) => (
   <ApolloConsumer>
     {client => {
-      return <div onClick={() => handleSignout(client, history)}>Signout</div>;
+      return <div onClick={() => handleLogout(client, history)}>Logout</div>;
     }}
   </ApolloConsumer>
 );
 
-export default withRouter(Signout);
+export default withRouter(Logout);

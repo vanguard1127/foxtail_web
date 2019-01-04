@@ -37,7 +37,7 @@ class ShareModal extends Component {
       title = "You have been invited to " + event.eventname;
       return <div>Share this Event?</div>;
     } else {
-      return <span />;
+      return null;
     }
   };
   render() {

@@ -1,10 +1,13 @@
 import React from "react";
 import moment from "moment";
-const EventCreator = ({ ownerProfile, createdAt }) => {
+const EventCreator = ({ ownerProfile, createdAt, history }) => {
   return (
     <div className="created">
-      <span className="avatar">
-        <a href="#">
+      <a
+        href={null}
+        onClick={() => history.push("/members/" + ownerProfile.id)}
+      >
+        <span className="avatar">
           <img
             src={
               ownerProfile.profilePic !== ""
@@ -13,19 +16,17 @@ const EventCreator = ({ ownerProfile, createdAt }) => {
             }
             alt=""
           />
-        </a>
-      </span>
-      <div className="detail">
-        <span className="name">
-          <a href="#">{ownerProfile.profileName}</a>
         </span>
-        <span className="created-date">
-          Created on{" "}
-          {moment(createdAt)
-            .format("MMM Do")
-            .toString()}
-        </span>
-      </div>
+        <div className="detail">
+          <span className="name">{ownerProfile.profileName}</span>
+          <span className="created-date">
+            Created on{" "}
+            {moment(createdAt)
+              .format("MMM Do")
+              .toString()}
+          </span>
+        </div>
+      </a>
     </div>
   );
 };

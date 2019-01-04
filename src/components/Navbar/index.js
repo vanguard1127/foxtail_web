@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import { Query } from "react-apollo";
+import { Mutation } from "react-apollo";
 import { LOGIN, FB_RESOLVE } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
 
@@ -19,9 +19,16 @@ const Navbar = ({ session, history, refetch }) => (
 
 //TODO: check it not id and try to make recursive
 class NavbarAuth extends Component {
+  componentDidMount() {
+    console.log("TEST");
+    window.addEventListener("beforeunload", function(event) {
+      localStorage.setItem("AYY", "test");
+    });
+  }
+
   render() {
     let href = window.location.href.split("/");
-    href = href[3].concat(href[4] ? "/" + href[4] : "");
+    href = href[3];
     const { session } = this.props;
     return (
       // <Menu
@@ -95,10 +102,10 @@ class NavbarAuth extends Component {
             </div>
             <div className="col-md-5 hidden-mobile">
               <ul className="menu">
-                <li className="active">
+                <li className={href === "members" && "active"}>
                   <NavLink to="/members">Meet Members</NavLink>
                 </li>
-                <li>
+                <li className={href === "events" && "active"}>
                   <NavLink to="/events">Go to Events</NavLink>
                 </li>
               </ul>
@@ -109,106 +116,9 @@ class NavbarAuth extends Component {
               </div>
             </div>
             <div className="col-md-5 flexible">
-              <UserToolbar currentuser={session.currentuser} />
-              <div className="toggle">
-                <div className="notification">
-                  <div className="item">
-                    <a href="#">
-                      <span className="avatar">
-                        <img
-                          src={
-                            process.env.PUBLIC_URL +
-                            "assets/img/usr/avatar/1001@2x.png"
-                          }
-                          alt=""
-                        />
-                      </span>
-                      <div>
-                        <span className="text">
-                          You have been invited to a chat by <b>Megread</b>
-                        </span>
-                        <span className="when">2 hours ago</span>
-                      </div>
-                    </a>
-                  </div>
-                  <div className="item">
-                    <a href="#">
-                      <span className="avatar">
-                        <img
-                          src={
-                            process.env.PUBLIC_URL +
-                            "assets/img/usr/avatar/1002@2x.png"
-                          }
-                          alt=""
-                        />
-                      </span>
-                      <div>
-                        <span className="text">
-                          You have been invited to a chat by <b>Megread</b>
-                        </span>
-                        <span className="when">2 hours ago</span>
-                      </div>
-                    </a>
-                  </div>
-                  <div className="item">
-                    <a href="#">
-                      <span className="avatar">
-                        <img
-                          src={
-                            process.env.PUBLIC_URL +
-                            "assets/img/usr/avatar/1003@2x.png"
-                          }
-                          alt=""
-                        />
-                      </span>
-                      <div>
-                        <span className="text">
-                          You have been invited to a chat by <b>Megread</b>
-                        </span>
-                        <span className="when">2 hours ago</span>
-                      </div>
-                    </a>
-                  </div>
-                  <div className="item">
-                    <a href="#">
-                      <span className="avatar">
-                        <img
-                          src={
-                            process.env.PUBLIC_URL +
-                            "assets/img/usr/avatar/1001@2x.png"
-                          }
-                          alt=""
-                        />
-                      </span>
-                      <div>
-                        <span className="text">
-                          You have been invited to a chat by <b>Megread</b>
-                        </span>
-                        <span className="when">2 hours ago</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div className="dropdown hidden-mobile">
-                  <ul>
-                    <li>
-                      <a href="#">My Account</a>
-                    </li>
-                    <li>
-                      <a href="#">Change Password</a>
-                    </li>
-                    <li>
-                      <a href="#">Add Couple Partner</a>
-                    </li>
-                    <li className="border">
-                      <a href="#">Become a Black Member</a>
-                    </li>
-                    <li>
-                      <a href="#">Logout</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              {session.currentuser !== undefined && (
+                <UserToolbar currentuser={session.currentuser} href={href} />
+              )}
             </div>
           </div>
         </div>

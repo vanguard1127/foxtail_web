@@ -1,9 +1,12 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-const EventCreator = ({ ownerProfile, id }) => {
+const EventCreator = ({ ownerProfile, history }) => {
   return (
     <div className="created">
-      <a href={null} onClick={() => this.props.history.push("/events/" + id)}>
+      <a
+        href={null}
+        onClick={() => history.push("/members/" + ownerProfile.id)}
+      >
         <span className="avatar">
           <img
             src={

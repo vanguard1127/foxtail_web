@@ -2,27 +2,22 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from "../../queries";
 import { Query } from "react-apollo";
-import Signout from "../Auth/Signout";
-import NoticesDropdown from "../common/NoticesDropdown";
+import Logout from "../Auth/LogoutLink";
+import NoticesItem from "./NoticesItem";
 import InboxItem from "./InboxItem";
 import MyAccountItem from "./MyAccountItem";
 var slapAudio = new Audio(require("../../docs/slap.wav"));
 
 let unsubscribe = null;
-const UserToolbar = ({ currentuser }) => {
+const UserToolbar = ({ currentuser, href }) => {
   return (
     <Query query={GET_COUNTS} fetchPolicy="cache-and-network">
       {({ data, loading, error, subscribeToMore }) => {
         if (loading) {
           return (
             <div className="function">
-              {/* TODO:Delete this */}
-
-              <Signout />
               <InboxItem />
-              <div className="notification active">
-                <span className="icon alert" />
-              </div>
+              <div className="notification" />
               <div className="user hidden-mobile">
                 <MyAccountItem />
               </div>
@@ -74,20 +69,13 @@ const UserToolbar = ({ currentuser }) => {
             })
           ];
         }
-
         return (
           <div className="function">
-            {/* TODO:Delete this */}
+            <InboxItem count={msgsCount} active={href === "inbox" && true} />
+            <NoticesItem count={noticesCount} />
 
-            <Signout />
-            <InboxItem count={msgsCount} />
-            <div className="notification active">
-              <span className="icon alert">
-                <span className="count">{noticesCount}</span>
-              </span>
-            </div>
             <div className="user hidden-mobile">
-              <MyAccountItem />
+              <MyAccountItem currentuser={currentuser} />
             </div>
           </div>
         );

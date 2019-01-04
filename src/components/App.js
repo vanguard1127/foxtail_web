@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Signup from "../components/Auth/Signup";
+import LoginButton from "../components/Auth/LoginButton";
 import LanguageControl from "./common/LanguageControl/LanguageControl";
 
 import { withNamespaces } from "react-i18next";
@@ -19,7 +20,7 @@ const App = () => {
               </div>
               <div className="offset-md-3 col-md-5">
                 <div className="content">
-                  {/* <LoginButton /> */}
+                  <LoginButton />
                   <LanguageControl lang={"en"} />
                 </div>
               </div>

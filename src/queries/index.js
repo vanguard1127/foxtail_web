@@ -630,6 +630,24 @@ export const GET_MESSAGES = gql`
   }
 `;
 
+export const GET_COMMENTS = gql`
+  query($chatID: ID!, $limit: Int!, $cursor: String) {
+    getComments(chatID: $chatID, limit: $limit, cursor: $cursor) {
+      messages {
+        id
+        text
+        fromUser {
+          username
+          id
+        }
+        profilePic
+        type
+        createdAt
+      }
+    }
+  }
+`;
+
 export const GET_COUNTS = gql`
   query {
     getCounts {

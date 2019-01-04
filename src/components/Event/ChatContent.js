@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Query } from "react-apollo";
-import { GET_MESSAGES, NEW_MESSAGE_SUB } from "../../queries";
+import { GET_COMMENTS, NEW_MESSAGE_SUB } from "../../queries";
 import Waypoint from "react-waypoint";
 import Spinner from "../common/Spinner";
 import MessageList from "./MessageList";
@@ -37,14 +37,14 @@ class ChatContent extends Component {
               return previousResult;
             }
 
-            if (fetchMoreResult.getMessages.messages < LIMIT) {
+            if (fetchMoreResult.getComments.messages < LIMIT) {
               this.setState({ hasMoreItems: false });
             }
-            console.log("NEW", ...fetchMoreResult.getMessages.messages);
-            console.log("OLD", ...previousResult.getMessages.messages);
-            previousResult.getMessages.messages = [
-              ...previousResult.getMessages.messages,
-              ...fetchMoreResult.getMessages.messages
+            console.log("NEW", ...fetchMoreResult.getComments.messages);
+            console.log("OLD", ...previousResult.getComments.messages);
+            previousResult.getComments.messages = [
+              ...previousResult.getComments.messages,
+              ...fetchMoreResult.getComments.messages
             ];
 
             return previousResult;
@@ -72,13 +72,13 @@ class ChatContent extends Component {
           return previousResult;
         }
 
-        if (fetchMoreResult.getMessages.messages < LIMIT) {
+        if (fetchMoreResult.getComments.messages < LIMIT) {
           this.setState({ hasMoreItems: false });
         }
 
-        previousResult.getMessages.messages = [
-          ...previousResult.getMessages.messages,
-          ...fetchMoreResult.getMessages.messages
+        previousResult.getComments.messages = [
+          ...previousResult.getComments.messages,
+          ...fetchMoreResult.getComments.messages
         ];
 
         return previousResult;
@@ -89,20 +89,21 @@ class ChatContent extends Component {
     });
   };
   render() {
-    const { chatID } = this.props;
+    const { chatID, history } = this.props;
 
     const { cursor } = this.state;
     return (
       <Query
-        query={GET_MESSAGES}
+        query={GET_COMMENTS}
         variables={{ chatID, limit: LIMIT, cursor }}
-        fetchPolicy="cache-first"
+        fetchPolicy="cache-and-network"
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
             return <Spinner message="Loading..." size="large" />;
           }
-          if (!data || !data.getMessages) {
+
+          if (!data || !data.getComments) {
             return <div>No messages</div>;
           }
 
@@ -110,8 +111,9 @@ class ChatContent extends Component {
             <MessageList
               chatID={chatID}
               ref={this.MessageList}
+              history={history}
               messages={
-                data && data.getMessages ? data.getMessages.messages : []
+                data && data.getComments ? data.getComments.messages : []
               }
               subscribe={() =>
                 subscribeToMore({
@@ -124,13 +126,13 @@ class ChatContent extends Component {
                     if (!newMessageSubscribe) {
                       return prev;
                     }
-                    if (prev.getMessages) {
-                      prev.getMessages.messages = [
+                    if (prev.getComments) {
+                      prev.getComments.messages = [
                         newMessageSubscribe,
-                        ...prev.getMessages.messages
+                        ...prev.getComments.messages
                       ];
                     } else {
-                      prev.getMessages = {
+                      prev.getComments = {
                         messages: [newMessageSubscribe],
                         __typename: "ChatType"
                       };

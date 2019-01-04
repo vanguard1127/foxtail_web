@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import MyAccountMenu from "./MyAccountMenu";
-
-class MyAccountItem extends Component {
+import NoticesList from "./NoticesList";
+class NoticesItem extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -30,27 +29,25 @@ class MyAccountItem extends Component {
   };
 
   render() {
+    const { count } = this.props;
     const { menuOpen } = this.state;
-    const { currentuser } = this.props;
-    console.log("currentuser (never be undef)", currentuser);
     return (
-      <span
-        onClick={() => this.setState({ menuOpen: !menuOpen })}
+      <div
+        className={!menuOpen ? "notification" : "notification active"}
         ref={this.wrapperRef}
       >
-        <span className="avatar">
-          <img
-            src={process.env.PUBLIC_URL + "/assets/img/usr/avatar/1001@2x.png"}
-            alt=""
-          />
+        <span
+          className="icon alert"
+          onClick={() => this.setState({ menuOpen: !menuOpen })}
+        >
+          {count > 0 && <span className="count">{count}</span>}
         </span>
-        <span className="username">John Doe</span>
         {menuOpen && (
-          <MyAccountMenu close={() => this.setState({ menuOpen: false })} />
+          <NoticesList close={() => this.setState({ menuOpen: false })} />
         )}
-      </span>
+      </div>
     );
   }
 }
 
-export default MyAccountItem;
+export default NoticesItem;

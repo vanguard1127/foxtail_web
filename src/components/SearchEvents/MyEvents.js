@@ -100,7 +100,7 @@ class MyEvents extends Component {
           }
 
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
-            return <div>You Have No Upcoming Events</div>;
+            return null;
           }
           const myEvents = data.getMyEvents.docs;
           return (

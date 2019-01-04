@@ -7,7 +7,7 @@ import {
   NEW_NOTICE_SUB
 } from "../../queries";
 import { Query, Mutation } from "react-apollo";
-import Spinner from "./Spinner";
+import Spinner from "../common/Spinner";
 import NoticesList from "./NoticesList";
 var slapAudio = new Audio(require("../../docs/slap.wav"));
 

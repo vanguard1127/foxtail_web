@@ -261,10 +261,10 @@ class MessageList extends Component {
   }
   render() {
     const { loading } = this.state;
-    const { messages, hasMoreItems, children } = this.props;
+    const { messages, hasMoreItems, children, history } = this.props;
     console.log("MESSGAE:", messages);
     const messageElements = messages.map(message => {
-      return <Message key={message.id} message={message} />;
+      return <Message key={message.id} message={message} history={history} />;
     });
 
     // const messageElements = _.flatten(

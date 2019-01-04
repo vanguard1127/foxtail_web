@@ -6,7 +6,7 @@ import BlockModal from "../common/BlockModal";
 import moment from "moment";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
-import Header from "./Header";
+import EventHeader from "./EventHeader";
 import EventAbout from "./EventAbout";
 import EventInfoMobile from "./EventInfoMobile";
 import EventDiscussion from "./EventDiscussion";
@@ -111,7 +111,7 @@ class EventPage extends Component {
   render() {
     const { id } = this.props.match.params;
     const { visible, blockModalVisible } = this.state;
-    const { session } = this.props;
+    const { session, history } = this.props;
     return (
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error }) => {
@@ -136,7 +136,7 @@ class EventPage extends Component {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <Header event={event} />
+                      <EventHeader event={event} history={history} />
                     </div>
                     <div className="col-lg-9 col-md-12">
                       <EventAbout
@@ -145,7 +145,11 @@ class EventPage extends Component {
                         description={description}
                       />
                       <EventInfoMobile event={event} />
-                      <EventDiscussion id={id} chatID={chatID} />
+                      <EventDiscussion
+                        id={id}
+                        chatID={chatID}
+                        history={history}
+                      />
                     </div>
                     <div className="col-lg-3 col-md-12">
                       <EventInfo event={event} />

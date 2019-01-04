@@ -1,12 +1,15 @@
 import React from "react";
 import moment from "moment";
 
-const Message = React.forwardRef(({ message }, ref) => {
+const Message = React.forwardRef(({ message, history }, ref) => {
   const messageText = message.text;
   return (
     <div className="item" ref={ref}>
       <span className="avatar">
-        <a href="#">
+        <a
+          href={null}
+          onClick={() => history.push("/members/" + message.fromUser.id)}
+        >
           <img
             src={
               message.profilePic !== ""
@@ -19,7 +22,13 @@ const Message = React.forwardRef(({ message }, ref) => {
       </span>
       <div className="info">
         <span className="name">
-          <a href="#"> {message.fromUser.username}</a>
+          <a
+            href={null}
+            onClick={() => history.push("/members/" + message.fromUser.id)}
+          >
+            {" "}
+            {message.fromUser.username}
+          </a>
         </span>
         <span className="date">
           {" "}

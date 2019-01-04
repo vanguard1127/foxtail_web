@@ -1,6 +1,6 @@
 import React from "react";
 import EventHeading from "./EventHeading";
-import EventDate from "../common/EventDate";
+import EventDate from "../common/Event/EventDate";
 import EventCreator from "./EventCreator";
 import EventShare from "./EventShare";
 

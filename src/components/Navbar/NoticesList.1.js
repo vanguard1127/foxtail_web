@@ -124,7 +124,30 @@ class NoticesList extends Component {
   render() {
     const { notifications } = this.props;
     return (
-      <div>
+      <div class="toggle">
+        <div class="notification open">
+          {notifications.map(notif => (
+            <div class="item" key={notif.id}>
+              <a href="#">
+                <span class="avatar">
+                  <img src="/assets/img/usr/avatar/1001@2x.png" alt="" />
+                </span>
+                <div>
+                  <span class="text">
+                    You have been invited to a chat by <b>Megread</b>
+                  </span>
+                  <span class="when">2 hours ago</span>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
+{
+  /* <div>
         <div>
           Notifcations
           <a href={null} style={{ float: "right" }}>
@@ -142,9 +165,6 @@ class NoticesList extends Component {
           {this.handleNoticeMenu({ notifications })}
         </div>
         <div style={{ height: "2vh", backgroundColor: "#fff" }}>See All</div>
-      </div>
-    );
-  }
+      </div> */
 }
-
 export default withRouter(NoticesList);
