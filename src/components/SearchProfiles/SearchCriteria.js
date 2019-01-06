@@ -35,33 +35,27 @@ class SearchCriteria extends Component {
 
     const { long, lat } = this.state;
     if (long !== crd.longitude && lat !== crd.latitude) {
-      this.setState({ long: crd.longitude, lat: crd.latitude });
-      this.props.form.setFieldsValue({ location });
+      this.setState({ long: crd.longitude, lat: crd.latitude, location });
     }
   };
 
-  handleSubmit = (e, updateSettings) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      updateSettings()
-        .then(async ({ data }) => {
-          const { lat, long } = this.state;
-          //if null get location
-          this.props.setQueryLoc({ lat, long });
-          this.props.client.resetStore();
-        })
-        .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+  handleSubmit = updateSettings => {
+    updateSettings()
+      .then(({ data }) => {
+        const { lat, long } = this.state;
+        //if null get location
+        this.props.setQueryLoc({ lat, long });
+        this.props.refetch();
+        // this.props.client.resetStore();
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
         });
-    });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+      });
   };
 
   handleRemoveLocLock = (e, removeLocation) => {
@@ -88,12 +82,14 @@ class SearchCriteria extends Component {
       });
   };
 
-  setLocationValues = ({ lat, long, address }) => {
+  setLocationValues = ({ lat, long, address, updateSettings }) => {
     this.setState({ lat, long, location: address });
+    this.handleSubmit(updateSettings);
   };
 
-  setValue = ({ name, value }) => {
+  setValue = ({ name, value, updateSettings }) => {
     this.setState({ [name]: value });
+    this.handleSubmit(updateSettings);
   };
 
   render() {
@@ -158,8 +154,17 @@ class SearchCriteria extends Component {
                                     <div className="item">
                                       <AddressSearch
                                         style={{ width: 150 }}
-                                        setLocationValues={
-                                          this.setLocationValues
+                                        setLocationValues={({
+                                          lat,
+                                          long,
+                                          address
+                                        }) =>
+                                          this.setLocationValues({
+                                            lat,
+                                            long,
+                                            address,
+                                            updateSettings
+                                          })
                                         }
                                         address={location}
                                         type={"(cities)"}
@@ -172,7 +177,8 @@ class SearchCriteria extends Component {
                                         setValue={el =>
                                           this.setValue({
                                             name: "interestedIn",
-                                            value: el
+                                            value: el,
+                                            updateSettings
                                           })
                                         }
                                         value={interestedIn}
@@ -186,7 +192,8 @@ class SearchCriteria extends Component {
                                       setValue={el =>
                                         this.setValue({
                                           name: "distance",
-                                          value: el
+                                          value: el,
+                                          updateSettings
                                         })
                                       }
                                     />
@@ -197,7 +204,8 @@ class SearchCriteria extends Component {
                                       setValue={el =>
                                         this.setValue({
                                           name: "ageRange",
-                                          value: el
+                                          value: el,
+                                          updateSettings
                                         })
                                       }
                                     />

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { withRouter, Prompt } from "react-router-dom";
 import { Mutation, Query } from "react-apollo";
-import { UPDATE_SETTINGS, GET_SETTINGS } from "../../queries";
+import { UPDATE_SETTINGS, GET_SETTINGS, GET_MY_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import { sexOptions } from "../../docs/data";
 import withAuth from "../withAuth";
@@ -12,6 +12,7 @@ import DistanceSlider from "../common/DistanceSlider";
 import InterestedInDropdown from "../common/InterestedInDropdown";
 import AgeRange from "../common/AgeRange";
 import AddressSearch from "../common/AddressSearch";
+import Upload from "rc-upload";
 
 import {
   Form,
@@ -102,6 +103,10 @@ class SettingsForm extends Component {
     this.setState({ isChanged: true });
   };
 
+  setValue = ({ name, value }) => {
+    this.setState({ [name]: value });
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { session } = this.props;
@@ -149,11 +154,7 @@ class SettingsForm extends Component {
             interestedIn
           } = settings;
 
-          console.log(
-            distance,
-            settings.distanceMetric,
-            data.getSettings.distanceMetric
-          );
+          console.log(settings);
           const convertFunction =
             "mi" === distanceMetric ? kilometersToMiles : milesToKilometers;
           // The input uses original metric
@@ -162,313 +163,351 @@ class SettingsForm extends Component {
           if (distanceMetric !== initialDistanceMetric) {
             convertedDistance = Math.floor(convertFunction(distance));
           }
-          console.log("d1", distance, "d2", convertedDistance, distanceMetric);
           return (
-            <Mutation
-              mutation={UPDATE_SETTINGS}
-              variables={{
-                distance: convertedDistance,
-                distanceMetric,
-                ageRange,
-                interestedIn,
-                location,
-                visible,
-                newMsgNotify,
-                lang,
-                emailNotify,
-                showOnline,
-                likedOnly,
-                vibrateNotify
-              }}
-            >
-              {(updateSettings, { loading }) => {
-                // The input always uses the first metric it was given
-                // And sends a transformed metric if the user changed it
-                const initialDistanceSliderMax =
-                  initialDistanceMetric === "mi"
-                    ? 100
-                    : Math.floor(milesToKilometers(100));
+            <Query query={GET_MY_PROFILE}>
+              {({ data, loading, error, refetch }) => {
+                if (loading) {
+                  return <Spinner message="Loading..." size="large" />;
+                }
 
-                const distanceSliderMax =
-                  distanceMetric === "mi"
-                    ? 100
-                    : Math.floor(milesToKilometers(100));
+                if (!data.getMyProfile) {
+                  return (
+                    <div>An error has occured. Please contact support!</div>
+                  );
+                }
+
+                const { users, photos, about, desires } = data.getMyProfile;
+                const myUser = users.find(
+                  user =>
+                    user.username === this.props.session.currentuser.username
+                );
+
                 return (
-                  <Fragment>
-                    <section className="breadcrumb settings">
-                      <div className="container">
-                        <div className="col-md-12">
-                          <span className="head">
-                            <a href="#">Hello, John Locke 👋</a>
-                          </span>
-                          <span className="title">
-                            You last logged in at: 03 October 2018 13:34
-                          </span>
-                        </div>
-                      </div>
-                    </section>
-                    <section className="settings">
-                      <div className="container">
-                        <div className="col-md-12">
-                          <div className="row">
-                            <div className="col-md-12 col-lg-3">
-                              <div className="sidebar">
-                                <div className="profile-picture-content">
-                                  <div className="picture">
-                                    <input
-                                      type="file"
-                                      className="filepond upload-avatar"
-                                      name="filepond"
-                                    />
-                                  </div>
-                                </div>
+                  <Mutation
+                    mutation={UPDATE_SETTINGS}
+                    variables={{
+                      distance: convertedDistance,
+                      distanceMetric,
+                      ageRange,
+                      interestedIn,
+                      location,
+                      visible,
+                      newMsgNotify,
+                      lang,
+                      emailNotify,
+                      showOnline,
+                      likedOnly,
+                      vibrateNotify
+                    }}
+                  >
+                    {(updateSettings, { loading }) => {
+                      // The input always uses the first metric it was given
+                      // And sends a transformed metric if the user changed it
+                      const initialDistanceSliderMax =
+                        initialDistanceMetric === "mi"
+                          ? 100
+                          : Math.floor(milesToKilometers(100));
 
-                                <div className="menu">
-                                  <ul>
-                                    <li className="active">
-                                      <a href="#">My Account</a>
-                                    </li>
-                                    <li>
-                                      <a href="#">Add Couple Partner</a>
-                                    </li>
-                                    <li>
-                                      <a href="#">Become a Black Member</a>
-                                    </li>
-                                  </ul>
-                                </div>
+                      const distanceSliderMax =
+                        distanceMetric === "mi"
+                          ? 100
+                          : Math.floor(milesToKilometers(100));
+                      return (
+                        <Fragment>
+                          <section className="breadcrumb settings">
+                            <div className="container">
+                              <div className="col-md-12">
+                                <span className="head">
+                                  <a href="#">Hello, John Locke 👋</a>
+                                </span>
+                                <span className="title">
+                                  You last logged in at: 03 October 2018 13:34
+                                </span>
                               </div>
                             </div>
-                            <div className="col-md-12 col-lg-9">
-                              <div className="page mtop">
-                                <div className="form">
-                                  <div className="content">
-                                    <div className="row">
-                                      <div className="col-md-12">
-                                        <span className="heading">
-                                          My Search Preferences
-                                        </span>
-                                      </div>
-                                      <div className="col-md-6">
-                                        <DistanceSlider
-                                          value={distance}
-                                          setValue={el =>
-                                            this.setValue({
-                                              name: "distance",
-                                              value: el
-                                            })
-                                          }
-                                        />
-                                      </div>
-                                      <div className="col-md-6">
-                                        <AgeRange
-                                          value={ageRange}
-                                          setValue={el =>
-                                            this.setValue({
-                                              name: "ageRange",
-                                              value: el
-                                            })
-                                          }
-                                        />
-                                      </div>
-
-                                      <div className="col-md-12">
-                                        <div className="item">
-                                          <div className="dropdown">
-                                            <select
-                                              className="js-example-basic-single"
-                                              name="states[]"
-                                            >
-                                              <option>Mile</option>
-                                              <option>KM</option>
-                                            </select>
-                                            <label>Distance Metric</label>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="col-md-6">
-                                        <InterestedInDropdown
-                                          setValue={el =>
-                                            this.setValue({
-                                              name: "interestedIn",
-                                              value: el
-                                            })
-                                          }
-                                          value={interestedIn}
-                                          placeholder={"Gender(s):"}
-                                        />
-                                      </div>
-                                      <div className="col-md-6">
-                                        <div className="item">
-                                          <AddressSearch
-                                            style={{ width: 150 }}
-                                            setLocationValues={
-                                              this.setLocationValues
-                                            }
-                                            address={location}
-                                            type={"(cities)"}
+                          </section>
+                          <section className="settings">
+                            <div className="container">
+                              <div className="col-md-12">
+                                <div className="row">
+                                  <div className="col-md-12 col-lg-3">
+                                    <div className="sidebar">
+                                      <div className="profile-picture-content">
+                                        <div className="picture">
+                                          <input
+                                            type="file"
+                                            className="filepond upload-avatar"
+                                            name="filepond"
                                           />
                                         </div>
                                       </div>
+
+                                      <div className="menu">
+                                        <ul>
+                                          <li className="active">
+                                            <a href="#">My Account</a>
+                                          </li>
+                                          <li>
+                                            <a href="#">Add Couple Partner</a>
+                                          </li>
+                                          <li>
+                                            <a href="#">
+                                              Become a Black Member
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </div>
                                     </div>
                                   </div>
-                                  <div className="content mtop">
-                                    <div className="row">
-                                      <div className="col-md-12">
-                                        <span className="heading">
-                                          Public Photos{" "}
-                                          <i>(No nudity please)</i>
-                                        </span>
-                                      </div>
-                                      <div className="col-md-12">
-                                        <input
+                                  <div className="col-md-12 col-lg-9">
+                                    <div className="page mtop">
+                                      <div className="form">
+                                        <div className="content">
+                                          <div className="row">
+                                            <div className="col-md-12">
+                                              <span className="heading">
+                                                My Search Preferences
+                                              </span>
+                                            </div>
+                                            <div className="col-md-6">
+                                              <DistanceSlider
+                                                value={distance}
+                                                setValue={el =>
+                                                  this.setValue({
+                                                    name: "distance",
+                                                    value: el
+                                                  })
+                                                }
+                                              />
+                                            </div>
+                                            <div className="col-md-6">
+                                              <AgeRange
+                                                value={ageRange}
+                                                setValue={el =>
+                                                  this.setValue({
+                                                    name: "ageRange",
+                                                    value: el
+                                                  })
+                                                }
+                                              />
+                                            </div>
+
+                                            <div className="col-md-12">
+                                              <div className="item">
+                                                <div className="dropdown">
+                                                  <select
+                                                    className="js-example-basic-single"
+                                                    name="states[]"
+                                                  >
+                                                    <option>Mile</option>
+                                                    <option>KM</option>
+                                                  </select>
+                                                  <label>Distance Metric</label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                              <InterestedInDropdown
+                                                setValue={el =>
+                                                  this.setValue({
+                                                    name: "interestedIn",
+                                                    value: el
+                                                  })
+                                                }
+                                                value={interestedIn}
+                                                placeholder={"Gender(s):"}
+                                              />
+                                            </div>
+                                            <div className="col-md-6">
+                                              <div className="item">
+                                                <AddressSearch
+                                                  style={{ width: 150 }}
+                                                  setLocationValues={
+                                                    this.setLocationValues
+                                                  }
+                                                  address={location}
+                                                  type={"(cities)"}
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div className="content mtop">
+                                          <div className="row">
+                                            <div className="col-md-12">
+                                              <span className="heading">
+                                                Public Photos{" "}
+                                                <i>(No nudity please)</i>
+                                              </span>
+                                            </div>
+                                            <div className="col-md-12">
+                                              <Upload
+                                                name="avatar"
+                                                listType="picture-card"
+                                                className="avatar-uploader"
+                                                showUploadList={false}
+                                                action="//jsonplaceholder.typicode.com/posts/"
+                                                onChange={this.handleChange}
+                                              >
+                                                <div>load</div>
+                                              </Upload>
+                                              {/* <input
                                           type="file"
                                           className="filepond public"
                                           name="filepond"
                                           multiple
                                           data-max-file-size="3MB"
                                           data-max-files="3"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="content mtop">
-                                    <div className="row">
-                                      <div className="col-md-12">
-                                        <span className="heading">
-                                          Private Photos{" "}
-                                          <i>
-                                            - (Nudity is OK. Will only show to
-                                            matches.)
-                                          </i>
-                                        </span>
-                                      </div>
-                                      <div className="col-md-12">
-                                        <input
-                                          type="file"
-                                          className="filepond private"
-                                          name="filepond"
-                                          multiple
-                                          data-max-file-size="3MB"
-                                          data-max-files="3"
-                                        />
-                                        >
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="content">
-                                    <div className="row">
-                                      <div className="col-md-12">
-                                        <span className="heading">
-                                          My Profile
-                                        </span>
-                                      </div>
-                                      <div className="col-md-12">
-                                        <div className="item">
-                                          <div className="select_desires desires_select_popup">
-                                            <span className="head">
-                                              Desires select:
-                                            </span>
-                                            <ul className="selected">
-                                              <li>Flirting</li>
-                                              <li>Dating</li>
-                                            </ul>
+                                        /> */}
+                                            </div>
                                           </div>
                                         </div>
-                                      </div>
-                                      <div className="col-md-12">
-                                        <div className="item">
-                                          <div className="textarea">
-                                            <textarea>
-                                              It is a long established fact that
-                                              a reader will be distracted by the
-                                              readable content of a page when
-                                              looking at its layout. The point
-                                              of using Lorem Ipsum is that it
-                                              has a more-or-less normal
-                                              distribution of letters, as
-                                              opposed to using 'Content here,
-                                              content here', making it look like
-                                              readable English.
-                                            </textarea>
+                                        <div className="content mtop">
+                                          <div className="row">
+                                            <div className="col-md-12">
+                                              <span className="heading">
+                                                Private Photos{" "}
+                                                <i>
+                                                  - (Nudity is OK. Will only
+                                                  show to matches.)
+                                                </i>
+                                              </span>
+                                            </div>
+                                            <div className="col-md-12">
+                                              <input
+                                                type="file"
+                                                className="filepond private"
+                                                name="filepond"
+                                                multiple
+                                                data-max-file-size="3MB"
+                                                data-max-files="3"
+                                              />
+                                              >
+                                            </div>
                                           </div>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                                        <div className="content">
+                                          <div className="row">
+                                            <div className="col-md-12">
+                                              <span className="heading">
+                                                My Profile
+                                              </span>
+                                            </div>
+                                            <div className="col-md-12">
+                                              <div className="item">
+                                                <div className="select_desires desires_select_popup">
+                                                  <span className="head">
+                                                    Desires select:
+                                                  </span>
+                                                  <ul className="selected">
+                                                    <li>Flirting</li>
+                                                    <li>Dating</li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div className="col-md-12">
+                                              <div className="item">
+                                                <div className="textarea">
+                                                  <textarea>
+                                                    It is a long established
+                                                    fact that a reader will be
+                                                    distracted by the readable
+                                                    content of a page when
+                                                    looking at its layout. The
+                                                    point of using Lorem Ipsum
+                                                    is that it has a
+                                                    more-or-less normal
+                                                    distribution of letters, as
+                                                    opposed to using 'Content
+                                                    here, content here', making
+                                                    it look like readable
+                                                    English.
+                                                  </textarea>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
 
-                                  <div className="content mtop">
-                                    <div className="row">
-                                      <div className="col-md-12">
-                                        <span className="heading">
-                                          Verifications{" "}
-                                          <i>
-                                            - (Verified members get more
-                                            responses)
-                                          </i>
-                                        </span>
-                                      </div>
-                                      <div className="col-md-12">
-                                        <div className="verification-box">
-                                          <span className="head">
-                                            Photo Verification
-                                          </span>
-                                          <span className="title">
-                                            It is a long established fact that a
-                                            reader will be…
-                                          </span>
-                                          <a
-                                            href="#"
-                                            className="clickverify-btn photo"
-                                          >
-                                            Click Verification
-                                          </a>
-                                        </div>
-                                      </div>
-                                      {/* <div className="col-md-6">
+                                        <div className="content mtop">
+                                          <div className="row">
+                                            <div className="col-md-12">
+                                              <span className="heading">
+                                                Verifications{" "}
+                                                <i>
+                                                  - (Verified members get more
+                                                  responses)
+                                                </i>
+                                              </span>
+                                            </div>
+                                            <div className="col-md-12">
+                                              <div className="verification-box">
+                                                <span className="head">
+                                                  Photo Verification
+                                                </span>
+                                                <span className="title">
+                                                  It is a long established fact
+                                                  that a reader will be…
+                                                </span>
+                                                <a
+                                                  href="#"
+                                                  className="clickverify-btn photo"
+                                                >
+                                                  Click Verification
+                                                </a>
+                                              </div>
+                                            </div>
+                                            {/* <div className="col-md-6">
                                             <div className="verification-box">
                                                 <span className="head">STD Verification</span>
                                                 <span className="title">It is a long established fact that a reader will be…</span>
                                                 <a href="#" className="clickverify-btn">Click Verification</a>
                                             </div>
                                         </div> */}
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
-                    <CoupleModal
-                      visible={coupleModalVisible}
-                      close={() => this.setCoupleModalVisible(false)}
-                      setPartnerID={this.setPartnerID}
-                      username={
-                        this.props.form.getFieldValue("couplePartner") !==
-                        "Add Partner"
-                          ? this.props.form.getFieldValue("couplePartner")
-                          : null
-                      }
-                    />
-                    {session.currentuser.blackMember && (
-                      <BlackMemberModal
-                        visible={blkMemberModalVisible}
-                        close={e => this.setBlkMemberModalVisible(e, false)}
-                        userID={session.currentuser.userID}
-                        refetchUser={this.props.refetch}
-                      />
-                    )}
-                    <Prompt
-                      when={isChanged}
-                      message={location =>
-                        `Are you sure you want to leave without saving your changes?`
-                      }
-                    />
-                  </Fragment>
+                          </section>
+                          <CoupleModal
+                            visible={coupleModalVisible}
+                            close={() => this.setCoupleModalVisible(false)}
+                            setPartnerID={this.setPartnerID}
+                            username={
+                              this.props.form.getFieldValue("couplePartner") !==
+                              "Add Partner"
+                                ? this.props.form.getFieldValue("couplePartner")
+                                : null
+                            }
+                          />
+                          {session.currentuser.blackMember && (
+                            <BlackMemberModal
+                              visible={blkMemberModalVisible}
+                              close={e =>
+                                this.setBlkMemberModalVisible(e, false)
+                              }
+                              userID={session.currentuser.userID}
+                              refetchUser={this.props.refetch}
+                            />
+                          )}
+                          <Prompt
+                            when={isChanged}
+                            message={location =>
+                              `Are you sure you want to leave without saving your changes?`
+                            }
+                          />
+                        </Fragment>
+                      );
+                    }}
+                  </Mutation>
                 );
               }}
-            </Mutation>
+            </Query>
           );
         }}
       </Query>

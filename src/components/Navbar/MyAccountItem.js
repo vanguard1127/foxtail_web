@@ -7,6 +7,16 @@ class MyAccountItem extends Component {
     this.wrapperRef = React.createRef();
   }
 
+  shouldComponentUpdate() {
+    const { currentuser } = this.props;
+
+    if (currentuser === undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   state = {
     menuOpen: false
   };
@@ -32,7 +42,10 @@ class MyAccountItem extends Component {
   render() {
     const { menuOpen } = this.state;
     const { currentuser } = this.props;
-    console.log("currentuser (never be undef)", currentuser);
+
+    if (currentuser === undefined) {
+      return null;
+    }
     return (
       <span
         onClick={() => this.setState({ menuOpen: !menuOpen })}
@@ -44,7 +57,7 @@ class MyAccountItem extends Component {
             alt=""
           />
         </span>
-        <span className="username">John Doe</span>
+        <span className="username">{currentuser.username}</span>
         {menuOpen && (
           <MyAccountMenu close={() => this.setState({ menuOpen: false })} />
         )}

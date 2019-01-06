@@ -1,6 +1,7 @@
 import React from "react";
 import EventCard from "./EventCard";
-const EventsList = ({ events }) => {
+import Waypoint from "react-waypoint";
+const EventsList = ({ events, handleEnd }) => {
   return (
     <div className="events-card-content">
       <div className="container">
@@ -12,9 +13,12 @@ const EventsList = ({ events }) => {
             {events.map(event => (
               <EventCard key={event.id} event={event} />
             ))}
+            <Waypoint
+              onEnter={({ previousPosition }) => handleEnd(previousPosition)}
+            />
             <div className="col-md-12">
               <div className="more-content-btn">
-                <a href="#">More Events</a>
+                <a href="#">No More Events</a>
               </div>
             </div>
           </div>

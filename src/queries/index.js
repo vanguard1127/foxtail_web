@@ -282,6 +282,12 @@ export const REMOVE_PROFILES_EVENT = gql`
   }
 `;
 
+export const TOGGLE_ONLINE = gql`
+  mutation($online: Boolean) {
+    toggleOnline(online: $online)
+  }
+`;
+
 export const CREATE_EVENT = gql`
   mutation(
     $eventname: String!
@@ -431,6 +437,7 @@ export const SEARCH_PROFILES = gql`
         desires
         profileName
         profilePic
+        distance
         users {
           id
           username

@@ -6,7 +6,6 @@ import ProfileInfoBox from "./ProfileInfoBox";
 
 const ProfileCard = ({
   profile,
-  setProfile,
   showMsgModal,
   showBlockModal,
   showShareModal,
@@ -32,11 +31,12 @@ const ProfileCard = ({
             <ProfileInfoBox
               users={profile.users}
               lastOnline={profile.showOnline && profile.updatedAt}
+              distance={profile.distance}
             />
           </a>
           <DesiresBlock desires={profile.desires} />
           <ProfileActionBtns
-            setProfile={setProfile}
+            profile={profile}
             likeProfile={likeProfile}
             showMsgModal={showMsgModal}
           />

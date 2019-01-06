@@ -316,7 +316,7 @@ class Signup extends React.Component {
                             <div className="couple-choose">
                               <div className="select-checkbox">
                                 <input type="checkbox" id="cbox" />
-                                <label for="cbox">
+                                <label htmlFor="cbox">
                                   <span />
                                   <b>Are you couple?</b>
                                 </label>

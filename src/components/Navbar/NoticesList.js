@@ -78,13 +78,13 @@ class NoticesList extends Component {
       query: GET_COUNTS
     });
     getCounts.noticesCount = getCounts.noticesCount - numSeen;
-    console.log(getCounts);
-    // client.writeQuery({
-    //   query: GET_COUNTS,
-    //   data: {
-    //     getCounts
-    //   }
-    // });
+
+    client.writeQuery({
+      query: GET_COUNTS,
+      data: {
+        getCounts
+      }
+    });
   };
 
   readAndGo = async ({
@@ -169,10 +169,10 @@ class NoticesList extends Component {
                 }
                 const notifications = data.getNotifications.notifications;
                 return (
-                  <div class="toggle">
-                    <div class="notification open">
+                  <div className="toggle">
+                    <div className="notification open">
                       {notifications.map(notif => (
-                        <div class="item" key={notif.id}>
+                        <div className="item" key={notif.id}>
                           <a
                             href={null}
                             onClick={() =>
@@ -184,18 +184,18 @@ class NoticesList extends Component {
                               })
                             }
                           >
-                            <span class="avatar">
+                            <span className="avatar">
                               <img
                                 src="/assets/img/usr/avatar/1001@2x.png"
                                 alt=""
                               />
                             </span>
                             <div>
-                              <span class="text">
+                              <span className="text">
                                 <b> {notif.fromProfile.profileName} </b>
                                 {notif.text}
                               </span>
-                              <span class="when">
+                              <span className="when">
                                 {moment(notif.date).fromNow()}
                               </span>
                             </div>

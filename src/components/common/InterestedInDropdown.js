@@ -6,7 +6,9 @@ const InterestedInDropdown = ({ setValue, value, placeholder }) => {
   return (
     <div className="dropdown">
       <Select
-        defaultValue={value.map(val => sexOptions.find(el => el.value === val))}
+        defaultValue={
+          value && value.map(val => sexOptions.find(el => el.value === val))
+        }
         closeMenuOnSelect={false}
         onChange={el => setValue(el.map(e => e.value))}
         options={sexOptions}

@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import App from "./components/App";
 import Navbar from "./components/Navbar/";
-import ProfileSearch from "./components/SearchProfiles/ProfileSearch";
+import ProfileSearch from "./components/SearchProfiles/";
 import Settings from "./components/Settings/Settings";
 import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/ProfilePage";
@@ -48,6 +48,7 @@ const wsLink = new WebSocketLink({
   uri: wsurl,
   options: {
     reconnect: true,
+    lazy: true,
     connectionParams: {
       token: localStorage.getItem("token"),
       refreshToken: localStorage.getItem("refreshToken")

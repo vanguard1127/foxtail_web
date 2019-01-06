@@ -1,14 +1,15 @@
 import React from "react";
 import ProfileCard from "./ProfileCard";
+import Waypoint from "react-waypoint";
 
 const ProfilesDiv = ({
   profiles,
-  setProfile,
   showMsgModal,
   showBlockModal,
   showShareModal,
   likeProfile,
-  history
+  history,
+  handleEnd
 }) => {
   return (
     <section className="members">
@@ -23,7 +24,6 @@ const ProfilesDiv = ({
                 <ProfileCard
                   key={profile.id}
                   profile={profile}
-                  setProfile={setProfile}
                   showMsgModal={showMsgModal}
                   showBlockModal={showBlockModal}
                   showShareModal={showShareModal}
@@ -32,11 +32,14 @@ const ProfilesDiv = ({
                 />
               );
             })}
-            <div className="col-md-12">
-              <div className="more-content-btn">
-                <a href="#">More Profiles</a>
-              </div>
-            </div>
+            <Waypoint
+              onEnter={({ previousPosition, currentPosition }) =>
+                handleEnd({
+                  previousPosition,
+                  currentPosition
+                })
+              }
+            />
           </div>
         </div>
       </div>

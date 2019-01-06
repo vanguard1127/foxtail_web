@@ -2,27 +2,70 @@ import React, { Fragment, Component } from "react";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
-import { LOGIN, FB_RESOLVE } from "../../queries";
+import { TOGGLE_ONLINE } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
 
 import UserToolbar from "./UserToolbar";
 
-const Navbar = ({ session, history, refetch }) => (
-  <Fragment>
-    {session && session.currentuser ? (
-      <NavbarAuth session={session} />
-    ) : (
-      history.push("/")
-    )}
-  </Fragment>
-);
+class Navbar extends Component {
+  state = { online: false };
+
+  handleToggle = (toggleOnline, online) => {
+    this.setState({ online }, () => {
+      toggleOnline()
+        .then(async ({ data }) => {
+          if (data.toggleOnline !== null) {
+            await this.props.refetch();
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+        });
+    });
+  };
+
+  render() {
+    const { session, history } = this.props;
+    const { online } = this.state;
+
+    return (
+      <Fragment>
+        {session && session.currentuser ? (
+          <Mutation
+            mutation={TOGGLE_ONLINE}
+            variables={{
+              online
+            }}
+          >
+            {(toggleOnline, { data, loading, error }) => (
+              <NavbarAuth
+                session={session}
+                toggleOnline={online => this.handleToggle(toggleOnline, online)}
+              />
+            )}
+          </Mutation>
+        ) : (
+          history.push("/")
+        )}
+      </Fragment>
+    );
+  }
+}
 
 //TODO: check it not id and try to make recursive
 class NavbarAuth extends Component {
   componentDidMount() {
-    console.log("TEST");
+    //TODO: Dont call if already online
+    const { toggleOnline } = this.props;
+    toggleOnline(true);
     window.addEventListener("beforeunload", function(event) {
-      localStorage.setItem("AYY", "test");
+      localStorage.setItem("Test", "done");
+      toggleOnline(false);
     });
   }
 
@@ -102,10 +145,10 @@ class NavbarAuth extends Component {
             </div>
             <div className="col-md-5 hidden-mobile">
               <ul className="menu">
-                <li className={href === "members" && "active"}>
+                <li className={href === "members" ? "active" : ""}>
                   <NavLink to="/members">Meet Members</NavLink>
                 </li>
-                <li className={href === "events" && "active"}>
+                <li className={href === "events" ? "active" : ""}>
                   <NavLink to="/events">Go to Events</NavLink>
                 </li>
               </ul>
@@ -116,7 +159,7 @@ class NavbarAuth extends Component {
               </div>
             </div>
             <div className="col-md-5 flexible">
-              {session.currentuser !== undefined && (
+              {session.currentuser && (
                 <UserToolbar currentuser={session.currentuser} href={href} />
               )}
             </div>

@@ -18,9 +18,8 @@ const UserToolbar = ({ currentuser, href }) => {
             <div className="function">
               <InboxItem />
               <div className="notification" />
-              <div className="user hidden-mobile">
-                <MyAccountItem />
-              </div>
+              <div className="user hidden-mobile" />
+              <MyAccountItem />
             </div>
           );
         }
@@ -47,7 +46,10 @@ const UserToolbar = ({ currentuser, href }) => {
               updateQuery: (prev, { subscriptionData }) => {
                 const { newInboxMsgSubscribe } = subscriptionData.data;
 
-                if (newInboxMsgSubscribe.fromUser.id === currentuser.userID) {
+                if (
+                  newInboxMsgSubscribe === null ||
+                  newInboxMsgSubscribe.fromUser.id === currentuser.userID
+                ) {
                   return;
                 }
 

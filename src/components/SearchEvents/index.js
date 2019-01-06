@@ -19,7 +19,8 @@ import SearchEventToolbar from "./SearchEventToolbar";
 import Header from "./Header";
 import EventsList from "./EventsList";
 
-const LIMIT = 3;
+const LIMIT = 6;
+
 //TODO: fix moment date format issue
 class SearchEvents extends Component {
   state = {
@@ -31,8 +32,23 @@ class SearchEvents extends Component {
     lat: this.props.location.lat,
     long: this.props.location.long,
     maxDistance: 50,
-    city: "My Location",
+    location: "My Location",
     all: true
+  };
+
+  clearState = () => {
+    this.setState({
+      skip: 0,
+      visible: false,
+      blockModalVisible: false,
+      shareModalVisible: false,
+      event: null,
+      lat: this.props.location.lat,
+      long: this.props.location.long,
+      maxDistance: 50,
+      location: "My Location",
+      all: true
+    });
   };
 
   showModal = () => {
@@ -57,8 +73,17 @@ class SearchEvents extends Component {
     else this.setState({ event: null, blockModalVisible });
   };
 
-  handleChangeSelect = value => {
-    this.setState({ maxDistance: value });
+  handleChangeSelect = e => {
+    e.preventDefault();
+    this.setState({ maxDistance: parseInt(e.target.value) });
+  };
+
+  setLocationValues = ({ lat, long, address }) => {
+    if (lat && long) {
+      this.setState({ lat, long, location: address });
+    } else {
+      this.setState({ location: address });
+    }
   };
 
   handleSubmit = (e, createEvent) => {
@@ -92,28 +117,29 @@ class SearchEvents extends Component {
         skip: this.state.skip
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
+        console.log(previousResult, fetchMoreResult);
         if (!fetchMoreResult || fetchMoreResult.searchEvents.length === 0) {
           return previousResult;
         }
         //if there are events from last date in new fetch add them to old list
-        if (
-          previousResult.searchEvents[previousResult.searchEvents.length - 1]
-            .date ===
-          fetchMoreResult.searchEvents[fetchMoreResult.searchEvents.length - 1]
-            .date
-        ) {
-          previousResult.searchEvents[
-            previousResult.searchEvents.length - 1
-          ].events = previousResult.searchEvents[
-            previousResult.searchEvents.length - 1
-          ].events.concat(
-            fetchMoreResult.searchEvents[
-              fetchMoreResult.searchEvents.length - 1
-            ].events
-          );
-          //remove the pushed events from the fetch list
-          fetchMoreResult.searchEvents.pop();
-        }
+        // if (
+        //   previousResult.searchEvents[previousResult.searchEvents.length - 1]
+        //     .date ===
+        //   fetchMoreResult.searchEvents[fetchMoreResult.searchEvents.length - 1]
+        //     .date
+        // ) {
+        //   previousResult.searchEvents[
+        //     previousResult.searchEvents.length - 1
+        //   ].events = previousResult.searchEvents[
+        //     previousResult.searchEvents.length - 1
+        //   ].events.concat(
+        //     fetchMoreResult.searchEvents[
+        //       fetchMoreResult.searchEvents.length - 1
+        //     ].events
+        //   );
+        //   //remove the pushed events from the fetch list
+        //   fetchMoreResult.searchEvents.pop();
+        // }
 
         return {
           searchEvents: [
@@ -130,6 +156,7 @@ class SearchEvents extends Component {
   };
 
   handleEnd = (previousPosition, fetchMore) => {
+    console.log(previousPosition);
     if (previousPosition === Waypoint.below) {
       this.setState(
         state => ({ skip: this.state.skip + LIMIT }),
@@ -156,32 +183,6 @@ class SearchEvents extends Component {
     );
   };
 
-  handleTextChange = city => {
-    this.setState({ city });
-  };
-
-  handleSelect = address => {
-    geocodeByAddress(address)
-      .then(results => {
-        return getLatLng(results[0]);
-      })
-      .then(latLng => {
-        this.setState({
-          lat: latLng.lat,
-          long: latLng.lng,
-          city: address
-        });
-      })
-      .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
-      });
-  };
-
   render() {
     const {
       event,
@@ -192,7 +193,7 @@ class SearchEvents extends Component {
       lat,
       long,
       maxDistance,
-      city
+      location
     } = this.state;
 
     sessionStorage.setItem(
@@ -207,31 +208,45 @@ class SearchEvents extends Component {
     );
     return (
       <div>
-        <Query
-          query={SEARCH_EVENTS}
-          variables={{ lat, long, maxDistance, all, limit: LIMIT }}
-          fetchPolicy="cache-first"
-        >
-          {({ data, loading, error, fetchMore }) => {
-            if (loading) {
-              return <Spinner message="Loading Events..." size="large" />;
-            }
-            if (!data || !data.searchEvents || data.searchEvents.length === 0) {
-              return <div>No Events Available</div>;
-            }
+        <div>
+          <Header />
+          <section className="go-events">
+            <SearchEventToolbar
+              location={location}
+              setLocationValues={this.setLocationValues}
+              handleChangeSelect={e => this.handleChangeSelect(e)}
+              reset={this.clearState}
+              maxDistance={maxDistance}
+            />
+            <MyEvents />
+            <Query
+              query={SEARCH_EVENTS}
+              variables={{ lat, long, maxDistance, all, limit: LIMIT }}
+              fetchPolicy="cache-first"
+            >
+              {({ data, loading, error, fetchMore }) => {
+                if (loading) {
+                  return <Spinner message="Loading Events..." size="large" />;
+                }
+                if (
+                  !data ||
+                  !data.searchEvents ||
+                  data.searchEvents.length === 0
+                ) {
+                  return <div>No Events Available</div>;
+                }
 
-            return (
-              <div>
-                <Header />
-                <section className="go-events">
-                  <SearchEventToolbar />
-                  <MyEvents />
-                  <EventsList events={data.searchEvents} />
-                </section>
-              </div>
-            );
-          }}
-        </Query>
+                return (
+                  <EventsList
+                    events={data.searchEvents}
+                    handleEnd={previous => this.handleEnd(previous, fetchMore)}
+                  />
+                );
+              }}
+            </Query>
+          </section>
+        </div>
+
         {event && (
           <BlockModal
             event={event}

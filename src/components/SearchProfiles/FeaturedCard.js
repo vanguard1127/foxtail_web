@@ -5,7 +5,6 @@ import ProfileActionBtns from "./ProfileActionBtns";
 
 const FeaturedCard = ({
   profile,
-  setProfile,
   showMsgModal,
   showBlockModal,
   showShareModal,
@@ -29,7 +28,6 @@ const FeaturedCard = ({
         </a>
       </div>
       <ProfileActionBtns
-        setProfile={setProfile}
         likeProfile={likeProfile}
         showMsgModal={showMsgModal}
       />

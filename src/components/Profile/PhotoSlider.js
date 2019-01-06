@@ -14,7 +14,10 @@ const PhotoSlider = ({ photos, isPublic }) => {
         margin={30}
         nav
         dots={false}
-        navText={['<i class="icon-left-open">', '<i class="icon-right-open">']}
+        navText={[
+          '<i className="icon-left-open">',
+          '<i className="icon-right-open">'
+        ]}
         lazyLoad
         autoplayTimeout={2400}
         autoplayHoverPause={false}

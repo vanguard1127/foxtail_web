@@ -30,51 +30,6 @@ const App = () => {
       </header>
 
       <main>
-        <section className="login-modal">
-          <div className="container">
-            <div className="offset-md-3 col-md-6">
-              <div className="popup">
-                <span className="head">Foxtail Login 👋</span>{" "}
-                <a className="close" />
-                <form>
-                  <div className="form-content">
-                    <div className="dropdown">
-                      <div className="dropdown">
-                        <select
-                          className="js-example-basic-single"
-                          name="countrycode[]"
-                        >
-                          <option selected>+1</option>
-                          <option>+2</option>
-                          <option>+3</option>
-                          <option>+4</option>
-                          <option>+5</option>
-                          <option>+6</option>
-                          <option>+7</option>
-                          <option>+8</option>
-                          <option>+9</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="input">
-                      <input type="text" placeholder="Phone Number" />
-                    </div>
-                    <span className="description">
-                      Foxtail Login uses Account Kit, a Facebook technology to
-                      help you sign in. You don't need a Facebook account an SMS
-                      or TEXT confirmation may be sent to verify your number.
-                      Message and data rates may apply.
-                    </span>
-                    <div className="submit">
-                      <button className="color">Use Sms</button>
-                      <button className="border">Use Whatsapp</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
         <section className="landing">
           <div className="container">
             <div className="col-md-12">

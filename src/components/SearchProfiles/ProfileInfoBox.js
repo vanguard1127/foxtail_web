@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import TimeAgo from "../../utils/TimeAgo";
 
-const ProfileInfoBox = ({ users, lastOnline }) => {
+const ProfileInfoBox = ({ users, lastOnline, distance }) => {
   let online = "";
   if (lastOnline) {
     online = TimeAgo(lastOnline);
@@ -26,7 +26,7 @@ const ProfileInfoBox = ({ users, lastOnline }) => {
               {moment().diff(users[1].dob, "years")}
             </li>
           )}
-          <li>~ 8.4 mil</li>
+          <li>~ {distance} mil</li>
         </ul>
       </span>
     </div>

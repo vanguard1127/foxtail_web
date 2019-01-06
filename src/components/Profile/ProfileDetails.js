@@ -10,16 +10,16 @@ const ProfileDetails = ({ users, profile, showShareModal, showBlockModal }) => {
   } else {
     distance = profile.distance;
   }
-  console.log(profile);
+
   return (
     <div className="data-info">
       <ul>
         <li>
           <span className="head">Gender:</span>
           <span className="data">
-            {genderOptions.find(el => el.key === users[0].gender).value}
+            {genderOptions.find(el => el.value === users[0].gender).value}
             {users[1] &&
-              genderOptions.find(el => el.key === users[1].gender).value}
+              genderOptions.find(el => el.value === users[1].gender).value}
           </span>
         </li>
         <li>
@@ -31,7 +31,7 @@ const ProfileDetails = ({ users, profile, showShareModal, showBlockModal }) => {
           <span className="data">
             {profile.interestedIn.map(
               interest =>
-                genderOptions.find(el => el.key === interest).value + ", "
+                genderOptions.find(el => el.value === interest).value + ", "
             )}
           </span>
         </li>

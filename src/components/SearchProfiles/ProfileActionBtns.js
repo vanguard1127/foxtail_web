@@ -11,18 +11,16 @@ const ProfileActionBtns = ({
       <div className="btn heart">
         <a
           href={null}
-          onClick={async () => {
-            await setProfile(profile);
-            await likeProfile();
+          onClick={() => {
+            likeProfile(profile);
           }}
         />
       </div>
       <div className="btn message">
         <a
           href={null}
-          onClick={async () => {
-            await setProfile(profile);
-            await showMsgModal();
+          onClick={() => {
+            showMsgModal(profile);
           }}
         />
       </div>

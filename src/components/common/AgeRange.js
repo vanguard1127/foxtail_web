@@ -16,7 +16,7 @@ const AgeRange = ({ value, setValue }) => {
         tipFormatter={value => `${value}`}
         className="range-con"
       />
-      <div class="limit">
+      <div className="limit">
         <span>18 years</span>
         <span>80+ years</span>
       </div>

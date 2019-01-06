@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import ProfilesDiv from "./ProfilesDiv";
-import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import Waypoint from "react-waypoint";
+import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
-import { Query, Mutation, ApolloConsumer } from "react-apollo";
+import { Query, Mutation, withApollo } from "react-apollo";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
@@ -13,7 +13,7 @@ import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
 import DirectMsgModal from "../common/DirectMsgModal";
 
-const LIMIT = 6;
+const LIMIT = 20;
 
 class ProfileSearch extends Component {
   state = {
@@ -29,11 +29,8 @@ class ProfileSearch extends Component {
     profile: null
   };
 
-  setProfile = profile => {
-    this.setState({ profile });
-  };
-
   setMsgModalVisible = (msgModalVisible, profile) => {
+    console.log("EEEE,", msgModalVisible, profile);
     if (profile) this.setState({ profile, msgModalVisible });
     else this.setState({ msgModalVisible });
   };
@@ -95,7 +92,7 @@ class ProfileSearch extends Component {
     });
   };
 
-  handleEnd = (previousPosition, fetchMore) => {
+  handleEnd = ({ previousPosition, fetchMore }) => {
     if (previousPosition === Waypoint.below) {
       this.setState(
         state => ({ skip: this.state.skip + LIMIT }),
@@ -108,8 +105,8 @@ class ProfileSearch extends Component {
     this.setState({ previewVisible: false });
   };
 
-  setLocation = ({ lat, long }) => {
-    this.setState({ long, lat });
+  setLocation = async ({ lat, long }) => {
+    await this.setState({ long, lat });
   };
 
   // removeProfile = id => {
@@ -121,6 +118,7 @@ class ProfileSearch extends Component {
   // };
 
   render() {
+    const { client } = this.props;
     const { currentuser } = this.props.session;
     const {
       long,
@@ -138,20 +136,16 @@ class ProfileSearch extends Component {
           variables={{ long, lat, limit: LIMIT }}
           fetchPolicy="cache-first"
         >
-          {({ data, loading, fetchMore, error }) => {
+          {({ data, loading, fetchMore, error, refetch }) => {
             const searchPanel = (
-              <ApolloConsumer>
-                {client => (
-                  <SearchCriteria
-                    queryParams={{ long, lat, limit: LIMIT }}
-                    client={client}
-                    isBlackMember={currentuser.blackMember.active}
-                    setQueryLoc={this.setLocation}
-                  />
-                )}
-              </ApolloConsumer>
+              <SearchCriteria
+                queryParams={{ long, lat, limit: LIMIT }}
+                client={client}
+                isBlackMember={currentuser.blackMember.active}
+                setQueryLoc={this.setLocation}
+                refetch={refetch}
+              />
             );
-
             if (loading) {
               return <Spinner message="Loading Members..." size="large" />;
             } else if (
@@ -163,7 +157,6 @@ class ProfileSearch extends Component {
               return <div>{searchPanel} No members near you</div>;
             }
             if (error) {
-              console.log(error.message);
               if (error.message.indexOf("invisible") > -1) {
                 return (
                   <div>
@@ -190,30 +183,51 @@ class ProfileSearch extends Component {
                           featuredProfiles={
                             data.searchProfiles.featuredProfiles
                           }
-                          setProfile={this.setProfile}
-                          showMsgModal={() => this.setMsgModalVisible(true)}
-                          showBlockModal={() => this.setBlockModalVisible(true)}
-                          showShareModal={() => this.setShareModalVisible(true)}
-                          likeProfile={() => this.handleLike(likeProfile)}
+                          showMsgModal={profile =>
+                            this.setMsgModalVisible(true, profile)
+                          }
+                          showBlockModal={profile =>
+                            this.setBlockModalVisible(true, profile)
+                          }
+                          showShareModal={profile =>
+                            this.setShareModalVisible(true, profile)
+                          }
+                          likeProfile={profile =>
+                            this.handleLike(likeProfile, profile)
+                          }
                           history={this.props.history}
                         />
                       )}
                       {data.searchProfiles.profiles.length !== 0 && (
                         <ProfilesDiv
                           profiles={data.searchProfiles.profiles}
-                          setProfile={this.setProfile}
-                          showMsgModal={() => this.setMsgModalVisible(true)}
-                          showBlockModal={() => this.setBlockModalVisible(true)}
-                          showShareModal={() => this.setShareModalVisible(true)}
-                          likeProfile={() => this.handleLike(likeProfile)}
+                          showMsgModal={profile =>
+                            this.setMsgModalVisible(true, profile)
+                          }
+                          showBlockModal={profile =>
+                            this.setBlockModalVisible(true, profile)
+                          }
+                          showShareModal={profile =>
+                            this.setShareModalVisible(true, profile)
+                          }
+                          likeProfile={profile =>
+                            this.handleLike(likeProfile, profile)
+                          }
                           history={this.props.history}
+                          handleEnd={({ previousPosition }) =>
+                            this.handleEnd({
+                              previousPosition,
+                              fetchMore
+                            })
+                          }
                         />
                       )}
-                      <Waypoint
-                        onEnter={({ previousPosition }) =>
-                          this.handleEnd(previousPosition, fetchMore)
-                        }
-                      />
+
+                      <div className="col-md-12">
+                        <div className="more-content-btn">
+                          <a href="#">No More Profiles</a>
+                        </div>
+                      </div>
                     </div>
                   );
                 }}
@@ -249,6 +263,8 @@ class ProfileSearch extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(
-  withRouter(withLocation(ProfileSearch))
+export default withApollo(
+  withAuth(session => session && session.currentuser)(
+    withRouter(withLocation(ProfileSearch))
+  )
 );

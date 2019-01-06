@@ -6,7 +6,6 @@ import FeaturedCard from "./FeaturedCard";
 
 const FeaturedDiv = ({
   featuredProfiles,
-  setProfile,
   showMsgModal,
   showBlockModal,
   showShareModal,
@@ -24,8 +23,8 @@ const FeaturedDiv = ({
             nav
             dots={false}
             navText={[
-              '<i class="icon-left-open">',
-              '<i class="icon-right-open">'
+              '<i className="icon-left-open">',
+              '<i className="icon-right-open">'
             ]}
             lazyLoad
             autoplayTimeout={2400}
@@ -53,7 +52,6 @@ const FeaturedDiv = ({
                 <FeaturedCard
                   key={profile.id}
                   profile={profile}
-                  setProfile={setProfile}
                   showMsgModal={showMsgModal}
                   showBlockModal={showBlockModal}
                   showShareModal={showShareModal}
