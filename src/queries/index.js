@@ -208,6 +208,10 @@ export const UPDATE_SETTINGS = gql`
     $showOnline: Boolean
     $likedOnly: Boolean
     $vibrateNotify: Boolean
+    $desires: [String]
+    $about: String
+    $publicPhotoList: [String]
+    $privatePhotoList: [String]
   ) {
     updateSettings(
       distance: $distance
@@ -224,6 +228,10 @@ export const UPDATE_SETTINGS = gql`
       showOnline: $showOnline
       likedOnly: $likedOnly
       vibrateNotify: $vibrateNotify
+      desires: $desires
+      about: $about
+      publicPhotoList: $publicPhotoList
+      privatePhotoList: $privatePhotoList
     )
   }
 `;
@@ -732,19 +740,6 @@ export const GET_SETTINGS = gql`
       likedOnly
       vibrateNotify
       couplePartner
-    }
-  }
-`;
-
-export const GENERATE_CODE = gql`
-  query {
-    generateCode
-  }
-`;
-
-export const GET_MY_PROFILE = gql`
-  query {
-    getMyProfile {
       users {
         username
         verifications {
@@ -757,12 +752,39 @@ export const GET_MY_PROFILE = gql`
         private
         id
       }
-
       about
       desires
     }
   }
 `;
+
+export const GENERATE_CODE = gql`
+  query {
+    generateCode
+  }
+`;
+
+// export const GET_MY_PROFILE = gql`
+//   query {
+//     getMyProfile {
+//       users {
+//         username
+//         verifications {
+//           photo
+//           std
+//         }
+//       }
+//       photos {
+//         url
+//         private
+//         id
+//       }
+
+//       about
+//       desires
+//     }
+//   }
+// `;
 
 export const GET_PROFILE = gql`
   query($id: ID!) {
