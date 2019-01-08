@@ -7,7 +7,9 @@ import InterestedInDropdown from "../common/InterestedInDropdown";
 import AgeRange from "../common/AgeRange";
 import AddressSearch from "../common/AddressSearch";
 import DesiresSelector from "../Modals/Desires/Selector";
+import ImageEditor from "../Modals/ImageEditor";
 
+import UploadComponent from "./UploadImageComponent";
 import DesiresModal from "../Modals/Desires/Modal";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
 const milesToKilometers = miles => miles / 0.621371;
@@ -35,6 +37,7 @@ class MyAccountForm extends Component {
     desires: [],
     showDesiresPopup: false,
     showPhotoSubPopup: false,
+    showImgEditorPopup: false,
     photoSubmitType: "",
     ...this.props.settings
   };
@@ -95,9 +98,26 @@ class MyAccountForm extends Component {
     });
   };
 
+  toggleImgEditorPopup = () => {
+    this.setState({
+      showImgEditorPopup: !this.state.showImgEditorPopup
+    });
+  };
+
   togglePhotoVerPopup = () => {
     this.setState({
       showPhotoSubPopup: !this.state.showPhotoSubPopup
+    });
+  };
+
+  SavePublicImgs = files => {
+    this.setState({
+      publicPhotoList: files
+    });
+  };
+  SavePrivateImgs = files => {
+    this.setState({
+      privatePhotoList: files
     });
   };
 
@@ -121,7 +141,8 @@ class MyAccountForm extends Component {
       desires,
       showPhotoSubPopup,
       showDesiresPopup,
-      photoSubmitType
+      photoSubmitType,
+      showImgEditorPopup
     } = this.state;
 
     const initialDistanceMetric = distanceMetric;
@@ -293,43 +314,42 @@ class MyAccountForm extends Component {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="content mtop">
-                                  <div className="row">
-                                    <div className="col-md-12">
-                                      <span className="heading">
-                                        Public Photos{" "}
-                                        <i>(No nudity please)</i>
-                                      </span>
-                                    </div>
-                                    <div className="col-md-12">
-                                      <PhotoUpload />
-                                    </div>
-                                  </div>
-                                </div> */}
-                          {/* <div className="content mtop">
-                                  <div className="row">
-                                    <div className="col-md-12">
-                                      <span className="heading">
-                                        Private Photos{" "}
-                                        <i>
-                                          - (Nudity is OK. Will only
-                                          show to matches.)
-                                        </i>
-                                      </span>
-                                    </div>
-                                    <div className="col-md-12">
-                                      <input
-                                        type="file"
-                                        className="filepond private"
-                                        name="filepond"
-                                        multiple
-                                        data-max-file-size="3MB"
-                                        data-max-files="3"
-                                      />
-                                      >
-                                    </div>
-                                  </div>
-                                </div> */}
+                          <div className="content mtop">
+                            <div className="row">
+                              <div className="col-md-12">
+                                <span className="heading">
+                                  Public Photos <i>(No nudity please)</i>
+                                </span>
+                              </div>
+                              <div className="col-md-12">
+                                <UploadComponent
+                                  max={4}
+                                  recieveImgs={this.SavePublicImgs}
+                                  showEditor={this.toggleImgEditorPopup}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="content mtop">
+                            <div className="row">
+                              <div className="col-md-12">
+                                <span className="heading">
+                                  Private Photos{" "}
+                                  <i>
+                                    - (Nudity is OK. Will only show to matches.)
+                                  </i>
+                                </span>
+                              </div>
+                              <div className="col-md-12">
+                                <UploadComponent
+                                  max={4}
+                                  recieveImgs={this.SavePrivateImgs}
+                                  showEditor={this.toggleImgEditorPopup}
+                                />
+                                >
+                              </div>
+                            </div>
+                          </div>
                           <div className="content">
                             <div className="row">
                               <div className="col-md-12">
@@ -422,6 +442,7 @@ class MyAccountForm extends Component {
                   </div>
                 </div>
               </div>
+              {showImgEditorPopup && <ImageEditor />}
               {showDesiresPopup ? (
                 <DesiresModal
                   closePopup={() => this.toggleDesiresPopup()}

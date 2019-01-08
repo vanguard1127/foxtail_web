@@ -103,74 +103,77 @@ class Settings extends Component {
     let { lang } = this.state;
 
     return (
-      <Query query={GET_SETTINGS} fetchPolicy="network-only">
-        {({ data, loading, error }) => {
-          if (loading) {
-            return <Spinner message="Loading..." size="large" />;
-          }
-          if (error) {
-            return <div>{error.message}</div>;
-          }
-          if (!data.getSettings) {
-            return <div>Error occured. Please contact support!</div>;
-          }
+      <Fragment>
+        <section className="breadcrumb settings">
+          <div className="container">
+            <div className="col-md-12">
+              <span className="head">
+                <a href="#">Hello, {session.currentuser.username} 👋</a>
+              </span>
+              <span className="title">
+                You last logged in at: 03 October 2018 13:34
+              </span>
+            </div>
+          </div>
+        </section>{" "}
+        <Query query={GET_SETTINGS} fetchPolicy="network-only">
+          {({ data, loading, error }) => {
+            if (loading) {
+              return <Spinner message="Loading..." size="large" />;
+            }
+            if (error) {
+              return <div>{error.message}</div>;
+            }
+            if (!data.getSettings) {
+              return <div>Error occured. Please contact support!</div>;
+            }
 
-          let settings;
+            let settings;
 
-          // if (Object.keys(this.props.form.getFieldsValue()).length !== 0) {
-          //   settings = this.props.form.getFieldsValue();
-          // } else {
-          settings = data.getSettings;
-          lang = settings.lang;
-          const couplePartner = settings.couplePartner;
-          //}
+            // if (Object.keys(this.props.form.getFieldsValue()).length !== 0) {
+            //   settings = this.props.form.getFieldsValue();
+            // } else {
+            settings = data.getSettings;
+            lang = settings.lang;
+            const couplePartner = settings.couplePartner;
+            //}
 
-          return (
-            <Fragment>
-              <section className="breadcrumb settings">
-                <div className="container">
-                  <div className="col-md-12">
-                    <span className="head">
-                      <a href="#">Hello, {session.currentuser.username} 👋</a>
-                    </span>
-                    <span className="title">
-                      You last logged in at: 03 October 2018 13:34
-                    </span>
-                  </div>
-                </div>
-              </section>{" "}
-              <MyAccountForm
-                settings={settings}
-                coupleModalVisible={this.coupleModalVisible}
-                blkMemberModalVisible={this.blkMemberModalVisible}
-                isChanged={this.isChanged}
-              />
-              <CoupleModal
-                visible={coupleModalVisible}
-                close={() => this.setCoupleModalVisible(false)}
-                setPartnerID={this.setPartnerID}
-                username={
-                  couplePartner !== "Add Partner" ? couplePartner : null
-                }
-              />
-              {session.currentuser.blackMember && (
-                <BlackMemberModal
-                  visible={blkMemberModalVisible}
-                  close={e => this.setBlkMemberModalVisible(e, false)}
-                  userID={session.currentuser.userID}
-                  refetchUser={this.props.refetch}
+            return (
+              <Fragment>
+                {" "}
+                <MyAccountForm
+                  settings={settings}
+                  coupleModalVisible={this.coupleModalVisible}
+                  blkMemberModalVisible={this.blkMemberModalVisible}
+                  isChanged={this.isChanged}
+                />{" "}
+                <CoupleModal
+                  visible={coupleModalVisible}
+                  close={() => this.setCoupleModalVisible(false)}
+                  setPartnerID={this.setPartnerID}
+                  username={
+                    couplePartner !== "Add Partner" ? couplePartner : null
+                  }
                 />
-              )}
-              <Prompt
-                when={isChanged}
-                message={location =>
-                  `Are you sure you want to leave without saving your changes?`
-                }
-              />
-            </Fragment>
-          );
-        }}
-      </Query>
+              </Fragment>
+            );
+          }}
+        </Query>
+        {session.currentuser.blackMember && (
+          <BlackMemberModal
+            visible={blkMemberModalVisible}
+            close={e => this.setBlkMemberModalVisible(e, false)}
+            userID={session.currentuser.userID}
+            refetchUser={this.props.refetch}
+          />
+        )}
+        <Prompt
+          when={isChanged}
+          message={location =>
+            `Are you sure you want to leave without saving your changes?`
+          }
+        />
+      </Fragment>
     );
   }
 }

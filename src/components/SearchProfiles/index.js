@@ -147,7 +147,12 @@ class ProfileSearch extends Component {
               />
             );
             if (loading) {
-              return <Spinner message="Loading Members..." size="large" />;
+              return (
+                <div>
+                  {searchPanel}{" "}
+                  <Spinner message="Loading Members..." size="large" />
+                </div>
+              );
             } else if (
               (data &&
                 data.searchProfiles.profiles.length === 0 &&
