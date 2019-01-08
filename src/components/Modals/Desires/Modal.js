@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { desireOptions } from "../../../docs/data";
+import SearchBox from "./SearchBox";
 export default class Desires extends Component {
+  state = { searchText: "" };
+  setValue = ({ name, value }) => {
+    this.setState({ [name]: value });
+  };
   render() {
+    const { searchText } = this.state;
     const { closePopup, toggleDesires, desires, updateSettings } = this.props;
 
     return (
@@ -20,34 +26,39 @@ export default class Desires extends Component {
                     <a className="close" onClick={closePopup} />
                   </div>
                   <div className="m-body desires">
+                    <SearchBox value={searchText} onChange={this.setValue} />
                     <div className="desires-list-con">
                       <ul>
-                        {desireOptions.map(option => (
-                          <li key={option.value}>
-                            <div className="select-checkbox">
-                              <input
-                                type="checkbox"
-                                id={option.value}
-                                checked={
-                                  desires.indexOf(option.value) > -1
-                                    ? true
-                                    : false
-                                }
-                                onChange={e =>
-                                  toggleDesires({
-                                    checked: e.target.checked,
-                                    value: option.value,
-                                    updateSettings
-                                  })
-                                }
-                              />
-                              <label htmlFor={option.value}>
-                                <span />
-                                <b>{option.label}</b>
-                              </label>
-                            </div>
-                          </li>
-                        ))}
+                        {desireOptions
+                          .filter(desire =>
+                            desire.label.toLowerCase().startsWith(searchText)
+                          )
+                          .map(option => (
+                            <li key={option.value}>
+                              <div className="select-checkbox">
+                                <input
+                                  type="checkbox"
+                                  id={option.value}
+                                  checked={
+                                    desires.indexOf(option.value) > -1
+                                      ? true
+                                      : false
+                                  }
+                                  onChange={e =>
+                                    toggleDesires({
+                                      checked: e.target.checked,
+                                      value: option.value,
+                                      updateSettings
+                                    })
+                                  }
+                                />
+                                <label htmlFor={option.value}>
+                                  <span />
+                                  <b>{option.label}</b>
+                                </label>
+                              </div>
+                            </li>
+                          ))}
                       </ul>
                     </div>
                   </div>

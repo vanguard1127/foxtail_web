@@ -9,9 +9,11 @@ import AddressSearch from "../common/AddressSearch";
 import DesiresSelector from "../Modals/Desires/Selector";
 
 import DesiresModal from "../Modals/Desires/Modal";
+import SubmitPhotoModal from "../Modals/SubmitPhoto";
 const milesToKilometers = miles => miles / 0.621371;
 const kilometersToMiles = kilometers => kilometers * 0.621371;
 class MyAccountForm extends Component {
+  //TODO: Do we need to have these setup?
   state = {
     distance: 100,
     distanceMetric: "mi",
@@ -32,6 +34,8 @@ class MyAccountForm extends Component {
     about: null,
     desires: [],
     showDesiresPopup: false,
+    showPhotoSubPopup: false,
+    photoSubmitType: "",
     ...this.props.settings
   };
 
@@ -60,7 +64,9 @@ class MyAccountForm extends Component {
         this.handleSubmit(updateSettings)
       );
     } else {
-      this.setState({ location: address });
+      this.setState({ location: address }, () =>
+        this.handleSubmit(updateSettings)
+      );
     }
   };
 
@@ -83,9 +89,15 @@ class MyAccountForm extends Component {
     this.setState({ [name]: value }, () => this.handleSubmit(updateSettings));
   };
 
-  togglePopup = () => {
+  toggleDesiresPopup = () => {
     this.setState({
       showDesiresPopup: !this.state.showDesiresPopup
+    });
+  };
+
+  togglePhotoVerPopup = () => {
+    this.setState({
+      showPhotoSubPopup: !this.state.showPhotoSubPopup
     });
   };
 
@@ -106,7 +118,10 @@ class MyAccountForm extends Component {
       publicPhotoList,
       privatePhotoList,
       about,
-      desires
+      desires,
+      showPhotoSubPopup,
+      showDesiresPopup,
+      photoSubmitType
     } = this.state;
 
     const initialDistanceMetric = distanceMetric;
@@ -323,7 +338,7 @@ class MyAccountForm extends Component {
                               <div className="col-md-12">
                                 <div className="item">
                                   <DesiresSelector
-                                    togglePopup={this.togglePopup}
+                                    togglePopup={this.toggleDesiresPopup}
                                     desires={desires}
                                   />
                                 </div>
@@ -335,7 +350,8 @@ class MyAccountForm extends Component {
                                       onChange={e =>
                                         this.setValue({
                                           name: "about",
-                                          value: e.target.value
+                                          value: e.target.value,
+                                          updateSettings
                                         })
                                       }
                                       value={about}
@@ -354,7 +370,7 @@ class MyAccountForm extends Component {
                                   <i>- (Verified members get more responses)</i>
                                 </span>
                               </div>
-                              <div className="col-md-12">
+                              <div className="col-md-6">
                                 <div className="verification-box">
                                   <span className="head">
                                     Photo Verification
@@ -363,18 +379,41 @@ class MyAccountForm extends Component {
                                     It is a long established fact that a reader
                                     will be…
                                   </span>
-                                  <a href="#" className="clickverify-btn photo">
+                                  <a
+                                    href="#"
+                                    className="clickverify-btn photo"
+                                    onClick={() =>
+                                      this.setState(
+                                        { photoSubmitType: "verify" },
+                                        () => this.togglePhotoVerPopup()
+                                      )
+                                    }
+                                  >
                                     Click Verification
                                   </a>
                                 </div>
                               </div>
-                              {/* <div className="col-md-6">
-                                    <div className="verification-box">
-                                        <span className="head">STD Verification</span>
-                                        <span className="title">It is a long established fact that a reader will be…</span>
-                                        <a href="#" className="clickverify-btn">Click Verification</a>
-                                    </div>
-                                </div> */}
+                              <div className="col-md-6">
+                                <div className="verification-box">
+                                  <span className="head">STD Verification</span>
+                                  <span className="title">
+                                    It is a long established fact that a reader
+                                    will be…
+                                  </span>
+                                  <a
+                                    href="#"
+                                    className="clickverify-btn"
+                                    onClick={() =>
+                                      this.setState(
+                                        { photoSubmitType: "std" },
+                                        () => this.togglePhotoVerPopup()
+                                      )
+                                    }
+                                  >
+                                    Click Verification
+                                  </a>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -383,12 +422,18 @@ class MyAccountForm extends Component {
                   </div>
                 </div>
               </div>
-              {this.state.showDesiresPopup ? (
+              {showDesiresPopup ? (
                 <DesiresModal
-                  closePopup={() => this.togglePopup()}
+                  closePopup={() => this.toggleDesiresPopup()}
                   toggleDesires={this.toggleDesires}
                   desires={desires}
                   updateSettings={updateSettings}
+                />
+              ) : null}
+              {showPhotoSubPopup ? (
+                <SubmitPhotoModal
+                  closePopup={() => this.togglePhotoVerPopup()}
+                  type={photoSubmitType}
                 />
               ) : null}
             </section>

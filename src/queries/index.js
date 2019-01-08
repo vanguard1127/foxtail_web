@@ -103,6 +103,12 @@ export const UPDATE_SUBSCRIPTION = gql`
   }
 `;
 
+export const SUBMIT_PHOTO = gql`
+  mutation($reason: String!, $photo: String!) {
+    submitPhoto(reason: $reason, photo: $photo)
+  }
+`;
+
 export const CANCEL_SUBSCRIPTION = gql`
   mutation {
     cancelSubcription
