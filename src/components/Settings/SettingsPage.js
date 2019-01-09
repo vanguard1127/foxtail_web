@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Message from "rc-message";
 import { Mutation } from "react-apollo";
 import { UPDATE_SETTINGS } from "../../queries";
 
@@ -14,8 +13,9 @@ import Verifications from "./Verifications";
 import MyProfile from "./MyProfile";
 import DesiresModal from "../Modals/Desires/Modal";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
+import CoupleModal from "../Modals/Couples";
 
-class MyAccountForm extends Component {
+class SettingsPage extends Component {
   //TODO: Do we need to have these setup?
   state = {
     distance: 100,
@@ -37,9 +37,11 @@ class MyAccountForm extends Component {
     about: null,
     desires: [],
     showDesiresPopup: false,
-    showPhotoSubPopup: false,
+    showPhotoVerPopup: false,
     showImgEditorPopup: false,
+    showCouplePopup: false,
     photoSubmitType: "",
+    includeMsgs: false,
     ...this.props.settings
   };
 
@@ -47,9 +49,9 @@ class MyAccountForm extends Component {
     updateSettings()
       .then(({ data }) => {
         if (data.updateSettings) {
-          Message.success("Settings have been saved");
+          //  Message.success("Settings have been saved");
         } else {
-          Message.error("Error saving settings. Please contact support.");
+          //Message.error("Error saving settings. Please contact support.");
         }
       })
       .catch(res => {
@@ -107,7 +109,13 @@ class MyAccountForm extends Component {
 
   togglePhotoVerPopup = () => {
     this.setState({
-      showPhotoSubPopup: !this.state.showPhotoSubPopup
+      showPhotoVerPopup: !this.state.showPhotoVerPopup
+    });
+  };
+
+  toggleCouplesPopup = () => {
+    this.setState({
+      showCouplePopup: !this.state.showCouplePopup
     });
   };
 
@@ -127,6 +135,10 @@ class MyAccountForm extends Component {
     }
   };
 
+  setPartnerID = id => {
+    this.props.form.setFieldsValue({ couplePartner: id });
+  };
+
   render() {
     const {
       location,
@@ -144,10 +156,13 @@ class MyAccountForm extends Component {
       privatePhotoList,
       about,
       desires,
-      showPhotoSubPopup,
+      showPhotoVerPopup,
       showDesiresPopup,
       photoSubmitType,
-      showImgEditorPopup
+      showImgEditorPopup,
+      showCouplePopup,
+      couplePartner,
+      includeMsgs
     } = this.state;
 
     let { lang } = this.state;
@@ -171,7 +186,9 @@ class MyAccountForm extends Component {
           publicPhotoList,
           privatePhotoList,
           about,
-          desires
+          desires,
+          couplePartner,
+          includeMsgs
         }}
       >
         {(updateSettings, { loading }) => {
@@ -183,7 +200,10 @@ class MyAccountForm extends Component {
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
                         <ProfilePic />
-                        <Menu />
+                        <Menu
+                          coupleModalToggle={this.toggleCouplesPopup}
+                          couplePartner={couplePartner}
+                        />
                       </div>
                     </div>
                     <div className="col-md-12 col-lg-9">
@@ -261,10 +281,21 @@ class MyAccountForm extends Component {
                   updateSettings={updateSettings}
                 />
               )}
-              {showPhotoSubPopup && (
+              {showPhotoVerPopup && (
                 <SubmitPhotoModal
                   closePopup={() => this.togglePhotoVerPopup()}
                   type={photoSubmitType}
+                />
+              )}
+              {showCouplePopup && (
+                <CoupleModal
+                  close={() => this.toggleCouplesPopup()}
+                  setValue={({ name, value }) =>
+                    this.setValue({ name, value, updateSettings })
+                  }
+                  username={couplePartner}
+                  includeMsgs={includeMsgs}
+                  setPartnerID={this.setPartnerID}
                 />
               )}
             </section>
@@ -275,4 +306,4 @@ class MyAccountForm extends Component {
   }
 }
 
-export default MyAccountForm;
+export default SettingsPage;

@@ -10,7 +10,7 @@ import {
 import App from "./components/App";
 import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/";
-import Settings from "./components/Settings/Settings";
+import Settings from "./components/Settings/";
 import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/ProfilePage";
 import InboxPage from "./components/Inbox/";
@@ -238,7 +238,7 @@ const Wrapper = withRouter(props => {
 });
 
 const NavBarWithSession = withSession(Navbar);
-
+//TODO:https://reacttraining.com/react-router/web/example/animated-transitions
 const Body = ({ showFooter }) => (
   <Layout className="layout">
     <header>

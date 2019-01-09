@@ -1,21 +1,13 @@
 import React from "react";
 
-const Menu = ({ selected }) => {
+const ProfilePic = ({ proPic }) => {
   return (
-    <div className="menu">
-      <ul>
-        <li className="active">
-          <a href="#">My Account</a>
-        </li>
-        <li>
-          <a href="#">Add Couple Partner</a>
-        </li>
-        <li>
-          <a href="#">Become a Black Member</a>
-        </li>
-      </ul>
+    <div className="profile-picture-content">
+      <div className="picture">
+        <input type="file" className="filepond upload-avatar" name="filepond" />
+      </div>
     </div>
   );
 };
 
-export default Menu;
+export default ProfilePic;

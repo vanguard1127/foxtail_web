@@ -218,6 +218,7 @@ export const UPDATE_SETTINGS = gql`
     $about: String
     $publicPhotoList: [String]
     $privatePhotoList: [String]
+    $includeMsgs: Boolean
   ) {
     updateSettings(
       distance: $distance
@@ -238,6 +239,7 @@ export const UPDATE_SETTINGS = gql`
       about: $about
       publicPhotoList: $publicPhotoList
       privatePhotoList: $privatePhotoList
+      includeMsgs: $includeMsgs
     )
   }
 `;
@@ -746,6 +748,7 @@ export const GET_SETTINGS = gql`
       likedOnly
       vibrateNotify
       couplePartner
+      includeMsgs
       users {
         username
         verifications {
