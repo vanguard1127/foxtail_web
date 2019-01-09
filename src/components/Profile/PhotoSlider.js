@@ -41,16 +41,14 @@ const PhotoSlider = ({ photos, isPublic }) => {
       >
         {photos.map(photo => {
           return (
-            <div className="item">
-              <a href={null}>
-                <img
-                  src={
-                    process.env.PUBLIC_URL +
-                    "/assets/img/usr/medium-avatar/1001@2x.png"
-                  }
-                  alt=""
-                />
-              </a>
+            <div className="item" key={photo.id}>
+              <img
+                src={
+                  process.env.PUBLIC_URL +
+                  "/assets/img/usr/medium-avatar/1001@2x.png"
+                }
+                alt=""
+              />
             </div>
           );
         })}

@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "antd";
 import moment from "moment";
 import UpdateSubBtn from "./UpdateSubBtn";
 import CancelSubBtn from "./CancelSubBtn";
@@ -35,9 +34,9 @@ const BlackStatus = ({
     );
   } else {
     return (
-      <Button type="primary" htmlType="submit" onClick={visible}>
+      <button type="primary" htmlType="submit" onClick={visible}>
         BECOME A BLACK MEMBER
-      </Button>
+      </button>
     );
   }
 };

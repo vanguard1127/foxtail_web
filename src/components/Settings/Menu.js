@@ -1,19 +1,19 @@
 import React from "react";
 
-const Menu = ({ selected, coupleModalToggle, couplePartner }) => {
+const Menu = ({ coupleModalToggle, couplePartner, blackModalToggle }) => {
   return (
     <div className="menu">
       <ul>
         <li className="active">
-          <a href="#">My Account</a>
+          <span>My Account</span>
         </li>
         <li>
-          <a href="#" onClick={() => coupleModalToggle()}>
+          <span onClick={() => coupleModalToggle()}>
             {couplePartner === null ? "Add Couple Partner" : couplePartner}
-          </a>
+          </span>
         </li>
         <li>
-          <a href="#">Become a Black Member</a>
+          <span onClick={() => blackModalToggle()}>Become a Black Member</span>
         </li>
       </ul>
     </div>

@@ -44,6 +44,7 @@ class SearchCriteria extends Component {
       .then(({ data }) => {
         const { lat, long } = this.state;
         //if null get location
+        //TODO: REFRESH LIST HEREs
         this.props.setQueryLoc({ lat, long });
         this.props.refetch();
         // this.props.client.resetStore();

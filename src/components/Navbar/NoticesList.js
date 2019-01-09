@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import Spinner from "../common/Spinner";
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
@@ -173,8 +172,7 @@ class NoticesList extends Component {
                     <div className="notification open">
                       {notifications.map(notif => (
                         <div className="item" key={notif.id}>
-                          <a
-                            href={null}
+                          <span
                             onClick={() =>
                               this.readAndGo({
                                 notifications: [notif.id],
@@ -199,7 +197,7 @@ class NoticesList extends Component {
                                 {moment(notif.date).fromNow()}
                               </span>
                             </div>
-                          </a>
+                          </span>
                         </div>
                       ))}
                     </div>

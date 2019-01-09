@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Collapse } from "antd";
-import { Card, Pagination } from "antd";
+import { Card } from "antd";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import { GET_MY_EVENTS } from "../../queries";
@@ -31,11 +30,11 @@ class MyEvents extends Component {
           >
             <Card
               title={
-                <a
+                <span
                   onClick={() => this.props.history.push("/events/" + item.id)}
                 >
                   {item.eventname}
-                </a>
+                </span>
               }
               style={{
                 display: "flex",

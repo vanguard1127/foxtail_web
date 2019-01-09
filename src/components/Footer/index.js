@@ -7,24 +7,24 @@ const Footer = () => {
         <div className="container">
           <div className="col-md-12">
             <div className="logo">
-              <a href="#" />
+              <span />
             </div>
             <div className="medias">
               <ul>
                 <li className="facebook">
-                  <a href="#">
+                  <span>
                     <i />
-                  </a>
+                  </span>
                 </li>
                 <li className="twitter">
-                  <a href="#">
+                  <span>
                     <i />
-                  </a>
+                  </span>
                 </li>
                 <li className="instagram">
-                  <a href="#">
+                  <span>
                     <i />
-                  </a>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -41,13 +41,13 @@ const Footer = () => {
             <div className="menu">
               <ul>
                 <li>
-                  <a href="#">Terms & Conditions</a>
+                  <span>Terms & Conditions</span>
                 </li>
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <span>Privacy Policy</span>
                 </li>
                 <li>
-                  <a href="#">Contact Us</a>
+                  <span>Contact Us</span>
                 </li>
               </ul>
             </div>

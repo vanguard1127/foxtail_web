@@ -15,7 +15,7 @@ const App = () => {
             <div className="row">
               <div className="col-md-4">
                 <div className="logo">
-                  <a href="#" />
+                  <span />
                 </div>
               </div>
               <div className="offset-md-3 col-md-5">
@@ -78,26 +78,26 @@ const App = () => {
             <div className="row">
               <div className="col-md-4">
                 <span className="created">
-                  Foxtail © 2018 Created by <a href="#">Foxtail</a>
+                  Foxtail © 2018 Created by <span>Foxtail</span>
                 </span>
               </div>
               <div className="offset-md-2 col-md-6">
                 <div className="links">
                   <ul>
                     <li>
-                      <a href="#">Terms</a>
+                      <span>Terms</span>
                     </li>
                     <li>
-                      <a href="#">Privacy</a>
+                      <span>Privacy</span>
                     </li>
                     <li>
-                      <a href="#">FAQ</a>
+                      <span>FAQ</span>
                     </li>
                     <li>
-                      <a href="#">About</a>
+                      <span>About</span>
                     </li>
                     <li>
-                      <a href="#">Support</a>
+                      <span>Support</span>
                     </li>
                   </ul>
                 </div>

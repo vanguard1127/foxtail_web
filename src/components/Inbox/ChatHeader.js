@@ -24,15 +24,15 @@ const ChatHeader = ({ currentChat, currentuser }) => {
     <div className="navbar">
       <div className="user">
         <div className="avatar">
-          <a href="#">
-            <img src="assets/img/usr/avatar/1001@2x.png" alt />
-          </a>
+          <span>
+            <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+          </span>
         </div>
         <span className="name couple">
-          <a href="#">
+          <span>
             {chatTitle}
             {chatTitleExtra}
-          </a>
+          </span>
         </span>
         <span className="last-seen online">{chatLastSeen}</span>
       </div>
@@ -40,13 +40,13 @@ const ChatHeader = ({ currentChat, currentuser }) => {
       <div className="more-dropdown">
         <ul>
           <li>
-            <a href="#">Search for Conversation</a>
+            <span>Search for Conversation</span>
           </li>
           <li>
-            <a href="#">Delete the Conversation</a>
+            <span>Delete the Conversation</span>
           </li>
           <li>
-            <a href="#">Report the Conversation</a>
+            <span>Report the Conversation</span>
           </li>
         </ul>
       </div>

@@ -6,31 +6,12 @@ import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
 import { sexOptions } from "../../docs/data";
 import withAuth from "../withAuth";
-import BlackMemberModal from "../common/BlackMemberModal";
 
 import SettingsPage from "./SettingsPage";
 
 class Settings extends Component {
-  state = {
-    coupleModalVisible: false,
-    blkMemberModalVisible: false,
-    isChanged: false,
-    lang: "en",
-    newDistanceMetric: null,
-    lat: null,
-    long: null,
-    location: null
-  };
-
-  setBlkMemberModalVisible = (e, blkMemberModalVisible) => {
-    e.preventDefault();
-    this.setState({ blkMemberModalVisible });
-    this.handleFormChange();
-  };
-
   render() {
-    const { session } = this.props;
-    const { coupleModalVisible, blkMemberModalVisible, isChanged } = this.state;
+    const { session, refetch } = this.props;
 
     return (
       <Fragment>
@@ -62,24 +43,11 @@ class Settings extends Component {
 
             return (
               <Fragment>
-                {" "}
-                <SettingsPage
-                  settings={settings}
-                  coupleModalToggle={this.toggleCouplesPopup}
-                  blkMemberModalVisible={this.blkMemberModalVisible}
-                />
+                <SettingsPage settings={settings} refetchUser={refetch} />
               </Fragment>
             );
           }}
         </Query>
-        {session.currentuser.blackMember && (
-          <BlackMemberModal
-            visible={blkMemberModalVisible}
-            close={e => this.setBlkMemberModalVisible(e, false)}
-            userID={session.currentuser.userID}
-            refetchUser={this.props.refetch}
-          />
-        )}
       </Fragment>
     );
   }

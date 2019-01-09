@@ -42,10 +42,10 @@ const ProfileDetails = ({ users, profile, showShareModal, showBlockModal }) => {
       </ul>
       <div className="functions">
         <div className="share btn">
-          <a href="#" onClick={() => showShareModal()} />
+          <span onClick={() => showShareModal()} />
         </div>
         <div className="report btn">
-          <a href="#" onClick={() => showBlockModal()} />
+          <span onClick={() => showBlockModal()} />
         </div>
       </div>
     </div>

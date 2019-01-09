@@ -4,9 +4,7 @@ const InboxHeader = () => {
     <section className="breadcrumb">
       <div className="container">
         <div className="col-md-12">
-          <span className="head">
-            <a href="#">Inbox</a>
-          </span>
+          <span className="head">Inbox</span>
           <span className="title">
             Chat with members, be yourself, have fun, follow the{" "}
             <a href={null}>rules</a>.{" "}

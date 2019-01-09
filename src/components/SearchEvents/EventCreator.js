@@ -3,10 +3,7 @@ import { withRouter } from "react-router-dom";
 const EventCreator = ({ ownerProfile, history }) => {
   return (
     <div className="created">
-      <a
-        href={null}
-        onClick={() => history.push("/members/" + ownerProfile.id)}
-      >
+      <span onClick={() => history.push("/members/" + ownerProfile.id)}>
         <span className="avatar">
           <img
             src={
@@ -18,7 +15,7 @@ const EventCreator = ({ ownerProfile, history }) => {
           />
         </span>
         <span className="name">{ownerProfile.profileName}</span>
-      </a>
+      </span>
     </div>
   );
 };

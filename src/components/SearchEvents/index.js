@@ -6,7 +6,7 @@ import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
-import { Button, message, BackTop, Input, Select, Tooltip } from "antd";
+import { message } from "antd";
 import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
 import MyEvents from "./MyEvents";

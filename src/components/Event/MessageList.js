@@ -1,77 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Waypoint from "react-waypoint";
 import Message from "./Message.js";
 import { List } from "antd";
-import moment from "moment";
-import _ from "lodash";
 
-class DateItem extends Component {
-  state = {
-    position: null
-  };
-  componentDidMount() {
-    // When Waypoint mountsit only calls waypoints on screen. But the parent needs
-    // to know everyone's position. So we asume position = above if waypoint did called
-    if (!this.state.position) {
-      this.setState({
-        position: "above"
-      });
-      if (this.props.onAbove) this.props.onAbove();
-    }
-  }
-  onEnter = ({ previousPosition, currentPosition }) => {
-    if (currentPosition === Waypoint.inside) {
-      this.setState({
-        position: "inside"
-      });
-      if (this.props.onInside) this.props.onInside();
-    }
-  };
-  onLeave = ({ previousPosition, currentPosition }) => {
-    if (currentPosition === Waypoint.above) {
-      this.setState({
-        position: "above"
-      });
-      if (this.props.onAbove) this.props.onAbove();
-    }
-  };
-  renderDate({ style = {}, children }) {
-    return (
-      <div
-        style={{
-          margin: "0 -20px 0 -20px",
-          background: "#ffffff70",
-          padding: "20px 0",
-          textAlign: "center",
-          ...style
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-  render() {
-    const { stickZIndex, showDate, children } = this.props;
-    const stickStyles = {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: stickZIndex || 10,
-      backgroundColor: "#add8e6",
-      padding: "20px 37px 20px 20px",
-      margin: "0 17px 0 0"
-    };
-
-    return (
-      <Fragment>
-        <Waypoint bottom="100%" onEnter={this.onEnter} onLeave={this.onLeave} />
-        {this.renderDate({ style: {}, children })}
-        {showDate ? this.renderDate({ style: stickStyles, children }) : null}
-      </Fragment>
-    );
-  }
-}
 class MessageList extends Component {
   constructor(props) {
     super(props);
@@ -262,7 +193,7 @@ class MessageList extends Component {
   render() {
     const { loading } = this.state;
     const { messages, hasMoreItems, children, history } = this.props;
-    console.log("MESSGAE:", messages);
+
     const messageElements = messages.map(message => {
       return <Message key={message.id} message={message} history={history} />;
     });

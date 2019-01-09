@@ -5,14 +5,12 @@ import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE, LOGIN } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
 import { withNamespaces } from "react-i18next";
-// import { Form, Select, Radio, message } from "antd";
 import Message from "rc-message";
 import { Formik, Field, Form } from "formik";
-// import Moustache from "../../images/moustache.svg"; // path to your '*.svg' file.
-// import LipsSvg from "../../images/lips.svg"; // path to your '*.svg' file.
 import InterestedInDropdown from "../common/InterestedInDropdown";
 import GenderDropdown from "../common/GenderDropdown";
 import BirthDatePicker from "./BirthDatePicker";
+import Select from "../common/Select";
 
 const initialState = {
   username: "",
@@ -93,7 +91,7 @@ class Signup extends React.Component {
 
                   if (isCouple) {
                     this.clearState();
-                    await this.props.history.push("/editprofile/" + "couple");
+                    await this.props.history.push("/editprofile/couple");
                   } else {
                     this.clearState();
                     await this.props.history.push("/editprofile");
@@ -148,38 +146,53 @@ class Signup extends React.Component {
 
   testCreateUser = createUser => {
     const { isCouple } = this.state;
-    createUser()
-      .then(async ({ data }) => {
-        if (data.createUser === null) {
-          Message.warn("Signup failed.");
-          return;
-        }
-        localStorage.setItem(
-          "token",
-          data.createUser.find(token => token.access === "auth").token
-        );
-        localStorage.setItem(
-          "refreshToken",
-          data.createUser.find(token => token.access === "refresh").token
-        );
 
-        if (isCouple) {
-          this.clearState();
-          window.location.href = "/editprofile/couple";
-          //await this.props.history.push("/editprofile/" + "couple");
-        } else {
-          this.clearState();
-          window.location.href = "/editprofile";
-          //await this.props.history.push("/editprofile");
-        }
-      })
-      .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
-      });
+    const max = 1000;
+    const rand = Math.floor(Math.random() * max);
+    this.setState(
+      {
+        phone: rand.toString(),
+        username: "TEST USER",
+        email: rand.toString() + "@fjfj.com",
+        dob: "12/12/1990",
+        interestedIn: ["M"],
+        gender: "M",
+        isCouple: false,
+        lang: "en"
+      },
+      createUser()
+        .then(async ({ data }) => {
+          if (data.createUser === null) {
+            Message.warn("Signup failed.");
+            return;
+          }
+          localStorage.setItem(
+            "token",
+            data.createUser.find(token => token.access === "auth").token
+          );
+          localStorage.setItem(
+            "refreshToken",
+            data.createUser.find(token => token.access === "refresh").token
+          );
+
+          if (isCouple) {
+            this.clearState();
+            window.location.href = "/editprofile/couple";
+            //await this.props.history.push("/editprofile/" + "couple");
+          } else {
+            this.clearState();
+            window.location.href = "/editprofile";
+            //await this.props.history.push("/editprofile");
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+        })
+    );
   };
 
   handleLangChange = value => {
@@ -190,6 +203,7 @@ class Signup extends React.Component {
     this.setState({ [name]: value });
   };
 
+  //TODO:DELETE THIS
   handleLogin = login => {
     login()
       .then(async ({ data }) => {
@@ -223,7 +237,7 @@ class Signup extends React.Component {
   render() {
     const { t } = this.props;
 
-    const {
+    let {
       csrf,
       code,
       phone,
@@ -232,26 +246,25 @@ class Signup extends React.Component {
       dob,
       interestedIn,
       lang,
-      gender
+      gender,
+      isCouple
     } = this.state;
 
     return (
       <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
         {fbResolve => {
-          const max = 1000;
-          const rand = Math.floor(Math.random() * max);
           return (
             <Mutation
               mutation={CREATE_USER}
               variables={{
-                phone: rand.toString(),
-                username: "TEST USER",
-                email: rand.toString() + "@fjfj.com",
-                dob: "12/12/1990",
-                interestedIn: ["M"],
-                gender: "M",
-                isCouple: false,
-                lang: "en"
+                phone,
+                username,
+                email,
+                dob,
+                interestedIn,
+                gender,
+                isCouple,
+                lang
               }}
             >
               {(createUser, { loading }) => {
@@ -288,31 +301,34 @@ class Signup extends React.Component {
                                 type="email"
                               />
                             </div>
-                            <div className="input birthday">
-                              <BirthDatePicker />
-                            </div>
-
-                            <GenderDropdown
-                              setValue={el =>
-                                this.setValue({
-                                  name: "interestedIn",
-                                  value: el
-                                })
-                              }
-                              value={interestedIn}
-                              placeholder={"Gender:"}
+                            <BirthDatePicker
+                              onDayChange={date => this.setState({ dob: date })}
                             />
 
-                            <InterestedInDropdown
-                              setValue={el =>
-                                this.setValue({
-                                  name: "interestedIn",
-                                  value: el
-                                })
-                              }
-                              value={interestedIn}
-                              placeholder={"Interested In:"}
+                            <Select
+                              label="Interested In:"
+                              onChange={e => console.log(e)}
+                              options={[
+                                { label: "Female", value: "female" },
+                                { label: "Male", value: "male" },
+                                { label: "Transgender", value: "trans" },
+                                { label: "Cuple", value: "couple" }
+                              ]}
                             />
+
+                            <Select
+                              className="test"
+                              onChange={e => console.log(e)}
+                              multiple
+                              label="Gender Select:"
+                              defaultOptionValues={["m", "c"]}
+                              options={[
+                                { label: "Female", value: "f" },
+                                { label: "Male", value: "m" },
+                                { label: "Couple", value: "c" }
+                              ]}
+                            />
+
                             <div className="couple-choose">
                               <div className="select-checkbox">
                                 <input type="checkbox" id="cbox" />
@@ -323,20 +339,17 @@ class Signup extends React.Component {
                               </div>
                             </div>
                             <div className="submit">
-                              <a className="btn" href="#">
-                                Get Started
-                              </a>
+                              <span className="btn">Get Started</span>
                             </div>
 
                             <div className="terms">
                               By clicking “Get Started“ you agree with our
-                              <a href="#">Terms & Privacy</a> <br />
-                              <a
-                                href={null}
+                              <span>Terms & Privacy</span> <br />
+                              <span
                                 onClick={() => this.testCreateUser(createUser)}
                               >
                                 Test Create
-                              </a>
+                              </span>
                               <br />
                               <br />
                               Test Users:
@@ -344,8 +357,7 @@ class Signup extends React.Component {
                                 {(login, { loading, error }) => {
                                   return (
                                     <div>
-                                      <a
-                                        href={null}
+                                      <span
                                         onClick={() => {
                                           this.setState({ phone: "1" }, () => {
                                             this.handleLogin(login);
@@ -353,9 +365,8 @@ class Signup extends React.Component {
                                         }}
                                       >
                                         1
-                                      </a>{" "}
-                                      <a
-                                        href={null}
+                                      </span>{" "}
+                                      <span
                                         onClick={() => {
                                           this.setState({ phone: "2" }, () => {
                                             this.handleLogin(login);
@@ -363,8 +374,8 @@ class Signup extends React.Component {
                                         }}
                                       >
                                         2
-                                      </a>{" "}
-                                      <a
+                                      </span>{" "}
+                                      <span
                                         href={null}
                                         onClick={() => {
                                           this.setState({ phone: "3" }, () => {
@@ -373,18 +384,16 @@ class Signup extends React.Component {
                                         }}
                                       >
                                         3
-                                      </a>{" "}
-                                      <a
-                                        href={null}
+                                      </span>{" "}
+                                      <span
                                         onClick={() => {
                                           this.setState({ phone: "4" });
                                           this.handleLogin(login);
                                         }}
                                       >
                                         4
-                                      </a>
-                                      <a
-                                        href={null}
+                                      </span>
+                                      <span
                                         onClick={() => {
                                           this.setState({ phone: "5" }, () => {
                                             this.handleLogin(login);
@@ -392,7 +401,7 @@ class Signup extends React.Component {
                                         }}
                                       >
                                         5
-                                      </a>
+                                      </span>
                                     </div>
                                   );
                                 }}

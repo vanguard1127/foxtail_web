@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
-import { Icon, Button } from "antd";
 import withAuth from "../withAuth";
 import { s3url } from "../../docs/data";
 import DesiresSection from "./DesiresSection";
@@ -16,8 +15,6 @@ import PhotoSlider from "./PhotoSlider";
 import BlockModal from "../common/BlockModal";
 import ShareModal from "../common/ShareModal";
 import DirectMsgModal from "../common/DirectMsgModal";
-
-const ButtonGroup = Button.Group;
 
 class ProfilePage extends Component {
   state = {

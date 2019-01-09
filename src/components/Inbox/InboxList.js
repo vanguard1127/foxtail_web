@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { Badge, Avatar, List, Divider } from "antd";
 import TimeAgo from "../../utils/TimeAgo";
 
 class InboxList extends Component {

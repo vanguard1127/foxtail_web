@@ -3,19 +3,17 @@ const ProfileActions = ({ profile, setProfile, likeProfile, showMsgModal }) => {
   return (
     <div className="functions">
       <div className="btn send-msg">
-        <a
-          href="#"
+        <span
           onClick={async () => {
             await setProfile(profile);
             await showMsgModal();
           }}
         >
           Send Message
-        </a>
+        </span>
       </div>
       <div className="btn heart">
-        <a
-          href="#"
+        <span
           onClick={async () => {
             await setProfile(profile);
             await likeProfile();

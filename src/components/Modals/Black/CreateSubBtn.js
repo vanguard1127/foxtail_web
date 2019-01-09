@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { CREATE_SUBSCRIPTION } from "../../queries";
+import { CREATE_SUBSCRIPTION } from "../../../queries";
 import { Mutation } from "react-apollo";
 import { message } from "antd";
 import StripeCheckout from "react-stripe-checkout";

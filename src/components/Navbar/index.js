@@ -129,16 +129,16 @@ class NavbarAuth extends Component {
                     <NavLink to="/inbox">Inbox</NavLink>
                   </li>
                   <li>
-                    <a href="#">Becoma a Black Member</a>
+                    <span>Becoma a Black Member</span>
                   </li>
                   <li>
-                    <a href="#">My Account</a>
+                    <span>My Account</span>
                   </li>
                   <li>
-                    <a href="#">Add Couple Partner</a>
+                    <span>Add Couple Partner</span>
                   </li>
                   <li>
-                    <a href="#">Logout</a>
+                    <span>Logout</span>
                   </li>
                 </ul>
               </div>
@@ -155,7 +155,7 @@ class NavbarAuth extends Component {
             </div>
             <div className="col-md-2 col-12">
               <div className="logo">
-                <a href="#" />
+                <span />
               </div>
             </div>
             <div className="col-md-5 flexible">

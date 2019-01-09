@@ -6,18 +6,18 @@ const ChatInfo = ({ profileID, chatID }) => {
         <div className="head" />
         <div className="content">
           <div className="visit-profile">
-            <a href="#">Visit Profile</a>
+            <span>Visit Profile</span>
           </div>
           <div className="functions">
             <ul>
               <li className="search">
-                <a href="#">Search for Conversation</a>
+                <span>Search for Conversation</span>
               </li>
               <li className="delete">
-                <a href="#">Delete the Conversation</a>
+                <span>Delete the Conversation</span>
               </li>
               <li className="report">
-                <a href="#">Report the Conversation</a>
+                <span>Report the Conversation</span>
               </li>
             </ul>
           </div>

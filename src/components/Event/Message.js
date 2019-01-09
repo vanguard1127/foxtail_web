@@ -6,10 +6,7 @@ const Message = React.forwardRef(({ message, history }, ref) => {
   return (
     <div className="item" ref={ref}>
       <span className="avatar">
-        <a
-          href={null}
-          onClick={() => history.push("/members/" + message.fromUser.id)}
-        >
+        <span onClick={() => history.push("/members/" + message.fromUser.id)}>
           <img
             src={
               message.profilePic !== ""
@@ -18,17 +15,14 @@ const Message = React.forwardRef(({ message, history }, ref) => {
             }
             alt=""
           />
-        </a>
+        </span>
       </span>
       <div className="info">
         <span className="name">
-          <a
-            href={null}
-            onClick={() => history.push("/members/" + message.fromUser.id)}
-          >
+          <span onClick={() => history.push("/members/" + message.fromUser.id)}>
             {" "}
             {message.fromUser.username}
-          </a>
+          </span>
         </span>
         <span className="date">
           {" "}

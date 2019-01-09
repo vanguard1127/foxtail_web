@@ -4,9 +4,7 @@ const EventHeader = () => {
     <section className="breadcrumb">
       <div className="container">
         <div className="col-md-12">
-          <span className="head">
-            <a href="#">Go to Events</a>
-          </span>
+          <span className="head">Go to Events</span>
           <span className="title">
             It is a long established fact that a reader will be distracted by
             the readable content of a page when looking at its layout.{" "}

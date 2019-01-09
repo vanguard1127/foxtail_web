@@ -3,10 +3,7 @@ import moment from "moment";
 const EventCreator = ({ ownerProfile, createdAt, history }) => {
   return (
     <div className="created">
-      <a
-        href={null}
-        onClick={() => history.push("/members/" + ownerProfile.id)}
-      >
+      <span onClick={() => history.push("/members/" + ownerProfile.id)}>
         <span className="avatar">
           <img
             src={
@@ -26,7 +23,7 @@ const EventCreator = ({ ownerProfile, createdAt, history }) => {
               .toString()}
           </span>
         </div>
-      </a>
+      </span>
     </div>
   );
 };

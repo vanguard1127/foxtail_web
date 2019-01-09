@@ -4,7 +4,6 @@
   "rules": {
     "prettier/prettier": "error",
     "react/display-name": [false],
-    "react/prop-types": [false],
-    "jsx-a11y/anchor-is-valid": [false]
+    "react/prop-types": [false]
   }
 }

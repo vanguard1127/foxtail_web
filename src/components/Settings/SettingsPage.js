@@ -14,6 +14,7 @@ import MyProfile from "./MyProfile";
 import DesiresModal from "../Modals/Desires/Modal";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
 import CoupleModal from "../Modals/Couples";
+import BlackModal from "../Modals/Black";
 
 class SettingsPage extends Component {
   //TODO: Do we need to have these setup?
@@ -38,6 +39,7 @@ class SettingsPage extends Component {
     desires: [],
     showDesiresPopup: false,
     showPhotoVerPopup: false,
+    showBlackPopup: false,
     showImgEditorPopup: false,
     showCouplePopup: false,
     photoSubmitType: "",
@@ -119,6 +121,12 @@ class SettingsPage extends Component {
     });
   };
 
+  toggleBlackPopup = () => {
+    this.setState({
+      showBlackPopup: !this.state.showBlackPopup
+    });
+  };
+
   openPhotoVerPopup = type => {
     this.setState({ photoSubmitType: type }, () => this.togglePhotoVerPopup());
   };
@@ -161,11 +169,13 @@ class SettingsPage extends Component {
       photoSubmitType,
       showImgEditorPopup,
       showCouplePopup,
+      showBlackPopup,
       couplePartner,
-      includeMsgs
+      includeMsgs,
+      lang
     } = this.state;
 
-    let { lang } = this.state;
+    const { userID } = this.props;
 
     return (
       <Mutation
@@ -203,6 +213,7 @@ class SettingsPage extends Component {
                         <Menu
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}
+                          blackModalToggle={this.toggleBlackPopup}
                         />
                       </div>
                     </div>
@@ -296,6 +307,13 @@ class SettingsPage extends Component {
                   username={couplePartner}
                   includeMsgs={includeMsgs}
                   setPartnerID={this.setPartnerID}
+                />
+              )}
+              {showBlackPopup && (
+                <BlackModal
+                  close={() => this.toggleBlackPopup()}
+                  userID={userID}
+                  refetchUser={this.props.refetch}
                 />
               )}
             </section>
