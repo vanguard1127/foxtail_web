@@ -45,6 +45,7 @@ export default class AddressSearch extends React.Component {
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
           return (
             <div className="dropdown">
+              {/* <label>Location</label> */}
               <input
                 {...getInputProps({
                   placeholder: "Search Places ...",

@@ -15,7 +15,7 @@ const EventInfo = ({
   }
 }) => {
   return (
-    <mm className="event-info-content hid-mobile">
+    <div className="event-info-content hid-mobile">
       <div className="event-image">
         <a href="assets/img/events/1001@2x.png">
           <img src="/assets/img/events/1001@2x.png" alt="" />
@@ -60,7 +60,7 @@ const EventInfo = ({
         </li>
       </ul>
       <AttendEvent id={id} participants={participants} />
-    </mm>
+    </div>
   );
 };
 
