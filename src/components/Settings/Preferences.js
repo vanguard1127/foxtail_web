@@ -16,7 +16,8 @@ class Preferences extends Component {
       ageRange,
       interestedIn,
       distanceMetric,
-      location
+      location,
+      setValue
     } = this.props;
     const distanceSliderMax =
       distanceMetric === "mi" ? 100 : Math.floor(milesToKilometers(100));
@@ -39,7 +40,7 @@ class Preferences extends Component {
             <DistanceSlider
               value={distance}
               setValue={el =>
-                this.setValue({
+                setValue({
                   name: "distance",
                   value: el,
                   updateSettings
@@ -51,7 +52,7 @@ class Preferences extends Component {
             <AgeRange
               value={ageRange}
               setValue={el =>
-                this.setValue({
+                setValue({
                   name: "ageRange",
                   value: el,
                   updateSettings
@@ -70,7 +71,7 @@ class Preferences extends Component {
                       id="distance"
                       checked={distanceMetric === "mi" ? true : false}
                       onChange={e => {
-                        this.setValue({
+                        setValue({
                           name: "distanceMetric",
                           value: distanceMetric === "km" ? "mi" : "km",
                           updateSettings
@@ -86,7 +87,7 @@ class Preferences extends Component {
           <div className="col-md-6">
             <InterestedInDropdown
               setValue={el =>
-                this.setValue({
+                setValue({
                   name: "interestedIn",
                   value: el,
                   updateSettings

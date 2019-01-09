@@ -194,6 +194,7 @@ class MyAccountForm extends Component {
                             interestedIn={interestedIn}
                             distanceMetric={distanceMetric}
                             location={location}
+                            setValue={this.setValue}
                           />
                           <Photos
                             isPrivate={false}
@@ -214,8 +215,9 @@ class MyAccountForm extends Component {
                             updateSettings={updateSettings}
                             about={about}
                             showPopup={this.toggleDesiresPopup}
+                            setValue={this.setValue}
                           />
-                          <AppSettings />
+                          <AppSettings setValue={this.setValue} />
                           <Verifications />
                         </div>
                       </div>

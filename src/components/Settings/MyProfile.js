@@ -19,7 +19,7 @@ const MyProfile = ({ desires, updateSettings, about, showPopup }) => {
               <label>Profile Bio:</label>
               <textarea
                 onChange={e =>
-                  this.setValue({
+                  setValue({
                     name: "about",
                     value: e.target.value,
                     updateSettings
