@@ -85,7 +85,9 @@ class SearchCriteria extends Component {
 
   setLocationValues = ({ lat, long, address, updateSettings }) => {
     this.setState({ lat, long, location: address });
-    this.handleSubmit(updateSettings);
+    if (lat && long) {
+      this.handleSubmit(updateSettings);
+    }
   };
 
   setValue = ({ name, value, updateSettings }) => {
