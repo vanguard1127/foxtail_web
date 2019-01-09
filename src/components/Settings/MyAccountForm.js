@@ -111,6 +111,10 @@ class MyAccountForm extends Component {
     });
   };
 
+  openPhotoVerPopup = type => {
+    this.setState({ photoSubmitType: type }, () => this.togglePhotoVerPopup());
+  };
+
   savePics = ({ files, isPrivate }) => {
     if (isPrivate) {
       this.setState({
@@ -127,7 +131,6 @@ class MyAccountForm extends Component {
     const {
       location,
       visible,
-      newMsgNotify,
       emailNotify,
       showOnline,
       likedOnly,
@@ -159,7 +162,6 @@ class MyAccountForm extends Component {
           interestedIn,
           location,
           visible,
-          newMsgNotify,
           lang,
           emailNotify,
           showOnline,
@@ -188,13 +190,24 @@ class MyAccountForm extends Component {
                       <div className="page mtop">
                         <div className="form">
                           <Preferences
-                            distance={distance}
-                            updateSettings={updateSettings}
-                            ageRange={ageRange}
-                            interestedIn={interestedIn}
-                            distanceMetric={distanceMetric}
-                            location={location}
-                            setValue={this.setValue}
+                            values={{
+                              distance,
+                              distanceMetric,
+                              ageRange,
+                              interestedIn,
+                              location
+                            }}
+                            setValue={({ name, value }) =>
+                              this.setValue({ name, value, updateSettings })
+                            }
+                            setLocationValues={({ lat, long, address }) =>
+                              this.setLocationValues({
+                                lat,
+                                long,
+                                address,
+                                updateSettings
+                              })
+                            }
                           />
                           <Photos
                             isPrivate={false}
@@ -212,13 +225,27 @@ class MyAccountForm extends Component {
                           />
                           <MyProfile
                             desires={desires}
-                            updateSettings={updateSettings}
                             about={about}
-                            showPopup={this.toggleDesiresPopup}
-                            setValue={this.setValue}
+                            togglePopup={this.toggleDesiresPopup}
+                            setValue={({ name, value }) =>
+                              this.setValue({ name, value, updateSettings })
+                            }
                           />
-                          <AppSettings setValue={this.setValue} />
-                          <Verifications />
+                          <AppSettings
+                            setValue={({ name, value }) =>
+                              this.setValue({ name, value, updateSettings })
+                            }
+                            values={{
+                              visible,
+                              lang,
+                              emailNotify,
+                              showOnline,
+                              likedOnly
+                            }}
+                          />
+                          <Verifications
+                            openPhotoVerPopup={this.openPhotoVerPopup}
+                          />
                         </div>
                       </div>
                     </div>

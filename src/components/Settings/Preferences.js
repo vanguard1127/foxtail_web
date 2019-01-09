@@ -10,15 +10,14 @@ class Preferences extends Component {
     //See if prev props and current props mean calculacte
   }
   render() {
+    const { values, setValue, setLocationValues } = this.props;
     const {
       distance,
-      updateSettings,
+      distanceMetric,
       ageRange,
       interestedIn,
-      distanceMetric,
-      location,
-      setValue
-    } = this.props;
+      location
+    } = values;
     const distanceSliderMax =
       distanceMetric === "mi" ? 100 : Math.floor(milesToKilometers(100));
 
@@ -42,8 +41,7 @@ class Preferences extends Component {
               setValue={el =>
                 setValue({
                   name: "distance",
-                  value: el,
-                  updateSettings
+                  value: el
                 })
               }
             />
@@ -54,8 +52,7 @@ class Preferences extends Component {
               setValue={el =>
                 setValue({
                   name: "ageRange",
-                  value: el,
-                  updateSettings
+                  value: el
                 })
               }
             />
@@ -73,8 +70,7 @@ class Preferences extends Component {
                       onChange={e => {
                         setValue({
                           name: "distanceMetric",
-                          value: distanceMetric === "km" ? "mi" : "km",
-                          updateSettings
+                          value: distanceMetric === "km" ? "mi" : "km"
                         });
                       }}
                     />
@@ -89,8 +85,7 @@ class Preferences extends Component {
               setValue={el =>
                 setValue({
                   name: "interestedIn",
-                  value: el,
-                  updateSettings
+                  value: el
                 })
               }
               value={interestedIn}
@@ -103,11 +98,10 @@ class Preferences extends Component {
               <AddressSearch
                 style={{ width: 150 }}
                 setLocationValues={({ lat, long, address }) =>
-                  this.setLocationValues({
+                  setLocationValues({
                     lat,
                     long,
-                    address,
-                    updateSettings
+                    address
                   })
                 }
                 address={location}

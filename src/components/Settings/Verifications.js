@@ -1,6 +1,6 @@
 import React from "react";
 
-const Verifications = () => {
+const Verifications = ({ openPhotoVerPopup }) => {
   return (
     <div className="content mtop">
       <div className="row">
@@ -18,11 +18,7 @@ const Verifications = () => {
             <a
               href="#"
               className="clickverify-btn photo"
-              onClick={() =>
-                this.setState({ photoSubmitType: "verify" }, () =>
-                  this.togglePhotoVerPopup()
-                )
-              }
+              onClick={() => openPhotoVerPopup("verify")}
             >
               Click Verification
             </a>
@@ -37,11 +33,7 @@ const Verifications = () => {
             <a
               href="#"
               className="clickverify-btn"
-              onClick={() =>
-                this.setState({ photoSubmitType: "std" }, () =>
-                  this.togglePhotoVerPopup()
-                )
-              }
+              onClick={() => openPhotoVerPopup("std")}
             >
               Click Verification
             </a>
