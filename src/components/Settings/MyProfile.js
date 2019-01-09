@@ -1,7 +1,7 @@
 import React from "react";
 import DesiresSelector from "../Modals/Desires/Selector";
 
-const MyProfile = ({ desires, updateSettings, about, showPopup }) => {
+const MyProfile = ({ desires, updateSettings, about, showPopup, setValue }) => {
   return (
     <div className="content">
       <div className="row">
