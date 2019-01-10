@@ -74,8 +74,7 @@ class SearchEvents extends Component {
   };
 
   handleChangeSelect = e => {
-    e.preventDefault();
-    this.setState({ maxDistance: parseInt(e.target.value) });
+    this.setState({ maxDistance: parseInt(e.value) });
   };
 
   setLocationValues = ({ lat, long, address }) => {

@@ -177,7 +177,7 @@ class SearchCriteria extends Component {
                                   <div className="col-md-6">
                                     <div className="item">
                                       <InterestedInDropdown
-                                        setValue={el =>
+                                        onChange={el =>
                                           this.setValue({
                                             name: "interestedIn",
                                             value: el,

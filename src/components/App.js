@@ -21,7 +21,7 @@ const App = () => {
               <div className="offset-md-3 col-md-5">
                 <div className="content">
                   <LoginButton />
-                  <LanguageControl lang={"en"} />
+                  <LanguageControl />
                 </div>
               </div>
             </div>

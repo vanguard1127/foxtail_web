@@ -1,4 +1,5 @@
 import React from "react";
+import Select from "../common/Select";
 
 const AppSettings = ({
   setValue,
@@ -13,24 +14,23 @@ const AppSettings = ({
 
         <div className="col-md-12">
           <div className="item">
-            <div className="dropdown">
-              <select
-                className="js-example-basic-single"
-                name="states[]"
-                value={lang}
-                onChange={e => {
-                  setValue({
-                    name: "lang",
-                    value: e.target.value
-                  });
-                }}
-              >
-                <option value="en">English</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-              </select>
-              <label>Language</label>
-            </div>
+            <Select
+              onChange={e => {
+                setValue({
+                  name: "lang",
+                  value: e.value
+                });
+              }}
+              label="Language"
+              defaultOptionValue={lang}
+              options={[
+                { label: "English", value: "en" },
+                { label: "Spanish", value: "es" },
+                { label: "French", value: "fr" },
+                { label: "German", value: "de" }
+              ]}
+              className={"dropdown"}
+            />
           </div>
         </div>
         <div className="col-md-6">

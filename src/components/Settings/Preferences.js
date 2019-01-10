@@ -82,7 +82,7 @@ class Preferences extends Component {
           </div>
           <div className="col-md-6">
             <InterestedInDropdown
-              setValue={el =>
+              onChange={el =>
                 setValue({
                   name: "interestedIn",
                   value: el

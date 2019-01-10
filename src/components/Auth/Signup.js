@@ -11,6 +11,7 @@ import InterestedInDropdown from "../common/InterestedInDropdown";
 import GenderDropdown from "../common/GenderDropdown";
 import BirthDatePicker from "./BirthDatePicker";
 import Select from "../common/Select";
+import SignupForm from "./SignupForm";
 
 const initialState = {
   username: "",
@@ -39,108 +40,66 @@ class Signup extends React.Component {
     this.setState({ ...initialState });
   };
 
-  handleChange = event => {
-    const { name, value } = event.target;
-    this.props.form.setFieldsValue({ [name]: value });
-  };
-
-  onChangeDate = (date, dateString) => {
-    this.setState({ dob: dateString });
-  };
-
-  handleChangeSelect = value => {
-    this.setState({ interestedIn: value });
+  setFormValues = values => {
+    console.log(values);
+    this.setState(values);
   };
 
   handleFBReturn = ({ state, code }, fbResolve, createUser) => {
-    this.props.form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
+    this.setState(
+      {
+        csrf: state,
+        code
+      },
+      () => {
+        fbResolve()
+          .then(({ data }) => {
+            const { isCouple } = this.state;
+            if (data.fbResolve === null) {
+              Message.warn("Phone verification failed.");
+              return;
+            }
+            this.setState({ phone: data.fbResolve });
+            createUser()
+              .then(async ({ data }) => {
+                if (data.createUser === null) {
+                  Message.warn("Signup failed.");
+                  return;
+                }
+                localStorage.setItem(
+                  "token",
+                  data.createUser.find(token => token.access === "auth").token
+                );
+                localStorage.setItem(
+                  "refreshToken",
+                  data.createUser.find(token => token.access === "refresh")
+                    .token
+                );
 
-      this.setState(
-        {
-          ...values,
-          csrf: state,
-          code
-        },
-        () => {
-          fbResolve()
-            .then(({ data }) => {
-              const { isCouple } = this.state;
-              if (data.fbResolve === null) {
-                Message.warn("Phone verification failed.");
-                return;
-              }
-              this.setState({ phone: data.fbResolve });
-              createUser()
-                .then(async ({ data }) => {
-                  if (data.createUser === null) {
-                    Message.warn("Signup failed.");
-                    return;
-                  }
-                  localStorage.setItem(
-                    "token",
-                    data.createUser.find(token => token.access === "auth").token
-                  );
-                  localStorage.setItem(
-                    "refreshToken",
-                    data.createUser.find(token => token.access === "refresh")
-                      .token
-                  );
-
-                  if (isCouple) {
-                    this.clearState();
-                    await this.props.history.push("/editprofile/couple");
-                  } else {
-                    this.clearState();
-                    await this.props.history.push("/editprofile");
-                  }
-                })
-                .catch(res => {
-                  const errors = res.graphQLErrors.map(error => {
-                    return error.message;
-                  });
-                  //TODO: send errors to analytics from here
-                  this.setState({ errors });
+                if (isCouple) {
+                  this.clearState();
+                  await this.props.history.push("/editprofile/couple");
+                } else {
+                  this.clearState();
+                  await this.props.history.push("/editprofile");
+                }
+              })
+              .catch(res => {
+                const errors = res.graphQLErrors.map(error => {
+                  return error.message;
                 });
-            })
-            .catch(res => {
-              const errors = res.graphQLErrors.map(error => {
-                return error.message;
+                //TODO: send errors to analytics from here
+                this.setState({ errors });
               });
-              //TODO: send errors to analytics from here
-              this.setState({ errors });
+          })
+          .catch(res => {
+            const errors = res.graphQLErrors.map(error => {
+              return error.message;
             });
-        }
-      );
-    });
-  };
-
-  validateForm = () => {
-    const {
-      username,
-      email,
-      dob,
-      interestedIn,
-      gender
-    } = this.props.form.getFieldsValue();
-    const isLengthZero = interestedIn ? interestedIn.length === 0 : true;
-
-    const isInvalid =
-      !username || !email || !dob || !interestedIn || !gender || isLengthZero;
-
-    return isInvalid;
-  };
-
-  disabledDate = current => {
-    // Can not select days before 18 years
-    return (
-      current &&
-      current >
-        moment()
-          .endOf("day")
-          .subtract(18, "years")
+            //TODO: send errors to analytics from here
+            this.setState({ errors });
+          });
+      }
     );
   };
 
@@ -197,10 +156,6 @@ class Signup extends React.Component {
 
   handleLangChange = value => {
     this.setState({ lang: value });
-  };
-
-  setValue = ({ name, value }) => {
-    this.setState({ [name]: value });
   };
 
   //TODO:DELETE THIS
@@ -273,13 +228,29 @@ class Signup extends React.Component {
                     <div className="head">
                       Become a <b>Foxtail</b> Member
                     </div>
-                    <Formik
+                    <SignupForm
+                      fields={{
+                        username: "",
+                        email: "",
+                        phone: "",
+                        dob: "",
+                        interestedIn: [],
+                        gender: "",
+                        isCouple: false
+                      }}
+                      disabled={loading}
+                      fbResolve={fbResolve}
+                      createUser={createUser}
+                      handleFBReturn={this.handleFBReturn}
+                      setFormValues={this.setFormValues}
+                    />
+                    {/* <Formik
                       initialValues={{
-                        firstName: "",
-                        lastName: "",
+                        username: "",
                         email: ""
                       }}
                       onSubmit={values => {
+                        console.log("DSS");
                         setTimeout(() => {
                           alert(JSON.stringify(values, null, 2));
                         }, 500);
@@ -301,32 +272,44 @@ class Signup extends React.Component {
                                 type="email"
                               />
                             </div>
-                            <BirthDatePicker
-                              onDayChange={date => this.setState({ dob: date })}
+                            <Field
+                              name="dob"
+                              placeholder="E-mail address"
+                              type="dob"
+                              component={
+                                <BirthDatePicker
+                                  onDayChange={date =>
+                                    this.setState({ dob: date })
+                                  }
+                                />
+                              }
                             />
 
                             <Select
-                              label="Interested In:"
-                              onChange={e => console.log(e)}
+                              label="Gender:"
+                              onChange={el =>
+                                this.setValue({
+                                  name: "gender",
+                                  value: el
+                                })
+                              }
                               options={[
                                 { label: "Female", value: "female" },
                                 { label: "Male", value: "male" },
                                 { label: "Transgender", value: "trans" },
-                                { label: "Cuple", value: "couple" }
+                                { label: "Non-Binary", value: "non" }
                               ]}
                             />
 
-                            <Select
-                              className="test"
-                              onChange={e => console.log(e)}
-                              multiple
-                              label="Gender Select:"
-                              defaultOptionValues={["m", "c"]}
-                              options={[
-                                { label: "Female", value: "f" },
-                                { label: "Male", value: "m" },
-                                { label: "Couple", value: "c" }
-                              ]}
+                            <InterestedInDropdown
+                              onChange={el =>
+                                this.setValue({
+                                  name: "interestedIn",
+                                  value: el
+                                })
+                              }
+                              value={interestedIn}
+                              placeholder={"Interested In:"}
                             />
 
                             <div className="couple-choose">
@@ -339,7 +322,7 @@ class Signup extends React.Component {
                               </div>
                             </div>
                             <div className="submit">
-                              <span className="btn">Get Started</span>
+                              <button className="btn">Get Started</button>
                             </div>
 
                             <div className="terms">
@@ -409,8 +392,7 @@ class Signup extends React.Component {
                             </div>
                           </div>
                         </Form>
-                      )}
-                    />
+                    )} />*/}
                   </div>
                 );
               }}

@@ -35,6 +35,7 @@ import { notification } from "antd";
 
 let server = "localhost:4444";
 //let server = "production-151896178.us-west-2.elb.amazonaws.com";
+console.log(process.env.REACT_APP_LOCAL_SERVER);
 // console.log(process.env.REACT_APP_LOCAL_SERVER);
 // if (process.env.REACT_APP_LOCAL_SERVER === "true") {
 //   server = ;
