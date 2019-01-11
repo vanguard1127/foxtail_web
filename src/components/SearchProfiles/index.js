@@ -10,8 +10,7 @@ import { withRouter } from "react-router-dom";
 import SearchCriteria from "./SearchCriteria";
 import FeaturedDiv from "./FeaturedDiv";
 import BlockModal from "../common/BlockModal";
-import ShareModal from "../common/ShareModal";
-import DirectMsgModal from "../common/DirectMsgModal";
+import DirectMsgModal from "../Modals/DirectMsg";
 
 const LIMIT = 20;
 
@@ -30,7 +29,6 @@ class ProfileSearch extends Component {
   };
 
   setMsgModalVisible = (msgModalVisible, profile) => {
-    console.log("EEEE,", msgModalVisible, profile);
     if (profile) this.setState({ profile, msgModalVisible });
     else this.setState({ msgModalVisible });
   };
@@ -249,17 +247,9 @@ class ProfileSearch extends Component {
             removeProfile={this.removeProfile}
           />
         )}
-        {profile && (
-          <ShareModal
-            profile={profile}
-            visible={shareModalVisible}
-            close={() => this.setShareModalVisible(false)}
-          />
-        )}
-        {profile && (
+        {profile && msgModalVisible && (
           <DirectMsgModal
             profile={profile}
-            visible={msgModalVisible}
             close={() => this.setMsgModalVisible(false)}
           />
         )}

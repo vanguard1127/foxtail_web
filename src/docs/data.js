@@ -103,7 +103,9 @@ export const desireOptions = [
   { value: "daddygirl", label: "Daddy/Girl" },
   { value: "enemas", label: "Enemas" },
   { value: "costumesdressingup", label: "Costumes/Dressing-Up" },
-  { value: "cockworship", label: "Cock Worship" }
+  { value: "cockworship", label: "Cock Worship" },
+  { value: "cuddling", label: "Cuddling" },
+  { value: "dating", label: "Dating" }
 ];
 
 export const sexOptions = [

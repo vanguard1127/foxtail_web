@@ -5,9 +5,10 @@ const DesiresMobile = ({ desires }) => {
       <div className="profile-head">Desires</div>
       <ul>
         {desires.reduce(function(result, desire) {
-          result.push(<li>{desire}</li>);
           if (result.length > 1) {
-            result.push(<li>...</li>);
+            result.push(<li key={desire}>...</li>);
+          } else {
+            result.push(<li key={desire}>{desire}</li>);
           }
           return result;
         }, [])}

@@ -17,9 +17,9 @@ const ProfileDetails = ({ users, profile, showShareModal, showBlockModal }) => {
         <li>
           <span className="head">Gender:</span>
           <span className="data">
-            {genderOptions.find(el => el.value === users[0].gender).value}
+            {genderOptions.find(el => el.value === users[0].gender).label}
             {users[1] &&
-              genderOptions.find(el => el.value === users[1].gender).value}
+              genderOptions.find(el => el.value === users[1].gender).label}
           </span>
         </li>
         <li>
@@ -29,23 +29,32 @@ const ProfileDetails = ({ users, profile, showShareModal, showBlockModal }) => {
         <li>
           <span className="head">Looking For:</span>
           <span className="data">
-            {profile.interestedIn.map(
-              interest =>
-                genderOptions.find(el => el.value === interest).value + ", "
-            )}
+            {profile.interestedIn.map((intrst, idx, arr) => {
+              if (idx === arr.length - 1) {
+                return genderOptions.find(el => el.value === intrst).label;
+              }
+
+              return genderOptions.find(el => el.value === intrst).label + ", ";
+            })}
           </span>
         </li>
         <li>
           <span className="head">Last Login:</span>
           <span className="data"> {TimeAgo(profile.updatedAt)}</span>
+          <div className="share btn" onClick={() => showShareModal()}>
+            <button>Share</button>
+          </div>
+          <div className="report btn" onClick={() => showBlockModal()}>
+            <button>Report</button>
+          </div>
         </li>
       </ul>
       <div className="functions">
-        <div className="share btn">
-          <span onClick={() => showShareModal()} />
+        <div className="share btn" onClick={() => showShareModal()}>
+          <button>Share</button>
         </div>
-        <div className="report btn">
-          <span onClick={() => showBlockModal()} />
+        <div className="report btn" onClick={() => showBlockModal()}>
+          <button>Reprot</button>
         </div>
       </div>
     </div>

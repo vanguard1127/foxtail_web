@@ -8,7 +8,7 @@ export default class Desires extends Component {
   };
   render() {
     const { searchText } = this.state;
-    const { closePopup, toggleDesires, desires, updateSettings } = this.props;
+    const { closePopup, onChange, desires } = this.props;
 
     return (
       <section className="desires-popup show">
@@ -45,10 +45,9 @@ export default class Desires extends Component {
                                       : false
                                   }
                                   onChange={e =>
-                                    toggleDesires({
+                                    onChange({
                                       checked: e.target.checked,
-                                      value: option.value,
-                                      updateSettings
+                                      value: option.value
                                     })
                                   }
                                 />

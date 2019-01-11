@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 // Import React FilePond
 import { FilePond, File, registerPlugin } from "react-filepond";
 
@@ -23,37 +23,40 @@ registerPlugin(
 );
 
 // Our app
-export default class PhotoUpload extends Component {
-  constructor(props) {
-    super(props);
+const PhotoUpload = ({ photos, setPhotos }) => {
+  return (
+    <FilePond
+      server={{
+        process: (fieldName, file, metadata, load, error, progress, abort) => {
+          // fieldName is the name of the input field
+          // file is the actual file object to send
+          load(file);
+          // Should expose an abort method so the request can be cancelled
+          return {
+            abort: () => {
+              // This function is entered if the user has tapped the cancel button
 
-    this.state = {
-      // Set initial files
-      files: []
-    };
-  }
+              // Let FilePond know the request has been cancelled
+              abort();
+            }
+          };
+        }
+      }}
+      acceptedFileTypes={["image/png", "image/jpeg"]}
+      labelFileTypeNotAllowed="Only jpgs and pngs allowed"
+      maxFileSize="5MB"
+      labelMaxFileSizeExceeded="File is too large. (5MB Max)"
+      onupdatefiles={fileItems => {
+        // Set current file objects to this.state
+        setPhotos(fileItems.map(fileItem => fileItem.file));
+      }}
+    >
+      {/* Update current files  */}
+      {photos.map(file => (
+        <File key={file} src={file} origin="local" />
+      ))}
+    </FilePond>
+  );
+};
 
-  render() {
-    return (
-      <FilePond
-        maxFiles={3}
-        server="/api"
-        acceptedFileTypes={["image/png", "image/jpeg"]}
-        labelFileTypeNotAllowed="Only jpgs and pngs allowed"
-        maxFileSize="5MB"
-        labelMaxFileSizeExceeded="File is too large. (5MB Max)"
-        onupdatefiles={fileItems => {
-          // Set current file objects to this.state
-          this.setState({
-            files: fileItems.map(fileItem => fileItem.file)
-          });
-        }}
-      >
-        {/* Update current files  */}
-        {this.state.files.map(file => (
-          <File key={file} src={file} origin="local" />
-        ))}
-      </FilePond>
-    );
-  }
-}
+export default PhotoUpload;

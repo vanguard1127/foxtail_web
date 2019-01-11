@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { SIGNS3, SUBMIT_PHOTO } from "queries";
 import axios from "axios";
-import PhotoUpload from "./PhotoUpload";
+import PhotoUpload from "../../common/PhotoUpload";
 
 export default class PhotoVerify extends Component {
   state = { photos: [], filename: "", filetype: "", photoKey: "" };

@@ -44,6 +44,7 @@ class SettingsPage extends Component {
     showCouplePopup: false,
     photoSubmitType: "",
     includeMsgs: false,
+    fileRecieved: null,
     ...this.props.settings
   };
 
@@ -78,7 +79,7 @@ class SettingsPage extends Component {
     }
   };
 
-  toggleDesires = ({ checked, value, updateSettings }) => {
+  toggleDesires = ({ checked, value }, updateSettings) => {
     const { desires } = this.state;
 
     if (checked) {
@@ -103,10 +104,22 @@ class SettingsPage extends Component {
     });
   };
 
-  toggleImgEditorPopup = () => {
-    this.setState({
-      showImgEditorPopup: !this.state.showImgEditorPopup
-    });
+  toggleImgEditorPopup = file => {
+    console.log("file get", file);
+    this.setState(
+      {
+        fileRecieved: file
+      },
+      () => {
+        this.setState({
+          showImgEditorPopup: !this.state.showImgEditorPopup
+        });
+      }
+    );
+  };
+
+  recieveEditedImage = files => {
+    console.log("recieved", files);
   };
 
   togglePhotoVerPopup = () => {
@@ -172,7 +185,8 @@ class SettingsPage extends Component {
       showBlackPopup,
       couplePartner,
       includeMsgs,
-      lang
+      lang,
+      fileRecieved
     } = this.state;
 
     const { userID } = this.props;
@@ -283,11 +297,17 @@ class SettingsPage extends Component {
                   </div>
                 </div>
               </div>
-              {showImgEditorPopup && <ImageEditor />}
+              {showImgEditorPopup && (
+                <ImageEditor
+                  file={fileRecieved}
+                  handlePhotoListChange={this.recieveEditedImage}
+                />
+              )}
+
               {showDesiresPopup && (
                 <DesiresModal
                   closePopup={() => this.toggleDesiresPopup()}
-                  toggleDesires={this.toggleDesires}
+                  onChange={e => this.toggleDesires(e, updateSettings)}
                   desires={desires}
                   updateSettings={updateSettings}
                 />

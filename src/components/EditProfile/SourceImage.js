@@ -19,7 +19,8 @@ class SourceImage extends React.Component {
   }
 
   readFile = () => {
-    const file = this.props.sourceImageObject.originFileObj;
+    const file = this.props.sourceImageObject;
+    //const file = this.props.sourceImageObject.originFileObj;
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = e => {

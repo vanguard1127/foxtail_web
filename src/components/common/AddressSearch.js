@@ -31,6 +31,7 @@ export default class AddressSearch extends React.Component {
       console.log("Google Maps API returned error with status: ", status);
       clearSuggestions();
     };
+
     return (
       <PlacesAutocomplete
         value={address}
@@ -64,6 +65,7 @@ export default class AddressSearch extends React.Component {
                     : { backgroundColor: "#ffffff", cursor: "pointer" };
                   return (
                     <div
+                      key={suggestion.id}
                       {...getSuggestionItemProps(suggestion, {
                         className,
                         style

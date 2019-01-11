@@ -6,9 +6,13 @@ const DesiresSection = ({ desires }) => {
       <div className="profile-head">Desires</div>
       <ul>
         {desires.reduce(function(result, desire) {
-          result.push(
-            <li>{desireOptions.find(el => el.key === desire).value}</li>
-          );
+          if (desireOptions.find(el => el.value === desire)) {
+            result.push(
+              <li key={desire}>
+                {desireOptions.find(el => el.value === desire).label}
+              </li>
+            );
+          }
           return result;
         }, [])}
       </ul>

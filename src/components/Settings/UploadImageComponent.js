@@ -52,7 +52,7 @@ class UploadComponent extends Component {
   error = (err, response, file) => {
     // console.log('file',file)
     var fileName = file.name;
-
+    this.props.showEditor(file);
     let idxDot = fileName.lastIndexOf(".") + 1;
     let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
     if (
@@ -189,7 +189,7 @@ class UploadComponent extends Component {
         })}
         <div className="box">
           <Upload
-            data={() => showEditor()}
+            // data={() => showEditor()}
             onSuccess={this.imageUploaded}
             onError={this.error}
             accept=".jpg,.jpeg,.png,.bmp,.gif"
@@ -214,11 +214,11 @@ class UploadComponent extends Component {
         >
           <img src={this.state.imgIndx} />
         </Dialog>
-        <PhotoModal
+        {/* <PhotoModal
           previewVisible={previewVisible}
           previewImage={previewImage}
           handleCancel={() => this.handleCancel(false)}
-        />
+        /> */}
       </div>
     );
   }

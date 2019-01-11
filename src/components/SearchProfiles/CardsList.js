@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ProfileCard from "./ProfileCard";
 import BlockModal from "../common/BlockModal";
-import ShareModal from "../common/ShareModal";
 import DirectMsgModal from "../common/DirectMsgModal";
 
 class CardsList extends Component {
@@ -56,11 +55,6 @@ class CardsList extends Component {
           visible={blockModalVisible}
           close={() => this.setBlockModalVisible(false)}
           removeProfile={this.removeProfile}
-        />
-        <ShareModal
-          profile={profile}
-          visible={shareModalVisible}
-          close={() => this.setShareModalVisible(false)}
         />
         <DirectMsgModal
           profile={profile}

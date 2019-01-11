@@ -12,9 +12,9 @@ import ProfileBio from "./ProfileBio";
 import DesiresMobile from "./DesiresMobile";
 import ProfileDetails from "./ProfileDetails";
 import PhotoSlider from "./PhotoSlider";
-import BlockModal from "../common/BlockModal";
-import ShareModal from "../common/ShareModal";
-import DirectMsgModal from "../common/DirectMsgModal";
+import BlockModal from "../Modals/Block";
+import ShareModal from "../Modals/Share";
+import DirectMsgModal from "../Modals/DirectMsg";
 
 class ProfilePage extends Component {
   state = {
@@ -143,26 +143,24 @@ class ProfilePage extends Component {
                         </div>
                       </div>
                     </div>
-                    {profile && (
+                    {profile && blockModalVisible && (
                       <BlockModal
-                        profile={profile}
                         id={profile.id}
-                        visible={blockModalVisible}
+                        profile={profile}
                         close={() => this.setBlockModalVisible(false)}
-                        removeProfile={this.removeProfile}
+                        goToMain={() => this.props.history.push("/members")}
+                        type={"Profile"}
                       />
                     )}
-                    {profile && (
+                    {profile && shareModalVisible && (
                       <ShareModal
                         profile={profile}
-                        visible={shareModalVisible}
                         close={() => this.setShareModalVisible(false)}
                       />
                     )}
-                    {profile && (
+                    {profile && msgModalVisible && (
                       <DirectMsgModal
                         profile={profile}
-                        visible={msgModalVisible}
                         close={() => this.setMsgModalVisible(false)}
                       />
                     )}

@@ -8,7 +8,7 @@ import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
 import { Button, message, BackTop, Input, Select, Tooltip } from "antd";
 import BlockModal from "../common/BlockModal";
-import ShareModal from "../common/ShareModal";
+import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
 import Spinner from "../common/Spinner";
 import withLocation from "../withLocation";

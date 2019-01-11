@@ -84,7 +84,7 @@ const MyForm = props => {
           onChange={el =>
             handleChange({
               target: {
-                value: el,
+                value: el.map(e => e.value),
                 type: "text",
                 id: "interestedIn",
                 name: "interestedIn"
@@ -123,6 +123,10 @@ const MyForm = props => {
           createUser={createUser}
           handleFBReturn={handleFBReturn}
         />
+        <div className="terms">
+          By clicking “Get Started“ you agree with our
+          <span>Terms & Privacy</span>
+        </div>
       </div>
     </form>
   );

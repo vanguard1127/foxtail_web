@@ -15,7 +15,7 @@ const SearchEventsFilters = ({
       <Select
         onChange={handleChangeSelect}
         label="Distance Away:"
-        defaultOptionValue={maxDistance}
+        defaultOptionValue={maxDistance.toString()}
         options={[
           { label: "5 miles", value: "5" },
           { label: "10 miles", value: "10" },

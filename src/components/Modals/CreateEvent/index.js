@@ -1,8 +1,66 @@
 import React, { Component } from "react";
 import PhotoUpload from "../../common/PhotoUpload";
+import DesiresModal from "../../Modals/Desires/Modal";
+import DesiresSelector from "../../Modals/Desires/Selector";
+import Select from "../../common/Select";
+import AddressSearch from "../../common/AddressSearch";
 export default class CreateEvent extends Component {
+  state = {
+    filename: "",
+    filetype: "",
+    photoKey: "",
+    showDesiresPopup: false,
+    desires: [],
+    lat: "",
+    long: "",
+    address: "",
+    photo: [],
+    image: "",
+    type: "",
+    time: "",
+    interestedIn: [],
+    validating: "",
+    eventname: ""
+  };
+
+  setValue = ({ name, value }) => {
+    this.setState({ [name]: value });
+  };
+  setPhotos = photos => {
+    this.setState({ photos });
+  };
+  toggleDesiresPopup = () => {
+    this.setState({
+      showDesiresPopup: !this.state.showDesiresPopup
+    });
+  };
+  toggleDesires = ({ checked, value, updateSettings }) => {
+    const { desires } = this.state;
+
+    if (checked) {
+      this.setState({ desires: [...desires, value] });
+    } else {
+      this.setState({ desires: desires.filter(desire => desire !== value) });
+    }
+  };
+  setLocationValues = ({ lat, long, address }) => {
+    if (lat && long) {
+      return this.setState({ lat, long, address });
+    }
+    this.setState({ address });
+  };
   render() {
     const { closePopup } = this.props;
+    const {
+      photo,
+      showDesiresPopup,
+      desires,
+      eventname,
+      interestedIn,
+      description,
+      address,
+      type
+    } = this.state;
     return (
       <section className="popup-content show">
         <div className="container">
@@ -24,59 +82,97 @@ export default class CreateEvent extends Component {
                         <div className="content">
                           <div className="item">
                             <div className="input">
-                              <input type="text" required id="eventName" />
-                              <label title="Event Name" for="eventName" />
+                              <input
+                                type="text"
+                                required
+                                id="eventname"
+                                onChange={el =>
+                                  this.setValue({
+                                    name: "eventname",
+                                    value: el
+                                  })
+                                }
+                              />
+                              <label title="Event Name" htmlFor="eventname" />
                             </div>
                           </div>
                           <div className="item">
                             <div className="input">
-                              <input type="text" required id="eventAddress" />
-                              <label title="Event Address" for="eventAddress" />
+                              <AddressSearch
+                                style={{ width: "100%" }}
+                                setLocationValues={({ lat, long, address }) =>
+                                  this.setLocationValues({
+                                    lat,
+                                    long,
+                                    address
+                                  })
+                                }
+                                address={address}
+                                type={"address"}
+                              />
+                              {/* <input
+                                type="text"
+                                required
+                                id="eventAddress"
+                                onChange={el =>
+                                  this.setValue({
+                                    name: "photo",
+                                    value: el
+                                  })
+                                }
+                              />
+                              <label
+                                title="Event Address"
+                                htmlFor="eventAddress"
+                              /> */}
                             </div>
                           </div>
                           <div className="item">
                             <div className="textarea">
-                              <textarea placeholder="Your event description here..." />
+                              <textarea
+                                placeholder="Your event description here..."
+                                onChange={el =>
+                                  this.setValue({
+                                    name: "photo",
+                                    value: el
+                                  })
+                                }
+                              />
                             </div>
                           </div>
                           <div className="item nobottom">
-                            <PhotoUpload />
-                            {/* <input
-                              type="file"
-                              className="filepond eventPhoto"
-                              name="filepond"
-                            /> */}
+                            <PhotoUpload
+                              photos={photo}
+                              setPhotos={el =>
+                                this.setValue({
+                                  name: "photo",
+                                  value: el
+                                })
+                              }
+                            />
                           </div>
                           <div className="item">
-                            <div className="dropdown">
-                              <select
-                                className="js-example-basic-multiple"
-                                name="interest[]"
-                                multiple="multiple"
-                              >
-                                <option selected>Flirting</option>
-                                <option>Cooking</option>
-                                <option>Sexting</option>
-                                <option selected>Dating</option>
-                                <option>Booking</option>
-                                <option>Reading</option>
-                                <option selected>BDSM</option>
-                                <option>Sex</option>
-                              </select>
-                              <label>For those interested in select:</label>
-                            </div>
+                            <DesiresSelector
+                              desires={desires}
+                              togglePopup={() => this.toggleDesiresPopup()}
+                            />
                           </div>
                           <div className="item">
-                            <div className="dropdown">
-                              <select
-                                className="js-example-basic-single"
-                                name="type[]"
-                              >
-                                <option selected>Public</option>
-                                <option>Private</option>
-                              </select>
-                              <label>Select event type:</label>
-                            </div>
+                            <Select
+                              label="Event Type:"
+                              onChange={el =>
+                                this.setValue({
+                                  name: "type",
+                                  value: el
+                                })
+                              }
+                              value={type}
+                              options={[
+                                { label: "Public", value: "public" },
+                                { label: "Private", value: "private" },
+                                { label: "Request", value: "request" }
+                              ]}
+                            />
                           </div>
                           <div className="item">
                             <div className="button mtop">
@@ -92,6 +188,14 @@ export default class CreateEvent extends Component {
             </div>
           </div>
         </div>
+
+        {showDesiresPopup && (
+          <DesiresModal
+            closePopup={() => this.toggleDesiresPopup()}
+            onChange={e => this.toggleDesires(e)}
+            desires={desires}
+          />
+        )}
       </section>
     );
   }

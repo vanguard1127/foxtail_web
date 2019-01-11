@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/";
 import Settings from "./components/Settings/";
 import EventPage from "./components/Event";
-import ProfilePage from "./components/Profile/ProfilePage";
+import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import EditProfile from "./components/EditProfile/EditProfilePage";
@@ -35,7 +35,7 @@ import { notification } from "antd";
 
 let server = "localhost:4444";
 //let server = "production-151896178.us-west-2.elb.amazonaws.com";
-console.log(process.env.REACT_APP_LOCAL_SERVER);
+
 // console.log(process.env.REACT_APP_LOCAL_SERVER);
 // if (process.env.REACT_APP_LOCAL_SERVER === "true") {
 //   server = ;

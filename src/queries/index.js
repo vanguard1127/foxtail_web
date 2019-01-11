@@ -807,6 +807,7 @@ export const GET_PROFILE = gql`
       photos {
         url
         private
+        id
       }
       users {
         id

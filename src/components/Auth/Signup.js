@@ -1,16 +1,10 @@
 import React from "react";
-import moment from "moment";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE, LOGIN } from "../../queries";
-import AccountKit from "react-facebook-account-kit";
 import { withNamespaces } from "react-i18next";
 import Message from "rc-message";
-import { Formik, Field, Form } from "formik";
-import InterestedInDropdown from "../common/InterestedInDropdown";
-import GenderDropdown from "../common/GenderDropdown";
-import BirthDatePicker from "./BirthDatePicker";
-import Select from "../common/Select";
+
 import SignupForm from "./SignupForm";
 
 const initialState = {
@@ -106,51 +100,51 @@ class Signup extends React.Component {
   testCreateUser = createUser => {
     const { isCouple } = this.state;
 
-    const max = 1000;
-    const rand = Math.floor(Math.random() * max);
+    const rand = Math.floor(Math.random() * 1000);
     this.setState(
       {
         phone: rand.toString(),
         username: "TEST USER",
-        email: rand.toString() + "@fjfj.com",
+        email: rand.toString() + "@test.com",
         dob: "12/12/1990",
         interestedIn: ["M"],
         gender: "M",
         isCouple: false,
         lang: "en"
       },
-      createUser()
-        .then(async ({ data }) => {
-          if (data.createUser === null) {
-            Message.warn("Signup failed.");
-            return;
-          }
-          localStorage.setItem(
-            "token",
-            data.createUser.find(token => token.access === "auth").token
-          );
-          localStorage.setItem(
-            "refreshToken",
-            data.createUser.find(token => token.access === "refresh").token
-          );
+      () =>
+        createUser()
+          .then(async ({ data }) => {
+            if (data.createUser === null) {
+              Message.warn("Signup failed.");
+              return;
+            }
+            localStorage.setItem(
+              "token",
+              data.createUser.find(token => token.access === "auth").token
+            );
+            localStorage.setItem(
+              "refreshToken",
+              data.createUser.find(token => token.access === "refresh").token
+            );
 
-          if (isCouple) {
-            this.clearState();
-            window.location.href = "/editprofile/couple";
-            //await this.props.history.push("/editprofile/" + "couple");
-          } else {
-            this.clearState();
-            window.location.href = "/editprofile";
-            //await this.props.history.push("/editprofile");
-          }
-        })
-        .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
-        })
+            if (isCouple) {
+              this.clearState();
+              window.location.href = "/editprofile/couple";
+              //await this.props.history.push("/editprofile/" + "couple");
+            } else {
+              this.clearState();
+              window.location.href = "/editprofile";
+              //await this.props.history.push("/editprofile");
+            }
+          })
+          .catch(res => {
+            const errors = res.graphQLErrors.map(error => {
+              return error.message;
+            });
+            //TODO: send errors to analytics from here
+            this.setState({ errors });
+          })
     );
   };
 
@@ -232,7 +226,6 @@ class Signup extends React.Component {
                       fields={{
                         username: "",
                         email: "",
-                        phone: "",
                         dob: "",
                         interestedIn: [],
                         gender: "",
@@ -244,155 +237,67 @@ class Signup extends React.Component {
                       handleFBReturn={this.handleFBReturn}
                       setFormValues={this.setFormValues}
                     />
-                    {/* <Formik
-                      initialValues={{
-                        username: "",
-                        email: ""
-                      }}
-                      onSubmit={values => {
-                        console.log("DSS");
-                        setTimeout(() => {
-                          alert(JSON.stringify(values, null, 2));
-                        }, 500);
-                      }}
-                      render={() => (
-                        <Form>
-                          <div className="form-content">
-                            <div className="input username">
-                              <Field
-                                name="username"
-                                placeholder="Username"
-                                type="text"
-                              />
-                            </div>
-                            <div className="input email">
-                              <Field
-                                name="email"
-                                placeholder="E-mail address"
-                                type="email"
-                              />
-                            </div>
-                            <Field
-                              name="dob"
-                              placeholder="E-mail address"
-                              type="dob"
-                              component={
-                                <BirthDatePicker
-                                  onDayChange={date =>
-                                    this.setState({ dob: date })
-                                  }
-                                />
-                              }
-                            />
-
-                            <Select
-                              label="Gender:"
-                              onChange={el =>
-                                this.setValue({
-                                  name: "gender",
-                                  value: el
-                                })
-                              }
-                              options={[
-                                { label: "Female", value: "female" },
-                                { label: "Male", value: "male" },
-                                { label: "Transgender", value: "trans" },
-                                { label: "Non-Binary", value: "non" }
-                              ]}
-                            />
-
-                            <InterestedInDropdown
-                              onChange={el =>
-                                this.setValue({
-                                  name: "interestedIn",
-                                  value: el
-                                })
-                              }
-                              value={interestedIn}
-                              placeholder={"Interested In:"}
-                            />
-
-                            <div className="couple-choose">
-                              <div className="select-checkbox">
-                                <input type="checkbox" id="cbox" />
-                                <label htmlFor="cbox">
-                                  <span />
-                                  <b>Are you couple?</b>
-                                </label>
-                              </div>
-                            </div>
-                            <div className="submit">
-                              <button className="btn">Get Started</button>
-                            </div>
-
-                            <div className="terms">
-                              By clicking “Get Started“ you agree with our
-                              <span>Terms & Privacy</span> <br />
+                    <div className="form terms">
+                      <span onClick={() => this.testCreateUser(createUser)}>
+                        Test Create
+                      </span>
+                      <br />
+                      <br />
+                      Test Users:
+                      <Mutation mutation={LOGIN} variables={{ phone }}>
+                        {(login, { loading, error }) => {
+                          return (
+                            <div>
                               <span
-                                onClick={() => this.testCreateUser(createUser)}
-                              >
-                                Test Create
-                              </span>
-                              <br />
-                              <br />
-                              Test Users:
-                              <Mutation mutation={LOGIN} variables={{ phone }}>
-                                {(login, { loading, error }) => {
-                                  return (
-                                    <div>
-                                      <span
-                                        onClick={() => {
-                                          this.setState({ phone: "1" }, () => {
-                                            this.handleLogin(login);
-                                          });
-                                        }}
-                                      >
-                                        1
-                                      </span>{" "}
-                                      <span
-                                        onClick={() => {
-                                          this.setState({ phone: "2" }, () => {
-                                            this.handleLogin(login);
-                                          });
-                                        }}
-                                      >
-                                        2
-                                      </span>{" "}
-                                      <span
-                                        href={null}
-                                        onClick={() => {
-                                          this.setState({ phone: "3" }, () => {
-                                            this.handleLogin(login);
-                                          });
-                                        }}
-                                      >
-                                        3
-                                      </span>{" "}
-                                      <span
-                                        onClick={() => {
-                                          this.setState({ phone: "4" });
-                                          this.handleLogin(login);
-                                        }}
-                                      >
-                                        4
-                                      </span>
-                                      <span
-                                        onClick={() => {
-                                          this.setState({ phone: "5" }, () => {
-                                            this.handleLogin(login);
-                                          });
-                                        }}
-                                      >
-                                        5
-                                      </span>
-                                    </div>
-                                  );
+                                onClick={() => {
+                                  this.setState({ phone: "1" }, () => {
+                                    this.handleLogin(login);
+                                  });
                                 }}
-                              </Mutation>
+                              >
+                                1
+                              </span>{" "}
+                              <span
+                                onClick={() => {
+                                  this.setState({ phone: "2" }, () => {
+                                    this.handleLogin(login);
+                                  });
+                                }}
+                              >
+                                2
+                              </span>{" "}
+                              <span
+                                href={null}
+                                onClick={() => {
+                                  this.setState({ phone: "3" }, () => {
+                                    this.handleLogin(login);
+                                  });
+                                }}
+                              >
+                                3
+                              </span>{" "}
+                              <span
+                                onClick={() => {
+                                  this.setState({ phone: "4" });
+                                  this.handleLogin(login);
+                                }}
+                              >
+                                4
+                              </span>
+                              <span
+                                onClick={() => {
+                                  this.setState({ phone: "5" }, () => {
+                                    this.handleLogin(login);
+                                  });
+                                }}
+                              >
+                                5
+                              </span>
                             </div>
-                          </div>
-                        </Form>
-                    )} />*/}
+                          );
+                        }}
+                      </Mutation>
+                    </div>
                   </div>
                 );
               }}
