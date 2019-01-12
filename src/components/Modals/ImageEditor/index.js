@@ -8,7 +8,14 @@ export default class ImageEditor extends Component {
   };
 
   render() {
-    const { closePopup, file, fileList, handlePhotoListChange } = this.props;
+    const {
+      close,
+      file,
+      handlePhotoListChange,
+      setS3PhotoParams,
+      uploadToS3,
+      signS3
+    } = this.props;
 
     return (
       <section className="popup-content show">
@@ -17,20 +24,20 @@ export default class ImageEditor extends Component {
             <div className="row">
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup">
-                  <EditCanvasImage
-                    imageObject={file}
-                    setS3PhotoParams={this.setS3PhotoParams}
-                    uploadToS3={this.uploadToS3}
-                    fileList={fileList}
-                    handlePhotoListChange={({ file, fileList }) =>
-                      this.handleChange(
-                        file,
-                        fileList,
-                        true,
-                        handlePhotoListChange
-                      )
-                    }
-                  />
+                  <div className="m-head">
+                    <span className="heading">Edit Photo</span>
+                    <span className="close" onClick={close} />
+                  </div>
+                  <div className="m-body">
+                    <EditCanvasImage
+                      imageObject={file}
+                      setS3PhotoParams={setS3PhotoParams}
+                      uploadToS3={uploadToS3}
+                      signS3={signS3}
+                      handlePhotoListChange={handlePhotoListChange}
+                      close={close}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

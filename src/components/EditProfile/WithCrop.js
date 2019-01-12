@@ -23,7 +23,7 @@ class WithAnchors extends React.Component {
         this.props.initialCrop.x !== this.state.handlesXs ||
         this.props.initialCrop.y !== this.state.handlesYs
       ) {
-        console.log("new", this.props.initialCrop);
+        // console.log("new", this.props.initialCrop);
         this.setState({
           handlesXs: this.props.initialCrop.x,
           handlesYs: this.props.initialCrop.y
@@ -165,7 +165,7 @@ class WithAnchors extends React.Component {
     const y = handlesYs[0];
     const width = handlesXs[1] - handlesXs[0];
     const height = handlesYs[1] - handlesYs[0];
-    console.log("using", handlesXs, handlesYs);
+    // console.log("using", handlesXs, handlesYs);
     // console.log("x", handlesXs, "y", handlesYs);
 
     // NOTE: send smallest X and smallest Y And abs(size)

@@ -7,6 +7,7 @@ class KonvaImage extends React.Component {
   };
 
   componentDidMount() {
+    // console.log(this.props.x , this.props.y)
     const importImage = require("./" + this.props.src);
     const image = new window.Image();
     image.setAttribute("crossOrigin", "anonymous");
@@ -19,8 +20,19 @@ class KonvaImage extends React.Component {
   }
 
   render() {
-    const { name, ...rest } = this.props;
-    return <Image {...rest} name={name} draggable image={this.state.image} />;
+    const { name } = this.props;
+    //WIDTH OF STICKER === 400
+    return (
+      <Image
+        x={this.props.x}
+        y={this.props.y}
+        width={this.props.width}
+        height={this.props.height}
+        name={name}
+        draggable
+        image={this.state.image}
+      />
+    );
   }
 }
 

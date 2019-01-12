@@ -10,9 +10,7 @@ import Dialog from "@material-ui/core/Dialog";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import PhotoModal from "../common/PhotoModal";
-
-import { Modal } from "antd";
+import { s3url } from "../../docs/data";
 
 const styles = theme => ({
   addIcon: {
@@ -23,36 +21,31 @@ const styles = theme => ({
   }
 });
 
+const dummyRequest = ({ file, onSuccess }) => {
+  setTimeout(() => {
+    onSuccess("ok");
+  }, 0);
+};
+
 class UploadComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       uploadedImagesFile: [],
-      uploadedImagesURL: [],
-      open: false,
-      imgIndx: "", //for modal dialog
+      photos: [],
+      fileList: [],
+      previewVisible: false,
+      selectedImg: null, //for modal dialog
       loader: "inline-block",
       uploadImg: "none",
-      totalImagesUploaded: 0,
       validateDisplay: "none",
       editorVisible: false,
-      previewVisible: false,
-      previewImage: "",
-      fileList: [],
-      fileToLoad: null,
-      filename: "",
-      filetype: "",
-      file: null,
-      order: "0",
-      photoUrl: "",
-      photoID: null
+      file: null
     };
   }
 
-  error = (err, response, file) => {
-    // console.log('file',file)
+  imageUploaded = (res, file) => {
     var fileName = file.name;
-    this.props.showEditor(file);
     let idxDot = fileName.lastIndexOf(".") + 1;
     let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
     if (
@@ -62,58 +55,29 @@ class UploadComponent extends Component {
       extFile == "bmp" ||
       extFile == "gif"
     ) {
-      //TO DO
-      //  console.log('pics',this.state.totalImagesUploaded)
-
-      if (this.state.totalImagesUploaded < this.props.max) {
-        let preUplodedFile = this.state.uploadedImagesFile;
-        let preUplodedURL = this.state.uploadedImagesURL;
-        let imagesUploaded = this.state.totalImagesUploaded;
-        let fileURL = URL.createObjectURL(file);
-        preUplodedURL.push(fileURL);
-        preUplodedFile.push(file);
-        this.setState({
-          uploadedImagesFile: preUplodedFile,
-          uploadedImagesURL: preUplodedURL
-        });
-        this.increaseCount();
-        this.props.recieveImgs(this.state.uploadedImagesFile);
-      } else {
-        this.setState({
-          validateDisplay: "block"
-        });
-      }
+      this.props.showEditor(file, this.props.isPrivate);
     } else {
       alert("Only jpg/jpeg and png files are allowed!");
     }
   };
+
   deleteFile = index => {
-    let filearray = this.state.uploadedImagesFile;
-    let URLarray = this.state.uploadedImagesURL;
-    filearray.splice(index, 1);
-    URLarray.splice(index, 1);
-    // console.log('pics',this.state.totalImagesUploaded)
-    this.setState({
-      uploadedImagesFile: filearray,
-      uploadedImagesURL: URLarray
-    });
-    this.setState({
-      totalImagesUploaded: this.state.totalImagesUploaded - 1
-    });
-    this.props.recieveImgs(this.state.uploadedImagesFile);
-    // console.log('pics',this.state.totalImagesUploaded)
+    let img = this.props.photos[index];
+
+    this.props.deleteImg({ file: img });
   };
   //modal
   handleClickOpen = index => {
-    let imgURL = this.state.uploadedImagesURL[index];
+    let img = this.props.photos[index];
+
     this.setState({
-      imgIndx: imgURL,
-      open: true
+      selectedImg: img.url,
+      previewVisible: true
     });
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ previewVisible: false });
   };
   switchLoader = () => {
     this.setState({
@@ -121,37 +85,15 @@ class UploadComponent extends Component {
       uploadImg: "block"
     });
   };
-  increaseCount = () => {
-    this.setState({
-      totalImagesUploaded: this.state.totalImagesUploaded + 1
-    });
-  };
-
-  handleShowImage() {
-    this.setState({
-      file: null,
-      editorVisible: true
-    });
-  }
 
   render() {
-    const { classes } = this.props;
-    const {
-      filename,
-      filetype,
-      editorVisible,
-      previewVisible,
-      previewImage,
-      fileList,
-      file
-    } = this.state;
-    const { handlePhotoListChange, showEditor } = this.props;
-
+    const { classes, photos } = this.props;
+    const { selectedImg, previewVisible } = this.state;
     return (
       <div className="header-container">
-        {this.state.uploadedImagesURL.map((value, index) => {
+        {photos.map((file, index) => {
           return (
-            <div key={index + 100}>
+            <div key={file.uid || file.id}>
               <div className="loader">
                 <CircularProgress
                   style={{ display: this.state.loader }}
@@ -164,10 +106,11 @@ class UploadComponent extends Component {
               >
                 <img
                   className="img-box"
-                  src={value}
+                  src={s3url + file.url}
                   onLoad={() => {
                     setTimeout(this.switchLoader, 1000);
                   }}
+                  alt=""
                 />
                 <div className="btns">
                   <DeleteIcon
@@ -187,38 +130,35 @@ class UploadComponent extends Component {
             </div>
           );
         })}
-        <div className="box">
-          <Upload
-            // data={() => showEditor()}
-            onSuccess={this.imageUploaded}
-            onError={this.error}
-            accept=".jpg,.jpeg,.png,.bmp,.gif"
-          >
-            <div className="upload-box">
-              <AddIcon className={classes.addIcon} />
-              <p className="text">Upload</p>
-            </div>
-          </Upload>
-          <p
-            style={{ display: this.state.validateDisplay }}
-            className="validat"
-          >
-            You can only select {this.props.max} pics.
-          </p>
-        </div>
+        {photos.length >= 4 ? null : (
+          <div className="box">
+            <Upload
+              onSuccess={this.imageUploaded}
+              onError={err => console.error(err)}
+              accept=".jpg,.jpeg,.png,.bmp,.gif"
+              customRequest={dummyRequest}
+            >
+              <div className="upload-box">
+                <AddIcon className={classes.addIcon} />
+                <p className="text">Upload</p>
+              </div>
+            </Upload>
+            <p
+              style={{ display: this.state.validateDisplay }}
+              className="validat"
+            >
+              You can only select {this.props.max} pics.
+            </p>
+          </div>
+        )}
 
         <Dialog
           onClose={this.handleClose}
           aria-labelledby="Image"
-          open={this.state.open}
+          open={previewVisible}
         >
-          <img src={this.state.imgIndx} />
+          <img src={s3url + selectedImg} alt="" />
         </Dialog>
-        {/* <PhotoModal
-          previewVisible={previewVisible}
-          previewImage={previewImage}
-          handleCancel={() => this.handleCancel(false)}
-        /> */}
       </div>
     );
   }

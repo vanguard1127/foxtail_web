@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Layer, Group, Stage } from "react-konva";
+import { Layer, Group, Stage, Rect } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
-import { Button } from "antd";
-
+import { Image } from "react-konva";
 import { WithCrop } from "./WithCrop";
 
 class EditCanvasImage extends React.Component {
@@ -23,16 +22,31 @@ class EditCanvasImage extends React.Component {
       selectedShapeName: "",
       hideTransformer: false,
       konvaImageList: [],
-      flipX: false,
-      flipY: false,
       crop: initialCrop,
       lastCrop: initialCrop,
-      isCropping: false
+      isCropping: false,
+      unduCrop: false,
+      rotation: 0,
+      uploading: false
     };
   }
   static propTypes = {
     imageObject: PropTypes.object
   };
+
+  componentDidMount() {
+    // let's go rotate image relative to it's center!
+    // we need to set offset to define new "center" of image
+    const image = this.stageRef;
+    image.offsetX(image.width() / 2);
+    image.offsetY(image.height() / 2);
+    // when we are setting {x,y} properties we are setting position of top left corner of image.
+    // but after applying offset when we are setting {x,y}
+    // properties we are setting position of central point of image.
+    // so we also need to move the image to see previous result
+    image.x(image.x() + image.width() / 2);
+    image.y(image.y() + image.height() / 2);
+  }
 
   handleStageClick = e => {
     this.setState({
@@ -50,7 +64,7 @@ class EditCanvasImage extends React.Component {
   };
 
   handleExportClick = () => {
-    this.setState({ hideTransformer: true }, () => {
+    this.setState({ hideTransformer: true, uploading: true }, () => {
       const dataURL = this.stageRef
         .getStage()
         .toDataURL({ mimeType: "image/jpeg" });
@@ -71,7 +85,7 @@ class EditCanvasImage extends React.Component {
       handlePhotoListChange,
       setS3PhotoParams,
       uploadToS3,
-      fileList
+      close
     } = this.props;
     await setS3PhotoParams(file.filename, file.filetype);
     //format name on backend
@@ -81,13 +95,8 @@ class EditCanvasImage extends React.Component {
         const { signedRequest, key } = data.signS3;
         await uploadToS3(file.filebody, signedRequest);
 
-        var foundIndex = fileList.findIndex(x => x.name === file.filename);
-        fileList[foundIndex] = {
-          uid: Date.now(),
-          url: key
-        };
-
-        await handlePhotoListChange({ file, fileList });
+        await handlePhotoListChange({ file, key });
+        close();
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -107,11 +116,35 @@ class EditCanvasImage extends React.Component {
   };
 
   handleStickerClick = (id, name, src) => {
-    const idFound = this.state.konvaImageList.find(x => x.id === id);
-    if (idFound === undefined) {
-      const imgList = [...this.state.konvaImageList];
-      imgList.push({ id, name, src });
-      this.setState({ konvaImageList: imgList });
+    let x = 0;
+    let y = 0;
+    let width = this.state.width;
+    let height = this.state.height;
+
+    let nwidth = this.state.lastCrop.x[1] - this.state.lastCrop.x[0];
+    let nheight = this.state.lastCrop.y[1] - this.state.lastCrop.y[0];
+
+    if (nwidth === width && nheight === height) {
+      const idFound = this.state.konvaImageList.find(x => x.id === id);
+      x = (x + width) / 2 - 50;
+      y = (y + height) / 2 - 50;
+      if (idFound === undefined) {
+        const imgList = [...this.state.konvaImageList];
+        imgList.push({ id, name, src, x, y });
+        this.setState({ konvaImageList: imgList });
+      }
+    } else {
+      //calculations
+      x = (x + nwidth) / 2 - 50 + this.state.lastCrop.x[0];
+      y = (y + nheight) / 2 - 50 + this.state.lastCrop.y[0];
+
+      const idFound = this.state.konvaImageList.find(x => x.id === id);
+
+      if (idFound === undefined) {
+        const imgList = [...this.state.konvaImageList];
+        imgList.push({ id, name, src, x, y });
+        this.setState({ konvaImageList: imgList });
+      }
     }
   };
 
@@ -121,16 +154,7 @@ class EditCanvasImage extends React.Component {
     );
     this.setState({ konvaImageList: filteredList });
   };
-  handleFlipX = () => {
-    this.setState({
-      flipX: !this.state.flipX
-    });
-  };
-  handleFlipY = () => {
-    this.setState({
-      flipY: !this.state.flipY
-    });
-  };
+
   // Crop Functions
   onAcceptCrop = e => {
     e.preventDefault();
@@ -141,7 +165,7 @@ class EditCanvasImage extends React.Component {
   };
   onCancelCrop = e => {
     e.preventDefault();
-    console.log("last", this.state.lastCrop);
+    // console.log("last", this.state.lastCrop);
     this.setState({
       isCropping: false,
       crop: this.state.lastCrop
@@ -154,9 +178,30 @@ class EditCanvasImage extends React.Component {
     });
   };
   onCropChange = (Xs, Ys) => {
-    console.log(Xs, Ys);
+    if (this.state.unduCrop === true) {
+      this.setState({
+        crop: { x: [0, 400], y: [0, 400] },
+        lastCrop: { x: [0, 400], y: [0, 400] },
+        unduCrop: false
+      });
+    } else {
+      this.setState({
+        crop: { x: Xs, y: Ys }
+      });
+    }
+  };
+
+  undoCrop = e => {
+    e.preventDefault();
     this.setState({
-      crop: { x: Xs, y: Ys }
+      unduCrop: true,
+      isCropping: true
+    });
+  };
+
+  rotate = () => {
+    this.setState({
+      rotation: this.state.rotation + 90
     });
   };
 
@@ -167,11 +212,9 @@ class EditCanvasImage extends React.Component {
       height,
       hideTransformer,
       selectedShapeName,
-      flipX,
-      flipY,
-      isCropping
+      isCropping,
+      uploading
     } = this.state;
-    console.log(flipX, flipY);
 
     const Sticker = props => (
       <div
@@ -197,6 +240,7 @@ class EditCanvasImage extends React.Component {
             ref={node => {
               this.stageRef = node;
             }}
+            rotation={this.state.rotation}
           >
             <Layer>
               <WithCrop
@@ -207,45 +251,42 @@ class EditCanvasImage extends React.Component {
                 isCropping={isCropping}
                 keepAspectRatio
               >
-                <Group
-                  scaleX={flipX ? -1 : 1}
-                  scaleY={flipY ? -1 : 1}
-                  x={flipX ? width : 0}
-                  y={flipY ? height : 0}
-                >
-                  {this.props.imageObject && (
-                    <SourceImage
-                      width={width}
-                      height={height}
-                      sourceImageObject={this.props.imageObject}
+                {this.props.imageObject && (
+                  <SourceImage
+                    width={width}
+                    height={height}
+                    sourceImageObject={this.props.imageObject}
+                  />
+                )}
+                {konvaImageList.length > 0 &&
+                  konvaImageList.map(img => (
+                    <KonvaImage
+                      src={img.src}
+                      key={img.id}
+                      onDragStart={this.handleDragStart}
+                      width={100}
+                      height={100}
+                      name={img.name}
+                      x={img.x}
+                      y={img.y}
                     />
-                  )}
-                  {konvaImageList.length > 0 &&
-                    konvaImageList.map(img => (
-                      <KonvaImage
-                        src={img.src}
-                        key={img.id}
-                        onDragStart={this.handleDragStart}
-                        width={100}
-                        height={100}
-                        name={img.name}
-                      />
-                    ))}
-                  {hideTransformer === false && (
-                    <TransformerHandler selectedShapeName={selectedShapeName} />
-                  )}
-                </Group>
+                  ))}
+                {hideTransformer === false && (
+                  <TransformerHandler selectedShapeName={selectedShapeName} />
+                )}
               </WithCrop>
             </Layer>
           </Stage>
         </div>
         {!isCropping ? (
-          <Button style={{ marginBottom: 5 }} onClick={this.onStartCrop}>
-            CROP
-          </Button>
+          <div style={{ display: "inline" }}>
+            <button style={{ marginBottom: 5 }} onClick={this.onStartCrop}>
+              CROP
+            </button>
+          </div>
         ) : (
           <React.Fragment>
-            <Button
+            <button
               style={{
                 border: "none",
                 backgroundColor: "lightgreen",
@@ -254,8 +295,8 @@ class EditCanvasImage extends React.Component {
               onClick={this.onAcceptCrop}
             >
               accept
-            </Button>
-            <Button
+            </button>
+            <button
               style={{
                 border: "none",
                 backgroundColor: "lightcoral",
@@ -264,24 +305,30 @@ class EditCanvasImage extends React.Component {
               onClick={this.onCancelCrop}
             >
               cancel
-            </Button>
+            </button>
           </React.Fragment>
         )}
-        <Button style={{ marginBottom: 5 }} onClick={this.handleFlipY}>
-          flipY
-        </Button>
-        <Button style={{ marginBottom: 5 }} onClick={this.handleFlipX}>
-          flipX
-        </Button>
-        <Button style={{ marginBottom: 5 }} onClick={this.handleExportClick}>
+
+        <button style={{ marginBottom: 5 }} onClick={this.rotate}>
+          Rotate
+        </button>
+
+        <button
+          style={{ marginBottom: 5 }}
+          onClick={this.handleExportClick}
+          disabled={uploading}
+        >
           Upload
-        </Button>
-        <Button
+        </button>
+        <button style={{ marginBottom: 5 }} onClick={() => this.props.close()}>
+          Close
+        </button>
+        <button
           style={{ marginBottom: 5 }}
           onClick={this.removeSelectedSticker}
         >
           Remove Selected Sticker
-        </Button>
+        </button>
         <div
           style={{
             display: "flex",

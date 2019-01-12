@@ -40,7 +40,6 @@ class Settings extends Component {
             }
 
             const settings = data.getSettings;
-
             return (
               <Fragment>
                 <SettingsPage settings={settings} refetchUser={refetch} />

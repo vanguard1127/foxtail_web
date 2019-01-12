@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-import { UPDATE_SETTINGS } from "../../queries";
+import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
 
 import ImageEditor from "../Modals/ImageEditor";
 
@@ -15,6 +15,8 @@ import DesiresModal from "../Modals/Desires/Modal";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
 import CoupleModal from "../Modals/Couples";
 import BlackModal from "../Modals/Black";
+import { s3url } from "../../docs/data";
+import axios from "axios";
 
 class SettingsPage extends Component {
   //TODO: Do we need to have these setup?
@@ -35,6 +37,12 @@ class SettingsPage extends Component {
     users: null,
     publicPhotoList: [],
     privatePhotoList: [],
+    publicPics: this.props.settings.photos
+      .slice(0, 4)
+      .filter(x => x.url !== ""),
+    privatePics: this.props.settings.photos
+      .slice(4, 8)
+      .filter(x => x.url !== ""),
     about: null,
     desires: [],
     showDesiresPopup: false,
@@ -45,6 +53,9 @@ class SettingsPage extends Component {
     photoSubmitType: "",
     includeMsgs: false,
     fileRecieved: null,
+    isPrivate: false,
+    filename: "",
+    filetype: "",
     ...this.props.settings
   };
 
@@ -104,11 +115,11 @@ class SettingsPage extends Component {
     });
   };
 
-  toggleImgEditorPopup = file => {
-    console.log("file get", file);
+  toggleImgEditorPopup = (file, isPrivate) => {
     this.setState(
       {
-        fileRecieved: file
+        fileRecieved: file,
+        isPrivate
       },
       () => {
         this.setState({
@@ -118,8 +129,52 @@ class SettingsPage extends Component {
     );
   };
 
-  recieveEditedImage = files => {
-    console.log("recieved", files);
+  handlePhotoListChange = ({
+    file,
+    key,
+    isPrivate,
+    isDeleted,
+    updateSettings
+  }) => {
+    if (isPrivate) {
+      let { privatePics } = this.state;
+
+      if (isDeleted) {
+        privatePics = privatePics.filter(x => x.id !== file.id);
+      } else {
+        privatePics.push({
+          uid: Date.now(),
+          url: key
+        });
+      }
+
+      this.setState(
+        {
+          privatePics,
+          privatePhotoList: privatePics.map(file => JSON.stringify(file))
+        },
+        () => this.handleSubmit(updateSettings)
+      );
+    } else {
+      let { publicPics } = this.state;
+
+      if (isDeleted) {
+        publicPics = publicPics.filter(x => x.id !== file.id);
+      } else {
+        publicPics.push({
+          uid: Date.now(),
+          url: key
+        });
+      }
+
+      this.setState(
+        {
+          publicPics,
+          publicPhotoList: publicPics.map(file => JSON.stringify(file))
+        },
+        () => this.handleSubmit(updateSettings)
+      );
+    }
   };
 
   togglePhotoVerPopup = () => {
@@ -144,20 +199,34 @@ class SettingsPage extends Component {
     this.setState({ photoSubmitType: type }, () => this.togglePhotoVerPopup());
   };
 
-  savePics = ({ files, isPrivate }) => {
-    if (isPrivate) {
-      this.setState({
-        privatePhotoList: files
-      });
-    } else {
-      this.setState({
-        publicPhotoList: files
-      });
-    }
-  };
-
   setPartnerID = id => {
     this.props.form.setFieldsValue({ couplePartner: id });
+  };
+
+  setS3PhotoParams = (name, type) => {
+    this.setState({
+      filename: name,
+      filetype: type
+    });
+  };
+
+  uploadToS3 = async (file, signedRequest) => {
+    try {
+      //ORIGINAL
+      const options = {
+        headers: {
+          "Content-Type": file.type
+        }
+      };
+      const resp = await axios.put(signedRequest, file, options);
+      if (resp.status === 200) {
+        console.log("upload ok");
+      } else {
+        console.log("Something went wrong");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   render() {
@@ -175,6 +244,8 @@ class SettingsPage extends Component {
       users,
       publicPhotoList,
       privatePhotoList,
+      publicPics,
+      privatePics,
       about,
       desires,
       showPhotoVerPopup,
@@ -186,7 +257,10 @@ class SettingsPage extends Component {
       couplePartner,
       includeMsgs,
       lang,
-      fileRecieved
+      fileRecieved,
+      filename,
+      filetype,
+      isPrivate
     } = this.state;
 
     const { userID } = this.props;
@@ -256,17 +330,31 @@ class SettingsPage extends Component {
                           />
                           <Photos
                             isPrivate={false}
-                            savePics={e =>
-                              this.savePics({ files: e, isPrivate: false })
-                            }
                             showEditor={this.toggleImgEditorPopup}
+                            photos={publicPics}
+                            deleteImg={({ file, key }) =>
+                              this.handlePhotoListChange({
+                                file,
+                                key,
+                                isPrivate: false,
+                                isDeleted: true,
+                                updateSettings
+                              })
+                            }
                           />
                           <Photos
                             isPrivate={true}
-                            savePics={e =>
-                              this.savePics({ files: e, isPrivate: true })
-                            }
                             showEditor={this.toggleImgEditorPopup}
+                            photos={privatePics}
+                            deleteImg={({ file, key }) =>
+                              this.handlePhotoListChange({
+                                file,
+                                key,
+                                isPrivate: true,
+                                isDeleted: true,
+                                updateSettings
+                              })
+                            }
                           />
                           <MyProfile
                             desires={desires}
@@ -298,10 +386,28 @@ class SettingsPage extends Component {
                 </div>
               </div>
               {showImgEditorPopup && (
-                <ImageEditor
-                  file={fileRecieved}
-                  handlePhotoListChange={this.recieveEditedImage}
-                />
+                <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
+                  {signS3 => {
+                    return (
+                      <ImageEditor
+                        file={fileRecieved}
+                        handlePhotoListChange={({ file, key }) =>
+                          this.handlePhotoListChange({
+                            file,
+                            key,
+                            isPrivate,
+                            isDeleted: false,
+                            updateSettings
+                          })
+                        }
+                        setS3PhotoParams={this.setS3PhotoParams}
+                        uploadToS3={this.uploadToS3}
+                        signS3={signS3}
+                        close={this.toggleImgEditorPopup}
+                      />
+                    );
+                  }}
+                </Mutation>
               )}
 
               {showDesiresPopup && (
