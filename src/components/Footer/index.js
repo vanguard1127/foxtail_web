@@ -1,6 +1,7 @@
 import React from "react";
 
-const Footer = () => {
+import { withNamespaces } from "react-i18next";
+const Footer = ({ t }) => {
   return (
     <footer>
       <div className="brand">
@@ -35,19 +36,19 @@ const Footer = () => {
         <div className="container">
           <div className="col-md-12">
             <span className="text">
-              © 2018 - 2019 Foxtail App Inc. Registered in one or more
-              countries.
+              © 2019 - 2020 Foxtail App Inc.{" "}
+              {t("Registered in one or more countries")}.
             </span>
             <div className="menu">
               <ul>
                 <li>
-                  <span>Terms & Conditions</span>
+                  <span>{t("Terms & Conditions")}</span>
                 </li>
                 <li>
-                  <span>Privacy Policy</span>
+                  <span>{t("Privacy Policy")}</span>
                 </li>
                 <li>
-                  <span>Contact Us</span>
+                  <span>{t("Contact Us")}</span>
                 </li>
               </ul>
             </div>
@@ -58,4 +59,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default withNamespaces()(Footer);

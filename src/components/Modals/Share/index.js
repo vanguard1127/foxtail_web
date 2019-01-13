@@ -13,18 +13,16 @@ import {
   TumblrIcon,
   EmailIcon
 } from "react-share";
-
+import { withNamespaces } from "react-i18next";
 let shareUrl = "";
 let title = "";
-
-const body = (profile, event) => {
+const body = (profile, event, t) => {
   if (profile) {
     shareUrl = "http://localhost:3000/members/" + profile.id;
-    title =
-      "Someone thinks you would be interested in a member on Foxtail. Here's their profile:";
+    title = t("shareText");
     return (
       <div>
-        Know someone that would like to meet{" "}
+        {t("Know someone that would like to meet")}{" "}
         {profile.users.map((user, index) => {
           if (index === 0) return user.username;
           else return +" & " + user.username;
@@ -34,15 +32,14 @@ const body = (profile, event) => {
     );
   } else if (event) {
     shareUrl = "http://localhost:3000/events/" + event.id;
-    title = "You have been invited to " + event.eventname;
-    return <div>Share this Event?</div>;
+    title = t("You have been invited to") + " " + event.eventname;
+    return <div>{t("Share this Event")}?</div>;
   } else {
     return null;
   }
 };
-
-const Share = ({ profile, event, close }) => {
-  const modalBody = body(profile, event);
+const Share = ({ profile, event, close, t }) => {
+  const modalBody = body(profile, event, t);
 
   return (
     <section className="popup-content show">
@@ -130,4 +127,4 @@ const Share = ({ profile, event, close }) => {
   );
 };
 
-export default Share;
+export default withNamespaces()(Share);

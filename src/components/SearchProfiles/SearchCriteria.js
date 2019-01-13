@@ -3,8 +3,8 @@ import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS, REMOVE_LOCLOCK } from "../../queries";
 import Spinner from "../common/Spinner";
 import AddressSearch from "../common/AddressSearch";
-import SetLocationModal from "../common/SetLocationModal";
-import { message } from "antd";
+import SetLocationModal from "../Modals/SetLocation";
+
 import DistanceSlider from "../common/DistanceSlider";
 import InterestedInDropdown from "../common/InterestedInDropdown";
 import AgeRange from "../common/AgeRange";
@@ -63,9 +63,7 @@ class SearchCriteria extends Component {
     e.preventDefault();
 
     navigator.geolocation.getCurrentPosition(this.setLocation, err => {
-      message.error(
-        "Please enable location services to remove your set location."
-      );
+      alert("Please enable location services to remove your set location.");
       return;
     });
 
@@ -103,20 +101,22 @@ class SearchCriteria extends Component {
       interestedIn,
       distance,
       distanceMetric,
-      ageRange
+      ageRange,
+      locModalVisible
     } = this.state;
+    const { t } = this.props;
     return (
       <div>
         <Query query={GET_SETTINGS} fetchPolicy="network-only">
           {({ data, loading, error }) => {
             if (loading) {
-              return <Spinner message="Loading..." size="large" />;
+              return <Spinner message={t("Loading...")} size="large" />;
             }
             if (error) {
               return <div>{error.message}</div>;
             }
             if (!data.getSettings) {
-              return <div>Error occured. Please contact support!</div>;
+              return <div>{t("Error occured. Please contact support!")}</div>;
             }
 
             distance = distance !== null ? distance : data.getSettings.distance;
@@ -171,6 +171,7 @@ class SearchCriteria extends Component {
                                         }
                                         address={location}
                                         type={"(cities)"}
+                                        placeholder={t("Set Location...")}
                                       />
                                     </div>
                                   </div>
@@ -185,7 +186,7 @@ class SearchCriteria extends Component {
                                           })
                                         }
                                         value={interestedIn}
-                                        placeholder={"Gender(s):"}
+                                        placeholder={t("Genders")}
                                       />
                                     </div>
                                   </div>
@@ -199,6 +200,7 @@ class SearchCriteria extends Component {
                                           updateSettings
                                         })
                                       }
+                                      t={t}
                                     />
                                   </div>
                                   <div className="col-md-6">
@@ -211,6 +213,7 @@ class SearchCriteria extends Component {
                                           updateSettings
                                         })
                                       }
+                                      t={t}
                                     />
                                   </div>
                                 </div>
@@ -226,12 +229,13 @@ class SearchCriteria extends Component {
             );
           }}
         </Query>
-        <SetLocationModal
-          visible={this.state.locModalVisible}
-          close={() => this.setLocModalVisible(false)}
-          setLocation={this.setLocation}
-          isBlackMember={this.props.isBlackMember}
-        />
+        {locModalVisible && (
+          <SetLocationModal
+            close={() => this.setLocModalVisible(false)}
+            setLocation={this.setLocation}
+            isBlackMember={this.props.isBlackMember}
+          />
+        )}
       </div>
     );
   }

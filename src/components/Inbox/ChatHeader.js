@@ -18,7 +18,9 @@ const ChatHeader = ({ currentChat, currentuser }) => {
     if (currentChat.participants.length > 2) {
       chatTitleExtra = ` + ${currentChat.participants.length - 2} participants`;
     }
-    chatLastSeen = TimeAgo(currentChat.participants[0].updatedAt);
+    chatLastSeen = currentChat.participants[0].online
+      ? "Online"
+      : TimeAgo(currentChat.participants[0].updatedAt);
   }
   return (
     <div className="navbar">

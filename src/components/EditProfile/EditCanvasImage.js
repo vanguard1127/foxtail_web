@@ -125,26 +125,20 @@ class EditCanvasImage extends React.Component {
     let nheight = this.state.lastCrop.y[1] - this.state.lastCrop.y[0];
 
     if (nwidth === width && nheight === height) {
-      const idFound = this.state.konvaImageList.find(x => x.id === id);
       x = (x + width) / 2 - 50;
       y = (y + height) / 2 - 50;
-      if (idFound === undefined) {
-        const imgList = [...this.state.konvaImageList];
-        imgList.push({ id, name, src, x, y });
-        this.setState({ konvaImageList: imgList });
-      }
+
+      const imgList = [...this.state.konvaImageList];
+      imgList.push({ id, name, src, x, y });
+      this.setState({ konvaImageList: imgList });
     } else {
       //calculations
       x = (x + nwidth) / 2 - 50 + this.state.lastCrop.x[0];
       y = (y + nheight) / 2 - 50 + this.state.lastCrop.y[0];
 
-      const idFound = this.state.konvaImageList.find(x => x.id === id);
-
-      if (idFound === undefined) {
-        const imgList = [...this.state.konvaImageList];
-        imgList.push({ id, name, src, x, y });
-        this.setState({ konvaImageList: imgList });
-      }
+      const imgList = [...this.state.konvaImageList];
+      imgList.push({ id, name, src, x, y });
+      this.setState({ konvaImageList: imgList });
     }
   };
 
@@ -229,6 +223,7 @@ class EditCanvasImage extends React.Component {
         />
       </div>
     );
+
     return (
       <div style={{ width: "fit-content" }}>
         <div style={{ width, height, margin: "0 auto" }}>
@@ -259,16 +254,17 @@ class EditCanvasImage extends React.Component {
                   />
                 )}
                 {konvaImageList.length > 0 &&
-                  konvaImageList.map(img => (
+                  konvaImageList.map((img, idx) => (
                     <KonvaImage
                       src={img.src}
-                      key={img.id}
+                      key={img.id + idx}
                       onDragStart={this.handleDragStart}
                       width={100}
                       height={100}
                       name={img.name}
                       x={img.x}
                       y={img.y}
+                      rotation={0}
                     />
                   ))}
                 {hideTransformer === false && (

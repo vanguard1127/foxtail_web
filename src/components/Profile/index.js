@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { withNamespaces } from "react-i18next";
 import { Query, Mutation } from "react-apollo";
 import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
-import { s3url } from "../../docs/data";
 import DesiresSection from "./DesiresSection";
 import ProfileCard from "./ProfileCard";
 import ProfileInfo from "./ProfileInfo";
@@ -51,7 +51,6 @@ class ProfilePage extends Component {
   handleLike = likeProfile => {
     likeProfile()
       .then(({ data }) => {
-        console.log(data);
         if (data.likeProfile) {
           console.log("liked");
           return;
@@ -73,6 +72,7 @@ class ProfilePage extends Component {
       shareModalVisible,
       msgModalVisible
     } = this.state;
+    const { t } = this.props;
     return (
       <Mutation
         mutation={LIKE_PROFILE}
@@ -85,11 +85,13 @@ class ProfilePage extends Component {
             <Query query={GET_PROFILE} variables={{ id }}>
               {({ data, loading, error }) => {
                 if (loading) {
-                  return <Spinner message="Loading..." size="large" />;
+                  return <Spinner message={t("Loading...")} size="large" />;
                 } else if (!data || !data.profile) {
                   return (
                     <div>
-                      This profile either never existed or it no longer does.
+                      {t(
+                        "This profile either never existed or it no longer does."
+                      )}
                     </div>
                   );
                 }
@@ -103,6 +105,7 @@ class ProfilePage extends Component {
                 const privatePics = photos.filter(
                   photoObject => photoObject.url === ""
                 );
+
                 return (
                   <section className="profile">
                     <div className="container">
@@ -114,13 +117,15 @@ class ProfilePage extends Component {
                               setProfile={this.setProfile}
                               showMsgModal={() => this.setMsgModalVisible(true)}
                               likeProfile={() => this.handleLike(likeProfile)}
+                              t={t}
                             />
-                            <DesiresSection desires={desires} />
+                            <DesiresSection desires={desires} t={t} />
                           </div>
                           <div className="col-md-9">
                             <ProfileInfo
                               users={users}
-                              updatedAt={profile.updatedAt}
+                              online={profile.online}
+                              t={t}
                             />
                             <ProfileDetails
                               users={users}
@@ -131,13 +136,19 @@ class ProfilePage extends Component {
                               showShareModal={() =>
                                 this.setShareModalVisible(true, profile)
                               }
+                              t={t}
                             />
-                            <ProfileBio about={about} />
-                            <DesiresMobile desires={desires} />
-                            <PhotoSlider isPublic={true} photos={publicPics} />
+                            <ProfileBio about={about} t={t} />
+                            <DesiresMobile desires={desires} t={t} />
+                            <PhotoSlider
+                              isPublic={true}
+                              photos={publicPics}
+                              t={t}
+                            />
                             <PhotoSlider
                               isPublic={false}
                               photos={privatePics}
+                              t={t}
                             />
                           </div>
                         </div>
@@ -176,5 +187,5 @@ class ProfilePage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(ProfilePage)
+  withRouter(withNamespaces()(ProfilePage))
 );

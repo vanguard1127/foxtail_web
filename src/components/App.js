@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
 import Signup from "../components/Auth/Signup";
 import LoginButton from "../components/Auth/LoginButton";
@@ -6,7 +6,7 @@ import LanguageControl from "./common/LanguageControl/LanguageControl";
 
 import { withNamespaces } from "react-i18next";
 
-const App = () => {
+const App = ({ t }) => {
   return (
     <div>
       <header className="landing">
@@ -20,7 +20,7 @@ const App = () => {
               </div>
               <div className="offset-md-3 col-md-5">
                 <div className="content">
-                  <LoginButton />
+                  <LoginButton t={t} />
                   <LanguageControl />
                 </div>
               </div>
@@ -38,33 +38,36 @@ const App = () => {
                   <div className="left">
                     <div className="welcome-text">
                       <h1>
-                        #1 FREE dating community for alternative relationships
+                        {t(
+                          "#1 FREE dating community for alternative relationships"
+                        )}
                       </h1>
-                      <span className="title">Feed Your Sexuality</span>
+                      <span className="title">{t("Feed Your Sexuality")}</span>
                     </div>
                     <div className="stats">
                       <div className="head">
-                        <span>Welcome</span> <span>Foxtail Stats</span>
+                        <span> {t("Welcome")}</span>{" "}
+                        <span> {t("Foxtail Stats")}</span>
                       </div>
                       <ul>
                         <li>
                           <span className="counter">19.528</span>
-                          <span>Male Member</span>
+                          <span>{t("Male Members")}</span>
                         </li>
                         <li>
                           <span className="counter">22.882</span>
-                          <span>Female Member</span>
+                          <span>{t("Female Members")}</span>
                         </li>
                         <li>
                           <span className="counter">5823</span>
-                          <span>Couple Profile</span>
+                          <span>{t("Couple Profiles")}</span>
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-5 col-md-12">
-                  <Signup />
+                  <Signup t={t} />
                 </div>
               </div>
             </div>
@@ -78,26 +81,26 @@ const App = () => {
             <div className="row">
               <div className="col-md-4">
                 <span className="created">
-                  Foxtail © 2018 Created by <span>Foxtail</span>
+                  Foxtail © 2018 {t("Created by")} <span>Foxtail</span>
                 </span>
               </div>
               <div className="offset-md-2 col-md-6">
                 <div className="links">
                   <ul>
                     <li>
-                      <span>Terms</span>
+                      <span>{t("Terms")}</span>
                     </li>
                     <li>
-                      <span>Privacy</span>
+                      <span>{t("Privacy")}</span>
                     </li>
                     <li>
-                      <span>FAQ</span>
+                      <span>{t("FAQ")}</span>
                     </li>
                     <li>
-                      <span>About</span>
+                      <span>{t("About")}</span>
                     </li>
                     <li>
-                      <span>Support</span>
+                      <span>{t("Support")}</span>
                     </li>
                   </ul>
                 </div>

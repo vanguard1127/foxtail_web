@@ -116,7 +116,7 @@ class NoticesList extends Component {
 
   render() {
     const { read, seen, notificationIDs } = this.state;
-
+    const { t } = this.props;
     return (
       <Mutation
         mutation={UPDATE_NOTIFICATIONS}
@@ -191,7 +191,7 @@ class NoticesList extends Component {
                             <div>
                               <span className="text">
                                 <b> {notif.fromProfile.profileName} </b>
-                                {notif.text}
+                                {t(notif.text)}
                               </span>
                               <span className="when">
                                 {moment(notif.date).fromNow()}

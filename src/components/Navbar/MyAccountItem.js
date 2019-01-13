@@ -41,7 +41,7 @@ class MyAccountItem extends Component {
 
   render() {
     const { menuOpen } = this.state;
-    const { currentuser } = this.props;
+    const { currentuser, t } = this.props;
 
     if (currentuser === undefined) {
       return null;
@@ -59,7 +59,10 @@ class MyAccountItem extends Component {
         </span>
         <span className="username">{currentuser.username}</span>
         {menuOpen && (
-          <MyAccountMenu close={() => this.setState({ menuOpen: false })} />
+          <MyAccountMenu
+            close={() => this.setState({ menuOpen: false })}
+            t={t}
+          />
         )}
       </span>
     );

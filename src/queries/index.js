@@ -144,6 +144,7 @@ export const READ_CHAT = gql`
         profilePic
         profileName
         updatedAt
+        online
         users {
           username
           id
@@ -467,6 +468,7 @@ export const SEARCH_PROFILES = gql`
         publicCode
         showOnline
         updatedAt
+        online
       }
       featuredProfiles {
         id
@@ -487,6 +489,7 @@ export const SEARCH_PROFILES = gql`
         publicCode
         showOnline
         updatedAt
+        online
       }
     }
   }
@@ -822,6 +825,7 @@ export const GET_PROFILE = gql`
       publicCode
       distance
       updatedAt
+      online
     }
   }
 `;

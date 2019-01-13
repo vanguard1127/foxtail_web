@@ -2,14 +2,15 @@ import React from "react";
 import ProfileInfoBox from "./ProfileInfoBox";
 import DesiresBlock from "./DesiresBlock";
 
-const ProfileInfoDiv = ({ profile, history }) => {
+const ProfileInfoDiv = ({ profile, t }) => {
   return (
     <div className="data">
       <ProfileInfoBox
         users={profile.users}
-        lastOnline={profile.showOnline && profile.updatedAt}
+        online={profile.showOnline && profile.online}
+        t={t}
       />
-      <DesiresBlock desires={profile.desires} />
+      <DesiresBlock desires={profile.desires} t={t} />
     </div>
   );
 };

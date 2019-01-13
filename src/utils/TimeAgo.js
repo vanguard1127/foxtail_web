@@ -5,9 +5,7 @@ function TimeAgo(updatedAt) {
   var duration = moment.duration(moment(Date.now()).diff(moment(updatedAt)));
   var minutes = duration.minutes();
 
-  if (minutes < 20) {
-    return "Online";
-  } else if (minutes < 10080) {
+  if (minutes < 10080) {
     return moment(updatedAt)
       .fromNow()
       .toString();

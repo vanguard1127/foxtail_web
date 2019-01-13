@@ -9,13 +9,14 @@ const FeaturedDiv = ({
   showMsgModal,
   showBlockModal,
   showShareModal,
-  likeProfile
+  likeProfile,
+  t
 }) => {
   return (
     <section className="featured-profiles" key="nmn">
       <div className="container">
         <div className="col-md-12">
-          <span className="head">Featured Profiles</span>
+          <span className="head">{t("Featured Profiles")}</span>
           <OwlCarousel
             className="owl-carousel slider"
             autoplay
@@ -56,6 +57,7 @@ const FeaturedDiv = ({
                   showBlockModal={showBlockModal}
                   showShareModal={showShareModal}
                   likeProfile={likeProfile}
+                  t={t}
                 />
               );
             })}

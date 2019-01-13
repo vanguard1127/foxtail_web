@@ -1,12 +1,12 @@
 import React from "react";
 import OwlCarousel from "react-owl-carousel";
-const PhotoSlider = ({ photos, isPublic }) => {
+const PhotoSlider = ({ photos, isPublic, t }) => {
   return (
     <div
       className={isPublic ? "photos-slider public" : "photos-slider private"}
     >
       <div className="profile-head">
-        {isPublic ? "Public" : "Private"} Photos (21)
+        {isPublic ? t("Public") : t("Private")} {t("Photos")} (21)
       </div>
       <OwlCarousel
         className="owl-carousel slider-content"

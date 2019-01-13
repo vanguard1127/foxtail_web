@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { message, Modal } from "antd";
-import SetLocationModal from "../components/common/SetLocationModal";
+import SetLocationModal from "./Modals/SetLocation";
 const confirm = Modal.confirm;
 
 const withLocation = PassedComponent =>
@@ -112,19 +112,20 @@ const withLocation = PassedComponent =>
     }
 
     render() {
-      const { lat, long } = this.state;
+      const { lat, long, locModalVisible } = this.state;
 
       return (
         <Fragment>
           {lat !== null && (
             <PassedComponent {...this.props} location={{ lat, long }} />
           )}
-          <SetLocationModal
-            visible={this.state.locModalVisible}
-            close={() => this.setLocModalVisible(false)}
-            setLocation={this.setLocation}
-            isBlackMember={this.props.session.currentuser.blackMember.active}
-          />
+          {locModalVisible && (
+            <SetLocationModal
+              close={() => this.setLocModalVisible(false)}
+              setLocation={this.setLocation}
+              isBlackMember={this.props.session.currentuser.blackMember.active}
+            />
+          )}
         </Fragment>
       );
     }

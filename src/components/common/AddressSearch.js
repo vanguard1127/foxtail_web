@@ -1,10 +1,11 @@
 import React from "react";
+import { withNamespaces } from "react-i18next";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
 
-export default class AddressSearch extends React.Component {
+class AddressSearch extends React.Component {
   handleChange = address => {
     this.props.setLocationValues({
       address
@@ -26,7 +27,7 @@ export default class AddressSearch extends React.Component {
   };
 
   render() {
-    const { type, address } = this.props;
+    const { type, address, t, placeholder } = this.props;
     const onError = (status, clearSuggestions) => {
       console.log("Google Maps API returned error with status: ", status);
       clearSuggestions();
@@ -49,12 +50,12 @@ export default class AddressSearch extends React.Component {
               {/* <label>Location</label> */}
               <input
                 {...getInputProps({
-                  placeholder: "Search Places ...",
+                  placeholder,
                   className: "location-search-input"
                 })}
               />
               <div className="autocomplete-dropdown-container">
-                {loading && <div>Loading...</div>}
+                {loading && <div>{t("Loading...")}</div>}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
                     ? "suggestion-item--active"
@@ -83,3 +84,5 @@ export default class AddressSearch extends React.Component {
     );
   }
 }
+
+export default withNamespaces()(AddressSearch);

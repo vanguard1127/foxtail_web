@@ -2,8 +2,10 @@ import React, { Fragment, Component } from "react";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
+import { withNamespaces } from "react-i18next";
 import { TOGGLE_ONLINE } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
+import axios from "axios";
 
 import UserToolbar from "./UserToolbar";
 
@@ -30,7 +32,7 @@ class Navbar extends Component {
   };
 
   render() {
-    const { session, history } = this.props;
+    const { session, history, t } = this.props;
     const { online } = this.state;
 
     return (
@@ -46,6 +48,7 @@ class Navbar extends Component {
               <NavbarAuth
                 session={session}
                 toggleOnline={online => this.handleToggle(toggleOnline, online)}
+                t={t}
               />
             )}
           </Mutation>
@@ -61,51 +64,27 @@ class Navbar extends Component {
 class NavbarAuth extends Component {
   componentDidMount() {
     //TODO: Dont call if already online
-    const { toggleOnline } = this.props;
+    const { toggleOnline, t } = this.props;
     toggleOnline(true);
-    window.addEventListener("beforeunload", function(event) {
-      localStorage.setItem("Test", "done");
-      toggleOnline(false);
-    });
-  }
 
+    //I don't know why but we need both
+    window.addEventListener("beforeunload", () => {
+      navigator.sendBeacon(
+        "http://localhost:4444/offline?token=" + localStorage.getItem("token")
+      );
+    });
+    window.addEventListener("unload", this.logData, false);
+  }
+  logData = () => {
+    axios.get(
+      "http://localhost:4444/offline?token=" + localStorage.getItem("token")
+    );
+  };
   render() {
     let href = window.location.href.split("/");
     href = href[3];
-    const { session } = this.props;
+    const { session, t } = this.props;
     return (
-      // <Menu
-      //   theme="dark"
-      //   mode="horizontal"
-      //   defaultSelectedKeys={["/"]}
-      //   selectedKeys={["/" + href]}
-      //   style={{ lineHeight: "64px" }}
-      // >
-      //   <Menu.Item key="/members">
-      //     <NavLink to="/members">Meet Members</NavLink>
-      //   </Menu.Item>
-      //   <Menu.Item key="/events">
-      //     <NavLink to="/events">Go to Events</NavLink>
-      //   </Menu.Item>
-
-      //   <Menu.Item key="/editprofile">
-      //     <NavLink to="/editprofile">Edit Profile</NavLink>
-      //   </Menu.Item>
-      //   <Menu.Item key="/settings">
-      //     <NavLink to="/settings">Settings</NavLink>
-      //   </Menu.Item>
-      //   <Menu.Item style={{ float: "right" }}>
-      //     <MyAccountItem />
-      //   </Menu.Item>
-      //   <Menu.Item style={{ float: "right" }}>
-      //     <NoticesDropdown style={{ fontSize: "16px", color: "#08c" }} />
-      //   </Menu.Item>
-      //   <Menu.Item style={{ float: "right" }} key="/inbox">
-      //     <InboxItem />
-      //   </Menu.Item>
-
-      //   <Signout />
-      // </Menu>
       <div className="container">
         <div className="col-md-12">
           <div className="row no-gutters">
@@ -120,25 +99,25 @@ class NavbarAuth extends Component {
               <div className="mobile-toggle">
                 <ul>
                   <li>
-                    <NavLink to="/members">Meet Members</NavLink>
+                    <NavLink to="/members">{t("Meet Members")}</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/events">Go to Events</NavLink>
+                    <NavLink to="/events">{t("Go to Events")}</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/inbox">Inbox</NavLink>
+                    <NavLink to="/inbox">{t("Inbox")}</NavLink>
                   </li>
                   <li>
-                    <span>Becoma a Black Member</span>
+                    <span>{t("Becoma a Black Member")}</span>
                   </li>
                   <li>
-                    <span>My Account</span>
+                    <span>{t("My Account")}</span>
                   </li>
                   <li>
-                    <span>Add Couple Partner</span>
+                    <span>{t("Add Couple Partner")}</span>
                   </li>
                   <li>
-                    <span>Logout</span>
+                    <span>{t("Logout")}</span>
                   </li>
                 </ul>
               </div>
@@ -146,10 +125,10 @@ class NavbarAuth extends Component {
             <div className="col-md-5 hidden-mobile">
               <ul className="menu">
                 <li className={href === "members" ? "active" : ""}>
-                  <NavLink to="/members">Meet Members</NavLink>
+                  <NavLink to="/members">{t("Meet Members")}</NavLink>
                 </li>
                 <li className={href === "events" ? "active" : ""}>
-                  <NavLink to="/events">Go to Events</NavLink>
+                  <NavLink to="/events">{t("Go to Events")}</NavLink>
                 </li>
               </ul>
             </div>
@@ -160,7 +139,11 @@ class NavbarAuth extends Component {
             </div>
             <div className="col-md-5 flexible">
               {session.currentuser && (
-                <UserToolbar currentuser={session.currentuser} href={href} />
+                <UserToolbar
+                  currentuser={session.currentuser}
+                  href={href}
+                  t={t}
+                />
               )}
             </div>
           </div>
@@ -170,4 +153,4 @@ class NavbarAuth extends Component {
   }
 }
 
-export default withRouter(Navbar);
+export default withNamespaces()(withRouter(Navbar));

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import ProfilesDiv from "./ProfilesDiv";
 import Waypoint from "react-waypoint";
+import { withNamespaces } from "react-i18next";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import { Query, Mutation, withApollo } from "react-apollo";
@@ -9,7 +10,6 @@ import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
 import SearchCriteria from "./SearchCriteria";
 import FeaturedDiv from "./FeaturedDiv";
-import BlockModal from "../common/BlockModal";
 import DirectMsgModal from "../Modals/DirectMsg";
 
 const LIMIT = 20;
@@ -22,8 +22,6 @@ class ProfileSearch extends Component {
     previewImage: "",
     lat: this.props.location.lat,
     long: this.props.location.long,
-    shareModalVisible: false,
-    blockModalVisible: false,
     msgModalVisible: false,
     profile: null
   };
@@ -33,20 +31,9 @@ class ProfileSearch extends Component {
     else this.setState({ msgModalVisible });
   };
 
-  setShareModalVisible = (shareModalVisible, profile) => {
-    if (profile) this.setState({ profile, shareModalVisible });
-    else this.setState({ shareModalVisible });
-  };
-
-  setBlockModalVisible = (blockModalVisible, profile) => {
-    if (profile) this.setState({ profile, blockModalVisible });
-    else this.setState({ blockModalVisible });
-  };
-
   handleLike = likeProfile => {
     likeProfile()
       .then(({ data }) => {
-        console.log(data);
         if (data.likeProfile) {
           console.log("liked");
           return;
@@ -116,16 +103,9 @@ class ProfileSearch extends Component {
   // };
 
   render() {
-    const { client } = this.props;
+    const { client, t } = this.props;
     const { currentuser } = this.props.session;
-    const {
-      long,
-      lat,
-      profile,
-      blockModalVisible,
-      shareModalVisible,
-      msgModalVisible
-    } = this.state;
+    const { long, lat, profile, msgModalVisible } = this.state;
     const toProfileID = profile && profile.id;
     return (
       <Fragment>
@@ -142,13 +122,14 @@ class ProfileSearch extends Component {
                 isBlackMember={currentuser.blackMember.active}
                 setQueryLoc={this.setLocation}
                 refetch={refetch}
+                t={t}
               />
             );
             if (loading) {
               return (
                 <div>
                   {searchPanel}{" "}
-                  <Spinner message="Loading Members..." size="large" />
+                  <Spinner message={t("Loading Members...")} size="large" />
                 </div>
               );
             } else if (
@@ -157,19 +138,18 @@ class ProfileSearch extends Component {
                 data.searchProfiles.featuredProfiles.length === 0) ||
               !data
             ) {
-              return <div>{searchPanel} No members near you</div>;
+              return (
+                <div>
+                  {searchPanel} {t("No members near you")}
+                </div>
+              );
             }
             if (error) {
               if (error.message.indexOf("invisible") > -1) {
-                return (
-                  <div>
-                    You cannot see user profiles while invisible unless you're a
-                    Black Member. Please set your profile to visible under
-                    settings to see members.
-                  </div>
-                );
+                return <div>{t("invisibleWarn")}</div>;
               }
             }
+
             return (
               <Mutation
                 mutation={LIKE_PROFILE}
@@ -199,6 +179,7 @@ class ProfileSearch extends Component {
                             this.handleLike(likeProfile, profile)
                           }
                           history={this.props.history}
+                          t={t}
                         />
                       )}
                       {data.searchProfiles.profiles.length !== 0 && (
@@ -223,12 +204,13 @@ class ProfileSearch extends Component {
                               fetchMore
                             })
                           }
+                          t={t}
                         />
                       )}
 
                       <div className="col-md-12">
                         <div className="more-content-btn">
-                          <a href="#">No More Profiles</a>
+                          <span>{t("No More Profiles")}</span>
                         </div>
                       </div>
                     </div>
@@ -238,15 +220,6 @@ class ProfileSearch extends Component {
             );
           }}
         </Query>
-        {profile && (
-          <BlockModal
-            profile={profile}
-            id={profile.id}
-            visible={blockModalVisible}
-            close={() => this.setBlockModalVisible(false)}
-            removeProfile={this.removeProfile}
-          />
-        )}
         {profile && msgModalVisible && (
           <DirectMsgModal
             profile={profile}
@@ -260,6 +233,6 @@ class ProfileSearch extends Component {
 
 export default withApollo(
   withAuth(session => session && session.currentuser)(
-    withRouter(withLocation(ProfileSearch))
+    withRouter(withLocation(withNamespaces()(ProfileSearch)))
   )
 );

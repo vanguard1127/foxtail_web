@@ -56,6 +56,7 @@ export default class BirthDatePicker extends Component {
     this.setState({ month });
   }
   render() {
+    const { t, name } = this.props;
     return (
       <div className="YearNavigation">
         <DayPickerInput
@@ -64,8 +65,8 @@ export default class BirthDatePicker extends Component {
             this.props.onChange({
               target: {
                 ...dayPickerInput.getInput(),
-                name: this.props.name,
-                id: this.props.name
+                name,
+                id: name
               }
             });
           }}
@@ -100,7 +101,7 @@ export default class BirthDatePicker extends Component {
           formatDate={formatDate}
           parseDate={parseDate}
           format="L"
-          placeholder={`Birthday`}
+          placeholder={t("Birthday")}
         />
       </div>
     );

@@ -2,19 +2,19 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Logout from "../Auth/LogoutLink";
 
-const MyAccountMenu = ({ currentuser }) => {
+const MyAccountMenu = ({ currentuser, t }) => {
   return (
     <div className="toggle">
       <div className="dropdown hidden-mobile open">
         <ul>
           <li>
-            <NavLink to="/settings">My Account</NavLink>
+            <NavLink to="/settings">{t("My Account")}</NavLink>
           </li>
           <li>
-            <NavLink to="/settings">Add Couple Partner</NavLink>
+            <NavLink to="/settings">{t("Add Couple Partner")}</NavLink>
           </li>
           <li className="border">
-            <NavLink to="/settings">Become a Black Member</NavLink>
+            <NavLink to="/settings">{t("Become a Black Member")}</NavLink>
           </li>
           <li>
             <Logout />

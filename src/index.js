@@ -15,7 +15,6 @@ import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
-import EditProfile from "./components/EditProfile/EditProfilePage";
 import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
 import "./i18n";
@@ -50,10 +49,10 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     lazy: true,
-    connectionParams: {
+    connectionParams: () => ({
       token: localStorage.getItem("token"),
       refreshToken: localStorage.getItem("refreshToken")
-    }
+    })
   }
 });
 
@@ -117,6 +116,7 @@ const splitlink = split(
 
 const cache = new InMemoryCache();
 
+//DTODO:Do ii need rhtis
 const defaultState = {
   profilePage: {
     __typename: "ProfilePage",

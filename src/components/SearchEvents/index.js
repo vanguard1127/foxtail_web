@@ -7,7 +7,6 @@ import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
 import { message } from "antd";
-import BlockModal from "../common/BlockModal";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
 import Spinner from "../common/Spinner";
@@ -246,14 +245,6 @@ class SearchEvents extends Component {
           </section>
         </div>
 
-        {event && (
-          <BlockModal
-            event={event}
-            id={event.id}
-            visible={blockModalVisible}
-            close={() => this.setBlockModalVisible(false)}
-          />
-        )}
         {event && (
           <ShareModal
             event={event}

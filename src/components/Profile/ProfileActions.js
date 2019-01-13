@@ -1,5 +1,11 @@
 import React from "react";
-const ProfileActions = ({ profile, setProfile, likeProfile, showMsgModal }) => {
+const ProfileActions = ({
+  profile,
+  setProfile,
+  likeProfile,
+  showMsgModal,
+  t
+}) => {
   return (
     <div className="functions">
       <div
@@ -9,7 +15,7 @@ const ProfileActions = ({ profile, setProfile, likeProfile, showMsgModal }) => {
           await showMsgModal();
         }}
       >
-        Send Message
+        {t("Send Message")}
       </div>
       <div
         className="btn heart"

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { withNamespaces } from "react-i18next";
 import "./Select.css";
 
 class Select extends React.Component {
@@ -109,7 +110,7 @@ class Select extends React.Component {
       selectedOption,
       menuOpen
     } = this.state;
-    const { className, label, multiple, options } = this.props;
+    const { className, label, multiple, options, t } = this.props;
     const SelectList = () => (
       <div className="select-list" style={{ top: selectListOffsetTop + "px" }}>
         <ul>
@@ -127,7 +128,7 @@ class Select extends React.Component {
                 onClick={e => this.onSelect(e, d)}
                 className={checked ? "checked" : ""}
               >
-                {d.label}
+                {t(d.label)}
               </li>
             );
           })}
@@ -147,13 +148,13 @@ class Select extends React.Component {
             <div className="multiple-options">
               {selectedOptions.map((d, idx, arr) => {
                 if (idx === arr.length - 1) {
-                  return <span key={d.label}>{d.label}</span>;
+                  return <span key={d.value}>{t(d.label)}</span>;
                 }
-                return <span key={d.label}>{d.label + ","}</span>;
+                return <span key={d.value}>{t(d.label) + ","}</span>;
               })}
             </div>
           )}
-          {!multiple && <span>{selectedOption.label}</span>}
+          {!multiple && <span>{t(selectedOption.label)}</span>}
         </div>
         {menuOpen && <SelectList />}
       </React.Fragment>
@@ -161,4 +162,4 @@ class Select extends React.Component {
   }
 }
 
-export default Select;
+export default withNamespaces()(Select);

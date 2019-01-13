@@ -28,34 +28,32 @@ const InputFeedback = ({ error }) =>
 const MyForm = props => {
   const {
     values,
-    touched,
     errors,
-    dirty,
     handleChange,
     handleBlur,
     handleSubmit,
-    handleReset,
-    isSubmitting,
     disabled,
     fbResolve,
     createUser,
-    handleFBReturn
+    handleFBReturn,
+    t
   } = props;
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-content">
         <div className="input username">
-          <Field name="username" placeholder="Username" type="text" />
+          <Field name="username" placeholder={t("Username")} type="text" />
         </div>
         <div className="input email">
-          <Field name="email" placeholder="E-mail address" type="email" />
+          <Field name="email" placeholder={t("E-mail address")} type="email" />
         </div>
         <BirthDatePicker
           name={"dob"}
           value={values["dob"]}
           onChange={handleChange}
           onBlur={handleBlur}
+          t={t}
         />
         <Select
           label="Gender:"
@@ -112,7 +110,7 @@ const MyForm = props => {
             />
             <label htmlFor="cbox">
               <span />
-              <b>Are you couple?</b>
+              <b>{t("Are you couple?")}</b>
             </label>
           </div>
         </div>
@@ -122,10 +120,11 @@ const MyForm = props => {
           fbResolve={fbResolve}
           createUser={createUser}
           handleFBReturn={handleFBReturn}
+          t={t}
         />
         <div className="terms">
-          By clicking “Get Started“ you agree with our
-          <span>Terms & Privacy</span>
+          {t("By clicking “Get Started“ you agree with our")}
+          <span>{t("Terms & Privacy")}</span>
         </div>
       </div>
     </form>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
-import BlockModal from "../common/BlockModal";
+import BlockModal from "../Modals/Block";
 import moment from "moment";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";

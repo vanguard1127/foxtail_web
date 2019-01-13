@@ -9,7 +9,8 @@ const ProfilesDiv = ({
   showShareModal,
   likeProfile,
   history,
-  handleEnd
+  handleEnd,
+  t
 }) => {
   return (
     <section className="members">
@@ -17,7 +18,7 @@ const ProfilesDiv = ({
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
-              <span className="head">All Members</span>
+              <span className="head">{t("All Members")}</span>
             </div>
             {profiles.map(profile => {
               return (
@@ -28,6 +29,7 @@ const ProfilesDiv = ({
                   showBlockModal={showBlockModal}
                   showShareModal={showShareModal}
                   likeProfile={likeProfile}
+                  t={t}
                   history={history}
                 />
               );

@@ -1,14 +1,14 @@
 import React from "react";
-const DesiresMobile = ({ desires }) => {
+const DesiresMobile = ({ desires, t }) => {
   return (
     <div className="mobile desires">
-      <div className="profile-head">Desires</div>
+      <div className="profile-head">{t("Desires")}</div>
       <ul>
         {desires.reduce(function(result, desire) {
           if (result.length > 1) {
             result.push(<li key={desire}>...</li>);
           } else {
-            result.push(<li key={desire}>{desire}</li>);
+            result.push(<li key={desire}>{t(desire)}</li>);
           }
           return result;
         }, [])}

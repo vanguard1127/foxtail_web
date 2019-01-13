@@ -58,6 +58,7 @@ class LoginButton extends Component {
   };
   render() {
     const { csrf, code, phone } = this.state;
+    const { t } = this.props;
     return (
       <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
         {fbResolve => {
@@ -78,7 +79,7 @@ class LoginButton extends Component {
                   >
                     {p => (
                       <a {...p} className="login-btn">
-                        Already member? Login
+                        {t("Already member? Login")}
                       </a>
                     )}
                   </AccountKit>

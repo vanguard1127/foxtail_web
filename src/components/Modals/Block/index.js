@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { withNamespaces } from "react-i18next";
 import { BLOCK_PROFILE, FLAG_ITEM } from "../../../queries";
 import { Mutation } from "react-apollo";
 
-export default class BlockModal extends Component {
+class BlockModal extends Component {
   state = { other: false, reason: "", type: this.props.type };
 
   handleChange = e => {
@@ -43,6 +44,7 @@ export default class BlockModal extends Component {
   };
 
   menu = () => {
+    const { t } = this.props;
     if (this.state.type === "Profile") {
       return (
         <select
@@ -50,15 +52,15 @@ export default class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">Select Reason:</option>
-          <option value="nopro">No Profile Picture</option>
-          <option value="stolenPic">Stolen Picture</option>
-          <option value="money">Mentions Money</option>
-          <option value="nudity">Nudity</option>
-          <option value="rude">Rude</option>
-          <option value="Spam">Spam</option>
-          <option value="racist">Racist</option>
-          <option value="other">Other</option>
+          <option value="">{t("Select Reason")}:</option>
+          <option value="nopro">{t("No Profile Picture")}</option>
+          <option value="stolenPic">{t("Stolen Picture")}</option>
+          <option value="money">{t("Mentions Money")}</option>
+          <option value="nudity">{t("Nudity")}</option>
+          <option value="rude">{t("Rude")}</option>
+          <option value="Spam">{t("Spam")}</option>
+          <option value="racist">{t("Racist")}</option>
+          <option value="other">{t("Other")}</option>
         </select>
       );
     } else {
@@ -68,30 +70,31 @@ export default class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">Select Reason:</option>
-          <option value="illegalEvent">Illegal Event</option>
-          <option value="racist">Racist</option>
-          <option value="Spam">Spam</option>
-          <option value="Phishing">Phishing</option>
+          <option value="">{t("Select Reason")}:</option>
+          <option value="illegalEvent">{t("Illegal Event")}</option>
+          <option value="racist">{t("Racist")}</option>
+          <option value="Spam">{t("Spam")}</option>
+          <option value="Phishing">{t("Phishing")}</option>
         </select>
       );
     }
   };
   render() {
-    const { profile, close, id } = this.props;
+    const { profile, close, id, t } = this.props;
 
     const { other, reason, type } = this.state;
     const blockMenu = this.menu();
     let title;
     if (type === "Profile") {
       title =
-        "Report/Block " +
+        t("Report/Block") +
+        " " +
         profile.users.map((user, index) => {
           if (index === 0) return user.username;
           else return +" & " + user.username;
         });
     } else {
-      title = "Report/Block";
+      title = t("Report/Block");
     }
     return (
       <section className="popup-content show">
@@ -102,7 +105,7 @@ export default class BlockModal extends Component {
                 <div className="modal-popup photo-verification">
                   <div className="m-head">
                     <span className="heading">{title}</span>
-                    <a className="close" onClick={close} />
+                    <span className="close" onClick={close} />
                   </div>
                   <div className="m-body">
                     {blockMenu}
@@ -112,7 +115,7 @@ export default class BlockModal extends Component {
                       }}
                     >
                       <input
-                        placeholder="Other reason"
+                        placeholder={t("Other reason")}
                         onChange={this.handleTextChange}
                         value={reason}
                       />
@@ -136,7 +139,7 @@ export default class BlockModal extends Component {
                             {(blockProfile, { loading }) => {
                               if (loading) {
                                 //TODO: Make nice popup saving
-                                return <div>SAVING...</div>;
+                                return <div>{t("Saving")}...</div>;
                               }
                               return (
                                 <button
@@ -145,7 +148,7 @@ export default class BlockModal extends Component {
                                   }
                                   disabled={reason === "" || loading}
                                 >
-                                  Report/Block
+                                  {t("Report/Block")}
                                 </button>
                               );
                             }}
@@ -163,3 +166,5 @@ export default class BlockModal extends Component {
     );
   }
 }
+
+export default withNamespaces()(BlockModal);

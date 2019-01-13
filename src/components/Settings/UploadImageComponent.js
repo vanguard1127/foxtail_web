@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import Upload from "rc-upload";
 import "./UploadImageComponentStyle.css";
-import Icon from "@material-ui/core/Icon";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import ViewIcon from "@material-ui/icons/RemoveRedEye";
-import CloseIcon from "@material-ui/icons/Close";
+import StarIcon from "@material-ui/icons/Grade";
 import Dialog from "@material-ui/core/Dialog";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -38,9 +37,7 @@ class UploadComponent extends Component {
       selectedImg: null, //for modal dialog
       loader: "inline-block",
       uploadImg: "none",
-      validateDisplay: "none",
-      editorVisible: false,
-      file: null
+      validateDisplay: "none"
     };
   }
 
@@ -68,6 +65,15 @@ class UploadComponent extends Component {
   };
   //modal
   handleClickOpen = index => {
+    let img = this.props.photos[index];
+
+    this.setState({
+      selectedImg: img.url,
+      previewVisible: true
+    });
+  };
+
+  handleClickProPic = index => {
     let img = this.props.photos[index];
 
     this.setState({
@@ -119,6 +125,12 @@ class UploadComponent extends Component {
                       this.deleteFile(index);
                     }}
                   />
+                  <StarIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      this.handleClickProPic(index);
+                    }}
+                  />{" "}
                   <ViewIcon
                     style={{ cursor: "pointer" }}
                     onClick={() => {

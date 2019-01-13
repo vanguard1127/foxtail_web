@@ -2,7 +2,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE, LOGIN } from "../../queries";
-import { withNamespaces } from "react-i18next";
 import Message from "rc-message";
 
 import SignupForm from "./SignupForm";
@@ -35,7 +34,6 @@ class Signup extends React.Component {
   };
 
   setFormValues = values => {
-    console.log(values);
     this.setState(values);
   };
 
@@ -220,7 +218,7 @@ class Signup extends React.Component {
                 return (
                   <div className="register-form">
                     <div className="head">
-                      Become a <b>Foxtail</b> Member
+                      {t("Become a")} <b>Foxtail</b> {t("Member")}
                     </div>
                     <SignupForm
                       fields={{
@@ -236,6 +234,7 @@ class Signup extends React.Component {
                       createUser={createUser}
                       handleFBReturn={this.handleFBReturn}
                       setFormValues={this.setFormValues}
+                      t={t}
                     />
                     <div className="form terms">
                       <span onClick={() => this.testCreateUser(createUser)}>
@@ -309,4 +308,4 @@ class Signup extends React.Component {
   }
 }
 
-export default withNamespaces()(withRouter(Signup));
+export default withRouter(Signup);

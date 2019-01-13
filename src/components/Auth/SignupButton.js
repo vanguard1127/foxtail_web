@@ -1,7 +1,13 @@
 import React from "react";
 import AccountKit from "react-facebook-account-kit";
 
-const SignupButton = ({ fbResolve, createUser, disabled, handleFBReturn }) => {
+const SignupButton = ({
+  fbResolve,
+  createUser,
+  disabled,
+  handleFBReturn,
+  t
+}) => {
   return (
     <AccountKit
       disabled={false}
@@ -18,7 +24,7 @@ const SignupButton = ({ fbResolve, createUser, disabled, handleFBReturn }) => {
       {p => (
         <div className="submit">
           <button className="btn" type="submit" {...p} disabled={false}>
-            Get Started
+            {t("Get Started")}
           </button>
         </div>
       )}

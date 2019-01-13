@@ -1,15 +1,15 @@
 import React from "react";
 import { desireOptions } from "../../docs/data";
-const DesiresSection = ({ desires }) => {
+const DesiresSection = ({ desires, t }) => {
   return (
     <div className="desires">
-      <div className="profile-head">Desires</div>
+      <div className="profile-head">{t("Desires")}</div>
       <ul>
         {desires.reduce(function(result, desire) {
           if (desireOptions.find(el => el.value === desire)) {
             result.push(
               <li key={desire}>
-                {desireOptions.find(el => el.value === desire).label}
+                {t(desireOptions.find(el => el.value === desire).label)}
               </li>
             );
           }

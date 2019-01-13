@@ -10,7 +10,8 @@ const ProfileCard = ({
   showBlockModal,
   showShareModal,
   likeProfile,
-  history
+  history,
+  t
 }) => {
   const stdCheck = profile.users.every(user => user.verifications.std === true);
   const photoCheck = profile.users.every(
@@ -20,6 +21,7 @@ const ProfileCard = ({
   if (photoCheck) {
     badge = "verified";
   }
+
   return (
     <div className="col-md-6 col-lg-4">
       <div className={"card-item " + badge}>
@@ -30,11 +32,12 @@ const ProfileCard = ({
           <a href={null} onClick={() => history.push("/members/" + profile.id)}>
             <ProfileInfoBox
               users={profile.users}
-              lastOnline={profile.showOnline && profile.updatedAt}
+              online={profile.showOnline && profile.online}
               distance={profile.distance}
+              t={t}
             />
           </a>
-          <DesiresBlock desires={profile.desires} />
+          <DesiresBlock desires={profile.desires} t={t} />
           <ProfileActionBtns
             profile={profile}
             likeProfile={likeProfile}

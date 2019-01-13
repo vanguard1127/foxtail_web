@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const InboxItem = ({ count, active }) => {
+const InboxItem = ({ count, active, t }) => {
   let iconstyle = "inbox hidden-mobile";
   if (count > 0) {
     iconstyle += " new";
@@ -16,7 +16,7 @@ const InboxItem = ({ count, active }) => {
         <span className="icon mail">
           <span className="count">{count}</span>
         </span>
-        <span className="text">Inbox</span>
+        <span className="text">{t("Inbox")}</span>
       </NavLink>
     </div>
   );

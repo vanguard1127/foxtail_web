@@ -4,10 +4,10 @@ import "rc-slider/assets/index.css";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const SliderWithToolTip = createSliderWithTooltip(Slider);
 
-const DistanceSlider = ({ value, setValue }) => {
+const DistanceSlider = ({ value, setValue, t }) => {
   return (
     <div className="item">
-      <div className="range-head">Distance:</div>
+      <div className="range-head">{t("Distance")}:</div>
       <SliderWithToolTip
         onAfterChange={e => setValue(e)}
         min={0}
@@ -17,8 +17,8 @@ const DistanceSlider = ({ value, setValue }) => {
         className="range-con"
       />
       <div className="limit">
-        <span>&lt;1 mil</span>
-        <span>100+ mil</span>
+        <span>&lt;1 {t("mil")}</span>
+        <span>100+ {t("mil")}</span>
       </div>
     </div>
   );

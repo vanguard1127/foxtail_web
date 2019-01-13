@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
+import { withNamespaces } from "react-i18next";
 import { SEND_MESSAGE } from "queries";
 
-export default class DirectMsg extends Component {
+class DirectMsg extends Component {
   state = { text: "" };
 
   handleTextChange = event => {
@@ -13,12 +14,12 @@ export default class DirectMsg extends Component {
     sendMessage()
       .then(async ({ data }) => {
         if (data.sendMessage) {
-          console.log("SSS");
+          console.log("sent");
           // message.success("Message Sent");
           this.setState({ text: "" });
           this.props.close();
         } else {
-          console.log("SDD");
+          console.log("Message not sent.");
           //  message.error("Message not sent.");
         }
       })
@@ -34,7 +35,7 @@ export default class DirectMsg extends Component {
   };
 
   render() {
-    const { close, profile } = this.props;
+    const { close, profile, t } = this.props;
     const { text } = this.state;
     return (
       <section className="popup-content show">
@@ -46,19 +47,20 @@ export default class DirectMsg extends Component {
                   <div className="m-head">
                     <span className="heading">
                       {profile
-                        ? "Send Message " +
+                        ? t("Send Message") +
+                          " " +
                           profile.users.map((user, index) => {
                             if (index === 0) return user.username;
                             else return +" & " + user.username;
                           }) +
                           "?"
-                        : "Send Message"}
+                        : t("Send Message")}
                     </span>
-                    <a className="close" onClick={close} />
+                    <span className="close" onClick={close} />
                   </div>
                   <div className="m-body">
                     <input
-                      placeholder={"Write Message Here..."}
+                      placeholder={t("Write Message Here...")}
                       value={text}
                       onChange={this.handleTextChange}
                     />
@@ -75,7 +77,7 @@ export default class DirectMsg extends Component {
                             <button
                               onClick={() => this.handleSubmit(sendMessage)}
                             >
-                              Send
+                              {t("Send")}
                             </button>
                           );
                         }}
@@ -91,3 +93,4 @@ export default class DirectMsg extends Component {
     );
   }
 }
+export default withNamespaces()(DirectMsg);

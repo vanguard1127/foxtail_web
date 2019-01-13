@@ -1,7 +1,7 @@
 import React from "react";
 import ProfilePic from "./ProfilePic";
 import ProfileActions from "./ProfileActions";
-const ProfileCard = ({ profile, setProfile, likeProfile, showMsgModal }) => {
+const ProfileCard = ({ profile, setProfile, likeProfile, showMsgModal, t }) => {
   const { profilePic, id } = profile;
   return (
     <div className="avatar-content">
@@ -12,6 +12,7 @@ const ProfileCard = ({ profile, setProfile, likeProfile, showMsgModal }) => {
           setProfile={setProfile}
           likeProfile={likeProfile}
           showMsgModal={showMsgModal}
+          t={t}
         />
       </div>
     </div>

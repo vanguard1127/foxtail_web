@@ -9,7 +9,8 @@ const FeaturedCard = ({
   showBlockModal,
   showShareModal,
   likeProfile,
-  history
+  history,
+  t
 }) => {
   const stdCheck = profile.users.every(user => user.verifications.std === true);
   const photoCheck = profile.users.every(
@@ -23,7 +24,7 @@ const FeaturedCard = ({
     <div className={"item " + badge}>
       <div className="info">
         <a href={null} onClick={() => history.push("/members/" + profile.id)}>
-          <ProfileInfoDiv profile={profile} />
+          <ProfileInfoDiv profile={profile} t={t} />
           <ProfilePic profilePic={profile.profilePic} />
         </a>
       </div>
