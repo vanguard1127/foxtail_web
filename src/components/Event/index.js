@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
+import { withNamespaces } from "react-i18next";
 import BlockModal from "../Modals/Block";
 import moment from "moment";
 import Spinner from "../common/Spinner";
@@ -111,7 +112,7 @@ class EventPage extends Component {
   render() {
     const { id } = this.props.match.params;
     const { visible, blockModalVisible } = this.state;
-    const { session, history } = this.props;
+    const { session, history, t } = this.props;
     return (
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error }) => {
@@ -119,7 +120,9 @@ class EventPage extends Component {
             return <Spinner message="Loading..." size="large" />;
           } else if (!data || !data.event) {
             return (
-              <div>This event either never existed or it no longer does.</div>
+              <div>
+                {t("This event either never existed or it no longer does")}.
+              </div>
             );
           }
 
@@ -136,33 +139,36 @@ class EventPage extends Component {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <EventHeader event={event} history={history} />
+                      <EventHeader event={event} history={history} t={t} />
                     </div>
                     <div className="col-lg-9 col-md-12">
                       <EventAbout
                         id={id}
                         participants={participants}
                         description={description}
+                        t={t}
                       />
-                      <EventInfoMobile event={event} />
+                      <EventInfoMobile event={event} t={t} />
                       <EventDiscussion
                         id={id}
                         chatID={chatID}
                         history={history}
+                        t={t}
                       />
                     </div>
                     <div className="col-lg-3 col-md-12">
-                      <EventInfo event={event} />
+                      <EventInfo event={event} t={t} />
                     </div>
                   </div>
                 </div>
               </div>
-              <BlockModal
-                event={event}
-                id={id}
-                visible={blockModalVisible}
-                close={() => this.setBlockModalVisible(false)}
-              />
+              {blockModalVisible && (
+                <BlockModal
+                  event={event}
+                  id={id}
+                  close={() => this.setBlockModalVisible(false)}
+                />
+              )}
             </section>
           );
         }}
@@ -172,5 +178,5 @@ class EventPage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(EventPage)
+  withRouter(withNamespaces()(EventPage))
 );

@@ -198,32 +198,6 @@ class MessageList extends Component {
       return <Message key={message.id} message={message} history={history} />;
     });
 
-    // const messageElements = _.flatten(
-    //   _.chain(messages) //using ES6 shorthand to generate the objects
-    //     .map((item, index, groupList) => {
-    //       const messageElements = item.messages.map(
-    //         (message, j, messageList) => {
-    //           let props = {
-    //             key: message.id,
-    //             message,
-    //             currentUserID
-    //           };
-    //           if (
-    //             j === messageList.length - 1 &&
-    //             index === groupList.length - 1
-    //           ) {
-    //             // Attach a ref to the last element for later measurement
-    //             props.ref = this.lastMessageRef;
-    //           }
-    //           return <Message key={message.id} {...props} />;
-    //         }
-    //       );
-
-    //       return messageElements;
-    //     })
-    //     .value()
-    // );
-
     return (
       <div
         className="messages"

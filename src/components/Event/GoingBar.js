@@ -1,6 +1,6 @@
 import React from "react";
 import MembersDropdown from "../common/MembersDropdown";
-const GoingBar = ({ id, participants }) => {
+const GoingBar = ({ id, participants, t }) => {
   return (
     <div className="goings">
       <span className="stats">
@@ -55,7 +55,10 @@ const GoingBar = ({ id, participants }) => {
                 </li>
               </ul>
               <span className="stats">
-                <b>{participants.length} people</b> going
+                <b>
+                  {participants.length} {t("people")}
+                </b>{" "}
+                {t("going")}
               </span>
             </div>
           }

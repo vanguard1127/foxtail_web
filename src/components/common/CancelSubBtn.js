@@ -1,14 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { CANCEL_SUBSCRIPTION } from "../../queries";
 import { Mutation } from "react-apollo";
-import { message, Button } from "antd";
-
-class CancelSubBtn extends Component {
-  handleSubmit = ({ cancelSubscription }) => {
+const CancelSubBtn = () => {
+  const handleSubmit = ({ cancelSubscription }) => {
     cancelSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
-        message.success("Credit Card Removed and Subscription Canceled.");
+        alert("Credit Card Removed and Subscription Canceled.");
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -20,25 +18,23 @@ class CancelSubBtn extends Component {
       });
   };
 
-  render() {
-    return (
-      <Mutation mutation={CANCEL_SUBSCRIPTION}>
-        {cancelSubscription => {
-          return (
-            <Button
-              onClick={() =>
-                this.handleSubmit({
-                  cancelSubscription
-                })
-              }
-            >
-              Cancel Subscription
-            </Button>
-          );
-        }}
-      </Mutation>
-    );
-  }
-}
+  return (
+    <Mutation mutation={CANCEL_SUBSCRIPTION}>
+      {cancelSubscription => {
+        return (
+          <button
+            onClick={() =>
+              handleSubmit({
+                cancelSubscription
+              })
+            }
+          >
+            Cancel Subscription
+          </button>
+        );
+      }}
+    </Mutation>
+  );
+};
 
 export default CancelSubBtn;

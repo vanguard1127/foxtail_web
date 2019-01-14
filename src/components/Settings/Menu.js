@@ -1,19 +1,21 @@
 import React from "react";
 
-const Menu = ({ coupleModalToggle, couplePartner, blackModalToggle }) => {
+const Menu = ({ coupleModalToggle, couplePartner, blackModalToggle, t }) => {
   return (
     <div className="menu">
       <ul>
         <li className="active">
-          <span>My Account</span>
+          <span>{t("My Account")}</span>
         </li>
         <li>
           <span onClick={() => coupleModalToggle()}>
-            {couplePartner === null ? "Add Couple Partner" : couplePartner}
+            {couplePartner === null ? t("Add Couple Partner") : couplePartner}
           </span>
         </li>
         <li>
-          <span onClick={() => blackModalToggle()}>Become a Black Member</span>
+          <span onClick={() => blackModalToggle()}>
+            {t("Become a Black Member")}
+          </span>
         </li>
       </ul>
     </div>

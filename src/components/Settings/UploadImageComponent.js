@@ -36,8 +36,7 @@ class UploadComponent extends Component {
       previewVisible: false,
       selectedImg: null, //for modal dialog
       loader: "inline-block",
-      uploadImg: "none",
-      validateDisplay: "none"
+      uploadImg: "none"
     };
   }
 
@@ -54,7 +53,7 @@ class UploadComponent extends Component {
     ) {
       this.props.showEditor(file, this.props.isPrivate);
     } else {
-      alert("Only jpg/jpeg and png files are allowed!");
+      alert(this.props.t("Only jpg/jpeg and png files are allowed!"));
     }
   };
 
@@ -93,7 +92,7 @@ class UploadComponent extends Component {
   };
 
   render() {
-    const { classes, photos } = this.props;
+    const { classes, photos, t } = this.props;
     const { selectedImg, previewVisible } = this.state;
     return (
       <div className="header-container">
@@ -152,15 +151,9 @@ class UploadComponent extends Component {
             >
               <div className="upload-box">
                 <AddIcon className={classes.addIcon} />
-                <p className="text">Upload</p>
+                <p className="text">{t(Upload)}</p>
               </div>
             </Upload>
-            <p
-              style={{ display: this.state.validateDisplay }}
-              className="validat"
-            >
-              You can only select {this.props.max} pics.
-            </p>
           </div>
         )}
 

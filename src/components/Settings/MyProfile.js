@@ -1,12 +1,12 @@
 import React from "react";
 import DesiresSelector from "../Modals/Desires/Selector";
 
-const MyProfile = ({ desires, about, setValue, togglePopup }) => {
+const MyProfile = ({ desires, about, setValue, togglePopup, t }) => {
   return (
     <div className="content">
       <div className="row">
         <div className="col-md-12">
-          <span className="heading">My Profile</span>
+          <span className="heading">{t("My Profile")}</span>
         </div>
         <div className="col-md-12">
           <div className="item">
@@ -16,7 +16,7 @@ const MyProfile = ({ desires, about, setValue, togglePopup }) => {
         <div className="col-md-12">
           <div className="item">
             <div className="textarea">
-              <label>Profile Bio:</label>
+              <label>{t("Profile Bio")}:</label>
               <textarea
                 onChange={e =>
                   setValue({

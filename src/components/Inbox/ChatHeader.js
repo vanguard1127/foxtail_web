@@ -1,8 +1,8 @@
 import React from "react";
 import TimeAgo from "../../utils/TimeAgo";
 import MembersDropdown from "../common/MembersDropdown";
-const ChatHeader = ({ currentChat, currentuser }) => {
-  let chatTitle = "Chat No Longer Available";
+const ChatHeader = ({ currentChat, currentuser, t }) => {
+  let chatTitle = t("Chat No Longer Available");
   let chatLastSeen = "";
   let chatTitleExtra = "";
 
@@ -16,10 +16,11 @@ const ChatHeader = ({ currentChat, currentuser }) => {
       chatTitle = currentuser.username;
     }
     if (currentChat.participants.length > 2) {
-      chatTitleExtra = ` + ${currentChat.participants.length - 2} participants`;
+      chatTitleExtra =
+        ` + ${currentChat.participants.length - 2}` + t("participants");
     }
     chatLastSeen = currentChat.participants[0].online
-      ? "Online"
+      ? t("Online")
       : TimeAgo(currentChat.participants[0].updatedAt);
   }
   return (
@@ -42,13 +43,13 @@ const ChatHeader = ({ currentChat, currentuser }) => {
       <div className="more-dropdown">
         <ul>
           <li>
-            <span>Search for Conversation</span>
+            <span>{t("Search for Conversation")}</span>
           </li>
           <li>
-            <span>Delete the Conversation</span>
+            <span>{t("Delete the Conversation")}</span>
           </li>
           <li>
-            <span>Report the Conversation</span>
+            <span>{t("Report the Conversation")}</span>
           </li>
         </ul>
       </div>

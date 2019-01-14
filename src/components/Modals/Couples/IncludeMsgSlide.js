@@ -7,11 +7,15 @@ const IncludeMsgSlide = ({
   setValue,
   prev,
   close,
-  handleLink
+  handleLink,
+  t
 }) => {
   return (
     <div>
-      Would you like to include you Messages and Events in this Couple Profile?
+      {t(
+        "Would you like to include you Messages and Events in this Couple Profile"
+      )}
+      ?
       <input
         type="checkbox"
         id="cbox"
@@ -25,11 +29,11 @@ const IncludeMsgSlide = ({
       />
       <label htmlFor="cbox">
         <span />
-        <b>Include Messages and Events in Couple Profile?</b>
+        <b>{t("Include Messages and Events in Couple Profile")}?</b>
       </label>
       <div className="button">
         <button disabled={code !== "" ? false : true} onClick={() => prev()}>
-          Back
+          {t("Back")}
         </button>
       </div>
       <Mutation
@@ -43,7 +47,7 @@ const IncludeMsgSlide = ({
             disabled={code !== "" ? false : true}
             onClick={() => handleLink(linkProfile, close)}
           >
-            Link
+            {t("Link")}
           </button>
         )}
       </Mutation>

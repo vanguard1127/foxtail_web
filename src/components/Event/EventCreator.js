@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-const EventCreator = ({ ownerProfile, createdAt, history }) => {
+const EventCreator = ({ ownerProfile, createdAt, history, t }) => {
   return (
     <div className="created">
       <span onClick={() => history.push("/members/" + ownerProfile.id)}>
@@ -17,7 +17,7 @@ const EventCreator = ({ ownerProfile, createdAt, history }) => {
         <div className="detail">
           <span className="name">{ownerProfile.profileName}</span>
           <span className="created-date">
-            Created on{" "}
+            {t("Created on")}{" "}
             {moment(createdAt)
               .format("MMM Do")
               .toString()}

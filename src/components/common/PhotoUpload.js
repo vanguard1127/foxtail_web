@@ -14,6 +14,7 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
+//TODO: How to translate words on filepond
 // Register the plugins
 registerPlugin(
   FilePondPluginImageExifOrientation,

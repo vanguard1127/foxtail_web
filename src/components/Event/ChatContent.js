@@ -89,7 +89,7 @@ class ChatContent extends Component {
     });
   };
   render() {
-    const { chatID, history } = this.props;
+    const { chatID, history, t } = this.props;
 
     const { cursor } = this.state;
     return (
@@ -100,11 +100,11 @@ class ChatContent extends Component {
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
-            return <Spinner message="Loading..." size="large" />;
+            return <Spinner message={t("Loading...")} size="large" />;
           }
 
           if (!data || !data.getComments) {
-            return <div>No messages</div>;
+            return <div>{t("No messages")}</div>;
           }
 
           return (

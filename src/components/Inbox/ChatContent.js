@@ -88,6 +88,7 @@ class ChatContent extends Component {
       loading: false
     });
   };
+  //TODO: use global spinner and error instead of chnaging each
   render() {
     const { chatID, currentUserID } = this.props;
 

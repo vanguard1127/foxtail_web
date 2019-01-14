@@ -1,10 +1,10 @@
 import React from "react";
-const SearchBox = ({ value, onChange }) => {
+const SearchBox = ({ value, onChange, t }) => {
   return (
     <div className="search">
       <input
         type="text"
-        placeholder="Search desires..."
+        placeholder={t("Search desires") + "..."}
         value={value}
         onChange={e =>
           onChange({ name: "searchText", value: e.target.value.toLowerCase() })

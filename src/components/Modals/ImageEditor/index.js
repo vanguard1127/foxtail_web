@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import EditCanvasImage from "components/EditProfile/EditCanvasImage";
-
-export default class ImageEditor extends Component {
+import EditCanvasImage from "./ImageEditorWindow/EditCanvasImage";
+import { withNamespaces } from "react-i18next";
+class ImageEditor extends Component {
   state = { photos: [], filename: "", filetype: "", photoKey: "" };
   setPhotos = photos => {
     this.setState({ photos });
@@ -14,7 +14,8 @@ export default class ImageEditor extends Component {
       handlePhotoListChange,
       setS3PhotoParams,
       uploadToS3,
-      signS3
+      signS3,
+      t
     } = this.props;
 
     return (
@@ -25,7 +26,7 @@ export default class ImageEditor extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup">
                   <div className="m-head">
-                    <span className="heading">Edit Photo</span>
+                    <span className="heading">{t("Edit Photo")}</span>
                     <span className="close" onClick={close} />
                   </div>
                   <div className="m-body">
@@ -36,6 +37,7 @@ export default class ImageEditor extends Component {
                       signS3={signS3}
                       handlePhotoListChange={handlePhotoListChange}
                       close={close}
+                      t={t}
                     />
                   </div>
                 </div>
@@ -47,3 +49,4 @@ export default class ImageEditor extends Component {
     );
   }
 }
+export default withNamespaces()(ImageEditor);

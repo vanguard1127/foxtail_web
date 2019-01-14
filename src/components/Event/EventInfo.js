@@ -12,7 +12,8 @@ const EventInfo = ({
     distance,
     address,
     participants
-  }
+  },
+  t
 }) => {
   return (
     <div className="event-info-content hid-mobile">
@@ -23,7 +24,7 @@ const EventInfo = ({
       </div>
       <ul>
         <li>
-          <span className="head">Event Date:</span>
+          <span className="head">{t("Event Date")}:</span>
           <span className="title">
             {moment(startTime)
               .format("DD MMMM YYYY, dddd")
@@ -31,7 +32,9 @@ const EventInfo = ({
           </span>
         </li>
         <li>
-          <span className="head">Date - Time:</span>
+          <span className="head">
+            {t("Date")} - {t("Time")}:
+          </span>
           <span className="title">
             {moment(startTime)
               .format("HH:mm")
@@ -43,23 +46,23 @@ const EventInfo = ({
           </span>
         </li>
         <li>
-          <span className="head">Type:</span>
+          <span className="head">{t("Type")}:</span>
           <span className="title">{type}</span>
         </li>
         <li>
-          <span className="head">What to Expect:</span>
+          <span className="head">{t("What to Expect")}:</span>
           <span className="title">{desires.map(desire => desire + ",")}</span>
         </li>
         <li>
-          <span className="head">Away:</span>
+          <span className="head">{t("Away")}:</span>
           <span className="title">{distance} Miles</span>
         </li>
         <li>
-          <span className="head">Address:</span>
+          <span className="head">{t("Address")}:</span>
           <span className="title address">{address}</span>
         </li>
       </ul>
-      <AttendEvent id={id} participants={participants} />
+      <AttendEvent id={id} participants={participants} t={t} />
     </div>
   );
 };

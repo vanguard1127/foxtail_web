@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import Spinner from "../common/Spinner";
 import InboxList from "./InboxList";
 let unsubscribe = null;
-const InboxPanel = ({ readChat, currentUserID }) => {
+const InboxPanel = ({ readChat, currentUserID, t }) => {
   return (
     <Query query={GET_INBOX} fetchPolicy="cache-and-network">
       {({ data, loading, error, subscribeToMore }) => {
@@ -54,7 +54,7 @@ const InboxPanel = ({ readChat, currentUserID }) => {
         return (
           <div className="col-md-4 col-lg-3 col-xl-3">
             <div className="left">
-              <InboxSearchTextBox />
+              <InboxSearchTextBox t={t} />
               <InboxList
                 messages={messages}
                 readChat={readChat}

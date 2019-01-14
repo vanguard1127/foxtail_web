@@ -1,12 +1,12 @@
 import React from "react";
 
-const LinkBox = ({ code, handleTextChange, next }) => {
+const LinkBox = ({ code, handleTextChange, next, t }) => {
   return (
     <div className="receive-code">
       <div className="couple-head">
-        <span className="first">Did you recieve a Couple's Code?</span>
+        <span className="first">{t("Did you recieve a Couple's Code")}?</span>
         <span className="second">
-          Add your Couple's Code here and click Next:
+          {t("Add your Couple's Code here and click Next")}:
         </span>
       </div>
       <div className="item nobottom">
@@ -18,13 +18,13 @@ const LinkBox = ({ code, handleTextChange, next }) => {
             onChange={e => handleTextChange(e.target.value)}
             value={code}
           />
-          <label title="Couple's Code" htmlFor="couples_code" />
+          <label title={t("Couple's Code")} htmlFor="couples_code" />
         </div>
       </div>
       <div className="item sticky">
         <div className="button">
           <button disabled={code !== "" ? false : true} onClick={() => next()}>
-            Next
+            {t("Next")}
           </button>
         </div>
       </div>

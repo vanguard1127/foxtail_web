@@ -8,13 +8,14 @@ const SearchEventsFilters = ({
   setLocationValues,
   handleChangeSelect,
   maxDistance,
-  reset
+  reset,
+  t
 }) => {
   return (
     <div className="settings-con">
       <Select
         onChange={handleChangeSelect}
-        label="Distance Away:"
+        label={t("Distance Away") + ":"}
         defaultOptionValue={maxDistance.toString()}
         options={[
           { label: "5 miles", value: "5" },
@@ -25,16 +26,17 @@ const SearchEventsFilters = ({
         className={"dropdown"}
       />
       <div>
-        <label>From:</label>
+        <label>{t("From")}:</label>
         <AddressSearch
           style={{ width: 150 }}
           setLocationValues={setLocationValues}
           address={location}
           type={"(cities)"}
+          placeholder={t("Search by city...")}
         />
-        <a href={null} onClick={() => reset()}>
+        <span href={null} onClick={() => reset()}>
           Reset
-        </a>
+        </span>
       </div>
     </div>
   );

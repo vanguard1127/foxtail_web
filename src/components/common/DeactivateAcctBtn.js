@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { DELETE_USER } from "../../queries";
 import { Mutation } from "react-apollo";
-import { message, Button } from "antd";
 import { ApolloConsumer } from "react-apollo";
 
-class DeactivateAcctBtn extends Component {
-  handleSubmit = ({ client, deleteUser }) => {
+const DeactivateAcctBtn = ({ t }) => {
+  const handleSubmit = ({ client, deleteUser }) => {
     deleteUser()
       .then(({ data }) => {
-        message.success("Account Deleted Successfully.");
+        alert("Account Deleted Successfully.");
 
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
@@ -28,32 +27,30 @@ class DeactivateAcctBtn extends Component {
       });
   };
 
-  render() {
-    return (
-      <Mutation mutation={DELETE_USER}>
-        {deleteUser => {
-          return (
-            <ApolloConsumer>
-              {client => {
-                return (
-                  <Button
-                    onClick={() =>
-                      this.handleSubmit({
-                        client,
-                        deleteUser
-                      })
-                    }
-                  >
-                    Deactivate Account
-                  </Button>
-                );
-              }}
-            </ApolloConsumer>
-          );
-        }}
-      </Mutation>
-    );
-  }
-}
+  return (
+    <Mutation mutation={DELETE_USER}>
+      {deleteUser => {
+        return (
+          <ApolloConsumer>
+            {client => {
+              return (
+                <button
+                  onClick={() =>
+                    handleSubmit({
+                      client,
+                      deleteUser
+                    })
+                  }
+                >
+                  {t("Deactivate Account")}
+                </button>
+              );
+            }}
+          </ApolloConsumer>
+        );
+      }}
+    </Mutation>
+  );
+};
 
 export default DeactivateAcctBtn;

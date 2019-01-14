@@ -1,13 +1,13 @@
 import React from "react";
-const InboxHeader = () => {
+const InboxHeader = ({ t }) => {
   return (
     <section className="breadcrumb">
       <div className="container">
         <div className="col-md-12">
-          <span className="head">Inbox</span>
+          <span className="head">{t("Inbox")}</span>
           <span className="title">
-            Chat with members, be yourself, have fun, follow the{" "}
-            <a href={null}>rules</a>.{" "}
+            {t("Chat with members, be yourself, have fun, follow the")}{" "}
+            <a href={null}>{t("rules")}</a>.{" "}
           </span>
         </div>
       </div>

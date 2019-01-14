@@ -87,6 +87,7 @@ class MyEvents extends Component {
   };
   render() {
     const { skip, current } = this.state;
+    const { t } = this.props;
     return (
       <Query
         query={GET_MY_EVENTS}
@@ -108,7 +109,7 @@ class MyEvents extends Component {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <span className="head">My Events</span>
+                      <span className="head">{t("My Events")}</span>
                     </div>
 
                     {myEvents.map(event => (

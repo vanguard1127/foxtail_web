@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { desireOptions } from "../../../docs/data";
+import { withNamespaces } from "react-i18next";
 
 class Selector extends Component {
   render() {
-    const { togglePopup, desires } = this.props;
+    const { togglePopup, desires, t } = this.props;
 
     return (
       <span>
@@ -11,11 +12,11 @@ class Selector extends Component {
           className="select_desires desires_select_popup"
           onClick={() => togglePopup()}
         >
-          <span className="head">Desires select:</span>
+          <span className="head">{t("Desires select")}:</span>
           <ul>
             {desires.map(desire => {
               const desireObj = desireOptions.find(el => el.value === desire);
-              if (desireObj) return <li key={desire}>{desireObj.label}</li>;
+              if (desireObj) return <li key={desire}>{t(desireObj.label)}</li>;
             })}
           </ul>
         </div>
@@ -24,4 +25,4 @@ class Selector extends Component {
   }
 }
 
-export default Selector;
+export default withNamespaces()(Selector);

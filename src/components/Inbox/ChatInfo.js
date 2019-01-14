@@ -1,23 +1,23 @@
 import React from "react";
-const ChatInfo = ({ profileID, chatID }) => {
+const ChatInfo = ({ profileID, chatID, t }) => {
   return (
     <div className="col-xl-2">
       <div className="right">
         <div className="head" />
         <div className="content">
           <div className="visit-profile">
-            <span>Visit Profile</span>
+            <span>{t("Visit Profile")}</span>
           </div>
           <div className="functions">
             <ul>
               <li className="search">
-                <span>Search for Conversation</span>
+                <span>{t("Search for Conversation")}</span>
               </li>
               <li className="delete">
-                <span>Delete the Conversation</span>
+                <span>{t("Delete the Conversation")}</span>
               </li>
               <li className="report">
-                <span>Report the Conversation</span>
+                <span>{t("Report the Conversation")}</span>
               </li>
             </ul>
           </div>

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import moment from "moment";
 
+import { withNamespaces } from "react-i18next";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
@@ -84,7 +85,7 @@ class SearchEvents extends Component {
     }
   };
 
-  handleSubmit = (e, createEvent) => {
+  handleSubmit = (e, createEvent, t) => {
     e.preventDefault();
     this.formRef.props.form.validateFields((err, fieldsValue) => {
       if (err) {
@@ -93,7 +94,9 @@ class SearchEvents extends Component {
 
       createEvent()
         .then(({ data }) => {
-          message.success("Event created successfully! Share to get attendees");
+          message.success(
+            t("Event created successfully! Share to get attendees")
+          );
           this.props.history.push("/events/" + data.createEvent.id);
         })
         .catch(res => {
@@ -115,29 +118,9 @@ class SearchEvents extends Component {
         skip: this.state.skip
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        console.log(previousResult, fetchMoreResult);
         if (!fetchMoreResult || fetchMoreResult.searchEvents.length === 0) {
           return previousResult;
         }
-        //if there are events from last date in new fetch add them to old list
-        // if (
-        //   previousResult.searchEvents[previousResult.searchEvents.length - 1]
-        //     .date ===
-        //   fetchMoreResult.searchEvents[fetchMoreResult.searchEvents.length - 1]
-        //     .date
-        // ) {
-        //   previousResult.searchEvents[
-        //     previousResult.searchEvents.length - 1
-        //   ].events = previousResult.searchEvents[
-        //     previousResult.searchEvents.length - 1
-        //   ].events.concat(
-        //     fetchMoreResult.searchEvents[
-        //       fetchMoreResult.searchEvents.length - 1
-        //     ].events
-        //   );
-        //   //remove the pushed events from the fetch list
-        //   fetchMoreResult.searchEvents.pop();
-        // }
 
         return {
           searchEvents: [
@@ -154,7 +137,6 @@ class SearchEvents extends Component {
   };
 
   handleEnd = (previousPosition, fetchMore) => {
-    console.log(previousPosition);
     if (previousPosition === Waypoint.below) {
       this.setState(
         state => ({ skip: this.state.skip + LIMIT }),
@@ -184,8 +166,6 @@ class SearchEvents extends Component {
   render() {
     const {
       event,
-      visible,
-      blockModalVisible,
       shareModalVisible,
       all,
       lat,
@@ -193,7 +173,9 @@ class SearchEvents extends Component {
       maxDistance,
       location
     } = this.state;
+    const { t } = this.props;
 
+    //TODO: Do we still need this
     sessionStorage.setItem(
       "searchEventQuery",
       JSON.stringify({
@@ -204,10 +186,11 @@ class SearchEvents extends Component {
         maxDistance
       })
     );
+
     return (
       <div>
         <div>
-          <Header />
+          <Header t={t} />
           <section className="go-events">
             <SearchEventToolbar
               location={location}
@@ -215,8 +198,9 @@ class SearchEvents extends Component {
               handleChangeSelect={e => this.handleChangeSelect(e)}
               reset={this.clearState}
               maxDistance={maxDistance}
+              t={t}
             />
-            <MyEvents />
+            <MyEvents t={t} />
             <Query
               query={SEARCH_EVENTS}
               variables={{ lat, long, maxDistance, all, limit: LIMIT }}
@@ -224,20 +208,23 @@ class SearchEvents extends Component {
             >
               {({ data, loading, error, fetchMore }) => {
                 if (loading) {
-                  return <Spinner message="Loading Events..." size="large" />;
+                  return (
+                    <Spinner message={t("Loading Events...")} size="large" />
+                  );
                 }
                 if (
                   !data ||
                   !data.searchEvents ||
                   data.searchEvents.length === 0
                 ) {
-                  return <div>No Events Available</div>;
+                  return <div>{t("No Events Available")}</div>;
                 }
 
                 return (
                   <EventsList
                     events={data.searchEvents}
                     handleEnd={previous => this.handleEnd(previous, fetchMore)}
+                    t={t}
                   />
                 );
               }}
@@ -258,5 +245,5 @@ class SearchEvents extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withLocation(SearchEvents))
+  withRouter(withLocation(withNamespaces()(SearchEvents)))
 );

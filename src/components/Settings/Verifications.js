@@ -1,42 +1,41 @@
 import React from "react";
 
-const Verifications = ({ openPhotoVerPopup }) => {
+const Verifications = ({ openPhotoVerPopup, t }) => {
   return (
     <div className="content mtop">
       <div className="row">
         <div className="col-md-12">
           <span className="heading">
-            Verifications <i>- (Verified members get more responses)</i>
+            {t("Verifications")}{" "}
+            <i>- ({t("Verified members get more responses")})</i>
           </span>
         </div>
         <div className="col-md-6">
           <div className="verification-box">
-            <span className="head">Photo Verification</span>
+            <span className="head">{t("Photo Verification")}</span>
             <span className="title">
-              It is a long established fact that a reader will be…
+              {t("Show members you are who you say you are…")}
             </span>
-            <a
-              href="#"
+            <span
               className="clickverify-btn photo"
               onClick={() => openPhotoVerPopup("verify")}
             >
-              Click Verification
-            </a>
+              {t("Send Verification")}
+            </span>
           </div>
         </div>
         <div className="col-md-6">
           <div className="verification-box">
-            <span className="head">STD Verification</span>
+            <span className="head">{t("STD Verification")}</span>
             <span className="title">
-              It is a long established fact that a reader will be…
+              {t("Show members you care about your health and theirs…")}
             </span>
-            <a
-              href="#"
+            <span
               className="clickverify-btn"
               onClick={() => openPhotoVerPopup("std")}
             >
-              Click Verification
-            </a>
+              {t("Send Verification")}
+            </span>
           </div>
         </div>
       </div>

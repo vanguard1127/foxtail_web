@@ -28,7 +28,7 @@ class ChatPanel extends Component {
   };
 
   render() {
-    const { chatID } = this.props;
+    const { chatID, t } = this.props;
     const { text } = this.state;
 
     return (
@@ -44,10 +44,12 @@ class ChatPanel extends Component {
             <textarea
               value={text}
               onChange={e => this.setText(e)}
-              placeholder="Now you can join the discussion by writing a message…"
+              placeholder={t(
+                "Now you can join the discussion by writing a message…"
+              )}
             />
             <button onClick={e => this.submitMessage(e, postComment)}>
-              Send Message
+              {t("Send Message")}
             </button>
           </div>
         )}

@@ -3,8 +3,9 @@ import { Mutation } from "react-apollo";
 import { SIGNS3, SUBMIT_PHOTO } from "queries";
 import axios from "axios";
 import PhotoUpload from "../../common/PhotoUpload";
+import { withNamespaces } from "react-i18next";
 
-export default class PhotoVerify extends Component {
+class PhotoVerify extends Component {
   state = { photos: [], filename: "", filetype: "", photoKey: "" };
   setPhotos = photos => {
     this.setState({ photos });
@@ -81,26 +82,41 @@ export default class PhotoVerify extends Component {
   };
 
   render() {
-    const { closePopup, type } = this.props;
+    const { closePopup, type, t } = this.props;
     const { photos, filename, filetype, photoKey } = this.state;
     let header, subheader, body, instruction, btnText;
     header = subheader = body = instruction = btnText = "";
     if (type === "verify") {
-      header = "Submit Photo Verification";
-      subheader =
-        "It is a long established fact that a reader will be distracted by the readable";
-      body =
-        "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others.";
-      instruction = "Please give us 2-3 days to verify your photo…";
-      btnText = "Submit Verify";
+      header = t("photoVerTitle", "Submit Photo Verification");
+      subheader = t(
+        "photoVerSubTitle",
+        "It is a long established fact that a reader will be distracted by the readable"
+      );
+      body = t(
+        "photoVerBody",
+        "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others."
+      );
+
+      instruction = t(
+        "photoVerInstruction",
+        "Please give us 2-3 days to verify your photo…"
+      );
+      btnText = t("photoVerBtn", "Submit Verify");
     } else if (type === "std") {
-      header = "Submit STD Verification";
-      subheader =
-        "It is a long established fact that a reader will be distracted by the readable";
-      body =
-        "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others.";
-      instruction = "Please give us 2-3 days to verify your photo…";
-      btnText = "Submit Verify";
+      header = t("stdVerTitle", "Submit STD Verification");
+      subheader = t(
+        "stdVerSubTitle",
+        "It is a long established fact that a reader will be distracted by the readable"
+      );
+      body = t(
+        "stdVerBody",
+        "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others."
+      );
+      instruction = t(
+        "stdVerInstructions",
+        "Please give us 2-3 days to verify your photo…"
+      );
+      btnText = t("stdVerBtnText", "Submit Verify");
     }
     return (
       <section className="popup-content show">
@@ -176,3 +192,5 @@ export default class PhotoVerify extends Component {
     );
   }
 }
+
+export default withNamespaces()(PhotoVerify);

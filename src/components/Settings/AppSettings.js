@@ -3,13 +3,14 @@ import Select from "../common/Select";
 
 const AppSettings = ({
   setValue,
-  values: { visible, lang, emailNotify, showOnline, likedOnly }
+  values: { visible, lang, emailNotify, showOnline, likedOnly },
+  t
 }) => {
   return (
     <div className="content">
       <div className="row">
         <div className="col-md-12">
-          <span className="heading">App Settings</span>
+          <span className="heading">{t("App Settings")}</span>
         </div>
 
         <div className="col-md-12">
@@ -36,7 +37,7 @@ const AppSettings = ({
         <div className="col-md-6">
           <div className="item">
             <div className="switch-con">
-              <div className="sw-head">Show My Profile:</div>
+              <div className="sw-head">{t("Show My Profile")}:</div>
               <div className="sw-btn">
                 <div className="switch">
                   <input
@@ -59,7 +60,7 @@ const AppSettings = ({
         <div className="col-md-6">
           <div className="item">
             <div className="switch-con">
-              <div className="sw-head">Receive E-mails:</div>
+              <div className="sw-head">{t("Receive E-mails")}:</div>
               <div className="sw-btn">
                 <div className="switch">
                   <input
@@ -82,7 +83,9 @@ const AppSettings = ({
         <div className="col-md-6">
           <div className="item">
             <div className="switch-con">
-              <div className="sw-head">Hide Online Status (Black only):</div>
+              <div className="sw-head">
+                {t("Hide Online Status (Black only)")}:
+              </div>
               <div className="sw-btn">
                 <div className="switch">
                   <input
@@ -106,7 +109,7 @@ const AppSettings = ({
           <div className="item">
             <div className="switch-con">
               <div className="sw-head">
-                Only show me to members I liked (Black only):
+                {t("Only show me to members I liked (Black only)")}:
               </div>
               <div className="sw-btn">
                 <div className="switch">

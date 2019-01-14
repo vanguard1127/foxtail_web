@@ -6,7 +6,8 @@ const SearchEventToolbar = ({
   setLocationValues,
   handleChangeSelect,
   reset,
-  maxDistance
+  maxDistance,
+  t
 }) => {
   return (
     <div className="header">
@@ -18,8 +19,9 @@ const SearchEventToolbar = ({
             handleChangeSelect={handleChangeSelect}
             reset={reset}
             maxDistance={maxDistance}
+            t={t}
           />
-          <CreateEventBtn />
+          <CreateEventBtn t={t} />
         </div>
       </div>
     </div>

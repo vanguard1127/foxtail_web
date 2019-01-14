@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { withNamespaces } from "react-i18next";
 import PhotoUpload from "../../common/PhotoUpload";
 import DesiresModal from "../../Modals/Desires/Modal";
 import DesiresSelector from "../../Modals/Desires/Selector";
 import Select from "../../common/Select";
 import AddressSearch from "../../common/AddressSearch";
-export default class CreateEvent extends Component {
+class CreateEvent extends Component {
   state = {
     filename: "",
     filetype: "",
@@ -50,7 +51,7 @@ export default class CreateEvent extends Component {
     this.setState({ address });
   };
   render() {
-    const { closePopup } = this.props;
+    const { closePopup, t } = this.props;
     const {
       photo,
       showDesiresPopup,
@@ -69,12 +70,9 @@ export default class CreateEvent extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup create-event">
                   <div className="m-head">
-                    <span className="heading">Create a New Event</span>
-                    <span className="title">
-                      It is a long established fact that a reader will be
-                      distracted by the readable
-                    </span>
-                    <a className="close" onClick={() => closePopup()} />
+                    <span className="heading">{t("Create a New Event")}</span>
+                    <span className="title">{t("createEventSubTitle")}</span>
+                    <span className="close" onClick={() => closePopup()} />
                   </div>
                   <div className="m-body">
                     <div className="page">
@@ -93,7 +91,10 @@ export default class CreateEvent extends Component {
                                   })
                                 }
                               />
-                              <label title="Event Name" htmlFor="eventname" />
+                              <label
+                                title={t("Event Name")}
+                                htmlFor="eventname"
+                              />
                             </div>
                           </div>
                           <div className="item">
@@ -109,6 +110,7 @@ export default class CreateEvent extends Component {
                                 }
                                 address={address}
                                 type={"address"}
+                                placeholder={t("Address")}
                               />
                               {/* <input
                                 type="text"
@@ -130,7 +132,9 @@ export default class CreateEvent extends Component {
                           <div className="item">
                             <div className="textarea">
                               <textarea
-                                placeholder="Your event description here..."
+                                placeholder={t(
+                                  "Your event description here..."
+                                )}
                                 onChange={el =>
                                   this.setValue({
                                     name: "photo",
@@ -159,7 +163,7 @@ export default class CreateEvent extends Component {
                           </div>
                           <div className="item">
                             <Select
-                              label="Event Type:"
+                              label={t("Event Type") + ":"}
                               onChange={el =>
                                 this.setValue({
                                   name: "type",
@@ -176,7 +180,7 @@ export default class CreateEvent extends Component {
                           </div>
                           <div className="item">
                             <div className="button mtop">
-                              <button>Create Event</button>
+                              <button>{t("Create Event")}</button>
                             </div>
                           </div>
                         </div>
@@ -200,3 +204,4 @@ export default class CreateEvent extends Component {
     );
   }
 }
+export default withNamespaces()(CreateEvent);

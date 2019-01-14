@@ -84,7 +84,7 @@ class AttendEvent extends Component {
 
   render() {
     const { username, isGoing } = this.state;
-    const { id } = this.props;
+    const { id, t } = this.props;
     return (
       <Mutation
         mutation={TOGGLE_EVENT_ATTEND}
@@ -96,7 +96,7 @@ class AttendEvent extends Component {
             username && (
               <div className="join-event">
                 <span onClick={() => this.handleClick(toggleAttendEvent)}>
-                  {isGoing ? "Not Going" : "Going"}
+                  {isGoing ? t("Not Going") : t("Going")}
                 </span>
               </div>
             )

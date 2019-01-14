@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import { withNamespaces } from "react-i18next";
 import { desireOptions } from "../../../docs/data";
 import SearchBox from "./SearchBox";
-export default class Desires extends Component {
+class Desires extends Component {
   state = { searchText: "" };
   setValue = ({ name, value }) => {
     this.setState({ [name]: value });
   };
   render() {
     const { searchText } = this.state;
-    const { closePopup, onChange, desires } = this.props;
+    const { closePopup, onChange, desires, t } = this.props;
 
     return (
       <section className="desires-popup show">
@@ -18,15 +19,16 @@ export default class Desires extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup desires-select">
                   <div className="m-head">
-                    <span className="heading">Desires Select</span>
-                    <span className="title">
-                      It is a long established fact that a reader will be
-                      distracted by the readable
-                    </span>
-                    <a className="close" onClick={closePopup} />
+                    <span className="heading">{t("Desires Select")}</span>
+                    <span className="title">{t("desiresSubTitle")}</span>
+                    <span className="close" onClick={closePopup} />
                   </div>
                   <div className="m-body desires">
-                    <SearchBox value={searchText} onChange={this.setValue} />
+                    <SearchBox
+                      value={searchText}
+                      onChange={this.setValue}
+                      t={t}
+                    />
                     <div className="desires-list-con">
                       <ul>
                         {desireOptions
@@ -70,3 +72,4 @@ export default class Desires extends Component {
     );
   }
 }
+export default withNamespaces()(Desires);

@@ -1,9 +1,9 @@
 import React from "react";
 import MembersDropdown from "../common/MembersDropdown";
-const EventShare = ({ id }) => {
+const EventShare = ({ id, t }) => {
   return (
     <div className="share-event">
-      <span className="title">Share Event:</span>
+      <span className="title">{t("Share Event")}:</span>
       <ul>
         <li className="facebook">
           <span />

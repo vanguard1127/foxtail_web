@@ -1,17 +1,16 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
+import { withNamespaces } from "react-i18next";
 import { Query } from "react-apollo";
-import Message from "rc-message";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
-import { sexOptions } from "../../docs/data";
 import withAuth from "../withAuth";
 
 import SettingsPage from "./SettingsPage";
 
 class Settings extends Component {
   render() {
-    const { session, refetch } = this.props;
+    const { session, refetch, t } = this.props;
 
     return (
       <Fragment>
@@ -19,10 +18,12 @@ class Settings extends Component {
           <div className="container">
             <div className="col-md-12">
               <span className="head">
-                <a href="#">Hello, {session.currentuser.username} 👋</a>
+                <span>
+                  {t("Hello")}, {session.currentuser.username} 👋
+                </span>
               </span>
               <span className="title">
-                You last logged in at: 03 October 2018 13:34
+                {t("You last logged in at")}: 03 October 2018 13:34
               </span>
             </div>
           </div>
@@ -42,7 +43,7 @@ class Settings extends Component {
             const settings = data.getSettings;
             return (
               <Fragment>
-                <SettingsPage settings={settings} refetchUser={refetch} />
+                <SettingsPage settings={settings} refetchUser={refetch} t={t} />
               </Fragment>
             );
           }}
@@ -53,5 +54,5 @@ class Settings extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(Settings)
+  withRouter(withNamespaces()(Settings))
 );

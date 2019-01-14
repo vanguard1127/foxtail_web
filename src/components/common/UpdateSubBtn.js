@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { UPDATE_SUBSCRIPTION } from "../../queries";
 import { Mutation } from "react-apollo";
-import { message, Button } from "antd";
 import StripeCheckout from "react-stripe-checkout";
 
 class UpdateSubBtn extends Component {
@@ -11,7 +10,7 @@ class UpdateSubBtn extends Component {
     updateSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
-        message.success("Credit Card Updated.");
+        alert("Credit Card Updated.");
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -45,7 +44,7 @@ class UpdateSubBtn extends Component {
               }
               stripeKey="pk_test_IdtGRrsuvxCLBd9AbDQBXCS3"
             >
-              <Button>Change Credit Card</Button>
+              <button>Change Credit Card</button>
             </StripeCheckout>
           );
         }}

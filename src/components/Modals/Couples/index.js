@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withNamespaces } from "react-i18next";
 import { GENERATE_CODE, LINK_PROFILE, UNLINK_PROFILE } from "../../../queries";
 import { Query, Mutation } from "react-apollo";
 import { EmailShareButton, EmailIcon } from "react-share";
@@ -11,7 +12,7 @@ class Couples extends Component {
   state = {
     code: "",
     currentSlide: 0,
-    title: "Join me on Foxtail",
+    title: this.props.t("Join me on Foxtail"),
     shareUrl: "",
     currSlide: 1
   };
@@ -65,7 +66,7 @@ class Couples extends Component {
 
   showLinkModal(visible, close, code, setValue, includeMsgs) {
     const { title, currSlide } = this.state;
-
+    const { t } = this.props;
     return (
       <section className="couple-popup-content">
         <div className="container">
@@ -73,7 +74,7 @@ class Couples extends Component {
             <div className="row">
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup">
-                  <Header close={close} title={title} />
+                  <Header close={close} title={title} t={t} />
                   <div className="m-body">
                     <div className="page">
                       <div className="form">
@@ -83,11 +84,13 @@ class Couples extends Component {
                               code={code}
                               handleTextChange={this.handleTextChange}
                               next={this.next}
+                              t={t}
                             />
 
                             <CodeBox
                               includeMsgs={includeMsgs}
                               setValue={setValue}
+                              t={t}
                             />
                           </div>
                         )}
@@ -99,6 +102,7 @@ class Couples extends Component {
                             code={code}
                             setValue={setValue}
                             handleLink={this.handleLink}
+                            t={t}
                           />
                         )}
                       </div>
@@ -114,6 +118,7 @@ class Couples extends Component {
   }
 
   showDeleteConfirm(visible, close, username, unlinkProfile, setValue) {
+    const { t } = this.props;
     return (
       <Mutation mutation={UNLINK_PROFILE}>
         {(unlinkProfile, { loading }) => {
@@ -133,8 +138,9 @@ class Couples extends Component {
             //   cancelText="No"
             // >
             <div>
-              Your couple profile will be deactivated and your profiles will
-              revert to single profiles
+              {t(
+                "Your couple profile will be deactivated and your profiles will revert to single profiles"
+              )}
             </div>
             // </Modal>
           );
@@ -153,4 +159,4 @@ class Couples extends Component {
   }
 }
 
-export default Couples;
+export default withNamespaces()(Couples);

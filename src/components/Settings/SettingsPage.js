@@ -263,7 +263,7 @@ class SettingsPage extends Component {
       isPrivate
     } = this.state;
 
-    const { userID } = this.props;
+    const { userID, t } = this.props;
 
     return (
       <Mutation
@@ -302,6 +302,7 @@ class SettingsPage extends Component {
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}
                           blackModalToggle={this.toggleBlackPopup}
+                          t={t}
                         />
                       </div>
                     </div>
@@ -327,6 +328,7 @@ class SettingsPage extends Component {
                                 updateSettings
                               })
                             }
+                            t={t}
                           />
                           <Photos
                             isPrivate={false}
@@ -341,6 +343,7 @@ class SettingsPage extends Component {
                                 updateSettings
                               })
                             }
+                            t={t}
                           />
                           <Photos
                             isPrivate={true}
@@ -355,6 +358,7 @@ class SettingsPage extends Component {
                                 updateSettings
                               })
                             }
+                            t={t}
                           />
                           <MyProfile
                             desires={desires}
@@ -363,6 +367,7 @@ class SettingsPage extends Component {
                             setValue={({ name, value }) =>
                               this.setValue({ name, value, updateSettings })
                             }
+                            t={t}
                           />
                           <AppSettings
                             setValue={({ name, value }) =>
@@ -375,9 +380,11 @@ class SettingsPage extends Component {
                               showOnline,
                               likedOnly
                             }}
+                            t={t}
                           />
                           <Verifications
                             openPhotoVerPopup={this.openPhotoVerPopup}
+                            t={t}
                           />
                         </div>
                       </div>

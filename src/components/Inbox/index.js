@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 
 import withAuth from "../withAuth";
+import { withNamespaces } from "react-i18next";
 import InboxPanel from "./InboxPanel";
 import Header from "./Header";
 import ChatInfo from "./ChatInfo";
@@ -66,6 +67,7 @@ class InboxPage extends Component {
 
   render() {
     sessionStorage.setItem("page", "inbox");
+    const { t } = this.props;
     const { currentuser } = this.props.session;
     let { chatID, chat } = this.state;
     chatID = this.state.chatID;
@@ -88,6 +90,7 @@ class InboxPage extends Component {
                 this.handleChatClick(id, unSeenCount, readChat)
               }
               currentUserID={currentuser.userID}
+              t={t}
             />
           );
         }}
@@ -96,12 +99,12 @@ class InboxPage extends Component {
 
     return (
       <div>
-        <Header />
+        <Header t={t} />
         <section className="inbox">
           <div className="row no-gutters">
             {inboxPanel}
-            <ChatWindow currentChat={chat} currentuser={currentuser} />
-            <ChatInfo />
+            <ChatWindow currentChat={chat} currentuser={currentuser} t={t} />
+            <ChatInfo t={t} />
           </div>
         </section>
       </div>
@@ -109,4 +112,6 @@ class InboxPage extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(InboxPage);
+export default withAuth(session => session && session.currentuser)(
+  withNamespaces()(InboxPage)
+);

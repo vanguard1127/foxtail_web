@@ -10,7 +10,7 @@ class Preferences extends Component {
     //See if prev props and current props mean calculacte
   }
   render() {
-    const { values, setValue, setLocationValues } = this.props;
+    const { values, setValue, setLocationValues, t } = this.props;
     const {
       distance,
       distanceMetric,
@@ -33,7 +33,7 @@ class Preferences extends Component {
       <div className="content">
         <div className="row">
           <div className="col-md-12">
-            <span className="heading">My Search Preferences</span>
+            <span className="heading">{t("My Search Preferences")}</span>
           </div>
           <div className="col-md-6">
             <DistanceSlider
@@ -44,6 +44,7 @@ class Preferences extends Component {
                   value: el
                 })
               }
+              t={t}
             />
           </div>
           <div className="col-md-6">
@@ -55,12 +56,13 @@ class Preferences extends Component {
                   value: el
                 })
               }
+              t={t}
             />
           </div>
           <div className="col-md-6">
             <div className="item">
               <div className="switch-con border-top">
-                <div className="sw-head">Distance Metric:</div>
+                <div className="sw-head">{t("Distance Metric")}:</div>
                 <div className="sw-btn">
                   <div className="switch distance">
                     <input
@@ -89,7 +91,7 @@ class Preferences extends Component {
                 })
               }
               value={interestedIn}
-              placeholder={"Gender(s):"}
+              placeholder={t("Gender(s):")}
             />
           </div>
 
@@ -106,6 +108,7 @@ class Preferences extends Component {
                 }
                 address={location}
                 type={"(cities)"}
+                placeholder={t("Set Location...")}
               />
             </div>
           </div>

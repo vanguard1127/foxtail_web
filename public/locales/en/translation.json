@@ -58,9 +58,10 @@
   "Report Conversation": "Report Conversation",
   "Type a message": "Type a message",
   "Send": "Send",
-  "Attend events nearby. Discuss events you're attending": "Attend events nearby. Discuss events you're attending",
+  "eventSubTitle": "Attend events nearby. Discuss events you're attending",
   "Events Located": "Events Located",
   "From": "From",
+  "createEventSubTitle": "Attend events nearby. Discuss events you're attending",
   "Create Event": "Create Event",
   "My Events": "My Events",
   "Upcoming Events": "All Events",
@@ -139,5 +140,6 @@
   "shareText": "Someone thinks you would be interested in a member on Foxtail. Here's their profile:",
   "Know someone that would like to meet": "Know someone that would like to meet",
   "You have been invited to": "You have been invited to",
-  "Share this Event": "Share this Event"
+  "Share this Event": "Share this Event",
+  "desiresSubTitle": "Set your desires"
 }

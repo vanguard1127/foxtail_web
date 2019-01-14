@@ -6,7 +6,7 @@ import EventCreator from "./EventCreator";
 
 class EventCard extends Component {
   render() {
-    const { event } = this.props;
+    const { event, t } = this.props;
     const {
       id,
       eventname,
@@ -42,7 +42,9 @@ class EventCard extends Component {
                 {eventname}
               </span>
             </div>
-            <span className="distance">{distance} mil away</span>
+            <span className="distance">
+              {distance} {t("mil away")}
+            </span>
             <div className="goings">
               <ul>
                 <li>
@@ -65,17 +67,20 @@ class EventCard extends Component {
                 </li>
               </ul>
               <span className="stats">
-                <b>{participants.length} people</b> going
+                <b>
+                  {participants.length} {t("people")}
+                </b>{" "}
+                {t("going")}
               </span>
             </div>
             <div className="functions">
               <div className="btn go-detail">
                 <span onClick={() => this.props.history.push("/events/" + id)}>
-                  Event Detail
+                  {t("Event Detail")}
                 </span>
               </div>
               <div className="btn share">
-                <a href="#" />
+                <span />
               </div>
             </div>
           </div>

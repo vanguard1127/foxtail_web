@@ -28,7 +28,7 @@ class ChatPanel extends Component {
   };
 
   render() {
-    const { chatID } = this.props;
+    const { chatID, t } = this.props;
     const { text } = this.state;
 
     return (
@@ -44,14 +44,14 @@ class ChatPanel extends Component {
             <div className="files" />
             <div className="textarea">
               <input
-                placeholder="Type a message…"
+                placeholder={t("Type a message") + "..."}
                 value={text}
                 onChange={e => this.setText(e)}
               />
             </div>
             <div className="send">
               <button onClick={e => this.submitMessage(e, sendMessage)}>
-                Send
+                {t("Send")}
               </button>
             </div>
           </div>

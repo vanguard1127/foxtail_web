@@ -15,9 +15,9 @@ class Black extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup photo-verification">
                   <div className="m-head">
-                    <span className="heading">Black Membership</span>
-                    <span className="title">Get more</span>
-                    <a className="close" onClick={close} />
+                    <span className="heading">{t("Black Membership")}</span>
+                    <span className="title">{t("Get more")}</span>
+                    <span className="close" onClick={close} />
                   </div>
                   <img
                     alt="upload"

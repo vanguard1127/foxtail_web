@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Layer, Group, Stage, Rect } from "react-konva";
+import { Layer, Stage } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
-import { Image } from "react-konva";
 import { WithCrop } from "./WithCrop";
 
 class EditCanvasImage extends React.Component {
@@ -209,6 +208,7 @@ class EditCanvasImage extends React.Component {
       isCropping,
       uploading
     } = this.state;
+    const { t } = this.props;
 
     const Sticker = props => (
       <div
@@ -277,7 +277,7 @@ class EditCanvasImage extends React.Component {
         {!isCropping ? (
           <div style={{ display: "inline" }}>
             <button style={{ marginBottom: 5 }} onClick={this.onStartCrop}>
-              CROP
+              {t("Crop")}
             </button>
           </div>
         ) : (
@@ -290,7 +290,7 @@ class EditCanvasImage extends React.Component {
               }}
               onClick={this.onAcceptCrop}
             >
-              accept
+              {t("Accept")}
             </button>
             <button
               style={{
@@ -300,7 +300,7 @@ class EditCanvasImage extends React.Component {
               }}
               onClick={this.onCancelCrop}
             >
-              cancel
+              {t("Cancel")}
             </button>
           </React.Fragment>
         )}
@@ -314,16 +314,16 @@ class EditCanvasImage extends React.Component {
           onClick={this.handleExportClick}
           disabled={uploading}
         >
-          Upload
+          {t("Upload")}
         </button>
         <button style={{ marginBottom: 5 }} onClick={() => this.props.close()}>
-          Close
+          {t("Close")}
         </button>
         <button
           style={{ marginBottom: 5 }}
           onClick={this.removeSelectedSticker}
         >
-          Remove Selected Sticker
+          {t("Remove Selected Sticker")}
         </button>
         <div
           style={{

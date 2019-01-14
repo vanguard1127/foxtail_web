@@ -1,5 +1,5 @@
 import React from "react";
-const EventHeading = ({ eventname }) => {
+const EventTitles = ({ eventname, tagline }) => {
   return (
     <div>
       {" "}
@@ -12,4 +12,4 @@ const EventHeading = ({ eventname }) => {
   );
 };
 
-export default EventHeading;
+export default EventTitles;
