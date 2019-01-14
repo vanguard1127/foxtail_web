@@ -22,9 +22,9 @@ registerPlugin(
   FilePondPluginFileValidateSize,
   FilePondPluginFileValidateType
 );
-
+//https://pqina.nl/filepond/docs/patterns/api/filepond-instance/#labels --- LABELS
 // Our app
-const PhotoUpload = ({ photos, setPhotos }) => {
+const PhotoUpload = ({ photos, setPhotos, t }) => {
   return (
     <FilePond
       server={{
@@ -44,9 +44,20 @@ const PhotoUpload = ({ photos, setPhotos }) => {
         }
       }}
       acceptedFileTypes={["image/png", "image/jpeg"]}
-      labelFileTypeNotAllowed="Only jpgs and pngs allowed"
+      labelFileTypeNotAllowed={t("Only jpgs and pngs allowed")}
       maxFileSize="5MB"
-      labelMaxFileSizeExceeded="File is too large. (5MB Max)"
+      labelIdle={
+        t("Drag & Drop your image or") +
+        `<span class="filepond--label-action">` +
+        t("Browse") +
+        `</span>.`
+      }
+      labelFileProcessing={t("Uploading")}
+      labelFileProcessingComplete={t("Upload complete")}
+      labelFileProcessingAborted={t("Upload cancelled")}
+      labelFileProcessingError={t("Error during upload")}
+      labelTapToCancel={t("tap to cancel")}
+      labelMaxFileSizeExceeded={t("File is too large. (5MB Max)")}
       onupdatefiles={fileItems => {
         // Set current file objects to this.state
         setPhotos(fileItems.map(fileItem => fileItem.file));

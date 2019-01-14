@@ -53,12 +53,12 @@ class LanguageControl extends Component {
               .filter(x => this.state.selectedLang !== x)
               .map(lang => (
                 <li key={lang}>
-                  <a href="#">
+                  <span>
                     <i
                       className={`flag ${lang}`}
                       onClick={() => this.setLang(lang)}
                     />
-                  </a>
+                  </span>
                 </li>
               ))}
           </ul>

@@ -51,13 +51,13 @@ class MembersList extends Component {
   };
 
   handleInvite = invite => {
-    const { targetType, close } = this.props;
+    const { targetType, close, t } = this.props;
     if (targetType === "event") {
       invite()
         .then(({ data }) => {
           if (data.inviteProfileEvent) {
             close();
-            message.success("Inivitations sent");
+            alert(t("Inivitations sent"));
           }
         })
         .catch(res => {
@@ -74,7 +74,7 @@ class MembersList extends Component {
         .then(({ data }) => {
           if (data.inviteProfile) {
             close();
-            message.success("Inivitations sent");
+            alert(t("Inivitations sent"));
           }
         })
         .catch(res => {
@@ -89,13 +89,13 @@ class MembersList extends Component {
   };
 
   handleRemove = remove => {
-    const { targetType, close } = this.props;
+    const { targetType, close, t } = this.props;
     if (targetType === "event") {
       remove()
         .then(({ data }) => {
           if (data.removeProfileEvent) {
             close();
-            message.success("Members removed");
+            alert(t("Members removed"));
           }
         })
         .catch(res => {
@@ -111,7 +111,7 @@ class MembersList extends Component {
         .then(({ data }) => {
           if (data.removeProfile) {
             close();
-            message.success("Removed profiles");
+            alert(t("Removed profiles"));
           }
         })
         .catch(res => {
@@ -159,7 +159,7 @@ class MembersList extends Component {
     });
   };
 
-  handleFriendList = ({ members }) => (
+  handleFriendList = ({ members, t }) => (
     <Menu>
       <Menu.Divider />
       {members.map(friend => (
@@ -174,7 +174,7 @@ class MembersList extends Component {
             {" "}
             <div>
               <Checkbox onChange={this.handleChange} value={friend.id}>
-                Checkbox
+                {t("Checkbox")}
               </Checkbox>{" "}
               <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />{" "}
             </div>
@@ -191,7 +191,7 @@ class MembersList extends Component {
       )}
     </Menu>
   );
-  actionButton = ({ targetID, invitedProfiles, targetType, listType }) => {
+  actionButton = ({ targetID, invitedProfiles, targetType, listType, t }) => {
     if (targetType === "event" && listType === "friends") {
       return (
         <Mutation
@@ -204,7 +204,7 @@ class MembersList extends Component {
           {inviteProfileEvent => {
             return (
               <Button onClick={() => this.handleInvite(inviteProfileEvent)}>
-                Invite Members
+                {t("Invite Members")}
               </Button>
             );
           }}
@@ -223,7 +223,7 @@ class MembersList extends Component {
           {removeProfileEvent => {
             return (
               <Button onClick={() => this.handleRemove(removeProfileEvent)}>
-                Remove Members
+                {t("Remove Members")}
               </Button>
             );
           }}
@@ -241,7 +241,7 @@ class MembersList extends Component {
           {inviteProfile => {
             return (
               <Button onClick={() => this.handleInvite(inviteProfile)}>
-                Invite Members
+                {t("Invite Members")}
               </Button>
             );
           }}
@@ -251,19 +251,22 @@ class MembersList extends Component {
   };
 
   render() {
-    const { members, targetID, targetType, listType } = this.props;
+    const { members, targetID, targetType, listType, t } = this.props;
     const { invitedProfiles } = this.state;
-    const membersList = this.handleFriendList({ members });
+    const membersList = this.handleFriendList({ members, t });
     const actionButton = this.actionButton({
       targetID,
       invitedProfiles,
       targetType,
-      listType
+      listType,
+      t
     });
     return (
       <div>
         <div>
-          {listType === "participants" ? "Remove Members" : "Invite Members"}
+          {listType === "participants"
+            ? t("Remove Members")
+            : t("Invite Members")}
         </div>
         <div
           style={{

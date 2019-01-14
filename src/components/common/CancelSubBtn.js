@@ -1,12 +1,12 @@
 import React from "react";
 import { CANCEL_SUBSCRIPTION } from "../../queries";
 import { Mutation } from "react-apollo";
-const CancelSubBtn = () => {
+const CancelSubBtn = ({ t }) => {
   const handleSubmit = ({ cancelSubscription }) => {
     cancelSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
-        alert("Credit Card Removed and Subscription Canceled.");
+        alert(t("Credit Card Removed and Subscription Canceled" + "."));
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -29,7 +29,7 @@ const CancelSubBtn = () => {
               })
             }
           >
-            Cancel Subscription
+            {t("Cancel Subscription")}
           </button>
         );
       }}

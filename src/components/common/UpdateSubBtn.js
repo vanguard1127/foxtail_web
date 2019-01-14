@@ -5,12 +5,12 @@ import StripeCheckout from "react-stripe-checkout";
 
 class UpdateSubBtn extends Component {
   state = { token: "", ccLast4: "" };
-  handleSubmit = ({ token, ccLast4, updateSubscription }) => {
+  handleSubmit = ({ token, ccLast4, updateSubscription, t }) => {
     this.setState({ token, ccLast4 });
     updateSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
-        alert("Credit Card Updated.");
+        alert(t("Credit Card Updated") + ".");
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -24,6 +24,7 @@ class UpdateSubBtn extends Component {
 
   render() {
     const { token, ccLast4 } = this.state;
+    const { t } = this.props;
     return (
       <Mutation
         mutation={UPDATE_SUBSCRIPTION}
@@ -44,7 +45,7 @@ class UpdateSubBtn extends Component {
               }
               stripeKey="pk_test_IdtGRrsuvxCLBd9AbDQBXCS3"
             >
-              <button>Change Credit Card</button>
+              <button>{t("Change Credit Card")}</button>
             </StripeCheckout>
           );
         }}

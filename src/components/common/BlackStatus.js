@@ -8,13 +8,14 @@ const BlackStatus = ({
   ccLast4,
   visible,
   refetchUser,
-  close
+  close,
+  t
 }) => {
   if (blkMemberInfo.active && ccLast4 === null) {
     return (
       <div>
-        Thanks for being a member.
-        <br /> Your membership will end:{" "}
+        {t("Thanks for being a member")}.
+        <br /> {t("Your membership will end")}:{" "}
         {moment(blkMemberInfo.renewalDate).format("MMMM DD YYYY")}
         <br />
         <UpdateSubBtn refetchUser={refetchUser} close={close} />
@@ -24,9 +25,10 @@ const BlackStatus = ({
   } else if (blkMemberInfo.active) {
     return (
       <div>
-        Thanks for being a member.
-        <br /> Your credit card ending in {ccLast4} will be charged on your
-        renewal date: {moment(blkMemberInfo.renewalDate).format("MMMM DD YYYY")}
+        {t("Thanks for being a member")}.
+        <br /> {t("Your credit card ending in")} {ccLast4}{" "}
+        {t("will be charged on your renewal date")}:{" "}
+        {moment(blkMemberInfo.renewalDate).format("MMMM DD YYYY")}
         <br />
         <UpdateSubBtn refetchUser={refetchUser} close={close} />
         <CancelSubBtn refetchUser={refetchUser} close={close} />
@@ -35,7 +37,7 @@ const BlackStatus = ({
   } else {
     return (
       <button type="primary" htmlType="submit" onClick={visible}>
-        BECOME A BLACK MEMBER
+        {t("BECOME A BLACK MEMBER")}
       </button>
     );
   }

@@ -16,7 +16,7 @@ class MembersDropdown extends Component {
     this.setState({ visible: flag });
   };
   render() {
-    const { targetType, targetID, listType, clickComponent } = this.props;
+    const { targetType, targetID, listType, clickComponent, t } = this.props;
     if (listType === "friends") {
       return (
         <Query query={GET_FRIENDS} variables={{ limit: LIMIT }}>
@@ -26,9 +26,11 @@ class MembersDropdown extends Component {
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.getFriends) {
-              return <div>Error occured. Please contact support!</div>;
+              return (
+                <div>{t("Error occured. Please contact support") + "!"}</div>
+              );
             } else if (!data.getFriends.length === 0) {
-              return <div>You are all caught up :)</div>;
+              return <div>{t("No more messages") + " :)"}</div>;
             }
 
             const members = data.getFriends;
@@ -64,9 +66,11 @@ class MembersDropdown extends Component {
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.chat) {
-              return <div>Error occured. Please contact support!</div>;
+              return (
+                <div>{t("Error occured. Please contact support") + "!"}</div>
+              );
             } else if (!data.chat.participants.length === 0) {
-              return <div>No more participants</div>;
+              return <div>{t("No more messages") + " :)"}</div>;
             }
             const members = data.chat.participants;
             return (
@@ -101,9 +105,11 @@ class MembersDropdown extends Component {
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.event) {
-              return <div>Error occured. Please contact support!</div>;
+              return (
+                <div>{t("Error occured. Please contact support") + "!"}</div>
+              );
             } else if (!data.event.participants.length === 0) {
-              return <div>No more participants</div>;
+              return <div>{t("No more participants")}</div>;
             }
             const members = data.event.participants;
             return (

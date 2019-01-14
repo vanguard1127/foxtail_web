@@ -55,7 +55,7 @@ class AddressSearch extends React.Component {
                 })}
               />
               <div className="autocomplete-dropdown-container">
-                {loading && <div>{t("Loading...")}</div>}
+                {loading && <div>{t("Loading") + "..."}</div>}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
                     ? "suggestion-item--active"

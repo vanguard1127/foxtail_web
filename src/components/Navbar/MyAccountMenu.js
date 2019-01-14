@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Logout from "../Auth/LogoutLink";
+import Logout from "./LogoutLink";
 
 const MyAccountMenu = ({ currentuser, t }) => {
   return (

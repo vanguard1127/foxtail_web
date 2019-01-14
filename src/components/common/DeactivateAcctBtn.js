@@ -7,7 +7,7 @@ const DeactivateAcctBtn = ({ t }) => {
   const handleSubmit = ({ client, deleteUser }) => {
     deleteUser()
       .then(({ data }) => {
-        alert("Account Deleted Successfully.");
+        alert(t("Account Deleted Successfully") + ".");
 
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");

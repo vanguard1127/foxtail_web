@@ -7,7 +7,7 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
-import App from "./components/App";
+import Landing from "./components/Landing";
 import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/";
 import Settings from "./components/Settings/";
@@ -15,7 +15,6 @@ import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
-import Signup from "./components/Auth/Signup";
 import withSession from "./components/withSession";
 import "./i18n";
 import Footer from "./components/Footer/";
@@ -226,7 +225,7 @@ const Wrapper = withRouter(props => {
   let location = props.location;
   let isLanding = location.pathname && location.pathname === "/";
   if (isLanding) {
-    return <App />;
+    return <Landing />;
   }
   let showFooter =
     location.pathname && location.pathname.match(/^\/inbox/) === null;
@@ -248,7 +247,6 @@ const Body = ({ showFooter }) => (
     <main>
       <Switch>
         <Route path="/members" component={ProfileSearch} exact />
-        <Route path="/signup" component={Signup} />
         <Route path="/events" component={SearchEvents} exact />
         {/* <Route path="/editprofile/:couple" component={EditProfile} />
         <Route path="/editprofile" component={EditProfile} /> */}
