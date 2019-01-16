@@ -243,5 +243,5 @@ class SearchEvents extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withLocation(withNamespaces()(SearchEvents)))
+  withRouter(withLocation(withNamespaces("searchevents")(SearchEvents)))
 );

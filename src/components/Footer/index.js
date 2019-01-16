@@ -44,7 +44,7 @@ const Footer = ({ t }) => {
                   <span>{t("termscon")}</span>
                 </li>
                 <li>
-                  <span>{t("common:privacy")}</span>
+                  <span>{t("privacy")}</span>
                 </li>
                 <li>
                   <span>{t("contact")}</span>

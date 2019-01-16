@@ -49,4 +49,4 @@ class ImageEditor extends Component {
     );
   }
 }
-export default withNamespaces()(ImageEditor);
+export default withNamespaces("modals")(ImageEditor);

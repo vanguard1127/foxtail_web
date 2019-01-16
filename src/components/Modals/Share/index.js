@@ -125,4 +125,4 @@ const Share = ({ profile, event, close, t }) => {
   );
 };
 
-export default withNamespaces()(Share);
+export default withNamespaces("modals")(Share);

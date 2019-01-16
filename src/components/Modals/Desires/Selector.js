@@ -25,4 +25,4 @@ class Selector extends Component {
   }
 }
 
-export default withNamespaces()(Selector);
+export default withNamespaces("modals")(Selector);

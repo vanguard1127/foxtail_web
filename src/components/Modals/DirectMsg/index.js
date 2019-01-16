@@ -93,4 +93,4 @@ class DirectMsg extends Component {
     );
   }
 }
-export default withNamespaces()(DirectMsg);
+export default withNamespaces("modals")(DirectMsg);

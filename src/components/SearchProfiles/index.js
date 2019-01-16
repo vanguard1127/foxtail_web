@@ -233,6 +233,6 @@ class ProfileSearch extends Component {
 
 export default withApollo(
   withAuth(session => session && session.currentuser)(
-    withRouter(withLocation(withNamespaces()(ProfileSearch)))
+    withRouter(withLocation(withNamespaces("searchprofiles")(ProfileSearch)))
   )
 );

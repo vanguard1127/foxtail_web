@@ -199,4 +199,4 @@ class CreateEvent extends Component {
     );
   }
 }
-export default withNamespaces()(CreateEvent);
+export default withNamespaces("modals")(CreateEvent);

@@ -72,4 +72,4 @@ class Desires extends Component {
     );
   }
 }
-export default withNamespaces()(Desires);
+export default withNamespaces("modals")(Desires);

@@ -47,7 +47,7 @@ class ChatPanel extends Component {
               placeholder={t("nowyoucan") + "..."}
             />
             <button onClick={e => this.submitMessage(e, postComment)}>
-              {t("sendmsg")}
+              {t("common:sendmsg")}
             </button>
           </div>
         )}

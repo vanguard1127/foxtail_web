@@ -155,4 +155,4 @@ class Couples extends Component {
   }
 }
 
-export default withNamespaces()(Couples);
+export default withNamespaces("modals")(Couples);

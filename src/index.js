@@ -20,7 +20,7 @@ import "./i18n";
 import Footer from "./components/Footer/";
 
 import { ApolloProvider } from "react-apollo";
-import { Layout, message as popmsg } from "antd";
+import { Layout } from "antd";
 import ApolloClient from "apollo-client";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
@@ -29,7 +29,6 @@ import { ApolloLink, split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
-import { notification } from "antd";
 
 let server = "localhost:4444";
 //let server = "production-151896178.us-west-2.elb.amazonaws.com";
@@ -135,7 +134,7 @@ const errorLink = onError(
       graphQLErrors.map(({ message, path }) => {
         if (~message.indexOf("Client")) {
           response.errors = null;
-          popmsg.warn(message.replace("Client:", "").trim());
+          alert(message.replace("Client:", "").trim());
           return null;
         } else if (~message.indexOf("authenticated")) {
           const refreshToken = localStorage.getItem("refreshToken");
@@ -194,11 +193,6 @@ const errorLink = onError(
     //TODO:Decipher btwn 500 and 400 errors
     if (networkError) {
       console.error(networkError);
-      notification["warn"]({
-        message: "Check you network",
-        placement: "bottomLeft",
-        description: `[Network error]: ${networkError}`
-      });
     }
     return null;
   }

@@ -186,5 +186,5 @@ class ProfilePage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces()(ProfilePage))
+  withRouter(withNamespaces("profile")(ProfilePage))
 );

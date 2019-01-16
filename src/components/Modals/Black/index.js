@@ -48,4 +48,4 @@ class Black extends Component {
     );
   }
 }
-export default withNamespaces()(Black);
+export default withNamespaces("modals")(Black);

@@ -17,7 +17,7 @@ const MyAccountMenu = ({ currentuser, t }) => {
             <NavLink to="/settings">{t("common:becomeblk")}</NavLink>
           </li>
           <li>
-            <Logout />
+            <Logout t={t} />
           </li>
         </ul>
       </div>

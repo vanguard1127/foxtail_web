@@ -167,4 +167,4 @@ class BlockModal extends Component {
   }
 }
 
-export default withNamespaces()(BlockModal);
+export default withNamespaces("modals")(BlockModal);

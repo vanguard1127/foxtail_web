@@ -183,4 +183,4 @@ class PhotoVerify extends Component {
   }
 }
 
-export default withNamespaces()(PhotoVerify);
+export default withNamespaces("modals")(PhotoVerify);

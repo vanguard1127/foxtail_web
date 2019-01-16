@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { withNamespaces } from "react-i18next";
+import i18next from "i18next";
 import SetLocationModal from "./Modals/SetLocation";
 
 const withLocation = PassedComponent =>
@@ -12,7 +12,7 @@ const withLocation = PassedComponent =>
 
     //TODO: Change messaging for Black
     showConfirm = (setLocModalVisible, caller) => {
-      const { t } = this.props;
+      const { t } = i18next;
       setLocModalVisible(true);
       //TODO: unlock when dialog made
       // confirm({
@@ -30,7 +30,7 @@ const withLocation = PassedComponent =>
 
     findLocation = (setLocation, setLocModalVisible, caller) => {
       if (!navigator.geolocation) {
-        alert(this.props.t("geonotlocated"));
+        alert(i18next.t("geonotlocated"));
         const session = this.props.session;
         if (session && session.location) {
           this.setLocation({
@@ -130,4 +130,4 @@ const withLocation = PassedComponent =>
     }
   };
 
-export default withNamespaces("common")(withLocation);
+export default withLocation;

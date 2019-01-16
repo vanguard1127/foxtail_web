@@ -152,4 +152,4 @@ class NavbarAuth extends Component {
   }
 }
 
-export default withNamespaces()(withRouter(Navbar));
+export default withNamespaces("common")(withRouter(Navbar));

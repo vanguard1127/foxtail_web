@@ -106,4 +106,4 @@ class SetLocationModal extends Component {
   }
 }
 
-export default withNamespaces()(SetLocationModal);
+export default withNamespaces("modals")(SetLocationModal);

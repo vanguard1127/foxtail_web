@@ -29,7 +29,7 @@ class NoticesItem extends Component {
   };
 
   render() {
-    const { count } = this.props;
+    const { count, t } = this.props;
     const { menuOpen } = this.state;
     return (
       <div
@@ -43,7 +43,7 @@ class NoticesItem extends Component {
           {count > 0 && <span className="count">{count}</span>}
         </span>
         {menuOpen && (
-          <NoticesList close={() => this.setState({ menuOpen: false })} />
+          <NoticesList close={() => this.setState({ menuOpen: false })} t={t} />
         )}
       </div>
     );

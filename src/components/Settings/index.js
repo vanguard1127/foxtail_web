@@ -56,5 +56,5 @@ class Settings extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces()(Settings))
+  withRouter(withNamespaces("settings")(Settings))
 );
