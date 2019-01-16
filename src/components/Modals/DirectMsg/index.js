@@ -47,20 +47,20 @@ class DirectMsg extends Component {
                   <div className="m-head">
                     <span className="heading">
                       {profile
-                        ? t("Send Message") +
+                        ? t("common:sendmsg") +
                           " " +
                           profile.users.map((user, index) => {
                             if (index === 0) return user.username;
                             else return +" & " + user.username;
                           }) +
                           "?"
-                        : t("Send Message")}
+                        : t("common:sendmsg")}
                     </span>
                     <span className="close" onClick={close} />
                   </div>
                   <div className="m-body">
                     <input
-                      placeholder={t("Write Message Here...")}
+                      placeholder={t("writemsg") + "..."}
                       value={text}
                       onChange={this.handleTextChange}
                     />
@@ -77,7 +77,7 @@ class DirectMsg extends Component {
                             <button
                               onClick={() => this.handleSubmit(sendMessage)}
                             >
-                              {t("Send")}
+                              {t("common:Send")}
                             </button>
                           );
                         }}

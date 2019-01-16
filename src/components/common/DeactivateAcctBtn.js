@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { DELETE_USER } from "../../queries";
 import { Mutation } from "react-apollo";
 import { ApolloConsumer } from "react-apollo";
@@ -7,7 +7,7 @@ const DeactivateAcctBtn = ({ t }) => {
   const handleSubmit = ({ client, deleteUser }) => {
     deleteUser()
       .then(({ data }) => {
-        alert(t("Account Deleted Successfully") + ".");
+        alert(t("common:acctdeleted") + ".");
 
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
@@ -17,7 +17,6 @@ const DeactivateAcctBtn = ({ t }) => {
         this.props.history.push("/");
       })
       .catch(res => {
-        console.log(res);
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });
@@ -42,7 +41,7 @@ const DeactivateAcctBtn = ({ t }) => {
                     })
                   }
                 >
-                  {t("Deactivate Account")}
+                  {t("common:deactacct")}
                 </button>
               );
             }}

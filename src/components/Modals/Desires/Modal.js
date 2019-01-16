@@ -19,8 +19,8 @@ class Desires extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup desires-select">
                   <div className="m-head">
-                    <span className="heading">{t("Desires Select")}</span>
-                    <span className="title">{t("desiresSubTitle")}</span>
+                    <span className="heading">{t("desireselect")}</span>
+                    <span className="title">{t("setdesires")}</span>
                     <span className="close" onClick={closePopup} />
                   </div>
                   <div className="m-body desires">
@@ -55,7 +55,7 @@ class Desires extends Component {
                                 />
                                 <label htmlFor={option.value}>
                                   <span />
-                                  <b>{option.label}</b>
+                                  <b>{t(option.label)}</b>
                                 </label>
                               </div>
                             </li>

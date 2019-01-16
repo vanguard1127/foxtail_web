@@ -8,6 +8,7 @@ const GoingBar = ({ id, participants, t }) => {
           targetID={id}
           targetType={"event"}
           listType={"participants"}
+          t={t}
           clickComponent={
             <div className="content">
               <ul>
@@ -56,9 +57,9 @@ const GoingBar = ({ id, participants, t }) => {
               </ul>
               <span className="stats">
                 <b>
-                  {participants.length} {t("people")}
+                  {participants.length} {t("common:people")}
                 </b>{" "}
-                {t("going")}
+                {t("common:going")}
               </span>
             </div>
           }

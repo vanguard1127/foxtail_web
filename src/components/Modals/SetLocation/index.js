@@ -15,6 +15,7 @@ class SetLocationModal extends Component {
   };
 
   handleSubmit = updateSettings => {
+    const { t } = this.props;
     updateSettings()
       .then(async ({ data }) => {
         if (data.updateSettings) {
@@ -25,10 +26,10 @@ class SetLocationModal extends Component {
             },
             location: this.state.address
           });
-          alert("Location set to: " + this.state.address);
+          alert(t("locset") + ": " + this.state.address);
           this.props.close();
         } else {
-          alert("Location not set! Please turn on locations services.");
+          alert(t("locnotset"));
         }
       })
       .catch(res => {
@@ -64,17 +65,17 @@ class SetLocationModal extends Component {
                     <div className="offset-md-3 col-md-6">
                       <div className="modal-popup photo-verification">
                         <div className="m-head">
-                          <span className="heading">{t("Set Location")}</span>
+                          <span className="heading">{t("common:setloc")}</span>
                           <span className="close" onClick={close} />
                         </div>
                         <div className="m-body">
-                          {t("Select a city")}:
+                          {t("setcity")}:
                           <AddressSearch
                             style={{ width: "100%" }}
                             setLocationValues={this.setLocationValues}
                             address={address}
                             type={"(cities)"}
-                            placeholder={t("Set Location...")}
+                            placeholder={t("common:setloc") + "..."}
                           />
                           {lat !== null ? (
                             <button
@@ -87,13 +88,9 @@ class SetLocationModal extends Component {
                         </div>
                         {!isBlackMember && (
                           <small>
-                            {t(
-                              "*You can only do this once since you do not have location services enabled."
-                            )}
+                            {t("compmsg")}
                             <br />
-                            {t(
-                              "To change your location in the future, you must either enable location services or signup for Black membership."
-                            )}
+                            {t("compsecmsg")}
                           </small>
                         )}
                       </div>

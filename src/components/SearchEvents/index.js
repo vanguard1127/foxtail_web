@@ -7,14 +7,11 @@ import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 import Waypoint from "react-waypoint";
-import { message } from "antd";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
 import Spinner from "../common/Spinner";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
-import AddressSearch from "../common/AddressSearch";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import SearchEventToolbar from "./SearchEventToolbar";
 import Header from "./Header";
 import EventsList from "./EventsList";
@@ -94,9 +91,7 @@ class SearchEvents extends Component {
 
       createEvent()
         .then(({ data }) => {
-          message.success(
-            t("Event created successfully! Share to get attendees")
-          );
+          alert(t("eventcreated"));
           this.props.history.push("/events/" + data.createEvent.id);
         })
         .catch(res => {
@@ -209,7 +204,10 @@ class SearchEvents extends Component {
               {({ data, loading, error, fetchMore }) => {
                 if (loading) {
                   return (
-                    <Spinner message={t("Loading Events...")} size="large" />
+                    <Spinner
+                      message={t("loadingevents") + "..."}
+                      size="large"
+                    />
                   );
                 }
                 if (
@@ -217,7 +215,7 @@ class SearchEvents extends Component {
                   !data.searchEvents ||
                   data.searchEvents.length === 0
                 ) {
-                  return <div>{t("No Events Available")}</div>;
+                  return <div>{t("noeventavailable")}</div>;
                 }
 
                 return (

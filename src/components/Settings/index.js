@@ -23,7 +23,7 @@ class Settings extends Component {
                 </span>
               </span>
               <span className="title">
-                {t("You last logged in at")}: 03 October 2018 13:34
+                {t("loggedin")}: 03 October 2018 13:34
               </span>
             </div>
           </div>
@@ -31,13 +31,15 @@ class Settings extends Component {
         <Query query={GET_SETTINGS} fetchPolicy="network-only">
           {({ data, loading, error }) => {
             if (loading) {
-              return <Spinner message="Loading..." size="large" />;
+              return (
+                <Spinner message={t("common:Loading") + "..."} size="large" />
+              );
             }
             if (error) {
               return <div>{error.message}</div>;
             }
             if (!data.getSettings) {
-              return <div>Error occured. Please contact support!</div>;
+              return <div>{t("Error occured. Please contact support!")}</div>;
             }
 
             const settings = data.getSettings;

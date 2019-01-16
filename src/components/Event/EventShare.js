@@ -3,7 +3,7 @@ import MembersDropdown from "../common/MembersDropdown";
 const EventShare = ({ id, t }) => {
   return (
     <div className="share-event">
-      <span className="title">{t("Share Event")}:</span>
+      <span className="title">{t("share")}:</span>
       <ul>
         <li className="facebook">
           <span />
@@ -17,6 +17,7 @@ const EventShare = ({ id, t }) => {
             targetType={"event"}
             listType={"friends"}
             clickComponent={<span />}
+            t={t}
           />
         </li>
       </ul>

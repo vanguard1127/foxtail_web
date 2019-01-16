@@ -10,7 +10,7 @@ class UpdateSubBtn extends Component {
     updateSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
-        alert(t("Credit Card Updated") + ".");
+        alert(t("common:cardupdated") + ".");
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -45,7 +45,7 @@ class UpdateSubBtn extends Component {
               }
               stripeKey="pk_test_IdtGRrsuvxCLBd9AbDQBXCS3"
             >
-              <button>{t("Change Credit Card")}</button>
+              <button>{t("common:cardchange")}</button>
             </StripeCheckout>
           );
         }}

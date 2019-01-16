@@ -43,7 +43,7 @@ class EventCard extends Component {
               </span>
             </div>
             <span className="distance">
-              {distance} {t("mil away")}
+              {distance} {t("common:" + "miaway")}
             </span>
             <div className="goings">
               <ul>
@@ -68,15 +68,15 @@ class EventCard extends Component {
               </ul>
               <span className="stats">
                 <b>
-                  {participants.length} {t("people")}
+                  {participants.length} {t("common:people")}
                 </b>{" "}
-                {t("going")}
+                {t("common:going")}
               </span>
             </div>
             <div className="functions">
               <div className="btn go-detail">
                 <span onClick={() => this.props.history.push("/events/" + id)}>
-                  {t("Event Detail")}
+                  {t("eventdetail")}
                 </span>
               </div>
               <div className="btn share">

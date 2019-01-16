@@ -17,7 +17,7 @@ const EventCreator = ({ ownerProfile, createdAt, history, t }) => {
         <div className="detail">
           <span className="name">{ownerProfile.profileName}</span>
           <span className="created-date">
-            {t("Created on")}{" "}
+            {t("createdon")}{" "}
             {moment(createdAt)
               .format("MMM Do")
               .toString()}

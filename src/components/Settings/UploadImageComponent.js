@@ -53,7 +53,7 @@ class UploadComponent extends Component {
     ) {
       this.props.showEditor(file, this.props.isPrivate);
     } else {
-      alert(this.props.t("Only jpg/jpeg and png files are allowed!"));
+      alert(this.props.t("onlyimg"));
     }
   };
 
@@ -151,7 +151,7 @@ class UploadComponent extends Component {
             >
               <div className="upload-box">
                 <AddIcon className={classes.addIcon} />
-                <p className="text">{t(Upload)}</p>
+                <p className="text">{t("Upload")}</p>
               </div>
             </Upload>
           </div>

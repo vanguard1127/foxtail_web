@@ -55,7 +55,7 @@ class AddressSearch extends React.Component {
                 })}
               />
               <div className="autocomplete-dropdown-container">
-                {loading && <div>{t("Loading") + "..."}</div>}
+                {loading && <div>{t("common:Loading") + "..."}</div>}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
                     ? "suggestion-item--active"
@@ -85,4 +85,4 @@ class AddressSearch extends React.Component {
   }
 }
 
-export default withNamespaces()(AddressSearch);
+export default withNamespaces("common")(AddressSearch);

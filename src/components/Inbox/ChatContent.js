@@ -90,7 +90,7 @@ class ChatContent extends Component {
   };
   //TODO: use global spinner and error instead of chnaging each
   render() {
-    const { chatID, currentUserID } = this.props;
+    const { chatID, currentUserID, t } = this.props;
 
     const { cursor } = this.state;
     return (
@@ -106,10 +106,12 @@ class ChatContent extends Component {
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (loading) {
-              return <Spinner message="Loading..." size="large" />;
+              return (
+                <Spinner message={t("common:Loading") + "..."} size="large" />
+              );
             }
             if (!data.getMessages) {
-              return <div>No messages</div>;
+              return <div>{t("commmonnomsgs")}</div>;
             }
 
             return (
@@ -117,6 +119,7 @@ class ChatContent extends Component {
                 chatID={chatID}
                 currentUserID={currentUserID}
                 ref={this.MessageList}
+                t={t}
                 messages={
                   data && data.getMessages ? data.getMessages.messages : []
                 }

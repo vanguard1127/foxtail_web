@@ -15,7 +15,7 @@ const ProfileActions = ({
           await showMsgModal();
         }}
       >
-        {t("Send Message")}
+        {t("common:sendmsg")}
       </div>
       <div
         className="btn heart"

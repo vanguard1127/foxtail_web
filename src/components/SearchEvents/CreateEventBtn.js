@@ -11,7 +11,7 @@ class CreateEventBtn extends Component {
     return (
       <div className="create-event-btn">
         <span href={null} onClick={() => this.togglePopup()}>
-          {this.props.t("Create Event")}
+          {this.props.t("common:createevent")}
         </span>
         {this.state.showPopup ? (
           <CreateEvent closePopup={() => this.togglePopup()} />

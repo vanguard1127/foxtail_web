@@ -18,7 +18,7 @@ const ProfilesDiv = ({
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
-              <span className="head">{t("All Members")}</span>
+              <span className="head">{t("allmems")}</span>
             </div>
             {profiles.map(profile => {
               return (

@@ -87,36 +87,26 @@ class PhotoVerify extends Component {
     let header, subheader, body, instruction, btnText;
     header = subheader = body = instruction = btnText = "";
     if (type === "verify") {
-      header = t("photoVerTitle", "Submit Photo Verification");
+      header = t("Submit Photo Verification");
       subheader = t(
-        "photoVerSubTitle",
         "It is a long established fact that a reader will be distracted by the readable"
       );
       body = t(
-        "photoVerBody",
         "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others."
       );
 
-      instruction = t(
-        "photoVerInstruction",
-        "Please give us 2-3 days to verify your photo…"
-      );
-      btnText = t("photoVerBtn", "Submit Verify");
+      instruction = t("Please give us 2-3 days to verify your photo…");
+      btnText = t("Submit Verify");
     } else if (type === "std") {
-      header = t("stdVerTitle", "Submit STD Verification");
+      header = t("Submit STD Verification");
       subheader = t(
-        "stdVerSubTitle",
         "It is a long established fact that a reader will be distracted by the readable"
       );
       body = t(
-        "stdVerBody",
         "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others."
       );
-      instruction = t(
-        "stdVerInstructions",
-        "Please give us 2-3 days to verify your photo…"
-      );
-      btnText = t("stdVerBtnText", "Submit Verify");
+      instruction = t("Please give us 2-3 days to verify your photo…");
+      btnText = t("Submit Verify");
     }
     return (
       <section className="popup-content show">
@@ -128,7 +118,7 @@ class PhotoVerify extends Component {
                   <div className="m-head">
                     <span className="heading">{header}</span>
                     <span className="title">{subheader}</span>
-                    <a className="close" onClick={closePopup} />
+                    <span className="close" onClick={closePopup} />
                   </div>
                   <div className="m-body">
                     <div className="verify-account">
@@ -172,7 +162,7 @@ class PhotoVerify extends Component {
                                         })
                                       }
                                     >
-                                      <a href={null}>{btnText}</a>
+                                      <span>{btnText}</span>
                                     </div>
                                   );
                                 }}

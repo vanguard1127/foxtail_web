@@ -129,7 +129,7 @@ class ProfileSearch extends Component {
               return (
                 <div>
                   {searchPanel}{" "}
-                  <Spinner message={t("Loading Members...")} size="large" />
+                  <Spinner message={t("loadmems") + "..."} size="large" />
                 </div>
               );
             } else if (
@@ -140,13 +140,13 @@ class ProfileSearch extends Component {
             ) {
               return (
                 <div>
-                  {searchPanel} {t("No members near you")}
+                  {searchPanel} {t("nomems")}
                 </div>
               );
             }
             if (error) {
               if (error.message.indexOf("invisible") > -1) {
-                return <div>{t("invisibleWarn")}</div>;
+                return <div>{t("novis")}</div>;
               }
             }
 
@@ -210,7 +210,7 @@ class ProfileSearch extends Component {
 
                       <div className="col-md-12">
                         <div className="more-content-btn">
-                          <span>{t("No More Profiles")}</span>
+                          <span>{t("nopros")}</span>
                         </div>
                       </div>
                     </div>

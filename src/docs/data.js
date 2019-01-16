@@ -112,6 +112,7 @@ export const sexOptions = [
   { value: "F", label: "Female" },
   { value: "M", label: "Male" },
   { value: "T", label: "Transgender" },
+  { value: "N", label: "Non-Binary" },
   { value: "MF", label: "Male + Female" },
   { value: "FF", label: "Female + Female" },
   { value: "MM", label: "Male + Male" },

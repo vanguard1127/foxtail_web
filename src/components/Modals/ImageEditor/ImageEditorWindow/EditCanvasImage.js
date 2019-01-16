@@ -323,7 +323,7 @@ class EditCanvasImage extends React.Component {
           style={{ marginBottom: 5 }}
           onClick={this.removeSelectedSticker}
         >
-          {t("Remove Selected Sticker")}
+          {t("removesticker")}
         </button>
         <div
           style={{

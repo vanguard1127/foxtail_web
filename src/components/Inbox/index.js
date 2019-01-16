@@ -113,5 +113,5 @@ class InboxPage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withNamespaces()(InboxPage)
+  withNamespaces("inbox")(InboxPage)
 );

@@ -19,10 +19,10 @@ let title = "";
 const body = (profile, event, t) => {
   if (profile) {
     shareUrl = "http://localhost:3000/members/" + profile.id;
-    title = t("shareText");
+    title = t("intrstmsg") + ":";
     return (
       <div>
-        {t("Know someone that would like to meet")}{" "}
+        {t("meetques")}{" "}
         {profile.users.map((user, index) => {
           if (index === 0) return user.username;
           else return +" & " + user.username;
@@ -32,8 +32,8 @@ const body = (profile, event, t) => {
     );
   } else if (event) {
     shareUrl = "http://localhost:3000/events/" + event.id;
-    title = t("You have been invited to") + " " + event.eventname;
-    return <div>{t("Share this Event")}?</div>;
+    title = t("invitation") + " " + event.eventname;
+    return <div>{t("shareevent")}?</div>;
   } else {
     return null;
   }
@@ -108,9 +108,7 @@ const Share = ({ profile, event, close, t }) => {
                       <EmailShareButton
                         url={shareUrl}
                         subject={title}
-                        body={
-                          title + ". Check out more details here:" + shareUrl
-                        }
+                        body={title + "." + t("checkout") + ":" + shareUrl}
                         className="Demo__some-network__share-button"
                       >
                         <EmailIcon size={32} round />

@@ -6,18 +6,18 @@ const ChatInfo = ({ profileID, chatID, t }) => {
         <div className="head" />
         <div className="content">
           <div className="visit-profile">
-            <span>{t("Visit Profile")}</span>
+            <span>{t("visit")}</span>
           </div>
           <div className="functions">
             <ul>
               <li className="search">
-                <span>{t("Search for Conversation")}</span>
+                <span>{t("searchconv")}</span>
               </li>
               <li className="delete">
-                <span>{t("Delete the Conversation")}</span>
+                <span>{t("deleconv")}</span>
               </li>
               <li className="report">
-                <span>{t("Report the Conversation")}</span>
+                <span>{t("reportconv")}</span>
               </li>
             </ul>
           </div>

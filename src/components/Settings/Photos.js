@@ -7,13 +7,8 @@ const Photos = ({ isPrivate, showEditor, photos, deleteImg, t }) => {
       <div className="row">
         <div className="col-md-12">
           <span className="heading">
-            {!isPrivate ? t("Public Photos") : t("Private Photos")}
-            <i>
-              {" "}
-              {!isPrivate
-                ? "- " + t("No nudity please")
-                : "- " + t("Nudity is OK. Will only show to matches.")}
-            </i>
+            {!isPrivate ? t("pubphotos") : t("privphotos")}
+            <i> {!isPrivate ? "- " + t("nonude") : "- " + t("nudeok")}</i>
           </span>
         </div>
         <div className="col-md-12">

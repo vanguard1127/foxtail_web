@@ -8,13 +8,13 @@ const MyAccountMenu = ({ currentuser, t }) => {
       <div className="dropdown hidden-mobile open">
         <ul>
           <li>
-            <NavLink to="/settings">{t("My Account")}</NavLink>
+            <NavLink to="/settings">{t("common:myaccount")}</NavLink>
           </li>
           <li>
-            <NavLink to="/settings">{t("Add Couple Partner")}</NavLink>
+            <NavLink to="/settings">{t("common:addcoup")}</NavLink>
           </li>
           <li className="border">
-            <NavLink to="/settings">{t("Become a Black Member")}</NavLink>
+            <NavLink to="/settings">{t("common:becomeblk")}</NavLink>
           </li>
           <li>
             <Logout />

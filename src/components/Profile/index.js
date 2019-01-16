@@ -85,15 +85,14 @@ class ProfilePage extends Component {
             <Query query={GET_PROFILE} variables={{ id }}>
               {({ data, loading, error }) => {
                 if (loading) {
-                  return <Spinner message={t("Loading...")} size="large" />;
-                } else if (!data || !data.profile) {
                   return (
-                    <div>
-                      {t(
-                        "This profile either never existed or it no longer does."
-                      )}
-                    </div>
+                    <Spinner
+                      message={t("common:Loading") + "..."}
+                      size="large"
+                    />
                   );
+                } else if (!data || !data.profile) {
+                  return <div>{t("notexist")}</div>;
                 }
                 const profile = data.profile;
 

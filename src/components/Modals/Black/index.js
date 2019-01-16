@@ -15,8 +15,8 @@ class Black extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup photo-verification">
                   <div className="m-head">
-                    <span className="heading">{t("Black Membership")}</span>
-                    <span className="title">{t("Get more")}</span>
+                    <span className="heading">{t("black")}</span>
+                    <span className="title">{t("getmore")}</span>
                     <span className="close" onClick={close} />
                   </div>
                   <img
@@ -25,21 +25,14 @@ class Black extends Component {
                     src={require("../../../images/girl2.jpg")}
                   />
                   <div>
-                    <h3>{t("BLACK Member privledges include")}:</h3>
+                    <h3>{t("blkinclude")}:</h3>
                     <ul>
-                      <li>{t("Direct Chat to Users (no match needed)")}</li>
-                      <li>{t("Change Location of your profile")}</li>
-                      <li>{t("Only Be Seen By Members You Like")}</li>
-                      <li>{t("Hide your online and read status")}</li>
-                      <li>
-                        {t("Exclusive Black members by only search filter")}
-                      </li>
-                      <li>{t("Show higher in results")}</li>
-                      <li>
-                        {t(
-                          "Block current and future members by phone number and email (Invisible from people you know)"
-                        )}
-                      </li>
+                      <li>{t("direct")}</li>
+                      <li>{t("changeloc")}</li>
+                      <li>{t("onlyliked")}</li>
+                      <li>{t("hidestat")}</li>
+                      <li>{t("higher") + "!"}</li>
+                      <li>{t("phoneblock")}</li>
                     </ul>
                   </div>
                   <CreateSubBtn

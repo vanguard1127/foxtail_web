@@ -2,7 +2,7 @@ import React from "react";
 const InboxSearchTextBox = ({ t }) => {
   return (
     <div className="search">
-      <input type="text" placeholder={t("Search messages...")} />
+      <input type="text" placeholder={t("search") + "..."} />
     </div>
   );
 };

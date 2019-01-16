@@ -100,11 +100,13 @@ class ChatContent extends Component {
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
-            return <Spinner message={t("Loading...")} size="large" />;
+            return (
+              <Spinner message={t("common:Loading") + "..."} size="large" />
+            );
           }
 
           if (!data || !data.getComments) {
-            return <div>{t("No messages")}</div>;
+            return <div>{t("commmon:nomsgs")}</div>;
           }
 
           return (

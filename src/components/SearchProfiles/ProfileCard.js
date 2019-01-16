@@ -25,18 +25,18 @@ const ProfileCard = ({
   return (
     <div className="col-md-6 col-lg-4">
       <div className={"card-item " + badge}>
-        <a href={null} onClick={() => history.push("/members/" + profile.id)}>
+        <span onClick={() => history.push("/members/" + profile.id)}>
           <ProfilePic profilePic={profile.profilePic} />
-        </a>
+        </span>
         <div className="info">
-          <a href={null} onClick={() => history.push("/members/" + profile.id)}>
+          <span onClick={() => history.push("/members/" + profile.id)}>
             <ProfileInfoBox
               users={profile.users}
               online={profile.showOnline && profile.online}
               distance={profile.distance}
               t={t}
             />
-          </a>
+          </span>
           <DesiresBlock desires={profile.desires} t={t} />
           <ProfileActionBtns
             profile={profile}

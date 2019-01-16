@@ -52,10 +52,10 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">{t("Select Reason")}:</option>
-          <option value="nopro">{t("No Profile Picture")}</option>
-          <option value="stolenPic">{t("Stolen Picture")}</option>
-          <option value="money">{t("Mentions Money")}</option>
+          <option value="">{t("reason")}:</option>
+          <option value="nopro">{t("nopro")}</option>
+          <option value="stolenPic">{t("stolepic")}</option>
+          <option value="money">{t("money")}</option>
           <option value="nudity">{t("Nudity")}</option>
           <option value="rude">{t("Rude")}</option>
           <option value="Spam">{t("Spam")}</option>
@@ -70,8 +70,8 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">{t("Select Reason")}:</option>
-          <option value="illegalEvent">{t("Illegal Event")}</option>
+          <option value="">{t("reason")}:</option>
+          <option value="illegalEvent">{t("illevent")}</option>
           <option value="racist">{t("Racist")}</option>
           <option value="Spam">{t("Spam")}</option>
           <option value="Phishing">{t("Phishing")}</option>
@@ -87,14 +87,14 @@ class BlockModal extends Component {
     let title;
     if (type === "Profile") {
       title =
-        t("Report/Block") +
+        t("repblock") +
         " " +
         profile.users.map((user, index) => {
           if (index === 0) return user.username;
           else return +" & " + user.username;
         });
     } else {
-      title = t("Report/Block");
+      title = t("repblock");
     }
     return (
       <section className="popup-content show">
@@ -115,7 +115,7 @@ class BlockModal extends Component {
                       }}
                     >
                       <input
-                        placeholder={t("Other reason")}
+                        placeholder={t("otherreason")}
                         onChange={this.handleTextChange}
                         value={reason}
                       />
@@ -148,7 +148,7 @@ class BlockModal extends Component {
                                   }
                                   disabled={reason === "" || loading}
                                 >
-                                  {t("Report/Block")}
+                                  {t("repblock")}
                                 </button>
                               );
                             }}

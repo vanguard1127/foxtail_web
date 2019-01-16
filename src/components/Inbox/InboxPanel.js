@@ -10,13 +10,13 @@ const InboxPanel = ({ readChat, currentUserID, t }) => {
     <Query query={GET_INBOX} fetchPolicy="cache-and-network">
       {({ data, loading, error, subscribeToMore }) => {
         if (loading) {
-          return <Spinner message="Loading..." size="large" />;
+          return <Spinner message={t("common:Loading") + "..."} size="large" />;
         }
 
         const messages = data.getInbox;
 
         if (!messages) {
-          return <div>Error occured.</div>;
+          return <div>{t("common:error")}.</div>;
         }
 
         if (!unsubscribe) {

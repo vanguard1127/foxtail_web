@@ -26,7 +26,7 @@ class ImageEditor extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup">
                   <div className="m-head">
-                    <span className="heading">{t("Edit Photo")}</span>
+                    <span className="heading">{t("editphoto")}</span>
                     <span className="close" onClick={close} />
                   </div>
                   <div className="m-body">

@@ -24,7 +24,7 @@ const ChatWindow = ({ currentChat, currentuser, t }) => {
           <ChatPanel chatID={currentChat.id} t={t} />
         </div>
       ) : (
-        <div>empty</div>
+        <div>{t("common:nomsgs")}</div>
       )}
     </div>
   );

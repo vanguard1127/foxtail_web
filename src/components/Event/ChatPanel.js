@@ -44,12 +44,10 @@ class ChatPanel extends Component {
             <textarea
               value={text}
               onChange={e => this.setText(e)}
-              placeholder={t(
-                "Now you can join the discussion by writing a message…"
-              )}
+              placeholder={t("nowyoucan") + "..."}
             />
             <button onClick={e => this.submitMessage(e, postComment)}>
-              {t("Send Message")}
+              {t("sendmsg")}
             </button>
           </div>
         )}

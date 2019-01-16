@@ -12,9 +12,7 @@ const IncludeMsgSlide = ({
 }) => {
   return (
     <div>
-      {t(
-        "Would you like to include you Messages and Events in this Couple Profile"
-      )}
+      {t("includeold")}
       ?
       <input
         type="checkbox"
@@ -29,7 +27,7 @@ const IncludeMsgSlide = ({
       />
       <label htmlFor="cbox">
         <span />
-        <b>{t("Include Messages and Events in Couple Profile")}?</b>
+        <b>{t("includemsg")}?</b>
       </label>
       <div className="button">
         <button disabled={code !== "" ? false : true} onClick={() => prev()}>

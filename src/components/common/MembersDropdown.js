@@ -22,15 +22,15 @@ class MembersDropdown extends Component {
         <Query query={GET_FRIENDS} variables={{ limit: LIMIT }}>
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
-              return <Spinner message="Loading..." size="large" />;
+              return (
+                <Spinner message={t("common:Loading") + "..."} size="large" />
+              );
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.getFriends) {
-              return (
-                <div>{t("Error occured. Please contact support") + "!"}</div>
-              );
+              return <div>{t("common:error") + "!"}</div>;
             } else if (!data.getFriends.length === 0) {
-              return <div>{t("No more messages") + " :)"}</div>;
+              return <div>{t("common:nomoremsgs") + " :)"}</div>;
             }
 
             const members = data.getFriends;
@@ -44,6 +44,7 @@ class MembersDropdown extends Component {
                     targetID={targetID}
                     targetType={targetType}
                     close={() => this.handleVisibleChange(false)}
+                    t={t}
                   />
                 }
                 trigger={["click"]}
@@ -62,15 +63,15 @@ class MembersDropdown extends Component {
         <Query query={GET_CHAT_PARTICIPANTS} variables={{ chatID: targetID }}>
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
-              return <Spinner message="Loading..." size="large" />;
+              return (
+                <Spinner message={t("common:Loading") + "..."} size="large" />
+              );
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.chat) {
-              return (
-                <div>{t("Error occured. Please contact support") + "!"}</div>
-              );
+              return <div>{t("common:error") + "!"}</div>;
             } else if (!data.chat.participants.length === 0) {
-              return <div>{t("No more messages") + " :)"}</div>;
+              return <div>{t("common:nomoremsgs") + " :)"}</div>;
             }
             const members = data.chat.participants;
             return (
@@ -83,6 +84,7 @@ class MembersDropdown extends Component {
                     listType={listType}
                     targetType={targetType}
                     close={() => this.handleVisibleChange(false)}
+                    t={t}
                   />
                 }
                 trigger={["click"]}
@@ -105,11 +107,9 @@ class MembersDropdown extends Component {
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.event) {
-              return (
-                <div>{t("Error occured. Please contact support") + "!"}</div>
-              );
+              return <div>{t("common:error") + "!"}</div>;
             } else if (!data.event.participants.length === 0) {
-              return <div>{t("No more participants")}</div>;
+              return <div>{t("common:nomorepart")}</div>;
             }
             const members = data.event.participants;
             return (
@@ -122,6 +122,7 @@ class MembersDropdown extends Component {
                     listType={listType}
                     targetType={targetType}
                     close={() => this.handleVisibleChange(false)}
+                    t={t}
                   />
                 }
                 trigger={["click"]}

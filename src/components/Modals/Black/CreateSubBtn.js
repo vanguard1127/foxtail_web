@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { CREATE_SUBSCRIPTION } from "../../../queries";
 import { Mutation } from "react-apollo";
-import { message } from "antd";
 import StripeCheckout from "react-stripe-checkout";
 
 class CreateSubBtn extends Component {
@@ -12,7 +11,7 @@ class CreateSubBtn extends Component {
       .then(({ data }) => {
         this.props.refetchUser();
         this.props.close();
-        message.success("Welcome to Foxtail Black Membership. Thanks.");
+        alert(this.props.t("welblk"));
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {

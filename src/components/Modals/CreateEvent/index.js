@@ -70,8 +70,8 @@ class CreateEvent extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup create-event">
                   <div className="m-head">
-                    <span className="heading">{t("Create a New Event")}</span>
-                    <span className="title">{t("createEventSubTitle")}</span>
+                    <span className="heading">{t("createeve")}</span>
+                    <span className="title">{t("common:eventsubtitle")}</span>
                     <span className="close" onClick={() => closePopup()} />
                   </div>
                   <div className="m-body">
@@ -91,10 +91,7 @@ class CreateEvent extends Component {
                                   })
                                 }
                               />
-                              <label
-                                title={t("Event Name")}
-                                htmlFor="eventname"
-                              />
+                              <label title={t("evename")} htmlFor="eventname" />
                             </div>
                           </div>
                           <div className="item">
@@ -110,7 +107,7 @@ class CreateEvent extends Component {
                                 }
                                 address={address}
                                 type={"address"}
-                                placeholder={t("Address")}
+                                placeholder={t("common:Address")}
                               />
                               {/* <input
                                 type="text"
@@ -132,9 +129,7 @@ class CreateEvent extends Component {
                           <div className="item">
                             <div className="textarea">
                               <textarea
-                                placeholder={t(
-                                  "Your event description here..."
-                                )}
+                                placeholder={t("desctitle") + "..."}
                                 onChange={el =>
                                   this.setValue({
                                     name: "photo",
@@ -163,7 +158,7 @@ class CreateEvent extends Component {
                           </div>
                           <div className="item">
                             <Select
-                              label={t("Event Type") + ":"}
+                              label={t("evetype") + ":"}
                               onChange={el =>
                                 this.setValue({
                                   name: "type",
@@ -180,7 +175,7 @@ class CreateEvent extends Component {
                           </div>
                           <div className="item">
                             <div className="button mtop">
-                              <button>{t("Create Event")}</button>
+                              <button>{t("common:createevent")}</button>
                             </div>
                           </div>
                         </div>

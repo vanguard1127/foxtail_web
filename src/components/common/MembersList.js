@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Menu, Avatar, Button, Checkbox, message } from "antd";
 import Waypoint from "react-waypoint";
 import {
   INVITE_PROFILES,
@@ -57,7 +56,7 @@ class MembersList extends Component {
         .then(({ data }) => {
           if (data.inviteProfileEvent) {
             close();
-            alert(t("Inivitations sent"));
+            alert(t("common:invitesent"));
           }
         })
         .catch(res => {
@@ -74,7 +73,7 @@ class MembersList extends Component {
         .then(({ data }) => {
           if (data.inviteProfile) {
             close();
-            alert(t("Inivitations sent"));
+            alert(t("common:invitesent"));
           }
         })
         .catch(res => {
@@ -95,7 +94,7 @@ class MembersList extends Component {
         .then(({ data }) => {
           if (data.removeProfileEvent) {
             close();
-            alert(t("Members removed"));
+            alert(t("common:memsremove"));
           }
         })
         .catch(res => {
@@ -111,7 +110,7 @@ class MembersList extends Component {
         .then(({ data }) => {
           if (data.removeProfile) {
             close();
-            alert(t("Removed profiles"));
+            alert(t("common:removpros"));
           }
         })
         .catch(res => {
@@ -160,10 +159,10 @@ class MembersList extends Component {
   };
 
   handleFriendList = ({ members, t }) => (
-    <Menu>
-      <Menu.Divider />
+    <div>
+      <hr />
       {members.map(friend => (
-        <Menu.Item key={friend.id}>
+        <div key={friend.id}>
           <div
             style={{
               display: "flex",
@@ -173,23 +172,29 @@ class MembersList extends Component {
           >
             {" "}
             <div>
-              <Checkbox onChange={this.handleChange} value={friend.id}>
-                {t("Checkbox")}
-              </Checkbox>{" "}
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />{" "}
+              <input
+                type="checkbox"
+                onChange={this.handleChange}
+                checked={friend.id ? true : false}
+              />
+              {t("common:checkbox")}{" "}
+              <img
+                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                alt=""
+              />{" "}
             </div>
             <div>
               <div>{friend.profileName}</div>
             </div>
           </div>
-        </Menu.Item>
+        </div>
       ))}
       {this.props.listType === "friends" && (
         <Waypoint
           onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
         />
       )}
-    </Menu>
+    </div>
   );
   actionButton = ({ targetID, invitedProfiles, targetType, listType, t }) => {
     if (targetType === "event" && listType === "friends") {
@@ -203,9 +208,9 @@ class MembersList extends Component {
         >
           {inviteProfileEvent => {
             return (
-              <Button onClick={() => this.handleInvite(inviteProfileEvent)}>
-                {t("Invite Members")}
-              </Button>
+              <button onClick={() => this.handleInvite(inviteProfileEvent)}>
+                {t("common:invitemems")}
+              </button>
             );
           }}
         </Mutation>
@@ -222,9 +227,9 @@ class MembersList extends Component {
         >
           {removeProfileEvent => {
             return (
-              <Button onClick={() => this.handleRemove(removeProfileEvent)}>
-                {t("Remove Members")}
-              </Button>
+              <button onClick={() => this.handleRemove(removeProfileEvent)}>
+                {t("common:removmems")}
+              </button>
             );
           }}
         </Mutation>
@@ -240,9 +245,9 @@ class MembersList extends Component {
         >
           {inviteProfile => {
             return (
-              <Button onClick={() => this.handleInvite(inviteProfile)}>
-                {t("Invite Members")}
-              </Button>
+              <button onClick={() => this.handleInvite(inviteProfile)}>
+                {t("common:invitemems")}
+              </button>
             );
           }}
         </Mutation>
@@ -265,8 +270,8 @@ class MembersList extends Component {
       <div>
         <div>
           {listType === "participants"
-            ? t("Remove Members")
-            : t("Invite Members")}
+            ? t("common:removmems")
+            : t("common:invitemems")}
         </div>
         <div
           style={{

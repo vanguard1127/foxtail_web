@@ -36,19 +36,18 @@ const Footer = ({ t }) => {
         <div className="container">
           <div className="col-md-12">
             <span className="text">
-              © 2019 - 2020 Foxtail App Inc.{" "}
-              {t("Registered in one or more countries")}.
+              © 2019 - 2020 Foxtail App Inc. {t("register")}.
             </span>
             <div className="menu">
               <ul>
                 <li>
-                  <span>{t("Terms & Conditions")}</span>
+                  <span>{t("termscon")}</span>
                 </li>
                 <li>
-                  <span>{t("Privacy Policy")}</span>
+                  <span>{t("common:privacy")}</span>
                 </li>
                 <li>
-                  <span>{t("Contact Us")}</span>
+                  <span>{t("contact")}</span>
                 </li>
               </ul>
             </div>
@@ -59,4 +58,4 @@ const Footer = ({ t }) => {
   );
 };
 
-export default withNamespaces()(Footer);
+export default withNamespaces("footer")(Footer);

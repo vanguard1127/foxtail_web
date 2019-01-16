@@ -4,10 +4,9 @@ const InboxHeader = ({ t }) => {
     <section className="breadcrumb">
       <div className="container">
         <div className="col-md-12">
-          <span className="head">{t("Inbox")}</span>
+          <span className="head">{t("common:Inbox")}</span>
           <span className="title">
-            {t("Chat with members, be yourself, have fun, follow the")}{" "}
-            <a href={null}>{t("rules")}</a>.{" "}
+            {t("subtitle")} <span>{t("rules")}</span>.{" "}
           </span>
         </div>
       </div>

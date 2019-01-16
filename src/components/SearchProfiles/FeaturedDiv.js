@@ -16,7 +16,7 @@ const FeaturedDiv = ({
     <section className="featured-profiles" key="nmn">
       <div className="container">
         <div className="col-md-12">
-          <span className="head">{t("Featured Profiles")}</span>
+          <span className="head">{t("featmems")}</span>
           <OwlCarousel
             className="owl-carousel slider"
             autoplay

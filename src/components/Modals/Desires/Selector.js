@@ -12,7 +12,7 @@ class Selector extends Component {
           className="select_desires desires_select_popup"
           onClick={() => togglePopup()}
         >
-          <span className="head">{t("Desires select")}:</span>
+          <span className="head">{t("seldesires")}:</span>
           <ul>
             {desires.map(desire => {
               const desireObj = desireOptions.find(el => el.value === desire);

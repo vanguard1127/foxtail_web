@@ -12,7 +12,7 @@ class Couples extends Component {
   state = {
     code: "",
     currentSlide: 0,
-    title: this.props.t("Join me on Foxtail"),
+    title: this.props.t("joinme"),
     shareUrl: "",
     currSlide: 1
   };
@@ -52,7 +52,7 @@ class Couples extends Component {
       .then(({ data }) => {
         //switch to new screen for do u want to edit?
         close();
-        this.props.setPartnerID("Add Partner");
+        this.props.setPartnerID("addpartner");
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -124,7 +124,7 @@ class Couples extends Component {
         {(unlinkProfile, { loading }) => {
           if (loading) {
             //TODO: nice unlinking message
-            return <Spinner message="Unlinking..." size="large" />;
+            return <Spinner message={t("Unlinking") + "..."} size="large" />;
           }
           return (
             // <Modal
@@ -137,11 +137,7 @@ class Couples extends Component {
             //   onCancel={close}
             //   cancelText="No"
             // >
-            <div>
-              {t(
-                "Your couple profile will be deactivated and your profiles will revert to single profiles"
-              )}
-            </div>
+            <div>{t("coupdeact")}</div>
             // </Modal>
           );
         }}

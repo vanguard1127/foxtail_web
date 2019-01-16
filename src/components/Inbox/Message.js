@@ -1,11 +1,11 @@
 import React from "react";
 import moment from "moment";
 
-const Message = React.forwardRef(({ message, currentUserID }, ref) => {
+const Message = React.forwardRef(({ message, currentUserID }, ref, t) => {
   const messageText =
     message.type === "msg"
       ? message.text
-      : `${message.fromUser.username} has left the chat`;
+      : `${message.fromUser.username}` + t("leftchat");
 
   return (
     <div

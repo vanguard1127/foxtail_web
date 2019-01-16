@@ -15,7 +15,6 @@ import DesiresModal from "../Modals/Desires/Modal";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
 import CoupleModal from "../Modals/Couples";
 import BlackModal from "../Modals/Black";
-import { s3url } from "../../docs/data";
 import axios from "axios";
 
 class SettingsPage extends Component {

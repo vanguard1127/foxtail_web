@@ -6,7 +6,7 @@ const MyProfile = ({ desires, about, setValue, togglePopup, t }) => {
     <div className="content">
       <div className="row">
         <div className="col-md-12">
-          <span className="heading">{t("My Profile")}</span>
+          <span className="heading">{t("myprofile")}</span>
         </div>
         <div className="col-md-12">
           <div className="item">
@@ -16,7 +16,7 @@ const MyProfile = ({ desires, about, setValue, togglePopup, t }) => {
         <div className="col-md-12">
           <div className="item">
             <div className="textarea">
-              <label>{t("Profile Bio")}:</label>
+              <label>{t("probio")}:</label>
               <textarea
                 onChange={e =>
                   setValue({

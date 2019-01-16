@@ -96,7 +96,7 @@ class MyEvents extends Component {
       >
         {({ data, loading, error, fetchMore }) => {
           if (loading) {
-            return <Spinner message="Loading My Events..." size="small" />;
+            return <Spinner message={t("loadmyeve") + "..."} size="small" />;
           }
 
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
@@ -109,7 +109,7 @@ class MyEvents extends Component {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <span className="head">{t("My Events")}</span>
+                      <span className="head">{t("myevents")}</span>
                     </div>
 
                     {myEvents.map(event => (

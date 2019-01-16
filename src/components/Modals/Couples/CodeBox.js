@@ -8,18 +8,18 @@ const CodeBox = ({ toggleIncludeMsgs, includeMsgs, setValue, t }) => {
   return (
     <div className="create-profile">
       <div className="couple-head">
-        <span className="first">{t("Want to create a Couple Profile")}?</span>
-        <span className="second">
-          {t("Send this Couple's Code to your partner")} :
-        </span>
+        <span className="first">{t("createcoup")}?</span>
+        <span className="second">{t("sendcode")} :</span>
       </div>
       <Query query={GENERATE_CODE} fetchPolicy="cache-first">
         {({ data, loading, error }) => {
           if (loading) {
-            return <Spinner message="Loading..." size="large" />;
+            return (
+              <Spinner message={t("common:Loading") + "..."} size="large" />
+            );
           }
           if (!data.generateCode) {
-            return <div>Error has occured. Please contact support</div>;
+            return <div>{t("common:error")}</div>;
           }
           const code = data.generateCode;
           return (
@@ -41,21 +41,14 @@ const CodeBox = ({ toggleIncludeMsgs, includeMsgs, setValue, t }) => {
                   />
                   <label htmlFor="cbox">
                     <span />
-                    <b>{t("Include Messages and Events in Couple Profile")}?</b>
+                    <b>{t("includemsg")}?</b>
                   </label>
                 </div>
               </div>
               <EmailShareButton
                 url={code}
-                subject={t("Join me on Foxtail as a couple.")}
-                body={
-                  t(
-                    "Join me on Foxtail as a couple. Check out more details here"
-                  ) +
-                  "." +
-                  code +
-                  t("(This code expires in 3 days)")
-                }
+                subject={t("jointitle") + "."}
+                body={t("joindets") + "." + code + t("expires")}
                 className="Demo__some-network__share-button"
               >
                 <EmailIcon size={32} round />

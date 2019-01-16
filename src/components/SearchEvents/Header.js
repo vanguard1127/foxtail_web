@@ -4,8 +4,8 @@ const EventHeader = ({ t }) => {
     <section className="breadcrumb">
       <div className="container">
         <div className="col-md-12">
-          <span className="head">{t("Go to Events")}</span>
-          <span className="title">{t("eventSubTitle")}</span>
+          <span className="head">{t("common:goevents")}</span>
+          <span className="title">{t("common:eventsubtitle")}</span>
         </div>
       </div>
     </section>

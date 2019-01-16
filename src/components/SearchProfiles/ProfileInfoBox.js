@@ -19,7 +19,7 @@ const ProfileInfoBox = ({ users, online, distance, t }) => {
             </li>
           )}
           <li>
-            ~ {distance} {t("mil")}
+            ~ {distance} {t("mi")}
           </li>
         </ul>
       </span>

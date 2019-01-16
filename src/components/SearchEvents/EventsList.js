@@ -8,7 +8,7 @@ const EventsList = ({ events, handleEnd, t }) => {
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
-              <span className="head">{t("Upcoming Events")}</span>
+              <span className="head">{t("upcomingevent")}</span>
             </div>
             {events.map(event => (
               <EventCard key={event.id} event={event} t={t} />
@@ -18,7 +18,7 @@ const EventsList = ({ events, handleEnd, t }) => {
             />
             <div className="col-md-12">
               <div className="more-content-btn">
-                <span>{t("No More Events")}</span>
+                <span>{t("noevent")}</span>
               </div>
             </div>
           </div>

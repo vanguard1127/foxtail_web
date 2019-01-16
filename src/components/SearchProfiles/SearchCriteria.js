@@ -63,7 +63,11 @@ class SearchCriteria extends Component {
     e.preventDefault();
 
     navigator.geolocation.getCurrentPosition(this.setLocation, err => {
-      alert("Please enable location services to remove your set location.");
+      alert(
+        this.props.t(
+          "Please enable location services to remove your set location."
+        )
+      );
       return;
     });
 
@@ -110,7 +114,9 @@ class SearchCriteria extends Component {
         <Query query={GET_SETTINGS} fetchPolicy="network-only">
           {({ data, loading, error }) => {
             if (loading) {
-              return <Spinner message={t("Loading...")} size="large" />;
+              return (
+                <Spinner message={t("common:Loading") + "..."} size="large" />
+              );
             }
             if (error) {
               return <div>{error.message}</div>;
@@ -171,7 +177,7 @@ class SearchCriteria extends Component {
                                         }
                                         address={location}
                                         type={"(cities)"}
-                                        placeholder={t("Set Location...")}
+                                        placeholder={t("common:setloc") + "..."}
                                       />
                                     </div>
                                   </div>

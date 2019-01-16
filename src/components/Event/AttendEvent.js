@@ -96,7 +96,7 @@ class AttendEvent extends Component {
             username && (
               <div className="join-event">
                 <span onClick={() => this.handleClick(toggleAttendEvent)}>
-                  {isGoing ? t("Not Going") : t("Going")}
+                  {isGoing ? t("notgoing") : t("Going")}
                 </span>
               </div>
             )

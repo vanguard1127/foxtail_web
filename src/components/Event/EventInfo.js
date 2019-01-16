@@ -24,7 +24,7 @@ const EventInfo = ({
       </div>
       <ul>
         <li>
-          <span className="head">{t("Event Date")}:</span>
+          <span className="head">{t("evedate")}:</span>
           <span className="title">
             {moment(startTime)
               .format("DD MMMM YYYY, dddd")
@@ -33,7 +33,7 @@ const EventInfo = ({
         </li>
         <li>
           <span className="head">
-            {t("Date")} - {t("Time")}:
+            {t("evedate")} - {t("time")}:
           </span>
           <span className="title">
             {moment(startTime)
@@ -50,7 +50,7 @@ const EventInfo = ({
           <span className="title">{type}</span>
         </li>
         <li>
-          <span className="head">{t("What to Expect")}:</span>
+          <span className="head">{t("toexpect")}:</span>
           <span className="title">{desires.map(desire => desire + ",")}</span>
         </li>
         <li>
@@ -58,7 +58,7 @@ const EventInfo = ({
           <span className="title">{distance} Miles</span>
         </li>
         <li>
-          <span className="head">{t("Address")}:</span>
+          <span className="head">{t("common:Address")}:</span>
           <span className="title address">{address}</span>
         </li>
       </ul>

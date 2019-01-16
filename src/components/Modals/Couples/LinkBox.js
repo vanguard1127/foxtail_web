@@ -4,10 +4,8 @@ const LinkBox = ({ code, handleTextChange, next, t }) => {
   return (
     <div className="receive-code">
       <div className="couple-head">
-        <span className="first">{t("Did you recieve a Couple's Code")}?</span>
-        <span className="second">
-          {t("Add your Couple's Code here and click Next")}:
-        </span>
+        <span className="first">{t("coderecv")}?</span>
+        <span className="second">{t("addcode")}:</span>
       </div>
       <div className="item nobottom">
         <div className="input">
@@ -18,7 +16,7 @@ const LinkBox = ({ code, handleTextChange, next, t }) => {
             onChange={e => handleTextChange(e.target.value)}
             value={code}
           />
-          <label title={t("Couple's Code")} htmlFor="couples_code" />
+          <label title={t("code")} htmlFor="couples_code" />
         </div>
       </div>
       <div className="item sticky">

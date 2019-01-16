@@ -33,7 +33,7 @@ class Preferences extends Component {
       <div className="content">
         <div className="row">
           <div className="col-md-12">
-            <span className="heading">{t("My Search Preferences")}</span>
+            <span className="heading">{t("myserchpref")}</span>
           </div>
           <div className="col-md-6">
             <DistanceSlider
@@ -62,7 +62,7 @@ class Preferences extends Component {
           <div className="col-md-6">
             <div className="item">
               <div className="switch-con border-top">
-                <div className="sw-head">{t("Distance Metric")}:</div>
+                <div className="sw-head">{t("dmetric")}:</div>
                 <div className="sw-btn">
                   <div className="switch distance">
                     <input
@@ -91,7 +91,7 @@ class Preferences extends Component {
                 })
               }
               value={interestedIn}
-              placeholder={t("Gender(s):")}
+              placeholder={t("Gendersparen") + ":"}
             />
           </div>
 
@@ -108,7 +108,7 @@ class Preferences extends Component {
                 }
                 address={location}
                 type={"(cities)"}
-                placeholder={t("Set Location...")}
+                placeholder={t("common:setloc") + "..."}
               />
             </div>
           </div>

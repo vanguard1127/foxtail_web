@@ -143,9 +143,9 @@ class NoticesList extends Component {
                   !data.getNotifications ||
                   !data.getNotifications.notifications
                 ) {
-                  return <div>Error occured. Please contact support!</div>;
+                  return <div>{t("common:error")}!</div>;
                 } else if (!data.getNotifications.notifications.length === 0) {
-                  return <div>You are all caught up :)</div>;
+                  return <div>{t("nonots")} :)</div>;
                 }
 
                 if (!unsubscribe) {

@@ -22,9 +22,7 @@ class EventPage extends Component {
   };
 
   handleDelete = deleteEvent => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this event?"
-    );
+    const confirmDelete = window.confirm(this.props.t("surewarn"));
     if (confirmDelete) {
       deleteEvent()
         .then(({ data }) => {
@@ -117,13 +115,11 @@ class EventPage extends Component {
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error }) => {
           if (loading) {
-            return <Spinner message="Loading..." size="large" />;
-          } else if (!data || !data.event) {
             return (
-              <div>
-                {t("This event either never existed or it no longer does")}.
-              </div>
+              <Spinner message={t("common:Loading" + "...")} size="large" />
             );
+          } else if (!data || !data.event) {
+            return <div>{t("noevent")}.</div>;
           }
 
           const { event } = data;
@@ -178,5 +174,5 @@ class EventPage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces()(EventPage))
+  withRouter(withNamespaces("event")(EventPage))
 );

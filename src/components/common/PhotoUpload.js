@@ -4,6 +4,7 @@ import { FilePond, File, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
+import { withNamespaces } from "react-i18next";
 
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
@@ -44,20 +45,20 @@ const PhotoUpload = ({ photos, setPhotos, t }) => {
         }
       }}
       acceptedFileTypes={["image/png", "image/jpeg"]}
-      labelFileTypeNotAllowed={t("Only jpgs and pngs allowed")}
+      labelFileTypeNotAllowed={t("onlyformat")}
       maxFileSize="5MB"
       labelIdle={
-        t("Drag & Drop your image or") +
+        t("drag") +
         `<span class="filepond--label-action">` +
-        t("Browse") +
+        t("browse") +
         `</span>.`
       }
-      labelFileProcessing={t("Uploading")}
-      labelFileProcessingComplete={t("Upload complete")}
-      labelFileProcessingAborted={t("Upload cancelled")}
-      labelFileProcessingError={t("Error during upload")}
-      labelTapToCancel={t("tap to cancel")}
-      labelMaxFileSizeExceeded={t("File is too large. (5MB Max)")}
+      labelFileProcessing={t("upload")}
+      labelFileProcessingComplete={t("uploadcomp")}
+      labelFileProcessingAborted={t("uploadcan")}
+      labelFileProcessingError={t("uploaderror")}
+      labelTapToCancel={t("cancel")}
+      labelMaxFileSizeExceeded={t("toolarge")}
       onupdatefiles={fileItems => {
         // Set current file objects to this.state
         setPhotos(fileItems.map(fileItem => fileItem.file));
@@ -71,4 +72,4 @@ const PhotoUpload = ({ photos, setPhotos, t }) => {
   );
 };
 
-export default PhotoUpload;
+export default withNamespaces("common")(PhotoUpload);

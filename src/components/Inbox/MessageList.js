@@ -261,10 +261,10 @@ class MessageList extends Component {
   }
   render() {
     const { loading } = this.state;
-    const { messages, hasMoreItems, children, currentUserID } = this.props;
+    const { messages, hasMoreItems, children, currentUserID, t } = this.props;
     let topMessage = "";
     if (loading) {
-      topMessage = "loading...";
+      topMessage = t("common:Loading") + "...";
     }
     // else if (!hasMoreItems) {
     //   topMessage = "Looks like there is nothing else to see here";

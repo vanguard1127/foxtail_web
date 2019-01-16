@@ -44,14 +44,14 @@ class ChatPanel extends Component {
             <div className="files" />
             <div className="textarea">
               <input
-                placeholder={t("Type a message") + "..."}
+                placeholder={t("typemsg") + "..."}
                 value={text}
                 onChange={e => this.setText(e)}
               />
             </div>
             <div className="send">
               <button onClick={e => this.submitMessage(e, sendMessage)}>
-                {t("Send")}
+                {t("common:Send")}
               </button>
             </div>
           </div>

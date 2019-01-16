@@ -16,7 +16,7 @@ const InboxItem = ({ count, active, t }) => {
         <span className="icon mail">
           <span className="count">{count}</span>
         </span>
-        <span className="text">{t("Inbox")}</span>
+        <span className="text">{t("common:Inbox")}</span>
       </NavLink>
     </div>
   );

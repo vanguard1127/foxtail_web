@@ -9,16 +9,14 @@ const ProfileActionBtns = ({
   return (
     <div className="function">
       <div className="btn heart">
-        <a
-          href={null}
+        <span
           onClick={() => {
             likeProfile(profile);
           }}
         />
       </div>
       <div className="btn message">
-        <a
-          href={null}
+        <span
           onClick={() => {
             showMsgModal(profile);
           }}

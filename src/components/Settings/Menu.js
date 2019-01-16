@@ -5,16 +5,16 @@ const Menu = ({ coupleModalToggle, couplePartner, blackModalToggle, t }) => {
     <div className="menu">
       <ul>
         <li className="active">
-          <span>{t("My Account")}</span>
+          <span>{t("common:myaccount")}</span>
         </li>
         <li>
           <span onClick={() => coupleModalToggle()}>
-            {couplePartner === null ? t("Add Couple Partner") : couplePartner}
+            {couplePartner === null ? t("common:addcoup") : couplePartner}
           </span>
         </li>
         <li>
           <span onClick={() => blackModalToggle()}>
-            {t("Become a Black Member")}
+            {t("common:becomeblk")}
           </span>
         </li>
       </ul>

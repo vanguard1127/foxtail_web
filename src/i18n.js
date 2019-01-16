@@ -16,6 +16,7 @@ i18n
     interpolation: {
       escapeValue: false // react already safes from xss
     },
+    ns: ["common"],
     // react-i18next options
     react: {
       wait: true

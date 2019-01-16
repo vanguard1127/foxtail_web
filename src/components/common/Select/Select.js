@@ -162,4 +162,4 @@ class Select extends React.Component {
   }
 }
 
-export default withNamespaces()(Select);
+export default withNamespaces("common")(Select);

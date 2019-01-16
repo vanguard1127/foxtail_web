@@ -6,7 +6,7 @@ const CancelSubBtn = ({ t }) => {
     cancelSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
-        alert(t("Credit Card Removed and Subscription Canceled" + "."));
+        alert(t("common:cancelsubmsg" + "."));
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -29,7 +29,7 @@ const CancelSubBtn = ({ t }) => {
               })
             }
           >
-            {t("Cancel Subscription")}
+            {t("common:subcancel")}
           </button>
         );
       }}

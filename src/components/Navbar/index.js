@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { withNamespaces } from "react-i18next";
 import { TOGGLE_ONLINE } from "../../queries";
-import AccountKit from "react-facebook-account-kit";
 import axios from "axios";
 
 import UserToolbar from "./UserToolbar";
@@ -99,25 +98,25 @@ class NavbarAuth extends Component {
               <div className="mobile-toggle">
                 <ul>
                   <li>
-                    <NavLink to="/members">{t("Meet Members")}</NavLink>
+                    <NavLink to="/members">{t("meetmembers")}</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/events">{t("Go to Events")}</NavLink>
+                    <NavLink to="/events">{t("meetmembers")}</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/inbox">{t("Inbox")}</NavLink>
+                    <NavLink to="/inbox">{t("common:Inbox")}</NavLink>
                   </li>
                   <li>
-                    <span>{t("Becoma a Black Member")}</span>
+                    <span>{t("common:becomeblk")}</span>
                   </li>
                   <li>
-                    <span>{t("My Account")}</span>
+                    <span>{t("common:myaccount")}</span>
                   </li>
                   <li>
-                    <span>{t("Add Couple Partner")}</span>
+                    <span>{t("common:addcoup")}</span>
                   </li>
                   <li>
-                    <span>{t("Logout")}</span>
+                    <span>{t("common:Logout")}</span>
                   </li>
                 </ul>
               </div>
@@ -125,10 +124,10 @@ class NavbarAuth extends Component {
             <div className="col-md-5 hidden-mobile">
               <ul className="menu">
                 <li className={href === "members" ? "active" : ""}>
-                  <NavLink to="/members">{t("Meet Members")}</NavLink>
+                  <NavLink to="/members">{t("meetmembers")}</NavLink>
                 </li>
                 <li className={href === "events" ? "active" : ""}>
-                  <NavLink to="/events">{t("Go to Events")}</NavLink>
+                  <NavLink to="/events">{t("goevents")}</NavLink>
                 </li>
               </ul>
             </div>

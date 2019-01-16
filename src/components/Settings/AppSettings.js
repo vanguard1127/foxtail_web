@@ -10,7 +10,7 @@ const AppSettings = ({
     <div className="content">
       <div className="row">
         <div className="col-md-12">
-          <span className="heading">{t("App Settings")}</span>
+          <span className="heading">{t("appsetting")}</span>
         </div>
 
         <div className="col-md-12">
@@ -37,7 +37,7 @@ const AppSettings = ({
         <div className="col-md-6">
           <div className="item">
             <div className="switch-con">
-              <div className="sw-head">{t("Show My Profile")}:</div>
+              <div className="sw-head">{t("showprofile")}:</div>
               <div className="sw-btn">
                 <div className="switch">
                   <input
@@ -60,7 +60,7 @@ const AppSettings = ({
         <div className="col-md-6">
           <div className="item">
             <div className="switch-con">
-              <div className="sw-head">{t("Receive E-mails")}:</div>
+              <div className="sw-head">{t("recivemails")}:</div>
               <div className="sw-btn">
                 <div className="switch">
                   <input
@@ -83,9 +83,7 @@ const AppSettings = ({
         <div className="col-md-6">
           <div className="item">
             <div className="switch-con">
-              <div className="sw-head">
-                {t("Hide Online Status (Black only)")}:
-              </div>
+              <div className="sw-head">{t("hideonline")}:</div>
               <div className="sw-btn">
                 <div className="switch">
                   <input
@@ -108,9 +106,7 @@ const AppSettings = ({
         <div className="col-md-6">
           <div className="item">
             <div className="switch-con">
-              <div className="sw-head">
-                {t("Only show me to members I liked (Black only)")}:
-              </div>
+              <div className="sw-head">{t("onlyshow")}:</div>
               <div className="sw-btn">
                 <div className="switch">
                   <input

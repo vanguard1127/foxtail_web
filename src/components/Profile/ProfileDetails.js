@@ -10,11 +10,11 @@ const ProfileDetails = ({
 }) => {
   let distance;
   if (profile.distance === null) {
-    distance = t("N/A");
+    distance = t("na");
   } else if (profile.distance < 1) {
-    distance = t("< 1 mil away");
+    distance = "< 1" + t("common:" + "miaway");
   } else {
-    distance = profile.distance + t("mil away");
+    distance = profile.distance + t("common:" + "miaway");
   }
 
   return (
@@ -33,7 +33,7 @@ const ProfileDetails = ({
           <span className="data">{distance}</span>
         </li>
         <li>
-          <span className="head">{t("Looking For")}:</span>
+          <span className="head">{t("lookfor")}:</span>
           <span className="data">
             {profile.interestedIn.map((intrst, idx, arr) => {
               if (idx === arr.length - 1) {
@@ -47,10 +47,10 @@ const ProfileDetails = ({
           </span>
         </li>
         <li>
-          <span className="head">{t("Last Login")}:</span>
+          <span className="head">{t("lstlogin")}:</span>
           <span className="data">
             {" "}
-            {profile.online ? t("Online") : TimeAgo(profile.updatedAt)}
+            {profile.online ? t("common:Online") : TimeAgo(profile.updatedAt)}
           </span>
           <div className="share btn" onClick={() => showShareModal()}>
             <button>{t("Share")}</button>
