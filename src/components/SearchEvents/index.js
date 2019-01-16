@@ -140,24 +140,6 @@ class SearchEvents extends Component {
     }
   };
 
-  handleEventCard = eventdate => {
-    return (
-      <div key={eventdate.date}>
-        <div>{moment(eventdate.date).format("dddd, MMMM Do YYYY")}</div>
-        {eventdate.events.map(event => (
-          <div key={event.id} style={{ marginLeft: "30vh" }}>
-            <EventCard
-              key={event.id}
-              event={event}
-              showBlockModal={this.setBlockModalVisible}
-              showShareModal={this.setShareModalVisible}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   render() {
     const {
       event,

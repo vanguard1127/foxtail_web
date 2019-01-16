@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dropdown, Icon, Badge } from "antd";
+import Dropdown from "rc-dropdown";
 import {
   GET_FRIENDS,
   GET_CHAT_PARTICIPANTS,

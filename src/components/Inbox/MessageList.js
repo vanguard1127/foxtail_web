@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Waypoint from "react-waypoint";
 import Message from "./Message.js";
-import { List } from "antd";
 import moment from "moment";
 import _ from "lodash";
 
@@ -228,7 +227,7 @@ class MessageList extends Component {
     });
   };
   renderTopMessage = message => {
-    return <List.Item style={{ color: "blue" }}>{message}</List.Item>;
+    return <div style={{ color: "blue" }}>{message}</div>;
   };
   onDateWaypointPostion = (i, position) => {
     if (this.state.dateWaypoints[i] === position) return;

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Waypoint from "react-waypoint";
 import Message from "./Message.js";
-import { List } from "antd";
 
 class MessageList extends Component {
   constructor(props) {
@@ -158,9 +157,7 @@ class MessageList extends Component {
       }
     });
   };
-  renderTopMessage = message => {
-    return <List.Item style={{ color: "blue" }}>{message}</List.Item>;
-  };
+
   onDateWaypointPostion = (i, position) => {
     if (this.state.dateWaypoints[i] === position) return;
     //

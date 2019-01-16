@@ -20,6 +20,7 @@ const ChatWindow = ({ currentChat, currentuser, t }) => {
           <ChatContent
             chatID={currentChat.id}
             currentUserID={currentuser.userID}
+            t={t}
           />
           <ChatPanel chatID={currentChat.id} t={t} />
         </div>

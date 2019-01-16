@@ -20,7 +20,6 @@ import "./i18n";
 import Footer from "./components/Footer/";
 
 import { ApolloProvider } from "react-apollo";
-import { Layout } from "antd";
 import ApolloClient from "apollo-client";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
@@ -234,7 +233,7 @@ const Wrapper = withRouter(props => {
 const NavBarWithSession = withSession(Navbar);
 //TODO:https://reacttraining.com/react-router/web/example/animated-transitions
 const Body = ({ showFooter }) => (
-  <Layout className="layout">
+  <div className="layout">
     <header>
       <NavBarWithSession />
     </header>
@@ -254,7 +253,7 @@ const Body = ({ showFooter }) => (
       </Switch>
     </main>
     {showFooter && <Footer />}
-  </Layout>
+  </div>
 );
 
 ReactDOM.render(

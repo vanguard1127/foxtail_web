@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 import withAuth from "../withAuth";
 import { withNamespaces } from "react-i18next";

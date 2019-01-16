@@ -111,7 +111,7 @@ class ChatContent extends Component {
               );
             }
             if (!data.getMessages) {
-              return <div>{t("commmonnomsgs")}</div>;
+              return <div>{t("commmon:nomsgs")}</div>;
             }
 
             return (
