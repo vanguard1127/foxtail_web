@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import { GET_MY_EVENTS } from "../../queries";
-import Spinner from "../common/Spinner";
+import { EventLoader } from "../common/Skeletons";
 import EventCard from "./EventCard";
 
 const LIMIT = 3;
@@ -49,7 +49,29 @@ class MyEvents extends Component {
       >
         {({ data, loading, error, fetchMore }) => {
           if (loading) {
-            return <Spinner message={t("loadmyeve") + "..."} size="small" />;
+            return (
+              <div className="events-card-content my-events">
+                <div className="container">
+                  <div className="col-md-12">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <span className="head">{t("myevents")}</span>
+                      </div>
+                      <div className="col-md-12 col-lg-6" key={"1"}>
+                        <div className="card-item">
+                          <EventLoader />
+                        </div>
+                      </div>
+                      <div className="col-md-12 col-lg-6" key={"2"}>
+                        <div className="card-item">
+                          <EventLoader />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
           }
 
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {

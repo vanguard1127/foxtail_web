@@ -52,7 +52,7 @@ class MembersDropdown extends Component {
                 onVisibleChange={this.handleVisibleChange}
                 visible={this.state.visible}
               >
-                <span className="ant-dropdown-link">{clickComponent}</span>
+                <span>{clickComponent}</span>
               </Dropdown>
             );
           }}
@@ -92,7 +92,7 @@ class MembersDropdown extends Component {
                 onVisibleChange={this.handleVisibleChange}
                 visible={this.state.visible}
               >
-                <span className="ant-dropdown-link">{clickComponent}</span>
+                <span>{clickComponent}</span>
               </Dropdown>
             );
           }}
@@ -130,7 +130,7 @@ class MembersDropdown extends Component {
                 onVisibleChange={this.handleVisibleChange}
                 visible={this.state.visible}
               >
-                <span className="ant-dropdown-link">{clickComponent}</span>
+                <span>{clickComponent}</span>
               </Dropdown>
             );
           }}

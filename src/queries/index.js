@@ -367,27 +367,28 @@ export const FB_RESOLVE = gql`
   }
 `;
 
-export const UPDATE_PROFILE = gql`
-  mutation(
-    $desires: [String]
-    $about: String
-    $publicPhotoList: [String]
-    $privatePhotoList: [String]
-  ) {
-    updateProfile(
-      desires: $desires
-      about: $about
-      publicPhotoList: $publicPhotoList
-      privatePhotoList: $privatePhotoList
-    )
-  }
-`;
+// export const UPDATE_PROFILE = gql`
+//   mutation(
+//     $desires: [String]
+//     $about: String
+//     $publicPhotoList: [String]
+//     $privatePhotoList: [String]
+//   ) {
+//     updateProfile(
+//       desires: $desires
+//       about: $about
+//       publicPhotoList: $publicPhotoList
+//       privatePhotoList: $privatePhotoList
+//     )
+//   }
+// `;
 
 export const SIGNS3 = gql`
   mutation($filename: String!, $filetype: String!) {
     signS3(filename: $filename, filetype: $filetype) {
       key
       signedRequest
+      url
     }
   }
 `;
@@ -762,6 +763,7 @@ export const GET_SETTINGS = gql`
       photos {
         url
         private
+        key
         id
       }
       about

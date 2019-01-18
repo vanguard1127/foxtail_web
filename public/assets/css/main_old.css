@@ -21,7 +21,7 @@
   }
 
 /*---- HEADER ----*/
-  
+
   /* LOGO */
     header {
       width: 100%;
@@ -766,7 +766,7 @@
     height: 250px;
     padding-top: 4px;
   }
- 
+
   section.featured-profiles .slider .owl-nav {
     color: white !important;
     position: absolute;
@@ -798,7 +798,7 @@
     right: -15px !important;
     border-radius: 2px 0 0 2px;
    }
- 
+
   section.featured-profiles .slider .owl-nav .owl-prev {
     left: -15px;
     border-radius: 0 2px 2px 0;
@@ -1312,7 +1312,7 @@
   section.members .card-item .info .function .btn.heart::before {
     content: '\e806';
   }
- 
+
 /*---- BUTTONS ----*/
 
   .more-content-btn {
@@ -1604,7 +1604,7 @@
       border: none;
       outline: none;
       padding: 2px 20px 0 55px;
-      color: #000;  
+      color: #000;
     }
 
     section.inbox .left .search::before {
@@ -1878,7 +1878,7 @@
     section.inbox .right .content .functions ul li:last-child a {
       border-bottom: 1px solid #DFE1E6;
     }
-  
+
   /* CHAT */
     section.inbox .chat {
       width: 100%;
@@ -2211,7 +2211,7 @@
 
     section.inbox .chat .panel .files:hover::before {
       color: #fff;
-    } 
+    }
 
     section.inbox .chat .panel .files:hover {
       background-color: #3387F9;
@@ -2616,10 +2616,10 @@
 
   section.profile .data-info .functions .btn.share::before {
     content: '\e809';
-  } 
+  }
   section.profile .data-info .functions .btn.report::before {
     content: '\e808';
-  } 
+  }
 
   section.profile .data-info .functions .btn.report {
     margin-left: 13px;
@@ -3159,7 +3159,7 @@
 
   section.go-events .events-card-content .card-item .content .goings ul {
     list-style-type: none;
-    padding: 0; 
+    padding: 0;
     margin: 0;
     float: left;
   }
@@ -3423,14 +3423,14 @@
   section.event-detail .header .info .share-event ul li.facebook::before {
     content: '\e816';
     font-size: 15px;
-  } 
+  }
   section.event-detail .header .info .share-event ul li.twitter::before {
     content: '\e819';
     font-size: 14px;
-  } 
+  }
   section.event-detail .header .info .share-event ul li.mail::before {
     content: '\e80c';
-  } 
+  }
 
   section.event-detail .header .info .share-event ul li:hover {
     background-color: #fff;
@@ -3607,7 +3607,7 @@
 
   section.event-detail .about-event-content .goings .content ul {
     list-style-type: none;
-    padding: 0; 
+    padding: 0;
     margin: 0;
     float: left;
   }
@@ -3888,7 +3888,7 @@
     display: inline-block;
     float: left;
     background-size: 100%;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
   }
 
   section.settings .sidebar .upload-btn {
@@ -5242,7 +5242,7 @@
 
   section.landing .left .stats ul li:last-child {
     border-right: none;
-  } 
+  }
 
   section.landing .left .stats ul li span {
     width: 100%;
@@ -5686,7 +5686,7 @@
     padding-top: 200px;
     display: none;
     visibility: hidden;
-    
+
   }
 
   section.login-modal.show {
@@ -5986,7 +5986,7 @@
   }
 }
 
-@media only screen and (min-width : 415px) { 
+@media only screen and (min-width : 415px) {
   section.profile .avatar-card {
     width: 68%;
   }
@@ -6007,7 +6007,7 @@
   }
 }
 
-@media only screen and (min-width : 500px) { 
+@media only screen and (min-width : 500px) {
   section.profile .avatar-card {
     width: 55%;
   }
@@ -6117,7 +6117,7 @@
     display: inline-block !important;
     visibility: visible !important;
   }
-  
+
   .hidden-mobile {
     display: inline-block;
     visibility: visible;
@@ -6186,9 +6186,9 @@
     top: 22px;
     font-size: 20px;
   }
-  
-  section.inbox .chat .navbar, 
-  section.inbox .right .head,  
+
+  section.inbox .chat .navbar,
+  section.inbox .right .head,
   section.inbox .left .search {
     height: 70px;
     max-height: 70px;
@@ -6246,7 +6246,7 @@
   section.inbox {
     position: absolute;
     overflow: hidden;
-    height: calc(100% - 144px) !important; 
+    height: calc(100% - 144px) !important;
   }
 
   section.inbox .right,
@@ -6329,7 +6329,7 @@
   }
 
   section.inbox .chat .navbar {
-    padding: 12px 20px; 
+    padding: 12px 20px;
   }
 
   section.breadcrumb span.head.back::before {
@@ -6350,7 +6350,7 @@
   section.inbox .chat .navbar .user {
     width: auto;
   }
-  
+
   section.inbox .chat .navbar .user .name {
     width: auto;
   }
@@ -6398,7 +6398,7 @@
     justify-content: inherit;
     align-items: inherit;
   }
-  
+
   section.profile .user-info > div span {
     color: #fff;
     text-shadow: 0 1px 0 rgba(0,0,0,0.50);
@@ -6495,7 +6495,7 @@
     display: inline-block;
     visibility: visible;
   }
-  
+
   section.event-detail .about-event-content .goings {
     padding: 20px 30px;
   }
@@ -6738,7 +6738,7 @@
     visibility: visible;
   }
 
-  
+
   section.inbox .chat .navbar .more,
   section.inbox .chat .navbar .more-dropdown,
   section.inbox .chat .navbar .more-dropdown.open {
@@ -6765,7 +6765,7 @@
 
   section.landing .register-form .head {
     font-size: 25px;
-  } 
+  }
 
   footer.landing {
     top: 470px;
@@ -6773,14 +6773,14 @@
   }
 }
 
-@media only screen and (min-width : 1350px) { 
+@media only screen and (min-width : 1350px) {
 
   section.inbox .right .content .functions ul li::before {
     display: inline-block;
     visibility: visible;
   }
-  
-  section.inbox .right .content .functions ul li a { 
+
+  section.inbox .right .content .functions ul li a {
     padding-left: 30px;
   }
 }

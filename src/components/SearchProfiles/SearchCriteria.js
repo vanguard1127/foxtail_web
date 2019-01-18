@@ -115,7 +115,40 @@ class SearchCriteria extends Component {
           {({ data, loading, error }) => {
             if (loading) {
               return (
-                <Spinner message={t("common:Loading") + "..."} size="large" />
+                <section className="meet-filter">
+                  <div className="container">
+                    <div className="col-md-12">
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="item">
+                            <AddressSearch
+                              style={{ width: 150 }}
+                              setLocationValues={null}
+                              address={""}
+                              type={"(cities)"}
+                              placeholder={t("common:setloc") + "..."}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="item">
+                            <InterestedInDropdown
+                              onChange={el => null}
+                              value={""}
+                              placeholder={t("Genders")}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <DistanceSlider value={""} setValue={null} t={t} />
+                        </div>
+                        <div className="col-md-6">
+                          <AgeRange value={[]} setValue={null} t={t} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
               );
             }
             if (error) {

@@ -9,7 +9,6 @@ import Dialog from "@material-ui/core/Dialog";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { s3url } from "../../docs/data";
 
 const styles = theme => ({
   addIcon: {
@@ -111,7 +110,7 @@ class UploadComponent extends Component {
               >
                 <img
                   className="img-box"
-                  src={s3url + file.url}
+                  src={file.url}
                   onLoad={() => {
                     setTimeout(this.switchLoader, 1000);
                   }}
@@ -162,7 +161,7 @@ class UploadComponent extends Component {
           aria-labelledby="Image"
           open={previewVisible}
         >
-          <img src={s3url + selectedImg} alt="" />
+          <img src={selectedImg} alt="" />
         </Dialog>
       </div>
     );

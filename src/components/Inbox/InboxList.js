@@ -15,7 +15,7 @@ class InboxList extends Component {
 
     return (
       <div className="item unread" key={item.id}>
-        <a onClick={() => readChat(item.chatID, item.unSeenCount)}>
+        <span onClick={() => readChat(item.chatID, item.unSeenCount)}>
           <span className="img">
             <img
               src={
@@ -34,7 +34,7 @@ class InboxList extends Component {
               <span className="notif">{item.unSeenCount}</span>
             )}
           </div>
-        </a>
+        </span>
       </div>
     );
   };

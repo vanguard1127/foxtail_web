@@ -2,7 +2,7 @@ import React from "react";
 import InboxSearchTextBox from "./InboxSearchTextBox";
 import { GET_INBOX, NEW_INBOX_SUB } from "../../queries";
 import { Query } from "react-apollo";
-import Spinner from "../common/Spinner";
+import { InboxLoader } from "../common/Skeletons";
 import InboxList from "./InboxList";
 let unsubscribe = null;
 const InboxPanel = ({ readChat, currentUserID, t }) => {
@@ -10,7 +10,21 @@ const InboxPanel = ({ readChat, currentUserID, t }) => {
     <Query query={GET_INBOX} fetchPolicy="cache-and-network">
       {({ data, loading, error, subscribeToMore }) => {
         if (loading) {
-          return <Spinner message={t("common:Loading") + "..."} size="large" />;
+          return (
+            <div className="col-md-4 col-lg-3 col-xl-3">
+              <div className="left">
+                <InboxSearchTextBox t={t} />
+                <div className="conversations">
+                  <div className="item unread" key={"1"}>
+                    <InboxLoader />
+                  </div>
+                  <div className="item unread" key={"2"}>
+                    <InboxLoader />
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
         }
 
         const messages = data.getInbox;

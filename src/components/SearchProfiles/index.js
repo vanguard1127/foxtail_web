@@ -3,7 +3,7 @@ import ProfilesDiv from "./ProfilesDiv";
 import Waypoint from "react-waypoint";
 import { withNamespaces } from "react-i18next";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
-import Spinner from "../common/Spinner";
+import { ProfileLoader } from "../common/Skeletons";
 import { Query, Mutation, withApollo } from "react-apollo";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
@@ -129,7 +129,32 @@ class ProfileSearch extends Component {
               return (
                 <div>
                   {searchPanel}{" "}
-                  <Spinner message={t("loadmems") + "..."} size="large" />
+                  <section className="members">
+                    <div className="container">
+                      <div className="col-md-12">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <span className="head">{t("allmems")}</span>
+                          </div>
+                          <div className="col-md-6 col-lg-4">
+                            <div className={"card-item "}>
+                              <ProfileLoader />
+                            </div>
+                          </div>{" "}
+                          <div className="col-md-6 col-lg-4">
+                            <div className={"card-item "}>
+                              <ProfileLoader />
+                            </div>
+                          </div>{" "}
+                          <div className="col-md-6 col-lg-4">
+                            <div className={"card-item "}>
+                              <ProfileLoader />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               );
             } else if (

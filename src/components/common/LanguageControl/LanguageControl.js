@@ -10,10 +10,13 @@ class LanguageControl extends Component {
   state = {
     menuOpen: false,
     selectedLang: localStorage.getItem("i18nextLng"),
-    languages: ["en", "de"]
+    languages: ["en", "de", "tu"]
   };
 
   setLang = lang => {
+    if (this.props.onChange) {
+      this.props.onChange(lang);
+    }
     i18n.changeLanguage(lang);
     this.setState({ selectedLang: lang, menuOpen: false });
   };
@@ -37,20 +40,24 @@ class LanguageControl extends Component {
   };
 
   render() {
+    let convertLang = this.state.selectedLang;
+    if (convertLang === "en-US") {
+      convertLang = "tu";
+    }
     return (
       <span ref={this.wrapperRef}>
         <div
           className="language-choose"
           onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}
         >
-          <i className={`flag ${this.state.selectedLang}`} />
+          <i className={`flag ${convertLang}`} />
         </div>
         <div
           className={`language-dropdown ${this.state.menuOpen ? "click" : ""}`}
         >
           <ul>
             {this.state.languages
-              .filter(x => this.state.selectedLang !== x)
+              .filter(x => convertLang !== x)
               .map(lang => (
                 <li key={lang}>
                   <span>

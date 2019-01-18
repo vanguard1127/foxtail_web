@@ -226,9 +226,7 @@ class MessageList extends Component {
       }
     });
   };
-  renderTopMessage = message => {
-    return <div style={{ color: "blue" }}>{message}</div>;
-  };
+
   onDateWaypointPostion = (i, position) => {
     if (this.state.dateWaypoints[i] === position) return;
     //
@@ -338,7 +336,6 @@ class MessageList extends Component {
             overflow: "hidden"
           }}
         >
-          {this.renderTopMessage(topMessage)}
           {messageElements}
 
           {children}

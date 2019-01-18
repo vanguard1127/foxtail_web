@@ -1,5 +1,5 @@
 import React from "react";
-import { genderOptions } from "../../docs/data";
+import { genderOptions } from "../../docs/options/en";
 import TimeAgo from "../../utils/TimeAgo";
 const ProfileDetails = ({
   users,

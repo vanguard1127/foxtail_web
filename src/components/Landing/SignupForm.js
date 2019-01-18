@@ -36,7 +36,8 @@ const MyForm = props => {
     fbResolve,
     createUser,
     handleFBReturn,
-    t
+    t,
+    lang
   } = props;
 
   return (
@@ -90,6 +91,7 @@ const MyForm = props => {
             })
           }
           placeholder={"Interested In:"}
+          lang={lang}
         />
         <div className="couple-choose">
           <div className="select-checkbox">

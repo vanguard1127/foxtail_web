@@ -131,6 +131,7 @@ class SettingsPage extends Component {
   handlePhotoListChange = ({
     file,
     key,
+    url,
     isPrivate,
     isDeleted,
     updateSettings
@@ -143,10 +144,10 @@ class SettingsPage extends Component {
       } else {
         privatePics.push({
           uid: Date.now(),
-          url: key
+          key,
+          url
         });
       }
-
       this.setState(
         {
           privatePics,
@@ -162,7 +163,8 @@ class SettingsPage extends Component {
       } else {
         publicPics.push({
           uid: Date.now(),
-          url: key
+          key,
+          url
         });
       }
 
@@ -263,7 +265,7 @@ class SettingsPage extends Component {
     } = this.state;
 
     const { userID, t } = this.props;
-
+    console.log("PICS", publicPics);
     return (
       <Mutation
         mutation={UPDATE_SETTINGS}
@@ -397,10 +399,11 @@ class SettingsPage extends Component {
                     return (
                       <ImageEditor
                         file={fileRecieved}
-                        handlePhotoListChange={({ file, key }) =>
+                        handlePhotoListChange={({ file, key, url }) =>
                           this.handlePhotoListChange({
                             file,
                             key,
+                            url,
                             isPrivate,
                             isDeleted: false,
                             updateSettings

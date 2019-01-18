@@ -12,7 +12,7 @@ i18n
   .init({
     fallbackLng: "en", // use en if detected lng is not available
     keySeparator: false, // we do not use keys in form messages.welcome
-    saveMissing: true, // send not translated keys to endpoint
+    saveMissing: false, // send not translated keys to endpoint
     interpolation: {
       escapeValue: false // react already safes from xss
     },

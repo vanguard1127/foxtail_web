@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { css } from "@emotion/core";
 // First way to import
 import { PacmanLoader } from "react-spinners";
 
@@ -7,12 +6,39 @@ class Spinner extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      displayMessage: false,
       loading: true
     };
+    this.enableMessage = this.enableMessage.bind(this);
+
+    this.timer = setTimeout(this.enableMessage, 250);
   }
+
+  enableMessage() {
+    this.setState({ displayMessage: true });
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
   render() {
+    const { displayMessage } = this.state;
+
+    if (!displayMessage) {
+      return null;
+    }
     return (
-      <div className="sweet-loading">
+      <div
+        className="sweet-loading"
+        style={{
+          display: "flex",
+          flex: "1",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column"
+        }}
+      >
         <PacmanLoader
           sizeUnit={"px"}
           size={15}
@@ -20,7 +46,7 @@ class Spinner extends Component {
           loading={this.state.loading}
         />
         <br />
-        {this.props.message}
+        <div style={{ marginLeft: "4vw" }}>{this.props.message}</div>
       </div>
     );
   }

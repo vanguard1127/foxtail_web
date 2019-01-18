@@ -30,7 +30,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 
 let server = "localhost:4444";
-//let server = "production-151896178.us-west-2.elb.amazonaws.com";
+//let server = "prod.foxtailapi.com";
 
 // console.log(process.env.REACT_APP_LOCAL_SERVER);
 // if (process.env.REACT_APP_LOCAL_SERVER === "true") {
@@ -39,7 +39,9 @@ let server = "localhost:4444";
 
 let wsurl = `ws://${server}/subscriptions`;
 let httpurl = `http://${server}/graphql`;
-let httpurlNonGraphQL = `http://${server}`;
+//let httpsraphurl = `https://${server}/graphql`;
+let HTTPSurl = `http://${server}`;
+//let HTTPSurl = `https://${server}`;
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
@@ -143,7 +145,7 @@ const errorLink = onError(
           const axios = require("axios");
           console.log("TOKEN REFREHS");
           axios
-            .post(httpurlNonGraphQL + "/refresh", {
+            .post(HTTPSurl + "/refresh", {
               refreshToken
             })
             .then(function(response) {
@@ -233,11 +235,20 @@ const Wrapper = withRouter(props => {
 const NavBarWithSession = withSession(Navbar);
 //TODO:https://reacttraining.com/react-router/web/example/animated-transitions
 const Body = ({ showFooter }) => (
-  <div className="layout">
+  <div
+    className="layout"
+    style={{
+      height: "auto",
+      margin: "0",
+      display: "flex",
+      flexDirection: "column",
+      minHeight: "100vh"
+    }}
+  >
     <header>
       <NavBarWithSession />
     </header>
-    <main>
+    <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
       <Switch>
         <Route path="/members" component={ProfileSearch} exact />
         <Route path="/events" component={SearchEvents} exact />

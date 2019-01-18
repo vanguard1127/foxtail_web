@@ -1,15 +1,13 @@
-import React, { Component, Fragment } from "react";
-import moment from "moment";
+import React, { Component } from "react";
 
 import { withNamespaces } from "react-i18next";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
-import EventCard from "./EventCard";
+import { EventLoader } from "../common/Skeletons";
 import Waypoint from "react-waypoint";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
-import Spinner from "../common/Spinner";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
 import SearchEventToolbar from "./SearchEventToolbar";
@@ -186,10 +184,32 @@ class SearchEvents extends Component {
               {({ data, loading, error, fetchMore }) => {
                 if (loading) {
                   return (
-                    <Spinner
-                      message={t("loadingevents") + "..."}
-                      size="large"
-                    />
+                    <div className="events-card-content">
+                      <div className="container">
+                        <div className="col-md-12">
+                          <div className="row">
+                            <div className="col-md-12">
+                              <span className="head">{t("upcomingevent")}</span>
+                            </div>
+                            <div className="col-md-12 col-lg-6" key={"1"}>
+                              <div className="card-item">
+                                <EventLoader />
+                              </div>
+                            </div>{" "}
+                            <div className="col-md-12 col-lg-6" key={"2"}>
+                              <div className="card-item">
+                                <EventLoader />
+                              </div>
+                            </div>{" "}
+                            <div className="col-md-12 col-lg-6" key={"3"}>
+                              <div className="card-item">
+                                <EventLoader />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   );
                 }
                 if (

@@ -91,10 +91,11 @@ class EditCanvasImage extends React.Component {
     //filename: this.formatFilename(file.name),
     await signS3()
       .then(async ({ data }) => {
-        const { signedRequest, key } = data.signS3;
+        const { signedRequest, key, url } = data.signS3;
+
         await uploadToS3(file.filebody, signedRequest);
 
-        await handlePhotoListChange({ file, key });
+        await handlePhotoListChange({ file, key, url });
         close();
       })
       .catch(res => {

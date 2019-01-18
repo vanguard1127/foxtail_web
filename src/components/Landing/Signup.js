@@ -2,8 +2,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE, LOGIN } from "../../queries";
-import Message from "rc-message";
-
 import SignupForm from "./SignupForm";
 
 const initialState = {
@@ -15,8 +13,7 @@ const initialState = {
   gender: "",
   isCouple: false,
   csrf: "",
-  code: "",
-  lang: "en"
+  code: ""
 };
 
 class Signup extends React.Component {
@@ -48,14 +45,14 @@ class Signup extends React.Component {
           .then(({ data }) => {
             const { isCouple } = this.state;
             if (data.fbResolve === null) {
-              Message.warn("Phone verification failed.");
+              alert("Phone verification failed.");
               return;
             }
             this.setState({ phone: data.fbResolve });
             createUser()
               .then(async ({ data }) => {
                 if (data.createUser === null) {
-                  Message.warn("Signup failed.");
+                  alert("Signup failed.");
                   return;
                 }
                 localStorage.setItem(
@@ -114,7 +111,7 @@ class Signup extends React.Component {
         createUser()
           .then(async ({ data }) => {
             if (data.createUser === null) {
-              Message.warn("Signup failed.");
+              alert("Signup failed.");
               return;
             }
             localStorage.setItem(
@@ -146,16 +143,12 @@ class Signup extends React.Component {
     );
   };
 
-  handleLangChange = value => {
-    this.setState({ lang: value });
-  };
-
   //TODO:DELETE THIS
   handleLogin = login => {
     login()
       .then(async ({ data }) => {
         if (data.login === null) {
-          Message.warn("User doesn't exist.");
+          alert("User doesn't exist.");
           return;
         }
 
@@ -182,7 +175,7 @@ class Signup extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, lang } = this.props;
 
     let {
       csrf,
@@ -192,7 +185,6 @@ class Signup extends React.Component {
       email,
       dob,
       interestedIn,
-      lang,
       gender,
       isCouple
     } = this.state;
@@ -235,6 +227,7 @@ class Signup extends React.Component {
                       handleFBReturn={this.handleFBReturn}
                       setFormValues={this.setFormValues}
                       t={t}
+                      lang={lang}
                     />
                     <div className="form terms">
                       <span onClick={() => this.testCreateUser(createUser)}>

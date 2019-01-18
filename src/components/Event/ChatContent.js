@@ -106,7 +106,7 @@ class ChatContent extends Component {
           }
 
           if (!data || !data.getComments) {
-            return <div>{t("commmon:nomsgs")}</div>;
+            return null;
           }
 
           return (
