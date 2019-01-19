@@ -71,13 +71,10 @@ class UploadComponent extends Component {
     });
   };
 
-  handleClickProPic = index => {
+  handleClickProPic = ({ index, setProfilePic }) => {
     let img = this.props.photos[index];
 
-    this.setState({
-      selectedImg: img.url,
-      previewVisible: true
-    });
+    setProfilePic({ key: img.key, url: img.url });
   };
 
   handleClose = () => {
@@ -91,7 +88,7 @@ class UploadComponent extends Component {
   };
 
   render() {
-    const { classes, photos, t } = this.props;
+    const { classes, photos, t, setProfilePic } = this.props;
     const { selectedImg, previewVisible } = this.state;
     return (
       <div className="header-container">
@@ -117,24 +114,32 @@ class UploadComponent extends Component {
                   alt=""
                 />
                 <div className="btns">
-                  <DeleteIcon
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      this.deleteFile(index);
-                    }}
-                  />
-                  <StarIcon
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      this.handleClickProPic(index);
-                    }}
-                  />{" "}
-                  <ViewIcon
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      this.handleClickOpen(index);
-                    }}
-                  />
+                  <div title={t("deletepic")}>
+                    <DeleteIcon
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.deleteFile(index);
+                      }}
+                    />
+                  </div>
+                  {!this.props.isPrivate && (
+                    <div title={t("updatepro")}>
+                      <StarIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          this.handleClickProPic({ index, setProfilePic });
+                        }}
+                      />
+                    </div>
+                  )}{" "}
+                  <div title={t("viewpic")}>
+                    <ViewIcon
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.handleClickOpen(index);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

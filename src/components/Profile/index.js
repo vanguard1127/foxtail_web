@@ -99,12 +99,13 @@ class ProfilePage extends Component {
                 const { users, photos, desires, about } = profile;
 
                 const publicPics = photos.filter(
-                  photoObject => photoObject.url !== ""
+                  photoObject => !photoObject.private && photoObject.url !== ""
                 );
-                const privatePics = photos.filter(
-                  photoObject => photoObject.url === ""
-                );
-
+                const privatePics = photos
+                  .slice(4, 8)
+                  .filter(
+                    photoObject => photoObject.private && photoObject.url !== ""
+                  );
                 return (
                   <section className="profile">
                     <div className="container">

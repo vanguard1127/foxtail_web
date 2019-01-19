@@ -36,12 +36,12 @@ class SettingsPage extends Component {
     users: null,
     publicPhotoList: [],
     privatePhotoList: [],
-    publicPics: this.props.settings.photos
-      .slice(0, 4)
-      .filter(x => x.url !== ""),
-    privatePics: this.props.settings.photos
-      .slice(4, 8)
-      .filter(x => x.url !== ""),
+    publicPics: this.props.settings.photos.filter(
+      x => !x.private && x.url !== ""
+    ),
+    privatePics: this.props.settings.photos.filter(
+      x => x.private && x.url !== ""
+    ),
     about: null,
     desires: [],
     showDesiresPopup: false,
@@ -55,6 +55,7 @@ class SettingsPage extends Component {
     isPrivate: false,
     filename: "",
     filetype: "",
+    profilePic: "",
     ...this.props.settings
   };
 
@@ -106,6 +107,13 @@ class SettingsPage extends Component {
 
   setValue = ({ name, value, updateSettings }) => {
     this.setState({ [name]: value }, () => this.handleSubmit(updateSettings));
+  };
+
+  setProfilePic = ({ key, url, updateSettings }) => {
+    this.setState({ profilePic: key }, () => {
+      this.handleSubmit(updateSettings);
+      this.setState({ profilePic: url });
+    });
   };
 
   toggleDesiresPopup = () => {
@@ -261,11 +269,12 @@ class SettingsPage extends Component {
       fileRecieved,
       filename,
       filetype,
-      isPrivate
+      isPrivate,
+      profilePic
     } = this.state;
 
     const { userID, t } = this.props;
-    console.log("PICS", publicPics);
+
     return (
       <Mutation
         mutation={UPDATE_SETTINGS}
@@ -287,7 +296,8 @@ class SettingsPage extends Component {
           about,
           desires,
           couplePartner,
-          includeMsgs
+          includeMsgs,
+          profilePic
         }}
       >
         {(updateSettings, { loading }) => {
@@ -298,7 +308,7 @@ class SettingsPage extends Component {
                   <div className="row">
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
-                        <ProfilePic />
+                        <ProfilePic profilePic={profilePic} />
                         <Menu
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}
@@ -335,6 +345,13 @@ class SettingsPage extends Component {
                             isPrivate={false}
                             showEditor={this.toggleImgEditorPopup}
                             photos={publicPics}
+                            setProfilePic={({ key, url }) =>
+                              this.setProfilePic({
+                                key,
+                                url,
+                                updateSettings
+                              })
+                            }
                             deleteImg={({ file, key }) =>
                               this.handlePhotoListChange({
                                 file,

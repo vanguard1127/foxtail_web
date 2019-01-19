@@ -1,10 +1,12 @@
 import React from "react";
+import Avatar from "react-avatar";
 
-const ProfilePic = ({ proPic }) => {
+const ProfilePic = ({ profilePic }) => {
+  console.log("PROP", profilePic);
   return (
     <div className="profile-picture-content">
       <div className="picture">
-        <input type="file" className="filepond upload-avatar" name="filepond" />
+        <Avatar size="90" src={profilePic} round />
       </div>
     </div>
   );

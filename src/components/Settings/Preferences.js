@@ -6,9 +6,6 @@ import AddressSearch from "../common/AddressSearch";
 const milesToKilometers = miles => miles / 0.621371;
 const kilometersToMiles = kilometers => kilometers * 0.621371;
 class Preferences extends Component {
-  UNSAFE_componentWillReceiveProps() {
-    //See if prev props and current props mean calculacte
-  }
   render() {
     const { values, setValue, setLocationValues, t } = this.props;
     const {

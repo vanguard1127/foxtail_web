@@ -10,7 +10,6 @@ class InterestedInDropdown extends Component {
     lang: this.props.lang
   };
   componentDidMount() {
-    console.log("DIDMOUNT");
     this.fetchData(this.state.lang);
   }
 
@@ -34,7 +33,6 @@ class InterestedInDropdown extends Component {
     const { onChange, value, placeholder } = this.props;
     const { sexOptions, isLoading } = this.state;
 
-    console.log("dropdown", this.props.lang);
     if (isLoading || sexOptions === null) {
       return <div>Loading...</div>;
     }

@@ -1,7 +1,14 @@
 import React from "react";
 import UploadComponent from "./UploadImageComponent";
 
-const Photos = ({ isPrivate, showEditor, photos, deleteImg, t }) => {
+const Photos = ({
+  isPrivate,
+  showEditor,
+  photos,
+  deleteImg,
+  t,
+  setProfilePic
+}) => {
   return (
     <div className="content mtop">
       <div className="row">
@@ -13,6 +20,7 @@ const Photos = ({ isPrivate, showEditor, photos, deleteImg, t }) => {
         </div>
         <div className="col-md-12">
           <UploadComponent
+            setProfilePic={setProfilePic}
             max={4}
             showEditor={showEditor}
             photos={photos}

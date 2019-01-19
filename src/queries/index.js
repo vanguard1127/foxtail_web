@@ -203,6 +203,7 @@ export const UPDATE_SETTINGS = gql`
   mutation(
     $distance: Int
     $distanceMetric: String
+    $profilePic: String
     $ageRange: [Int]
     $lang: String
     $interestedIn: [String]
@@ -224,6 +225,7 @@ export const UPDATE_SETTINGS = gql`
     updateSettings(
       distance: $distance
       distanceMetric: $distanceMetric
+      profilePic: $profilePic
       ageRange: $ageRange
       lang: $lang
       interestedIn: $interestedIn
@@ -751,6 +753,7 @@ export const GET_SETTINGS = gql`
       showOnline
       likedOnly
       vibrateNotify
+      profilePic
       couplePartner
       includeMsgs
       users {
