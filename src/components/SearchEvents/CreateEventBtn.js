@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import CreateEvent from "../Modals/CreateEvent/";
 class CreateEventBtn extends Component {
   state = { showPopup: false };
@@ -9,14 +9,14 @@ class CreateEventBtn extends Component {
   };
   render() {
     return (
-      <div className="create-event-btn">
-        <span href={null} onClick={() => this.togglePopup()}>
-          {this.props.t("common:createevent")}
-        </span>
+      <Fragment>
+        <div className="create-event-btn" onClick={() => this.togglePopup()}>
+          <span>{this.props.t("common:createevent")}</span>
+        </div>
         {this.state.showPopup ? (
           <CreateEvent closePopup={() => this.togglePopup()} />
         ) : null}
-      </div>
+      </Fragment>
     );
   }
 }

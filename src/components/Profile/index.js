@@ -140,16 +140,20 @@ class ProfilePage extends Component {
                             />
                             <ProfileBio about={about} t={t} />
                             <DesiresMobile desires={desires} t={t} />
-                            <PhotoSlider
-                              isPublic={true}
-                              photos={publicPics}
-                              t={t}
-                            />
-                            <PhotoSlider
-                              isPublic={false}
-                              photos={privatePics}
-                              t={t}
-                            />
+                            {publicPics.length > 0 && (
+                              <PhotoSlider
+                                isPublic={true}
+                                photos={publicPics}
+                                t={t}
+                              />
+                            )}
+                            {privatePics.length > 0 && (
+                              <PhotoSlider
+                                isPublic={false}
+                                photos={privatePics}
+                                t={t}
+                              />
+                            )}
                           </div>
                         </div>
                       </div>

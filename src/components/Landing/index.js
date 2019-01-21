@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import Signup from "./Signup";
 import LoginButton from "./LoginButton";
 import LanguageControl from "../common/LanguageControl/LanguageControl";

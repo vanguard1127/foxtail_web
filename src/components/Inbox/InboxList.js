@@ -12,7 +12,7 @@ class InboxList extends Component {
     } else {
       title = item.fromUser.username;
     }
-
+    console.log("INVOX", item.profilePic);
     return (
       <div className="item unread" key={item.id}>
         <span onClick={() => readChat(item.chatID, item.unSeenCount)}>

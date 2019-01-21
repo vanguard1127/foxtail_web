@@ -86,23 +86,18 @@ class NoticesList extends Component {
     });
   };
 
-  readAndGo = async ({
-    notifications,
-    targetID,
-    type,
-    updateNotifications
-  }) => {
+  readAndGo = ({ notifications, targetID, type, updateNotifications }) => {
     try {
       const { close } = this.props;
       if (notifications.length !== 0) {
-        await this.readNotices(notifications, updateNotifications);
+        this.readNotices(notifications, updateNotifications);
 
         switch (type) {
           case "chat":
-            await this.props.history.push("/inbox/" + targetID);
+            this.props.history.push("/inbox/" + targetID);
             break;
           case "event":
-            await this.props.history.push("/events/" + targetID);
+            this.props.history.push("/events/" + targetID);
             break;
           default:
             break;
@@ -113,6 +108,10 @@ class NoticesList extends Component {
       console.error(e.message);
     }
   };
+
+  componentWillUnmount() {
+    unsubscribe();
+  }
 
   render() {
     const { read, seen, notificationIDs } = this.state;
@@ -170,36 +169,42 @@ class NoticesList extends Component {
                 return (
                   <div className="toggle">
                     <div className="notification open">
-                      {notifications.map(notif => (
-                        <div className="item" key={notif.id}>
-                          <span
-                            onClick={() =>
-                              this.readAndGo({
-                                notifications: [notif.id],
-                                targetID: notif.targetID,
-                                type: notif.type,
-                                updateNotifications
-                              })
-                            }
-                          >
-                            <span className="avatar">
-                              <img
-                                src="/assets/img/usr/avatar/1001@2x.png"
-                                alt=""
-                              />
+                      {notifications.length > 0 ? (
+                        notifications.map(notif => (
+                          <div className="item" key={notif.id}>
+                            <span
+                              onClick={() =>
+                                this.readAndGo({
+                                  notifications: [notif.id],
+                                  targetID: notif.targetID,
+                                  type: notif.type,
+                                  updateNotifications
+                                })
+                              }
+                            >
+                              <span className="avatar">
+                                <img
+                                  src={notif.fromProfile.profilePic}
+                                  alt=""
+                                />
+                              </span>
+                              <div>
+                                <span className="text">
+                                  <b> {notif.fromProfile.profileName} </b>
+                                  {t(notif.text)}
+                                </span>
+                                <span className="when">
+                                  {moment(notif.date).fromNow()}
+                                </span>
+                              </div>
                             </span>
-                            <div>
-                              <span className="text">
-                                <b> {notif.fromProfile.profileName} </b>
-                                {t(notif.text)}
-                              </span>
-                              <span className="when">
-                                {moment(notif.date).fromNow()}
-                              </span>
-                            </div>
-                          </span>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="item" key="na">
+                          <span className="text">No notifcations</span>
                         </div>
-                      ))}
+                      )}
                     </div>
                   </div>
                 );

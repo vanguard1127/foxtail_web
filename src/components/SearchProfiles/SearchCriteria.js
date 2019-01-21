@@ -134,16 +134,16 @@ class SearchCriteria extends Component {
                           <div className="item">
                             <InterestedInDropdown
                               onChange={el => null}
-                              value={""}
+                              value={[]}
                               placeholder={t("Genders")}
                             />
                           </div>
                         </div>
                         <div className="col-md-6">
-                          <DistanceSlider value={""} setValue={null} t={t} />
+                          <DistanceSlider value={0} setValue={null} t={t} />
                         </div>
                         <div className="col-md-6">
-                          <AgeRange value={[]} setValue={null} t={t} />
+                          <AgeRange value={[18, 80]} setValue={null} t={t} />
                         </div>
                       </div>
                     </div>

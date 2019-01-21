@@ -5,6 +5,7 @@ import DesiresModal from "../../Modals/Desires/Modal";
 import DesiresSelector from "../../Modals/Desires/Selector";
 import Select from "../../common/Select";
 import AddressSearch from "../../common/AddressSearch";
+import DateTimePicker from "../../common/DatePicker/DateTimePicker";
 class CreateEvent extends Component {
   state = {
     filename: "",
@@ -92,6 +93,11 @@ class CreateEvent extends Component {
                                 }
                               />
                               <label title={t("evename")} htmlFor="eventname" />
+                            </div>
+                          </div>
+                          <div className="item">
+                            <div className="input">
+                              <DateTimePicker />
                             </div>
                           </div>
                           <div className="item">

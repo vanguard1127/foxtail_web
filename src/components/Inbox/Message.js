@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-const Message = React.forwardRef(({ message, currentUserID }, ref, t) => {
+const Message = React.forwardRef(({ message, currentUserID, t }, ref) => {
   const messageText =
     message.type === "msg"
       ? message.text
@@ -24,14 +24,12 @@ const Message = React.forwardRef(({ message, currentUserID }, ref, t) => {
           alt=""
         />
       </div>
-      <div className="bubble">
-        {messageText}
-        {message.fromUser.username}
-      </div>
+      <div className="bubble">{messageText}</div>
       <span className="time">
         {" "}
+        {message.fromUser.username},{" "}
         {moment(message.createdAt)
-          .format("MMM Do")
+          .format("HH:mm")
           .toString()}
       </span>
     </div>

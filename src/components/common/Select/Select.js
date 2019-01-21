@@ -15,38 +15,30 @@ class Select extends React.Component {
 
   constructor(props) {
     super(props);
-    this.selectContainerRef = React.createRef();
   }
 
   state = {
     menuOpen: false,
     selectedOption: this.props.options[0],
-    selectListOffsetTop: 0,
     selectedOptions: [this.props.options[0]]
   };
 
+  componentWillMount() {
+    document.addEventListener("mousedown", this.handleClickOutside, false);
+  }
+
   componentDidMount() {
     this.getDefaultOption();
-    document.addEventListener("mousedown", this.handleClickOutside);
-    this.setState({
-      selectListOffsetTop: this.selectContainerRef.current.offsetTop + 48
-    });
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside, false);
   }
 
   handleClickOutside = event => {
-    // console.log(event);
-    //TODO: Fix handle clickout for this
-    // if (
-    //   this.selectContainerRef &&
-    //   !this.selectContainerRef.current.contains(event.target) &&
-    //   this.state.menuOpen
-    // ) {
-    //   this.setState({ menuOpen: false });
-    // }
+    if (!this.selectContainerRef.contains(event.target)) {
+      this.setState({ menuOpen: false });
+    }
   };
 
   getDefaultOption = () => {
@@ -101,18 +93,15 @@ class Select extends React.Component {
         }
       );
     }
+    this.setState({ menuOpen: false });
   };
 
   render() {
-    const {
-      selectListOffsetTop,
-      selectedOptions,
-      selectedOption,
-      menuOpen
-    } = this.state;
+    const { selectedOptions, selectedOption, menuOpen } = this.state;
     const { className, label, multiple, options, t } = this.props;
+    const menuStatus = multiple ? true : !menuOpen;
     const SelectList = () => (
-      <div className="select-list" style={{ top: selectListOffsetTop + "px" }}>
+      <div className="select-list">
         <ul>
           {options.map((d, i) => {
             let checked = false;
@@ -139,24 +128,29 @@ class Select extends React.Component {
     return (
       <React.Fragment>
         <div
-          ref={this.selectContainerRef}
-          className={"select-container " + className || ""}
-          onClick={() => this.setState({ menuOpen: !menuOpen })}
+          ref={selectContainerRef =>
+            (this.selectContainerRef = selectContainerRef)
+          }
         >
-          <label>{label}</label>
-          {multiple && (
-            <div className="multiple-options">
-              {selectedOptions.map((d, idx, arr) => {
-                if (idx === arr.length - 1) {
-                  return <span key={d.value}>{t(d.label)}</span>;
-                }
-                return <span key={d.value}>{t(d.label) + ","}</span>;
-              })}
-            </div>
-          )}
-          {!multiple && <span>{t(selectedOption.label)}</span>}
+          <div
+            className={"select-container " + className || ""}
+            onClick={() => this.setState({ menuOpen: menuStatus })}
+          >
+            <label>{label}</label>
+            {multiple && (
+              <div className="multiple-options">
+                {selectedOptions.map((d, idx, arr) => {
+                  if (idx === arr.length - 1) {
+                    return <span key={d.value}>{t(d.label)}</span>;
+                  }
+                  return <span key={d.value}>{t(d.label) + ","}</span>;
+                })}
+              </div>
+            )}
+            {!multiple && <span>{t(selectedOption.label)}</span>}
+            {menuOpen && <SelectList />}
+          </div>
         </div>
-        {menuOpen && <SelectList />}
       </React.Fragment>
     );
   }

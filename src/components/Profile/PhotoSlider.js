@@ -6,7 +6,7 @@ const PhotoSlider = ({ photos, isPublic, t }) => {
       className={isPublic ? "photos-slider public" : "photos-slider private"}
     >
       <div className="profile-head">
-        {isPublic ? t("Public") : t("Private")} {t("Photos")} (21)
+        {isPublic ? t("Public") : t("Private")} {t("Photos")} ({photos.length})
       </div>
       <OwlCarousel
         className="owl-carousel slider-content"

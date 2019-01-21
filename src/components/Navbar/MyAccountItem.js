@@ -52,10 +52,7 @@ class MyAccountItem extends Component {
         ref={this.wrapperRef}
       >
         <span className="avatar">
-          <img
-            src={process.env.PUBLIC_URL + "/assets/img/usr/avatar/1001@2x.png"}
-            alt=""
-          />
+          <img src={currentuser.profilePic} alt="" />
         </span>
         <span className="username">{currentuser.username}</span>
         {menuOpen && (

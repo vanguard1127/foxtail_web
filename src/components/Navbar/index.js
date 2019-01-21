@@ -61,9 +61,18 @@ class Navbar extends Component {
 
 //TODO: check it not id and try to make recursive
 class NavbarAuth extends Component {
+  state = {
+    mobileMenu: false
+  };
+
+  toggleMobileMenu = () => {
+    console.log("DDD");
+    this.setState({ mobileMenu: !this.state.mobileMenu });
+  };
   componentDidMount() {
     //TODO: Dont call if already online
-    const { toggleOnline, t } = this.props;
+    const { toggleOnline } = this.props;
+
     toggleOnline(true);
 
     //I don't know why but we need both
@@ -83,25 +92,40 @@ class NavbarAuth extends Component {
     let href = window.location.href.split("/");
     href = href[3];
     const { session, t } = this.props;
+    const { mobileMenu } = this.state;
+
     return (
       <div className="container">
         <div className="col-md-12">
           <div className="row no-gutters">
             <div className="mobile">
               <div className="mobile-menu">
-                <div className="hamburger hamburger--spring">
-                  <span className="hamburger-box">
+                <div
+                  className={
+                    mobileMenu === true
+                      ? "hamburger hamburger--spring is-active"
+                      : "hamburger hamburger--spring"
+                  }
+                >
+                  <span
+                    className="hamburger-box"
+                    onClick={() => this.toggleMobileMenu()}
+                  >
                     <span className="hamburger-inner" />
                   </span>
                 </div>
               </div>
-              <div className="mobile-toggle">
+              <div
+                className={
+                  mobileMenu === true ? "mobile-toggle show" : "mobile-toggle"
+                }
+              >
                 <ul>
                   <li>
                     <NavLink to="/members">{t("meetmembers")}</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/events">{t("meetmembers")}</NavLink>
+                    <NavLink to="/events">{t("goevents")}</NavLink>
                   </li>
                   <li>
                     <NavLink to="/inbox">{t("common:Inbox")}</NavLink>
@@ -132,7 +156,7 @@ class NavbarAuth extends Component {
               </ul>
             </div>
             <div className="col-md-2 col-12">
-              <div className="logo">
+              <div className={mobileMenu === true ? "logo white" : "logo"}>
                 <span />
               </div>
             </div>

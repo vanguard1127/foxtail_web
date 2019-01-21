@@ -56,6 +56,7 @@ class SettingsPage extends Component {
     filename: "",
     filetype: "",
     profilePic: "",
+    profilePicUrl: this.props.settings.profilePic,
     ...this.props.settings
   };
 
@@ -110,9 +111,8 @@ class SettingsPage extends Component {
   };
 
   setProfilePic = ({ key, url, updateSettings }) => {
-    this.setState({ profilePic: key }, () => {
+    this.setState({ profilePic: key, profilePicUrl: url }, () => {
       this.handleSubmit(updateSettings);
-      this.setState({ profilePic: url });
     });
   };
 
@@ -164,7 +164,7 @@ class SettingsPage extends Component {
         () => this.handleSubmit(updateSettings)
       );
     } else {
-      let { publicPics } = this.state;
+      let { publicPics, profilePic } = this.state;
 
       if (isDeleted) {
         publicPics = publicPics.filter(x => x.id !== file.id);
@@ -174,6 +174,9 @@ class SettingsPage extends Component {
           key,
           url
         });
+        if (profilePic === "") {
+          this.setProfilePic({ key, url, updateSettings });
+        }
       }
 
       this.setState(
@@ -270,7 +273,8 @@ class SettingsPage extends Component {
       filename,
       filetype,
       isPrivate,
-      profilePic
+      profilePic,
+      profilePicUrl
     } = this.state;
 
     const { userID, t } = this.props;
@@ -308,7 +312,7 @@ class SettingsPage extends Component {
                   <div className="row">
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
-                        <ProfilePic profilePic={profilePic} />
+                        <ProfilePic profilePic={profilePicUrl} />
                         <Menu
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}

@@ -27,7 +27,7 @@ const ChatHeader = ({ currentChat, currentuser, t }) => {
       <div className="user">
         <div className="avatar">
           <span>
-            <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+            <img src={currentChat.participants[0].profilePic} alt="" />
           </span>
         </div>
         <span className="name couple">

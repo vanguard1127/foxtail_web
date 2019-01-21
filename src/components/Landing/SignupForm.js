@@ -1,7 +1,7 @@
 import React from "react";
 import { withFormik, Field } from "formik";
 import * as Yup from "yup";
-import BirthDatePicker from "./BirthDatePicker";
+import BirthDatePicker from "../common/DatePicker/BirthDatePicker";
 import Select from "../common/Select";
 import InterestedInDropdown from "../common/InterestedInDropdown";
 import SignupButton from "./SignupButton";

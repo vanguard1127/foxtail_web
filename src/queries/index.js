@@ -721,6 +721,7 @@ export const GET_CURRENT_USER = gql`
       username
       userID
       profileID
+      profilePic
       blackMember {
         active
         renewalDate

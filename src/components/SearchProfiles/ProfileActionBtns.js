@@ -8,20 +8,18 @@ const ProfileActionBtns = ({
 }) => {
   return (
     <div className="function">
-      <div className="btn heart">
-        <span
-          onClick={() => {
-            likeProfile(profile);
-          }}
-        />
-      </div>
-      <div className="btn message">
-        <span
-          onClick={() => {
-            showMsgModal(profile);
-          }}
-        />
-      </div>
+      <div
+        className="btn heart"
+        onClick={() => {
+          likeProfile(profile);
+        }}
+      />
+      <div
+        className="btn message"
+        onClick={() => {
+          showMsgModal(profile);
+        }}
+      />
     </div>
   );
 };

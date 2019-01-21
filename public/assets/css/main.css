@@ -4109,7 +4109,7 @@
     float: left;
     margin-bottom: 10px;
     position: relative;
-    z-index: 1;
+    /* z-index: 1; */
   }
 
   .page .form .content .item.nobottom {
@@ -5852,7 +5852,6 @@
     float: left;
     margin-bottom: 15px;
     z-index: 100;
-    overflow: hidden;
   }
   section.landing .register-form form .form-content .dropdown.nobottom {
     margin-bottom: none;
@@ -6482,7 +6481,8 @@
 
  .select-list {
   width: 100% !important;
-  top: 43px !important;
+  top: calc(100% + 5px);
+  left: 0px;
  }
 
 .select-list ul::-webkit-scrollbar {
@@ -6505,13 +6505,14 @@
 
 
  .multiple-options {
-  position: relative;
-  top: -3px;
+   overflow: hidden;
+   margin-bottom: -6px;
  }
  .select-container {
   background-color: #fff !important;
   border: 1px solid #e3e3e3 !important;
   height: 45px !important;
+  position: relative !important;
  }
  .filepond--drop-label label {
   text-transform: none;

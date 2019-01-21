@@ -27,6 +27,7 @@ class ProfileSearch extends Component {
   };
 
   setMsgModalVisible = (msgModalVisible, profile) => {
+    console.log(msgModalVisible, profile);
     if (profile) this.setState({ profile, msgModalVisible });
     else this.setState({ msgModalVisible });
   };

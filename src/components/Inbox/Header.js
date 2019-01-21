@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 const InboxHeader = ({ t }) => {
   return (
     <section className="breadcrumb">
@@ -6,7 +7,7 @@ const InboxHeader = ({ t }) => {
         <div className="col-md-12">
           <span className="head">{t("common:Inbox")}</span>
           <span className="title">
-            {t("subtitle")} <span>{t("rules")}</span>.{" "}
+            {t("subtitle")} <NavLink to="/inbox">{t("rules")}</NavLink>.{" "}
           </span>
         </div>
       </div>
