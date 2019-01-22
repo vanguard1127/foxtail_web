@@ -21,7 +21,7 @@ const ProfileDetails = ({
     <div className="data-info">
       <ul>
         <li>
-          <span className="head">{t("Gender")}:</span>
+          <span className="head">{t("common:Gender")}:</span>
           <span className="data">
             {genderOptions.find(el => el.value === users[0].gender).label}
             {users[1] &&

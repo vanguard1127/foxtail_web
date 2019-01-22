@@ -1,7 +1,7 @@
 import React from "react";
 import { withFormik, Field } from "formik";
 import * as Yup from "yup";
-import BirthDatePicker from "../common/DatePicker/BirthDatePicker";
+import DatePicker from "../common/DatePicker";
 import Select from "../common/Select";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
@@ -58,7 +58,7 @@ const MyForm = props => {
         <div className="input email">
           <Field name="email" placeholder={t("emailLbl")} type="email" />
         </div>
-        <BirthDatePicker
+        <DatePicker
           name={"dob"}
           value={values["dob"]}
           onChange={el => {
@@ -73,9 +73,9 @@ const MyForm = props => {
           }}
           onBlur={handleBlur}
           t={t}
+          type="birthday"
         />
         <Dropdown
-          label="Gender:"
           value={values["gender"]}
           type={"gender"}
           onChange={el =>
@@ -88,12 +88,11 @@ const MyForm = props => {
               }
             })
           }
-          placeholder={"Gender:"}
+          placeholder={t("common:Gender") + ":"}
           lang={lang}
         />
 
         <Dropdown
-          label="Interested In:"
           value={values["interestedIn"]}
           type={"interestedin"}
           onChange={el =>
@@ -106,7 +105,7 @@ const MyForm = props => {
               }
             })
           }
-          placeholder={"Interested In:"}
+          placeholder={t("common:Interested") + ":"}
           lang={lang}
         />
         <div className="couple-choose">
@@ -138,6 +137,7 @@ const MyForm = props => {
           fbResolve={fbResolve}
           createUser={createUser}
           handleFBReturn={handleFBReturn}
+          lang={lang}
           t={t}
         />
         <div className="terms">

@@ -21,6 +21,7 @@ class Dropdown extends Component {
 
   fetchData = langSel => {
     let lang = langSel;
+    console.log(lang, "FFF");
     if (availableLangs.indexOf(lang) < 0) {
       lang = "en";
     }

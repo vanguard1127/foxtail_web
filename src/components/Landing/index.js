@@ -7,12 +7,13 @@ import CountUp from "react-countup";
 import { withNamespaces } from "react-i18next";
 
 class Landing extends Component {
-  state = { lang: "en" };
+  state = { lang: localStorage.getItem("i18nextLng") || "en" };
   handleLangChange = value => {
     this.setState({ lang: value });
   };
   render() {
     const { t } = this.props;
+    const { lang } = this.state;
 
     return (
       <div>
@@ -27,7 +28,7 @@ class Landing extends Component {
                 </div>
                 <div className="offset-md-3 col-md-5">
                   <div className="content">
-                    <LoginButton t={t} />
+                    <LoginButton t={t} lang={lang} />
                     <LanguageControl onChange={this.handleLangChange} />
                   </div>
                 </div>
