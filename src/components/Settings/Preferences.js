@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DistanceSlider from "../common/DistanceSlider";
-import InterestedInDropdown from "../common/InterestedInDropdown";
+import Dropdown from "../common/Dropdown";
 import AgeRange from "../common/AgeRange";
 import AddressSearch from "../common/AddressSearch";
 const milesToKilometers = miles => miles / 0.621371;
@@ -25,6 +25,7 @@ class Preferences extends Component {
     let convertedDistance = distance;
 
     convertedDistance = Math.floor(convertFunction(distance));
+    const lang = localStorage.getItem("i18nextLng");
 
     return (
       <div className="content">
@@ -80,7 +81,8 @@ class Preferences extends Component {
             </div>
           </div>
           <div className="col-md-6">
-            <InterestedInDropdown
+            <Dropdown
+              type={"interestedin"}
               onChange={el =>
                 setValue({
                   name: "interestedIn",
@@ -88,7 +90,8 @@ class Preferences extends Component {
                 })
               }
               value={interestedIn}
-              placeholder={t("Gendersparen") + ":"}
+              placeholder={t("common:Interested") + ":"}
+              lang={lang}
             />
           </div>
 

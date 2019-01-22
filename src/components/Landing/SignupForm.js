@@ -2,7 +2,6 @@ import React from "react";
 import { withFormik, Field } from "formik";
 import * as Yup from "yup";
 import DatePicker from "../common/DatePicker";
-import Select from "../common/Select";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
 
@@ -45,9 +44,9 @@ const MyForm = props => {
     fbResolve,
     createUser,
     handleFBReturn,
-    t,
-    lang
+    t
   } = props;
+  const lang = localStorage.getItem("i18nextLng");
 
   return (
     <form onSubmit={handleSubmit}>
@@ -137,7 +136,6 @@ const MyForm = props => {
           fbResolve={fbResolve}
           createUser={createUser}
           handleFBReturn={handleFBReturn}
-          lang={lang}
           t={t}
         />
         <div className="terms">

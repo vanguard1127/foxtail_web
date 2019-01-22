@@ -70,7 +70,7 @@ class Signup extends React.Component {
                   await this.props.history.push("/editprofile/couple");
                 } else {
                   this.clearState();
-                  await this.props.history.push("/editprofile");
+                  await this.props.history.push("/settings");
                 }
               })
               .catch(res => {
@@ -104,8 +104,7 @@ class Signup extends React.Component {
         dob: "12/12/1990",
         interestedIn: ["M"],
         gender: "M",
-        isCouple: false,
-        lang: "en"
+        isCouple: false
       },
       () =>
         createUser()
@@ -175,7 +174,7 @@ class Signup extends React.Component {
   };
 
   render() {
-    const { t, lang } = this.props;
+    const { t } = this.props;
     let {
       csrf,
       code,
@@ -202,7 +201,7 @@ class Signup extends React.Component {
                 interestedIn,
                 gender,
                 isCouple,
-                lang
+                lang: localStorage.getItem("i18nextLng")
               }}
             >
               {(createUser, { loading }) => {
@@ -226,7 +225,6 @@ class Signup extends React.Component {
                       handleFBReturn={this.handleFBReturn}
                       setFormValues={this.setFormValues}
                       t={t}
-                      lang={lang}
                     />
                     <div className="form terms">
                       <span onClick={() => this.testCreateUser(createUser)}>

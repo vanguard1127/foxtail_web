@@ -6,11 +6,10 @@ class Dropdown extends Component {
   state = {
     options: null,
     isLoading: true,
-    error: null,
-    lang: this.props.lang
+    error: null
   };
   componentDidMount() {
-    this.fetchData(this.state.lang);
+    this.fetchData(this.props.lang);
   }
 
   componentDidUpdate(prevProps) {
@@ -21,7 +20,7 @@ class Dropdown extends Component {
 
   fetchData = langSel => {
     let lang = langSel;
-    console.log(lang, "FFF");
+
     if (availableLangs.indexOf(lang) < 0) {
       lang = "en";
     }
@@ -32,6 +31,7 @@ class Dropdown extends Component {
       } else {
         ops = els.sexOptions;
       }
+
       this.setState({ options: ops, isLoading: false });
     });
   };

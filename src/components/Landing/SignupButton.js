@@ -6,7 +6,6 @@ const SignupButton = ({
   createUser,
   disabled,
   handleFBReturn,
-  lang,
   t
 }) => {
   return (
@@ -21,7 +20,7 @@ const SignupButton = ({
       countryCode={"+1"} // eg. +60
       phoneNumber={""} // eg. 12345678
       emailAddress={""} // eg. me@site.com
-      language={lang}
+      language={localStorage.getItem("i18nextLng")}
     >
       {p => (
         <div className="submit">

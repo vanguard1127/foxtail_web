@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS, REMOVE_LOCLOCK } from "../../queries";
-import Spinner from "../common/Spinner";
+import Dropdown from "../common/Dropdown";
 import AddressSearch from "../common/AddressSearch";
 import SetLocationModal from "../Modals/SetLocation";
 
 import DistanceSlider from "../common/DistanceSlider";
-import InterestedInDropdown from "../common/InterestedInDropdown";
 import AgeRange from "../common/AgeRange";
 
 const CURRENT_LOC_LABEL = "My Location";
@@ -109,6 +108,7 @@ class SearchCriteria extends Component {
       locModalVisible
     } = this.state;
     const { t } = this.props;
+    const lang = localStorage.getItem("i18nextLng");
     return (
       <div>
         <Query query={GET_SETTINGS} fetchPolicy="network-only">
@@ -132,10 +132,12 @@ class SearchCriteria extends Component {
                         </div>
                         <div className="col-md-6">
                           <div className="item">
-                            <InterestedInDropdown
+                            <Dropdown
+                              type={"interestedin"}
                               onChange={el => null}
                               value={[]}
-                              placeholder={t("Genders")}
+                              placeholder={t("common:Interested") + ":"}
+                              lang={lang}
                             />
                           </div>
                         </div>
@@ -216,7 +218,8 @@ class SearchCriteria extends Component {
                                   </div>
                                   <div className="col-md-6">
                                     <div className="item">
-                                      <InterestedInDropdown
+                                      <Dropdown
+                                        type={"interestedin"}
                                         onChange={el =>
                                           this.setValue({
                                             name: "interestedIn",
@@ -225,7 +228,10 @@ class SearchCriteria extends Component {
                                           })
                                         }
                                         value={interestedIn}
-                                        placeholder={t("Genders")}
+                                        placeholder={
+                                          t("common:Interested") + ":"
+                                        }
+                                        lang={lang}
                                       />
                                     </div>
                                   </div>

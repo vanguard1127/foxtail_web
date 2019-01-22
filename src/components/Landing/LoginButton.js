@@ -59,8 +59,7 @@ class LoginButton extends Component {
   };
   render() {
     const { csrf, code, phone } = this.state;
-    const { t, lang } = this.props;
-    console.log(lang, "FFDFDFDFF");
+    const { t } = this.props;
     return (
       <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
         {fbResolve => {
@@ -78,7 +77,7 @@ class LoginButton extends Component {
                     countryCode={"+1"} // eg. +60
                     phoneNumber={""} // eg. 12345678
                     emailAddress={"noreply@foxtailapp.com"} // eg. me@site.com
-                    language="af_ZA"
+                    language={localStorage.getItem("i18nextLng")}
                   >
                     {p => (
                       <a {...p} className="login-btn">
