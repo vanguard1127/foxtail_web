@@ -22,6 +22,7 @@ class Signup extends React.Component {
   componentDidMount() {
     if (localStorage.getItem("token") !== null) {
       //TODO: Check somehow if user active...Possibly use session.
+
       this.props.history.push("/members");
     }
   }
@@ -50,7 +51,7 @@ class Signup extends React.Component {
             }
             this.setState({ phone: data.fbResolve });
             createUser()
-              .then(async ({ data }) => {
+              .then(({ data }) => {
                 if (data.createUser === null) {
                   alert("Signup failed.");
                   return;
@@ -66,11 +67,9 @@ class Signup extends React.Component {
                 );
 
                 if (isCouple) {
-                  this.clearState();
-                  await this.props.history.push("/editprofile/couple");
+                  this.props.history.push("/settings/couple");
                 } else {
-                  this.clearState();
-                  await this.props.history.push("/settings");
+                  this.props.history.push("/settings");
                 }
               })
               .catch(res => {
@@ -108,7 +107,7 @@ class Signup extends React.Component {
       },
       () =>
         createUser()
-          .then(async ({ data }) => {
+          .then(({ data }) => {
             if (data.createUser === null) {
               alert("Signup failed.");
               return;
@@ -123,13 +122,9 @@ class Signup extends React.Component {
             );
 
             if (isCouple) {
-              this.clearState();
-              window.location.href = "/editprofile/couple";
-              //await this.props.history.push("/editprofile/" + "couple");
+              this.props.history.push("/settings/couple");
             } else {
-              this.clearState();
-              window.location.href = "/editprofile";
-              //await this.props.history.push("/editprofile");
+              this.props.history.push("/settings");
             }
           })
           .catch(res => {

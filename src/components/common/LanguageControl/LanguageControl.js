@@ -14,9 +14,6 @@ class LanguageControl extends Component {
   };
 
   setLang = lang => {
-    if (this.props.onChange) {
-      this.props.onChange(lang);
-    }
     i18n.changeLanguage(lang);
     this.setState({ selectedLang: lang, menuOpen: false });
   };
