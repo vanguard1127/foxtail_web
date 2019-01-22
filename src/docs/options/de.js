@@ -109,7 +109,7 @@ export const desireOptions = [
 ];
 
 export const sexOptions = [
-  { value: "F", label: "Female" },
+  { value: "F", label: "AYYYY" },
   { value: "M", label: "Male" },
   { value: "T", label: "Transgender" },
   { value: "N", label: "Non-Binary" },
@@ -122,7 +122,7 @@ export const sexOptions = [
 ];
 
 export const genderOptions = [
-  { value: "F", label: "Female" },
+  { value: "F", label: "AYYYY" },
   { value: "M", label: "Male" },
   { value: "T", label: "Transgender" },
   { value: "N", label: "NonBinary" }

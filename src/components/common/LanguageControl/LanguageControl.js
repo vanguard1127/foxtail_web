@@ -42,8 +42,9 @@ class LanguageControl extends Component {
   render() {
     let convertLang = this.state.selectedLang;
     if (convertLang === "en-US") {
-      convertLang = "tu";
+      convertLang = "en";
     }
+
     return (
       <span ref={this.wrapperRef}>
         <div

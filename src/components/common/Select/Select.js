@@ -19,8 +19,8 @@ class Select extends React.Component {
 
   state = {
     menuOpen: false,
-    selectedOption: this.props.options[0],
-    selectedOptions: [this.props.options[0]]
+    selectedOption: "",
+    selectedOptions: []
   };
 
   componentWillMount() {
@@ -100,6 +100,7 @@ class Select extends React.Component {
     const { selectedOptions, selectedOption, menuOpen } = this.state;
     const { className, label, multiple, options, t } = this.props;
     const menuStatus = multiple ? true : !menuOpen;
+
     const SelectList = () => (
       <div className="select-list">
         <ul>

@@ -3,19 +3,28 @@ import { withFormik, Field } from "formik";
 import * as Yup from "yup";
 import BirthDatePicker from "../common/DatePicker/BirthDatePicker";
 import Select from "../common/Select";
-import InterestedInDropdown from "../common/InterestedInDropdown";
+import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
 
+let date = new Date();
+date.setFullYear(date.getFullYear() - 18);
 const formikEnhancer = withFormik({
   validationSchema: Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address")
-      .required("Email is required!")
+      .required("Email is required!"),
+    username: Yup.string().required("Username is required!"),
+    dob: Yup.date()
+      .max(date)
+      .required("Birthdate is required!"),
+    interestedIn: Yup.array().required("Interest is required!"),
+    gender: Yup.string().required("Gender is required!")
   }),
 
   mapPropsToValues: ({ fields }) => ({
     ...fields
   }),
+
   handleSubmit: (payload, { props }) => {
     props.setFormValues(payload);
   },
@@ -52,13 +61,23 @@ const MyForm = props => {
         <BirthDatePicker
           name={"dob"}
           value={values["dob"]}
-          onChange={handleChange}
+          onChange={el => {
+            handleChange({
+              target: {
+                value: el,
+                type: "text",
+                id: "dob",
+                name: "dob"
+              }
+            });
+          }}
           onBlur={handleBlur}
           t={t}
         />
-        <Select
+        <Dropdown
           label="Gender:"
           value={values["gender"]}
+          type={"gender"}
           onChange={el =>
             handleChange({
               target: {
@@ -69,17 +88,14 @@ const MyForm = props => {
               }
             })
           }
-          options={[
-            { label: "Female", value: "female" },
-            { label: "Male", value: "male" },
-            { label: "Transgender", value: "trans" },
-            { label: "Non-Binary", value: "non" }
-          ]}
+          placeholder={"Gender:"}
+          lang={lang}
         />
 
-        <InterestedInDropdown
+        <Dropdown
           label="Interested In:"
           value={values["interestedIn"]}
+          type={"interestedin"}
           onChange={el =>
             handleChange({
               target: {
@@ -133,6 +149,6 @@ const MyForm = props => {
   );
 };
 
-const MyEnhancedForm = formikEnhancer(MyForm);
+const SignupForm = formikEnhancer(MyForm);
 
-export default MyEnhancedForm;
+export default SignupForm;

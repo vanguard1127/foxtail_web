@@ -1,0 +1,16 @@
+{
+  "disway": "Distance Away",
+  "From": "From",
+  "miles": "miles",
+  "kilometers": "kilometers",
+  "srchcity": "Search by city",
+  "Reset": "Reset",
+  "myevents": "My Events",
+  "eventcreated": "Event created successfully! Share to get attendees",
+  "loadingevents": "Loading Events",
+  "noeventavailable": "No Events Available",
+  "noevent": "No More Events",
+  "upcomingevent": "Upcoming Events",
+  "eventdetail": "Event Detail",
+  "loadmyeve": "Loading My Events"
+}

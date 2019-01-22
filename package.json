@@ -31,6 +31,7 @@
     "react-apollo": "^2.3.1",
     "react-avatar": "^3.5.0",
     "react-content-loader": "^3.4.2",
+    "react-countup": "^4.0.0",
     "react-datepicker": "^2.0.0",
     "react-dom": "^16.7.0",
     "react-facebook-account-kit": "^0.1.3",

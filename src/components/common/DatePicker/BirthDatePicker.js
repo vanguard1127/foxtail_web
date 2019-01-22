@@ -12,13 +12,16 @@ export default class BirthDatePicker extends Component {
   }
 
   handleChange = date => {
-    this.setState({
-      startDate: date
-    });
+    this.setState(
+      {
+        startDate: date
+      },
+      () => this.props.onChange(date)
+    );
   };
 
   render() {
-    const { t, name, onChange } = this.props;
+    const { t } = this.props;
     const { startDate } = this.state;
 
     let date = new Date();
@@ -34,7 +37,6 @@ export default class BirthDatePicker extends Component {
           showYearDropdown
           dropdownMode="select"
           maxDate={date}
-          shouldCloseOnSelect={false}
         />
       </div>
     );

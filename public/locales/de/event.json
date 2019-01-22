@@ -1,0 +1,19 @@
+{
+  "noevent": "This event either never existed or it no longer does",
+  "surewarn": "Are you sure you want to delete this event?",
+  "share": "Share Event",
+  "evedate": "Event Date",
+  "evetime": "Event Time",
+  "Type": "Type",
+  "Interested": "Interested",
+  "toexpect": "What to Expect",
+  "Away": "Away",
+  "imGoing": "I'm Going",
+  "date": "Date",
+  "time": "Time",
+  "discuss": "Discuss this event",
+  "createdon": "Created on",
+  "nowyoucan": "Now you can join the discussion by writing a message",
+  "notgoing": "Not Going",
+  "Going": "Going"
+}

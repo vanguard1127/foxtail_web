@@ -176,7 +176,6 @@ class Signup extends React.Component {
 
   render() {
     const { t, lang } = this.props;
-
     let {
       csrf,
       code,

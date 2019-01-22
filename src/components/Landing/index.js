@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Signup from "./Signup";
 import LoginButton from "./LoginButton";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
+import CountUp from "react-countup";
 
 import { withNamespaces } from "react-i18next";
 
@@ -53,15 +54,35 @@ class Landing extends Component {
                         </div>
                         <ul>
                           <li>
-                            <span className="counter">19.528</span>
+                            <span className="counter">
+                              <CountUp
+                                end={19538}
+                                duration={1.75}
+                                separator="."
+                              />
+                            </span>
                             <span>{t("Male Members")}</span>
                           </li>
                           <li>
-                            <span className="counter">22.882</span>
+                            <span className="counter">
+                              {" "}
+                              <CountUp
+                                end={19538}
+                                duration={1.75}
+                                separator="."
+                              />
+                            </span>
                             <span>{t("Female Members")}</span>
                           </li>
                           <li>
-                            <span className="counter">5823</span>
+                            <span className="counter">
+                              {" "}
+                              <CountUp
+                                end={19538}
+                                duration={1.75}
+                                separator="."
+                              />
+                            </span>
                             <span>{t("Couple Profiles")}</span>
                           </li>
                         </ul>
