@@ -1,7 +1,7 @@
 import React from "react";
 import DesiresSelector from "../Modals/Desires/Selector";
 
-const MyProfile = ({ desires, about, setValue, togglePopup, t }) => {
+const MyProfile = ({ desires, about, setValue, togglePopup, t, errors }) => {
   return (
     <div className="content">
       <div className="row">
@@ -11,6 +11,9 @@ const MyProfile = ({ desires, about, setValue, togglePopup, t }) => {
         <div className="col-md-12">
           <div className="item">
             <DesiresSelector desires={desires} togglePopup={togglePopup} />
+            {errors.desires && (
+              <label className="errorLbl">{errors.desires}</label>
+            )}
           </div>
         </div>
         <div className="col-md-12">
@@ -27,6 +30,7 @@ const MyProfile = ({ desires, about, setValue, togglePopup, t }) => {
                 value={about}
               />
             </div>
+            {errors.about && <label className="errorLbl">{errors.about}</label>}
           </div>
         </div>
       </div>

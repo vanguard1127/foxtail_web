@@ -4,6 +4,10 @@ import LoginButton from "./LoginButton";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
 import CountUp from "react-countup";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// minified version is also included
+// import 'react-toastify/dist/ReactToastify.min.css';
 import { withNamespaces } from "react-i18next";
 
 const Landing = ({ t }) => {
@@ -125,6 +129,7 @@ const Landing = ({ t }) => {
           </div>
         </div>
       </footer>
+      <ToastContainer />
     </div>
   );
 };

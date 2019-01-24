@@ -1,6 +1,12 @@
 import React from "react";
 
-const Menu = ({ coupleModalToggle, couplePartner, blackModalToggle, t }) => {
+const Menu = ({
+  coupleModalToggle,
+  couplePartner,
+  blackModalToggle,
+  t,
+  flashCpl
+}) => {
   return (
     <div className="menu">
       <ul>
@@ -8,7 +14,10 @@ const Menu = ({ coupleModalToggle, couplePartner, blackModalToggle, t }) => {
           <span>{t("common:myaccount")}</span>
         </li>
         <li>
-          <span onClick={() => coupleModalToggle()}>
+          <span
+            onClick={() => coupleModalToggle()}
+            className={flashCpl ? "flashCpl" : null}
+          >
             {couplePartner === null ? t("common:addcoup") : couplePartner}
           </span>
         </li>

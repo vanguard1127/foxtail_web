@@ -133,7 +133,7 @@ class SearchCriteria extends Component {
                         <div className="col-md-6">
                           <div className="item">
                             <Dropdown
-                              type={"interestedin"}
+                              type={"interestedIn"}
                               onChange={el => null}
                               value={[]}
                               placeholder={t("common:Interested") + ":"}
@@ -219,11 +219,11 @@ class SearchCriteria extends Component {
                                   <div className="col-md-6">
                                     <div className="item">
                                       <Dropdown
-                                        type={"interestedin"}
+                                        type={"interestedIn"}
                                         onChange={el =>
                                           this.setValue({
                                             name: "interestedIn",
-                                            value: el,
+                                            value: el.map(e => e.value),
                                             updateSettings
                                           })
                                         }

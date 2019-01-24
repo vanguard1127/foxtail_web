@@ -49,29 +49,7 @@ class MyEvents extends Component {
       >
         {({ data, loading, error, fetchMore }) => {
           if (loading) {
-            return (
-              <div className="events-card-content my-events">
-                <div className="container">
-                  <div className="col-md-12">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <span className="head">{t("myevents")}</span>
-                      </div>
-                      <div className="col-md-12 col-lg-6" key={"1"}>
-                        <div className="card-item">
-                          <EventLoader />
-                        </div>
-                      </div>
-                      <div className="col-md-12 col-lg-6" key={"2"}>
-                        <div className="card-item">
-                          <EventLoader />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
+            return null;
           }
 
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {

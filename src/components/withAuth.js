@@ -18,19 +18,18 @@ const withAuth = conditionFunc => Component => props => {
           }
 
           if (conditionFunc(data)) {
-            // if (
-            //   !data.currentuser.isProfileOK &&
-            //   ~window.location.href.indexOf("/editprofile") === 0
-            // ) {
-            //   return (
-            //     <Redirect
-            //       to={{
-            //         pathname: "/editprofile",
-            //         state: { alert: "Please complete your profile" }
-            //       }}
-            //     />
-            //   );
-            // }
+            if (
+              !data.currentuser.isProfileOK &&
+              ~window.location.href.indexOf("/settings") === 0
+            ) {
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/settings"
+                  }}
+                />
+              );
+            }
 
             return <Component {...props} session={data} refetch={refetch} />;
           } else {

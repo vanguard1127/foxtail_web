@@ -7,6 +7,7 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/";
@@ -39,7 +40,7 @@ let server = "localhost:4444";
 
 let wsurl = `ws://${server}/subscriptions`;
 let httpurl = `http://${server}/graphql`;
-//let httpsraphurl = `https://${server}/graphql`;
+//let httpurl = `https://${server}/graphql`;
 let HTTPSurl = `http://${server}`;
 //let HTTPSurl = `https://${server}`;
 
@@ -252,8 +253,6 @@ const Body = ({ showFooter }) => (
       <Switch>
         <Route path="/members" component={ProfileSearch} exact />
         <Route path="/events" component={SearchEvents} exact />
-        {/* <Route path="/editprofile/:couple" component={EditProfile} />
-        <Route path="/editprofile" component={EditProfile} /> */}
         <Route path="/events/:id" component={EventPage} />
         <Route path="/members/:id" component={ProfilePage} />
         <Route path="/inbox/:chatID" component={InboxPage} />
@@ -264,6 +263,7 @@ const Body = ({ showFooter }) => (
       </Switch>
     </main>
     {showFooter && <Footer />}
+    <ToastContainer />
   </div>
 );
 

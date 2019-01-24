@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { CREATE_USER, FB_RESOLVE, LOGIN } from "../../queries";
 import SignupForm from "./SignupForm";
-
 const initialState = {
   username: "",
   email: "",
@@ -67,9 +66,15 @@ class Signup extends React.Component {
                 );
 
                 if (isCouple) {
-                  this.props.history.push("/settings/couple");
+                  this.props.history.push({
+                    pathname: "/settings",
+                    state: { couple: true, initial: true }
+                  });
                 } else {
-                  this.props.history.push("/settings");
+                  this.props.history.push({
+                    pathname: "/settings",
+                    state: { initial: true }
+                  });
                 }
               })
               .catch(res => {
@@ -92,18 +97,16 @@ class Signup extends React.Component {
   };
 
   testCreateUser = createUser => {
-    const { isCouple } = this.state;
-
     const rand = Math.floor(Math.random() * 1000);
     this.setState(
       {
         phone: rand.toString(),
-        username: "TEST USER",
+        username: "TEST USER2",
         email: rand.toString() + "@test.com",
         dob: "12/12/1990",
         interestedIn: ["M"],
         gender: "M",
-        isCouple: false
+        isCouple: true
       },
       () =>
         createUser()
@@ -121,10 +124,17 @@ class Signup extends React.Component {
               data.createUser.find(token => token.access === "refresh").token
             );
 
+            const { isCouple } = this.state;
             if (isCouple) {
-              this.props.history.push("/settings/couple");
+              this.props.history.push({
+                pathname: "/settings",
+                state: { couple: true, initial: true }
+              });
             } else {
-              this.props.history.push("/settings");
+              this.props.history.push({
+                pathname: "/settings",
+                state: { initial: true }
+              });
             }
           })
           .catch(res => {

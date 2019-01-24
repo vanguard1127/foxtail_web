@@ -40,7 +40,7 @@ class Dropdown extends Component {
     const { onChange, value, placeholder, type } = this.props;
     const { options, isLoading } = this.state;
     let multiple = false;
-    if (type === "interestedin") {
+    if (type === "interestedIn") {
       multiple = true;
     }
 

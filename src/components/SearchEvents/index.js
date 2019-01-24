@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import { withNamespaces } from "react-i18next";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import { SEARCH_EVENTS } from "../../queries";
-import { EventLoader } from "../common/Skeletons";
+import EmptyScreen from "../common/EmptyScreen";
 import Waypoint from "react-waypoint";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
@@ -13,6 +13,7 @@ import withAuth from "../withAuth";
 import SearchEventToolbar from "./SearchEventToolbar";
 import Header from "./Header";
 import EventsList from "./EventsList";
+import Spinner from "../common/Spinner";
 
 const LIMIT = 6;
 
@@ -184,32 +185,7 @@ class SearchEvents extends Component {
               {({ data, loading, error, fetchMore }) => {
                 if (loading) {
                   return (
-                    <div className="events-card-content">
-                      <div className="container">
-                        <div className="col-md-12">
-                          <div className="row">
-                            <div className="col-md-12">
-                              <span className="head">{t("upcomingevent")}</span>
-                            </div>
-                            <div className="col-md-12 col-lg-6" key={"1"}>
-                              <div className="card-item">
-                                <EventLoader />
-                              </div>
-                            </div>{" "}
-                            <div className="col-md-12 col-lg-6" key={"2"}>
-                              <div className="card-item">
-                                <EventLoader />
-                              </div>
-                            </div>{" "}
-                            <div className="col-md-12 col-lg-6" key={"3"}>
-                              <div className="card-item">
-                                <EventLoader />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <Spinner page="searchEvents" title={t("upcomingevent")} />
                   );
                 }
                 if (
@@ -217,6 +193,7 @@ class SearchEvents extends Component {
                   !data.searchEvents ||
                   data.searchEvents.length === 0
                 ) {
+                  // <EmptyScreen message={t("noeventavailable")} />
                   return <div>{t("noeventavailable")}</div>;
                 }
 

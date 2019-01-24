@@ -93,7 +93,7 @@ const MyForm = props => {
 
         <Dropdown
           value={values["interestedIn"]}
-          type={"interestedin"}
+          type={"interestedIn"}
           onChange={el =>
             handleChange({
               target: {

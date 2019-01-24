@@ -4,6 +4,7 @@ import Waypoint from "react-waypoint";
 import { withNamespaces } from "react-i18next";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import { ProfileLoader } from "../common/Skeletons";
+import EmptyScreen from "../common/EmptyScreen";
 import { Query, Mutation, withApollo } from "react-apollo";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
@@ -11,6 +12,7 @@ import { withRouter } from "react-router-dom";
 import SearchCriteria from "./SearchCriteria";
 import FeaturedDiv from "./FeaturedDiv";
 import DirectMsgModal from "../Modals/DirectMsg";
+import Spinner from "../common/Spinner";
 
 const LIMIT = 20;
 
@@ -130,32 +132,7 @@ class ProfileSearch extends Component {
               return (
                 <div>
                   {searchPanel}{" "}
-                  <section className="members">
-                    <div className="container">
-                      <div className="col-md-12">
-                        <div className="row">
-                          <div className="col-md-12">
-                            <span className="head">{t("allmems")}</span>
-                          </div>
-                          <div className="col-md-6 col-lg-4">
-                            <div className={"card-item "}>
-                              <ProfileLoader />
-                            </div>
-                          </div>{" "}
-                          <div className="col-md-6 col-lg-4">
-                            <div className={"card-item "}>
-                              <ProfileLoader />
-                            </div>
-                          </div>{" "}
-                          <div className="col-md-6 col-lg-4">
-                            <div className={"card-item "}>
-                              <ProfileLoader />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
+                  <Spinner page="searchProfiles" title={t("allmems")} />
                 </div>
               );
             } else if (
@@ -165,9 +142,11 @@ class ProfileSearch extends Component {
               !data
             ) {
               return (
-                <div>
-                  {searchPanel} {t("nomems")}
-                </div>
+                <Fragment>
+                  {" "}
+                  {searchPanel}
+                  <EmptyScreen message={t("nomems")} />
+                </Fragment>
               );
             }
             if (error) {

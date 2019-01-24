@@ -32,7 +32,7 @@
 }
 
 .react-datepicker-popper {
-  z-index: 999 !important;
+  z-index: 111111111111;
 }
 
 .react-datepicker__day--selected,
@@ -69,4 +69,16 @@
 
 .react-datepicker__current-month.react-datepicker__current-month--hasYearDropdown.react-datepicker__current-month--hasMonthDropdown {
   display: none !important;
+}
+
+.calender-input-sm .react-datepicker-popper[data-placement^="top"] {
+  margin-bottom: 55px !important;
+}
+
+.calender-input-sm .react-datepicker-popper {
+  top: 100% !important;
+}
+
+.react-datepicker__time-container {
+  border-left: 1px solid #cb0032 !important;
 }

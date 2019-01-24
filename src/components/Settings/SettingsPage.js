@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
 
+import { toast } from "react-toastify";
 import ImageEditor from "../Modals/ImageEditor";
 
 import ProfilePic from "./ProfilePic";
@@ -34,8 +35,6 @@ class SettingsPage extends Component {
     vibrateNotify: false,
     couplePartner: null,
     users: null,
-    publicPhotoList: [],
-    privatePhotoList: [],
     publicPics: this.props.settings.photos.filter(
       x => !x.private && x.url !== ""
     ),
@@ -56,27 +55,124 @@ class SettingsPage extends Component {
     filename: "",
     filetype: "",
     profilePic: "",
-    profilePicUrl: this.props.settings.profilePic,
-    ...this.props.settings
+    profilePicUrl: "",
+    flashCpl: false,
+    ...this.props.settings,
+    publicPhotoList: undefined,
+    privatePhotoList: undefined
   };
 
-  handleSubmit = updateSettings => {
-    updateSettings()
-      .then(({ data }) => {
-        if (data.updateSettings) {
-          //  Message.success("Settings have been saved");
-        } else {
-          //Message.error("Error saving settings. Please contact support.");
-        }
-      })
-      .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
+  // componentDidUpdate(prevProps, prevState) {
+  //   //set it if different.after save revert to undefined
+  //   console.log(
+  //     this.state.publicPhotoList,
+  //     "MMMMMM",
+  //     prevState.publicPhotoList
+  //   );
+  //   if (this.state.publicPhotoList !== prevState.publicPhotoList) {
+  //     console.log("UPDATE");
+  //   }
+  // }
 
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
-      });
+  handlePhotoListChange = ({
+    file,
+    key,
+    url,
+    isPrivate,
+    isDeleted,
+    updateSettings
+  }) => {
+    if (isPrivate) {
+      let { privatePics } = this.state;
+
+      if (isDeleted) {
+        privatePics = privatePics.filter(x => x.id !== file.id);
+      } else {
+        privatePics.push({
+          uid: Date.now(),
+          key,
+          url
+        });
+      }
+      this.setState(
+        {
+          privatePics,
+          publicPhotoList: undefined,
+          privatePhotoList: privatePics.map(file => JSON.stringify(file))
+        },
+        () => this.handleSubmit(updateSettings, true)
+      );
+    } else {
+      let { publicPics, profilePic } = this.state;
+
+      if (isDeleted) {
+        publicPics = publicPics.filter(x => x.id !== file.id);
+      } else {
+        publicPics.push({
+          uid: Date.now(),
+          key,
+          url
+        });
+        if (profilePic === "") {
+          this.setProfilePic({ key, url, updateSettings });
+        }
+      }
+
+      this.setState(
+        {
+          publicPics,
+          privatePhotoList: undefined,
+          publicPhotoList: publicPics.map(file => JSON.stringify(file))
+        },
+        () => this.handleSubmit(updateSettings, true)
+      );
+    }
+  };
+
+  handleSubmit = (updateSettings, saveImage) => {
+    if (!saveImage) {
+      this.setState(
+        {
+          privatePhotoList: undefined,
+          publicPhotoList: undefined
+        },
+        () => {
+          updateSettings()
+            .then(({ data }) => {
+              if (data.updateSettings) {
+                if (this.props.isCouple && this.props.isInitial) {
+                  this.setState({ flashCpl: true });
+                }
+              }
+            })
+            .catch(res => {
+              const errors = res.graphQLErrors.map(error => {
+                return error.message;
+              });
+
+              //TODO: send errors to analytics from here
+              this.setState({ errors });
+            });
+        }
+      );
+    } else {
+      updateSettings()
+        .then(({ data }) => {
+          if (data.updateSettings) {
+            if (this.props.isCouple && this.props.isInitial) {
+              this.setState({ flashCpl: true });
+            }
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+        });
+    }
   };
 
   setLocationValues = ({ lat, long, address, updateSettings }) => {
@@ -134,59 +230,6 @@ class SettingsPage extends Component {
         });
       }
     );
-  };
-
-  handlePhotoListChange = ({
-    file,
-    key,
-    url,
-    isPrivate,
-    isDeleted,
-    updateSettings
-  }) => {
-    if (isPrivate) {
-      let { privatePics } = this.state;
-
-      if (isDeleted) {
-        privatePics = privatePics.filter(x => x.id !== file.id);
-      } else {
-        privatePics.push({
-          uid: Date.now(),
-          key,
-          url
-        });
-      }
-      this.setState(
-        {
-          privatePics,
-          privatePhotoList: privatePics.map(file => JSON.stringify(file))
-        },
-        () => this.handleSubmit(updateSettings)
-      );
-    } else {
-      let { publicPics, profilePic } = this.state;
-
-      if (isDeleted) {
-        publicPics = publicPics.filter(x => x.id !== file.id);
-      } else {
-        publicPics.push({
-          uid: Date.now(),
-          key,
-          url
-        });
-        if (profilePic === "") {
-          this.setProfilePic({ key, url, updateSettings });
-        }
-      }
-
-      this.setState(
-        {
-          publicPics,
-          publicPhotoList: publicPics.map(file => JSON.stringify(file))
-        },
-        () => this.handleSubmit(updateSettings)
-      );
-    }
   };
 
   togglePhotoVerPopup = () => {
@@ -274,10 +317,24 @@ class SettingsPage extends Component {
       filetype,
       isPrivate,
       profilePic,
-      profilePicUrl
+      profilePicUrl,
+      flashCpl
     } = this.state;
 
     const { userID, t } = this.props;
+    let aboutErr = "";
+    if (about === "") {
+      aboutErr = "Please fill in your bio";
+    } else if (about.length < 10) {
+      aboutErr = "Bio must be more than 20 characters";
+    }
+
+    const errors = {
+      profilePic:
+        publicPics.length === 0 ? "Please upload at least 1 photo" : null,
+      about: aboutErr !== "" ? aboutErr : null,
+      desires: desires.length === 0 ? "Please select at least 1 desire" : null
+    };
 
     return (
       <Mutation
@@ -318,6 +375,7 @@ class SettingsPage extends Component {
                           couplePartner={couplePartner}
                           blackModalToggle={this.toggleBlackPopup}
                           t={t}
+                          flashCpl={flashCpl}
                         />
                       </div>
                     </div>
@@ -367,6 +425,12 @@ class SettingsPage extends Component {
                             }
                             t={t}
                           />
+
+                          {errors.profilePic && (
+                            <label className="errorLbl">
+                              {errors.profilePic}
+                            </label>
+                          )}
                           <Photos
                             isPrivate={true}
                             showEditor={this.toggleImgEditorPopup}
@@ -390,6 +454,7 @@ class SettingsPage extends Component {
                               this.setValue({ name, value, updateSettings })
                             }
                             t={t}
+                            errors={errors}
                           />
                           <AppSettings
                             setValue={({ name, value }) =>

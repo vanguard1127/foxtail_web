@@ -82,11 +82,11 @@ class Preferences extends Component {
           </div>
           <div className="col-md-6">
             <Dropdown
-              type={"interestedin"}
+              type={"interestedIn"}
               onChange={el =>
                 setValue({
                   name: "interestedIn",
-                  value: el
+                  value: el.map(e => e.value)
                 })
               }
               value={interestedIn}

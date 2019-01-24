@@ -1,5 +1,10 @@
 import React from "react";
 import Select from "../common/Select";
+import i18n from "../../i18n";
+
+const setLang = lang => {
+  i18n.changeLanguage(lang);
+};
 
 const AppSettings = ({
   setValue,
@@ -16,11 +21,12 @@ const AppSettings = ({
         <div className="col-md-12">
           <div className="item">
             <Select
-              onChange={e => {
-                setValue({
+              onChange={async e => {
+                await setValue({
                   name: "lang",
                   value: e.value
                 });
+                setLang(e.value);
               }}
               label="Language"
               defaultOptionValue={lang}

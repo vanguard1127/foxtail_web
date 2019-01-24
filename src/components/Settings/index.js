@@ -1,17 +1,32 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { withNamespaces } from "react-i18next";
+import { toast } from "react-toastify";
 import { Query } from "react-apollo";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
 
 import SettingsPage from "./SettingsPage";
-
+//TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends Component {
+  componentDidMount() {
+    if (!this.props.session.currentuser.isProfileOK) {
+      toast.error("Please complete your profile first.", {
+        position: toast.POSITION.TOP_CENTER
+      });
+    }
+  }
   render() {
     const { session, refetch, t } = this.props;
-
+    let isCouple = false;
+    let isInitial = false;
+    if (this.props.location.state) {
+      isCouple = this.props.location.state.couple;
+    }
+    if (this.props.location.state) {
+      isInitial = this.props.location.state.initial;
+    }
     return (
       <Fragment>
         <section className="breadcrumb settings">
@@ -43,10 +58,16 @@ class Settings extends Component {
             }
 
             const settings = data.getSettings;
-            console.log("settings", settings.photos);
+
             return (
               <Fragment>
-                <SettingsPage settings={settings} refetchUser={refetch} t={t} />
+                <SettingsPage
+                  settings={settings}
+                  refetchUser={refetch}
+                  t={t}
+                  isCouple={isCouple}
+                  isInitial={isInitial}
+                />
               </Fragment>
             );
           }}

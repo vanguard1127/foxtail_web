@@ -755,6 +755,7 @@ export const GET_SETTINGS = gql`
       likedOnly
       vibrateNotify
       profilePic
+      profilePicUrl
       couplePartner
       includeMsgs
       users {
