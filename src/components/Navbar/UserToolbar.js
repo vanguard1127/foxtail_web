@@ -7,7 +7,7 @@ import MyAccountItem from "./MyAccountItem";
 var slapAudio = new Audio(require("../../docs/slap.wav"));
 
 let unsubscribe = null;
-const UserToolbar = ({ currentuser, href, t }) => {
+const UserToolbar = ({ currentuser, href, t, setRef }) => {
   return (
     <Query query={GET_COUNTS} fetchPolicy="cache-and-network">
       {({ data, loading, error, subscribeToMore }) => {
@@ -76,10 +76,12 @@ const UserToolbar = ({ currentuser, href, t }) => {
               count={msgsCount}
               active={href === "inbox" && true}
               t={t}
+              data-name="inbox"
+              ref={setRef}
             />
             <NoticesItem count={noticesCount} />
             <div className="user hidden-mobile">
-              <MyAccountItem currentuser={currentuser} />
+              <MyAccountItem currentuser={currentuser} setRef={setRef} />
             </div>
           </div>
         );
