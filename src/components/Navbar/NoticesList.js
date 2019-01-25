@@ -71,6 +71,7 @@ class NoticesList extends Component {
     });
   };
 
+  //TODO: Ensure this causes instant update to nums
   updateSeen = numSeen => {
     const { client } = this.props;
     const { getCounts } = client.readQuery({

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Logout from "./LogoutLink";
 
-const MyAccountMenu = ({ currentuser, t }) => {
+const MyAccountMenu = ({ t }) => {
   return (
     <div className="toggle">
       <div className="dropdown hidden-mobile open">

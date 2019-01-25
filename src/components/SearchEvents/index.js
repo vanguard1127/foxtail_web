@@ -32,21 +32,6 @@ class SearchEvents extends Component {
     all: true
   };
 
-  clearState = () => {
-    this.setState({
-      skip: 0,
-      visible: false,
-      blockModalVisible: false,
-      shareModalVisible: false,
-      event: null,
-      lat: this.props.location.lat,
-      long: this.props.location.long,
-      maxDistance: 50,
-      location: "My Location",
-      all: true
-    });
-  };
-
   showModal = () => {
     this.setState({ visible: true });
   };
@@ -172,7 +157,6 @@ class SearchEvents extends Component {
               location={location}
               setLocationValues={this.setLocationValues}
               handleChangeSelect={e => this.handleChangeSelect(e)}
-              reset={this.clearState}
               maxDistance={maxDistance}
               t={t}
             />
@@ -193,8 +177,7 @@ class SearchEvents extends Component {
                   !data.searchEvents ||
                   data.searchEvents.length === 0
                 ) {
-                  // <EmptyScreen message={t("noeventavailable")} />
-                  return <div>{t("noeventavailable")}</div>;
+                  return <EmptyScreen message={t("noeventavailable")} />;
                 }
 
                 return (

@@ -8,7 +8,6 @@ import {
 import { Query } from "react-apollo";
 import Spinner from "./Spinner";
 import MembersList from "./MembersList";
-import Menu from "../common/Menu";
 const LIMIT = 5;
 class MembersDropdown extends Component {
   state = { visible: false };
@@ -36,44 +35,25 @@ class MembersDropdown extends Component {
 
             const members = data.getFriends;
             return (
-              <Menu menuOpener={clickComponent}>
-                <div className="invite-member open">
-                  <div className="content">
-                    <div className="head">Invite Members</div>
-                    <div className="inv-item">
-                      <div className="select-checkbox">
-                        <input type="checkbox" id="cbox" checked="" />
-                        <label for="cbox">
-                          <span />
-                        </label>
-                      </div>
-                      <div className="avatar">
-                        <a href="#">
-                          <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
-                        </a>
-                      </div>
-                      <span className="username">Chris</span>
-                    </div>
-                    <div className="inv-item">
-                      <div className="select-checkbox">
-                        <input type="checkbox" id="cbox" checked="" />
-                        <label for="cbox">
-                          <span />
-                        </label>
-                      </div>
-                      <div className="avatar">
-                        <a href="#">
-                          <img src="assets/img/usr/avatar/1004@2x.png" alt="" />
-                        </a>
-                      </div>
-                      <span className="username">Meggie</span>
-                    </div>
-                    <div className="apply-content">
-                      <span>Invite</span>
-                    </div>
-                  </div>
-                </div>
-              </Menu>
+              <Dropdown
+                overlay={
+                  <MembersList
+                    members={members}
+                    fetchMore={fetchMore}
+                    listType={listType}
+                    targetID={targetID}
+                    targetType={targetType}
+                    close={() => this.handleVisibleChange(false)}
+                    t={t}
+                  />
+                }
+                trigger={["click"]}
+                placement="bottomRight"
+                onVisibleChange={this.handleVisibleChange}
+                visible={this.state.visible}
+              >
+                <span>{clickComponent}</span>
+              </Dropdown>
             );
           }}
         </Query>

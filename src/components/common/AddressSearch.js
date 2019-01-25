@@ -46,14 +46,27 @@ class AddressSearch extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
           return (
-            <div className="dropdown">
+            <div className="search">
               {/* <label>Location</label> */}
-              <input
-                {...getInputProps({
-                  placeholder,
-                  className: "location-search-input"
-                })}
-              />
+              <div style={{ display: "flex" }}>
+                <input
+                  {...getInputProps({
+                    placeholder,
+                    className: "location-search-input"
+                  })}
+                />
+
+                <span
+                  style={{
+                    flex: "1",
+                    backgroundColor: "transparent",
+                    marginLeft: "-7%"
+                  }}
+                  onClick={() => this.handleChange("My Location")}
+                >
+                  {t("Reset")}
+                </span>
+              </div>
               <div className="autocomplete-dropdown-container">
                 {loading && <div>{t("common:Loading") + "..."}</div>}
                 {suggestions.map(suggestion => {

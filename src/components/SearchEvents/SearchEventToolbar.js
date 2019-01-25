@@ -5,7 +5,6 @@ const SearchEventToolbar = ({
   location,
   setLocationValues,
   handleChangeSelect,
-  reset,
   maxDistance,
   t
 }) => {
@@ -17,7 +16,6 @@ const SearchEventToolbar = ({
             location={location}
             setLocationValues={setLocationValues}
             handleChangeSelect={handleChangeSelect}
-            reset={reset}
             maxDistance={maxDistance}
             t={t}
           />

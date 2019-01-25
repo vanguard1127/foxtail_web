@@ -1,69 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import MyAccountMenu from "./MyAccountMenu";
-
-class MyAccountItem extends Component {
-  constructor(props) {
-    super(props);
-    this.wrapperRef = React.createRef();
+import Menu from "../common/Menu";
+const MyAccountItem = ({ currentuser }) => {
+  if (currentuser === undefined) {
+    return null;
   }
-
-  shouldComponentUpdate() {
-    const { currentuser } = this.props;
-
-    if (currentuser === undefined) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  state = {
-    menuOpen: false
-  };
-
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-
-  handleClickOutside = event => {
-    if (
-      this.wrapperRef &&
-      !this.wrapperRef.current.contains(event.target) &&
-      this.state.menuOpen
-    ) {
-      this.setState({ menuOpen: false });
-    }
-  };
-
-  render() {
-    const { menuOpen } = this.state;
-    const { currentuser, t } = this.props;
-
-    if (currentuser === undefined) {
-      return null;
-    }
-    return (
-      <span
-        onClick={() => this.setState({ menuOpen: !menuOpen })}
-        ref={this.wrapperRef}
-      >
-        <span className="avatar">
-          <img src={currentuser.profilePic} alt="" />
+  return (
+    <Menu
+      menuOpener={
+        <span>
+          <span className="avatar">
+            <img src={currentuser.profilePic} alt="" />
+          </span>
+          <span className="username">{currentuser.username}</span>
         </span>
-        <span className="username">{currentuser.username}</span>
-        {menuOpen && (
-          <MyAccountMenu
-            close={() => this.setState({ menuOpen: false })}
-            t={t}
-          />
-        )}
-      </span>
-    );
-  }
-}
+      }
+    >
+      <MyAccountMenu />
+    </Menu>
+  );
+};
 
 export default MyAccountItem;

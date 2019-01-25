@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from "../../queries";
 import { Query } from "react-apollo";
 import NoticesItem from "./NoticesItem";
@@ -70,6 +69,7 @@ const UserToolbar = ({ currentuser, href, t }) => {
             })
           ];
         }
+
         return (
           <div className="function">
             <InboxItem
@@ -77,10 +77,9 @@ const UserToolbar = ({ currentuser, href, t }) => {
               active={href === "inbox" && true}
               t={t}
             />
-            <NoticesItem count={noticesCount} t={t} />
-
+            <NoticesItem count={noticesCount} />
             <div className="user hidden-mobile">
-              <MyAccountItem currentuser={currentuser} t={t} />
+              <MyAccountItem currentuser={currentuser} />
             </div>
           </div>
         );

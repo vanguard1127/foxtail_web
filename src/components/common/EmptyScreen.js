@@ -6,7 +6,9 @@ const EmptyScreen = ({ message }) => (
       display: "flex",
       flex: "1",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
+      float: "left",
+      width: "100%"
     }}
   >
     {message}

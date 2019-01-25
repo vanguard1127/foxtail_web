@@ -636,7 +636,6 @@ export const GET_NOTIFICATIONS = gql`
         }
       }
       total
-      unseen
     }
   }
 `;

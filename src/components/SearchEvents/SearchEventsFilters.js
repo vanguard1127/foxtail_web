@@ -8,7 +8,6 @@ const SearchEventsFilters = ({
   setLocationValues,
   handleChangeSelect,
   maxDistance,
-  reset,
   t
 }) => {
   return (
@@ -34,9 +33,6 @@ const SearchEventsFilters = ({
           type={"(cities)"}
           placeholder={t("srchcity") + "..."}
         />
-        <span href={null} onClick={() => reset()}>
-          {t("Reset")}
-        </span>
       </div>
     </div>
   );

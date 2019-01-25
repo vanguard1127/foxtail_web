@@ -145,7 +145,9 @@ class SettingsPage extends Component {
                 }
               }
             })
+            .then(() => this.props.refetchUser())
             .catch(res => {
+              console.log(res);
               const errors = res.graphQLErrors.map(error => {
                 return error.message;
               });
@@ -164,7 +166,10 @@ class SettingsPage extends Component {
             }
           }
         })
+        .then(() => this.props.refetchUser())
         .catch(res => {
+          console.log(res);
+
           const errors = res.graphQLErrors.map(error => {
             return error.message;
           });
@@ -173,6 +178,8 @@ class SettingsPage extends Component {
           this.setState({ errors });
         });
     }
+    //TODO:REfetchs
+    console.log(this.props);
   };
 
   setLocationValues = ({ lat, long, address, updateSettings }) => {

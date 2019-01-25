@@ -3,6 +3,7 @@ import { Query } from "react-apollo";
 import { GET_MESSAGES, NEW_MESSAGE_SUB } from "../../queries";
 import Waypoint from "react-waypoint";
 import Spinner from "../common/Spinner";
+import EmptyScreen from "../common/EmptyScreen";
 import MessageList from "./MessageList";
 
 const LIMIT = 6;
@@ -111,7 +112,7 @@ class ChatContent extends Component {
               );
             }
             if (!data.getMessages) {
-              return <div>{t("commmon:nomsgs")}</div>;
+              return <EmptyScreen message={t("commmon:nomsgs")} />;
             }
 
             return (

@@ -17,6 +17,7 @@ class Settings extends Component {
       });
     }
   }
+  //TODO: Set time below
   render() {
     const { session, refetch, t } = this.props;
     let isCouple = false;
