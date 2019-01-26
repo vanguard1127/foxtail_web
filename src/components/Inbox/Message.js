@@ -1,6 +1,11 @@
 import React from "react";
 import moment from "moment";
-
+const preventContextMenu = e => {
+  e.preventDefault();
+  alert(
+    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
+  );
+};
 const Message = React.forwardRef(({ message, currentUserID, t }, ref) => {
   const messageText =
     message.type === "msg"
@@ -22,6 +27,7 @@ const Message = React.forwardRef(({ message, currentUserID, t }, ref) => {
               : "assets/img/usr/avatar/1001@2x.png"
           }
           alt=""
+          onContextMenu={preventContextMenu}
         />
       </div>
       <div className="bubble">{messageText}</div>

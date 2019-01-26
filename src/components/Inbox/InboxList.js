@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from "react";
 import TimeAgo from "../../utils/TimeAgo";
-
+const preventContextMenu = e => {
+  e.preventDefault();
+  alert(
+    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
+  );
+};
 class InboxList extends Component {
   state = { chatID: null };
 
@@ -12,7 +17,7 @@ class InboxList extends Component {
     } else {
       title = item.fromUser.username;
     }
-    console.log("INVOX", item.profilePic);
+
     return (
       <div className="item unread" key={item.id}>
         <span onClick={() => readChat(item.chatID, item.unSeenCount)}>
@@ -24,6 +29,7 @@ class InboxList extends Component {
                   : "assets/img/usr/avatar/1001@2x.png"
               }
               alt=""
+              onContextMenu={preventContextMenu}
             />
           </span>
           <div className="data">

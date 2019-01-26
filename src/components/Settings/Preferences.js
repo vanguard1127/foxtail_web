@@ -3,8 +3,6 @@ import DistanceSlider from "../common/DistanceSlider";
 import Dropdown from "../common/Dropdown";
 import AgeRange from "../common/AgeRange";
 import AddressSearch from "../common/AddressSearch";
-const milesToKilometers = miles => miles / 0.621371;
-const kilometersToMiles = kilometers => kilometers * 0.621371;
 class Preferences extends Component {
   render() {
     const { values, setValue, setLocationValues, t } = this.props;
@@ -15,16 +13,7 @@ class Preferences extends Component {
       interestedIn,
       location
     } = values;
-    const distanceSliderMax =
-      distanceMetric === "mi" ? 100 : Math.floor(milesToKilometers(100));
 
-    const convertFunction =
-      "mi" === distanceMetric ? kilometersToMiles : milesToKilometers;
-    // The input uses original metric
-    // But displays and sends the selected metric
-    let convertedDistance = distance;
-
-    convertedDistance = Math.floor(convertFunction(distance));
     const lang = localStorage.getItem("i18nextLng");
 
     return (
@@ -43,6 +32,7 @@ class Preferences extends Component {
                 })
               }
               t={t}
+              metric={distanceMetric}
             />
           </div>
           <div className="col-md-6">

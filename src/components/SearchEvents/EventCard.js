@@ -74,10 +74,11 @@ class EventCard extends Component {
               </span>
             </div>
             <div className="functions">
-              <div className="btn go-detail">
-                <span onClick={() => this.props.history.push("/events/" + id)}>
-                  {t("eventdetail")}
-                </span>
+              <div
+                className="btn go-detail"
+                onClick={() => this.props.history.push("/events/" + id)}
+              >
+                <span>{t("eventdetail")}</span>
               </div>
               <div className="btn share">
                 <span />

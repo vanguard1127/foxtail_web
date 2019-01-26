@@ -246,6 +246,7 @@ class SearchCriteria extends Component {
                                         })
                                       }
                                       t={t}
+                                      metric={distanceMetric}
                                     />
                                   </div>
                                   <div className="col-md-6">

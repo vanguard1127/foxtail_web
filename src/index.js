@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
@@ -8,6 +8,7 @@ import {
   withRouter
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import ReactJoyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/";
@@ -18,6 +19,7 @@ import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import withSession from "./components/withSession";
 import "./i18n";
+import "./Joyride";
 import Footer from "./components/Footer/";
 
 import { ApolloProvider } from "react-apollo";
@@ -225,7 +227,13 @@ const Wrapper = withRouter(props => {
   }
   let showFooter =
     location.pathname && location.pathname.match(/^\/inbox/) === null;
-
+  // if (true) {
+  //   return (
+  //     <div>
+  //       <JoyBody showFooter={showFooter} />
+  //     </div>
+  //   );
+  // }
   return (
     <div>
       <Body showFooter={showFooter} />
@@ -266,6 +274,169 @@ const Body = ({ showFooter }) => (
     <ToastContainer />
   </div>
 );
+
+class JoyBody extends Component {
+  members;
+  profile;
+  events;
+  inbox;
+  myaccount;
+  constructor(props) {
+    super(props);
+    this.state = {
+      run: false,
+      steps: [],
+      stepIndex: 0
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      run: true,
+      steps: [
+        {
+          target: this.members,
+          content: (
+            <div>
+              You can interact with your own components through the spotlight.
+              <br />
+              Click the menu above!
+            </div>
+          ),
+          textAlign: "center",
+          placement: "bottom",
+          disableBeacon: true,
+          disableOverlayClose: true,
+          hideCloseButton: true,
+          hideFooter: true,
+          spotlightClicks: true,
+          styles: {
+            options: {
+              zIndex: 10000
+            }
+          },
+          title: "Menu"
+        },
+        {
+          target: this.events,
+          content: (
+            <div>
+              You can interact with your own components through the spotlight.
+              <br />
+              Click the menu above!
+            </div>
+          ),
+          textAlign: "center",
+          placement: "bottom",
+
+          styles: {
+            options: {
+              zIndex: 10000
+            }
+          },
+          title: "Events"
+        }
+      ]
+    });
+  }
+
+  handleNext = e => {
+    e.preventDefault();
+
+    this.setState({
+      stepIndex: this.state.stepIndex + 1
+    });
+  };
+
+  handleJoyrideCallback = data => {
+    const { action, index, type, status } = data;
+
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      this.setState({ run: false, stepIndex: 0 });
+    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1);
+
+      // Update state to advance the tour
+      this.setState({
+        stepIndex
+      });
+    }
+  };
+
+  setRef = el => {
+    if (!el) return;
+    const { dataset } = el;
+
+    this[dataset.name] = el;
+  };
+  render() {
+    const { showFooter } = this.props;
+    const { run, steps, stepIndex } = this.state;
+
+    return (
+      <div
+        className="layout"
+        style={{
+          height: "auto",
+          margin: "0",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh"
+        }}
+      >
+        <ReactJoyride
+          continuous
+          run={run}
+          steps={steps}
+          stepIndex={stepIndex}
+          scrollToFirstStep
+          showProgress
+          showSkipButton
+          callback={this.handleJoyrideCallback}
+        />
+        <header>
+          <NavBarWithSession
+            setRef={this.setRef}
+            handleNext={this.handleNext}
+          />
+        </header>
+        <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
+          <Switch>
+            <Route
+              path="/members"
+              render={() => <ProfileSearch setRef={this.setRef} />}
+              exact
+            />
+            <Route
+              path="/events"
+              render={() => <SearchEvents setRef={this.setRef} />}
+              exact
+            />
+            <Route
+              path="/events/:id"
+              render={() => <EventPage setRef={this.setRef} />}
+            />
+            <Route
+              path="/members/:id"
+              render={() => <ProfilePage setRef={this.setRef} />}
+            />
+            <Route path="/inbox/:chatID" component={InboxPage} />
+            <Route
+              path="/inbox"
+              render={() => <InboxPage setRef={this.setRef} />}
+            />
+            <Route path="/settings" component={Settings} />
+
+            <Redirect to="/" />
+          </Switch>
+        </main>
+        {showFooter && <Footer />}
+        <ToastContainer />
+      </div>
+    );
+  }
+}
 
 ReactDOM.render(
   <ApolloProvider client={client}>

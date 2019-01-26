@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 // First way to import
 import { PacmanLoader } from "react-spinners";
-import { EventLoader, ProfileLoader } from "../common/Skeletons";
+import { EventLoader, ProfileLoader, InboxLoader } from "../common/Skeletons";
 
 class Spinner extends Component {
   constructor(props) {
@@ -58,6 +58,17 @@ class Spinner extends Component {
             </div>
           </div>
         </section>
+      );
+    } else if (page === "inbox") {
+      return (
+        <div className="conversations">
+          <div className="item unread" key={"1"}>
+            <InboxLoader />
+          </div>
+          <div className="item unread" key={"2"}>
+            <InboxLoader />
+          </div>
+        </div>
       );
     } else if (page === "searchEvents") {
       return (

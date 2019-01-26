@@ -1,5 +1,11 @@
 import React from "react";
 import OwlCarousel from "react-owl-carousel";
+const preventContextMenu = e => {
+  e.preventDefault();
+  alert(
+    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
+  );
+};
 const PhotoSlider = ({ photos, isPublic, t }) => {
   return (
     <div
@@ -42,7 +48,7 @@ const PhotoSlider = ({ photos, isPublic, t }) => {
         {photos.map(photo => {
           return (
             <div className="item" key={photo.id}>
-              <img src={photo.url} alt="" />
+              <img src={photo.url} alt="" onContextMenu={preventContextMenu} />
             </div>
           );
         })}

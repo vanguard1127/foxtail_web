@@ -1,5 +1,11 @@
 import React from "react";
 import moment from "moment";
+const preventContextMenu = e => {
+  e.preventDefault();
+  alert(
+    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
+  );
+};
 const EventCreator = ({ ownerProfile, createdAt, history, t }) => {
   return (
     <div className="created">
@@ -12,6 +18,7 @@ const EventCreator = ({ ownerProfile, createdAt, history, t }) => {
                 : "/assets/img/usr/avatar/1003@2x.png"
             }
             alt=""
+            onContextMenu={preventContextMenu}
           />
         </span>
         <div className="detail">

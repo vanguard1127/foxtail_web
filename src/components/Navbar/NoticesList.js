@@ -113,7 +113,12 @@ class NoticesList extends Component {
   componentWillUnmount() {
     unsubscribe();
   }
-
+  preventContextMenu = e => {
+    e.preventDefault();
+    alert(
+      "Right-click disabled: Saving images on Foxtail will result in your account being banned."
+    );
+  };
   render() {
     const { read, seen, notificationIDs } = this.state;
     const { t } = this.props;
@@ -187,6 +192,7 @@ class NoticesList extends Component {
                                 <img
                                   src={notif.fromProfile.profilePic}
                                   alt=""
+                                  onContextMenu={this.preventContextMenu}
                                 />
                               </span>
                               <div>

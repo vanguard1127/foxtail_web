@@ -66,7 +66,6 @@ class NavbarAuth extends Component {
   };
 
   toggleMobileMenu = () => {
-    console.log("DDD");
     this.setState({ mobileMenu: !this.state.mobileMenu });
   };
   componentDidMount() {
