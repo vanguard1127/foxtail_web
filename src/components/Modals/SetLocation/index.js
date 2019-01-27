@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { UPDATE_SETTINGS } from "../../../queries";
 import { Mutation } from "react-apollo";
 import AddressSearch from "../../common/AddressSearch";
+import ErrorBoundary from "../../common/ErrorBoundary";
 import { withNamespaces } from "react-i18next";
 
 class SetLocationModal extends Component {
@@ -64,35 +65,41 @@ class SetLocationModal extends Component {
                   <div className="row">
                     <div className="offset-md-3 col-md-6">
                       <div className="modal-popup photo-verification">
-                        <div className="m-head">
-                          <span className="heading">{t("common:setloc")}</span>
-                          <span className="close" onClick={close} />
-                        </div>
-                        <div className="m-body">
-                          {t("setcity")}:
-                          <AddressSearch
-                            style={{ width: "100%" }}
-                            setLocationValues={this.setLocationValues}
-                            address={address}
-                            type={"(cities)"}
-                            placeholder={t("common:setloc") + "..."}
-                          />
-                          {lat !== null ? (
-                            <button
-                              onClick={() => this.handleSubmit(updateSettings)}
-                              disabled={lat === null}
-                            >
-                              {t("Save")}
-                            </button>
-                          ) : null}
-                        </div>
-                        {!isBlackMember && (
-                          <small>
-                            {t("compmsg")}
-                            <br />
-                            {t("compsecmsg")}
-                          </small>
-                        )}
+                        <ErrorBoundary>
+                          <div className="m-head">
+                            <span className="heading">
+                              {t("common:setloc")}
+                            </span>
+                            <span className="close" onClick={close} />
+                          </div>
+                          <div className="m-body">
+                            {t("setcity")}:
+                            <AddressSearch
+                              style={{ width: "100%" }}
+                              setLocationValues={this.setLocationValues}
+                              address={address}
+                              type={"(cities)"}
+                              placeholder={t("common:setloc") + "..."}
+                            />
+                            {lat !== null ? (
+                              <button
+                                onClick={() =>
+                                  this.handleSubmit(updateSettings)
+                                }
+                                disabled={lat === null}
+                              >
+                                {t("Save")}
+                              </button>
+                            ) : null}
+                          </div>
+                          {!isBlackMember && (
+                            <small>
+                              {t("compmsg")}
+                              <br />
+                              {t("compsecmsg")}
+                            </small>
+                          )}
+                        </ErrorBoundary>
                       </div>
                     </div>
                   </div>

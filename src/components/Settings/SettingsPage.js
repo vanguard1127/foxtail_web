@@ -328,7 +328,7 @@ class SettingsPage extends Component {
       flashCpl
     } = this.state;
 
-    const { userID, t } = this.props;
+    const { userID, t, ErrorBoundary } = this.props;
     let aboutErr = "";
     if (about === "") {
       aboutErr = "Please fill in your bio";
@@ -376,83 +376,94 @@ class SettingsPage extends Component {
                   <div className="row">
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
-                        <ProfilePic profilePic={profilePicUrl} />
-                        <Menu
-                          coupleModalToggle={this.toggleCouplesPopup}
-                          couplePartner={couplePartner}
-                          blackModalToggle={this.toggleBlackPopup}
-                          t={t}
-                          flashCpl={flashCpl}
-                        />
+                        <ErrorBoundary>
+                          {" "}
+                          <ProfilePic profilePic={profilePicUrl} />
+                          <Menu
+                            coupleModalToggle={this.toggleCouplesPopup}
+                            couplePartner={couplePartner}
+                            blackModalToggle={this.toggleBlackPopup}
+                            t={t}
+                            flashCpl={flashCpl}
+                          />
+                        </ErrorBoundary>
                       </div>
                     </div>
                     <div className="col-md-12 col-lg-9">
                       <div className="page mtop">
                         <div className="form">
-                          <Preferences
-                            values={{
-                              distance,
-                              distanceMetric,
-                              ageRange,
-                              interestedIn,
-                              location
-                            }}
-                            setValue={({ name, value }) =>
-                              this.setValue({ name, value, updateSettings })
-                            }
-                            setLocationValues={({ lat, long, address }) =>
-                              this.setLocationValues({
-                                lat,
-                                long,
-                                address,
-                                updateSettings
-                              })
-                            }
-                            t={t}
-                          />
-                          <Photos
-                            isPrivate={false}
-                            showEditor={this.toggleImgEditorPopup}
-                            photos={publicPics}
-                            setProfilePic={({ key, url }) =>
-                              this.setProfilePic({
-                                key,
-                                url,
-                                updateSettings
-                              })
-                            }
-                            deleteImg={({ file, key }) =>
-                              this.handlePhotoListChange({
-                                file,
-                                key,
-                                isPrivate: false,
-                                isDeleted: true,
-                                updateSettings
-                              })
-                            }
-                            t={t}
-                          />
-
+                          <ErrorBoundary>
+                            {" "}
+                            <Preferences
+                              values={{
+                                distance,
+                                distanceMetric,
+                                ageRange,
+                                interestedIn,
+                                location
+                              }}
+                              setValue={({ name, value }) =>
+                                this.setValue({ name, value, updateSettings })
+                              }
+                              setLocationValues={({ lat, long, address }) =>
+                                this.setLocationValues({
+                                  lat,
+                                  long,
+                                  address,
+                                  updateSettings
+                                })
+                              }
+                              t={t}
+                            />
+                          </ErrorBoundary>
+                          <ErrorBoundary>
+                            {" "}
+                            <Photos
+                              isPrivate={false}
+                              showEditor={this.toggleImgEditorPopup}
+                              photos={publicPics}
+                              setProfilePic={({ key, url }) =>
+                                this.setProfilePic({
+                                  key,
+                                  url,
+                                  updateSettings
+                                })
+                              }
+                              deleteImg={({ file, key }) =>
+                                this.handlePhotoListChange({
+                                  file,
+                                  key,
+                                  isPrivate: false,
+                                  isDeleted: true,
+                                  updateSettings
+                                })
+                              }
+                              t={t}
+                            />
+                          </ErrorBoundary>
                           {errors.profilePic && (
                             <label className="errorLbl">
                               {errors.profilePic}
                             </label>
                           )}
-                          <Photos
-                            isPrivate={true}
-                            showEditor={this.toggleImgEditorPopup}
-                            photos={privatePics}
-                            deleteImg={({ file, key }) =>
-                              this.handlePhotoListChange({
-                                file,
-                                key,
-                                isPrivate: true,
-                                isDeleted: true,
-                                updateSettings
-                              })
-                            }
-                            t={t}
-                          />
+                          <ErrorBoundary>
+                            {" "}
+                            <Photos
+                              isPrivate={true}
+                              showEditor={this.toggleImgEditorPopup}
+                              photos={privatePics}
+                              deleteImg={({ file, key }) =>
+                                this.handlePhotoListChange({
+                                  file,
+                                  key,
+                                  isPrivate: true,
+                                  isDeleted: true,
+                                  updateSettings
+                                })
+                              }
+                              t={t}
+                            />
+                          </ErrorBoundary>
                           <MyProfile
                             desires={desires}
                             about={about}
@@ -462,24 +473,30 @@ class SettingsPage extends Component {
                             }
                             t={t}
                             errors={errors}
+                            ErrorBoundary={ErrorBoundary}
                           />
-                          <AppSettings
-                            setValue={({ name, value }) =>
-                              this.setValue({ name, value, updateSettings })
-                            }
-                            values={{
-                              visible,
-                              lang,
-                              emailNotify,
-                              showOnline,
-                              likedOnly
-                            }}
-                            t={t}
-                          />
-                          <Verifications
-                            openPhotoVerPopup={this.openPhotoVerPopup}
-                            t={t}
-                          />
+                          <ErrorBoundary>
+                            {" "}
+                            <AppSettings
+                              setValue={({ name, value }) =>
+                                this.setValue({ name, value, updateSettings })
+                              }
+                              values={{
+                                visible,
+                                lang,
+                                emailNotify,
+                                showOnline,
+                                likedOnly
+                              }}
+                              t={t}
+                            />
+                          </ErrorBoundary>
+                          <ErrorBoundary>
+                            <Verifications
+                              openPhotoVerPopup={this.openPhotoVerPopup}
+                              t={t}
+                            />
+                          </ErrorBoundary>
                         </div>
                       </div>
                     </div>
@@ -506,6 +523,7 @@ class SettingsPage extends Component {
                         uploadToS3={this.uploadToS3}
                         signS3={signS3}
                         close={this.toggleImgEditorPopup}
+                        ErrorBoundary={ErrorBoundary}
                       />
                     );
                   }}
@@ -518,12 +536,14 @@ class SettingsPage extends Component {
                   onChange={e => this.toggleDesires(e, updateSettings)}
                   desires={desires}
                   updateSettings={updateSettings}
+                  ErrorBoundary={ErrorBoundary}
                 />
               )}
               {showPhotoVerPopup && (
                 <SubmitPhotoModal
                   closePopup={() => this.togglePhotoVerPopup()}
                   type={photoSubmitType}
+                  ErrorBoundary={ErrorBoundary}
                 />
               )}
               {showCouplePopup && (
@@ -535,6 +555,7 @@ class SettingsPage extends Component {
                   username={couplePartner}
                   includeMsgs={includeMsgs}
                   setPartnerID={this.setPartnerID}
+                  ErrorBoundary={ErrorBoundary}
                 />
               )}
               {showBlackPopup && (
@@ -542,6 +563,7 @@ class SettingsPage extends Component {
                   close={() => this.toggleBlackPopup()}
                   userID={userID}
                   refetchUser={this.props.refetch}
+                  ErrorBoundary={ErrorBoundary}
                 />
               )}
             </section>

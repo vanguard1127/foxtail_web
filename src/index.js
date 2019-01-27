@@ -7,7 +7,7 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import ReactJoyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar/";
@@ -17,10 +17,11 @@ import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
+import ErrorBoundary from "./components/common/ErrorBoundary";
 import withSession from "./components/withSession";
 import "./i18n";
-import "./Joyride";
 import Footer from "./components/Footer/";
+import tokenHandler from "./utils/tokenHandler";
 
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";
@@ -32,19 +33,17 @@ import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 
+//FOR LOCAL
 let server = "localhost:4444";
-//let server = "prod.foxtailapi.com";
+let httpurl = `http://${server}/graphql`;
+let HTTPSurl = `http://${server}`;
 
-// console.log(process.env.REACT_APP_LOCAL_SERVER);
-// if (process.env.REACT_APP_LOCAL_SERVER === "true") {
-//   server = ;
-// }
+//FOR DEV
+// let server = "prod.foxtailapi.com";
+// let httpurl = `https://${server}/graphql`;
+// let HTTPSurl = `https://${server}`;
 
 let wsurl = `ws://${server}/subscriptions`;
-let httpurl = `http://${server}/graphql`;
-//let httpurl = `https://${server}/graphql`;
-let HTTPSurl = `http://${server}`;
-//let HTTPSurl = `https://${server}`;
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
@@ -131,72 +130,28 @@ const stateLink = withClientState({
   defaults: defaultState
 });
 
-//TODO: find what used the UNAUTH erro and remvoe that package
 const errorLink = onError(
   ({ graphQLErrors, networkError, response, operation, forward }) => {
-    if (graphQLErrors)
+    if (graphQLErrors) {
       graphQLErrors.map(({ message, path }) => {
         if (~message.indexOf("Client")) {
-          response.errors = null;
-          alert(message.replace("Client:", "").trim());
+          toast.warn(message.replace("Client:", "").trim(), {
+            position: toast.POSITION.TOP_CENTER
+          });
+          //TODO: prevent unhandled exception
           return null;
         } else if (~message.indexOf("authenticated")) {
-          const refreshToken = localStorage.getItem("refreshToken");
-          if (!refreshToken) {
-            return;
-          }
-          const axios = require("axios");
-          console.log("TOKEN REFREHS");
-          axios
-            .post(HTTPSurl + "/refresh", {
-              refreshToken
-            })
-            .then(function(response) {
-              const newTokens = response.data;
-              if (
-                newTokens &&
-                newTokens.token !== undefined &&
-                newTokens.refresh !== undefined
-              ) {
-                localStorage.setItem("token", newTokens.token);
-                localStorage.setItem("refreshToken", newTokens.refresh);
-                operation.setContext(context => ({
-                  ...context,
-                  headers: {
-                    ...context.headers,
-                    authorization: `Bearer ${newTokens.token}`,
-                    "x-refresh-token": newTokens.refresh
-                  }
-                }));
-              } else {
-                localStorage.removeItem("token");
-
-                localStorage.removeItem("refreshToken");
-              }
-
-              return forward(operation);
-            })
-            .catch(function(error) {
-              // handle error
-              console.log("Token Refresh Error:", error);
-            });
+          //TODO: Does this work?
+          tokenHandler({ operation, forward, HTTPSurl });
         } else {
-          console.error(message);
-          // popmsg.warn(
-          //   "An error has occured. We will have it fixed soon. Thanks for your patience."
-          // );
+          console.error("APP ERROR:::", message);
         }
-        //TODO: Only allow this in dev mode
-        // notification["error"]({
-        //   message: "Oops an Error",
-        //   placement: "bottomLeft",
-        //   description: `Message: ${message}, Path: ${path}. Please report this issue so we can fix it.`
-        // });
         return null;
       });
-    //TODO:Decipher btwn 500 and 400 errors
+    }
     if (networkError) {
-      console.error(networkError);
+      //TODO:Decipher btwn 500 and 400 errors
+      console.error("NETWORK:::", networkError);
     }
     return null;
   }
@@ -259,13 +214,30 @@ const Body = ({ showFooter }) => (
     </header>
     <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
       <Switch>
-        <Route path="/members" component={ProfileSearch} exact />
-        <Route path="/events" component={SearchEvents} exact />
-        <Route path="/events/:id" component={EventPage} />
-        <Route path="/members/:id" component={ProfilePage} />
+        <Route
+          path="/members"
+          render={() => <ProfileSearch ErrorBoundary={ErrorBoundary} />}
+          exact
+        />
+        <Route
+          path="/events"
+          render={() => <SearchEvents ErrorBoundary={ErrorBoundary} />}
+          exact
+        />
+        <Route
+          path="/events/:id"
+          render={() => <EventPage ErrorBoundary={ErrorBoundary} />}
+        />
+        <Route
+          path="/members/:id"
+          render={() => <ProfilePage ErrorBoundary={ErrorBoundary} />}
+        />
         <Route path="/inbox/:chatID" component={InboxPage} />
         <Route path="/inbox" component={InboxPage} />
-        <Route path="/settings" component={Settings} />
+        <Route
+          path="/settings"
+          render={() => <Settings ErrorBoundary={ErrorBoundary} />}
+        />
 
         <Redirect to="/" />
       </Switch>
@@ -275,6 +247,7 @@ const Body = ({ showFooter }) => (
   </div>
 );
 
+const JoyNavBarWithSession = withSession()(Navbar);
 class JoyBody extends Component {
   members;
   profile;
@@ -396,7 +369,7 @@ class JoyBody extends Component {
           callback={this.handleJoyrideCallback}
         />
         <header>
-          <NavBarWithSession
+          <JoyNavBarWithSession
             setRef={this.setRef}
             handleNext={this.handleNext}
           />
@@ -432,7 +405,7 @@ class JoyBody extends Component {
           </Switch>
         </main>
         {showFooter && <Footer />}
-        <ToastContainer />
+        <ToastContainer autoClose={8000} />
       </div>
     );
   }

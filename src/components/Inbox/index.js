@@ -8,6 +8,7 @@ import ChatInfo from "./ChatInfo";
 import { GET_COUNTS, READ_CHAT, GET_INBOX } from "../../queries";
 import { Mutation } from "react-apollo";
 import ChatWindow from "./ChatWindow";
+import ErrorBoundary from "../common/ErrorBoundary";
 
 class InboxPage extends Component {
   state = { chatID: null, chat: null, unSeenCount: 0 };
@@ -85,13 +86,15 @@ class InboxPage extends Component {
       >
         {readChat => {
           return (
-            <InboxPanel
-              readChat={(id, unSeenCount) =>
-                this.handleChatClick(id, unSeenCount, readChat)
-              }
-              currentUserID={currentuser.userID}
-              t={t}
-            />
+            <ErrorBoundary>
+              <InboxPanel
+                readChat={(id, unSeenCount) =>
+                  this.handleChatClick(id, unSeenCount, readChat)
+                }
+                currentUserID={currentuser.userID}
+                t={t}
+              />
+            </ErrorBoundary>
           );
         }}
       </Mutation>
@@ -99,12 +102,17 @@ class InboxPage extends Component {
 
     return (
       <div>
-        <Header t={t} />
+        <ErrorBoundary>
+          <Header t={t} />
+        </ErrorBoundary>
         <section className="inbox">
           <div className="row no-gutters">
             {inboxPanel}
-            <ChatWindow currentChat={chat} currentuser={currentuser} t={t} />
-            <ChatInfo t={t} />
+            <ErrorBoundary>
+              {" "}
+              <ChatWindow currentChat={chat} currentuser={currentuser} t={t} />
+              <ChatInfo t={t} />
+            </ErrorBoundary>
           </div>
         </section>
       </div>

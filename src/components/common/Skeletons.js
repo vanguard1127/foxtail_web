@@ -7,6 +7,7 @@ export const ProfileLoader = () => (
     speed={2}
     primaryColor="#f3f3f3"
     secondaryColor="#ecebeb"
+    style={{ width: "100%", height: "100%" }}
   >
     <rect x="1.05" y="0.00" rx="0" ry="0" width="125.2" height="141.89" />
     <rect x="143.44" y="13.67" rx="0" ry="0" width="139" height="21" />

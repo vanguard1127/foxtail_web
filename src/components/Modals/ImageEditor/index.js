@@ -16,7 +16,8 @@ class ImageEditor extends Component {
       setS3PhotoParams,
       uploadToS3,
       signS3,
-      t
+      t,
+      ErrorBoundary
     } = this.props;
 
     return (
@@ -31,16 +32,18 @@ class ImageEditor extends Component {
                     <span className="close" onClick={close} />
                   </div>
                   <div className="m-body">
-                    {/* <AvatarEditor imageObject={file} t={t} /> */}
-                    <EditCanvasImage
-                      imageObject={file}
-                      setS3PhotoParams={setS3PhotoParams}
-                      uploadToS3={uploadToS3}
-                      signS3={signS3}
-                      handlePhotoListChange={handlePhotoListChange}
-                      close={close}
-                      t={t}
-                    />
+                    <ErrorBoundary>
+                      {/* <AvatarEditor imageObject={file} t={t} /> */}
+                      <EditCanvasImage
+                        imageObject={file}
+                        setS3PhotoParams={setS3PhotoParams}
+                        uploadToS3={uploadToS3}
+                        signS3={signS3}
+                        handlePhotoListChange={handlePhotoListChange}
+                        close={close}
+                        t={t}
+                      />
+                    </ErrorBoundary>
                   </div>
                 </div>
               </div>

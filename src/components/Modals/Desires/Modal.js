@@ -9,7 +9,7 @@ class Desires extends Component {
   };
   render() {
     const { searchText } = this.state;
-    const { closePopup, onChange, desires, t } = this.props;
+    const { closePopup, onChange, desires, t, ErrorBoundary } = this.props;
 
     return (
       <section className="desires-popup show">
@@ -18,51 +18,53 @@ class Desires extends Component {
             <div className="row">
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup desires-select">
-                  <div className="m-head">
-                    <span className="heading">{t("desireselect")}</span>
-                    <span className="title">{t("setdesires")}</span>
-                    <span className="close" onClick={closePopup} />
-                  </div>
-                  <div className="m-body desires">
-                    <SearchBox
-                      value={searchText}
-                      onChange={this.setValue}
-                      t={t}
-                    />
-                    <div className="desires-list-con">
-                      <ul>
-                        {desireOptions
-                          .filter(desire =>
-                            desire.label.toLowerCase().startsWith(searchText)
-                          )
-                          .map(option => (
-                            <li key={option.value}>
-                              <div className="select-checkbox">
-                                <input
-                                  type="checkbox"
-                                  id={option.value}
-                                  checked={
-                                    desires.indexOf(option.value) > -1
-                                      ? true
-                                      : false
-                                  }
-                                  onChange={e =>
-                                    onChange({
-                                      checked: e.target.checked,
-                                      value: option.value
-                                    })
-                                  }
-                                />
-                                <label htmlFor={option.value}>
-                                  <span />
-                                  <b>{t(option.label)}</b>
-                                </label>
-                              </div>
-                            </li>
-                          ))}
-                      </ul>
+                  <ErrorBoundary>
+                    <div className="m-head">
+                      <span className="heading">{t("desireselect")}</span>
+                      <span className="title">{t("setdesires")}</span>
+                      <span className="close" onClick={closePopup} />
                     </div>
-                  </div>
+                    <div className="m-body desires">
+                      <SearchBox
+                        value={searchText}
+                        onChange={this.setValue}
+                        t={t}
+                      />
+                      <div className="desires-list-con">
+                        <ul>
+                          {desireOptions
+                            .filter(desire =>
+                              desire.label.toLowerCase().startsWith(searchText)
+                            )
+                            .map(option => (
+                              <li key={option.value}>
+                                <div className="select-checkbox">
+                                  <input
+                                    type="checkbox"
+                                    id={option.value}
+                                    checked={
+                                      desires.indexOf(option.value) > -1
+                                        ? true
+                                        : false
+                                    }
+                                    onChange={e =>
+                                      onChange({
+                                        checked: e.target.checked,
+                                        value: option.value
+                                      })
+                                    }
+                                  />
+                                  <label htmlFor={option.value}>
+                                    <span />
+                                    <b>{t(option.label)}</b>
+                                  </label>
+                                </div>
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </ErrorBoundary>
                 </div>
               </div>
             </div>

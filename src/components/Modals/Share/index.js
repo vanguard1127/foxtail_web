@@ -38,7 +38,7 @@ const body = (profile, event, t) => {
     return null;
   }
 };
-const Share = ({ profile, event, close, t }) => {
+const Share = ({ profile, event, close, t, ErrorBoundary }) => {
   const modalBody = body(profile, event, t);
 
   return (
@@ -48,74 +48,76 @@ const Share = ({ profile, event, close, t }) => {
           <div className="row">
             <div className="offset-md-3 col-md-6">
               <div className="modal-popup photo-verification">
-                <div className="m-head">
-                  <span className="heading">{modalBody}</span>
-                  <span className="close" onClick={close} />
-                </div>
-                <div className="m-body">
-                  <div
-                    style={{
-                      justifyContent: "center",
-                      display: "flex"
-                    }}
-                  >
+                <ErrorBoundary>
+                  <div className="m-head">
+                    <span className="heading">{modalBody}</span>
+                    <span className="close" onClick={close} />
+                  </div>
+                  <div className="m-body">
                     <div
                       style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        padding: "10px",
-                        width: "20vw"
+                        justifyContent: "center",
+                        display: "flex"
                       }}
                     >
-                      <FacebookShareButton
-                        url={shareUrl}
-                        quote={title}
-                        className="Demo__some-network__share-button"
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          padding: "10px",
+                          width: "20vw"
+                        }}
                       >
-                        <FacebookIcon size={32} round />
-                      </FacebookShareButton>
-                      <TwitterShareButton
-                        url={shareUrl}
-                        title={title}
-                        className="Demo__some-network__share-button"
-                      >
-                        <TwitterIcon size={32} round />
-                      </TwitterShareButton>
-                      <GooglePlusShareButton
-                        url={shareUrl}
-                        className="Demo__some-network__share-button"
-                      >
-                        <GooglePlusIcon size={32} round />
-                      </GooglePlusShareButton>
-                      <RedditShareButton
-                        url={shareUrl}
-                        title={title}
-                        windowWidth={660}
-                        windowHeight={460}
-                        className="Demo__some-network__share-button"
-                      >
-                        <RedditIcon size={32} round />
-                      </RedditShareButton>
-                      <TumblrShareButton
-                        url={shareUrl}
-                        title={title}
-                        windowWidth={660}
-                        windowHeight={460}
-                        className="Demo__some-network__share-button"
-                      >
-                        <TumblrIcon size={32} round />
-                      </TumblrShareButton>
-                      <EmailShareButton
-                        url={shareUrl}
-                        subject={title}
-                        body={title + "." + t("checkout") + ":" + shareUrl}
-                        className="Demo__some-network__share-button"
-                      >
-                        <EmailIcon size={32} round />
-                      </EmailShareButton>
+                        <FacebookShareButton
+                          url={shareUrl}
+                          quote={title}
+                          className="Demo__some-network__share-button"
+                        >
+                          <FacebookIcon size={32} round />
+                        </FacebookShareButton>
+                        <TwitterShareButton
+                          url={shareUrl}
+                          title={title}
+                          className="Demo__some-network__share-button"
+                        >
+                          <TwitterIcon size={32} round />
+                        </TwitterShareButton>
+                        <GooglePlusShareButton
+                          url={shareUrl}
+                          className="Demo__some-network__share-button"
+                        >
+                          <GooglePlusIcon size={32} round />
+                        </GooglePlusShareButton>
+                        <RedditShareButton
+                          url={shareUrl}
+                          title={title}
+                          windowWidth={660}
+                          windowHeight={460}
+                          className="Demo__some-network__share-button"
+                        >
+                          <RedditIcon size={32} round />
+                        </RedditShareButton>
+                        <TumblrShareButton
+                          url={shareUrl}
+                          title={title}
+                          windowWidth={660}
+                          windowHeight={460}
+                          className="Demo__some-network__share-button"
+                        >
+                          <TumblrIcon size={32} round />
+                        </TumblrShareButton>
+                        <EmailShareButton
+                          url={shareUrl}
+                          subject={title}
+                          body={title + "." + t("checkout") + ":" + shareUrl}
+                          className="Demo__some-network__share-button"
+                        >
+                          <EmailIcon size={32} round />
+                        </EmailShareButton>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </ErrorBoundary>
               </div>
             </div>
           </div>

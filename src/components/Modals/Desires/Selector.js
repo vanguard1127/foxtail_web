@@ -4,7 +4,7 @@ import { withNamespaces } from "react-i18next";
 
 class Selector extends Component {
   render() {
-    const { togglePopup, desires, t } = this.props;
+    const { togglePopup, desires, t, ErrorBoundary } = this.props;
 
     return (
       <span>
@@ -13,12 +13,15 @@ class Selector extends Component {
           onClick={() => togglePopup()}
         >
           <span className="head">{t("seldesires")}:</span>
-          <ul>
-            {desires.map(desire => {
-              const desireObj = desireOptions.find(el => el.value === desire);
-              if (desireObj) return <li key={desire}>{t(desireObj.label)}</li>;
-            })}
-          </ul>
+          <ErrorBoundary>
+            <ul>
+              {desires.map(desire => {
+                const desireObj = desireOptions.find(el => el.value === desire);
+                if (desireObj)
+                  return <li key={desire}>{t(desireObj.label)}</li>;
+              })}
+            </ul>
+          </ErrorBoundary>
         </div>
       </span>
     );

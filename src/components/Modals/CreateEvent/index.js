@@ -52,7 +52,7 @@ class CreateEvent extends Component {
     this.setState({ address });
   };
   render() {
-    const { closePopup, t } = this.props;
+    const { closePopup, t, ErrorBoundary } = this.props;
     const {
       photo,
       showDesiresPopup,
@@ -70,52 +70,56 @@ class CreateEvent extends Component {
             <div className="row">
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup create-event">
-                  <div className="m-head">
-                    <span className="heading">{t("createeve")}</span>
-                    <span className="title">{t("common:eventsubtitle")}</span>
-                    <span className="close" onClick={() => closePopup()} />
-                  </div>
-                  <div className="m-body">
-                    <div className="page">
-                      <div className="form">
-                        <div className="content">
-                          <div className="item">
-                            <div className="input">
-                              <input
-                                type="text"
-                                required
-                                id="eventname"
-                                onChange={el =>
-                                  this.setValue({
-                                    name: "eventname",
-                                    value: el
-                                  })
-                                }
-                              />
-                              <label title={t("evename")} htmlFor="eventname" />
+                  <ErrorBoundary>
+                    <div className="m-head">
+                      <span className="heading">{t("createeve")}</span>
+                      <span className="title">{t("common:eventsubtitle")}</span>
+                      <span className="close" onClick={() => closePopup()} />
+                    </div>
+                    <div className="m-body">
+                      <div className="page">
+                        <div className="form">
+                          <div className="content">
+                            <div className="item">
+                              <div className="input">
+                                <input
+                                  type="text"
+                                  required
+                                  id="eventname"
+                                  onChange={el =>
+                                    this.setValue({
+                                      name: "eventname",
+                                      value: el
+                                    })
+                                  }
+                                />
+                                <label
+                                  title={t("evename")}
+                                  htmlFor="eventname"
+                                />
+                              </div>
                             </div>
-                          </div>
-                          <div className="item">
-                            <div className="input">
-                              <DateTimePicker />
+                            <div className="item">
+                              <div className="input">
+                                <DateTimePicker />
+                              </div>
                             </div>
-                          </div>
-                          <div className="item">
-                            <div className="input">
-                              <AddressSearch
-                                style={{ width: "100%" }}
-                                setLocationValues={({ lat, long, address }) =>
-                                  this.setLocationValues({
-                                    lat,
-                                    long,
-                                    address
-                                  })
-                                }
-                                address={address}
-                                type={"address"}
-                                placeholder={t("common:Address")}
-                              />
-                              {/* <input
+                            <div className="item">
+                              <div className="input">
+                                <AddressSearch
+                                  style={{ width: "100%" }}
+                                  setLocationValues={({ lat, long, address }) =>
+                                    this.setLocationValues({
+                                      lat,
+                                      long,
+                                      address
+                                    })
+                                  }
+                                  address={address}
+                                  type={"address"}
+                                  placeholder={t("common:Address")}
+                                />
+                                {/* <input
                                 type="text"
                                 required
                                 id="eventAddress"
@@ -130,13 +134,25 @@ class CreateEvent extends Component {
                                 title="Event Address"
                                 htmlFor="eventAddress"
                               /> */}
+                              </div>
                             </div>
-                          </div>
-                          <div className="item">
-                            <div className="textarea">
-                              <textarea
-                                placeholder={t("desctitle") + "..."}
-                                onChange={el =>
+                            <div className="item">
+                              <div className="textarea">
+                                <textarea
+                                  placeholder={t("desctitle") + "..."}
+                                  onChange={el =>
+                                    this.setValue({
+                                      name: "photo",
+                                      value: el
+                                    })
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="item nobottom">
+                              <PhotoUpload
+                                photos={photo}
+                                setPhotos={el =>
                                   this.setValue({
                                     name: "photo",
                                     value: el
@@ -144,50 +160,40 @@ class CreateEvent extends Component {
                                 }
                               />
                             </div>
-                          </div>
-                          <div className="item nobottom">
-                            <PhotoUpload
-                              photos={photo}
-                              setPhotos={el =>
-                                this.setValue({
-                                  name: "photo",
-                                  value: el
-                                })
-                              }
-                            />
-                          </div>
-                          <div className="item">
-                            <DesiresSelector
-                              desires={desires}
-                              togglePopup={() => this.toggleDesiresPopup()}
-                            />
-                          </div>
-                          <div className="item">
-                            <Select
-                              label={t("evetype") + ":"}
-                              onChange={el =>
-                                this.setValue({
-                                  name: "type",
-                                  value: el
-                                })
-                              }
-                              value={type}
-                              options={[
-                                { label: "Public", value: "public" },
-                                { label: "Private", value: "private" },
-                                { label: "Request", value: "request" }
-                              ]}
-                            />
-                          </div>
-                          <div className="item">
-                            <div className="button mtop">
-                              <button>{t("common:createevent")}</button>
+                            <div className="item">
+                              <DesiresSelector
+                                desires={desires}
+                                togglePopup={() => this.toggleDesiresPopup()}
+                                ErrorBoundary={ErrorBoundary}
+                              />
+                            </div>
+                            <div className="item">
+                              <Select
+                                label={t("evetype") + ":"}
+                                onChange={el =>
+                                  this.setValue({
+                                    name: "type",
+                                    value: el
+                                  })
+                                }
+                                value={type}
+                                options={[
+                                  { label: "Public", value: "public" },
+                                  { label: "Private", value: "private" },
+                                  { label: "Request", value: "request" }
+                                ]}
+                              />
+                            </div>
+                            <div className="item">
+                              <div className="button mtop">
+                                <button>{t("common:createevent")}</button>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </ErrorBoundary>
                 </div>
               </div>
             </div>
@@ -199,6 +205,7 @@ class CreateEvent extends Component {
             closePopup={() => this.toggleDesiresPopup()}
             onChange={e => this.toggleDesires(e)}
             desires={desires}
+            ErrorBoundary={ErrorBoundary}
           />
         )}
       </section>

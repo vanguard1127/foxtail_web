@@ -18,6 +18,11 @@ class Dropdown extends Component {
     }
   }
 
+  componentWillUnmount() {
+    //TODO: unmount dynamic import to prevent error
+    //console.log("componentWillUnmount");
+  }
+
   fetchData = langSel => {
     let lang = langSel;
 

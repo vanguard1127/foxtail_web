@@ -52,7 +52,7 @@ class ProfilePage extends Component {
     likeProfile()
       .then(({ data }) => {
         if (data.likeProfile) {
-          console.log("liked");
+          console.log("Liked");
           return;
         }
       })
@@ -72,7 +72,7 @@ class ProfilePage extends Component {
       shareModalVisible,
       msgModalVisible
     } = this.state;
-    const { t } = this.props;
+    const { t, ErrorBoundary } = this.props;
     return (
       <Mutation
         mutation={LIKE_PROFILE}
@@ -112,47 +112,62 @@ class ProfilePage extends Component {
                       <div className="col-md-12">
                         <div className="row">
                           <div className="col-md-3">
-                            <ProfileCard
-                              profile={profile}
-                              setProfile={this.setProfile}
-                              showMsgModal={() => this.setMsgModalVisible(true)}
-                              likeProfile={() => this.handleLike(likeProfile)}
-                              t={t}
-                            />
-                            <DesiresSection desires={desires} t={t} />
+                            <ErrorBoundary>
+                              <ProfileCard
+                                profile={profile}
+                                setProfile={this.setProfile}
+                                showMsgModal={() =>
+                                  this.setMsgModalVisible(true)
+                                }
+                                likeProfile={() => this.handleLike(likeProfile)}
+                                t={t}
+                              />
+                              <DesiresSection desires={desires} t={t} />
+                            </ErrorBoundary>
                           </div>
                           <div className="col-md-9">
-                            <ProfileInfo
-                              users={users}
-                              online={profile.online}
-                              t={t}
-                            />
-                            <ProfileDetails
-                              users={users}
-                              profile={profile}
-                              showBlockModal={() =>
-                                this.setBlockModalVisible(true, profile)
-                              }
-                              showShareModal={() =>
-                                this.setShareModalVisible(true, profile)
-                              }
-                              t={t}
-                            />
-                            <ProfileBio about={about} t={t} />
-                            <DesiresMobile desires={desires} t={t} />
-                            {publicPics.length > 0 && (
-                              <PhotoSlider
-                                isPublic={true}
-                                photos={publicPics}
+                            <ErrorBoundary>
+                              <ProfileInfo
+                                users={users}
+                                online={profile.online}
                                 t={t}
                               />
+                            </ErrorBoundary>
+                            <ErrorBoundary>
+                              <ProfileDetails
+                                users={users}
+                                profile={profile}
+                                showBlockModal={() =>
+                                  this.setBlockModalVisible(true, profile)
+                                }
+                                showShareModal={() =>
+                                  this.setShareModalVisible(true, profile)
+                                }
+                                t={t}
+                              />
+                              <ProfileBio about={about} t={t} />
+                            </ErrorBoundary>
+
+                            <ErrorBoundary>
+                              <DesiresMobile desires={desires} t={t} />
+                            </ErrorBoundary>
+                            {publicPics.length > 0 && (
+                              <ErrorBoundary>
+                                <PhotoSlider
+                                  isPublic={true}
+                                  photos={publicPics}
+                                  t={t}
+                                />
+                              </ErrorBoundary>
                             )}
                             {privatePics.length > 0 && (
-                              <PhotoSlider
-                                isPublic={false}
-                                photos={privatePics}
-                                t={t}
-                              />
+                              <ErrorBoundary>
+                                <PhotoSlider
+                                  isPublic={false}
+                                  photos={privatePics}
+                                  t={t}
+                                />
+                              </ErrorBoundary>
                             )}
                           </div>
                         </div>
@@ -165,18 +180,21 @@ class ProfilePage extends Component {
                         close={() => this.setBlockModalVisible(false)}
                         goToMain={() => this.props.history.push("/members")}
                         type={"Profile"}
+                        ErrorBoundary={ErrorBoundary}
                       />
                     )}
                     {profile && shareModalVisible && (
                       <ShareModal
                         profile={profile}
                         close={() => this.setShareModalVisible(false)}
+                        ErrorBoundary={ErrorBoundary}
                       />
                     )}
                     {profile && msgModalVisible && (
                       <DirectMsgModal
                         profile={profile}
                         close={() => this.setMsgModalVisible(false)}
+                        ErrorBoundary={ErrorBoundary}
                       />
                     )}
                   </section>

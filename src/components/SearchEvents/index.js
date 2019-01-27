@@ -134,7 +134,7 @@ class SearchEvents extends Component {
       maxDistance,
       location
     } = this.state;
-    const { t } = this.props;
+    const { t, ErrorBoundary } = this.props;
 
     //TODO: Do we still need this
     sessionStorage.setItem(
@@ -153,42 +153,51 @@ class SearchEvents extends Component {
         <div>
           <Header t={t} />
           <section className="go-events">
-            <SearchEventToolbar
-              location={location}
-              setLocationValues={this.setLocationValues}
-              handleChangeSelect={e => this.handleChangeSelect(e)}
-              maxDistance={maxDistance}
-              t={t}
-            />
-            <MyEvents t={t} />
-            <Query
-              query={SEARCH_EVENTS}
-              variables={{ lat, long, maxDistance, all, limit: LIMIT }}
-              fetchPolicy="cache-first"
-            >
-              {({ data, loading, error, fetchMore }) => {
-                if (loading) {
-                  return (
-                    <Spinner page="searchEvents" title={t("upcomingevent")} />
-                  );
-                }
-                if (
-                  !data ||
-                  !data.searchEvents ||
-                  data.searchEvents.length === 0
-                ) {
-                  return <EmptyScreen message={t("noeventavailable")} />;
-                }
+            <ErrorBoundary>
+              <SearchEventToolbar
+                location={location}
+                setLocationValues={this.setLocationValues}
+                handleChangeSelect={e => this.handleChangeSelect(e)}
+                maxDistance={maxDistance}
+                t={t}
+              />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <MyEvents t={t} />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {" "}
+              <Query
+                query={SEARCH_EVENTS}
+                variables={{ lat, long, maxDistance, all, limit: LIMIT }}
+                fetchPolicy="cache-first"
+              >
+                {({ data, loading, error, fetchMore }) => {
+                  if (loading) {
+                    return (
+                      <Spinner page="searchEvents" title={t("upcomingevent")} />
+                    );
+                  }
+                  if (
+                    !data ||
+                    !data.searchEvents ||
+                    data.searchEvents.length === 0
+                  ) {
+                    return <EmptyScreen message={t("noeventavailable")} />;
+                  }
 
-                return (
-                  <EventsList
-                    events={data.searchEvents}
-                    handleEnd={previous => this.handleEnd(previous, fetchMore)}
-                    t={t}
-                  />
-                );
-              }}
-            </Query>
+                  return (
+                    <EventsList
+                      events={data.searchEvents}
+                      handleEnd={previous =>
+                        this.handleEnd(previous, fetchMore)
+                      }
+                      t={t}
+                    />
+                  );
+                }}
+              </Query>
+            </ErrorBoundary>
           </section>
         </div>
 
@@ -197,6 +206,7 @@ class SearchEvents extends Component {
             event={event}
             visible={shareModalVisible}
             close={() => this.setShareModalVisible(false)}
+            ErrorBoundary={ErrorBoundary}
           />
         )}
       </div>

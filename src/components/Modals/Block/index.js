@@ -44,7 +44,7 @@ class BlockModal extends Component {
   };
 
   menu = () => {
-    const { t } = this.props;
+    const { t, ErrorBoundary } = this.props;
     if (this.state.type === "Profile") {
       return (
         <select
@@ -80,7 +80,7 @@ class BlockModal extends Component {
     }
   };
   render() {
-    const { profile, close, id, t } = this.props;
+    const { profile, close, id, t, ErrorBoundary } = this.props;
 
     const { other, reason, type } = this.state;
     const blockMenu = this.menu();
@@ -103,60 +103,62 @@ class BlockModal extends Component {
             <div className="row">
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup photo-verification">
-                  <div className="m-head">
-                    <span className="heading">{title}</span>
-                    <span className="close" onClick={close} />
-                  </div>
-                  <div className="m-body">
-                    {blockMenu}
-                    <div
-                      style={{
-                        display: other ? "block" : "none"
-                      }}
-                    >
-                      <input
-                        placeholder={t("otherreason")}
-                        onChange={this.handleTextChange}
-                        value={reason}
-                      />
+                  <ErrorBoundary>
+                    <div className="m-head">
+                      <span className="heading">{title}</span>
+                      <span className="close" onClick={close} />
                     </div>
-                    <Mutation
-                      mutation={FLAG_ITEM}
-                      variables={{
-                        type,
-                        reason,
-                        targetID: id
-                      }}
-                    >
-                      {flagItem => {
-                        return (
-                          <Mutation
-                            mutation={BLOCK_PROFILE}
-                            variables={{
-                              blockedProfileID: id
-                            }}
-                          >
-                            {(blockProfile, { loading }) => {
-                              if (loading) {
-                                //TODO: Make nice popup saving
-                                return <div>{t("Saving")}...</div>;
-                              }
-                              return (
-                                <button
-                                  onClick={() =>
-                                    this.handleSubmit(blockProfile, flagItem)
-                                  }
-                                  disabled={reason === "" || loading}
-                                >
-                                  {t("repblock")}
-                                </button>
-                              );
-                            }}
-                          </Mutation>
-                        );
-                      }}
-                    </Mutation>
-                  </div>
+                    <div className="m-body">
+                      {blockMenu}
+                      <div
+                        style={{
+                          display: other ? "block" : "none"
+                        }}
+                      >
+                        <input
+                          placeholder={t("otherreason")}
+                          onChange={this.handleTextChange}
+                          value={reason}
+                        />
+                      </div>
+                      <Mutation
+                        mutation={FLAG_ITEM}
+                        variables={{
+                          type,
+                          reason,
+                          targetID: id
+                        }}
+                      >
+                        {flagItem => {
+                          return (
+                            <Mutation
+                              mutation={BLOCK_PROFILE}
+                              variables={{
+                                blockedProfileID: id
+                              }}
+                            >
+                              {(blockProfile, { loading }) => {
+                                if (loading) {
+                                  //TODO: Make nice popup saving
+                                  return <div>{t("Saving")}...</div>;
+                                }
+                                return (
+                                  <button
+                                    onClick={() =>
+                                      this.handleSubmit(blockProfile, flagItem)
+                                    }
+                                    disabled={reason === "" || loading}
+                                  >
+                                    {t("repblock")}
+                                  </button>
+                                );
+                              }}
+                            </Mutation>
+                          );
+                        }}
+                      </Mutation>
+                    </div>
+                  </ErrorBoundary>
                 </div>
               </div>
             </div>

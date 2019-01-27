@@ -3,7 +3,6 @@ import ProfilesDiv from "./ProfilesDiv";
 import Waypoint from "react-waypoint";
 import { withNamespaces } from "react-i18next";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
-import { ProfileLoader } from "../common/Skeletons";
 import EmptyScreen from "../common/EmptyScreen";
 import { Query, Mutation, withApollo } from "react-apollo";
 import withLocation from "../withLocation";
@@ -34,22 +33,24 @@ class ProfileSearch extends Component {
     else this.setState({ msgModalVisible });
   };
 
-  handleLike = likeProfile => {
-    likeProfile()
-      .then(({ data }) => {
-        if (data.likeProfile) {
-          console.log("liked");
-          return;
-        }
-      })
-      .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
+  handleLike = (likeProfile, profile) => {
+    this.setState({ profile }, () => {
+      likeProfile()
+        .then(({ data }) => {
+          if (data.likeProfile) {
+            console.log("liked");
+            return;
+          }
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
 
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
-      });
+          //TODO: send errors to analytics from here
+          this.setState({ errors });
+        });
+    });
   };
 
   fetchData = async fetchMore => {
@@ -106,10 +107,11 @@ class ProfileSearch extends Component {
   // };
 
   render() {
-    const { client, t } = this.props;
+    const { client, t, ErrorBoundary } = this.props;
     const { currentuser } = this.props.session;
     const { long, lat, profile, msgModalVisible } = this.state;
     const toProfileID = profile && profile.id;
+
     return (
       <Fragment>
         <Query
@@ -119,14 +121,16 @@ class ProfileSearch extends Component {
         >
           {({ data, loading, fetchMore, error, refetch }) => {
             const searchPanel = (
-              <SearchCriteria
-                queryParams={{ long, lat, limit: LIMIT }}
-                client={client}
-                isBlackMember={currentuser.blackMember.active}
-                setQueryLoc={this.setLocation}
-                refetch={refetch}
-                t={t}
-              />
+              <ErrorBoundary>
+                <SearchCriteria
+                  queryParams={{ long, lat, limit: LIMIT }}
+                  client={client}
+                  isBlackMember={currentuser.blackMember.active}
+                  setQueryLoc={this.setLocation}
+                  refetch={refetch}
+                  t={t}
+                />
+              </ErrorBoundary>
             );
             if (loading) {
               return (
@@ -134,6 +138,14 @@ class ProfileSearch extends Component {
                   {searchPanel}{" "}
                   <Spinner page="searchProfiles" title={t("allmems")} />
                 </div>
+              );
+            } else if (data === undefined || data.searchProfiles === null) {
+              return (
+                <Fragment>
+                  {" "}
+                  {searchPanel}
+                  <EmptyScreen message={t("nomems")} />
+                </Fragment>
               );
             } else if (
               (data &&
@@ -167,50 +179,54 @@ class ProfileSearch extends Component {
                     <div>
                       {searchPanel}
                       {data.searchProfiles.featuredProfiles.length !== 0 && (
-                        <FeaturedDiv
-                          featuredProfiles={
-                            data.searchProfiles.featuredProfiles
-                          }
-                          showMsgModal={profile =>
-                            this.setMsgModalVisible(true, profile)
-                          }
-                          showBlockModal={profile =>
-                            this.setBlockModalVisible(true, profile)
-                          }
-                          showShareModal={profile =>
-                            this.setShareModalVisible(true, profile)
-                          }
-                          likeProfile={profile =>
-                            this.handleLike(likeProfile, profile)
-                          }
-                          history={this.props.history}
-                          t={t}
-                        />
+                        <ErrorBoundary>
+                          <FeaturedDiv
+                            featuredProfiles={
+                              data.searchProfiles.featuredProfiles
+                            }
+                            showMsgModal={profile =>
+                              this.setMsgModalVisible(true, profile)
+                            }
+                            showBlockModal={profile =>
+                              this.setBlockModalVisible(true, profile)
+                            }
+                            showShareModal={profile =>
+                              this.setShareModalVisible(true, profile)
+                            }
+                            likeProfile={profile =>
+                              this.handleLike(likeProfile, profile)
+                            }
+                            history={this.props.history}
+                            t={t}
+                          />
+                        </ErrorBoundary>
                       )}
                       {data.searchProfiles.profiles.length !== 0 && (
-                        <ProfilesDiv
-                          profiles={data.searchProfiles.profiles}
-                          showMsgModal={profile =>
-                            this.setMsgModalVisible(true, profile)
-                          }
-                          showBlockModal={profile =>
-                            this.setBlockModalVisible(true, profile)
-                          }
-                          showShareModal={profile =>
-                            this.setShareModalVisible(true, profile)
-                          }
-                          likeProfile={profile =>
-                            this.handleLike(likeProfile, profile)
-                          }
-                          history={this.props.history}
-                          handleEnd={({ previousPosition }) =>
-                            this.handleEnd({
-                              previousPosition,
-                              fetchMore
-                            })
-                          }
-                          t={t}
-                        />
+                        <ErrorBoundary>
+                          <ProfilesDiv
+                            profiles={data.searchProfiles.profiles}
+                            showMsgModal={profile =>
+                              this.setMsgModalVisible(true, profile)
+                            }
+                            showBlockModal={profile =>
+                              this.setBlockModalVisible(true, profile)
+                            }
+                            showShareModal={profile =>
+                              this.setShareModalVisible(true, profile)
+                            }
+                            likeProfile={profile =>
+                              this.handleLike(likeProfile, profile)
+                            }
+                            history={this.props.history}
+                            handleEnd={({ previousPosition }) =>
+                              this.handleEnd({
+                                previousPosition,
+                                fetchMore
+                              })
+                            }
+                            t={t}
+                          />
+                        </ErrorBoundary>
                       )}
 
                       <div className="col-md-12">
@@ -229,6 +245,7 @@ class ProfileSearch extends Component {
           <DirectMsgModal
             profile={profile}
             close={() => this.setMsgModalVisible(false)}
+            ErrorBoundary={ErrorBoundary}
           />
         )}
       </Fragment>

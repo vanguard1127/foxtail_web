@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import NoticesItem from "./NoticesItem";
 import InboxItem from "./InboxItem";
 import MyAccountItem from "./MyAccountItem";
+import ErrorBoundary from "../common/ErrorBoundary";
 var slapAudio = new Audio(require("../../docs/slap.wav"));
 
 let unsubscribe = null;
@@ -72,17 +73,25 @@ const UserToolbar = ({ currentuser, href, t, setRef }) => {
 
         return (
           <div className="function">
-            <InboxItem
-              count={msgsCount}
-              active={href === "inbox" && true}
-              t={t}
-              data-name="inbox"
-              ref={setRef}
-            />
-            <NoticesItem count={noticesCount} />
-            <div className="user hidden-mobile">
-              <MyAccountItem currentuser={currentuser} setRef={setRef} />
-            </div>
+            <ErrorBoundary>
+              <InboxItem
+                count={msgsCount}
+                active={href === "inbox" && true}
+                t={t}
+                data-name="inbox"
+                ref={setRef}
+              />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {" "}
+              <NoticesItem count={noticesCount} />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {" "}
+              <div className="user hidden-mobile">
+                <MyAccountItem currentuser={currentuser} setRef={setRef} />
+              </div>
+            </ErrorBoundary>
           </div>
         );
       }}

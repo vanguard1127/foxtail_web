@@ -19,7 +19,7 @@ class Settings extends Component {
   }
   //TODO: Set time below
   render() {
-    const { session, refetch, t } = this.props;
+    const { session, refetch, t, ErrorBoundary } = this.props;
     let isCouple = false;
     let isInitial = false;
     if (this.props.location.state) {
@@ -68,6 +68,7 @@ class Settings extends Component {
                   t={t}
                   isCouple={isCouple}
                   isInitial={isInitial}
+                  ErrorBoundary={ErrorBoundary}
                 />
               </Fragment>
             );

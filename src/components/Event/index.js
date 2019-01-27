@@ -110,7 +110,7 @@ class EventPage extends Component {
   render() {
     const { id } = this.props.match.params;
     const { visible, blockModalVisible } = this.state;
-    const { session, history, t } = this.props;
+    const { session, history, t, ErrorBoundary } = this.props;
     return (
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error }) => {
@@ -135,25 +135,37 @@ class EventPage extends Component {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <EventHeader event={event} history={history} t={t} />
+                      <ErrorBoundary>
+                        <EventHeader event={event} history={history} t={t} />
+                      </ErrorBoundary>
                     </div>
                     <div className="col-lg-9 col-md-12">
-                      <EventAbout
-                        id={id}
-                        participants={participants}
-                        description={description}
-                        t={t}
-                      />
-                      <EventInfoMobile event={event} t={t} />
-                      <EventDiscussion
-                        id={id}
-                        chatID={chatID}
-                        history={history}
-                        t={t}
-                      />
+                      <ErrorBoundary>
+                        {" "}
+                        <EventAbout
+                          id={id}
+                          participants={participants}
+                          description={description}
+                          t={t}
+                        />{" "}
+                      </ErrorBoundary>{" "}
+                      <ErrorBoundary>
+                        <EventInfoMobile event={event} t={t} />{" "}
+                      </ErrorBoundary>{" "}
+                      <ErrorBoundary>
+                        <EventDiscussion
+                          id={id}
+                          chatID={chatID}
+                          history={history}
+                          t={t}
+                        />
+                      </ErrorBoundary>
                     </div>
                     <div className="col-lg-3 col-md-12">
-                      <EventInfo event={event} t={t} />
+                      <ErrorBoundary>
+                        {" "}
+                        <EventInfo event={event} t={t} />{" "}
+                      </ErrorBoundary>
                     </div>
                   </div>
                 </div>
@@ -163,6 +175,7 @@ class EventPage extends Component {
                   event={event}
                   id={id}
                   close={() => this.setBlockModalVisible(false)}
+                  ErrorBoundary={ErrorBoundary}
                 />
               )}
             </section>

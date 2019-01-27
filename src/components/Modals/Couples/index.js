@@ -66,7 +66,7 @@ class Couples extends Component {
 
   showLinkModal(visible, close, code, setValue, includeMsgs) {
     const { title, currSlide } = this.state;
-    const { t } = this.props;
+    const { t, ErrorBoundary } = this.props;
     return (
       <section className="couple-popup-content">
         <div className="container">
@@ -80,30 +80,36 @@ class Couples extends Component {
                       <div className="form">
                         {currSlide === 1 && (
                           <div className="content">
-                            <LinkBox
-                              code={code}
-                              handleTextChange={this.handleTextChange}
-                              next={this.next}
-                              t={t}
-                            />
-
-                            <CodeBox
-                              includeMsgs={includeMsgs}
-                              setValue={setValue}
-                              t={t}
-                            />
+                            <ErrorBoundary>
+                              <LinkBox
+                                code={code}
+                                handleTextChange={this.handleTextChange}
+                                next={this.next}
+                                t={t}
+                              />
+                            </ErrorBoundary>{" "}
+                            <ErrorBoundary>
+                              <CodeBox
+                                includeMsgs={includeMsgs}
+                                setValue={setValue}
+                                t={t}
+                              />{" "}
+                            </ErrorBoundary>
                           </div>
                         )}
                         {currSlide === 2 && (
-                          <IncludeMsgSlide
-                            prev={this.prev}
-                            close={close}
-                            includeMsgs={includeMsgs}
-                            code={code}
-                            setValue={setValue}
-                            handleLink={this.handleLink}
-                            t={t}
-                          />
+                          <ErrorBoundary>
+                            {" "}
+                            <IncludeMsgSlide
+                              prev={this.prev}
+                              close={close}
+                              includeMsgs={includeMsgs}
+                              code={code}
+                              setValue={setValue}
+                              handleLink={this.handleLink}
+                              t={t}
+                            />{" "}
+                          </ErrorBoundary>
                         )}
                       </div>
                     </div>

@@ -21,7 +21,6 @@ const ProfileCard = ({
   if (photoCheck) {
     badge = "verified";
   }
-
   return (
     <div className="col-md-6 col-lg-4">
       <div className={"card-item " + badge}>

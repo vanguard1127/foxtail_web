@@ -2,6 +2,7 @@ import React from "react";
 import Signup from "./Signup";
 import LoginButton from "./LoginButton";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
+import ErrorBoundary from "../common/ErrorBoundary";
 import CountUp from "react-countup";
 
 import { ToastContainer } from "react-toastify";
@@ -24,8 +25,13 @@ const Landing = ({ t }) => {
               </div>
               <div className="offset-md-3 col-md-5">
                 <div className="content">
-                  <LoginButton t={t} />
-                  <LanguageControl />
+                  <ErrorBoundary>
+                    <LoginButton t={t} />
+                  </ErrorBoundary>
+                  <ErrorBoundary>
+                    {" "}
+                    <LanguageControl />
+                  </ErrorBoundary>
                 </div>
               </div>
             </div>
@@ -49,45 +55,50 @@ const Landing = ({ t }) => {
                         <span> {t("Welcome")}</span>{" "}
                         <span> {t("Foxtail Stats")}</span>
                       </div>
-                      <ul>
-                        <li>
-                          <span className="counter">
-                            <CountUp
-                              end={19538}
-                              duration={1.75}
-                              separator="."
-                            />
-                          </span>
-                          <span>{t("Male Members")}</span>
-                        </li>
-                        <li>
-                          <span className="counter">
-                            {" "}
-                            <CountUp
-                              end={19538}
-                              duration={1.75}
-                              separator="."
-                            />
-                          </span>
-                          <span>{t("Female Members")}</span>
-                        </li>
-                        <li>
-                          <span className="counter">
-                            {" "}
-                            <CountUp
-                              end={19538}
-                              duration={1.75}
-                              separator="."
-                            />
-                          </span>
-                          <span>{t("Couple Profiles")}</span>
-                        </li>
-                      </ul>
+                      <ErrorBoundary>
+                        <ul>
+                          <li>
+                            <span className="counter">
+                              <CountUp
+                                end={19538}
+                                duration={1.75}
+                                separator="."
+                              />
+                            </span>
+                            <span>{t("Male Members")}</span>
+                          </li>
+                          <li>
+                            <span className="counter">
+                              {" "}
+                              <CountUp
+                                end={19538}
+                                duration={1.75}
+                                separator="."
+                              />
+                            </span>
+                            <span>{t("Female Members")}</span>
+                          </li>
+                          <li>
+                            <span className="counter">
+                              {" "}
+                              <CountUp
+                                end={19538}
+                                duration={1.75}
+                                separator="."
+                              />
+                            </span>
+                            <span>{t("Couple Profiles")}</span>
+                          </li>
+                        </ul>
+                      </ErrorBoundary>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-5 col-md-12">
-                  <Signup t={t} />
+                  <ErrorBoundary>
+                    {" "}
+                    <Signup t={t} />
+                  </ErrorBoundary>
                 </div>
               </div>
             </div>
