@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import EditCanvasImage from "./ImageEditorWindow/EditCanvasImage";
-import AvatarEditor from "./ImageEditorWindow/AvatarEditor";
 import { withNamespaces } from "react-i18next";
 class ImageEditor extends Component {
   state = { photos: [], filename: "", filetype: "", photoKey: "" };
@@ -33,7 +32,6 @@ class ImageEditor extends Component {
                   </div>
                   <div className="m-body">
                     <ErrorBoundary>
-                      {/* <AvatarEditor imageObject={file} t={t} /> */}
                       <EditCanvasImage
                         imageObject={file}
                         setS3PhotoParams={setS3PhotoParams}

@@ -5,8 +5,6 @@ import Waypoint from "react-waypoint";
 const ProfilesDiv = ({
   profiles,
   showMsgModal,
-  showBlockModal,
-  showShareModal,
   likeProfile,
   history,
   handleEnd,
@@ -26,8 +24,6 @@ const ProfilesDiv = ({
                   key={profile.id}
                   profile={profile}
                   showMsgModal={showMsgModal}
-                  showBlockModal={showBlockModal}
-                  showShareModal={showShareModal}
                   likeProfile={likeProfile}
                   t={t}
                   history={history}

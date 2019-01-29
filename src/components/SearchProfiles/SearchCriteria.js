@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Mutation, Query } from "react-apollo";
 import { UPDATE_SETTINGS, GET_SETTINGS, REMOVE_LOCLOCK } from "../../queries";
 import Dropdown from "../common/Dropdown";
 import AddressSearch from "../common/AddressSearch";
 import SetLocationModal from "../Modals/SetLocation";
-
 import DistanceSlider from "../common/DistanceSlider";
 import AgeRange from "../common/AgeRange";
 
@@ -12,15 +11,14 @@ const CURRENT_LOC_LABEL = "My Location";
 
 class SearchCriteria extends Component {
   state = {
-    long: this.props.queryParams.long,
-    lat: this.props.queryParams.lat,
-    limit: this.props.queryParams.limit,
+    skip: 0,
+    loading: false,
+    lat: this.props.lat || null,
+    long: this.props.long || null,
     locModalVisible: false,
-    location: null,
-    interestedIn: null,
-    distance: null,
-    distanceMetric: null,
-    ageRange: null
+    location: "",
+    profile: null,
+    ...this.props.searchCriteria
   };
 
   setLocModalVisible = visible => {
@@ -41,12 +39,8 @@ class SearchCriteria extends Component {
   handleSubmit = updateSettings => {
     updateSettings()
       .then(({ data }) => {
-        const { lat, long } = this.state;
-        //if null get location
-        //TODO: REFRESH LIST HEREs
-        this.props.setQueryLoc({ lat, long });
-        this.props.refetch();
-        // this.props.client.resetStore();
+        console.log("IN", data);
+        //TODO: REFRESH LIST HERE
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -94,192 +88,163 @@ class SearchCriteria extends Component {
   setValue = ({ name, value, updateSettings }) => {
     this.setState({ [name]: value });
     this.handleSubmit(updateSettings);
+    this.props.setValue({ name, value });
   };
 
   render() {
-    let {
-      lat,
+    const {
       long,
-      location,
-      interestedIn,
+      lat,
       distance,
       distanceMetric,
       ageRange,
+      interestedIn,
+      location,
       locModalVisible
     } = this.state;
-    const { t } = this.props;
     const lang = localStorage.getItem("i18nextLng");
+    const { t, loading } = this.props;
+    if (loading) {
+      return (
+        <section className="meet-filter">
+          <div className="container">
+            <div className="col-md-12">
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="item">
+                    <AddressSearch
+                      style={{ width: 150 }}
+                      setLocationValues={null}
+                      address={""}
+                      type={"(cities)"}
+                      placeholder={t("common:setloc") + "..."}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="item">
+                    <Dropdown
+                      type={"interestedIn"}
+                      onChange={el => null}
+                      value={[]}
+                      placeholder={t("common:Interested") + ":"}
+                      lang={lang}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <DistanceSlider value={0} setValue={null} t={t} />
+                </div>
+                <div className="col-md-6">
+                  <AgeRange value={[18, 80]} setValue={null} t={t} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
     return (
       <div>
-        <Query query={GET_SETTINGS} fetchPolicy="network-only">
-          {({ data, loading, error }) => {
-            if (loading) {
-              return (
-                <section className="meet-filter">
-                  <div className="container">
-                    <div className="col-md-12">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="item">
-                            <AddressSearch
-                              style={{ width: 150 }}
-                              setLocationValues={null}
-                              address={""}
-                              type={"(cities)"}
-                              placeholder={t("common:setloc") + "..."}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="item">
-                            <Dropdown
-                              type={"interestedIn"}
-                              onChange={el => null}
-                              value={[]}
-                              placeholder={t("common:Interested") + ":"}
-                              lang={lang}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <DistanceSlider value={0} setValue={null} t={t} />
-                        </div>
-                        <div className="col-md-6">
-                          <AgeRange value={[18, 80]} setValue={null} t={t} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              );
-            }
-            if (error) {
-              return <div>{error.message}</div>;
-            }
-            if (!data.getSettings) {
-              return <div>{t("Error occured. Please contact support!")}</div>;
-            }
-
-            distance = distance !== null ? distance : data.getSettings.distance;
-            distanceMetric =
-              distanceMetric !== null
-                ? distanceMetric
-                : data.getSettings.distanceMetric;
-            ageRange = ageRange !== null ? ageRange : data.getSettings.ageRange;
-            location = location !== null ? location : data.getSettings.location;
-            interestedIn =
-              interestedIn !== null
-                ? interestedIn
-                : data.getSettings.interestedIn;
-
+        <Mutation mutation={REMOVE_LOCLOCK}>
+          {(removeLocation, { loading }) => {
             return (
-              <Mutation mutation={REMOVE_LOCLOCK}>
-                {(removeLocation, { loading }) => {
+              <Mutation
+                mutation={UPDATE_SETTINGS}
+                variables={{
+                  distance,
+                  distanceMetric,
+                  ageRange,
+                  interestedIn,
+                  location,
+                  lat,
+                  long
+                }}
+              >
+                {(updateSettings, { loading }) => {
                   return (
-                    <Mutation
-                      mutation={UPDATE_SETTINGS}
-                      variables={{
-                        distance,
-                        distanceMetric,
-                        ageRange,
-                        interestedIn,
-                        location,
-                        lat,
-                        long
-                      }}
-                    >
-                      {(updateSettings, { loading }) => {
-                        return (
-                          <section className="meet-filter">
-                            <div className="container">
-                              <div className="col-md-12">
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="item">
-                                      <AddressSearch
-                                        style={{ width: 150 }}
-                                        setLocationValues={({
-                                          lat,
-                                          long,
-                                          address
-                                        }) =>
-                                          this.setLocationValues({
-                                            lat,
-                                            long,
-                                            address,
-                                            updateSettings
-                                          })
-                                        }
-                                        address={location}
-                                        type={"(cities)"}
-                                        placeholder={t("common:setloc") + "..."}
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="col-md-6">
-                                    <div className="item">
-                                      <Dropdown
-                                        type={"interestedIn"}
-                                        onChange={el =>
-                                          this.setValue({
-                                            name: "interestedIn",
-                                            value: el.map(e => e.value),
-                                            updateSettings
-                                          })
-                                        }
-                                        value={interestedIn}
-                                        placeholder={
-                                          t("common:Interested") + ":"
-                                        }
-                                        lang={lang}
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="col-md-6">
-                                    <DistanceSlider
-                                      value={distance}
-                                      setValue={el =>
-                                        this.setValue({
-                                          name: "distance",
-                                          value: el,
-                                          updateSettings
-                                        })
-                                      }
-                                      t={t}
-                                      metric={distanceMetric}
-                                    />
-                                  </div>
-                                  <div className="col-md-6">
-                                    <AgeRange
-                                      value={ageRange}
-                                      setValue={el =>
-                                        this.setValue({
-                                          name: "ageRange",
-                                          value: el,
-                                          updateSettings
-                                        })
-                                      }
-                                      t={t}
-                                    />
-                                  </div>
-                                </div>
+                    <section className="meet-filter">
+                      <div className="container">
+                        <div className="col-md-12">
+                          <div className="row">
+                            <div className="col-md-6">
+                              <div className="item">
+                                <AddressSearch
+                                  style={{ width: 150 }}
+                                  setLocationValues={({ lat, long, address }) =>
+                                    this.setLocationValues({
+                                      lat,
+                                      long,
+                                      address,
+                                      updateSettings
+                                    })
+                                  }
+                                  address={location}
+                                  type={"(cities)"}
+                                  placeholder={t("common:setloc") + "..."}
+                                />
                               </div>
                             </div>
-                          </section>
-                        );
-                      }}
-                    </Mutation>
+                            <div className="col-md-6">
+                              <div className="item">
+                                <Dropdown
+                                  type={"interestedIn"}
+                                  onChange={el =>
+                                    this.setValue({
+                                      name: "interestedIn",
+                                      value: el.map(e => e.value),
+                                      updateSettings
+                                    })
+                                  }
+                                  value={interestedIn}
+                                  placeholder={t("common:Interested") + ":"}
+                                  lang={lang}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <DistanceSlider
+                                value={distance}
+                                setValue={el =>
+                                  this.setValue({
+                                    name: "distance",
+                                    value: el,
+                                    updateSettings
+                                  })
+                                }
+                                t={t}
+                                metric={distanceMetric}
+                              />
+                            </div>
+                            <div className="col-md-6">
+                              <AgeRange
+                                value={ageRange}
+                                setValue={el =>
+                                  this.setValue({
+                                    name: "ageRange",
+                                    value: el,
+                                    updateSettings
+                                  })
+                                }
+                                t={t}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
                   );
                 }}
               </Mutation>
             );
           }}
-        </Query>
+        </Mutation>
+
         {locModalVisible && (
           <SetLocationModal
             close={() => this.setLocModalVisible(false)}
             setLocation={this.setLocation}
-            isBlackMember={this.props.isBlackMember}
+            isBlackMember={this.props.session.currentuser.blackMember.active}
           />
         )}
       </div>

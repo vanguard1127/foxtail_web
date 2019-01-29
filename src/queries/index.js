@@ -449,8 +449,24 @@ export const SEARCH_EVENTS = gql`
 `;
 
 export const SEARCH_PROFILES = gql`
-  query($long: Float!, $lat: Float!, $limit: Int, $skip: Int) {
-    searchProfiles(long: $long, lat: $lat, limit: $limit, skip: $skip) {
+  query(
+    $long: Float!
+    $lat: Float!
+    $distance: Int
+    $interestedIn: [String]
+    $ageRange: [Int]
+    $limit: Int
+    $skip: Int
+  ) {
+    searchProfiles(
+      long: $long
+      lat: $lat
+      distance: $distance
+      interestedIn: $interestedIn
+      ageRange: $ageRange
+      limit: $limit
+      skip: $skip
+    ) {
       profiles {
         id
         about
@@ -734,6 +750,19 @@ export const GET_CURRENT_USER = gql`
           lat
         }
       }
+    }
+  }
+`;
+
+export const GET_SEARCH_SETTINGS = gql`
+  query {
+    getSettings {
+      distance
+      distanceMetric
+      ageRange
+      lang
+      interestedIn
+      location
     }
   }
 `;

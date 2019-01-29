@@ -4,7 +4,6 @@ import { Layer, Stage } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
-import { WithCrop } from "./WithCrop";
 
 class EditCanvasImage extends React.Component {
   constructor(props) {
@@ -18,6 +17,10 @@ class EditCanvasImage extends React.Component {
     this.state = {
       width: width,
       height: height,
+      scaleWidth: width,
+      scaleHeight: height,
+      x_pos: 0,
+      y_pos: 0,
       selectedShapeName: "",
       hideTransformer: false,
       konvaImageList: [],
@@ -26,7 +29,8 @@ class EditCanvasImage extends React.Component {
       isCropping: false,
       unduCrop: false,
       rotation: 0,
-      uploading: false
+      uploading: false,
+      scale: 1
     };
   }
   static propTypes = {
@@ -199,14 +203,41 @@ class EditCanvasImage extends React.Component {
     });
   };
 
+  handleScale = e => {
+    const scale = parseFloat(e.target.value);
+    this.setState({
+      scaleWidth: this.state.width * scale,
+      scaleHeight: this.state.height * scale,
+      scale: scale
+    });
+  };
+
+  handleXPosition = e => {
+    const x = parseFloat(e.target.value);
+    this.setState({
+      x_pos: x
+    });
+  };
+
+  handleYPosition = e => {
+    const y = parseFloat(e.target.value);
+    this.setState({
+      y_pos: y
+    });
+  };
+
   render() {
     const {
       konvaImageList,
       width,
       height,
+      scaleWidth,
+      scaleHeight,
+      scale,
+      x_pos,
+      y_pos,
       hideTransformer,
       selectedShapeName,
-      isCropping,
       uploading
     } = this.state;
     const { t } = this.props;
@@ -239,72 +270,51 @@ class EditCanvasImage extends React.Component {
             rotation={this.state.rotation}
           >
             <Layer>
-              <WithCrop
-                width={width}
-                height={height}
-                onChange={this.onCropChange}
-                initialCrop={this.state.crop}
-                isCropping={isCropping}
-                keepAspectRatio
-              >
-                {this.props.imageObject && (
-                  <SourceImage
-                    width={width}
-                    height={height}
-                    sourceImageObject={this.props.imageObject}
+              {this.props.imageObject && (
+                <SourceImage
+                  width={width}
+                  height={height}
+                  scaleWidth={scaleWidth}
+                  scaleHeight={scaleHeight}
+                  scale={scale}
+                  x_pos={x_pos}
+                  y_pos={y_pos}
+                  sourceImageObject={this.props.imageObject}
+                />
+              )}
+              {konvaImageList.length > 0 &&
+                konvaImageList.map((img, idx) => (
+                  <KonvaImage
+                    src={img.src}
+                    key={img.id + idx}
+                    onDragStart={this.handleDragStart}
+                    width={100}
+                    height={100}
+                    name={img.name}
+                    x={img.x}
+                    y={img.y}
+                    rotation={0}
                   />
-                )}
-                {konvaImageList.length > 0 &&
-                  konvaImageList.map((img, idx) => (
-                    <KonvaImage
-                      src={img.src}
-                      key={img.id + idx}
-                      onDragStart={this.handleDragStart}
-                      width={100}
-                      height={100}
-                      name={img.name}
-                      x={img.x}
-                      y={img.y}
-                      rotation={0}
-                    />
-                  ))}
-                {hideTransformer === false && (
-                  <TransformerHandler selectedShapeName={selectedShapeName} />
-                )}
-              </WithCrop>
+                ))}
+              {hideTransformer === false && (
+                <TransformerHandler selectedShapeName={selectedShapeName} />
+              )}
             </Layer>
           </Stage>
         </div>
-        {!isCropping ? (
-          <div style={{ display: "inline" }}>
-            <button style={{ marginBottom: 5 }} onClick={this.onStartCrop}>
-              {t("Crop")}
-            </button>
-          </div>
-        ) : (
-          <React.Fragment>
-            <button
-              style={{
-                border: "none",
-                backgroundColor: "lightgreen",
-                marginBottom: 5
-              }}
-              onClick={this.onAcceptCrop}
-            >
-              {t("Accept")}
-            </button>
-            <button
-              style={{
-                border: "none",
-                backgroundColor: "lightcoral",
-                marginBottom: 5
-              }}
-              onClick={this.onCancelCrop}
-            >
-              {t("Cancel")}
-            </button>
-          </React.Fragment>
-        )}
+
+        <div style={{ margin: 5 }}>
+          Zoom: &nbsp; &nbsp;
+          <input
+            name="scale"
+            type="range"
+            onChange={this.handleScale}
+            min="1"
+            max="2"
+            step="0.01"
+            defaultValue="1"
+          />
+        </div>
 
         <button style={{ marginBottom: 5 }} onClick={this.rotate}>
           Rotate

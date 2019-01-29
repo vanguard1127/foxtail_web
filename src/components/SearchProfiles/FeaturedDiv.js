@@ -4,16 +4,9 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import FeaturedCard from "./FeaturedCard";
 
-const FeaturedDiv = ({
-  featuredProfiles,
-  showMsgModal,
-  showBlockModal,
-  showShareModal,
-  likeProfile,
-  t
-}) => {
+const FeaturedDiv = ({ featuredProfiles, showMsgModal, likeProfile, t }) => {
   return (
-    <section className="featured-profiles" key="nmn">
+    <section className="featured-profiles" key="na">
       <div className="container">
         <div className="col-md-12">
           <span className="head">{t("featmems")}</span>
@@ -54,8 +47,6 @@ const FeaturedDiv = ({
                   key={profile.id}
                   profile={profile}
                   showMsgModal={showMsgModal}
-                  showBlockModal={showBlockModal}
-                  showShareModal={showShareModal}
                   likeProfile={likeProfile}
                   t={t}
                 />

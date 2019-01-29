@@ -247,9 +247,8 @@ const Body = ({ showFooter }) => (
   </div>
 );
 
-const JoyNavBarWithSession = withSession()(Navbar);
 class JoyBody extends Component {
-  members;
+  startmem;
   profile;
   events;
   inbox;
@@ -268,7 +267,7 @@ class JoyBody extends Component {
       run: true,
       steps: [
         {
-          target: this.members,
+          target: this.startmem,
           content: (
             <div>
               You can interact with your own components through the spotlight.
@@ -369,37 +368,62 @@ class JoyBody extends Component {
           callback={this.handleJoyrideCallback}
         />
         <header>
-          <JoyNavBarWithSession
-            setRef={this.setRef}
-            handleNext={this.handleNext}
-          />
+          <NavBarWithSession />
         </header>
         <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
           <Switch>
             <Route
               path="/members"
-              render={() => <ProfileSearch setRef={this.setRef} />}
+              render={() => (
+                <ProfileSearch
+                  setRef={this.setRef}
+                  handleNext={this.handleNext}
+                  ErrorBoundary={ErrorBoundary}
+                />
+              )}
               exact
             />
             <Route
               path="/events"
-              render={() => <SearchEvents setRef={this.setRef} />}
+              render={() => (
+                <SearchEvents
+                  setRef={this.setRef}
+                  ErrorBoundary={ErrorBoundary}
+                />
+              )}
               exact
             />
             <Route
               path="/events/:id"
-              render={() => <EventPage setRef={this.setRef} />}
+              render={() => (
+                <EventPage setRef={this.setRef} ErrorBoundary={ErrorBoundary} />
+              )}
             />
             <Route
               path="/members/:id"
-              render={() => <ProfilePage setRef={this.setRef} />}
+              render={() => (
+                <ProfilePage
+                  setRef={this.setRef}
+                  ErrorBoundary={ErrorBoundary}
+                />
+              )}
             />
-            <Route path="/inbox/:chatID" component={InboxPage} />
+            <Route
+              path="/inbox/:chatID"
+              component={InboxPage}
+              ErrorBoundary={ErrorBoundary}
+            />
             <Route
               path="/inbox"
-              render={() => <InboxPage setRef={this.setRef} />}
+              render={() => (
+                <InboxPage setRef={this.setRef} ErrorBoundary={ErrorBoundary} />
+              )}
             />
-            <Route path="/settings" component={Settings} />
+            <Route
+              path="/settings"
+              component={Settings}
+              ErrorBoundary={ErrorBoundary}
+            />
 
             <Redirect to="/" />
           </Switch>

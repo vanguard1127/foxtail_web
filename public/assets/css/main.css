@@ -7607,3 +7607,9 @@ section.meet-filter .search {
 img {
   background: url('../img/elements/loader.gif') 50% no-repeat;
 }
+
+/* lightGallery */
+.lg-next, .lg-prev {
+  border: none !important;
+  outline: none !important;
+}
