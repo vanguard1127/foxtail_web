@@ -99,7 +99,7 @@ class ProfilesContainer extends Component {
     if (loading) {
       return <Spinner page="searchProfiles" title={t("allmems")} />;
     }
-    console.log("RTRRR", long, lat, distance, ageRange, interestedIn);
+
     return (
       <Query
         query={SEARCH_PROFILES}

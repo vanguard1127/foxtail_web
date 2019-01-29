@@ -1,7 +1,7 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { GET_SEARCH_SETTINGS } from "../../queries";
-import SearchProfilesPage from "./SearchProfilesPage";
+import SearchProfilesPage from "./SearchProfiles_Tour";
 
 const SearchProfiles = ({ t, ErrorBoundary }) => {
   return (
@@ -22,7 +22,7 @@ const SearchProfiles = ({ t, ErrorBoundary }) => {
         if (!data.getSettings) {
           return <div>{t("Error occured. Please contact support!")}</div>;
         }
-        console.log(data.getSettings);
+
         const {
           long,
           lat,

@@ -8,6 +8,7 @@ import {
   withRouter
 } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import ReactJoyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/";
@@ -116,8 +117,17 @@ const splitlink = split(
 
 const cache = new InMemoryCache();
 
+//DTODO:Do ii need rhtis
+const defaultState = {
+  profilePage: {
+    __typename: "ProfilePage",
+    image: "123"
+  }
+};
+
 const stateLink = withClientState({
-  cache
+  cache,
+  defaults: defaultState
 });
 
 const errorLink = onError(
@@ -132,7 +142,6 @@ const errorLink = onError(
           return null;
         } else if (~message.indexOf("authenticated")) {
           //TODO: Does this work?
-          console.log("TOEKN");
           tokenHandler({ operation, forward, HTTPSurl });
         } else {
           console.error("APP ERROR:::", message);
@@ -165,7 +174,6 @@ const Root = () => (
   </Router>
 );
 
-//TODO:https://reacttraining.com/react-router/web/example/animated-transitions
 const Wrapper = withRouter(props => {
   let location = props.location;
   let isLanding = location.pathname && location.pathname === "/";
@@ -174,7 +182,13 @@ const Wrapper = withRouter(props => {
   }
   let showFooter =
     location.pathname && location.pathname.match(/^\/inbox/) === null;
-
+  // if (true) {
+  //   return (
+  //     <div>
+  //       <JoyBody showFooter={showFooter} />
+  //     </div>
+  //   );
+  // }
   return (
     <div>
       <Body showFooter={showFooter} />
@@ -183,6 +197,7 @@ const Wrapper = withRouter(props => {
 });
 
 const NavBarWithSession = withSession(Navbar);
+//TODO:https://reacttraining.com/react-router/web/example/animated-transitions
 const Body = ({ showFooter }) => (
   <div
     className="layout"
@@ -231,6 +246,194 @@ const Body = ({ showFooter }) => (
     <ToastContainer />
   </div>
 );
+
+class JoyBody extends Component {
+  startmem;
+  profile;
+  events;
+  inbox;
+  myaccount;
+  constructor(props) {
+    super(props);
+    this.state = {
+      run: false,
+      steps: [],
+      stepIndex: 0
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      run: true,
+      steps: [
+        {
+          target: this.startmem,
+          content: (
+            <div>
+              You can interact with your own components through the spotlight.
+              <br />
+              Click the menu above!
+            </div>
+          ),
+          textAlign: "center",
+          placement: "bottom",
+          disableBeacon: true,
+          disableOverlayClose: true,
+          hideCloseButton: true,
+          hideFooter: true,
+          spotlightClicks: true,
+          styles: {
+            options: {
+              zIndex: 10000
+            }
+          },
+          title: "Menu"
+        },
+        {
+          target: this.events,
+          content: (
+            <div>
+              You can interact with your own components through the spotlight.
+              <br />
+              Click the menu above!
+            </div>
+          ),
+          textAlign: "center",
+          placement: "bottom",
+
+          styles: {
+            options: {
+              zIndex: 10000
+            }
+          },
+          title: "Events"
+        }
+      ]
+    });
+  }
+
+  handleNext = e => {
+    e.preventDefault();
+
+    this.setState({
+      stepIndex: this.state.stepIndex + 1
+    });
+  };
+
+  handleJoyrideCallback = data => {
+    const { action, index, type, status } = data;
+
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      // Need to set our running state to false, so we can restart if we click start again.
+      this.setState({ run: false, stepIndex: 0 });
+    } else if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      const stepIndex = index + (action === ACTIONS.PREV ? -1 : 1);
+
+      // Update state to advance the tour
+      this.setState({
+        stepIndex
+      });
+    }
+  };
+
+  setRef = el => {
+    if (!el) return;
+    const { dataset } = el;
+
+    this[dataset.name] = el;
+  };
+  render() {
+    const { showFooter } = this.props;
+    const { run, steps, stepIndex } = this.state;
+
+    return (
+      <div
+        className="layout"
+        style={{
+          height: "auto",
+          margin: "0",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh"
+        }}
+      >
+        <ReactJoyride
+          continuous
+          run={run}
+          steps={steps}
+          stepIndex={stepIndex}
+          scrollToFirstStep
+          showProgress
+          showSkipButton
+          callback={this.handleJoyrideCallback}
+        />
+        <header>
+          <NavBarWithSession />
+        </header>
+        <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
+          <Switch>
+            <Route
+              path="/members"
+              render={() => (
+                <ProfileSearch
+                  setRef={this.setRef}
+                  handleNext={this.handleNext}
+                  ErrorBoundary={ErrorBoundary}
+                />
+              )}
+              exact
+            />
+            <Route
+              path="/events"
+              render={() => (
+                <SearchEvents
+                  setRef={this.setRef}
+                  ErrorBoundary={ErrorBoundary}
+                />
+              )}
+              exact
+            />
+            <Route
+              path="/events/:id"
+              render={() => (
+                <EventPage setRef={this.setRef} ErrorBoundary={ErrorBoundary} />
+              )}
+            />
+            <Route
+              path="/members/:id"
+              render={() => (
+                <ProfilePage
+                  setRef={this.setRef}
+                  ErrorBoundary={ErrorBoundary}
+                />
+              )}
+            />
+            <Route
+              path="/inbox/:chatID"
+              component={InboxPage}
+              ErrorBoundary={ErrorBoundary}
+            />
+            <Route
+              path="/inbox"
+              render={() => (
+                <InboxPage setRef={this.setRef} ErrorBoundary={ErrorBoundary} />
+              )}
+            />
+            <Route
+              path="/settings"
+              component={Settings}
+              ErrorBoundary={ErrorBoundary}
+            />
+
+            <Redirect to="/" />
+          </Switch>
+        </main>
+        {showFooter && <Footer />}
+        <ToastContainer autoClose={8000} />
+      </div>
+    );
+  }
+}
 
 ReactDOM.render(
   <ApolloProvider client={client}>
