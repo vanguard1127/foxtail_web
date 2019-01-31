@@ -1,19 +1,19 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from 'react';
 
-import { withNamespaces } from "react-i18next";
-import { withRouter } from "react-router-dom";
-import { Query } from "react-apollo";
-import { SEARCH_EVENTS } from "../../queries";
-import EmptyScreen from "../common/EmptyScreen";
-import Waypoint from "react-waypoint";
-import ShareModal from "../Modals/Share";
-import MyEvents from "./MyEvents";
-import withLocation from "../withLocation";
-import withAuth from "../withAuth";
-import SearchEventToolbar from "./SearchEventToolbar";
-import Header from "./Header";
-import EventsList from "./EventsList";
-import Spinner from "../common/Spinner";
+import { withNamespaces } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
+import { Query } from 'react-apollo';
+import { SEARCH_EVENTS } from '../../queries';
+import EmptyScreen from '../common/EmptyScreen';
+import Waypoint from 'react-waypoint';
+import ShareModal from '../Modals/Share';
+import MyEvents from './MyEvents';
+import withLocation from '../withLocation';
+import withAuth from '../withAuth';
+import SearchEventToolbar from './SearchEventToolbar';
+import Header from './Header';
+import EventsList from './EventsList';
+import Spinner from '../common/Spinner';
 
 const LIMIT = 6;
 
@@ -28,11 +28,12 @@ class SearchEvents extends Component {
     lat: this.props.location.lat,
     long: this.props.location.long,
     maxDistance: 50,
-    location: "My Location",
+    location: 'My Location',
     all: true
   };
 
   showModal = () => {
+    this.props.ErrorHandler.setBreadcrumb('Show Modal in Events');
     this.setState({ visible: true });
   };
 
@@ -41,24 +42,33 @@ class SearchEvents extends Component {
   };
 
   handleCancel = () => {
+    this.props.ErrorHandler.setBreadcrumb('Cancel event popup');
     this.setState({ event: null, visible: false });
   };
 
   setShareModalVisible = (shareModalVisible, event) => {
+    this.props.ErrorHandler.setBreadcrumb(
+      'share modal visible:' + shareModalVisible
+    );
     if (event) this.setState({ event, shareModalVisible });
     else this.setState({ event: null, shareModalVisible });
   };
 
   setBlockModalVisible = (blockModalVisible, event) => {
+    this.props.ErrorHandler.setBreadcrumb(
+      'Block Modal visible:' + blockModalVisible
+    );
     if (event) this.setState({ event, blockModalVisible });
     else this.setState({ event: null, blockModalVisible });
   };
 
   handleChangeSelect = e => {
+    this.props.ErrorHandler.setBreadcrumb('Change max distance');
     this.setState({ maxDistance: parseInt(e.value) });
   };
 
   setLocationValues = ({ lat, long, address }) => {
+    this.props.ErrorHandler.setBreadcrumb('Set location');
     if (lat && long) {
       this.setState({ lat, long, location: address });
     } else {
@@ -67,6 +77,7 @@ class SearchEvents extends Component {
   };
 
   handleSubmit = (e, createEvent, t) => {
+    this.props.ErrorHandler.setBreadcrumb('Create event');
     e.preventDefault();
     this.formRef.props.form.validateFields((err, fieldsValue) => {
       if (err) {
@@ -75,21 +86,17 @@ class SearchEvents extends Component {
 
       createEvent()
         .then(({ data }) => {
-          alert(t("eventcreated"));
-          this.props.history.push("/events/" + data.createEvent.id);
+          alert(t('eventcreated'));
+          this.props.history.push('/events/' + data.createEvent.id);
         })
         .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     });
   };
 
   fetchData = fetchMore => {
+    this.props.ErrorHandler.setBreadcrumb('Fetch more events');
     this.setState({ loading: true });
     fetchMore({
       variables: {
@@ -132,13 +139,15 @@ class SearchEvents extends Component {
       lat,
       long,
       maxDistance,
-      location
+      location,
+      skip
     } = this.state;
-    const { t, ErrorBoundary } = this.props;
+    const { t, ErrorHandler } = this.props;
+    ErrorHandler.setBreadcrumb('Search Events');
 
     //TODO: Do we still need this
     sessionStorage.setItem(
-      "searchEventQuery",
+      'searchEventQuery',
       JSON.stringify({
         lat,
         long,
@@ -153,29 +162,38 @@ class SearchEvents extends Component {
         <div>
           <Header t={t} />
           <section className="go-events">
-            <ErrorBoundary>
+            <ErrorHandler.ErrorBoundary>
               <SearchEventToolbar
                 location={location}
                 setLocationValues={this.setLocationValues}
                 handleChangeSelect={e => this.handleChangeSelect(e)}
                 maxDistance={maxDistance}
                 t={t}
+                ErrorHandler={ErrorHandler}
               />
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <MyEvents t={t} />
-            </ErrorBoundary>
-            <ErrorBoundary>
-              {" "}
+            </ErrorHandler.ErrorBoundary>
+            <ErrorHandler.ErrorBoundary>
+              <MyEvents t={t} ErrorHandler={ErrorHandler} />
+            </ErrorHandler.ErrorBoundary>
+            <ErrorHandler.ErrorBoundary>
+              {' '}
               <Query
                 query={SEARCH_EVENTS}
-                variables={{ lat, long, maxDistance, all, limit: LIMIT }}
+                variables={{ lat, long, maxDistance, all, limit: LIMIT, skip }}
                 fetchPolicy="cache-first"
               >
                 {({ data, loading, error, fetchMore }) => {
                   if (loading) {
                     return (
-                      <Spinner page="searchEvents" title={t("upcomingevent")} />
+                      <Spinner page="searchEvents" title={t('upcomingevent')} />
+                    );
+                  }
+                  if (error) {
+                    return (
+                      <ErrorHandler.report
+                        error={error}
+                        calledName={'searchEvents'}
+                      />
                     );
                   }
                   if (
@@ -183,7 +201,7 @@ class SearchEvents extends Component {
                     !data.searchEvents ||
                     data.searchEvents.length === 0
                   ) {
-                    return <EmptyScreen message={t("noeventavailable")} />;
+                    return <EmptyScreen message={t('noeventavailable')} />;
                   }
 
                   return (
@@ -197,7 +215,7 @@ class SearchEvents extends Component {
                   );
                 }}
               </Query>
-            </ErrorBoundary>
+            </ErrorHandler.ErrorBoundary>
           </section>
         </div>
 
@@ -206,7 +224,7 @@ class SearchEvents extends Component {
             event={event}
             visible={shareModalVisible}
             close={() => this.setShareModalVisible(false)}
-            ErrorBoundary={ErrorBoundary}
+            ErrorBoundary={ErrorHandler.ErrorBoundary}
           />
         )}
       </div>
@@ -214,6 +232,8 @@ class SearchEvents extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(
-  withRouter(withLocation(withNamespaces("searchevents")(SearchEvents)))
+export default withRouter(
+  withAuth(session => session && session.currentuser)(
+    withLocation(withNamespaces('searchevents')(SearchEvents))
+  )
 );

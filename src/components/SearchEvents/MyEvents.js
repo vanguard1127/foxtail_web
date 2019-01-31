@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { Query } from "react-apollo";
-import { GET_MY_EVENTS } from "../../queries";
-import { EventLoader } from "../common/Skeletons";
-import EventCard from "./EventCard";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Query } from 'react-apollo';
+import { GET_MY_EVENTS } from '../../queries';
+import EventCard from './EventCard';
 
 const LIMIT = 3;
 
+//TODO: Test paginate
 class MyEvents extends Component {
   state = { skip: 0, current: 1 };
 
@@ -29,6 +29,7 @@ class MyEvents extends Component {
   };
 
   handlePaginate = (page, fetchMore) => {
+    this.props.ErrorHandler.setBreadcrumb('Page my events');
     this.setState(
       state => ({
         skip: (page - 1) * LIMIT,
@@ -40,7 +41,7 @@ class MyEvents extends Component {
 
   render() {
     const { skip, current } = this.state;
-    const { t } = this.props;
+    const { t, ErrorHandler } = this.props;
     return (
       <Query
         query={GET_MY_EVENTS}
@@ -51,7 +52,11 @@ class MyEvents extends Component {
           if (loading) {
             return null;
           }
-
+          if (error) {
+            return (
+              <ErrorHandler.report error={error} calledName={'getMyEvents'} />
+            );
+          }
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
             return null;
           }
@@ -62,7 +67,7 @@ class MyEvents extends Component {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <span className="head">{t("myevents")}</span>
+                      <span className="head">{t('myevents')}</span>
                     </div>
 
                     {myEvents.map(event => (

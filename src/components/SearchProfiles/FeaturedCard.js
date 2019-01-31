@@ -1,7 +1,7 @@
-import React from "react";
-import ProfileInfoDiv from "./ProfileInfoDiv";
-import ProfilePic from "./ProfilePic";
-import ProfileActionBtns from "./ProfileActionBtns";
+import React from 'react';
+import ProfileInfoDiv from './ProfileInfoDiv';
+import ProfilePic from './ProfilePic';
+import ProfileActionBtns from './ProfileActionBtns';
 
 const FeaturedCard = ({
   profile,
@@ -16,17 +16,17 @@ const FeaturedCard = ({
   const photoCheck = profile.users.every(
     user => user.verifications.photo === true
   );
-  let badge = "";
+  let badge = '';
   if (photoCheck) {
-    badge = "verified";
+    badge = 'verified';
   }
   return (
-    <div className={"item " + badge}>
+    <div className={'item ' + badge}>
       <div className="info">
-        <a href={null} onClick={() => history.push("/members/" + profile.id)}>
+        <span onClick={() => history.push('/members/' + profile.id)}>
           <ProfileInfoDiv profile={profile} t={t} />
           <ProfilePic profilePic={profile.profilePic} />
-        </a>
+        </span>
       </div>
       <ProfileActionBtns
         likeProfile={likeProfile}

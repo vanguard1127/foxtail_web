@@ -1,25 +1,21 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import { SEND_MESSAGE } from "../../queries";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import { SEND_MESSAGE } from '../../queries';
 
 class ChatPanel extends Component {
   state = {
-    text: ""
+    text: ''
   };
   submitMessage(e, sendMessage) {
+    this.props.ErrorHandler.setBreadcrumb('Send message (chat)');
     e.preventDefault();
 
     sendMessage()
       .then(({ data }) => {
-        this.setState({ text: "" });
+        this.setState({ text: '' });
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   }
 
@@ -39,19 +35,19 @@ class ChatPanel extends Component {
           text
         }}
       >
-        {(sendMessage, { data, loading, error }) => (
+        {sendMessage => (
           <div className="panel">
             <div className="files" />
             <div className="textarea">
               <input
-                placeholder={t("typemsg") + "..."}
+                placeholder={t('typemsg') + '...'}
                 value={text}
                 onChange={e => this.setText(e)}
               />
             </div>
             <div className="send">
               <button onClick={e => this.submitMessage(e, sendMessage)}>
-                {t("common:Send")}
+                {t('common:Send')}
               </button>
             </div>
           </div>

@@ -1,50 +1,39 @@
-import React from "react";
-import { Query } from "react-apollo";
-import { GET_SEARCH_SETTINGS } from "../../queries";
-import SearchProfilesPage from "./SearchProfiles_Tour";
+// @flow
+import React from 'react';
+import { Query } from 'react-apollo';
+import { GET_SEARCH_SETTINGS } from '../../queries';
+import SearchProfilesPage from './SearchProfilesPage';
+//import SearchProfilesPage from "./SearchProfiles_Tour";
 
-const SearchProfiles = ({ t, ErrorBoundary }) => {
+const SearchProfiles = ({ t, ErrorHandler }) => {
+  ErrorHandler.setBreadcrumb('Enter Search Profiles');
+  document.title = 'Events';
   return (
-    <Query query={GET_SEARCH_SETTINGS} fetchPolicy="network-only">
+    <Query query={GET_SEARCH_SETTINGS} fetchPolicy="cache-and-network">
       {({ data, loading, error }) => {
         if (loading) {
           return (
             <SearchProfilesPage
               t={t}
-              ErrorBoundary={ErrorBoundary}
+              ErrorHandler={ErrorHandler}
               loading={loading}
             />
           );
         }
-        if (error) {
-          return <div>{error.message}</div>;
-        }
-        if (!data.getSettings) {
-          return <div>{t("Error occured. Please contact support!")}</div>;
+        if (error || !data.getSettings) {
+          return (
+            <ErrorHandler.report
+              error={error}
+              calledName={'getSearchSettings'}
+            />
+          );
         }
 
-        const {
-          long,
-          lat,
-          distance,
-          distanceMetric,
-          ageRange,
-          interestedIn,
-          location
-        } = data.getSettings;
         return (
           <SearchProfilesPage
             t={t}
-            ErrorBoundary={ErrorBoundary}
-            searchCriteria={{
-              long,
-              lat,
-              distance,
-              distanceMetric,
-              ageRange,
-              interestedIn,
-              location
-            }}
+            ErrorHandler={ErrorHandler}
+            searchCriteria={data.getSettings}
           />
         );
       }}

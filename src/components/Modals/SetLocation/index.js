@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { UPDATE_SETTINGS } from "../../../queries";
-import { Mutation } from "react-apollo";
-import AddressSearch from "../../common/AddressSearch";
-import ErrorBoundary from "../../common/ErrorBoundary";
-import { withNamespaces } from "react-i18next";
+import React, { Component } from 'react';
+import { UPDATE_SETTINGS } from '../../../queries';
+import { Mutation } from 'react-apollo';
+import AddressSearch from '../../common/AddressSearch';
+import { ErrorBoundary } from '../../common/ErrorHandler';
+import { withNamespaces } from 'react-i18next';
 
 class SetLocationModal extends Component {
-  state = { address: "", long: null, lat: null };
+  state = { address: '', long: null, lat: null };
 
   setLocationValues = ({ lat, long, address }) => {
     if (lat && long) {
@@ -27,10 +27,10 @@ class SetLocationModal extends Component {
             },
             location: this.state.address
           });
-          alert(t("locset") + ": " + this.state.address);
+          alert(t('locset') + ': ' + this.state.address);
           this.props.close();
         } else {
-          alert(t("locnotset"));
+          alert(t('locnotset'));
         }
       })
       .catch(res => {
@@ -68,18 +68,18 @@ class SetLocationModal extends Component {
                         <ErrorBoundary>
                           <div className="m-head">
                             <span className="heading">
-                              {t("common:setloc")}
+                              {t('common:setloc')}
                             </span>
                             <span className="close" onClick={close} />
                           </div>
                           <div className="m-body">
-                            {t("setcity")}:
+                            {t('setcity')}:
                             <AddressSearch
-                              style={{ width: "100%" }}
+                              style={{ width: '100%' }}
                               setLocationValues={this.setLocationValues}
                               address={address}
-                              type={"(cities)"}
-                              placeholder={t("common:setloc") + "..."}
+                              type={'(cities)'}
+                              placeholder={t('common:setloc') + '...'}
                             />
                             {lat !== null ? (
                               <button
@@ -88,15 +88,15 @@ class SetLocationModal extends Component {
                                 }
                                 disabled={lat === null}
                               >
-                                {t("Save")}
+                                {t('Save')}
                               </button>
                             ) : null}
                           </div>
                           {!isBlackMember && (
                             <small>
-                              {t("compmsg")}
+                              {t('compmsg')}
                               <br />
-                              {t("compsecmsg")}
+                              {t('compsecmsg')}
                             </small>
                           )}
                         </ErrorBoundary>
@@ -113,4 +113,4 @@ class SetLocationModal extends Component {
   }
 }
 
-export default withNamespaces("modals")(SetLocationModal);
+export default withNamespaces('modals')(SetLocationModal);

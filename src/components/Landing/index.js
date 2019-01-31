@@ -1,15 +1,15 @@
-import React from "react";
-import Signup from "./Signup";
-import LoginButton from "./LoginButton";
-import LanguageControl from "../common/LanguageControl/LanguageControl";
-import ErrorBoundary from "../common/ErrorBoundary";
-import CountUp from "react-countup";
+import React from 'react';
+import Signup from './Signup';
+import LoginButton from './LoginButton';
+import LanguageControl from '../common/LanguageControl/LanguageControl';
+import { ErrorBoundary } from '../common/ErrorHandler';
+import CountUp from 'react-countup';
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // minified version is also included
 // import 'react-toastify/dist/ReactToastify.min.css';
-import { withNamespaces } from "react-i18next";
+import { withNamespaces } from 'react-i18next';
 
 const Landing = ({ t }) => {
   return (
@@ -29,7 +29,7 @@ const Landing = ({ t }) => {
                     <LoginButton t={t} />
                   </ErrorBoundary>
                   <ErrorBoundary>
-                    {" "}
+                    {' '}
                     <LanguageControl />
                   </ErrorBoundary>
                 </div>
@@ -47,13 +47,13 @@ const Landing = ({ t }) => {
                 <div className="col-lg-7 col-md-12">
                   <div className="left">
                     <div className="welcome-text">
-                      <h1>{t("title")}</h1>
-                      <span className="title">{t("subtitle")}</span>
+                      <h1>{t('title')}</h1>
+                      <span className="title">{t('subtitle')}</span>
                     </div>
                     <div className="stats">
                       <div className="head">
-                        <span> {t("Welcome")}</span>{" "}
-                        <span> {t("Foxtail Stats")}</span>
+                        <span> {t('Welcome')}</span>{' '}
+                        <span> {t('Foxtail Stats')}</span>
                       </div>
                       <ErrorBoundary>
                         <ul>
@@ -65,29 +65,29 @@ const Landing = ({ t }) => {
                                 separator="."
                               />
                             </span>
-                            <span>{t("Male Members")}</span>
+                            <span>{t('Male Members')}</span>
                           </li>
                           <li>
                             <span className="counter">
-                              {" "}
+                              {' '}
                               <CountUp
                                 end={19538}
                                 duration={1.75}
                                 separator="."
                               />
                             </span>
-                            <span>{t("Female Members")}</span>
+                            <span>{t('Female Members')}</span>
                           </li>
                           <li>
                             <span className="counter">
-                              {" "}
+                              {' '}
                               <CountUp
                                 end={19538}
                                 duration={1.75}
                                 separator="."
                               />
                             </span>
-                            <span>{t("Couple Profiles")}</span>
+                            <span>{t('Couple Profiles')}</span>
                           </li>
                         </ul>
                       </ErrorBoundary>
@@ -96,7 +96,7 @@ const Landing = ({ t }) => {
                 </div>
                 <div className="col-lg-5 col-md-12">
                   <ErrorBoundary>
-                    {" "}
+                    {' '}
                     <Signup t={t} />
                   </ErrorBoundary>
                 </div>
@@ -112,26 +112,26 @@ const Landing = ({ t }) => {
             <div className="row">
               <div className="col-md-4">
                 <span className="created">
-                  Foxtail © 2018 {t("Created by")} <span>Foxtail</span>
+                  Foxtail © 2018 {t('Created by')} <span>Foxtail</span>
                 </span>
               </div>
               <div className="offset-md-2 col-md-6">
                 <div className="links">
                   <ul>
                     <li>
-                      <span>{t("common:Terms")}</span>
+                      <span>{t('common:Terms')}</span>
                     </li>
                     <li>
-                      <span>{t("common:Privacy")}</span>
+                      <span>{t('common:Privacy')}</span>
                     </li>
                     <li>
-                      <span>{t("FAQ")}</span>
+                      <span>{t('FAQ')}</span>
                     </li>
                     <li>
-                      <span>{t("About")}</span>
+                      <span>{t('About')}</span>
                     </li>
                     <li>
-                      <span>{t("Support")}</span>
+                      <span>{t('Support')}</span>
                     </li>
                   </ul>
                 </div>
@@ -145,4 +145,4 @@ const Landing = ({ t }) => {
   );
 };
 
-export default withNamespaces("landing")(Landing);
+export default withNamespaces('landing')(Landing);

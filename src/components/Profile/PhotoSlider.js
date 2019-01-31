@@ -1,23 +1,19 @@
-import React, { Component } from "react";
-import OwlCarousel from "react-owl-carousel";
-import $ from "jquery";
-import "lightgallery";
-import "lg-thumbnail";
-import "lg-fullscreen";
-import "lg-zoom";
-import "lg-autoplay";
-
-const preventContextMenu = e => {
-  e.preventDefault();
-  alert(
-    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
-  );
-};
+import React, { Component } from 'react';
+import OwlCarousel from 'react-owl-carousel';
+import _ from 'lodash';
+import $ from 'jquery';
+import 'lightgallery';
+import 'lg-thumbnail';
+import 'lg-fullscreen';
+import 'lg-zoom';
+import 'lg-autoplay';
+import { preventContextMenu } from '../../utils/image';
 
 const configLightGallery = {
   thumbnail: true,
-  selector: ".item",
-  width: "100%",
+  selector: 'a',
+  width: '100%',
+  thumbnail: true,
   download: false,
   mousewheel: true,
   zoom: true
@@ -29,9 +25,25 @@ class PhotoSlider extends Component {
     $(node).lightGallery(configLightGallery);
   };
 
+  componentDidMount() {
+    document.addEventListener('contextmenu', this.handleContextMenu);
+  }
+
+  handleContextMenu = event => {
+    if (event.target.hasAttribute('src')) preventContextMenu(event);
+  };
+
+  multiIncludes(text, values) {
+    var re = new RegExp(values.join('|'));
+    return re.test(text);
+  }
+
   componentWillUnmount() {
     try {
-      $(this.lightGallery).lightGallery("destroy");
+      document.removeEventListener('contextmenu', this.handleContextMenu);
+      $(this.lightGallery)
+        .data('lightGallery')
+        .destroy(true);
     } catch (e) {}
   }
 
@@ -40,10 +52,10 @@ class PhotoSlider extends Component {
 
     return (
       <div
-        className={isPublic ? "photos-slider public" : "photos-slider private"}
+        className={isPublic ? 'photos-slider public' : 'photos-slider private'}
       >
         <div className="profile-head">
-          {isPublic ? t("Public") : t("Private")} {t("Photos")} ({photos.length}
+          {isPublic ? t('Public') : t('Private')} {t('Photos')} ({photos.length}
           )
         </div>
         <div id="lightgallery" ref={this.onLightGallery}>
@@ -79,13 +91,15 @@ class PhotoSlider extends Component {
             }}
           >
             {photos.map(photo => (
-              <a href={photo.url} className="item" key={Math.random()}>
-                <img
-                  src={photo.url}
-                  alt=""
-                  onContextMenu={preventContextMenu}
-                />
-              </a>
+              <div
+                className="item"
+                key={Math.random()}
+                onContextMenu={preventContextMenu}
+              >
+                <a href={photo.url}>
+                  <img src={photo.url} alt="" />
+                </a>
+              </div>
             ))}
           </OwlCarousel>
         </div>

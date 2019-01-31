@@ -1,25 +1,29 @@
-import React, { Component, Fragment } from "react";
-import { withRouter } from "react-router-dom";
-import { withNamespaces } from "react-i18next";
-import { toast } from "react-toastify";
-import { Query } from "react-apollo";
-import { GET_SETTINGS } from "../../queries";
-import Spinner from "../common/Spinner";
-import withAuth from "../withAuth";
+import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
+import { withNamespaces } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { Query } from 'react-apollo';
+import { GET_SETTINGS } from '../../queries';
+import Spinner from '../common/Spinner';
+import withAuth from '../withAuth';
 
-import SettingsPage from "./SettingsPage";
+import SettingsPage from './SettingsPage';
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends Component {
   componentDidMount() {
     if (!this.props.session.currentuser.isProfileOK) {
-      toast.error("Please complete your profile first.", {
-        position: toast.POSITION.TOP_CENTER
-      });
+      const toastId = 'nopro';
+      if (!toast.isActive(toastId)) {
+        toast.info('Please complete your profile.', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: toastId
+        });
+      }
     }
   }
   //TODO: Set time below
   render() {
-    const { session, refetch, t, ErrorBoundary } = this.props;
+    const { session, refetch, t, ErrorHandler } = this.props;
     let isCouple = false;
     let isInitial = false;
     if (this.props.location.state) {
@@ -35,27 +39,26 @@ class Settings extends Component {
             <div className="col-md-12">
               <span className="head">
                 <span>
-                  {t("Hello")}, {session.currentuser.username} 👋
+                  {t('Hello')}, {session.currentuser.username} 👋
                 </span>
               </span>
               <span className="title">
-                {t("loggedin")}: 03 October 2018 13:34
+                {t('loggedin')}: 03 October 2018 13:34
               </span>
             </div>
           </div>
-        </section>{" "}
+        </section>{' '}
         <Query query={GET_SETTINGS} fetchPolicy="network-only">
           {({ data, loading, error }) => {
             if (loading) {
               return (
-                <Spinner message={t("common:Loading") + "..."} size="large" />
+                <Spinner message={t('common:Loading') + '...'} size="large" />
               );
             }
-            if (error) {
-              return <div>{error.message}</div>;
-            }
-            if (!data.getSettings) {
-              return <div>{t("Error occured. Please contact support!")}</div>;
+            if (error || !data.getSettings) {
+              return (
+                <ErrorHandler.report error={error} calledName={'getSettings'} />
+              );
             }
 
             const settings = data.getSettings;
@@ -68,7 +71,7 @@ class Settings extends Component {
                   t={t}
                   isCouple={isCouple}
                   isInitial={isInitial}
-                  ErrorBoundary={ErrorBoundary}
+                  ErrorHandler={ErrorHandler}
                 />
               </Fragment>
             );
@@ -79,6 +82,8 @@ class Settings extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces("settings")(Settings))
+export default withRouter(
+  withAuth(session => session && session.currentuser)(
+    withNamespaces('settings')(Settings)
+  )
 );

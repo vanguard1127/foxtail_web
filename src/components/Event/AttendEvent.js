@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import withSession from "../withSession";
-import { Mutation } from "react-apollo";
-import { TOGGLE_EVENT_ATTEND, GET_EVENT } from "../../queries";
+import React, { Component } from 'react';
+import withSession from '../withSession';
+import { Mutation } from 'react-apollo';
+import { TOGGLE_EVENT_ATTEND, GET_EVENT } from '../../queries';
 
 class AttendEvent extends Component {
   state = {
-    username: "",
+    username: '',
     isGoing: false
   };
 
@@ -24,6 +24,7 @@ class AttendEvent extends Component {
   }
 
   handleAttend = toggleAttend => {
+    this.props.ErrorHandler.setBreadcrumb('Toggle Attend');
     toggleAttend()
       .then(async ({ data }) => {
         if (data.toggleAttendEvent !== null) {
@@ -31,12 +32,7 @@ class AttendEvent extends Component {
         }
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
@@ -67,9 +63,9 @@ class AttendEvent extends Component {
               ? [
                   {
                     id: toggleAttendEvent,
-                    profileName: "",
-                    profilePic: "",
-                    __typename: "ProfileType"
+                    profileName: '',
+                    profilePic: '',
+                    __typename: 'ProfileType'
                   },
                   ...event.participants
                 ]
@@ -96,7 +92,7 @@ class AttendEvent extends Component {
             username && (
               <div className="join-event">
                 <span onClick={() => this.handleClick(toggleAttendEvent)}>
-                  {isGoing ? t("notgoing") : t("Going")}
+                  {isGoing ? t('notgoing') : t('Going')}
                 </span>
               </div>
             )

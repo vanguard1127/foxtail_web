@@ -1,28 +1,28 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-import { Mutation } from "react-apollo";
-import { CREATE_USER, FB_RESOLVE, LOGIN } from "../../queries";
-import SignupForm from "./SignupForm";
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { Mutation } from 'react-apollo';
+import { CREATE_USER, FB_RESOLVE, LOGIN } from '../../queries';
+import SignupForm from './SignupForm';
 const initialState = {
-  username: "",
-  email: "",
-  phone: "",
-  dob: "",
+  username: '',
+  email: '',
+  phone: '',
+  dob: '',
   interestedIn: [],
-  gender: "",
+  gender: '',
   isCouple: false,
-  csrf: "",
-  code: ""
+  csrf: '',
+  code: ''
 };
 
 class Signup extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
-    if (localStorage.getItem("token") !== null) {
+    if (localStorage.getItem('token') !== null) {
       //TODO: Check somehow if user active...Possibly use session.
 
-      this.props.history.push("/members");
+      this.props.history.push('/members');
     }
   }
 
@@ -45,34 +45,34 @@ class Signup extends React.Component {
           .then(({ data }) => {
             const { isCouple } = this.state;
             if (data.fbResolve === null) {
-              alert("Phone verification failed.");
+              alert('Phone verification failed.');
               return;
             }
             this.setState({ phone: data.fbResolve });
             createUser()
               .then(({ data }) => {
                 if (data.createUser === null) {
-                  alert("Signup failed.");
+                  alert('Signup failed.');
                   return;
                 }
                 localStorage.setItem(
-                  "token",
-                  data.createUser.find(token => token.access === "auth").token
+                  'token',
+                  data.createUser.find(token => token.access === 'auth').token
                 );
                 localStorage.setItem(
-                  "refreshToken",
-                  data.createUser.find(token => token.access === "refresh")
+                  'refreshToken',
+                  data.createUser.find(token => token.access === 'refresh')
                     .token
                 );
 
                 if (isCouple) {
                   this.props.history.push({
-                    pathname: "/settings",
+                    pathname: '/settings',
                     state: { couple: true, initial: true }
                   });
                 } else {
                   this.props.history.push({
-                    pathname: "/settings",
+                    pathname: '/settings',
                     state: { initial: true }
                   });
                 }
@@ -101,38 +101,38 @@ class Signup extends React.Component {
     this.setState(
       {
         phone: rand.toString(),
-        username: "TEST USER2",
-        email: rand.toString() + "@test.com",
-        dob: "12/12/1990",
-        interestedIn: ["M"],
-        gender: "M",
+        username: 'TEST USER2',
+        email: rand.toString() + '@test.com',
+        dob: '12/12/1990',
+        interestedIn: ['M'],
+        gender: 'M',
         isCouple: true
       },
       () =>
         createUser()
           .then(({ data }) => {
             if (data.createUser === null) {
-              alert("Signup failed.");
+              alert('Signup failed.');
               return;
             }
             localStorage.setItem(
-              "token",
-              data.createUser.find(token => token.access === "auth").token
+              'token',
+              data.createUser.find(token => token.access === 'auth').token
             );
             localStorage.setItem(
-              "refreshToken",
-              data.createUser.find(token => token.access === "refresh").token
+              'refreshToken',
+              data.createUser.find(token => token.access === 'refresh').token
             );
 
             const { isCouple } = this.state;
             if (isCouple) {
               this.props.history.push({
-                pathname: "/settings",
+                pathname: '/settings',
                 state: { couple: true, initial: true }
               });
             } else {
               this.props.history.push({
-                pathname: "/settings",
+                pathname: '/settings',
                 state: { initial: true }
               });
             }
@@ -157,24 +157,22 @@ class Signup extends React.Component {
         }
 
         localStorage.setItem(
-          "token",
-          data.login.find(token => token.access === "auth").token
+          'token',
+          data.login.find(token => token.access === 'auth').token
         );
         localStorage.setItem(
-          "refreshToken",
-          data.login.find(token => token.access === "refresh").token
+          'refreshToken',
+          data.login.find(token => token.access === 'refresh').token
         );
         // await this.props.refetch();
-        this.props.history.push("/members");
+        this.props.history.push('/members');
       })
       .catch(res => {
-        console.log("ERR", res);
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });
 
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        return errors;
       });
   };
 
@@ -206,22 +204,22 @@ class Signup extends React.Component {
                 interestedIn,
                 gender,
                 isCouple,
-                lang: localStorage.getItem("i18nextLng")
+                lang: localStorage.getItem('i18nextLng')
               }}
             >
               {(createUser, { loading }) => {
                 return (
                   <div className="register-form">
                     <div className="head">
-                      {t("Become a")} <b>Foxtail</b> {t("Member")}
+                      {t('Become a')} <b>Foxtail</b> {t('Member')}
                     </div>
                     <SignupForm
                       fields={{
-                        username: "",
-                        email: "",
-                        dob: "",
+                        username: '',
+                        email: '',
+                        dob: '',
                         interestedIn: [],
-                        gender: "",
+                        gender: '',
                         isCouple: false
                       }}
                       disabled={loading}
@@ -244,35 +242,35 @@ class Signup extends React.Component {
                             <div>
                               <span
                                 onClick={() => {
-                                  this.setState({ phone: "1" }, () => {
+                                  this.setState({ phone: '1' }, () => {
                                     this.handleLogin(login);
                                   });
                                 }}
                               >
                                 1
-                              </span>{" "}
+                              </span>{' '}
                               <span
                                 onClick={() => {
-                                  this.setState({ phone: "2" }, () => {
+                                  this.setState({ phone: '2' }, () => {
                                     this.handleLogin(login);
                                   });
                                 }}
                               >
                                 2
-                              </span>{" "}
+                              </span>{' '}
                               <span
                                 href={null}
                                 onClick={() => {
-                                  this.setState({ phone: "3" }, () => {
+                                  this.setState({ phone: '3' }, () => {
                                     this.handleLogin(login);
                                   });
                                 }}
                               >
                                 3
-                              </span>{" "}
+                              </span>{' '}
                               <span
                                 onClick={() => {
-                                  this.setState({ phone: "4" });
+                                  this.setState({ phone: '4' });
                                   this.handleLogin(login);
                                 }}
                               >
@@ -280,7 +278,7 @@ class Signup extends React.Component {
                               </span>
                               <span
                                 onClick={() => {
-                                  this.setState({ phone: "5" }, () => {
+                                  this.setState({ phone: '5' }, () => {
                                     this.handleLogin(login);
                                   });
                                 }}

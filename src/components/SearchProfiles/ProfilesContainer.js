@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
-import EmptyScreen from "../common/EmptyScreen";
-import { Query, Mutation } from "react-apollo";
-import ProfilesDiv from "./ProfilesDiv";
-import Waypoint from "react-waypoint";
-import FeaturedDiv from "./FeaturedDiv";
-import DirectMsgModal from "../Modals/DirectMsg";
-import Spinner from "../common/Spinner";
+import React, { Component } from 'react';
+import { SEARCH_PROFILES, LIKE_PROFILE } from '../../queries';
+import EmptyScreen from '../common/EmptyScreen';
+import { Query, Mutation } from 'react-apollo';
+import ProfilesDiv from './ProfilesDiv';
+import Waypoint from 'react-waypoint';
+import FeaturedDiv from './FeaturedDiv';
+import DirectMsgModal from '../Modals/DirectMsg';
+import Spinner from '../common/Spinner';
 
 const LIMIT = 20;
 
@@ -26,31 +26,31 @@ class ProfilesContainer extends Component {
   };
 
   setMsgModalVisible = (msgModalVisible, profile) => {
+    this.props.ErrorHandler.setBreadcrumb(
+      'Message Modal visible:' + msgModalVisible
+    );
     if (profile) this.setState({ profile, msgModalVisible });
     else this.setState({ msgModalVisible });
   };
 
   handleLike = (likeProfile, profile) => {
+    this.props.ErrorHandler.setBreadcrumb('Liked:' + likeProfile);
     this.setState({ profile }, () => {
       likeProfile()
         .then(({ data }) => {
           if (data.likeProfile) {
-            console.log("liked");
+            console.log('liked');
             return;
           }
         })
         .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     });
   };
 
   fetchData = async fetchMore => {
+    this.props.ErrorHandler.setBreadcrumb('Fetch more profiles');
     this.setState({ loading: true });
     fetchMore({
       variables: {
@@ -89,15 +89,15 @@ class ProfilesContainer extends Component {
 
   render() {
     const {
-      ErrorBoundary,
+      ErrorHandler,
       t,
       history,
       loading,
       searchCriteria: { long, lat, distance, ageRange, interestedIn }
     } = this.props;
-    const { profile, msgModalVisible } = this.state;
+    const { profile, msgModalVisible, skip } = this.state;
     if (loading) {
-      return <Spinner page="searchProfiles" title={t("allmems")} />;
+      return <Spinner page="searchProfiles" title={t('allmems')} />;
     }
 
     return (
@@ -109,28 +109,36 @@ class ProfilesContainer extends Component {
           distance,
           ageRange,
           interestedIn,
-          limit: LIMIT
+          limit: LIMIT,
+          skip
         }}
         fetchPolicy="cache-first"
       >
-        {({ data, loading, fetchMore, error, refetch }) => {
+        {({ data, loading, fetchMore, error }) => {
           if (error) {
-            if (error.message.indexOf("invisible") > -1) {
-              return <div>{t("novis")}</div>;
+            if (error.message.indexOf('invisible') > -1) {
+              return <div>{t('novis')}</div>;
+            } else {
+              return (
+                <ErrorHandler.report
+                  error={error}
+                  calledName={'searchProfiles'}
+                />
+              );
             }
           }
 
           if (loading) {
-            return <Spinner page="searchProfiles" title={t("allmems")} />;
+            return <Spinner page="searchProfiles" title={t('allmems')} />;
           } else if (data === undefined || data.searchProfiles === null) {
-            return <EmptyScreen message={t("nomems")} />;
+            return <EmptyScreen message={t('nomems')} />;
           } else if (
             (data &&
               data.searchProfiles.profiles.length === 0 &&
               data.searchProfiles.featuredProfiles.length === 0) ||
             !data
           ) {
-            return <EmptyScreen message={t("nomems")} />;
+            return <EmptyScreen message={t('nomems')} />;
           }
 
           const result = data.searchProfiles;
@@ -143,7 +151,7 @@ class ProfilesContainer extends Component {
             >
               {(likeProfile, { loading }) => {
                 return (
-                  <ErrorBoundary>
+                  <div>
                     {result.featuredProfiles.length !== 0 && (
                       <FeaturedDiv
                         featuredProfiles={result.featuredProfiles}
@@ -179,17 +187,17 @@ class ProfilesContainer extends Component {
 
                     <div className="col-md-12">
                       <div className="more-content-btn">
-                        <span>{t("nopros")}</span>
+                        <span>{t('nopros')}</span>
                       </div>
                     </div>
                     {profile && msgModalVisible && (
                       <DirectMsgModal
                         profile={profile}
                         close={() => this.setMsgModalVisible(false)}
-                        ErrorBoundary={ErrorBoundary}
+                        ErrorBoundary={ErrorHandler.ErrorBoundary}
                       />
                     )}
-                  </ErrorBoundary>
+                  </div>
                 );
               }}
             </Mutation>

@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Query } from "react-apollo";
-import { GET_COMMENTS, NEW_MESSAGE_SUB } from "../../queries";
-import Waypoint from "react-waypoint";
-import Spinner from "../common/Spinner";
-import MessageList from "./MessageList";
+import React, { Component } from 'react';
+import { Query } from 'react-apollo';
+import { GET_COMMENTS, NEW_MESSAGE_SUB } from '../../queries';
+import Waypoint from 'react-waypoint';
+import Spinner from '../common/Spinner';
+import MessageList from './MessageList';
 
 const LIMIT = 6;
 class ChatContent extends Component {
@@ -40,8 +40,8 @@ class ChatContent extends Component {
             if (fetchMoreResult.getComments.messages < LIMIT) {
               this.setState({ hasMoreItems: false });
             }
-            console.log("NEW", ...fetchMoreResult.getComments.messages);
-            console.log("OLD", ...previousResult.getComments.messages);
+            console.log('NEW', ...fetchMoreResult.getComments.messages);
+            console.log('OLD', ...previousResult.getComments.messages);
             previousResult.getComments.messages = [
               ...previousResult.getComments.messages,
               ...fetchMoreResult.getComments.messages
@@ -58,6 +58,7 @@ class ChatContent extends Component {
   };
 
   fetchData = async (fetchMore, cursor) => {
+    this.props.ErrorHandler.setBreadcrumb('Fetch more comments');
     // not beign used
     const { chatID } = this.props;
     this.setState({ loading: true });
@@ -89,7 +90,7 @@ class ChatContent extends Component {
     });
   };
   render() {
-    const { chatID, history, t } = this.props;
+    const { chatID, history, t, ErrorHandler } = this.props;
 
     const { cursor } = this.state;
     return (
@@ -101,12 +102,16 @@ class ChatContent extends Component {
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
             return (
-              <Spinner message={t("common:Loading") + "..."} size="large" />
+              <Spinner message={t('common:Loading') + '...'} size="large" />
             );
           }
-
-          if (!data || !data.getComments) {
-            return null;
+          if (error || !data) {
+            return (
+              <ErrorHandler.report error={error} calledName={'getCommets'} />
+            );
+          }
+          if (!data.getComments) {
+            return <div>No comments yet.</div>;
           }
 
           return (
@@ -136,7 +141,7 @@ class ChatContent extends Component {
                     } else {
                       prev.getComments = {
                         messages: [newMessageSubscribe],
-                        __typename: "ChatType"
+                        __typename: 'ChatType'
                       };
                     }
                     return prev;

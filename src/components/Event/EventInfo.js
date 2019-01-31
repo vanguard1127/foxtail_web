@@ -1,6 +1,6 @@
-import React from "react";
-import moment from "moment";
-import AttendEvent from "./AttendEvent";
+import React from 'react';
+import moment from 'moment';
+import AttendEvent from './AttendEvent';
 
 const EventInfo = ({
   event: {
@@ -13,7 +13,8 @@ const EventInfo = ({
     address,
     participants
   },
-  t
+  t,
+  ErrorHandler
 }) => {
   return (
     <div className="event-info-content hid-mobile">
@@ -24,45 +25,50 @@ const EventInfo = ({
       </div>
       <ul>
         <li>
-          <span className="head">{t("evedate")}:</span>
+          <span className="head">{t('evedate')}:</span>
           <span className="title">
             {moment(startTime)
-              .format("DD MMMM YYYY, dddd")
+              .format('DD MMMM YYYY, dddd')
               .toString()}
           </span>
         </li>
         <li>
           <span className="head">
-            {t("evedate")} - {t("time")}:
+            {t('evedate')} - {t('time')}:
           </span>
           <span className="title">
             {moment(startTime)
-              .format("HH:mm")
-              .toString()}{" "}
-            -{" "}
+              .format('HH:mm')
+              .toString()}{' '}
+            -{' '}
             {moment(endTime)
-              .format("HH:mm")
+              .format('HH:mm')
               .toString()}
           </span>
         </li>
         <li>
-          <span className="head">{t("Type")}:</span>
+          <span className="head">{t('Type')}:</span>
           <span className="title">{type}</span>
         </li>
         <li>
-          <span className="head">{t("toexpect")}:</span>
-          <span className="title">{desires.map(desire => desire + ",")}</span>
+          <span className="head">{t('toexpect')}:</span>
+          <span className="title">{desires.map(desire => desire + ',')}</span>
         </li>
         <li>
-          <span className="head">{t("Away")}:</span>
+          <span className="head">{t('Away')}:</span>
           <span className="title">{distance} Miles</span>
         </li>
         <li>
-          <span className="head">{t("common:Address")}:</span>
+          <span className="head">{t('common:Address')}:</span>
           <span className="title address">{address}</span>
         </li>
       </ul>
-      <AttendEvent id={id} participants={participants} t={t} />
+      <AttendEvent
+        id={id}
+        participants={participants}
+        t={t}
+        ErrorHandler={ErrorHandler}
+      />
     </div>
   );
 };

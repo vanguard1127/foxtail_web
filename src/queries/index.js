@@ -1,9 +1,9 @@
 //TODO: Remove apollo boost and replace with something smaller or already used
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 
 /* Subscriptions */
 export const NEW_MESSAGE_SUB = gql`
-  subscription($chatID: ID) {
+  subscription($chatID: ID!) {
     newMessageSubscribe(chatID: $chatID) {
       id
       text
@@ -70,9 +70,9 @@ export const CREATE_USER = gql`
     $username: String!
     $email: String!
     $phone: String!
-    $gender: String
+    $gender: String!
     $interestedIn: [String]
-    $dob: String
+    $dob: String!
     $lang: String
   ) {
     createUser(
@@ -176,13 +176,13 @@ export const DELETE_PHOTO = gql`
 `;
 
 export const SEND_MESSAGE = gql`
-  mutation($chatID: ID, $text: String!, $invitedProfile: ID) {
+  mutation($chatID: ID!, $text: String!, $invitedProfile: ID) {
     sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile)
   }
 `;
 
 export const POST_COMMENT = gql`
-  mutation($chatID: ID, $text: String!) {
+  mutation($chatID: ID!, $text: String!) {
     postComment(chatID: $chatID, text: $text)
   }
 `;
@@ -284,25 +284,25 @@ export const UPDATE_NOTIFICATIONS = gql`
 `;
 
 export const INVITE_PROFILES = gql`
-  mutation($chatID: String, $invitedProfiles: [String]) {
+  mutation($chatID: ID!, $invitedProfiles: [ID]!) {
     inviteProfile(chatID: $chatID, invitedProfiles: $invitedProfiles)
   }
 `;
 
 export const INVITE_PROFILES_EVENT = gql`
-  mutation($eventID: String, $invitedProfiles: [String]) {
+  mutation($eventID: ID!, $invitedProfiles: [ID]!) {
     inviteProfileEvent(eventID: $eventID, invitedProfiles: $invitedProfiles)
   }
 `;
 
 export const REMOVE_PROFILES_EVENT = gql`
-  mutation($eventID: ID, $removedProfiles: [ID]) {
+  mutation($eventID: ID!, $removedProfiles: [ID]!) {
     removeProfileEvent(eventID: $eventID, removedProfiles: $removedProfiles)
   }
 `;
 
 export const TOGGLE_ONLINE = gql`
-  mutation($online: Boolean) {
+  mutation($online: Boolean!) {
     toggleOnline(online: $online)
   }
 `;
@@ -312,12 +312,13 @@ export const CREATE_EVENT = gql`
     $eventname: String!
     $desires: [String]
     $interestedIn: [String]
-    $description: String
-    $lat: Float
-    $long: Float
+    $description: String!
+    $lat: Float!
+    $long: Float!
     $address: String!
     $type: String!
-    $time: String!
+    $startTime: String!
+    $endTime: String!
     $eventID: ID
   ) {
     createEvent(
@@ -364,26 +365,10 @@ export const TOGGLE_EVENT_ATTEND = gql`
 `;
 
 export const FB_RESOLVE = gql`
-  mutation($csrf: String, $code: String) {
+  mutation($csrf: String!, $code: String!) {
     fbResolve(csrf: $csrf, code: $code)
   }
 `;
-
-// export const UPDATE_PROFILE = gql`
-//   mutation(
-//     $desires: [String]
-//     $about: String
-//     $publicPhotoList: [String]
-//     $privatePhotoList: [String]
-//   ) {
-//     updateProfile(
-//       desires: $desires
-//       about: $about
-//       publicPhotoList: $publicPhotoList
-//       privatePhotoList: $privatePhotoList
-//     )
-//   }
-// `;
 
 export const SIGNS3 = gql`
   mutation($filename: String!, $filetype: String!) {
@@ -411,10 +396,10 @@ export const SEARCH_EVENTS = gql`
   query(
     $long: Float!
     $lat: Float!
-    $maxDistance: Int
+    $maxDistance: Int!
     $desires: [String]
-    $limit: Int
-    $skip: Int
+    $limit: Int!
+    $skip: Int!
   ) {
     searchEvents(
       long: $long
@@ -452,11 +437,11 @@ export const SEARCH_PROFILES = gql`
   query(
     $long: Float!
     $lat: Float!
-    $distance: Int
+    $distance: Int!
     $interestedIn: [String]
     $ageRange: [Int]
-    $limit: Int
-    $skip: Int
+    $limit: Int!
+    $skip: Int!
   ) {
     searchProfiles(
       long: $long
@@ -612,7 +597,7 @@ export const GET_FRIENDS = gql`
 `;
 
 export const GET_CHAT_PARTICIPANTS = gql`
-  query($chatID: ID) {
+  query($chatID: ID!) {
     chat(id: $chatID) {
       participants {
         profilePic
@@ -636,7 +621,7 @@ export const GET_EVENT_PARTICIPANTS = gql`
 `;
 
 export const GET_NOTIFICATIONS = gql`
-  query($limit: Int, $skip: Int) {
+  query($limit: Int!, $skip: Int!) {
     getNotifications(limit: $limit, skip: $skip) {
       notifications {
         id

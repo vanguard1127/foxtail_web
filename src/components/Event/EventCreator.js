@@ -1,21 +1,16 @@
-import React from "react";
-import moment from "moment";
-const preventContextMenu = e => {
-  e.preventDefault();
-  alert(
-    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
-  );
-};
+import React from 'react';
+import moment from 'moment';
+import { preventContextMenu } from '../../utils/image';
 const EventCreator = ({ ownerProfile, createdAt, history, t }) => {
   return (
     <div className="created">
-      <span onClick={() => history.push("/members/" + ownerProfile.id)}>
+      <span onClick={() => history.push('/members/' + ownerProfile.id)}>
         <span className="avatar">
           <img
             src={
-              ownerProfile.profilePic !== ""
+              ownerProfile.profilePic !== ''
                 ? ownerProfile.profilePic
-                : "/assets/img/usr/avatar/1003@2x.png"
+                : '/assets/img/usr/avatar/1003@2x.png'
             }
             alt=""
             onContextMenu={preventContextMenu}
@@ -24,9 +19,9 @@ const EventCreator = ({ ownerProfile, createdAt, history, t }) => {
         <div className="detail">
           <span className="name">{ownerProfile.profileName}</span>
           <span className="created-date">
-            {t("createdon")}{" "}
+            {t('createdon')}{' '}
             {moment(createdAt)
-              .format("MMM Do")
+              .format('MMM Do')
               .toString()}
           </span>
         </div>

@@ -1,11 +1,11 @@
-import React from "react";
-import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from "../../queries";
-import { Query } from "react-apollo";
-import NoticesItem from "./NoticesItem";
-import InboxItem from "./InboxItem";
-import MyAccountItem from "./MyAccountItem";
-import ErrorBoundary from "../common/ErrorBoundary";
-var slapAudio = new Audio(require("../../docs/slap.wav"));
+import React from 'react';
+import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from '../../queries';
+import { Query } from 'react-apollo';
+import NoticesItem from './NoticesItem';
+import InboxItem from './InboxItem';
+import MyAccountItem from './MyAccountItem';
+import { ErrorBoundary } from '../common/ErrorHandler';
+var slapAudio = new Audio(require('../../docs/slap.wav'));
 
 let unsubscribe = null;
 const UserToolbar = ({ currentuser, href, t, setRef }) => {
@@ -59,8 +59,8 @@ const UserToolbar = ({ currentuser, href, t, setRef }) => {
                 slapAudio.play();
 
                 if (
-                  sessionStorage.getItem("page") === "inbox" &&
-                  sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
+                  sessionStorage.getItem('page') === 'inbox' &&
+                  sessionStorage.getItem('pid') === newInboxMsgSubscribe.chatID
                 ) {
                   return;
                 }
@@ -76,18 +76,18 @@ const UserToolbar = ({ currentuser, href, t, setRef }) => {
             <ErrorBoundary>
               <InboxItem
                 count={msgsCount}
-                active={href === "inbox" && true}
+                active={href === 'inbox' && true}
                 t={t}
                 data-name="inbox"
                 ref={setRef}
               />
             </ErrorBoundary>
             <ErrorBoundary>
-              {" "}
+              {' '}
               <NoticesItem count={noticesCount} />
             </ErrorBoundary>
             <ErrorBoundary>
-              {" "}
+              {' '}
               <div className="user hidden-mobile">
                 <MyAccountItem currentuser={currentuser} setRef={setRef} />
               </div>

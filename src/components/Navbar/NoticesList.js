@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
   NEW_NOTICE_SUB,
   GET_COUNTS
-} from "../../queries";
-import { Query, Mutation, withApollo } from "react-apollo";
-import Waypoint from "react-waypoint";
-import moment from "moment";
+} from '../../queries';
+import { Query, Mutation, withApollo } from 'react-apollo';
+import Waypoint from 'react-waypoint';
+import moment from 'moment';
 
 let unsubscribe = null;
 const LIMIT = 5;
@@ -94,11 +94,11 @@ class NoticesList extends Component {
         this.readNotices(notifications, updateNotifications);
 
         switch (type) {
-          case "chat":
-            this.props.history.push("/inbox/" + targetID);
+          case 'chat':
+            this.props.history.push('/inbox/' + targetID);
             break;
-          case "event":
-            this.props.history.push("/events/" + targetID);
+          case 'event':
+            this.props.history.push('/events/' + targetID);
             break;
           default:
             break;
@@ -116,11 +116,11 @@ class NoticesList extends Component {
   preventContextMenu = e => {
     e.preventDefault();
     alert(
-      "Right-click disabled: Saving images on Foxtail will result in your account being banned."
+      'Right-click disabled: Saving images on Foxtail will result in your account being banned.'
     );
   };
   render() {
-    const { read, seen, notificationIDs } = this.state;
+    const { read, seen, notificationIDs, skip } = this.state;
     const { t } = this.props;
     return (
       <Mutation
@@ -136,7 +136,7 @@ class NoticesList extends Component {
           return (
             <Query
               query={GET_NOTIFICATIONS}
-              variables={{ limit: LIMIT }}
+              variables={{ limit: LIMIT, skip }}
               fetchPolicy="network-only"
             >
               {({ data, loading, error, subscribeToMore, fetchMore }) => {
@@ -148,9 +148,9 @@ class NoticesList extends Component {
                   !data.getNotifications ||
                   !data.getNotifications.notifications
                 ) {
-                  return <div>{t("common:error")}!</div>;
+                  return <div>{t('common:error')}!</div>;
                 } else if (!data.getNotifications.notifications.length === 0) {
-                  return <div>{t("nonots")} :)</div>;
+                  return <div>{t('nonots')} :)</div>;
                 }
 
                 if (!unsubscribe) {

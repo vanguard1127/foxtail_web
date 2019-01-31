@@ -1,13 +1,13 @@
-import React, { Component, Fragment } from "react";
-import { Mutation, Query } from "react-apollo";
-import { UPDATE_SETTINGS, GET_SETTINGS, REMOVE_LOCLOCK } from "../../queries";
-import Dropdown from "../common/Dropdown";
-import AddressSearch from "../common/AddressSearch";
-import SetLocationModal from "../Modals/SetLocation";
-import DistanceSlider from "../common/DistanceSlider";
-import AgeRange from "../common/AgeRange";
+import React, { Component, Fragment } from 'react';
+import { Mutation, Query } from 'react-apollo';
+import { UPDATE_SETTINGS, GET_SETTINGS, REMOVE_LOCLOCK } from '../../queries';
+import Dropdown from '../common/Dropdown';
+import AddressSearch from '../common/AddressSearch';
+import SetLocationModal from '../Modals/SetLocation';
+import DistanceSlider from '../common/DistanceSlider';
+import AgeRange from '../common/AgeRange';
 
-const CURRENT_LOC_LABEL = "My Location";
+const CURRENT_LOC_LABEL = 'My Location';
 
 class SearchCriteria extends Component {
   state = {
@@ -16,7 +16,7 @@ class SearchCriteria extends Component {
     lat: this.props.lat || null,
     long: this.props.long || null,
     locModalVisible: false,
-    location: "",
+    location: '',
     profile: null,
     ...this.props.searchCriteria
   };
@@ -39,7 +39,7 @@ class SearchCriteria extends Component {
   handleSubmit = updateSettings => {
     updateSettings()
       .then(({ data }) => {
-        console.log("IN", data);
+        console.log('IN', data);
         //TODO: REFRESH LIST HERE
       })
       .catch(res => {
@@ -58,7 +58,7 @@ class SearchCriteria extends Component {
     navigator.geolocation.getCurrentPosition(this.setLocation, err => {
       alert(
         this.props.t(
-          "Please enable location services to remove your set location."
+          'Please enable location services to remove your set location.'
         )
       );
       return;
@@ -102,7 +102,8 @@ class SearchCriteria extends Component {
       location,
       locModalVisible
     } = this.state;
-    const lang = localStorage.getItem("i18nextLng");
+
+    const lang = localStorage.getItem('i18nextLng');
     const { t, loading } = this.props;
     if (loading) {
       return (
@@ -115,19 +116,19 @@ class SearchCriteria extends Component {
                     <AddressSearch
                       style={{ width: 150 }}
                       setLocationValues={null}
-                      address={""}
-                      type={"(cities)"}
-                      placeholder={t("common:setloc") + "..."}
+                      address={''}
+                      type={'(cities)'}
+                      placeholder={t('common:setloc') + '...'}
                     />
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="item">
                     <Dropdown
-                      type={"interestedIn"}
+                      type={'interestedIn'}
                       onChange={el => null}
                       value={[]}
-                      placeholder={t("common:Interested") + ":"}
+                      placeholder={t('common:Interested') + ':'}
                       lang={lang}
                     />
                   </div>
@@ -180,24 +181,24 @@ class SearchCriteria extends Component {
                                     })
                                   }
                                   address={location}
-                                  type={"(cities)"}
-                                  placeholder={t("common:setloc") + "..."}
+                                  type={'(cities)'}
+                                  placeholder={t('common:setloc') + '...'}
                                 />
                               </div>
                             </div>
                             <div className="col-md-6">
                               <div className="item">
                                 <Dropdown
-                                  type={"interestedIn"}
+                                  type={'interestedIn'}
                                   onChange={el =>
                                     this.setValue({
-                                      name: "interestedIn",
+                                      name: 'interestedIn',
                                       value: el.map(e => e.value),
                                       updateSettings
                                     })
                                   }
                                   value={interestedIn}
-                                  placeholder={t("common:Interested") + ":"}
+                                  placeholder={t('common:Interested') + ':'}
                                   lang={lang}
                                 />
                               </div>
@@ -207,7 +208,7 @@ class SearchCriteria extends Component {
                                 value={distance}
                                 setValue={el =>
                                   this.setValue({
-                                    name: "distance",
+                                    name: 'distance',
                                     value: el,
                                     updateSettings
                                   })
@@ -221,7 +222,7 @@ class SearchCriteria extends Component {
                                 value={ageRange}
                                 setValue={el =>
                                   this.setValue({
-                                    name: "ageRange",
+                                    name: 'ageRange',
                                     value: el,
                                     updateSettings
                                   })

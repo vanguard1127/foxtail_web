@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Query } from "react-apollo";
-import { GET_MESSAGES, NEW_MESSAGE_SUB } from "../../queries";
-import Waypoint from "react-waypoint";
-import Spinner from "../common/Spinner";
-import EmptyScreen from "../common/EmptyScreen";
-import MessageList from "./MessageList";
+import React, { Component } from 'react';
+import { Query } from 'react-apollo';
+import { GET_MESSAGES, NEW_MESSAGE_SUB } from '../../queries';
+import Waypoint from 'react-waypoint';
+import Spinner from '../common/Spinner';
+import EmptyScreen from '../common/EmptyScreen';
+import MessageList from './MessageList';
 
 const LIMIT = 6;
 class ChatContent extends Component {
@@ -41,8 +41,8 @@ class ChatContent extends Component {
             if (fetchMoreResult.getMessages.messages < LIMIT) {
               this.setState({ hasMoreItems: false });
             }
-            console.log("NEW", ...fetchMoreResult.getMessages.messages);
-            console.log("OLD", ...previousResult.getMessages.messages);
+            console.log('NEW', ...fetchMoreResult.getMessages.messages);
+            console.log('OLD', ...previousResult.getMessages.messages);
             previousResult.getMessages.messages = [
               ...previousResult.getMessages.messages,
               ...fetchMoreResult.getMessages.messages
@@ -59,7 +59,7 @@ class ChatContent extends Component {
   };
 
   fetchData = async (fetchMore, cursor) => {
-    // not beign used
+    this.props.ErrorHandler.setBreadcrumb('fetch more messages');
     const { chatID } = this.props;
     this.setState({ loading: true });
     fetchMore({
@@ -91,15 +91,15 @@ class ChatContent extends Component {
   };
   //TODO: use global spinner and error instead of chnaging each
   render() {
-    const { chatID, currentUserID, t } = this.props;
+    const { chatID, currentUserID, t, ErrorHandler } = this.props;
 
     const { cursor } = this.state;
     return (
       <div
         className="content"
-        style={{ display: "flex", flexDirection: " column-reverse" }}
+        style={{ display: 'flex', flexDirection: ' column-reverse' }}
       >
-        {" "}
+        {' '}
         <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit: LIMIT, cursor }}
@@ -108,11 +108,16 @@ class ChatContent extends Component {
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (loading) {
               return (
-                <Spinner message={t("common:Loading") + "..."} size="large" />
+                <Spinner message={t('common:Loading') + '...'} size="large" />
+              );
+            }
+            if (error) {
+              return (
+                <ErrorHandler.report error={error} calledName={'getSettings'} />
               );
             }
             if (!data.getMessages) {
-              return <EmptyScreen message={t("commmon:nomsgs")} />;
+              return <EmptyScreen message={t('commmon:nomsgs')} />;
             }
 
             return (
@@ -143,7 +148,7 @@ class ChatContent extends Component {
                       } else {
                         prev.getMessages = {
                           messages: [newMessageSubscribe],
-                          __typename: "ChatType"
+                          __typename: 'ChatType'
                         };
                       }
                       return prev;

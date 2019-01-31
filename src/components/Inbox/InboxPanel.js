@@ -1,11 +1,11 @@
-import React from "react";
-import InboxSearchTextBox from "./InboxSearchTextBox";
-import { GET_INBOX, NEW_INBOX_SUB } from "../../queries";
-import { Query } from "react-apollo";
-import Spinner from "../common/Spinner";
-import InboxList from "./InboxList";
+import React from 'react';
+import InboxSearchTextBox from './InboxSearchTextBox';
+import { GET_INBOX, NEW_INBOX_SUB } from '../../queries';
+import { Query } from 'react-apollo';
+import Spinner from '../common/Spinner';
+import InboxList from './InboxList';
 let unsubscribe = null;
-const InboxPanel = ({ readChat, currentUserID, t }) => {
+const InboxPanel = ({ readChat, currentUserID, t, ErrorHandler }) => {
   return (
     <Query query={GET_INBOX} fetchPolicy="cache-and-network">
       {({ data, loading, error, subscribeToMore }) => {
@@ -14,16 +14,21 @@ const InboxPanel = ({ readChat, currentUserID, t }) => {
             <div className="col-md-4 col-lg-3 col-xl-3">
               <div className="left">
                 <InboxSearchTextBox t={t} />
-                <Spinner page="inbox" title={t("allmems")} />
+                <Spinner page="inbox" title={t('allmems')} />
               </div>
             </div>
+          );
+        }
+        if (error) {
+          return (
+            <ErrorHandler.report error={error} calledName={'getSettings'} />
           );
         }
 
         const messages = data.getInbox;
 
         if (!messages) {
-          return <div>{t("common:error")}.</div>;
+          return <div>{t('common:error')}.</div>;
         }
 
         if (!unsubscribe) {
@@ -41,8 +46,8 @@ const InboxPanel = ({ readChat, currentUserID, t }) => {
                 );
 
                 if (
-                  sessionStorage.getItem("page") === "inbox" &&
-                  sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
+                  sessionStorage.getItem('page') === 'inbox' &&
+                  sessionStorage.getItem('pid') === newInboxMsgSubscribe.chatID
                 ) {
                   newInboxMsgSubscribe.unSeenCount = 0;
                 }

@@ -1,28 +1,32 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { Query, Mutation } from "react-apollo";
-import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from "../../queries";
-import { withNamespaces } from "react-i18next";
-import BlockModal from "../Modals/Block";
-import moment from "moment";
-import Spinner from "../common/Spinner";
-import withAuth from "../withAuth";
-import EventHeader from "./EventHeader";
-import EventAbout from "./EventAbout";
-import EventInfoMobile from "./EventInfoMobile";
-import EventDiscussion from "./EventDiscussion";
-import EventInfo from "./EventInfo";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Query, Mutation } from 'react-apollo';
+import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from '../../queries';
+import { withNamespaces } from 'react-i18next';
+import BlockModal from '../Modals/Block';
+import moment from 'moment';
+import Spinner from '../common/Spinner';
+import withAuth from '../withAuth';
+import EventHeader from './EventHeader';
+import EventAbout from './EventAbout';
+import EventInfoMobile from './EventInfoMobile';
+import EventDiscussion from './EventDiscussion';
+import EventInfo from './EventInfo';
 
 class EventPage extends Component {
   state = { visible: false, blockModalVisible: false };
 
   setBlockModalVisible = (blockModalVisible, event) => {
+    this.props.ErrorHandler.setBreadcrumb(
+      'Block modal visible:' + blockModalVisible
+    );
     if (event) this.setState({ event, blockModalVisible });
     else this.setState({ event: null, blockModalVisible });
   };
 
   handleDelete = deleteEvent => {
-    const confirmDelete = window.confirm(this.props.t("surewarn"));
+    this.props.ErrorHandler.setBreadcrumb('Delete Event');
+    const confirmDelete = window.confirm(this.props.t('surewarn'));
     if (confirmDelete) {
       deleteEvent()
         .then(({ data }) => {
@@ -39,13 +43,19 @@ class EventPage extends Component {
     }
   };
 
-  handleEdit = event => {
+  showEdit = event => {
+    this.props.ErrorHandler.setBreadcrumb('Show edit event');
     this.setState({ event }, function() {
       this.setState({ visible: true });
     });
   };
+  closeEdit = () => {
+    this.props.ErrorHandler.setBreadcrumb('Close called');
+    this.setState({ visible: false });
+  };
 
   handleSubmit = (e, createEvent) => {
+    this.props.ErrorHandler.setBreadcrumb('update event');
     e.preventDefault();
 
     this.formRef.props.form.validateFields((err, fieldsValue) => {
@@ -59,22 +69,13 @@ class EventPage extends Component {
         })
 
         .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     });
   };
 
   saveFormRef = formRef => {
     this.formRef = formRef;
-  };
-
-  handleCancel = () => {
-    this.setState({ visible: false });
   };
 
   updateEvent = (cache, { data: { createEvent } }) => {
@@ -110,23 +111,29 @@ class EventPage extends Component {
   render() {
     const { id } = this.props.match.params;
     const { visible, blockModalVisible } = this.state;
-    const { session, history, t, ErrorBoundary } = this.props;
+    const { session, history, t, ErrorHandler } = this.props;
     return (
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error }) => {
+          if (error) {
+            return (
+              <ErrorHandler.report error={error} calledName={'getEvent'} />
+            );
+          }
+
           if (loading) {
             return (
-              <Spinner message={t("common:Loading" + "...")} size="large" />
+              <Spinner message={t('common:Loading' + '...')} size="large" />
             );
           } else if (!data || !data.event) {
-            return <div>{t("noevent")}.</div>;
+            return <div>{t('noevent')}.</div>;
           }
 
           const { event } = data;
 
           const { description, participants, chatID } = event;
           const queryParams = JSON.parse(
-            sessionStorage.getItem("searchEventQuery")
+            sessionStorage.getItem('searchEventQuery')
           );
 
           return (
@@ -135,37 +142,42 @@ class EventPage extends Component {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <ErrorBoundary>
+                      <ErrorHandler.ErrorBoundary>
                         <EventHeader event={event} history={history} t={t} />
-                      </ErrorBoundary>
+                      </ErrorHandler.ErrorBoundary>
                     </div>
                     <div className="col-lg-9 col-md-12">
-                      <ErrorBoundary>
-                        {" "}
+                      <ErrorHandler.ErrorBoundary>
+                        {' '}
                         <EventAbout
                           id={id}
                           participants={participants}
                           description={description}
                           t={t}
-                        />{" "}
-                      </ErrorBoundary>{" "}
-                      <ErrorBoundary>
-                        <EventInfoMobile event={event} t={t} />{" "}
-                      </ErrorBoundary>{" "}
-                      <ErrorBoundary>
+                        />{' '}
+                      </ErrorHandler.ErrorBoundary>{' '}
+                      <ErrorHandler.ErrorBoundary>
+                        <EventInfoMobile event={event} t={t} />{' '}
+                      </ErrorHandler.ErrorBoundary>{' '}
+                      <ErrorHandler.ErrorBoundary>
                         <EventDiscussion
                           id={id}
                           chatID={chatID}
                           history={history}
                           t={t}
+                          ErrorHandler={ErrorHandler}
                         />
-                      </ErrorBoundary>
+                      </ErrorHandler.ErrorBoundary>
                     </div>
                     <div className="col-lg-3 col-md-12">
-                      <ErrorBoundary>
-                        {" "}
-                        <EventInfo event={event} t={t} />{" "}
-                      </ErrorBoundary>
+                      <ErrorHandler.ErrorBoundary>
+                        {' '}
+                        <EventInfo
+                          event={event}
+                          t={t}
+                          ErrorHandler={ErrorHandler}
+                        />{' '}
+                      </ErrorHandler.ErrorBoundary>
                     </div>
                   </div>
                 </div>
@@ -175,7 +187,7 @@ class EventPage extends Component {
                   event={event}
                   id={id}
                   close={() => this.setBlockModalVisible(false)}
-                  ErrorBoundary={ErrorBoundary}
+                  ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
             </section>
@@ -187,5 +199,5 @@ class EventPage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces("event")(EventPage))
+  withRouter(withNamespaces('event')(EventPage))
 );

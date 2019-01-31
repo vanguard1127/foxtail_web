@@ -1,17 +1,20 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import { POST_COMMENT } from "../../queries";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import { POST_COMMENT } from '../../queries';
 
 class ChatPanel extends Component {
   state = {
-    text: ""
+    text: ''
   };
+
+  //TODO: Optimistic UI new message to prevent empty msg problem
   submitMessage(e, postComment) {
+    this.props.ErrorHandler.setBreadcrumb('Send comment (event)');
     e.preventDefault();
 
     postComment()
       .then(({ data }) => {
-        this.setState({ text: "" });
+        this.setState({ text: '' });
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -44,10 +47,10 @@ class ChatPanel extends Component {
             <textarea
               value={text}
               onChange={e => this.setText(e)}
-              placeholder={t("nowyoucan") + "..."}
+              placeholder={t('nowyoucan') + '...'}
             />
             <button onClick={e => this.submitMessage(e, postComment)}>
-              {t("common:sendmsg")}
+              {t('common:sendmsg')}
             </button>
           </div>
         )}

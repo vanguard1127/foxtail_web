@@ -1,34 +1,34 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import { UPDATE_SETTINGS, SIGNS3 } from '../../queries';
 
-import { toast } from "react-toastify";
-import ImageEditor from "../Modals/ImageEditor";
+import { toast } from 'react-toastify';
+import ImageEditor from '../Modals/ImageEditor';
 
-import ProfilePic from "./ProfilePic";
-import Photos from "./Photos";
-import Menu from "./Menu";
-import Preferences from "./Preferences";
-import AppSettings from "./AppSettings";
-import Verifications from "./Verifications";
-import MyProfile from "./MyProfile";
-import DesiresModal from "../Modals/Desires/Modal";
-import SubmitPhotoModal from "../Modals/SubmitPhoto";
-import CoupleModal from "../Modals/Couples";
-import BlackModal from "../Modals/Black";
-import axios from "axios";
+import ProfilePic from './ProfilePic';
+import Photos from './Photos';
+import Menu from './Menu';
+import Preferences from './Preferences';
+import AppSettings from './AppSettings';
+import Verifications from './Verifications';
+import MyProfile from './MyProfile';
+import DesiresModal from '../Modals/Desires/Modal';
+import SubmitPhotoModal from '../Modals/SubmitPhoto';
+import CoupleModal from '../Modals/Couples';
+import BlackModal from '../Modals/Black';
+import axios from 'axios';
 
 class SettingsPage extends Component {
   //TODO: Do we need to have these setup?
   state = {
     distance: 100,
-    distanceMetric: "mi",
+    distanceMetric: 'mi',
     ageRange: [18, 80],
-    interestedIn: ["M", "F"],
-    location: "",
+    interestedIn: ['M', 'F'],
+    location: '',
     visible: true,
     newMsgNotify: true,
-    lang: "en",
+    lang: 'en',
     emailNotify: true,
     showOnline: true,
     likedOnly: false,
@@ -36,10 +36,10 @@ class SettingsPage extends Component {
     couplePartner: null,
     users: null,
     publicPics: this.props.settings.photos.filter(
-      x => !x.private && x.url !== ""
+      x => !x.private && x.url !== ''
     ),
     privatePics: this.props.settings.photos.filter(
-      x => x.private && x.url !== ""
+      x => x.private && x.url !== ''
     ),
     about: null,
     desires: [],
@@ -48,31 +48,19 @@ class SettingsPage extends Component {
     showBlackPopup: false,
     showImgEditorPopup: false,
     showCouplePopup: false,
-    photoSubmitType: "",
+    photoSubmitType: '',
     includeMsgs: false,
     fileRecieved: null,
     isPrivate: false,
-    filename: "",
-    filetype: "",
-    profilePic: "",
-    profilePicUrl: "",
+    filename: '',
+    filetype: '',
+    profilePic: '',
+    profilePicUrl: '',
     flashCpl: false,
     ...this.props.settings,
     publicPhotoList: undefined,
     privatePhotoList: undefined
   };
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   //set it if different.after save revert to undefined
-  //   console.log(
-  //     this.state.publicPhotoList,
-  //     "MMMMMM",
-  //     prevState.publicPhotoList
-  //   );
-  //   if (this.state.publicPhotoList !== prevState.publicPhotoList) {
-  //     console.log("UPDATE");
-  //   }
-  // }
 
   handlePhotoListChange = ({
     file,
@@ -82,6 +70,7 @@ class SettingsPage extends Component {
     isDeleted,
     updateSettings
   }) => {
+    this.props.ErrorHandler.setBreadcrumb('Photo list updated');
     if (isPrivate) {
       let { privatePics } = this.state;
 
@@ -113,7 +102,7 @@ class SettingsPage extends Component {
           key,
           url
         });
-        if (profilePic === "") {
+        if (profilePic === '') {
           this.setProfilePic({ key, url, updateSettings });
         }
       }
@@ -130,6 +119,7 @@ class SettingsPage extends Component {
   };
 
   handleSubmit = (updateSettings, saveImage) => {
+    this.props.ErrorHandler.setBreadcrumb('Settings updated');
     if (!saveImage) {
       this.setState(
         {
@@ -220,12 +210,14 @@ class SettingsPage extends Component {
   };
 
   toggleDesiresPopup = () => {
+    this.props.ErrorHandler.setBreadcrumb('Desires popup toggled');
     this.setState({
       showDesiresPopup: !this.state.showDesiresPopup
     });
   };
 
   toggleImgEditorPopup = (file, isPrivate) => {
+    this.props.ErrorHandler.setBreadcrumb('Toggle image editor');
     this.setState(
       {
         fileRecieved: file,
@@ -240,18 +232,21 @@ class SettingsPage extends Component {
   };
 
   togglePhotoVerPopup = () => {
+    this.props.ErrorHandler.setBreadcrumb('Toggle Photo Ver Popup');
     this.setState({
       showPhotoVerPopup: !this.state.showPhotoVerPopup
     });
   };
 
   toggleCouplesPopup = () => {
+    this.props.ErrorHandler.setBreadcrumb('Toggle Couple popup');
     this.setState({
       showCouplePopup: !this.state.showCouplePopup
     });
   };
 
   toggleBlackPopup = () => {
+    this.props.ErrorHandler.setBreadcrumb('Toggle Blk popup');
     this.setState({
       showBlackPopup: !this.state.showBlackPopup
     });
@@ -262,6 +257,7 @@ class SettingsPage extends Component {
   };
 
   setPartnerID = id => {
+    this.props.ErrorHandler.setBreadcrumb('Set Partner ID');
     this.props.form.setFieldsValue({ couplePartner: id });
   };
 
@@ -273,18 +269,19 @@ class SettingsPage extends Component {
   };
 
   uploadToS3 = async (file, signedRequest) => {
+    this.props.ErrorHandler.setBreadcrumb('Upload to S3');
     try {
       //ORIGINAL
       const options = {
         headers: {
-          "Content-Type": file.type
+          'Content-Type': file.type
         }
       };
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status === 200) {
-        console.log("upload ok");
+        console.log('upload ok');
       } else {
-        console.log("Something went wrong");
+        console.log('Something went wrong');
       }
     } catch (e) {
       console.log(e);
@@ -328,19 +325,19 @@ class SettingsPage extends Component {
       flashCpl
     } = this.state;
 
-    const { userID, t, ErrorBoundary } = this.props;
-    let aboutErr = "";
-    if (about === "") {
-      aboutErr = "Please fill in your bio";
+    const { userID, t, ErrorHandler } = this.props;
+    let aboutErr = '';
+    if (about === '') {
+      aboutErr = 'Please fill in your bio';
     } else if (about.length < 10) {
-      aboutErr = "Bio must be more than 20 characters";
+      aboutErr = 'Bio must be more than 20 characters';
     }
 
     const errors = {
       profilePic:
-        publicPics.length === 0 ? "Please upload at least 1 photo" : null,
-      about: aboutErr !== "" ? aboutErr : null,
-      desires: desires.length === 0 ? "Please select at least 1 desire" : null
+        publicPics.length === 0 ? 'Please upload at least 1 photo' : null,
+      about: aboutErr !== '' ? aboutErr : null,
+      desires: desires.length === 0 ? 'Please select at least 1 desire' : null
     };
 
     return (
@@ -376,8 +373,8 @@ class SettingsPage extends Component {
                   <div className="row">
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
-                        <ErrorBoundary>
-                          {" "}
+                        <ErrorHandler.ErrorBoundary>
+                          {' '}
                           <ProfilePic profilePic={profilePicUrl} />
                           <Menu
                             coupleModalToggle={this.toggleCouplesPopup}
@@ -386,14 +383,14 @@ class SettingsPage extends Component {
                             t={t}
                             flashCpl={flashCpl}
                           />
-                        </ErrorBoundary>
+                        </ErrorHandler.ErrorBoundary>
                       </div>
                     </div>
                     <div className="col-md-12 col-lg-9">
                       <div className="page mtop">
                         <div className="form">
-                          <ErrorBoundary>
-                            {" "}
+                          <ErrorHandler.ErrorBoundary>
+                            {' '}
                             <Preferences
                               values={{
                                 distance,
@@ -415,9 +412,9 @@ class SettingsPage extends Component {
                               }
                               t={t}
                             />
-                          </ErrorBoundary>
-                          <ErrorBoundary>
-                            {" "}
+                          </ErrorHandler.ErrorBoundary>
+                          <ErrorHandler.ErrorBoundary>
+                            {' '}
                             <Photos
                               isPrivate={false}
                               showEditor={this.toggleImgEditorPopup}
@@ -440,14 +437,14 @@ class SettingsPage extends Component {
                               }
                               t={t}
                             />
-                          </ErrorBoundary>
+                          </ErrorHandler.ErrorBoundary>
                           {errors.profilePic && (
                             <label className="errorLbl">
                               {errors.profilePic}
                             </label>
                           )}
-                          <ErrorBoundary>
-                            {" "}
+                          <ErrorHandler.ErrorBoundary>
+                            {' '}
                             <Photos
                               isPrivate={true}
                               showEditor={this.toggleImgEditorPopup}
@@ -463,7 +460,7 @@ class SettingsPage extends Component {
                               }
                               t={t}
                             />
-                          </ErrorBoundary>
+                          </ErrorHandler.ErrorBoundary>
                           <MyProfile
                             desires={desires}
                             about={about}
@@ -473,10 +470,10 @@ class SettingsPage extends Component {
                             }
                             t={t}
                             errors={errors}
-                            ErrorBoundary={ErrorBoundary}
+                            ErrorBoundary={ErrorHandler.ErrorBoundary}
                           />
-                          <ErrorBoundary>
-                            {" "}
+                          <ErrorHandler.ErrorBoundary>
+                            {' '}
                             <AppSettings
                               setValue={({ name, value }) =>
                                 this.setValue({ name, value, updateSettings })
@@ -489,14 +486,15 @@ class SettingsPage extends Component {
                                 likedOnly
                               }}
                               t={t}
+                              ErrorHandler={ErrorHandler}
                             />
-                          </ErrorBoundary>
-                          <ErrorBoundary>
+                          </ErrorHandler.ErrorBoundary>
+                          <ErrorHandler.ErrorBoundary>
                             <Verifications
                               openPhotoVerPopup={this.openPhotoVerPopup}
                               t={t}
                             />
-                          </ErrorBoundary>
+                          </ErrorHandler.ErrorBoundary>
                         </div>
                       </div>
                     </div>
@@ -523,7 +521,7 @@ class SettingsPage extends Component {
                         uploadToS3={this.uploadToS3}
                         signS3={signS3}
                         close={this.toggleImgEditorPopup}
-                        ErrorBoundary={ErrorBoundary}
+                        ErrorBoundary={ErrorHandler.ErrorBoundary}
                       />
                     );
                   }}
@@ -536,14 +534,14 @@ class SettingsPage extends Component {
                   onChange={e => this.toggleDesires(e, updateSettings)}
                   desires={desires}
                   updateSettings={updateSettings}
-                  ErrorBoundary={ErrorBoundary}
+                  ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
               {showPhotoVerPopup && (
                 <SubmitPhotoModal
                   closePopup={() => this.togglePhotoVerPopup()}
                   type={photoSubmitType}
-                  ErrorBoundary={ErrorBoundary}
+                  ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
               {showCouplePopup && (
@@ -555,7 +553,7 @@ class SettingsPage extends Component {
                   username={couplePartner}
                   includeMsgs={includeMsgs}
                   setPartnerID={this.setPartnerID}
-                  ErrorBoundary={ErrorBoundary}
+                  ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
               {showBlackPopup && (
@@ -563,7 +561,7 @@ class SettingsPage extends Component {
                   close={() => this.toggleBlackPopup()}
                   userID={userID}
                   refetchUser={this.props.refetch}
-                  ErrorBoundary={ErrorBoundary}
+                  ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
             </section>
