@@ -25,25 +25,26 @@ class PhotoSlider extends Component {
     $(node).lightGallery(configLightGallery);
   };
 
-  componentDidMount() {
+  componentWillMount() {
     document.addEventListener('contextmenu', this.handleContextMenu);
   }
 
   handleContextMenu = event => {
-    if (event.target.hasAttribute('src')) preventContextMenu(event);
+    event.preventDefault();
+    const { target } = event;
+    const { classList, offsetParent } = target;
+    if (
+      classList.contains('lg-image') ||
+      offsetParent.classList.contains('lg-thumb')
+    ) {
+      preventContextMenu(event);
+    }
   };
-
-  multiIncludes(text, values) {
-    var re = new RegExp(values.join('|'));
-    return re.test(text);
-  }
 
   componentWillUnmount() {
     try {
       document.removeEventListener('contextmenu', this.handleContextMenu);
-      $(this.lightGallery)
-        .data('lightGallery')
-        .destroy(true);
+      $(this.lightGallery).lightGallery('destroy');
     } catch (e) {}
   }
 

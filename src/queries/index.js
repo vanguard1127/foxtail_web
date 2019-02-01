@@ -78,7 +78,6 @@ export const CREATE_USER = gql`
     createUser(
       username: $username
       email: $email
-      appVersion: "3"
       phone: $phone
       gender: $gender
       interestedIn: $interestedIn
@@ -438,8 +437,8 @@ export const SEARCH_PROFILES = gql`
     $long: Float!
     $lat: Float!
     $distance: Int!
-    $interestedIn: [String]
-    $ageRange: [Int]
+    $interestedIn: [String]!
+    $ageRange: [Int]!
     $limit: Int!
     $skip: Int!
   ) {

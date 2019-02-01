@@ -284,3 +284,8 @@ ReactDOM.render(
   </ApolloProvider>,
   document.getElementById('root')
 );
+
+//TODO: Figure out how o fix lightbox issue: Current fix is to add this:
+// if (!document.fullscreenElement) {
+//   return;
+//   }
