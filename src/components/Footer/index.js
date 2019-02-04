@@ -1,6 +1,9 @@
-import React from "react";
+import React from 'react';
+import { Mutation } from 'react-apollo';
+import { SEEN_TOUR } from '../../queries';
 
-import { withNamespaces } from "react-i18next";
+import { withNamespaces } from 'react-i18next';
+
 const Footer = ({ t }) => {
   return (
     <footer>
@@ -36,18 +39,30 @@ const Footer = ({ t }) => {
         <div className="container">
           <div className="col-md-12">
             <span className="text">
-              © 2019 - 2020 Foxtail App Inc. {t("register")}.
+              © 2019 - 2020 Foxtail App Inc. {t('register')}.
             </span>
             <div className="menu">
               <ul>
                 <li>
-                  <span>{t("termscon")}</span>
+                  <Mutation
+                    mutation={SEEN_TOUR}
+                    variables={{
+                      tour: 'reset'
+                    }}
+                  >
+                    {seenTour => {
+                      return <span onClick={() => seenTour()}>Reset Tour</span>;
+                    }}
+                  </Mutation>
                 </li>
                 <li>
-                  <span>{t("privacy")}</span>
+                  <span>{t('termscon')}</span>
                 </li>
                 <li>
-                  <span>{t("contact")}</span>
+                  <span>{t('privacy')}</span>
+                </li>
+                <li>
+                  <span>{t('contact')}</span>
                 </li>
               </ul>
             </div>
@@ -58,4 +73,4 @@ const Footer = ({ t }) => {
   );
 };
 
-export default withNamespaces("footer")(Footer);
+export default withNamespaces('footer')(Footer);

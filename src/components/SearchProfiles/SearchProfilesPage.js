@@ -5,6 +5,7 @@ import withAuth from '../withAuth';
 import { withRouter } from 'react-router-dom';
 import SearchCriteria from './SearchCriteria';
 import ProfilesContainer from './ProfilesContainer';
+import Tour from './Tour';
 
 class SearchProfilesPage extends Component {
   state = {
@@ -26,7 +27,14 @@ class SearchProfilesPage extends Component {
   };
 
   render() {
-    const { t, ErrorHandler, loading } = this.props;
+    const { t, ErrorHandler, loading, session } = this.props;
+
+    if (session.currentuser.tours.indexOf('sp') < 0) {
+      ErrorHandler.setBreadcrumb('Opened Tour: Search Profiles');
+      return (
+        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+      );
+    }
 
     return (
       <Fragment>

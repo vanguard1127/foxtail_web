@@ -41,13 +41,13 @@ Sentry.init({
 let server = 'localhost:4444';
 let httpurl = `http://${server}/graphql`;
 let HTTPSurl = `http://${server}`;
+let wsurl = `ws://${server}/subscriptions`;
 
 //FOR DEV
-// let server = "prod.foxtailapi.com";
+// let server = "connor.foxtailapi.com";
 // let httpurl = `https://${server}/graphql`;
 // let HTTPSurl = `https://${server}`;
-
-let wsurl = `ws://${server}/subscriptions`;
+// let wsurl = `wss://${server}/subscriptions`;
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
@@ -248,11 +248,11 @@ const Body = ({ showFooter }) => (
           exact
         />
         <Route
-          path="/events/:id"
+          path="/event/:id"
           render={() => <EventPage ErrorHandler={ErrorHandler} />}
         />
         <Route
-          path="/members/:id"
+          path="/member/:id"
           render={() => <ProfilePage ErrorHandler={ErrorHandler} />}
         />
         <Route

@@ -7,6 +7,7 @@ import Spinner from '../common/Spinner';
 import withAuth from '../withAuth';
 import DesiresSection from './DesiresSection';
 import ProfileCard from './ProfileCard';
+import Tour from './Tour';
 import ProfileInfo from './ProfileInfo';
 import ProfileBio from './ProfileBio';
 import DesiresMobile from './DesiresMobile';
@@ -78,8 +79,15 @@ class ProfilePage extends Component {
       shareModalVisible,
       msgModalVisible
     } = this.state;
-    const { t, ErrorHandler } = this.props;
+    const { t, ErrorHandler, session } = this.props;
     ErrorHandler.setBreadcrumb('Open Profile:' + id);
+
+    if (session.currentuser.tours.indexOf('p') < 0) {
+      ErrorHandler.setBreadcrumb('Opened Tour: Profile');
+      return (
+        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+      );
+    }
     return (
       <Mutation
         mutation={LIKE_PROFILE}

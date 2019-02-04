@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   FacebookShareButton,
   GooglePlusShareButton,
@@ -12,28 +12,28 @@ import {
   RedditIcon,
   TumblrIcon,
   EmailIcon
-} from "react-share";
-import { withNamespaces } from "react-i18next";
-let shareUrl = "";
-let title = "";
+} from 'react-share';
+import { withNamespaces } from 'react-i18next';
+let shareUrl = '';
+let title = '';
 const body = (profile, event, t) => {
   if (profile) {
-    shareUrl = "http://localhost:3000/members/" + profile.id;
-    title = t("intrstmsg") + ":";
+    shareUrl = 'http://localhost:3000/member/' + profile.id;
+    title = t('intrstmsg') + ':';
     return (
       <div>
-        {t("meetques")}{" "}
+        {t('meetques')}{' '}
         {profile.users.map((user, index) => {
           if (index === 0) return user.username;
-          else return +" & " + user.username;
+          else return +' & ' + user.username;
         })}
         ?
       </div>
     );
   } else if (event) {
-    shareUrl = "http://localhost:3000/events/" + event.id;
-    title = t("invitation") + " " + event.eventname;
-    return <div>{t("shareevent")}?</div>;
+    shareUrl = 'http://localhost:3000/event/' + event.id;
+    title = t('invitation') + ' ' + event.eventname;
+    return <div>{t('shareevent')}?</div>;
   } else {
     return null;
   }
@@ -56,16 +56,16 @@ const Share = ({ profile, event, close, t, ErrorBoundary }) => {
                   <div className="m-body">
                     <div
                       style={{
-                        justifyContent: "center",
-                        display: "flex"
+                        justifyContent: 'center',
+                        display: 'flex'
                       }}
                     >
                       <div
                         style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          padding: "10px",
-                          width: "20vw"
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          padding: '10px',
+                          width: '20vw'
                         }}
                       >
                         <FacebookShareButton
@@ -109,7 +109,7 @@ const Share = ({ profile, event, close, t, ErrorBoundary }) => {
                         <EmailShareButton
                           url={shareUrl}
                           subject={title}
-                          body={title + "." + t("checkout") + ":" + shareUrl}
+                          body={title + '.' + t('checkout') + ':' + shareUrl}
                           className="Demo__some-network__share-button"
                         >
                           <EmailIcon size={32} round />
@@ -127,4 +127,4 @@ const Share = ({ profile, event, close, t, ErrorBoundary }) => {
   );
 };
 
-export default withNamespaces("modals")(Share);
+export default withNamespaces('modals')(Share);

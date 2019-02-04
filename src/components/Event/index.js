@@ -8,6 +8,7 @@ import moment from 'moment';
 import Spinner from '../common/Spinner';
 import withAuth from '../withAuth';
 import EventHeader from './EventHeader';
+import Tour from './Tour';
 import EventAbout from './EventAbout';
 import EventInfoMobile from './EventInfoMobile';
 import EventDiscussion from './EventDiscussion';
@@ -112,6 +113,12 @@ class EventPage extends Component {
     const { id } = this.props.match.params;
     const { visible, blockModalVisible } = this.state;
     const { session, history, t, ErrorHandler } = this.props;
+    if (session.currentuser.tours.indexOf('e') < 0) {
+      ErrorHandler.setBreadcrumb('Opened Tour: Event');
+      return (
+        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+      );
+    }
     return (
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error }) => {

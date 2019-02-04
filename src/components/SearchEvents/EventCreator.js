@@ -5,7 +5,7 @@ import { preventContextMenu } from '../../utils/image';
 const EventCreator = ({ ownerProfile, history }) => {
   return (
     <div className="created">
-      <span onClick={() => history.push('/members/' + ownerProfile.id)}>
+      <span onClick={() => history.push('/member/' + ownerProfile.id)}>
         <span className="avatar">
           <img
             src={

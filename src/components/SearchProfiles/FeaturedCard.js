@@ -23,7 +23,7 @@ const FeaturedCard = ({
   return (
     <div className={'item ' + badge}>
       <div className="info">
-        <span onClick={() => history.push('/members/' + profile.id)}>
+        <span onClick={() => history.push('/member/' + profile.id)}>
           <ProfileInfoDiv profile={profile} t={t} />
           <ProfilePic profilePic={profile.profilePic} />
         </span>

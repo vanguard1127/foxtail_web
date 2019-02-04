@@ -22,7 +22,7 @@ class EventCard extends Component {
           <div className="thumbnail">
             <EventDate time={startTime} />
             <EventCreator ownerProfile={ownerProfile} />
-            <span onClick={() => this.props.history.push('/events/' + id)}>
+            <span onClick={() => this.props.history.push('/event/' + id)}>
               <img
                 src={
                   image !== '' && image !== undefined && image !== null
@@ -35,7 +35,7 @@ class EventCard extends Component {
           </div>
           <div className="content">
             <div className="event-name">
-              <span onClick={() => this.props.history.push('/events/' + id)}>
+              <span onClick={() => this.props.history.push('/event/' + id)}>
                 {eventname}
               </span>
             </div>
@@ -73,7 +73,7 @@ class EventCard extends Component {
             <div className="functions">
               <div
                 className="btn go-detail"
-                onClick={() => this.props.history.push('/events/' + id)}
+                onClick={() => this.props.history.push('/event/' + id)}
               >
                 <span>{t('eventdetail')}</span>
               </div>

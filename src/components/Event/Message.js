@@ -1,17 +1,17 @@
-import React from "react";
-import moment from "moment";
+import React from 'react';
+import moment from 'moment';
 
 const Message = React.forwardRef(({ message, history }, ref) => {
   const messageText = message.text;
   return (
     <div className="item" ref={ref}>
       <span className="avatar">
-        <span onClick={() => history.push("/members/" + message.fromUser.id)}>
+        <span onClick={() => history.push('/member/' + message.fromUser.id)}>
           <img
             src={
-              message.profilePic !== ""
+              message.profilePic !== ''
                 ? message.profilePic
-                : "/assets/img/usr/avatar/1001@2x.png"
+                : '/assets/img/usr/avatar/1001@2x.png'
             }
             alt=""
           />
@@ -19,15 +19,15 @@ const Message = React.forwardRef(({ message, history }, ref) => {
       </span>
       <div className="info">
         <span className="name">
-          <span onClick={() => history.push("/members/" + message.fromUser.id)}>
-            {" "}
+          <span onClick={() => history.push('/member/' + message.fromUser.id)}>
+            {' '}
             {message.fromUser.username}
           </span>
         </span>
         <span className="date">
-          {" "}
+          {' '}
           {moment(message.createdAt)
-            .format("MMMM D, YYYY - HH:mm")
+            .format('MMMM D, YYYY - HH:mm')
             .toString()}
         </span>
 

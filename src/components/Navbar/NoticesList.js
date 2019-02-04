@@ -98,7 +98,7 @@ class NoticesList extends Component {
             this.props.history.push('/inbox/' + targetID);
             break;
           case 'event':
-            this.props.history.push('/events/' + targetID);
+            this.props.history.push('/event/' + targetID);
             break;
           default:
             break;

@@ -3,11 +3,11 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { GET_SEARCH_SETTINGS } from '../../queries';
 import SearchProfilesPage from './SearchProfilesPage';
-//import SearchProfilesPage from "./SearchProfiles_Tour";
 
 const SearchProfiles = ({ t, ErrorHandler }) => {
   ErrorHandler.setBreadcrumb('Enter Search Profiles');
-  document.title = 'Events';
+  document.title = 'Profiles';
+
   return (
     <Query query={GET_SEARCH_SETTINGS} fetchPolicy="cache-and-network">
       {({ data, loading, error }) => {

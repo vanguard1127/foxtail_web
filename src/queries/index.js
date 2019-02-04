@@ -351,6 +351,12 @@ export const CREATE_EVENT = gql`
   }
 `;
 
+export const SEEN_TOUR = gql`
+  mutation($tour: String!) {
+    seenTour(tour: $tour)
+  }
+`;
+
 export const DELETE_EVENT = gql`
   mutation($eventID: ID!) {
     deleteEvent(eventID: $eventID)
@@ -727,6 +733,7 @@ export const GET_CURRENT_USER = gql`
       }
       ccLast4
       isProfileOK
+      tours
       location {
         city
         crds {

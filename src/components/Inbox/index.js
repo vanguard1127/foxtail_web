@@ -8,6 +8,8 @@ import ChatInfo from './ChatInfo';
 import { GET_COUNTS, READ_CHAT, GET_INBOX } from '../../queries';
 import { Mutation } from 'react-apollo';
 import ChatWindow from './ChatWindow';
+import Tour from './Tour';
+
 import * as ErrorHandler from '../common/ErrorHandler';
 
 class InboxPage extends Component {
@@ -69,6 +71,12 @@ class InboxPage extends Component {
     const { currentuser } = this.props.session;
     let { chatID, chat } = this.state;
     chatID = this.state.chatID;
+    if (currentuser.tours.indexOf('i') < 0) {
+      ErrorHandler.setBreadcrumb('Opened Tour: Inbox');
+      return (
+        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+      );
+    }
     if (chatID === null) {
       chatID = this.props.match.params.chatID;
       if (chatID === 'null' || chatID === undefined) {

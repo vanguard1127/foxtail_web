@@ -12,6 +12,7 @@ import withLocation from '../withLocation';
 import withAuth from '../withAuth';
 import SearchEventToolbar from './SearchEventToolbar';
 import Header from './Header';
+import Tour from './Tour';
 import EventsList from './EventsList';
 import Spinner from '../common/Spinner';
 
@@ -87,7 +88,7 @@ class SearchEvents extends Component {
       createEvent()
         .then(({ data }) => {
           alert(t('eventcreated'));
-          this.props.history.push('/events/' + data.createEvent.id);
+          this.props.history.push('/event/' + data.createEvent.id);
         })
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -132,6 +133,7 @@ class SearchEvents extends Component {
   };
 
   render() {
+    document.title = 'Events';
     const {
       event,
       shareModalVisible,
@@ -142,9 +144,15 @@ class SearchEvents extends Component {
       location,
       skip
     } = this.state;
-    const { t, ErrorHandler } = this.props;
+    const { t, ErrorHandler, session } = this.props;
     ErrorHandler.setBreadcrumb('Search Events');
 
+    if (session.currentuser.tours.indexOf('se') < 0) {
+      ErrorHandler.setBreadcrumb('Opened Tour: Search Events');
+      return (
+        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+      );
+    }
     //TODO: Do we still need this
     sessionStorage.setItem(
       'searchEventQuery',

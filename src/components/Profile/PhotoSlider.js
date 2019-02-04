@@ -94,7 +94,7 @@ class PhotoSlider extends Component {
             {photos.map(photo => (
               <div
                 className="item"
-                key={Math.random()}
+                key={photo.id}
                 onContextMenu={preventContextMenu}
               >
                 <a href={photo.url}>
