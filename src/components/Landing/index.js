@@ -5,13 +5,31 @@ import LanguageControl from '../common/LanguageControl/LanguageControl';
 import { ErrorBoundary } from '../common/ErrorHandler';
 import CountUp from 'react-countup';
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // minified version is also included
 // import 'react-toastify/dist/ReactToastify.min.css';
 import { withNamespaces } from 'react-i18next';
 
-const Landing = ({ t }) => {
+const Landing = ({ t, props }) => {
+  if (props.location.state) {
+    if (props.location.state.emailVer === true) {
+      if (!toast.isActive('emailVer')) {
+        toast.success('Email has been confirmed.', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'emailVer'
+        });
+      }
+    } else if (props.location.state.emailVer === false) {
+      if (!toast.isActive('errVer')) {
+        toast.error('Email confirmation failed, please try again.', {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'errVer'
+        });
+      }
+    }
+    props.history.replace({ state: {} });
+  }
   return (
     <div>
       <header className="landing">

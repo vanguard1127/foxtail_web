@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import * as Sentry from '@sentry/browser';
 
 import Landing from './components/Landing';
+import EmailConfirm from './components/Landing/EmailConfirm';
 import Navbar from './components/Navbar/';
 import ProfileSearch from './components/SearchProfiles/';
 import Settings from './components/Settings/';
@@ -44,7 +45,7 @@ let HTTPSurl = `http://${server}`;
 let wsurl = `ws://${server}/subscriptions`;
 
 //FOR DEV
-// let server = "connor.foxtailapi.com";
+// let server = "prod.foxtailapi.com";
 // let httpurl = `https://${server}/graphql`;
 // let HTTPSurl = `https://${server}`;
 // let wsurl = `wss://${server}/subscriptions`;
@@ -207,8 +208,9 @@ const Root = () => (
 const Wrapper = withRouter(props => {
   let location = props.location;
   let isLanding = location.pathname && location.pathname === '/';
+
   if (isLanding) {
-    return <Landing />;
+    return <Landing props={props} />;
   }
   let showFooter =
     location.pathname && location.pathname.match(/^\/inbox/) === null;
@@ -269,7 +271,7 @@ const Body = ({ showFooter }) => (
           path="/settings"
           render={() => <Settings ErrorHandler={ErrorHandler} />}
         />
-
+        <Route path="/confirmation/:token" component={EmailConfirm} />
         <Redirect to="/" />
       </Switch>
     </main>

@@ -97,7 +97,7 @@ class Signup extends React.Component {
   };
 
   testCreateUser = createUser => {
-    const rand = Math.floor(Math.random() * 1000);
+    const rand = Math.floor(10000000 + Math.random() * 1000);
     this.setState(
       {
         phone: rand.toString(),

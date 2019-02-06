@@ -1,13 +1,14 @@
-import React from "react";
+import React from 'react';
 
-import { Query } from "react-apollo";
+import { Query } from 'react-apollo';
 
-import { Redirect } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { GET_CURRENT_USER } from "../queries";
+import { GET_CURRENT_USER } from '../queries';
 const withAuth = conditionFunc => Component => props => {
-  if (localStorage.getItem("token") === null) {
-    props.history.push("/");
+  if (localStorage.getItem('token') === null) {
+    props.history.push('/');
     return null;
   } else {
     return (
@@ -20,15 +21,34 @@ const withAuth = conditionFunc => Component => props => {
           if (conditionFunc(data)) {
             if (
               !data.currentuser.isProfileOK &&
-              ~window.location.href.indexOf("/settings") === 0
+              ~window.location.href.indexOf('/settings') === 0
             ) {
               return (
                 <Redirect
                   to={{
-                    pathname: "/settings"
+                    pathname: '/settings'
                   }}
                 />
               );
+            }
+            if (
+              !data.currentuser.isEmailOK &&
+              ~window.location.href.indexOf('/settings') === 0
+            ) {
+              if (!toast.isActive('ever')) {
+                toast.error(
+                  'Please check your inbox to confirm your email before contacting members! Resend',
+                  {
+                    toastId: 'ever',
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: false,
+                    hideProgressBar: true,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: false
+                  }
+                );
+              }
             }
 
             return <Component {...props} session={data} refetch={refetch} />;

@@ -27,10 +27,21 @@ class Settings extends Component {
     let isCouple = false;
     let isInitial = false;
     if (this.props.location.state) {
-      isCouple = this.props.location.state.couple;
-    }
-    if (this.props.location.state) {
-      isInitial = this.props.location.state.initial;
+      if (this.props.location.state.couple) {
+        isCouple = this.props.location.state.couple;
+      }
+
+      if (this.props.location.state.initial) {
+        isInitial = this.props.location.state.initial;
+        // if (!toast.isActive("verEmail")) {
+        //   toast.info("Please check your email to confirm your account.", {
+        //     position: toast.POSITION.TOP_CENTER,
+        //     toastId: "verEmail"
+        //   });
+        // }
+      }
+
+      this.props.history.replace({ state: {} });
     }
     return (
       <Fragment>

@@ -733,6 +733,7 @@ export const GET_CURRENT_USER = gql`
       }
       ccLast4
       isProfileOK
+      isEmailOK
       tours
       location {
         city
