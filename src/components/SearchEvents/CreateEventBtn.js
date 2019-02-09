@@ -15,7 +15,10 @@ class CreateEventBtn extends Component {
           <span>{this.props.t('common:createevent')}</span>
         </div>
         {this.state.showPopup ? (
-          <CreateEvent closePopup={() => this.togglePopup()} />
+          <CreateEvent
+            closePopup={() => this.togglePopup()}
+            ErrorHandler={this.props.ErrorHandler}
+          />
         ) : null}
       </Fragment>
     );

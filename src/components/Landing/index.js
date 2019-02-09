@@ -2,7 +2,7 @@ import React from 'react';
 import Signup from './Signup';
 import LoginButton from './LoginButton';
 import LanguageControl from '../common/LanguageControl/LanguageControl';
-import { ErrorBoundary } from '../common/ErrorHandler';
+import { ErrorBoundary, setBreadcrumb } from '../common/ErrorHandler';
 import CountUp from 'react-countup';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -115,7 +115,7 @@ const Landing = ({ t, props }) => {
                 <div className="col-lg-5 col-md-12">
                   <ErrorBoundary>
                     {' '}
-                    <Signup t={t} />
+                    <Signup t={t} setBreadcrumb={setBreadcrumb} />
                   </ErrorBoundary>
                 </div>
               </div>

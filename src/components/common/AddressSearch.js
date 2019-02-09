@@ -1,9 +1,9 @@
-import React from "react";
-import { withNamespaces } from "react-i18next";
+import React from 'react';
+import { withNamespaces } from 'react-i18next';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
-} from "react-places-autocomplete";
+} from 'react-places-autocomplete';
 
 class AddressSearch extends React.Component {
   handleChange = address => {
@@ -22,14 +22,14 @@ class AddressSearch extends React.Component {
           address
         });
       })
-      .then(latLng => console.log("Success", latLng))
-      .catch(error => console.error("Error", error));
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
   };
 
   render() {
-    const { type, address, t, placeholder } = this.props;
+    const { type, address, t, placeholder, hideReset } = this.props;
     const onError = (status, clearSuggestions) => {
-      console.log("Google Maps API returned error with status: ", status);
+      console.log('Google Maps API returned error with status: ', status);
       clearSuggestions();
     };
 
@@ -48,35 +48,38 @@ class AddressSearch extends React.Component {
           return (
             <div className="search">
               {/* <label>Location</label> */}
-              <div style={{ display: "flex" }}>
+              <div style={{ display: 'flex' }}>
                 <input
                   {...getInputProps({
                     placeholder,
-                    className: "location-search-input"
+                    className: 'location-search-input'
                   })}
                 />
 
-                <span
-                  style={{
-                    flex: "1",
-                    backgroundColor: "transparent",
-                    marginLeft: "-7%"
-                  }}
-                  onClick={() => this.handleChange("My Location")}
-                >
-                  {t("Reset")}
-                </span>
+                {!hideReset && (
+                  <span
+                    style={{
+                      flex: '1',
+                      backgroundColor: 'transparent',
+                      marginLeft: '-9%',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => this.handleChange('My Location')}
+                  >
+                    <span className="reset-icon" />
+                  </span>
+                )}
               </div>
               <div className="autocomplete-dropdown-container">
-                {loading && <div>{t("common:Loading") + "..."}</div>}
+                {loading && <div>{t('common:Loading') + '...'}</div>}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
-                    ? "suggestion-item--active"
-                    : "suggestion-item";
+                    ? 'suggestion-item--active'
+                    : 'suggestion-item';
                   // inline style for demonstration purpose
                   const style = suggestion.active
-                    ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                    : { backgroundColor: "#ffffff", cursor: "pointer" };
+                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
                   return (
                     <div
                       key={suggestion.id}
@@ -98,4 +101,4 @@ class AddressSearch extends React.Component {
   }
 }
 
-export default withNamespaces("common")(AddressSearch);
+export default withNamespaces('common')(AddressSearch);

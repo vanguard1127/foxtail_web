@@ -1,36 +1,86 @@
-import React, { Component } from "react";
-import { withNamespaces } from "react-i18next";
-import PhotoUpload from "../../common/PhotoUpload";
-import DesiresModal from "../../Modals/Desires/Modal";
-import DesiresSelector from "../../Modals/Desires/Selector";
-import Select from "../../common/Select";
-import AddressSearch from "../../common/AddressSearch";
-import DateTimePicker from "../../common/DatePicker/DateTimePicker";
+import React, { Component } from 'react';
+import { withNamespaces } from 'react-i18next';
+import * as yup from 'yup';
+import axios from 'axios';
+import { Mutation } from 'react-apollo';
+import { SIGNS3, CREATE_EVENT, SEARCH_EVENTS } from '../../../queries';
+import PhotoUpload from '../../common/PhotoUpload';
+import DesiresModal from '../../Modals/Desires/Modal';
+import DesiresSelector from '../../Modals/Desires/Selector';
+import Select from '../../common/Select';
+import AddressSearch from '../../common/AddressSearch';
+import DatePicker from '../../common/DatePicker';
+import isEmpty from '../../../utils/isEmpty';
+
+const schema = yup.object().shape({
+  eventname: yup
+    .string()
+    .min(3, 'Event Name must be at least 3 characters')
+    .max(120, 'Event Name must be less than 120 characters')
+    .required('Event Name is required!'),
+  description: yup
+    .string()
+    .min(10, 'Description must be at least 10 characters')
+    .max(500, 'Description must be less than 500 characters')
+    .required('Description is required!'),
+  type: yup.string().required('Event Type is required!'),
+  address: yup
+    .string()
+    .max(240, 'Description must be less than 240 characters')
+    .required('Address is required!')
+});
 class CreateEvent extends Component {
   state = {
-    filename: "",
-    filetype: "",
-    photoKey: "",
-    showDesiresPopup: false,
+    eventname: '',
+    tagline: '',
+    description: '',
+    filename: '',
+    filetype: '',
     desires: [],
-    lat: "",
-    long: "",
-    address: "",
-    photo: [],
-    image: "",
-    type: "",
-    time: "",
+    lat: null,
+    long: null,
+    address: '',
+    images: [],
+    image: '',
+    type: '',
+    startTime: '',
+    endTime: '',
     interestedIn: [],
-    validating: "",
-    eventname: ""
+    errors: {},
+    showInfo: true,
+    showDesiresPopup: false
+  };
+  componentDidMount() {
+    this.props.ErrorHandler.setBreadcrumb('Create Event Modal');
+  }
+  setValue = ({ name, value }) => {
+    console.log(value);
+    this.setState({ [name]: value }, () => {
+      if (!isEmpty(this.state.errors)) {
+        this.validateForm();
+      }
+    });
   };
 
-  setValue = ({ name, value }) => {
-    this.setState({ [name]: value });
+  validateForm = async () => {
+    try {
+      await schema.validate(this.state, { abortEarly: false });
+      this.setState({ errors: {} });
+      return true;
+    } catch (e) {
+      let errors = {};
+      e.inner.forEach(err => (errors[err.path] = err.message));
+      this.setState({ errors });
+      return false;
+    }
   };
-  setPhotos = photos => {
-    this.setState({ photos });
-  };
+  InputFeedback = error =>
+    error ? (
+      <div className="input-feedback" style={{ color: 'red' }}>
+        {error}
+      </div>
+    ) : null;
+
   toggleDesiresPopup = () => {
     this.setState({
       showDesiresPopup: !this.state.showDesiresPopup
@@ -45,23 +95,114 @@ class CreateEvent extends Component {
       this.setState({ desires: desires.filter(desire => desire !== value) });
     }
   };
+
+  handleSubmit = async ({ createEvent, signS3 }) => {
+    if (await this.validateForm()) {
+      if (this.state.images.length > 0) {
+        await signS3().catch(res => {
+          console.log('!', res);
+        });
+      }
+      createEvent()
+        .then(async ({ data }) => {
+          console.log('2', data);
+          this.props.closePopup();
+        })
+        .catch(res => {
+          console.log('3', res);
+        });
+    }
+  };
+
+  //TODO: Are all of these async await needed?
+  handleUpload = async ({ signS3 }) => {
+    const { images } = this.state;
+    if (images.length === 0) {
+      return;
+    }
+
+    const file = images[0];
+
+    await this.setS3PhotoParams(file.name, file.type);
+    //format name on backend
+    //filename: this.formatFilename(file.name),
+    await signS3()
+      .then(async ({ data }) => {
+        const { signedRequest, key } = data.signS3;
+        await this.uploadToS3(file, signedRequest);
+        this.setState({ image: key });
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
+
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+      });
+  };
+
+  setS3PhotoParams = (name, type) => {
+    this.setState({
+      filename: name,
+      filetype: type
+    });
+  };
+
+  uploadToS3 = async (file, signedRequest) => {
+    try {
+      //ORIGINAL
+      const options = {
+        headers: {
+          'Content-Type': file.type
+        }
+      };
+      const resp = await axios.put(signedRequest, file, options);
+      if (resp.status === 200) {
+        console.log('upload ok');
+      } else {
+        console.log('Something went wrong');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   setLocationValues = ({ lat, long, address }) => {
     if (lat && long) {
       return this.setState({ lat, long, address });
     }
     this.setState({ address });
+    if (!isEmpty(this.state.errors)) {
+      this.validateForm();
+    }
   };
+  togglePage = () => {
+    this.setState({
+      showInfo: !this.state.showInfo
+    });
+  };
+  //TODO: Min time for date pickers to prevent time overlap
   render() {
-    const { closePopup, t, ErrorBoundary } = this.props;
+    const { closePopup, t, ErrorHandler } = this.props;
     const {
-      photo,
-      showDesiresPopup,
-      desires,
       eventname,
+      tagline,
+      desires,
       interestedIn,
       description,
       address,
-      type
+      type,
+      lat,
+      long,
+      startTime,
+      endTime,
+      images,
+      image,
+      showDesiresPopup,
+      errors,
+      showInfo,
+      filename,
+      filetype
     } = this.state;
     return (
       <section className="popup-content show">
@@ -70,44 +211,125 @@ class CreateEvent extends Component {
             <div className="row">
               <div className="offset-md-3 col-md-6">
                 <div className="modal-popup create-event">
-                  <ErrorBoundary>
+                  <ErrorHandler.ErrorBoundary>
                     <div className="m-head">
-                      <span className="heading">{t("createeve")}</span>
-                      <span className="title">{t("common:eventsubtitle")}</span>
+                      <span className="heading">{t('createeve')}</span>
+                      <span className="title">{t('common:eventsubtitle')}</span>
                       <span className="close" onClick={() => closePopup()} />
                     </div>
                     <div className="m-body">
                       <div className="page">
                         <div className="form">
-                          <div className="content">
-                            <div className="item">
-                              <div className="input">
-                                <input
-                                  type="text"
-                                  required
-                                  id="eventname"
+                          {showInfo && (
+                            <div className="content">
+                              <div className="item">
+                                <div className="input">
+                                  <input
+                                    type="text"
+                                    required
+                                    id="eventname"
+                                    onChange={el =>
+                                      this.setValue({
+                                        name: 'eventname',
+                                        value: el.target.value
+                                      })
+                                    }
+                                    value={eventname}
+                                  />
+                                  <label
+                                    title={t('evename')}
+                                    htmlFor="eventname"
+                                  />
+                                </div>
+                                {this.InputFeedback(errors.eventname)}
+                              </div>
+                              <div className="item">
+                                <div className="input">
+                                  <input
+                                    type="text"
+                                    required
+                                    id="tagline"
+                                    onChange={el =>
+                                      this.setValue({
+                                        name: 'tagline',
+                                        value: el.target.value
+                                      })
+                                    }
+                                    value={tagline}
+                                  />
+                                  <label
+                                    title={t('tagline')}
+                                    htmlFor="tagline"
+                                  />
+                                </div>
+                              </div>
+                              <div className="item">
+                                <div className="textarea">
+                                  <textarea
+                                    placeholder={t('desctitle') + '...'}
+                                    onChange={el =>
+                                      this.setValue({
+                                        name: 'description',
+                                        value: el.target.value
+                                      })
+                                    }
+                                    value={description}
+                                  />
+                                </div>
+                                {this.InputFeedback(errors.description)}
+                              </div>
+                              <div className="item">
+                                <DesiresSelector
+                                  desires={desires}
+                                  togglePopup={() => this.toggleDesiresPopup()}
+                                  ErrorBoundary={ErrorHandler.ErrorBoundary}
+                                />
+                              </div>
+                              <div className="item">
+                                <Select
+                                  label={t('evetype') + ':'}
                                   onChange={el =>
                                     this.setValue({
-                                      name: "eventname",
+                                      name: 'type',
+                                      value: el.value
+                                    })
+                                  }
+                                  value={type}
+                                  options={[
+                                    { label: 'Public', value: 'public' },
+                                    { label: 'Private', value: 'private' },
+                                    { label: 'Request', value: 'request' }
+                                  ]}
+                                />
+                              </div>
+                              {this.InputFeedback(errors.type)}
+                              <div className="item nobottom">
+                                <PhotoUpload
+                                  photos={images}
+                                  setPhotos={el =>
+                                    this.setValue({
+                                      name: 'images',
                                       value: el
                                     })
                                   }
                                 />
-                                <label
-                                  title={t("evename")}
-                                  htmlFor="eventname"
-                                />
+                              </div>
+                              <div className="item">
+                                <div className="button mtop">
+                                  <button onClick={() => this.togglePage()}>
+                                    {t('common:Next')}
+                                  </button>
+                                </div>
                               </div>
                             </div>
-                            <div className="item">
-                              <div className="input">
-                                <DateTimePicker />
-                              </div>
-                            </div>
-                            <div className="item">
-                              <div className="input">
+                          )}
+                          {!showInfo && (
+                            <div className="content">
+                              <div className="item">
                                 <AddressSearch
-                                  style={{ width: "100%" }}
+                                  style={{
+                                    width: '100%'
+                                  }}
                                   setLocationValues={({ lat, long, address }) =>
                                     this.setLocationValues({
                                       lat,
@@ -116,84 +338,106 @@ class CreateEvent extends Component {
                                     })
                                   }
                                   address={address}
-                                  type={"address"}
-                                  placeholder={t("common:Address")}
+                                  type={'address'}
+                                  placeholder={t('common:Address')}
+                                  hideReset={true}
                                 />
-                                {/* <input
-                                type="text"
-                                required
-                                id="eventAddress"
-                                onChange={el =>
-                                  this.setValue({
-                                    name: "photo",
-                                    value: el
-                                  })
-                                }
-                              />
-                              <label
-                                title="Event Address"
-                                htmlFor="eventAddress"
-                              /> */}
                               </div>
-                            </div>
-                            <div className="item">
-                              <div className="textarea">
-                                <textarea
-                                  placeholder={t("desctitle") + "..."}
-                                  onChange={el =>
+                              {this.InputFeedback(errors.address)}
+                              <div className="item">
+                                <DatePicker
+                                  value={startTime}
+                                  p={{
+                                    maxDate: endTime || null,
+                                    minDate: new Date()
+                                  }}
+                                  onChange={e => {
                                     this.setValue({
-                                      name: "photo",
-                                      value: el
-                                    })
-                                  }
+                                      name: 'startTime',
+                                      value: e
+                                    });
+                                  }}
+                                  t={t}
+                                  type="datetime"
+                                  placeholder={t('evestart')}
                                 />
                               </div>
-                            </div>
-                            <div className="item nobottom">
-                              <PhotoUpload
-                                photos={photo}
-                                setPhotos={el =>
-                                  this.setValue({
-                                    name: "photo",
-                                    value: el
-                                  })
-                                }
-                              />
-                            </div>
-                            <div className="item">
-                              <DesiresSelector
-                                desires={desires}
-                                togglePopup={() => this.toggleDesiresPopup()}
-                                ErrorBoundary={ErrorBoundary}
-                              />
-                            </div>
-                            <div className="item">
-                              <Select
-                                label={t("evetype") + ":"}
-                                onChange={el =>
-                                  this.setValue({
-                                    name: "type",
-                                    value: el
-                                  })
-                                }
-                                value={type}
-                                options={[
-                                  { label: "Public", value: "public" },
-                                  { label: "Private", value: "private" },
-                                  { label: "Request", value: "request" }
-                                ]}
-                              />
-                            </div>
-                            <div className="item">
-                              <div className="button mtop">
-                                <button>{t("common:createevent")}</button>
+                              <div className="item">
+                                <DatePicker
+                                  value={endTime}
+                                  p={{ minDate: startTime || new Date() }}
+                                  onChange={e => {
+                                    this.setValue({
+                                      name: 'endTime',
+                                      value: e
+                                    });
+                                  }}
+                                  t={t}
+                                  placeholder={t('eveend')}
+                                  type="datetime"
+                                />
+                              </div>
+
+                              <div className="item">
+                                <div className="button mtop">
+                                  {' '}
+                                  <Mutation
+                                    mutation={SIGNS3}
+                                    variables={{ filename, filetype }}
+                                  >
+                                    {signS3 => {
+                                      return (
+                                        <Mutation
+                                          mutation={CREATE_EVENT}
+                                          variables={{
+                                            eventname,
+                                            desires,
+                                            interestedIn,
+                                            description,
+                                            address,
+                                            type,
+                                            lat,
+                                            long,
+                                            startTime,
+                                            endTime,
+                                            image
+                                          }}
+                                        >
+                                          {(createEvent, { loading }) => {
+                                            return (
+                                              <button
+                                                onClick={() =>
+                                                  this.handleSubmit({
+                                                    createEvent,
+                                                    signS3
+                                                  })
+                                                }
+                                              >
+                                                {t('common:createevent')}
+                                              </button>
+                                            );
+                                          }}
+                                        </Mutation>
+                                      );
+                                    }}
+                                  </Mutation>
+                                  <button
+                                    style={{
+                                      backgroundColor: '#404040',
+                                      marginTop: '10px'
+                                    }}
+                                    onClick={() => this.togglePage()}
+                                  >
+                                    Back
+                                  </button>
+                                </div>
                               </div>
                             </div>
-                          </div>
+                          )}
                         </div>
                       </div>
                     </div>
-                  </ErrorBoundary>
+                  </ErrorHandler.ErrorBoundary>
                 </div>
               </div>
             </div>
@@ -205,11 +449,11 @@ class CreateEvent extends Component {
             closePopup={() => this.toggleDesiresPopup()}
             onChange={e => this.toggleDesires(e)}
             desires={desires}
-            ErrorBoundary={ErrorBoundary}
+            ErrorBoundary={ErrorHandler.ErrorBoundary}
           />
         )}
       </section>
     );
   }
 }
-export default withNamespaces("modals")(CreateEvent);
+export default withNamespaces('modals')(CreateEvent);

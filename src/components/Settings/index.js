@@ -23,16 +23,25 @@ class Settings extends Component {
   }
   //TODO: Set time below
   render() {
-    const { session, refetch, t, ErrorHandler } = this.props;
+    //TODO: If on Settigns make popup show
+    const { session, refetch, t, ErrorHandler, location, history } = this.props;
     let isCouple = false;
     let isInitial = false;
-    if (this.props.location.state) {
-      if (this.props.location.state.couple) {
-        isCouple = this.props.location.state.couple;
+    let showBlkModal = false;
+    let showCplModal = false;
+    if (location.state) {
+      if (location.state.couple) {
+        isCouple = location.state.couple;
+      }
+      if (location.state.showBlkMdl) {
+        showBlkModal = location.state.showBlkMdl;
+      }
+      if (location.state.showCplMdl) {
+        showCplModal = location.state.showCplMdl;
       }
 
-      if (this.props.location.state.initial) {
-        isInitial = this.props.location.state.initial;
+      if (location.state.initial) {
+        isInitial = location.state.initial;
         // if (!toast.isActive("verEmail")) {
         //   toast.info("Please check your email to confirm your account.", {
         //     position: toast.POSITION.TOP_CENTER,
@@ -40,8 +49,6 @@ class Settings extends Component {
         //   });
         // }
       }
-
-      this.props.history.replace({ state: {} });
     }
     return (
       <Fragment>
@@ -82,7 +89,10 @@ class Settings extends Component {
                   t={t}
                   isCouple={isCouple}
                   isInitial={isInitial}
+                  showBlkModal={showBlkModal}
+                  showCplModal={showCplModal}
                   ErrorHandler={ErrorHandler}
+                  history={history}
                 />
               </Fragment>
             );

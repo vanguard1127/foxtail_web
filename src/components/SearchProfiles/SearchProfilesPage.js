@@ -14,8 +14,11 @@ class SearchProfilesPage extends Component {
     ...this.props.searchCriteria
   };
 
+  componentDidMount() {
+    this.props.ErrorHandler.setBreadcrumb('Search Profile Page');
+  }
+
   setValue = ({ name, value }) => {
-    this.props.ErrorHandler.setBreadcrumb('Set Value:' + name + ':' + value);
     this.setState({ [name]: value });
   };
 

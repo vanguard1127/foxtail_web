@@ -1,61 +1,163 @@
-@font-face{font-family:'San Francisco Display';src:url('../fonts/SanFranciscoDisplay-Semibold.woff2') format('woff2'),
-url('../fonts/SanFranciscoDisplay-Semibold.woff') format('woff');font-weight:600;font-style:normal;}
-@font-face{font-family:'San Francisco Display';src:url('../fonts/SanFranciscoDisplay-Light.woff2') format('woff2'),
-url('../fonts/SanFranciscoDisplay-Light.woff') format('woff');font-weight:200;font-style:normal;}
-@font-face{font-family:'San Francisco Display';src:url('../fonts/SanFranciscoDisplay-Medium.woff2') format('woff2'),
-url('../fonts/SanFranciscoDisplay-Medium.woff') format('woff');font-weight:500;font-style:normal;}
-@font-face{font-family:'San Francisco Display';src:url('../fonts/SanFranciscoDisplay-Regular.woff2') format('woff2'),
-url('../fonts/SanFranciscoDisplay-Regular.woff') format('woff');font-weight:300;font-style:normal;}
-@font-face{font-family:'San Francisco Display';src:url('../fonts/SanFranciscoDisplay-Bold.woff2') format('woff2'),
-url('../fonts/SanFranciscoDisplay-Bold.woff') format('woff');font-weight:bold;font-style:normal;}
-
+@font-face {
+  font-family: "San Francisco Display";
+  src: url("../fonts/SanFranciscoDisplay-Semibold.woff2") format("woff2"),
+    url("../fonts/SanFranciscoDisplay-Semibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "San Francisco Display";
+  src: url("../fonts/SanFranciscoDisplay-Light.woff2") format("woff2"),
+    url("../fonts/SanFranciscoDisplay-Light.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "San Francisco Display";
+  src: url("../fonts/SanFranciscoDisplay-Medium.woff2") format("woff2"),
+    url("../fonts/SanFranciscoDisplay-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "San Francisco Display";
+  src: url("../fonts/SanFranciscoDisplay-Regular.woff2") format("woff2"),
+    url("../fonts/SanFranciscoDisplay-Regular.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "San Francisco Display";
+  src: url("../fonts/SanFranciscoDisplay-Bold.woff2") format("woff2"),
+    url("../fonts/SanFranciscoDisplay-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
 
 @font-face {
-  font-family: 'foxtail-icon';
-  src: url('../fonts/fontello.eot?27061464');
-  src: url('../fonts/fontello.eot?27061464#iefix') format('embedded-opentype'),
-       url('../fonts/fontello.woff2?27061464') format('woff2'),
-       url('../fonts/fontello.woff?27061464') format('woff'),
-       url('../fonts/fontello.ttf?27061464') format('truetype'),
-       url('../fonts/fontello.svg?27061464#fontello') format('svg');
+  font-family: "foxtail-icon";
+  src: url("../fonts/fontello.eot?27061464");
+  src: url("../fonts/fontello.eot?27061464#iefix") format("embedded-opentype"),
+    url("../fonts/fontello.woff2?27061464") format("woff2"),
+    url("../fonts/fontello.woff?27061464") format("woff"),
+    url("../fonts/fontello.ttf?27061464") format("truetype"),
+    url("../fonts/fontello.svg?27061464#fontello") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="icon-"]:before, [class*=" icon-"]:before { font-family: "foxtail-icon"; font-style: normal; font-weight: normal; speak: none; display: inline-block; text-decoration: inherit; text-align: center; font-variant: normal;text-transform: none;
-  line-height: 1em;  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
- 
- 
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "foxtail-icon";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-.icon-female:before { content: '\e800'; } /* '' */
-.icon-male:before { content: '\e801'; } /* '' */
-.icon-add:before { content: '\e802'; } /* '' */
-.icon-check:before { content: '\e803'; } /* '' */
-.icon-close:before { content: '\e804'; } /* '' */
-.icon-danger:before { content: '\e805'; } /* '' */
-.icon-heart:before { content: '\e806'; } /* '' */
-.icon-magnifier:before { content: '\e807'; } /* '' */
-.icon-report:before { content: '\e808'; } /* '' */
-.icon-share:before { content: '\e809'; } /* '' */
-.icon-trash:before { content: '\e80a'; } /* '' */
-.icon-upload:before { content: '\e80b'; } /* '' */
-.icon-email:before { content: '\e80c'; } /* '' */
-.icon-group:before { content: '\e80e'; } /* '' */
-.icon-members:before { content: '\e80d'; } /* '' */
-.icon-notification:before { content: '\e80f'; } /* '' */
-.icon-gender:before { content: '\e810'; } /* '' */
-.icon-interested:before { content: '\e813'; } /* '' */
-.icon-password:before { content: '\e814'; } /* '' */
-.icon-user:before { content: '\e815'; } /* '' */
-.icon-facebook:before { content: '\e816'; } /* '' */
-.icon-whatsapp:before { content: '\e817'; } /* '' */
-.icon-instagram:before { content: '\e818'; } /* '' */
-.icon-attachment:before { content: '\e81d'; } /* '' */
-.icon-twitter:before { content: '\e819'; } /* '' */
-.icon-down-open:before { content: '\f004'; } /* '' */
-.icon-up-open:before { content: '\f005'; } /* '' */
-.icon-right-open:before { content: '\f006'; } /* '' */
-.icon-left-open:before { content: '\f007'; } /* '' */
-.icon-more:before { content: '\e81e'; } /* '' */
-.icon-location:before { content: '\f031'; } /* '' */
-.icon-calendar:before { content: '\f4c5'; } /* '' */
+.icon-female:before {
+  content: "\e800";
+} /* '' */
+.icon-male:before {
+  content: "\e801";
+} /* '' */
+.icon-add:before {
+  content: "\e802";
+} /* '' */
+.icon-check:before {
+  content: "\e803";
+} /* '' */
+.icon-close:before {
+  content: "\e804";
+} /* '' */
+.icon-danger:before {
+  content: "\e805";
+} /* '' */
+.icon-heart:before {
+  content: "\e806";
+} /* '' */
+.icon-magnifier:before {
+  content: "\e807";
+} /* '' */
+.icon-report:before {
+  content: "\e808";
+} /* '' */
+.icon-share:before {
+  content: "\e809";
+} /* '' */
+.icon-trash:before {
+  content: "\e80a";
+} /* '' */
+.icon-upload:before {
+  content: "\e80b";
+} /* '' */
+.icon-email:before {
+  content: "\e80c";
+} /* '' */
+.icon-group:before {
+  content: "\e80e";
+} /* '' */
+.icon-members:before {
+  content: "\e80d";
+} /* '' */
+.icon-notification:before {
+  content: "\e80f";
+} /* '' */
+.icon-gender:before {
+  content: "\e810";
+} /* '' */
+.icon-interested:before {
+  content: "\e813";
+} /* '' */
+.icon-password:before {
+  content: "\e814";
+} /* '' */
+.icon-user:before {
+  content: "\e815";
+} /* '' */
+.icon-facebook:before {
+  content: "\e816";
+} /* '' */
+.icon-whatsapp:before {
+  content: "\e817";
+} /* '' */
+.icon-instagram:before {
+  content: "\e818";
+} /* '' */
+.icon-attachment:before {
+  content: "\e81d";
+} /* '' */
+.icon-twitter:before {
+  content: "\e819";
+} /* '' */
+.icon-down-open:before {
+  content: "\f004";
+} /* '' */
+.icon-up-open:before {
+  content: "\f005";
+} /* '' */
+.icon-right-open:before {
+  content: "\f006";
+} /* '' */
+.icon-left-open:before {
+  content: "\f007";
+} /* '' */
+.icon-more:before {
+  content: "\e81e";
+} /* '' */
+.icon-location:before {
+  content: "\f031";
+} /* '' */
+.icon-calendar:before {
+  content: "\f4c5";
+} /* '' */
+.icon-spin3:before {
+  content: "\e832";
+} /* '' */

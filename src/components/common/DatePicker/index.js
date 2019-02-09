@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import DatePicker, { registerLocale } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import fi from "date-fns/locale/fi";
-import "./DatePicker.css";
-registerLocale("fi", fi);
+import React, { Component } from 'react';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import fi from 'date-fns/locale/fi';
+import './DatePicker.css';
+registerLocale('fi', fi);
 
 export default class CustomDatePicker extends Component {
   constructor(props) {
@@ -23,15 +23,15 @@ export default class CustomDatePicker extends Component {
   };
 
   render() {
-    const { t, type } = this.props;
+    const { t, type, placeholder, p } = this.props;
     const { selectedDate } = this.state;
-    if (type === "birthday") {
+    if (type === 'birthday') {
       let date = new Date();
       date.setFullYear(date.getFullYear() - 18);
       return (
         <div className="input calender calender-input-sm">
           <DatePicker
-            placeholderText={t("Birthday")}
+            placeholderText={t('Birthday')}
             selected={selectedDate}
             onChange={this.handleChange}
             peekNextMonth
@@ -43,13 +43,13 @@ export default class CustomDatePicker extends Component {
           />
         </div>
       );
-    } else if (type === "datetime") {
+    } else if (type === 'datetime') {
       let date = new Date();
       date.setFullYear(date.getFullYear() - 18);
       return (
         <div className="input calender">
           <DatePicker
-            placeholderText={t("startdate")}
+            placeholderText={placeholder}
             selected={selectedDate}
             onChange={this.handleChange}
             peekNextMonth
@@ -62,6 +62,7 @@ export default class CustomDatePicker extends Component {
             timeFormat="HH:mm"
             dateFormat="MMMM d, yyyy h:mm aa"
             timeCaption="time"
+            {...p}
           />
         </div>
       );

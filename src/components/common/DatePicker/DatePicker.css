@@ -1,5 +1,5 @@
-.input.calender::before {
-  content: "\f4c5" !important;
+.form-content .input.calender::before {
+  content: '\f4c5' !important;
   font-size: 20px !important;
   top: 12px !important;
   z-index: 999 !important;
@@ -55,7 +55,7 @@
   border-bottom: 1px solid #cb0032 !important;
 }
 
-.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle {
+.react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle {
   border-bottom-color: #fff !important;
 }
 
@@ -71,7 +71,7 @@
   display: none !important;
 }
 
-.calender-input-sm .react-datepicker-popper[data-placement^="top"] {
+.calender-input-sm .react-datepicker-popper[data-placement^='top'] {
   margin-bottom: 55px !important;
 }
 

@@ -1,152 +1,188 @@
-import React from "react";
-import { withFormik, Field } from "formik";
-import * as Yup from "yup";
-import DatePicker from "../common/DatePicker";
-import Dropdown from "../common/Dropdown";
-import SignupButton from "./SignupButton";
+import React, { Component } from 'react';
+import * as yup from 'yup';
+import DatePicker from '../common/DatePicker';
+import Dropdown from '../common/Dropdown';
+import SignupButton from './SignupButton';
+import isEmpty from '../../utils/isEmpty.js';
 
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
-const formikEnhancer = withFormik({
-  validationSchema: Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required!"),
-    username: Yup.string().required("Username is required!"),
-    dob: Yup.date()
-      .max(date)
-      .required("Birthdate is required!"),
-    interestedIn: Yup.array().required("Interest is required!"),
-    gender: Yup.string().required("Gender is required!")
-  }),
-
-  mapPropsToValues: ({ fields }) => ({
-    ...fields
-  }),
-
-  handleSubmit: (payload, { props }) => {
-    props.setFormValues(payload);
-  },
-  displayName: "MyForm"
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Invalid email address')
+    .required('Email is required!'),
+  username: yup.string().required('Username is required!'),
+  dob: yup
+    .date()
+    .nullable()
+    .default(null)
+    .max(date, 'You must be at least 18 years old!')
+    .required('Birthdate is required!'),
+  interestedIn: yup.array().required('Interest is required!'),
+  gender: yup.string().required('Gender is required!')
 });
 
-const InputFeedback = ({ error }) =>
-  error ? <div className="input-feedback">{error}</div> : null;
+class SignupForm extends Component {
+  state = {
+    username: '',
+    email: '',
+    dob: null,
+    gender: '',
+    interestedIn: [],
+    isCouple: false,
+    isValid: false,
+    errors: {}
+  };
+  componentDidMount() {
+    this.props.setBreadcrumb('Signup Form loaded');
+  }
+  setValue = ({ name, value }) => {
+    this.setState({ [name]: value }, () => {
+      if (!isEmpty(this.state.errors)) {
+        this.validateForm();
+      }
+    });
+  };
 
-const MyForm = props => {
-  const {
-    values,
-    errors,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    disabled,
-    fbResolve,
-    createUser,
-    handleFBReturn,
-    t
-  } = props;
-  const lang = localStorage.getItem("i18nextLng");
+  validateForm = async () => {
+    try {
+      await schema.validate(this.state, { abortEarly: false });
+      this.setState({ isValid: true, errors: {} });
+    } catch (e) {
+      let errors = {};
+      e.inner.forEach(err => (errors[err.path] = err.message));
+      this.setState({ isValid: false, errors });
+    }
+  };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-content">
-        <div className="input username">
-          <Field name="username" placeholder={t("userLbl")} type="text" />
-        </div>
-        <div className="input email">
-          <Field name="email" placeholder={t("emailLbl")} type="email" />
-        </div>
-        <DatePicker
-          name={"dob"}
-          value={values["dob"]}
-          onChange={el => {
-            handleChange({
-              target: {
-                value: el,
-                type: "text",
-                id: "dob",
-                name: "dob"
-              }
-            });
-          }}
-          onBlur={handleBlur}
-          t={t}
-          type="birthday"
-        />
-        <Dropdown
-          value={values["gender"]}
-          type={"gender"}
-          onChange={el =>
-            handleChange({
-              target: {
-                value: el.value,
-                type: "text",
-                id: "gender",
-                name: "gender"
-              }
-            })
-          }
-          placeholder={t("common:Gender") + ":"}
-          lang={lang}
-        />
+  InputFeedback = error =>
+    error ? (
+      <div className="input-feedback" style={{ color: 'red' }}>
+        {error}
+      </div>
+    ) : null;
 
-        <Dropdown
-          value={values["interestedIn"]}
-          type={"interestedIn"}
-          onChange={el =>
-            handleChange({
-              target: {
-                value: el.map(e => e.value),
-                type: "text",
-                id: "interestedIn",
-                name: "interestedIn"
-              }
-            })
-          }
-          placeholder={t("common:Interested") + ":"}
-          lang={lang}
-        />
-        <div className="couple-choose">
-          <div className="select-checkbox">
+  render() {
+    const { fbResolve, createUser, handleFBReturn, t } = this.props;
+    const {
+      username,
+      email,
+      dob,
+      gender,
+      interestedIn,
+      isCouple,
+      isValid,
+      errors
+    } = this.state;
+    const lang = localStorage.getItem('i18nextLng');
+
+    return (
+      <form>
+        <div className="form-content">
+          <div className="input username">
             <input
-              type="checkbox"
-              id="cbox"
-              checked={values["isCouple"]}
-              onChange={el => {
-                handleChange({
-                  target: {
-                    checked: el.target.checked,
-                    type: "checkbox",
-                    id: "isCouple",
-                    name: "isCouple"
-                  }
+              placeholder={t('userLbl')}
+              type="text"
+              onChange={e => {
+                this.setValue({
+                  name: 'username',
+                  value: e.target.value
                 });
               }}
+              value={username}
             />
-            <label htmlFor="cbox">
-              <span />
-              <b>{t("coupleBox")}</b>
-            </label>
+            {this.InputFeedback(errors.username)}
+          </div>
+          <div className="input email">
+            <input
+              placeholder={t('emailLbl')}
+              type="email"
+              onChange={e => {
+                this.setValue({
+                  name: 'email',
+                  value: e.target.value
+                });
+              }}
+              value={email}
+            />
+            {this.InputFeedback(errors.email)}
+          </div>
+          <DatePicker
+            value={dob}
+            onChange={e => {
+              this.setValue({
+                name: 'dob',
+                value: e
+              });
+            }}
+            t={t}
+            type="birthday"
+          />
+          {this.InputFeedback(errors.dob)}
+          <Dropdown
+            value={gender}
+            type={'gender'}
+            onChange={e => {
+              this.setValue({
+                name: 'gender',
+                value: e.value
+              });
+            }}
+            placeholder={t('common:Gender') + ':'}
+            lang={lang}
+          />
+          {this.InputFeedback(errors.gender)}
+
+          <Dropdown
+            value={interestedIn}
+            type={'interestedIn'}
+            onChange={el => {
+              this.setValue({
+                name: 'interestedIn',
+                value: el.map(e => e.value)
+              });
+            }}
+            placeholder={t('common:Interested') + ':'}
+            lang={lang}
+          />
+          {this.InputFeedback(errors.interestedIn)}
+          <div className="couple-choose">
+            <div className="select-checkbox">
+              <input
+                type="checkbox"
+                id="cbox"
+                checked={isCouple}
+                onChange={el => {
+                  this.setValue({
+                    name: 'isCouple',
+                    value: el.target.checked
+                  });
+                }}
+              />
+              <label htmlFor="cbox">
+                <span />
+                <b>{t('coupleBox')}</b>
+              </label>
+            </div>
+          </div>
+          <SignupButton
+            disabled={!isValid}
+            fbResolve={fbResolve}
+            createUser={createUser}
+            handleFBReturn={handleFBReturn}
+            setValue={this.setValue}
+            validateForm={this.validateForm}
+            t={t}
+          />
+          <div className="terms">
+            {t('signupMsg')}
+            <span>{t('tnp')}</span>
           </div>
         </div>
-
-        <SignupButton
-          disabled={disabled}
-          fbResolve={fbResolve}
-          createUser={createUser}
-          handleFBReturn={handleFBReturn}
-          t={t}
-        />
-        <div className="terms">
-          {t("signupMsg")}
-          <span>{t("tnp")}</span>
-        </div>
-      </div>
-    </form>
-  );
-};
-
-const SignupForm = formikEnhancer(MyForm);
+      </form>
+    );
+  }
+}
 
 export default SignupForm;

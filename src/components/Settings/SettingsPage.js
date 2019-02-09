@@ -45,9 +45,9 @@ class SettingsPage extends Component {
     desires: [],
     showDesiresPopup: false,
     showPhotoVerPopup: false,
-    showBlackPopup: false,
+    showBlackPopup: this.props.showBlkModal || false,
     showImgEditorPopup: false,
-    showCouplePopup: false,
+    showCouplePopup: this.props.showCplModal || false,
     photoSubmitType: '',
     includeMsgs: false,
     fileRecieved: null,
@@ -62,6 +62,9 @@ class SettingsPage extends Component {
     privatePhotoList: undefined
   };
 
+  componentDidMount() {
+    this.props.history.replace({ state: {} });
+  }
   handlePhotoListChange = ({
     file,
     key,

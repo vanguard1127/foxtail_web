@@ -1,20 +1,38 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import Logout from "./LogoutLink";
+import React from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import Logout from './LogoutLink';
 
-const MyAccountMenu = ({ t }) => {
+const MyAccountMenu = ({ t, history }) => {
   return (
     <div className="toggle">
       <div className="dropdown hidden-mobile open">
         <ul>
           <li>
-            <NavLink to="/settings">{t("common:myaccount")}</NavLink>
+            <NavLink to="/settings">{t('common:myaccount')}</NavLink>
           </li>
           <li>
-            <NavLink to="/settings">{t("common:addcoup")}</NavLink>
+            <span
+              onClick={() =>
+                history.push({
+                  pathname: '/settings',
+                  state: { showCplMdl: true }
+                })
+              }
+            >
+              {t('common:addcoup')}
+            </span>
           </li>
           <li className="border">
-            <NavLink to="/settings">{t("common:becomeblk")}</NavLink>
+            <span
+              onClick={() =>
+                history.push({
+                  pathname: '/settings',
+                  state: { showBlkMdl: true }
+                })
+              }
+            >
+              {t('common:becomeblk')}
+            </span>
           </li>
           <li>
             <Logout t={t} />
@@ -25,4 +43,4 @@ const MyAccountMenu = ({ t }) => {
   );
 };
 
-export default MyAccountMenu;
+export default withRouter(MyAccountMenu);

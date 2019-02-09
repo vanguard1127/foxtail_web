@@ -209,6 +209,7 @@ class SearchEvents extends Component {
                     !data.searchEvents ||
                     data.searchEvents.length === 0
                   ) {
+                    //TODO: Add label to empty. for when My events and no events
                     return <EmptyScreen message={t('noeventavailable')} />;
                   }
 

@@ -19,6 +19,7 @@ class Signup extends React.Component {
   state = { ...initialState };
 
   componentDidMount() {
+    this.props.setBreadcrumb('Signup loaded');
     if (localStorage.getItem('token') !== null) {
       //TODO: Check somehow if user active...Possibly use session.
 
@@ -177,7 +178,7 @@ class Signup extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, setBreadcrumb } = this.props;
     let {
       csrf,
       code,
@@ -207,7 +208,7 @@ class Signup extends React.Component {
                 lang: localStorage.getItem('i18nextLng')
               }}
             >
-              {(createUser, { loading }) => {
+              {createUser => {
                 return (
                   <div className="register-form">
                     <div className="head">
@@ -222,11 +223,11 @@ class Signup extends React.Component {
                         gender: '',
                         isCouple: false
                       }}
-                      disabled={loading}
                       fbResolve={fbResolve}
                       createUser={createUser}
                       handleFBReturn={this.handleFBReturn}
                       setFormValues={this.setFormValues}
+                      setBreadcrumb={setBreadcrumb}
                       t={t}
                     />
                     <div className="form terms">

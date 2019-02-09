@@ -309,6 +309,7 @@ export const TOGGLE_ONLINE = gql`
 export const CREATE_EVENT = gql`
   mutation(
     $eventname: String!
+    $tagline: String
     $desires: [String]
     $interestedIn: [String]
     $description: String!
@@ -322,18 +323,21 @@ export const CREATE_EVENT = gql`
   ) {
     createEvent(
       eventname: $eventname
+      tagline: $tagline
       desires: $desires
       interestedIn: $interestedIn
       description: $description
       lat: $lat
       long: $long
-      time: $time
+      startTime: $startTime
+      endTime: $endTime
       eventID: $eventID
       address: $address
       type: $type
     ) {
       id
       eventname
+      tagline
       type
       participants {
         profileName
@@ -518,7 +522,6 @@ export const GET_EVENT = gql`
       description
       desires
       interestedIn
-      photo
       ownerProfile {
         profilePic
         profileName
