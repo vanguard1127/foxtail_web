@@ -175,7 +175,7 @@ export const DELETE_PHOTO = gql`
 `;
 
 export const SEND_MESSAGE = gql`
-  mutation($chatID: ID!, $text: String!, $invitedProfile: ID) {
+  mutation($chatID: ID, $text: String!, $invitedProfile: ID) {
     sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile)
   }
 `;
@@ -694,34 +694,11 @@ export const GET_COUNTS = gql`
   }
 `;
 
-// export const GET_CHAT = gql`
-//   query($chatID: ID) {
-//     chat(id: $chatID) {
-//       id
-//       updatedAt
-//       messages {
-//         id
-//         text
-//         fromUser {
-//           username
-//           id
-//         }
-//         profilePic
-//         createdAt
-//       }
-//       participants {
-//         id
-//         profilePic
-//         profileName
-//         updatedAt
-//         users {
-//           username
-//           id
-//         }
-//       }
-//     }
-//   }
-// `;
+export const CONFIRM_EMAIL = gql`
+  query($token: String!) {
+    confirmEmail(token: $token)
+  }
+`;
 
 export const GET_CURRENT_USER = gql`
   query {
@@ -805,28 +782,6 @@ export const GENERATE_CODE = gql`
     generateCode
   }
 `;
-
-// export const GET_MY_PROFILE = gql`
-//   query {
-//     getMyProfile {
-//       users {
-//         username
-//         verifications {
-//           photo
-//           std
-//         }
-//       }
-//       photos {
-//         url
-//         private
-//         id
-//       }
-
-//       about
-//       desires
-//     }
-//   }
-// `;
 
 export const GET_PROFILE = gql`
   query($id: ID!) {

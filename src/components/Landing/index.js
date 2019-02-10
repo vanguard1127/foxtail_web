@@ -19,6 +19,8 @@ const Landing = ({ t, props }) => {
           position: toast.POSITION.TOP_CENTER,
           toastId: 'emailVer'
         });
+
+        props.history.replace({ state: {} });
       }
     } else if (props.location.state.emailVer === false) {
       if (!toast.isActive('errVer')) {
@@ -26,9 +28,10 @@ const Landing = ({ t, props }) => {
           position: toast.POSITION.TOP_CENTER,
           toastId: 'errVer'
         });
+
+        props.history.replace({ state: {} });
       }
     }
-    props.history.replace({ state: {} });
   }
   return (
     <div>

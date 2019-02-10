@@ -1,21 +1,35 @@
-import axios from 'axios';
+import React from 'react';
+import Spinner from '../common/Spinner';
+import { Redirect } from 'react-router-dom';
+import { Query } from 'react-apollo';
+import { CONFIRM_EMAIL } from '../../queries';
 const EmailConfirm = props => {
-  axios
-    .get('http://localhost:4444' + '/confirmation/' + props.match.params.token)
-    .then(() => {
-      props.history.push({
-        pathname: '/',
-        state: { emailVer: true }
-      });
-    })
-    .catch(() => {
-      // handle error
-      props.history.push({
-        pathname: '/',
-        state: { emailVer: false }
-      });
-    });
-  return null;
+  return (
+    <Query
+      query={CONFIRM_EMAIL}
+      variables={{ token: props.match.params.token }}
+    >
+      {({ data, loading, error }) => {
+        if (error) {
+          return (
+            <props.ErrorHandler.report
+              error={error}
+              calledName={'confirmEvent'}
+            />
+          );
+        }
+
+        if (loading) {
+          return <Spinner message={'...'} size="large" />;
+        }
+        if (data.confirmEmail) {
+          return <Redirect to={{ pathname: '/', state: { emailVer: true } }} />;
+        }
+
+        return <Redirect to={{ pathname: '/', state: { emailVer: false } }} />;
+      }}
+    </Query>
+  );
 };
 
 export default EmailConfirm;

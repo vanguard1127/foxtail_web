@@ -271,7 +271,12 @@ const Body = ({ showFooter }) => (
           path="/settings"
           render={() => <Settings ErrorHandler={ErrorHandler} />}
         />
-        <Route path="/confirmation/:token" component={EmailConfirm} />
+        <Route
+          path="/confirmation/:token"
+          render={props => (
+            <EmailConfirm ErrorHandler={ErrorHandler} {...props} />
+          )}
+        />
         <Redirect to="/" />
       </Switch>
     </main>
