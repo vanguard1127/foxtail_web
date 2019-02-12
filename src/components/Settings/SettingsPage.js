@@ -10,6 +10,7 @@ import Photos from './Photos';
 import Menu from './Menu';
 import Preferences from './Preferences';
 import AppSettings from './AppSettings';
+import AcctSettings from './AcctSettings';
 import Verifications from './Verifications';
 import MyProfile from './MyProfile';
 import DesiresModal from '../Modals/Desires/Modal';
@@ -43,6 +44,10 @@ class SettingsPage extends Component {
     ),
     about: null,
     desires: [],
+    username: null,
+    email: null,
+    gender: null,
+    phone: null,
     showDesiresPopup: false,
     showPhotoVerPopup: false,
     showBlackPopup: this.props.showBlkModal || false,
@@ -303,6 +308,9 @@ class SettingsPage extends Component {
       distanceMetric,
       ageRange,
       interestedIn,
+      email,
+      username,
+      gender,
       users,
       publicPhotoList,
       privatePhotoList,
@@ -325,6 +333,7 @@ class SettingsPage extends Component {
       isPrivate,
       profilePic,
       profilePicUrl,
+      phone,
       flashCpl
     } = this.state;
 
@@ -365,6 +374,10 @@ class SettingsPage extends Component {
           desires,
           couplePartner,
           includeMsgs,
+          email,
+          username,
+          gender,
+          phone,
           profilePic
         }}
       >
@@ -496,6 +509,23 @@ class SettingsPage extends Component {
                             <Verifications
                               openPhotoVerPopup={this.openPhotoVerPopup}
                               t={t}
+                            />
+                          </ErrorHandler.ErrorBoundary>
+                          <ErrorHandler.ErrorBoundary>
+                            {' '}
+                            <AcctSettings
+                              setValue={({ name, value }) =>
+                                this.setValue({ name, value, updateSettings })
+                              }
+                              values={{
+                                visible,
+                                lang,
+                                emailNotify,
+                                showOnline,
+                                likedOnly
+                              }}
+                              t={t}
+                              ErrorHandler={ErrorHandler}
                             />
                           </ErrorHandler.ErrorBoundary>
                         </div>

@@ -207,6 +207,10 @@ export const UPDATE_SETTINGS = gql`
     $lang: String
     $interestedIn: [String]
     $location: String
+    $email: String
+    $phone: String
+    $username: String
+    $gender: String
     $lat: Float
     $long: Float
     $visible: Boolean
@@ -231,6 +235,10 @@ export const UPDATE_SETTINGS = gql`
       location: $location
       lat: $lat
       long: $long
+      email: $email
+      phone: $phone
+      username: $username
+      gender: $gender
       visible: $visible
       newMsgNotify: $newMsgNotify
       emailNotify: $emailNotify

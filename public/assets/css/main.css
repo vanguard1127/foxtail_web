@@ -7470,7 +7470,7 @@ img {
 .reset-icon::before {
   content: '\e811';
   font-family: 'foxtail-icon';
-  color: #464648;
+  color: #7B7A7A;
   position: absolute;
   right: 5px;
   top: 12px;
