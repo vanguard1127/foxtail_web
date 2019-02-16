@@ -8,9 +8,9 @@ import {
 } from '../../queries';
 import { Query, Mutation, withApollo } from 'react-apollo';
 import Waypoint from 'react-waypoint';
+import { preventContextMenu } from '../../utils/image';
 import moment from 'moment';
 
-let unsubscribe = null;
 const LIMIT = 5;
 const intialState = {
   read: null,
@@ -20,13 +20,56 @@ const intialState = {
   skip: 0,
   visible: false
 };
+
 class NoticesList extends Component {
   state = {
     ...intialState
   };
 
+  componentDidMount() {
+    this.props.subscribeToNewNotices();
+  }
   clearState = () => {
     this.setState({ ...intialState });
+  };
+
+  handleEnd = ({ previousPosition, fetchMore }) => {
+    console.log('OOPO', previousPosition);
+    //if totoal reach skip and show no more sign
+    const { skip } = this.state;
+    if (previousPosition === Waypoint.below) {
+      this.setState(
+        state => ({ skip: skip + LIMIT }),
+        () => this.fetchData(fetchMore)
+      );
+    }
+  };
+
+  fetchData = fetchMore => {
+    this.setState({ loading: true });
+
+    fetchMore({
+      variables: {
+        skip: this.state.skip,
+        limit: LIMIT
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        console.log(previousResult, fetchMoreResult);
+        if (
+          !fetchMoreResult ||
+          !fetchMoreResult.getNotifications ||
+          fetchMoreResult.getNotifications.notifications.length === 0
+        ) {
+          return previousResult;
+        }
+        previousResult.getNotifications.notifications = [
+          ...fetchMoreResult.getNotifications.notifications,
+          ...previousResult.getNotifications.notifications
+        ];
+
+        return previousResult;
+      }
+    });
   };
 
   readNotices = (notificationIDs, updateNotifications) => {
@@ -42,48 +85,6 @@ class NoticesList extends Component {
           //TODO: send errors to analytics from here
           this.setState({ errors });
         });
-    });
-  };
-
-  updateRead = (cache, data) => {
-    const { notificationIDs } = this.state;
-
-    const {
-      getNotifications,
-      getNotifications: { notifications }
-    } = cache.readQuery({
-      query: GET_NOTIFICATIONS,
-      variables: { limit: LIMIT }
-    });
-
-    const [id] = notificationIDs;
-    var index = notifications.findIndex(notice => notice.id === id);
-    const readNotice = notifications[index];
-    // Replace item at index using native splice
-    notifications.splice(index, 1, { ...readNotice, read: true });
-
-    cache.writeQuery({
-      query: GET_NOTIFICATIONS,
-      variables: { limit: LIMIT },
-      data: {
-        getNotifications: { ...getNotifications, notifications }
-      }
-    });
-  };
-
-  //TODO: Ensure this causes instant update to nums
-  updateSeen = numSeen => {
-    const { client } = this.props;
-    const { getCounts } = client.readQuery({
-      query: GET_COUNTS
-    });
-    getCounts.noticesCount = getCounts.noticesCount - numSeen;
-
-    client.writeQuery({
-      query: GET_COUNTS,
-      data: {
-        getCounts
-      }
     });
   };
 
@@ -110,116 +111,63 @@ class NoticesList extends Component {
     }
   };
 
-  componentWillUnmount() {
-    unsubscribe();
-  }
-  preventContextMenu = e => {
-    e.preventDefault();
-    alert(
-      'Right-click disabled: Saving images on Foxtail will result in your account being banned.'
-    );
-  };
   render() {
-    const { read, seen, notificationIDs, skip } = this.state;
-    const { t } = this.props;
+    const { t, notifications, updateNotifications, fetchMore } = this.props;
+
     return (
-      <Mutation
-        mutation={UPDATE_NOTIFICATIONS}
-        variables={{
-          notificationIDs,
-          read,
-          seen
-        }}
-        update={this.updateRead}
-      >
-        {(updateNotifications, { loading }) => {
-          return (
-            <Query
-              query={GET_NOTIFICATIONS}
-              variables={{ limit: LIMIT, skip }}
-              fetchPolicy="network-only"
-            >
-              {({ data, loading, error, subscribeToMore, fetchMore }) => {
-                if (loading) {
-                  return null;
-                } else if (error) {
-                  return <div>{error.message}</div>;
-                } else if (
-                  !data.getNotifications ||
-                  !data.getNotifications.notifications
-                ) {
-                  return <div>{t('common:error')}!</div>;
-                } else if (!data.getNotifications.notifications.length === 0) {
-                  return <div>{t('nonots')} :)</div>;
-                }
-
-                if (!unsubscribe) {
-                  unsubscribe = subscribeToMore({
-                    document: NEW_NOTICE_SUB,
-                    updateQuery: (prev, { subscriptionData }) => {
-                      const { newNoticeSubscribe } = subscriptionData.data;
-
-                      if (!newNoticeSubscribe) {
-                        return prev;
-                      }
-                      prev.getNotifications.notifications = [
-                        newNoticeSubscribe,
-                        ...prev.getNotifications.notifications
-                      ];
-
-                      return prev;
-                    }
-                  });
-                }
-                const notifications = data.getNotifications.notifications;
-                return (
-                  <div className="toggle">
-                    <div className="notification open">
-                      {notifications.length > 0 ? (
-                        notifications.map(notif => (
-                          <div className="item" key={notif.id}>
-                            <span
-                              onClick={() =>
-                                this.readAndGo({
-                                  notifications: [notif.id],
-                                  targetID: notif.targetID,
-                                  type: notif.type,
-                                  updateNotifications
-                                })
-                              }
-                            >
-                              <span className="avatar">
-                                <img
-                                  src={notif.fromProfile.profilePic}
-                                  alt=""
-                                  onContextMenu={this.preventContextMenu}
-                                />
-                              </span>
-                              <div>
-                                <span className="text">
-                                  <b> {notif.fromProfile.profileName} </b>
-                                  {t(notif.text)}
-                                </span>
-                                <span className="when">
-                                  {moment(notif.date).fromNow()}
-                                </span>
-                              </div>
-                            </span>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="item" key="na">
-                          <span className="text">No notifcations</span>
-                        </div>
-                      )}
-                    </div>
+      <div className="toggle">
+        <div className="notification open">
+          {notifications.length > 0 ? (
+            notifications.map(notif => (
+              <div className="item" key={notif.id}>
+                <span
+                  onClick={() =>
+                    this.readAndGo({
+                      notifications: [notif.id],
+                      targetID: notif.targetID,
+                      type: notif.type,
+                      updateNotifications
+                    })
+                  }
+                >
+                  <span className="avatar">
+                    <img
+                      src={notif.fromProfile.profilePic}
+                      alt=""
+                      onContextMenu={preventContextMenu}
+                    />
+                  </span>
+                  <div>
+                    <span className="text">
+                      <b> {notif.fromProfile.profileName} </b>
+                      {t(notif.text)}
+                    </span>
+                    <span className="when">
+                      {moment(notif.date)
+                        .locale(localStorage.getItem('i18nextLng'))
+                        .fromNow()}
+                    </span>
                   </div>
-                );
+                </span>
+              </div>
+            ))
+          ) : (
+            <div className="item" key="na">
+              <span className="text">No notifcations</span>
+            </div>
+          )}
+
+          <div className="item" key="way">
+            <Waypoint
+              onEnter={({ previousPosition }) => {
+                this.handleEnd({ previousPosition, fetchMore });
               }}
-            </Query>
-          );
-        }}
-      </Mutation>
+              style={{ padding: '5px', backgroundColor: 'blue' }}
+            />
+            <span className="text">No more notifications :)</span>
+          </div>
+        </div>
+      </div>
     );
   }
 }

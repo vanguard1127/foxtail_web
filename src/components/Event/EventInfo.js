@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import AttendEvent from './AttendEvent';
-
 const EventInfo = ({
   event: {
     id,
@@ -28,6 +27,7 @@ const EventInfo = ({
           <span className="head">{t('evedate')}:</span>
           <span className="title">
             {moment(startTime)
+              .locale(localStorage.getItem('i18nextLng'))
               .format('DD MMMM YYYY, dddd')
               .toString()}
           </span>
@@ -38,10 +38,12 @@ const EventInfo = ({
           </span>
           <span className="title">
             {moment(startTime)
+              .locale(localStorage.getItem('i18nextLng'))
               .format('HH:mm')
               .toString()}{' '}
             -{' '}
             {moment(endTime)
+              .locale(localStorage.getItem('i18nextLng'))
               .format('HH:mm')
               .toString()}
           </span>

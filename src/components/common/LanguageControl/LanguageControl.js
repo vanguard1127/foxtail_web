@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import i18n from "../../../i18n";
+import React, { Component } from 'react';
+import i18n from '../../../i18n';
 
 class LanguageControl extends Component {
   constructor(props) {
@@ -9,21 +9,22 @@ class LanguageControl extends Component {
 
   state = {
     menuOpen: false,
-    selectedLang: localStorage.getItem("i18nextLng"),
-    languages: ["en", "de", "tu"]
+    selectedLang: localStorage.getItem('i18nextLng'),
+    languages: ['en', 'de', 'tu']
   };
 
   setLang = lang => {
     i18n.changeLanguage(lang);
+    import('moment/locale/' + lang);
     this.setState({ selectedLang: lang, menuOpen: false });
   };
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener('mousedown', this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   handleClickOutside = event => {
@@ -38,8 +39,8 @@ class LanguageControl extends Component {
 
   render() {
     let convertLang = this.state.selectedLang;
-    if (convertLang === "en-US") {
-      convertLang = "en";
+    if (convertLang === 'en-US') {
+      convertLang = 'en';
     }
 
     return (
@@ -51,7 +52,7 @@ class LanguageControl extends Component {
           <i className={`flag ${convertLang}`} />
         </div>
         <div
-          className={`language-dropdown ${this.state.menuOpen ? "click" : ""}`}
+          className={`language-dropdown ${this.state.menuOpen ? 'click' : ''}`}
         >
           <ul>
             {this.state.languages

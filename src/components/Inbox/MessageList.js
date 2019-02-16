@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
-import Waypoint from "react-waypoint";
-import Message from "./Message.js";
-import moment from "moment";
-import _ from "lodash";
+import React, { Component, Fragment } from 'react';
+import Waypoint from 'react-waypoint';
+import Message from './Message.js';
+import moment from 'moment';
+import _ from 'lodash';
 
 class DateItem extends Component {
   state = {
@@ -13,7 +13,7 @@ class DateItem extends Component {
     // to know everyone's position. So we asume position = above if waypoint did called
     if (!this.state.position) {
       this.setState({
-        position: "above"
+        position: 'above'
       });
       if (this.props.onAbove) this.props.onAbove();
     }
@@ -21,7 +21,7 @@ class DateItem extends Component {
   onEnter = ({ previousPosition, currentPosition }) => {
     if (currentPosition === Waypoint.inside) {
       this.setState({
-        position: "inside"
+        position: 'inside'
       });
       if (this.props.onInside) this.props.onInside();
     }
@@ -29,7 +29,7 @@ class DateItem extends Component {
   onLeave = ({ previousPosition, currentPosition }) => {
     if (currentPosition === Waypoint.above) {
       this.setState({
-        position: "above"
+        position: 'above'
       });
       if (this.props.onAbove) this.props.onAbove();
     }
@@ -38,10 +38,10 @@ class DateItem extends Component {
     return (
       <div
         style={{
-          margin: "0 -20px 0 -20px",
-          background: "#ffffff70",
-          padding: "20px 0",
-          textAlign: "center",
+          margin: '0 -20px 0 -20px',
+          background: '#ffffff70',
+          padding: '20px 0',
+          textAlign: 'center',
           ...style
         }}
       >
@@ -52,14 +52,14 @@ class DateItem extends Component {
   render() {
     const { stickZIndex, showDate, children } = this.props;
     const stickStyles = {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
       right: 0,
       zIndex: stickZIndex || 10,
-      backgroundColor: "#add8e6",
-      padding: "20px 37px 20px 20px",
-      margin: "0 17px 0 0"
+      backgroundColor: '#add8e6',
+      padding: '20px 37px 20px 20px',
+      margin: '0 17px 0 0'
     };
 
     return (
@@ -119,7 +119,7 @@ class MessageList extends Component {
         // So, for the scroll to start at the bottom when user firsts sees it,
         // either this or fetching more items initial mount
         if (!this.state.hasScrolledBottomInitial) {
-          console.log("Initial Scroll Bottom");
+          console.log('Initial Scroll Bottom');
         }
         this.scrollToBot();
       } else if (this.state.restoreScroll) {
@@ -131,7 +131,7 @@ class MessageList extends Component {
     }
   }
   restoreScroll() {
-    console.log("restoring");
+    console.log('restoring');
     this.scrollWrapperRef.current.scrollTop =
       this.state.previousScrollTop +
       (this.scrollWrapperRef.current.scrollHeight -
@@ -145,7 +145,7 @@ class MessageList extends Component {
   }
   scrollToBot() {
     const { hasScrolledBottomInitial } = this.props;
-    console.log("Scrolling to Bottom");
+    console.log('Scrolling to Bottom');
 
     this.scrollWrapperRef.current.scrollTop = this.scrollWrapperRef.current.scrollHeight;
     this.setState({
@@ -173,7 +173,7 @@ class MessageList extends Component {
     const { chatID, limit, messages, fetchMore } = this.props;
     // Doesn't repeat because frist we are setting loading =  true
     // And on updateQuary, when the fetch it done. We set loading = false
-    console.log("Can i fetch?", !this.state.loading && this.state.hasMoreItems);
+    console.log('Can i fetch?', !this.state.loading && this.state.hasMoreItems);
     // Wait for restoreScroll to take place, then do the call.
     // If not,things are going to play over each other.
     if (
@@ -184,7 +184,7 @@ class MessageList extends Component {
       return;
     const cursor =
       messages.length > 0 ? messages[messages.length - 1].createdAt : null;
-    console.log("c", messages, cursor);
+    console.log('c', messages, cursor);
     this.setState({ loading: true });
     fetchMore({
       variables: {
@@ -200,7 +200,7 @@ class MessageList extends Component {
         if (noMessagesLeft) {
           this.setState({ hasMoreItems: false });
         }
-        console.log("more", noMessagesLeft);
+        console.log('more', noMessagesLeft);
         if (previousResult.getMessages) {
           previousResult.getMessages.messages = [
             ...previousResult.getMessages.messages,
@@ -209,7 +209,7 @@ class MessageList extends Component {
         } else {
           previousResult.getMessages = fetchMoreResult.getMessages;
         }
-        console.log("Fetch done");
+        console.log('Fetch done');
 
         this.setState({
           loading: false,
@@ -259,16 +259,16 @@ class MessageList extends Component {
   render() {
     const { loading } = this.state;
     const { messages, hasMoreItems, children, currentUserID, t } = this.props;
-    let topMessage = "";
+    let topMessage = '';
     if (loading) {
-      topMessage = t("common:Loading") + "...";
+      topMessage = t('common:Loading') + '...';
     }
     // else if (!hasMoreItems) {
     //   topMessage = "Looks like there is nothing else to see here";
     // }
     const lastAboveDateWaypointIndex = this.state.dateWaypoints.reduce(
       (res, cur, i) => {
-        if (cur === "above") return i;
+        if (cur === 'above') return i;
         return res;
       },
       0
@@ -278,7 +278,8 @@ class MessageList extends Component {
       _.chain(messages)
         .groupBy(datum =>
           moment(datum.createdAt)
-            .format("dddd, MMMM Do YYYY")
+            .locale(localStorage.getItem('i18nextLng'))
+            .format('dddd, MMMM Do YYYY')
             .toLocaleUpperCase()
         )
         .map((messages, date) => ({ date, messages })) //using ES6 shorthand to generate the objects
@@ -306,10 +307,10 @@ class MessageList extends Component {
             <DateItem
               stickZIndex={index + 10}
               onAbove={() => {
-                this.onDateWaypointPostion(index, "above");
+                this.onDateWaypointPostion(index, 'above');
               }}
               onInside={() => {
-                this.onDateWaypointPostion(index, "inside");
+                this.onDateWaypointPostion(index, 'inside');
               }}
               // showDate={lastAboveDateWaypointIndex === index}
               // Keys won't collied because DateItems's dates are days appart from each other
@@ -328,12 +329,12 @@ class MessageList extends Component {
         {/** Parent for abs position elements because scroll does weird things for abs items */}
         <div
           style={{
-            position: "relative",
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "wrap",
-            height: "100%",
-            overflow: "hidden"
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'wrap',
+            height: '100%',
+            overflow: 'hidden'
           }}
         >
           {messageElements}

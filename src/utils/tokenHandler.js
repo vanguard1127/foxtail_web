@@ -1,12 +1,11 @@
 const refreshToken = ({ operation, forward, HTTPSurl }) => {
-  const refreshToken = localStorage.getItem("refreshToken");
+  const refreshToken = localStorage.getItem('refreshToken');
   if (!refreshToken) {
     return;
   }
-  const axios = require("axios");
-  console.log("TOKEN REFREHS");
+  const axios = require('axios');
   axios
-    .post(HTTPSurl + "/refresh", {
+    .post(HTTPSurl + '/refresh', {
       refreshToken
     })
     .then(function(response) {
@@ -16,27 +15,27 @@ const refreshToken = ({ operation, forward, HTTPSurl }) => {
         newTokens.token !== undefined &&
         newTokens.refresh !== undefined
       ) {
-        localStorage.setItem("token", newTokens.token);
-        localStorage.setItem("refreshToken", newTokens.refresh);
+        localStorage.setItem('token', newTokens.token);
+        localStorage.setItem('refreshToken', newTokens.refresh);
         operation.setContext(context => ({
           ...context,
           headers: {
             ...context.headers,
             authorization: `Bearer ${newTokens.token}`,
-            "x-refresh-token": newTokens.refresh
+            'x-refresh-token': newTokens.refresh
           }
         }));
       } else {
-        localStorage.removeItem("token");
+        localStorage.removeItem('token');
 
-        localStorage.removeItem("refreshToken");
+        localStorage.removeItem('refreshToken');
       }
 
       return forward(operation);
     })
     .catch(function(error) {
       // handle error
-      console.log("Token Refresh Error:", error);
+      console.log('Token Refresh Error:', error);
     });
 };
 export default refreshToken;

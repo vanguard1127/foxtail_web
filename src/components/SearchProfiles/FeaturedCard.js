@@ -3,15 +3,7 @@ import ProfileInfoDiv from './ProfileInfoDiv';
 import ProfilePic from './ProfilePic';
 import ProfileActionBtns from './ProfileActionBtns';
 
-const FeaturedCard = ({
-  profile,
-  showMsgModal,
-  showBlockModal,
-  showShareModal,
-  likeProfile,
-  history,
-  t
-}) => {
+const FeaturedCard = ({ profile, showMsgModal, likeProfile, history, t }) => {
   const stdCheck = profile.users.every(user => user.verifications.std === true);
   const photoCheck = profile.users.every(
     user => user.verifications.photo === true

@@ -88,14 +88,17 @@ class ProfilesContainer extends Component {
   };
 
   render() {
+    const { ErrorHandler, t, history, loading } = this.props;
     const {
-      ErrorHandler,
-      t,
-      history,
-      loading,
-      searchCriteria: { long, lat, distance, ageRange, interestedIn }
-    } = this.props;
-    const { profile, msgModalVisible, skip } = this.state;
+      profile,
+      msgModalVisible,
+      skip,
+      long,
+      lat,
+      distance,
+      ageRange,
+      interestedIn
+    } = this.state;
     if (loading) {
       return <Spinner page="searchProfiles" title={t('allmems')} />;
     }

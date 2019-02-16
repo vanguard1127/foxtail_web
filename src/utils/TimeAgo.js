@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 
 //TODO: is this the best way to get most recent user
 function TimeAgo(updatedAt) {
@@ -7,11 +7,13 @@ function TimeAgo(updatedAt) {
 
   if (minutes < 10080) {
     return moment(updatedAt)
+      .locale(localStorage.getItem('i18nextLng'))
       .fromNow()
       .toString();
   } else {
     return moment(updatedAt)
-      .format("MMM Do")
+      .locale(localStorage.getItem('i18nextLng'))
+      .format('MMM Do')
       .toString();
   }
 }

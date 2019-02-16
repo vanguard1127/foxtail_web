@@ -150,7 +150,9 @@ class SearchEvents extends Component {
     if (session.currentuser.tours.indexOf('se') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Search Events');
       return (
-        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        <div>
+          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        </div>
       );
     }
     //TODO: Do we still need this

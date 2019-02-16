@@ -38,6 +38,7 @@ import { withClientState } from 'apollo-link-state';
 Sentry.init({
   dsn: 'https://e26c22fc85dc4315bddcad2103c61cee@sentry.io/1380381'
 });
+
 //FOR LOCAL
 let server = 'localhost:4444';
 let httpurl = `http://${server}/graphql`;
@@ -88,20 +89,16 @@ const afterwareLink = new ApolloLink((operation, forward) => {
       const refreshToken = headers.get('x-refresh-token');
       const lang = headers.get('lang');
 
-      if (lang && lang !== undefined) {
+      if (lang) {
         localStorage.setItem('i18nextLng', lang);
       }
 
-      if (token && token !== undefined) {
+      if (token) {
         localStorage.setItem('token', token.replace('Bearer', '').trim());
-      } else {
-        localStorage.removeItem('token');
       }
 
-      if (refreshToken && token !== refreshToken) {
+      if (refreshToken) {
         localStorage.setItem('refreshToken', refreshToken);
-      } else {
-        localStorage.removeItem('refreshToken');
       }
     }
 
@@ -138,8 +135,6 @@ const errorLink = onError(
             });
           }
         } else if (~message.indexOf('authenticated')) {
-          //TODO: Does this work?
-          console.log('TOEKN');
           tokenHandler({ operation, forward, HTTPSurl });
         } else {
           console.log('ERROR::::', message);

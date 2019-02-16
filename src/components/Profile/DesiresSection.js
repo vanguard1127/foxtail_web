@@ -1,9 +1,9 @@
-import React from "react";
-import { desireOptions } from "../../docs/data";
+import React from 'react';
+import { desireOptions } from '../../docs/options';
 const DesiresSection = ({ desires, t }) => {
   return (
     <div className="desires">
-      <div className="profile-head">{t("Desires")}</div>
+      <div className="profile-head">{t('Desires')}</div>
       <ul>
         {desires.reduce(function(result, desire) {
           if (desireOptions.find(el => el.value === desire)) {

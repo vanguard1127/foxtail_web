@@ -652,6 +652,17 @@ export const GET_NOTIFICATIONS = gql`
           profileName
         }
       }
+      alert {
+        id
+        seen
+        read
+        type
+        text
+        targetID
+        date
+        title
+        body
+      }
       total
     }
   }

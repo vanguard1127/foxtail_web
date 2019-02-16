@@ -16,6 +16,7 @@ import PhotoSlider from './PhotoSlider';
 import BlockModal from '../Modals/Block';
 import ShareModal from '../Modals/Share';
 import DirectMsgModal from '../Modals/DirectMsg';
+import { flagOptions } from '../../docs/options';
 
 class ProfilePage extends Component {
   state = {
@@ -85,7 +86,9 @@ class ProfilePage extends Component {
     if (session.currentuser.tours.indexOf('p') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Profile');
       return (
-        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        <div>
+          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        </div>
       );
     }
     return (
@@ -202,7 +205,7 @@ class ProfilePage extends Component {
                         profile={profile}
                         close={() => this.setBlockModalVisible(false)}
                         goToMain={() => this.props.history.push('/members')}
-                        type={'Profile'}
+                        type={flagOptions.Profile}
                         ErrorBoundary={ErrorHandler.ErrorBoundary}
                       />
                     )}

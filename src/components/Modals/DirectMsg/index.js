@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import { withNamespaces } from "react-i18next";
-import { SEND_MESSAGE } from "queries";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import { withNamespaces } from 'react-i18next';
+import { SEND_MESSAGE } from 'queries';
+import { toast } from 'react-toastify';
 
 class DirectMsg extends Component {
-  state = { text: "" };
+  state = { text: '' };
 
   handleTextChange = event => {
     this.setState({ text: event.target.value });
@@ -14,13 +15,11 @@ class DirectMsg extends Component {
     sendMessage()
       .then(async ({ data }) => {
         if (data.sendMessage) {
-          console.log("sent");
-          // message.success("Message Sent");
-          this.setState({ text: "" });
+          toast.success('Message Sent');
+          this.setState({ text: '' });
           this.props.close();
         } else {
-          console.log("Message not sent.");
-          //  message.error("Message not sent.");
+          toast.error('Message not sent.');
         }
       })
       .catch(res => {
@@ -48,24 +47,24 @@ class DirectMsg extends Component {
                     <div className="m-head">
                       <span className="heading">
                         {profile
-                          ? t("common:sendmsg") +
-                            " " +
+                          ? t('common:sendmsg') +
+                            ' ' +
                             profile.users.map((user, index) => {
                               if (index === 0) return user.username;
-                              else return +" & " + user.username;
+                              else return +' & ' + user.username;
                             }) +
-                            "?"
-                          : t("common:sendmsg")}
+                            '?'
+                          : t('common:sendmsg')}
                       </span>
                       <span className="close" onClick={close} />
                     </div>
                     <div className="m-body">
                       <input
-                        placeholder={t("writemsg") + "..."}
+                        placeholder={t('writemsg') + '...'}
                         value={text}
                         onChange={this.handleTextChange}
                       />
-                      {text !== "" ? (
+                      {text !== '' ? (
                         <Mutation
                           mutation={SEND_MESSAGE}
                           variables={{
@@ -78,7 +77,7 @@ class DirectMsg extends Component {
                               <button
                                 onClick={() => this.handleSubmit(sendMessage)}
                               >
-                                {t("common:Send")}
+                                {t('common:Send')}
                               </button>
                             );
                           }}
@@ -95,4 +94,4 @@ class DirectMsg extends Component {
     );
   }
 }
-export default withNamespaces("modals")(DirectMsg);
+export default withNamespaces('modals')(DirectMsg);

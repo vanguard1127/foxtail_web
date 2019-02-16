@@ -5,15 +5,28 @@ import { withNamespaces } from 'react-i18next';
 import InboxPanel from './InboxPanel';
 import Header from './Header';
 import ChatInfo from './ChatInfo';
-import { GET_COUNTS, READ_CHAT, GET_INBOX } from '../../queries';
+import BlockModal from '../Modals/Block';
+import { GET_COUNTS, READ_CHAT, GET_INBOX, REMOVE_SELF } from '../../queries';
 import { Mutation } from 'react-apollo';
 import ChatWindow from './ChatWindow';
 import Tour from './Tour';
+import { flagOptions } from '../../docs/options';
 
 import * as ErrorHandler from '../common/ErrorHandler';
 
 class InboxPage extends Component {
-  state = { chatID: null, chat: null, unSeenCount: 0 };
+  state = {
+    chatID: null,
+    chat: null,
+    unSeenCount: 0,
+    blockModalVisible: false
+  };
+
+  setBlockModalVisible = () => {
+    const { chatID, blockModalVisible } = this.state;
+    ErrorHandler.setBreadcrumb('Block modal visible:' + !blockModalVisible);
+    this.setState({ chatID, blockModalVisible: !blockModalVisible });
+  };
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
     ErrorHandler.setBreadcrumb('Open Chat:' + chatID);
@@ -25,6 +38,32 @@ class InboxPage extends Component {
         .catch(res => {
           ErrorHandler.catchErrors(res.graphQLErrors);
         });
+    });
+  };
+
+  handleRemoveSelf = removeSelf => {
+    ErrorHandler.setBreadcrumb('Remove Self from Chat:' + this.state.chatID);
+    removeSelf()
+      .then(({ data }) => {
+        this.setState({ chat: null });
+      })
+      .catch(res => {
+        ErrorHandler.catchErrors(res.graphQLErrors);
+      });
+  };
+
+  updateMail = cache => {
+    const { chatID } = this.state;
+
+    const { getInbox } = cache.readQuery({
+      query: GET_INBOX
+    });
+    const updatedInbox = getInbox.filter(x => x.chatID !== chatID);
+    cache.writeQuery({
+      query: GET_INBOX,
+      data: {
+        getInbox: updatedInbox
+      }
     });
   };
 
@@ -69,12 +108,14 @@ class InboxPage extends Component {
     sessionStorage.setItem('page', 'inbox');
     const { t } = this.props;
     const { currentuser } = this.props.session;
-    let { chatID, chat } = this.state;
+    let { chatID, chat, blockModalVisible } = this.state;
     chatID = this.state.chatID;
     if (currentuser.tours.indexOf('i') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Inbox');
       return (
-        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        <div>
+          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        </div>
       );
     }
     if (chatID === null) {
@@ -122,9 +163,35 @@ class InboxPage extends Component {
                 t={t}
                 ErrorHandler={ErrorHandler}
               />
-              <ChatInfo t={t} />
+              {chatID && (
+                <Mutation
+                  mutation={REMOVE_SELF}
+                  variables={{ chatID }}
+                  update={this.updateMail}
+                >
+                  {removeSelf => {
+                    return (
+                      <ChatInfo
+                        t={t}
+                        setBlockModalVisible={this.setBlockModalVisible}
+                        handleRemoveSelf={() =>
+                          this.handleRemoveSelf(removeSelf)
+                        }
+                      />
+                    );
+                  }}
+                </Mutation>
+              )}
             </ErrorHandler.ErrorBoundary>
           </div>
+          {blockModalVisible && (
+            <BlockModal
+              type={flagOptions.Chat}
+              id={chatID}
+              close={() => this.setBlockModalVisible()}
+              ErrorBoundary={ErrorHandler.ErrorBoundary}
+            />
+          )}
         </section>
       </div>
     );

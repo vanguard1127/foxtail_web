@@ -35,7 +35,9 @@ class SearchProfilesPage extends Component {
     if (session.currentuser.tours.indexOf('sp') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Search Profiles');
       return (
-        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        <div>
+          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        </div>
       );
     }
 

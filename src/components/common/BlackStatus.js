@@ -1,7 +1,7 @@
-import React from "react";
-import moment from "moment";
-import UpdateSubBtn from "./UpdateSubBtn";
-import CancelSubBtn from "./CancelSubBtn";
+import React from 'react';
+import moment from 'moment';
+import UpdateSubBtn from './UpdateSubBtn';
+import CancelSubBtn from './CancelSubBtn';
 
 const BlackStatus = ({
   blkMemberInfo,
@@ -14,9 +14,11 @@ const BlackStatus = ({
   if (blkMemberInfo.active && ccLast4 === null) {
     return (
       <div>
-        {t("common:thanks")}.
-        <br /> {t("common:blkend")}:{" "}
-        {moment(blkMemberInfo.renewalDate).format("MMMM DD YYYY")}
+        {t('common:thanks')}.
+        <br /> {t('common:blkend')}:{' '}
+        {moment(blkMemberInfo.renewalDate)
+          .locale(localStorage.getItem('i18nextLng'))
+          .format('MMMM DD YYYY')}
         <br />
         <UpdateSubBtn refetchUser={refetchUser} close={close} />
         <CancelSubBtn refetchUser={refetchUser} close={close} />
@@ -25,9 +27,11 @@ const BlackStatus = ({
   } else if (blkMemberInfo.active) {
     return (
       <div>
-        {t("thanks")}.
-        <br /> {t("common:creditend")} {ccLast4} {t("common:renewdate")}:{" "}
-        {moment(blkMemberInfo.renewalDate).format("MMMM DD YYYY")}
+        {t('thanks')}.
+        <br /> {t('common:creditend')} {ccLast4} {t('common:renewdate')}:{' '}
+        {moment(blkMemberInfo.renewalDate)
+          .locale(localStorage.getItem('i18nextLng'))
+          .format('MMMM DD YYYY')}
         <br />
         <UpdateSubBtn refetchUser={refetchUser} close={close} />
         <CancelSubBtn refetchUser={refetchUser} close={close} />
@@ -36,7 +40,7 @@ const BlackStatus = ({
   } else {
     return (
       <button type="primary" htmlType="submit" onClick={visible}>
-        {t("common:become")}
+        {t('common:become')}
       </button>
     );
   }

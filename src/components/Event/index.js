@@ -13,6 +13,7 @@ import EventAbout from './EventAbout';
 import EventInfoMobile from './EventInfoMobile';
 import EventDiscussion from './EventDiscussion';
 import EventInfo from './EventInfo';
+import { flagOptions } from '../../docs/options';
 
 class EventPage extends Component {
   state = { visible: false, blockModalVisible: false };
@@ -116,7 +117,9 @@ class EventPage extends Component {
     if (session.currentuser.tours.indexOf('e') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Event');
       return (
-        <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        <div>
+          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+        </div>
       );
     }
     return (
@@ -191,7 +194,7 @@ class EventPage extends Component {
               </div>
               {blockModalVisible && (
                 <BlockModal
-                  event={event}
+                  type={flagOptions.Event}
                   id={id}
                   close={() => this.setBlockModalVisible(false)}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}

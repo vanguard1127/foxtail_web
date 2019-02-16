@@ -29,7 +29,7 @@ const SignupButton = ({
           <button
             className="btn"
             type="submit"
-            onMouseEnter={validateForm}
+            // onMouseEnter={validateForm}
             {...p}
           >
             {t('getstarted')}

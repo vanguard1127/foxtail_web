@@ -1,23 +1,26 @@
-import React from "react";
-const ChatInfo = ({ profileID, chatID, t }) => {
+import React from 'react';
+const ChatInfo = ({
+  profileID,
+  chatID,
+  t,
+  setBlockModalVisible,
+  handleRemoveSelf
+}) => {
   return (
     <div className="col-xl-2">
       <div className="right">
         <div className="head" />
         <div className="content">
           <div className="visit-profile">
-            <span>{t("visit")}</span>
+            <span>{t('visit')}</span>
           </div>
           <div className="functions">
             <ul>
-              <li className="search">
-                <span>{t("searchconv")}</span>
-              </li>
               <li className="delete">
-                <span>{t("deleconv")}</span>
+                <span onClick={handleRemoveSelf}>{t('leaveconv')}</span>
               </li>
               <li className="report">
-                <span>{t("reportconv")}</span>
+                <span onClick={setBlockModalVisible}>{t('reportconv')}</span>
               </li>
             </ul>
           </div>

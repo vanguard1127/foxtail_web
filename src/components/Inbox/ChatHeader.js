@@ -1,9 +1,9 @@
-import React from "react";
-import TimeAgo from "../../utils/TimeAgo";
+import React from 'react';
+import TimeAgo from '../../utils/TimeAgo';
 const ChatHeader = ({ currentChat, currentuser, t }) => {
-  let chatTitle = t("nothere");
-  let chatLastSeen = "";
-  let chatTitleExtra = "";
+  let chatTitle = t('nothere');
+  let chatLastSeen = '';
+  let chatTitleExtra = '';
 
   if (currentChat) {
     let notME = currentChat.participants.filter(
@@ -16,10 +16,10 @@ const ChatHeader = ({ currentChat, currentuser, t }) => {
     }
     if (currentChat.participants.length > 2) {
       chatTitleExtra =
-        ` + ${currentChat.participants.length - 2}` + t("participants");
+        ` + ${currentChat.participants.length - 2}` + t('participants');
     }
     chatLastSeen = currentChat.participants[0].online
-      ? t("common:Online")
+      ? t('common:Online')
       : TimeAgo(currentChat.participants[0].updatedAt);
   }
   return (
@@ -42,13 +42,10 @@ const ChatHeader = ({ currentChat, currentuser, t }) => {
       <div className="more-dropdown">
         <ul>
           <li>
-            <span>{t("searchconv")}</span>
+            <span>{t('leaveconv')}</span>
           </li>
           <li>
-            <span>{t("deleconv")}</span>
-          </li>
-          <li>
-            <span>{t("reportconv")}</span>
+            <span>{t('reportconv')}</span>
           </li>
         </ul>
       </div>

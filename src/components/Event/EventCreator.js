@@ -21,6 +21,7 @@ const EventCreator = ({ ownerProfile, createdAt, history, t }) => {
           <span className="created-date">
             {t('createdon')}{' '}
             {moment(createdAt)
+              .locale(localStorage.getItem('i18nextLng'))
               .format('MMM Do')
               .toString()}
           </span>

@@ -4,9 +4,8 @@
   "rules": "rules",
   "typemsg": "Type a message",
   "visit": "Visit Profile",
-  "searchconv": "Search for Conversation",
-  "deleconv": "Delete the Conversation",
-  "reportconv": "Report the Conversation",
+  "leaveconv": "Leave Conversation",
+  "reportconv": "Report Conversation",
   "participants": "participants",
   "nothere": "Chat No Longer Available",
   "leftchat": "has left the chat"

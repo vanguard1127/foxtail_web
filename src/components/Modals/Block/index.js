@@ -1,14 +1,16 @@
-import React, { Component } from "react";
-import { withNamespaces } from "react-i18next";
-import { BLOCK_PROFILE, FLAG_ITEM } from "../../../queries";
-import { Mutation } from "react-apollo";
+import React, { Component } from 'react';
+import { withNamespaces } from 'react-i18next';
+import { BLOCK_PROFILE, FLAG_ITEM } from '../../../queries';
+import { Mutation } from 'react-apollo';
+import { toast } from 'react-toastify';
+import { flagOptions } from '../../../docs/options';
 
 class BlockModal extends Component {
-  state = { other: false, reason: "", type: this.props.type };
+  state = { other: false, reason: '', type: this.props.type };
 
   handleChange = e => {
-    if (e.target.value === "other") {
-      this.setState({ other: true, reason: "" });
+    if (e.target.value === 'other') {
+      this.setState({ other: true, reason: '' });
     } else {
       this.setState({ reason: e.target.value, other: false });
     }
@@ -24,10 +26,10 @@ class BlockModal extends Component {
         this.props.close();
       })
       .then(() => {
-        if (this.state.type === "Profile") {
+        if (this.state.type === flagOptions.Profile) {
           blockProfile().then(({ data }) => {
             if (data.blockProfile) {
-              // message.success("Selected profile has been reported. Thanks.");
+              toast.success('Selected profile has been reported. Thanks.');
               this.props.goToMain();
             }
           });
@@ -45,36 +47,48 @@ class BlockModal extends Component {
 
   menu = () => {
     const { t, ErrorBoundary } = this.props;
-    if (this.state.type === "Profile") {
+    if (this.state.type === flagOptions.Profile) {
       return (
         <select
           defaultValue=""
-          style={{ display: "flex", flex: "1", margin: "10px" }}
+          style={{ display: 'flex', flex: '1', margin: '10px' }}
           onChange={this.handleChange}
         >
-          <option value="">{t("reason")}:</option>
-          <option value="nopro">{t("nopro")}</option>
-          <option value="stolenPic">{t("stolepic")}</option>
-          <option value="money">{t("money")}</option>
-          <option value="nudity">{t("Nudity")}</option>
-          <option value="rude">{t("Rude")}</option>
-          <option value="Spam">{t("Spam")}</option>
-          <option value="racist">{t("Racist")}</option>
-          <option value="other">{t("Other")}</option>
+          <option value="">{t('reason')}:</option>
+          <option value="nopro">{t('nopro')}</option>
+          <option value="stolenPic">{t('stolepic')}</option>
+          <option value="money">{t('money')}</option>
+          <option value="nudity">{t('Nudity')}</option>
+          <option value="rude">{t('Rude')}</option>
+          <option value="Spam">{t('Spam')}</option>
+          <option value="racist">{t('Racist')}</option>
+          <option value="other">{t('Other')}</option>
+        </select>
+      );
+    }
+    if (this.state.type === flagOptions.Chat) {
+      return (
+        <select
+          defaultValue=""
+          style={{ display: 'flex', flex: '1', margin: '10px' }}
+          onChange={this.handleChange}
+        >
+          <option value="">{t('reason')}:</option>
+          <option value="nopro">{t('nopro')}</option>
         </select>
       );
     } else {
       return (
         <select
           defaultValue=""
-          style={{ display: "flex", flex: "1", margin: "10px" }}
+          style={{ display: 'flex', flex: '1', margin: '10px' }}
           onChange={this.handleChange}
         >
-          <option value="">{t("reason")}:</option>
-          <option value="illegalEvent">{t("illevent")}</option>
-          <option value="racist">{t("Racist")}</option>
-          <option value="Spam">{t("Spam")}</option>
-          <option value="Phishing">{t("Phishing")}</option>
+          <option value="">{t('reason')}:</option>
+          <option value="illegalEvent">{t('illevent')}</option>
+          <option value="racist">{t('Racist')}</option>
+          <option value="Spam">{t('Spam')}</option>
+          <option value="Phishing">{t('Phishing')}</option>
         </select>
       );
     }
@@ -85,16 +99,19 @@ class BlockModal extends Component {
     const { other, reason, type } = this.state;
     const blockMenu = this.menu();
     let title;
-    if (type === "Profile") {
+    if (type === flagOptions.Profile) {
       title =
-        t("repblock") +
-        " " +
+        t('repblock') +
+        ' ' +
         profile.users.map((user, index) => {
           if (index === 0) return user.username;
-          else return +" & " + user.username;
+          else return +' & ' + user.username;
         });
+    }
+    if (type === flagOptions.Chat) {
+      title = 'Report Group';
     } else {
-      title = t("repblock");
+      title = t('repblock');
     }
     return (
       <section className="popup-content show">
@@ -112,11 +129,11 @@ class BlockModal extends Component {
                       {blockMenu}
                       <div
                         style={{
-                          display: other ? "block" : "none"
+                          display: other ? 'block' : 'none'
                         }}
                       >
                         <input
-                          placeholder={t("otherreason")}
+                          placeholder={t('otherreason')}
                           onChange={this.handleTextChange}
                           value={reason}
                         />
@@ -140,16 +157,16 @@ class BlockModal extends Component {
                               {(blockProfile, { loading }) => {
                                 if (loading) {
                                   //TODO: Make nice popup saving
-                                  return <div>{t("Saving")}...</div>;
+                                  return <div>{t('Saving')}...</div>;
                                 }
                                 return (
                                   <button
                                     onClick={() =>
                                       this.handleSubmit(blockProfile, flagItem)
                                     }
-                                    disabled={reason === "" || loading}
+                                    disabled={reason === '' || loading}
                                   >
-                                    {t("repblock")}
+                                    {t('repblock')}
                                   </button>
                                 );
                               }}
@@ -169,4 +186,4 @@ class BlockModal extends Component {
   }
 }
 
-export default withNamespaces("modals")(BlockModal);
+export default withNamespaces('modals')(BlockModal);

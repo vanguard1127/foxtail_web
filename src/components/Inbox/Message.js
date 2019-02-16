@@ -1,30 +1,26 @@
-import React from "react";
-import moment from "moment";
-const preventContextMenu = e => {
-  e.preventDefault();
-  alert(
-    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
-  );
-};
+import React from 'react';
+import moment from 'moment';
+import { preventContextMenu } from '../../utils/image';
+
 const Message = React.forwardRef(({ message, currentUserID, t }, ref) => {
   const messageText =
-    message.type === "msg"
+    message.type === 'msg'
       ? message.text
-      : `${message.fromUser.username}` + t("leftchat");
+      : `${message.fromUser.username}` + t('leftchat');
 
   return (
     <div
       className={
-        message.fromUser.id === currentUserID ? "msg-item response" : "msg-item"
+        message.fromUser.id === currentUserID ? 'msg-item response' : 'msg-item'
       }
       ref={ref}
     >
       <div className="avatar">
         <img
           src={
-            message.profilePic !== ""
+            message.profilePic !== ''
               ? message.profilePic
-              : "assets/img/usr/avatar/1001@2x.png"
+              : 'assets/img/usr/avatar/1001@2x.png'
           }
           alt=""
           onContextMenu={preventContextMenu}
@@ -32,10 +28,11 @@ const Message = React.forwardRef(({ message, currentUserID, t }, ref) => {
       </div>
       <div className="bubble">{messageText}</div>
       <span className="time">
-        {" "}
-        {message.fromUser.username},{" "}
+        {' '}
+        {message.fromUser.username},{' '}
         {moment(message.createdAt)
-          .format("HH:mm")
+          .locale(localStorage.getItem('i18nextLng'))
+          .format('HH:mm')
           .toString()}
       </span>
     </div>

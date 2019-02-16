@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { desireOptions } from "../../../docs/data";
-import { withNamespaces } from "react-i18next";
+import React, { Component } from 'react';
+import { desireOptions } from '../../../docs/options';
+import { withNamespaces } from 'react-i18next';
 
 class Selector extends Component {
   render() {
@@ -12,7 +12,7 @@ class Selector extends Component {
           className="select_desires desires_select_popup"
           onClick={() => togglePopup()}
         >
-          <span className="head">{t("seldesires")}:</span>
+          <span className="head">{t('seldesires')}:</span>
           <ErrorBoundary>
             <ul>
               {desires.map(desire => {
@@ -28,4 +28,4 @@ class Selector extends Component {
   }
 }
 
-export default withNamespaces("modals")(Selector);
+export default withNamespaces('modals')(Selector);

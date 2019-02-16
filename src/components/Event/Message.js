@@ -27,6 +27,7 @@ const Message = React.forwardRef(({ message, history }, ref) => {
         <span className="date">
           {' '}
           {moment(message.createdAt)
+            .locale(localStorage.getItem('i18nextLng'))
             .format('MMMM D, YYYY - HH:mm')
             .toString()}
         </span>

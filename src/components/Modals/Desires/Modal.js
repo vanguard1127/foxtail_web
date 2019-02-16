@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { withNamespaces } from "react-i18next";
-import { desireOptions } from "../../../docs/data";
-import SearchBox from "./SearchBox";
+import React, { Component } from 'react';
+import { withNamespaces } from 'react-i18next';
+import { desireOptions } from '../../../docs/options';
+import SearchBox from './SearchBox';
 class Desires extends Component {
-  state = { searchText: "" };
+  state = { searchText: '' };
   setValue = ({ name, value }) => {
     this.setState({ [name]: value });
   };
@@ -20,8 +20,8 @@ class Desires extends Component {
                 <div className="modal-popup desires-select">
                   <ErrorBoundary>
                     <div className="m-head">
-                      <span className="heading">{t("desireselect")}</span>
-                      <span className="title">{t("setdesires")}</span>
+                      <span className="heading">{t('desireselect')}</span>
+                      <span className="title">{t('setdesires')}</span>
                       <span className="close" onClick={closePopup} />
                     </div>
                     <div className="m-body desires">
@@ -74,4 +74,4 @@ class Desires extends Component {
     );
   }
 }
-export default withNamespaces("modals")(Desires);
+export default withNamespaces('modals')(Desires);
