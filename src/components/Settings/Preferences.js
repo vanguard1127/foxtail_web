@@ -1,33 +1,27 @@
-import React, { Component } from "react";
-import DistanceSlider from "../common/DistanceSlider";
-import Dropdown from "../common/Dropdown";
-import AgeRange from "../common/AgeRange";
-import AddressSearch from "../common/AddressSearch";
+import React, { Component } from 'react';
+import DistanceSlider from '../common/DistanceSlider';
+import Dropdown from '../common/Dropdown';
+import AgeRange from '../common/AgeRange';
+import AddressSearch from '../common/AddressSearch';
 class Preferences extends Component {
   render() {
     const { values, setValue, setLocationValues, t } = this.props;
-    const {
-      distance,
-      distanceMetric,
-      ageRange,
-      interestedIn,
-      location
-    } = values;
+    const { distance, distanceMetric, ageRange, interestedIn, city } = values;
 
-    const lang = localStorage.getItem("i18nextLng");
+    const lang = localStorage.getItem('i18nextLng');
 
     return (
       <div className="content">
         <div className="row">
           <div className="col-md-12">
-            <span className="heading">{t("myserchpref")}</span>
+            <span className="heading">{t('myserchpref')}</span>
           </div>
           <div className="col-md-6">
             <DistanceSlider
               value={distance}
               setValue={el =>
                 setValue({
-                  name: "distance",
+                  name: 'distance',
                   value: el
                 })
               }
@@ -40,7 +34,7 @@ class Preferences extends Component {
               value={ageRange}
               setValue={el =>
                 setValue({
-                  name: "ageRange",
+                  name: 'ageRange',
                   value: el
                 })
               }
@@ -50,17 +44,17 @@ class Preferences extends Component {
           <div className="col-md-6">
             <div className="item">
               <div className="switch-con border-top">
-                <div className="sw-head">{t("dmetric")}:</div>
+                <div className="sw-head">{t('dmetric')}:</div>
                 <div className="sw-btn">
                   <div className="switch distance">
                     <input
                       type="checkbox"
                       id="distance"
-                      checked={distanceMetric === "mi" ? true : false}
+                      checked={distanceMetric === 'mi' ? true : false}
                       onChange={e => {
                         setValue({
-                          name: "distanceMetric",
-                          value: distanceMetric === "km" ? "mi" : "km"
+                          name: 'distanceMetric',
+                          value: distanceMetric === 'km' ? 'mi' : 'km'
                         });
                       }}
                     />
@@ -72,15 +66,15 @@ class Preferences extends Component {
           </div>
           <div className="col-md-6">
             <Dropdown
-              type={"interestedIn"}
+              type={'interestedIn'}
               onChange={el =>
                 setValue({
-                  name: "interestedIn",
+                  name: 'interestedIn',
                   value: el.map(e => e.value)
                 })
               }
               value={interestedIn}
-              placeholder={t("common:Interested") + ":"}
+              placeholder={t('common:Interested') + ':'}
               lang={lang}
             />
           </div>
@@ -89,16 +83,16 @@ class Preferences extends Component {
             <div className="item">
               <AddressSearch
                 style={{ width: 150 }}
-                setLocationValues={({ lat, long, address }) =>
+                setLocationValues={({ lat, long, address }) => {
                   setLocationValues({
                     lat,
                     long,
-                    address
-                  })
-                }
-                address={location}
-                type={"(cities)"}
-                placeholder={t("common:setloc") + "..."}
+                    city: address
+                  });
+                }}
+                address={city}
+                type={'(cities)'}
+                placeholder={t('common:setloc') + '...'}
               />
             </div>
           </div>

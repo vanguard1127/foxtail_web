@@ -18,6 +18,7 @@ import SubmitPhotoModal from '../Modals/SubmitPhoto';
 import CoupleModal from '../Modals/Couples';
 import BlackModal from '../Modals/Black';
 import axios from 'axios';
+import getCityCountry from '../../utils/getCityCountry';
 
 class SettingsPage extends Component {
   //TODO: Do we need to have these setup?
@@ -26,7 +27,8 @@ class SettingsPage extends Component {
     distanceMetric: 'mi',
     ageRange: [18, 80],
     interestedIn: ['M', 'F'],
-    location: '',
+    city: '',
+    country: '',
     visible: true,
     newMsgNotify: true,
     lang: 'en',
@@ -180,15 +182,24 @@ class SettingsPage extends Component {
     console.log(this.props);
   };
 
-  setLocationValues = ({ lat, long, address, updateSettings }) => {
+  setLocationValues = async ({ lat, long, city, updateSettings }) => {
     if (lat && long) {
-      this.setState({ lat, long, location: address }, () =>
-        this.handleSubmit(updateSettings)
+      const citycntry = await getCityCountry({
+        long,
+        lat
+      });
+
+      this.setState(
+        {
+          long,
+          lat,
+          city: citycntry.city,
+          country: citycntry.country
+        },
+        () => this.handleSubmit(updateSettings)
       );
     } else {
-      this.setState({ location: address }, () =>
-        this.handleSubmit(updateSettings)
-      );
+      this.setState({ city });
     }
   };
 
@@ -298,7 +309,8 @@ class SettingsPage extends Component {
 
   render() {
     const {
-      location,
+      city,
+      country,
       visible,
       emailNotify,
       showOnline,
@@ -360,7 +372,8 @@ class SettingsPage extends Component {
           distanceMetric,
           ageRange,
           interestedIn,
-          location,
+          city,
+          country,
           visible,
           lang,
           emailNotify,
@@ -413,16 +426,16 @@ class SettingsPage extends Component {
                                 distanceMetric,
                                 ageRange,
                                 interestedIn,
-                                location
+                                city
                               }}
                               setValue={({ name, value }) =>
                                 this.setValue({ name, value, updateSettings })
                               }
-                              setLocationValues={({ lat, long, address }) =>
+                              setLocationValues={({ lat, long, city }) =>
                                 this.setLocationValues({
                                   lat,
                                   long,
-                                  address,
+                                  city,
                                   updateSettings
                                 })
                               }

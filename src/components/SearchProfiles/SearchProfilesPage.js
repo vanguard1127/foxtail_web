@@ -11,7 +11,9 @@ class SearchProfilesPage extends Component {
   state = {
     lat: this.props.location.lat,
     long: this.props.location.long,
-    ...this.props.searchCriteria
+    ...this.props.searchCriteria,
+    city: this.props.location.city || this.props.searchCriteria.city,
+    country: this.props.location.country || this.props.searchCriteria.country
   };
 
   componentDidMount() {

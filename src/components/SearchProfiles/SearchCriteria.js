@@ -1,11 +1,12 @@
-import React, { Component, Fragment } from 'react';
-import { Mutation, Query } from 'react-apollo';
-import { UPDATE_SETTINGS, GET_SETTINGS, REMOVE_LOCLOCK } from '../../queries';
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import { UPDATE_SETTINGS, REMOVE_LOCLOCK } from '../../queries';
 import Dropdown from '../common/Dropdown';
 import AddressSearch from '../common/AddressSearch';
 import SetLocationModal from '../Modals/SetLocation';
 import DistanceSlider from '../common/DistanceSlider';
 import AgeRange from '../common/AgeRange';
+import getCityCountry from '../../utils/getCityCountry';
 
 const CURRENT_LOC_LABEL = 'My Location';
 
@@ -13,12 +14,10 @@ class SearchCriteria extends Component {
   state = {
     skip: 0,
     loading: false,
-    lat: this.props.lat || null,
-    long: this.props.long || null,
     locModalVisible: false,
-    location: '',
     profile: null,
-    ...this.props.searchCriteria
+    ...this.props.searchCriteria,
+    city: this.props.searchCriteria.city || 'My Location'
   };
 
   setLocModalVisible = visible => {
@@ -28,11 +27,11 @@ class SearchCriteria extends Component {
   //TODO: Refactor to use setValue
   setLocation = async pos => {
     var crd = pos.coords;
-    var location = pos.location ? pos.location : CURRENT_LOC_LABEL;
+    var city = pos.location ? pos.location : CURRENT_LOC_LABEL;
 
     const { long, lat } = this.state;
     if (long !== crd.longitude && lat !== crd.latitude) {
-      this.setState({ long: crd.longitude, lat: crd.latitude, location });
+      this.setState({ long: crd.longitude, lat: crd.latitude, city });
     }
   };
 
@@ -78,10 +77,25 @@ class SearchCriteria extends Component {
       });
   };
 
-  setLocationValues = ({ lat, long, address, updateSettings }) => {
-    this.setState({ lat, long, location: address });
+  setLocationValues = async ({ lat, long, city, updateSettings }) => {
+    console.log(lat, long, city);
     if (lat && long) {
-      this.handleSubmit(updateSettings);
+      const citycntry = await getCityCountry({
+        long,
+        lat
+      });
+
+      this.setState(
+        {
+          long,
+          lat,
+          city: citycntry.city,
+          country: citycntry.country
+        },
+        () => this.handleSubmit(updateSettings)
+      );
+    } else {
+      this.setState({ city });
     }
   };
 
@@ -99,10 +113,11 @@ class SearchCriteria extends Component {
       distanceMetric,
       ageRange,
       interestedIn,
-      location,
+      city,
+      country,
       locModalVisible
     } = this.state;
-
+    console.log('LL', this.props.searchCriteria);
     const lang = localStorage.getItem('i18nextLng');
     const { t, loading } = this.props;
     if (loading) {
@@ -157,7 +172,8 @@ class SearchCriteria extends Component {
                   distanceMetric,
                   ageRange,
                   interestedIn,
-                  location,
+                  city,
+                  country,
                   lat,
                   long
                 }}
@@ -172,15 +188,19 @@ class SearchCriteria extends Component {
                               <div className="item">
                                 <AddressSearch
                                   style={{ width: 150 }}
-                                  setLocationValues={({ lat, long, address }) =>
+                                  setLocationValues={({
+                                    lat,
+                                    long,
+                                    address
+                                  }) => {
                                     this.setLocationValues({
                                       lat,
                                       long,
-                                      address,
+                                      city: address,
                                       updateSettings
-                                    })
-                                  }
-                                  address={location}
+                                    });
+                                  }}
+                                  address={city}
                                   type={'(cities)'}
                                   placeholder={t('common:setloc') + '...'}
                                 />

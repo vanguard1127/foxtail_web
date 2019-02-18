@@ -80,7 +80,7 @@ class Settings extends Component {
             }
 
             const settings = data.getSettings;
-
+            console.log(settings);
             return (
               <Fragment>
                 <SettingsPage

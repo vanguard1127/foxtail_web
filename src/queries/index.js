@@ -206,7 +206,8 @@ export const UPDATE_SETTINGS = gql`
     $ageRange: [Int]
     $lang: String
     $interestedIn: [String]
-    $location: String
+    $city: String
+    $country: String
     $email: String
     $phone: String
     $username: String
@@ -232,7 +233,8 @@ export const UPDATE_SETTINGS = gql`
       ageRange: $ageRange
       lang: $lang
       interestedIn: $interestedIn
-      location: $location
+      city: $city
+      country: $country
       lat: $lat
       long: $long
       email: $email
@@ -753,7 +755,7 @@ export const GET_SEARCH_SETTINGS = gql`
       ageRange
       lang
       interestedIn
-      location
+      city
     }
   }
 `;
@@ -766,7 +768,7 @@ export const GET_SETTINGS = gql`
       ageRange
       lang
       interestedIn
-      location
+      city
       visible
       newMsgNotify
       emailNotify

@@ -12,7 +12,7 @@ class SetLocationModal extends Component {
     if (lat && long) {
       return this.setState({ lat, long, address });
     }
-    this.setState({ address });
+    return this.setState({ address });
   };
 
   handleSubmit = updateSettings => {
@@ -25,7 +25,7 @@ class SetLocationModal extends Component {
               longitude: this.state.long,
               latitude: this.state.lat
             },
-            location: this.state.address
+            city: this.state.address
           });
           alert(t('locset') + ': ' + this.state.address);
           this.props.close();
@@ -52,7 +52,7 @@ class SetLocationModal extends Component {
       <Mutation
         mutation={UPDATE_SETTINGS}
         variables={{
-          location: address,
+          city: address,
           lat,
           long
         }}

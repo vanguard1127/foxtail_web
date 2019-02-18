@@ -1,12 +1,15 @@
-import React, { Fragment } from "react";
-import i18next from "i18next";
-import SetLocationModal from "./Modals/SetLocation";
+import React, { Fragment } from 'react';
+import i18next from 'i18next';
+import SetLocationModal from './Modals/SetLocation';
+import getCityCountry from '../utils/getCityCountry';
 
 const withLocation = PassedComponent =>
   class withLocation extends React.Component {
     state = {
       lat: null,
       long: null,
+      city: null,
+      country: null,
       locModalVisible: false
     };
 
@@ -30,7 +33,7 @@ const withLocation = PassedComponent =>
 
     findLocation = (setLocation, setLocModalVisible, caller) => {
       if (!navigator.geolocation) {
-        alert(i18next.t("geonotlocated"));
+        alert(i18next.t('geonotlocated'));
         const session = this.props.session;
         if (session && session.location) {
           this.setLocation({
@@ -71,8 +74,19 @@ const withLocation = PassedComponent =>
     setLocation = async pos => {
       var crd = pos.coords;
       const { long, lat } = this.state;
+
       if (long !== crd.longitude && lat !== crd.latitude) {
-        this.setState({ long: crd.longitude, lat: crd.latitude });
+        const citycntry = await getCityCountry({
+          long: crd.longitude,
+          lat: crd.latitude
+        });
+
+        this.setState({
+          long: crd.longitude,
+          lat: crd.latitude,
+          city: citycntry.city,
+          country: citycntry.country
+        });
       }
       await this.props.refetch();
     };
@@ -83,12 +97,12 @@ const withLocation = PassedComponent =>
 
     checkLocation() {
       //TODO:Delete this:
-      return this.setLocation({
-        coords: {
-          longitude: 45,
-          latitude: 45
-        }
-      });
+      // return this.setLocation({
+      //   coords: {
+      //     longitude: 45,
+      //     latitude: 45
+      //   }
+      // });
 
       try {
         if (
@@ -111,12 +125,15 @@ const withLocation = PassedComponent =>
     }
 
     render() {
-      const { lat, long, locModalVisible } = this.state;
+      const { lat, long, city, country, locModalVisible } = this.state;
 
       return (
         <Fragment>
           {lat !== null && (
-            <PassedComponent {...this.props} location={{ lat, long }} />
+            <PassedComponent
+              {...this.props}
+              location={{ lat, long, city, country }}
+            />
           )}
           {locModalVisible && (
             <SetLocationModal
