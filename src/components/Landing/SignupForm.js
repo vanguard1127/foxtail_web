@@ -47,7 +47,7 @@ class SignupForm extends Component {
 
   validateForm = async () => {
     try {
-      await schema.validate(this.state, { abortEarly: false });
+      await schema.validate(this.state);
       this.setState({ isValid: true, errors: {} });
     } catch (e) {
       let errors = {};
