@@ -163,6 +163,10 @@ class EventPage extends Component {
                           id={id}
                           participants={participants}
                           description={description}
+                          isOwner={
+                            event.ownerProfile.id ===
+                            session.currentuser.profileID
+                          }
                           t={t}
                         />{' '}
                       </ErrorHandler.ErrorBoundary>{' '}

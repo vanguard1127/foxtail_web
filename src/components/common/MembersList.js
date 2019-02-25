@@ -1,12 +1,13 @@
-import React, { Component } from "react";
-import Waypoint from "react-waypoint";
+import React, { Component } from 'react';
+import Waypoint from 'react-waypoint';
 import {
   INVITE_PROFILES,
   INVITE_PROFILES_EVENT,
   REMOVE_PROFILES_EVENT,
   GET_EVENT
-} from "../../queries";
-import { Mutation } from "react-apollo";
+} from '../../queries';
+import { Mutation } from 'react-apollo';
+import { toast } from 'react-toastify';
 
 const LIMIT = 5;
 class MembersList extends Component {
@@ -51,12 +52,13 @@ class MembersList extends Component {
 
   handleInvite = invite => {
     const { targetType, close, t } = this.props;
-    if (targetType === "event") {
+
+    if (targetType === 'event') {
       invite()
         .then(({ data }) => {
           if (data.inviteProfileEvent) {
             close();
-            alert(t("common:invitesent"));
+            toast.success(t('common:invitesent'));
           }
         })
         .catch(res => {
@@ -73,7 +75,7 @@ class MembersList extends Component {
         .then(({ data }) => {
           if (data.inviteProfile) {
             close();
-            alert(t("common:invitesent"));
+            toast.success(t('common:invitesent'));
           }
         })
         .catch(res => {
@@ -89,12 +91,12 @@ class MembersList extends Component {
 
   handleRemove = remove => {
     const { targetType, close, t } = this.props;
-    if (targetType === "event") {
+    if (targetType === 'event') {
       remove()
         .then(({ data }) => {
           if (data.removeProfileEvent) {
             close();
-            alert(t("common:memsremove"));
+            toast.success(t('common:memsremove'));
           }
         })
         .catch(res => {
@@ -110,7 +112,7 @@ class MembersList extends Component {
         .then(({ data }) => {
           if (data.removeProfile) {
             close();
-            alert(t("common:removpros"));
+            toast.success(t('common:removpros'));
           }
         })
         .catch(res => {
@@ -126,6 +128,7 @@ class MembersList extends Component {
 
   handleChange = e => {
     let { invitedProfiles } = this.state;
+
     if (e.target.checked) {
       invitedProfiles.push(e.target.value);
     } else {
@@ -160,36 +163,30 @@ class MembersList extends Component {
 
   handleFriendList = ({ members, t }) => (
     <div>
-      <hr />
-      {members.map(friend => (
-        <div key={friend.id}>
-          <div
-            style={{
-              display: "flex",
-              backgroundColor: "#eee",
-              width: "35vw"
-            }}
-          >
-            {" "}
-            <div>
+      {members.map(el => (
+        <div className="inv-item" key={el.id}>
+          {this.props.showActionButton && (
+            <div className="select-checkbox">
               <input
                 type="checkbox"
+                id={el.id}
                 onChange={this.handleChange}
-                checked={friend.id ? true : false}
+                value={el.id}
               />
-              {t("common:checkbox")}{" "}
-              <img
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                alt=""
-              />{" "}
+              <label htmlFor={el.id}>
+                <span />
+              </label>
             </div>
-            <div>
-              <div>{friend.profileName}</div>
-            </div>
+          )}
+          <div className="avatar">
+            <a href="#">
+              <img src={el.profilePic} alt="" />
+            </a>
           </div>
+          <span className="username">{el.profileName}</span>
         </div>
       ))}
-      {this.props.listType === "friends" && (
+      {this.props.listType === 'friends' && (
         <Waypoint
           onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
         />
@@ -197,7 +194,7 @@ class MembersList extends Component {
     </div>
   );
   actionButton = ({ targetID, invitedProfiles, targetType, listType, t }) => {
-    if (targetType === "event" && listType === "friends") {
+    if (targetType === 'event' && listType === 'friends') {
       return (
         <Mutation
           mutation={INVITE_PROFILES_EVENT}
@@ -208,14 +205,17 @@ class MembersList extends Component {
         >
           {inviteProfileEvent => {
             return (
-              <button onClick={() => this.handleInvite(inviteProfileEvent)}>
-                {t("common:invitemems")}
-              </button>
+              <div
+                className="apply-content"
+                onClick={() => this.handleInvite(inviteProfileEvent)}
+              >
+                <span> {t('common:invite')}</span>
+              </div>
             );
           }}
         </Mutation>
       );
-    } else if (targetType === "event" && listType === "participants") {
+    } else if (targetType === 'event' && listType === 'participants') {
       return (
         <Mutation
           mutation={REMOVE_PROFILES_EVENT}
@@ -227,9 +227,12 @@ class MembersList extends Component {
         >
           {removeProfileEvent => {
             return (
-              <button onClick={() => this.handleRemove(removeProfileEvent)}>
-                {t("common:removmems")}
-              </button>
+              <div
+                className="apply-content"
+                onClick={() => this.handleRemove(removeProfileEvent)}
+              >
+                <span> {t('common:remove')}</span>
+              </div>
             );
           }}
         </Mutation>
@@ -245,9 +248,12 @@ class MembersList extends Component {
         >
           {inviteProfile => {
             return (
-              <button onClick={() => this.handleInvite(inviteProfile)}>
-                {t("common:invitemems")}
-              </button>
+              <div
+                className="apply-content"
+                onClick={() => this.handleInvite(inviteProfile)}
+              >
+                <span> {t('common:invite')}</span>
+              </div>
             );
           }}
         </Mutation>
@@ -256,7 +262,14 @@ class MembersList extends Component {
   };
 
   render() {
-    const { members, targetID, targetType, listType, t } = this.props;
+    const {
+      members,
+      targetID,
+      targetType,
+      listType,
+      t,
+      showActionButton
+    } = this.props;
     const { invitedProfiles } = this.state;
     const membersList = this.handleFriendList({ members, t });
     const actionButton = this.actionButton({
@@ -268,24 +281,11 @@ class MembersList extends Component {
     });
     return (
       <div>
-        <div>
-          {listType === "participants"
-            ? t("common:removmems")
-            : t("common:invitemems")}
-        </div>
-        <div
-          style={{
-            height: "19vh",
-            overflow: "hidden",
-            overflowY: "scroll",
-            backgroundColor: "#fff"
-          }}
-        >
-          {membersList}
-        </div>
-        <div style={{ height: "2vh", backgroundColor: "#fff" }}>
-          {" "}
-          {actionButton}
+        {membersList}
+
+        <div style={{ height: '2vh', backgroundColor: '#fff' }}>
+          {' '}
+          {showActionButton && actionButton}
         </div>
       </div>
     );

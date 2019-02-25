@@ -136,8 +136,13 @@
 
     header .function .inbox {
       float: left;
-      padding-right: 20px;
+      padding-right: 15px;
       border-right: 1px solid #EAEAEA;
+    }
+
+    header .function .inbox.hidden-mobile {
+      display: inline-block !important;
+      visibility: visible !important;
     }
 
     header .function .inbox span.icon {
@@ -206,8 +211,8 @@
 
     header .function .notification {
       float: left;
-      padding-right: 20px;
-      padding-left: 20px;
+      padding-right: 15px;
+      padding-left: 15px;
       cursor: pointer;
     }
 
@@ -239,7 +244,7 @@
       visibility: hidden;
     }
 
-    header .function .notification span.icon span.count {
+    header .function .notification.active span.icon span.count {
       width: 15px;
       height: 15px;
       position: absolute;
@@ -315,6 +320,174 @@
       top: 65px;
       left: 0;
     }
+
+
+    /* INVITE MEMBER */
+
+    .event-inv-toggle{
+      position: relative;
+    z-index: 9;
+    top: 34px;
+    }
+
+      .invite-member {
+        max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        background-color: #fff;
+        float: left;
+        position: absolute;
+        top: 6px;
+        right: 0px;
+        box-shadow: 0 1px 0 0 rgba(0,0,0,0.04), 0 15px 65px 0 rgba(17,25,40,0.12);
+        border-radius: 3px;
+        padding: 5px 15px;
+      }
+
+      .invite-member.open {
+        display: inline-block;
+        visibility: visible;
+      }
+
+      .invite-member::-webkit-scrollbar {
+        width: 9px;
+        height: 10px;
+        border: none;
+        background-color: inherit;
+        overflow: hidden;
+        border-radius: 0 3px 3px 0;
+      }
+
+      .invite-member::-webkit-scrollbar-thumb {
+        background: #ECECEC;
+        border: none;
+      }
+
+      .invite-member::-webkit-scrollbar-corner {
+        background: inherit;
+      }
+
+      .invite-member .inv-item .select-checkbox {
+        float: left;
+        margin-top: 3px;
+      }
+
+      .invite-member .inv-item .select-checkbox input {
+        display: none;
+      }
+
+      .invite-member .inv-item .select-checkbox input + label span {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #E9EBEC;
+        position: relative;
+        background: inherit;
+        border-radius: 2px;
+        cursor: pointer;
+        margin: 0 auto;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+      }
+
+      .invite-member .inv-item .select-checkbox input:checked + label span:before {
+        content: '\e803';
+        font-family: 'foxtail-icon';
+        color: #CB0032;
+        font-size: 8px;
+        text-align: center;
+        display: inline-block;
+        float: left;
+        width: 100%;
+        line-height: 20px;
+      }
+
+      .invite-member .content {
+        padding: 0 0 15px 0 !important;
+        background-color: #fff !important;
+        float: none !important;
+      }
+
+      .invite-member .removeContent {
+        width: 100%;
+        display: block;
+        float: left;
+        border-radius: 100px;
+        padding: 10px;
+      }
+      .invite-member .inv-item {
+        width: 100%;
+        display: block;
+        float: left;
+        margin-bottom: 20px;
+      }
+
+      .invite-member .content .head {
+        width: 100%;
+        display: block;
+        float: left;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding-bottom: 10px;
+        font-size: 15px;
+        line-height: 15px;
+        padding-top: 10px;
+        color: #000;
+        margin-bottom: 10px;
+        height: auto !important;
+        box-shadow: none !important;
+        max-height: none !important;
+      }
+
+      .invite-member .content .inv-item .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 2px;
+        display: inline-block;
+        float: left;
+        margin-left: 10px;
+        overflow: hidden;
+      }
+      .invite-member .content .inv-item .avatar img {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        float: left;
+        background-size: 100%;
+        background-repeat: no-repeat;
+      }
+
+      .invite-member .content .inv-item span.username {
+        width: calc(100% - 102px);
+        float: left;
+        display: block;
+        line-height: 32px;
+        color: rgba(0,0,0,0.8);
+        margin-left: 15px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+
+      .invite-member .content .apply-content span {
+        justify-content: center;
+        height: 35px;
+        width: 100%;
+        display: flex;
+        padding: 0 90px;
+        line-height: 35px;
+        float: left;
+        border-radius: 2px;
+        color: #fff;
+        font-weight: 700;
+        background-color: #36D055;
+        cursor: pointer;
+        transform: .3s all;
+        margin-bottom: 10px;
+      }
+
+      .invite-member .content .apply-content span:hover {
+        background-color: #1FBA3D;
+      }
 
     /* NOTIFICATION */
 
@@ -528,6 +701,7 @@
     }
 
 
+    header .mobile-toggle ul li span,
     header .mobile-toggle ul li a {
       width: 100%;
       height: 100%;
@@ -1559,6 +1733,9 @@
     line-height: 34px;
     font-size: 30px;
     padding-top: 6px;
+    width: 100%;
+    display: block;
+    float: left;
   }
 
   section.breadcrumb.settings span.head {
@@ -1581,6 +1758,9 @@
     line-height: 16px;
     display: none;
     visibility: hidden;
+    width: 100%;
+    display: block;
+    float: left;
   }
 
 /*---- INBOX ----*/
@@ -1740,10 +1920,12 @@
       display: inline-block;
       color: rgba(145,145,145,0.57);
       font-size: 13px;
-      text-transform: uppercase;
       line-height: 15px;
       letter-spacing: -0.5px;
       text-align: right;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     section.inbox .left .conversations .item .data span.msg {
@@ -1830,11 +2012,12 @@
       background-color: #1FBA3D;
     }
 
-    section.inbox .right .content .visit-profile a {
+    section.inbox .right .content .visit-profile span {
       width: 100%;
       height: 100%;
       display: inline-block;
       float: left;
+      cursor: pointer;
     }
 
     section.inbox .right .content .functions {
@@ -1894,16 +2077,16 @@
       color: #3387F9;
     }
 
-    section.inbox .right .content .functions ul li a {
+    section.inbox .right .content .functions ul li span {
       width: 100%;
       height: 100%;
       display: inline-block;
       float: left;
-      padding: 15px 0 13px 0;
+      padding: 15px 0 13px 25px;
       border-top: 1px solid #DFE1E6;
     }
 
-    section.inbox .right .content .functions ul li:last-child a {
+    section.inbox .right .content .functions ul li:last-child span {
       border-bottom: 1px solid #DFE1E6;
     }
 
@@ -2177,7 +2360,6 @@
       color: #9D9D9D;
       padding-left: 2px;
       padding-top: 5px;
-      text-transform: uppercase;
     }
 
     section.inbox .chat .content .msg-item.response {
@@ -2597,8 +2779,6 @@
 
   section.profile .data-info .functions {
     float: right;
-    display: none;
-    visibility: hidden;
   }
 
   section.profile .data-info .functions .btn {
@@ -2616,7 +2796,7 @@
     top: -2px;
   }
 
-  section.profile .data-info .functions .btn a {
+  section.profile .data-info .functions .btn button {
     width: 100%;
     height: 100%;
     display: inline-block;
@@ -5453,6 +5633,221 @@
     background-color: #fff;
   }
 
+
+    section.invite-popup-content {
+      width: 100%;
+      height: 100%;
+      display: block;
+      float: left;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      padding-top: 85px;
+      display: inline-block;
+      visibility: visible;
+    }
+
+    section.invite-popup-content.show {
+      display: inline-block;
+      visibility: visible;
+    }
+
+    section.invite-popup-content::before {
+      content: '';
+      width: 100%;
+      height: 300vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: block;
+      float: left;
+      background: rgba(41,1,10,0.44);
+    }
+
+    section.invite-popup-content  .select-checkbox {
+      float: left;
+      margin-top: 10px;
+    }
+
+    section.invite-popup-content  .select-checkbox input {
+      display: none;
+    }
+
+    section.invite-popup-content  .select-checkbox input + label span {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #E9EBEC;
+      position: relative;
+      background: inherit;
+      border-radius: 2px;
+      cursor: pointer;
+      margin: 0 auto;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: -o-flex;
+      display: flex;
+    }
+
+
+    section.invite-popup-content  .select-checkbox input:checked + label span:before {
+      content: '\e803';
+      font-family: 'foxtail-icon';
+      color: #CB0032;
+      font-size: 10px;
+      text-align: center;
+      display: inline-block;
+      float: left;
+      width: 100%;
+      line-height: 24px;
+    }
+
+
+    section.invite-popup-content .modal-popup {
+      width: 100%;
+      display: block;
+      float: left;
+      position: relative;
+      background-color: #fff;
+      border-radius: 2px;
+    }
+
+    section.invite-popup-content .modal-popup .m-head {
+      width: 100%;
+      padding: 30px;
+      display: block;
+      float: left;
+      background-image: -webkit-linear-gradient(top right, #F70016 0%, #791B7D 100%);
+      background-image: -o-linear-gradient(top right, #F70016 0%, #791B7D 100%);
+      background-image: linear-gradient(to bottom left, #F70016 0%, #791B7D 100%);
+      position: relative;
+    }
+
+    section.invite-popup-content .modal-popup .m-head .close::before {
+      content: '\e804';
+      font-family: 'foxtail-icon';
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      color: rgba(255,255,255,0.50);
+      font-size: 16px;
+      display: inline-block;
+      float: left;
+      transition: .3s all;
+      cursor: pointer;
+    }
+
+    section.invite-popup-content .modal-popup .m-head .close:hover::before {
+      color: #fff;
+    }
+
+    section.invite-popup-content .modal-popup .m-head span {
+      width: 100%;
+      display: block;
+      float: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    section.invite-popup-content .modal-popup .m-head span.heading {
+      color: #fff;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      line-height: 36px;
+    }
+
+    section.invite-popup-content .modal-popup .m-head span.title {
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      line-height: 15px;
+    }
+
+    section.invite-popup-content .modal-popup .m-body {
+      width: 100%;
+      display: block;
+      float: left;
+      padding: 30px;
+      background-color: #fff;
+    }
+
+
+    section.invite-popup-content .invite-members {
+      width: 100%;
+      display: block;
+      float: left;
+    }
+
+    section.invite-popup-content .invite-members .inv-item {
+      width: 100%;
+      display: block;
+      float: left;
+      margin-bottom: 20px;
+    }
+
+    section.invite-popup-content .invite-members .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 2px;
+      display: inline-block;
+      float: left;
+      margin-left: 15px;
+      overflow: hidden;
+    }
+    section.invite-popup-content .invite-members .avatar img {
+      width: 100%;
+      height: 100%;
+      display: inline-block;
+      float: left;
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
+
+    section.invite-popup-content .invite-members span.username {
+      width: calc(100% - 102px);
+      float: left;
+      display: block;
+      line-height: 48px;
+      color: rgba(0,0,0,0.8);
+      margin-left: 15px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    section.invite-popup-content .invite-members .apply-content {
+      width: 100%;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      padding-top: 15px;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: -o-flex;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    section.invite-popup-content .invite-members .apply-content span {
+      text-align: center;
+      height: 45px;
+      display: inline-block;
+      padding: 0 90px;
+      line-height: 45px;
+      float: left;
+      border-radius: 2px;
+      color: #fff;
+      font-weight: 700;
+      background-color: #36D055;
+      cursor: pointer;
+      transform: .3s all;
+    }
+
+    section.invite-popup-content .invite-members .apply-content span:hover {
+      background-color: #1FBA3D;
+    }
+
+
 /*---- LANDING ----*/
 
   header.landing {
@@ -5516,8 +5911,10 @@
     border: 1px solid rgba(255,255,255,0.25);
     transition: .3s all;
     cursor: pointer;
-    display: none;
-    visibility: hidden;
+    display: inline-block;
+    top: -65px;
+    position: absolute;
+    right: 0;
   }
   header.landing .content .language-dropdown.click {
     display: inline-block;
@@ -5557,7 +5954,7 @@
   header.landing .content .language-dropdown {
     position: absolute;
     right: 0;
-    top: 39px;
+    top: -26px;
     background-color: #fff;
     border-radius: 0 0 1px 1px;
     width: 52px;
@@ -5861,7 +6258,8 @@
     position: relative;
     float: left;
     margin-bottom: 15px;
-    /* z-index: 100; */
+    z-index: 100;
+    overflow: hidden;
   }
   section.landing .register-form form .form-content .dropdown.nobottom {
     margin-bottom: none;
@@ -6491,8 +6889,7 @@
 
  .select-list {
   width: 100% !important;
-  top: calc(100% + 5px);
-  left: 0px;
+  top: 43px !important;
  }
 
 .select-list ul::-webkit-scrollbar {
@@ -6515,14 +6912,13 @@
 
 
  .multiple-options {
-   overflow: hidden;
-   margin-bottom: -6px;
+  position: relative;
+  top: -3px;
  }
  .select-container {
   background-color: #fff !important;
   border: 1px solid #e3e3e3 !important;
   height: 45px !important;
-  position: relative !important;
  }
  .filepond--drop-label label {
   text-transform: none;
@@ -6679,6 +7075,23 @@
 }
 
 @media only screen and (min-width : 768px) {
+
+  header .function .notification {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  header .function .inbox {
+    padding-right: 20px;
+  }
+  header.landing .content .language-choose {
+    position: inherit;
+    top: inherit;
+    right: inherit;
+  }
+  header.landing .content .language-dropdown {
+    top: 39px;
+  }
+
   header ul.menu li::before {
     display: none;
     visibility: hidden;
@@ -6714,6 +7127,7 @@
     left: initial;
   }
 
+  header .toggle .invite-member,
   header .toggle .notification {
     width: 310px;
     right: 71px;
@@ -7120,15 +7534,14 @@
     height: 65px;
   }
 
-
-  section.go-events .header .settings-con .dropdown {
+  section.go-events .header .settings-con .search {
     width: 220px;
     margin-bottom: 0;
     float: left;
     margin-right: 10px;
   }
 
-  section.go-events .header .settings-con .search {
+  section.go-events .header .settings-con .dropdown {
     width: 220px;
     margin-bottom: 0;
     float: left;
@@ -7243,6 +7656,7 @@
     margin-right: 10px;
   }
 
+  header .toggle .invite-member,
   header .toggle .notification {
     right: 134px;
   }
@@ -7477,153 +7891,3 @@ img {
   font-size: 16px;
   z-index: 99999;
 }
-
-  /* INVITE MEMBER */
-
-  .invite-member {
-    width: 100%;
-    max-height: 300px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    background-color: #fff;
-    float: left;
-    position: relative;
-    top: 6px;
-    right: inherit;
-    box-shadow: 0 1px 0 0 rgba(0,0,0,0.04), 0 15px 65px 0 rgba(17,25,40,0.12);
-    border-radius: 3px;
-    padding: 5px 15px;
-  }
-
-  .invite-member.open {
-    display: inline-block;
-    visibility: visible;
-  }
-
-  .invite-member::-webkit-scrollbar {
-    width: 9px;
-    height: 10px;
-    border: none;
-    background-color: inherit;
-    overflow: hidden;
-    border-radius: 0 3px 3px 0;
-  }
-
-  .invite-member::-webkit-scrollbar-thumb {
-    background: #ECECEC;
-    border: none;
-  }
-
-  .invite-member::-webkit-scrollbar-corner {
-    background: inherit;
-  }
-
-  .invite-member .inv-item .select-checkbox {
-    float: left;
-    margin-top: 3px;
-  }
-
-  .invite-member .inv-item .select-checkbox input {
-    display: none;
-  }
-
-  .invite-member .inv-item .select-checkbox input + label span {
-    width: 20px;
-    height: 20px;
-    border: 1px solid #E9EBEC;
-    position: relative;
-    background: inherit;
-    border-radius: 2px;
-    cursor: pointer;
-    margin: 0 auto;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-  }
-
-  .invite-member .inv-item .select-checkbox input:checked + label span:before {
-    content: '\e803';
-    font-family: 'foxtail-icon';
-    color: #CB0032;
-    font-size: 8px;
-    text-align: center;
-    display: inline-block;
-    float: left;
-    width: 100%;
-    line-height: 20px;
-  }
-
-  .invite-member .content {
-    padding: 0 0 15px 0;
-  }
-
-  .invite-member .inv-item {
-    width: 100%;
-    display: block;
-    float: left;
-    margin-bottom: 20px;
-  }
-
-  .invite-member .content .head {
-    width: 100%;
-    display: block;
-    float: left;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    padding-bottom: 10px;
-    font-size: 15px;
-    line-height: 15px;
-    padding-top: 10px;
-    color: #000;
-    margin-bottom: 10px;
-  }
-
-  .invite-member .content .inv-item .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 2px;
-    display: inline-block;
-    float: left;
-    margin-left: 10px;
-    overflow: hidden;
-  }
-  .invite-member .content .inv-item .avatar img {
-    width: 100%;
-    height: 100%;
-    display: inline-block;
-    float: left;
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
-
-  .invite-member .content .inv-item span.username {
-    width: calc(100% - 102px);
-    float: left;
-    display: block;
-    line-height: 32px;
-    color: rgba(0,0,0,0.8);
-    margin-left: 15px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-  }
-
-  .invite-member .content .apply-content span {
-    text-align: center;
-    height: 35px;
-    width: 100%;
-    display: inline-block;
-    padding: 0 90px;
-    line-height: 35px;
-    float: left;
-    border-radius: 2px;
-    color: #fff;
-    font-weight: 700;
-    background-color: #36D055;
-    cursor: pointer;
-    transform: .3s all;
-    margin-bottom: 10px;
-  }
-
-  .invite-member .content .apply-content span:hover {
-    background-color: #1FBA3D;
-  }

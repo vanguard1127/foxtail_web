@@ -128,6 +128,9 @@ export const READ_CHAT = gql`
     readChat(chatID: $chatID) {
       id
       updatedAt
+      ownerProfile {
+        id
+      }
       messages {
         id
         text
@@ -484,8 +487,12 @@ export const SEARCH_PROFILES = gql`
           dob
           gender
           verifications {
-            std
-            photo
+            stdVer {
+              active
+            }
+            photoVer {
+              active
+            }
           }
         }
         publicCode
@@ -505,8 +512,12 @@ export const SEARCH_PROFILES = gql`
           dob
           gender
           verifications {
-            std
-            photo
+            stdVer {
+              active
+            }
+            photoVer {
+              active
+            }
           }
         }
         publicCode
@@ -782,8 +793,12 @@ export const GET_SETTINGS = gql`
       users {
         username
         verifications {
-          photo
-          std
+          photoVer {
+            active
+          }
+          stdVer {
+            active
+          }
         }
       }
       photos {
@@ -824,8 +839,12 @@ export const GET_PROFILE = gql`
         dob
         gender
         verifications {
-          std
-          photo
+          stdVer {
+            active
+          }
+          photoVer {
+            active
+          }
         }
       }
       publicCode

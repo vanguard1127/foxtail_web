@@ -177,6 +177,10 @@ class InboxPage extends Component {
                         handleRemoveSelf={() =>
                           this.handleRemoveSelf(removeSelf)
                         }
+                        chatID={chatID}
+                        isOwner={
+                          chat && chat.ownerProfile.id === currentuser.profileID
+                        }
                       />
                     );
                   }}

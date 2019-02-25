@@ -6,9 +6,9 @@ import { ErrorBoundary, setBreadcrumb } from '../common/ErrorHandler';
 import CountUp from 'react-countup';
 
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+//import 'react-toastify/dist/ReactToastify.css';
 // minified version is also included
-// import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { withNamespaces } from 'react-i18next';
 
 const Landing = ({ t, props }) => {
