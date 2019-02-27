@@ -386,9 +386,27 @@ export const TOGGLE_EVENT_ATTEND = gql`
   }
 `;
 
+export const SEND_PHONE_RESET_EMAIL = gql`
+  mutation($phone: String!) {
+    sendPhoneResetEmail(phone: $phone)
+  }
+`;
+
 export const FB_RESOLVE = gql`
   mutation($csrf: String!, $code: String!) {
-    fbResolve(csrf: $csrf, code: $code)
+    fbResolve(csrf: $csrf, code: $code) {
+      token
+      access
+    }
+  }
+`;
+
+export const FB_RESET_PHONE = gql`
+  mutation($csrf: String!, $code: String!, $token: String!) {
+    fbResetPhone(csrf: $csrf, code: $code, token: $token) {
+      token
+      access
+    }
   }
 `;
 

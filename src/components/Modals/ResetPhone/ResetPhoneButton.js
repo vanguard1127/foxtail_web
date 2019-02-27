@@ -1,33 +1,34 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import { FB_RESOLVE } from '../../queries';
+import { FB_RESET_PHONE } from '../../../queries';
 import AccountKit from 'react-facebook-account-kit';
 
 const initialState = {
   csrf: '',
   code: ''
 };
-class LoginButton extends Component {
+class ResetPhoneButton extends Component {
   state = { ...initialState };
-  handleFBReturn = ({ state, code }, fbResolve) => {
+  handleFBReturn = ({ state, code }, fbResetPhone) => {
     const { t } = this.props;
     this.setState({
       csrf: state,
       code
     });
-    fbResolve()
+    fbResetPhone()
       .then(async ({ data }) => {
-        if (data.fbResolve === null) {
+        if (data.fbResetPhone === null) {
           alert(t('noUserError') + '.');
           return;
         } else {
+          alert('Phone Login Updated.');
           localStorage.setItem(
             'token',
-            data.fbResolve.find(token => token.access === 'auth').token
+            data.fbResetPhone.find(token => token.access === 'auth').token
           );
           localStorage.setItem(
             'refreshToken',
-            data.fbResolve.find(token => token.access === 'refresh').token
+            data.fbResetPhone.find(token => token.access === 'refresh').token
           );
           //  await this.props.refetch();
           this.props.history.push('/members');
@@ -43,16 +44,16 @@ class LoginButton extends Component {
   };
   render() {
     const { csrf, code } = this.state;
-    const { t } = this.props;
+    const { t, token } = this.props;
     return (
-      <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
-        {fbResolve => {
+      <Mutation mutation={FB_RESET_PHONE} variables={{ csrf, code, token }}>
+        {fbResetPhone => {
           return (
             <AccountKit
               appId="172075056973555" // Update this!
               version="v1.1" // Version must be in form v{major}.{minor}
               onResponse={resp => {
-                this.handleFBReturn(resp, fbResolve);
+                this.handleFBReturn(resp, fbResetPhone);
               }}
               csrf={'889306f7553962e44db6ed508b4e8266'} // Required for security
               countryCode={'+1'} // eg. +60
@@ -61,9 +62,9 @@ class LoginButton extends Component {
               language={localStorage.getItem('i18nextLng')}
             >
               {p => (
-                <a {...p} className="login-btn">
-                  {t('loginBtn')}
-                </a>
+                <span className="color" {...p}>
+                  Update Phone Number
+                </span>
               )}
             </AccountKit>
           );
@@ -73,4 +74,4 @@ class LoginButton extends Component {
   }
 }
 
-export default LoginButton;
+export default ResetPhoneButton;

@@ -6806,6 +6806,7 @@
     float: left;
   }
 
+  section.login-modal .popup form .form-content .submit span,
   section.login-modal .popup form .form-content .submit button {
     width: 100%;
     height: 50px;
@@ -6822,6 +6823,7 @@
     display: inline-block;
   }
 
+  section.login-modal .popup form .form-content .submit span.color,
   section.login-modal .popup form .form-content .submit button.color {
     background-image: -webkit-linear-gradient(119deg, #F70016 0%, #5F00A4 100%);
     background-image: -o-linear-gradient(119deg, #F70016 0%, #5F00A4 100%);
@@ -6831,6 +6833,7 @@
     margin-bottom: 15px;
   }
 
+  section.login-modal .popup form .form-content .submit span.border,
   section.login-modal .popup form .form-content .submit button.border {
     background-color: #fff;
     border: 1px solid #C20046;
@@ -6838,6 +6841,7 @@
   }
 
 
+  section.login-modal .popup form .form-content .submit span.border:hover
   section.login-modal .popup form .form-content .submit button.border:hover {
     background-color: #C20046;
     color: #fff;

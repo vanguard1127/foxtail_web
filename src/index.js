@@ -12,6 +12,7 @@ import * as Sentry from '@sentry/browser';
 
 import Landing from './components/Landing';
 import EmailConfirm from './components/Landing/EmailConfirm';
+import PhoneConfirm from './components/Landing/PhoneConfirm';
 import Navbar from './components/Navbar/';
 import ProfileSearch from './components/SearchProfiles/';
 import Settings from './components/Settings/';
@@ -270,6 +271,12 @@ const Body = ({ showFooter }) => (
           path="/confirmation/:token"
           render={props => (
             <EmailConfirm ErrorHandler={ErrorHandler} {...props} />
+          )}
+        />
+        <Route
+          path="/phonereset/:token"
+          render={props => (
+            <PhoneConfirm ErrorHandler={ErrorHandler} {...props} />
           )}
         />
         <Redirect to="/" />
