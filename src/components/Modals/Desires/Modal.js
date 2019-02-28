@@ -9,7 +9,7 @@ class Desires extends Component {
   };
   render() {
     const { searchText } = this.state;
-    const { closePopup, onChange, desires, t, ErrorBoundary } = this.props;
+    const { close, onChange, desires, t, ErrorBoundary } = this.props;
 
     return (
       <section className="desires-popup show">
@@ -22,7 +22,7 @@ class Desires extends Component {
                     <div className="m-head">
                       <span className="heading">{t('desireselect')}</span>
                       <span className="title">{t('setdesires')}</span>
-                      <span className="close" onClick={closePopup} />
+                      <span className="close" onClick={close} />
                     </div>
                     <div className="m-body desires">
                       <SearchBox

@@ -1,19 +1,20 @@
-import React, { Component } from "react";
-import { withNamespaces } from "react-i18next";
-import { GENERATE_CODE, LINK_PROFILE, UNLINK_PROFILE } from "../../../queries";
-import { Query, Mutation } from "react-apollo";
-import { EmailShareButton, EmailIcon } from "react-share";
-import Spinner from "../../common/Spinner";
-import Header from "./Header";
-import LinkBox from "./LinkBox";
-import IncludeMsgSlide from "./IncludeMsgSlide";
-import CodeBox from "./CodeBox";
+import React, { Component } from 'react';
+import { withNamespaces } from 'react-i18next';
+import { GENERATE_CODE, LINK_PROFILE, UNLINK_PROFILE } from '../../../queries';
+import { Query, Mutation } from 'react-apollo';
+import { EmailShareButton, EmailIcon } from 'react-share';
+import Spinner from '../../common/Spinner';
+import Header from './Header';
+import LinkBox from './LinkBox';
+import Modal from '../../common/Modal';
+import IncludeMsgSlide from './IncludeMsgSlide';
+import CodeBox from './CodeBox';
 class Couples extends Component {
   state = {
-    code: "",
+    code: '',
     currentSlide: 0,
-    title: this.props.t("joinme"),
-    shareUrl: "",
+    title: this.props.t('joinme'),
+    shareUrl: '',
     currSlide: 1
   };
 
@@ -22,7 +23,7 @@ class Couples extends Component {
   };
 
   handleLink = (linkProfile, close) => {
-    if (this.state.code !== "") {
+    if (this.state.code !== '') {
       linkProfile()
         .then(({ data }) => {
           close();
@@ -52,7 +53,7 @@ class Couples extends Component {
       .then(({ data }) => {
         //switch to new screen for do u want to edit?
         close();
-        this.props.setPartnerID("addpartner");
+        this.props.setPartnerID('addpartner');
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -68,58 +69,53 @@ class Couples extends Component {
     const { title, currSlide } = this.state;
     const { t, ErrorBoundary } = this.props;
     return (
-      <section className="couple-popup-content">
-        <div className="container">
-          <div className="col-md-12">
-            <div className="row">
-              <div className="offset-md-3 col-md-6">
-                <div className="modal-popup">
-                  <Header close={close} title={title} t={t} />
-                  <div className="m-body">
-                    <div className="page">
-                      <div className="form">
-                        {currSlide === 1 && (
-                          <div className="content">
-                            <ErrorBoundary>
-                              <LinkBox
-                                code={code}
-                                handleTextChange={this.handleTextChange}
-                                next={this.next}
-                                t={t}
-                              />
-                            </ErrorBoundary>{" "}
-                            <ErrorBoundary>
-                              <CodeBox
-                                includeMsgs={includeMsgs}
-                                setValue={setValue}
-                                t={t}
-                              />{" "}
-                            </ErrorBoundary>
-                          </div>
-                        )}
-                        {currSlide === 2 && (
-                          <ErrorBoundary>
-                            {" "}
-                            <IncludeMsgSlide
-                              prev={this.prev}
-                              close={close}
-                              includeMsgs={includeMsgs}
-                              code={code}
-                              setValue={setValue}
-                              handleLink={this.handleLink}
-                              t={t}
-                            />{" "}
-                          </ErrorBoundary>
-                        )}
+      <Modal header={title} close={close}>
+        <section className="couple-popup-content">
+          <div className="container">
+            <div className="col-md-12">
+              <div className="row">
+                <div className="page">
+                  <div className="form">
+                    {currSlide === 1 && (
+                      <div className="content">
+                        <ErrorBoundary>
+                          <LinkBox
+                            code={code}
+                            handleTextChange={this.handleTextChange}
+                            next={this.next}
+                            t={t}
+                          />
+                        </ErrorBoundary>{' '}
+                        <ErrorBoundary>
+                          <CodeBox
+                            includeMsgs={includeMsgs}
+                            setValue={setValue}
+                            t={t}
+                          />{' '}
+                        </ErrorBoundary>
                       </div>
-                    </div>
+                    )}
+                    {currSlide === 2 && (
+                      <ErrorBoundary>
+                        {' '}
+                        <IncludeMsgSlide
+                          prev={this.prev}
+                          close={close}
+                          includeMsgs={includeMsgs}
+                          code={code}
+                          setValue={setValue}
+                          handleLink={this.handleLink}
+                          t={t}
+                        />{' '}
+                      </ErrorBoundary>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </Modal>
     );
   }
 
@@ -130,7 +126,7 @@ class Couples extends Component {
         {(unlinkProfile, { loading }) => {
           if (loading) {
             //TODO: nice unlinking message
-            return <Spinner message={t("Unlinking") + "..."} size="large" />;
+            return <Spinner message={t('Unlinking') + '...'} size="large" />;
           }
           return (
             // <Modal
@@ -143,7 +139,7 @@ class Couples extends Component {
             //   onCancel={close}
             //   cancelText="No"
             // >
-            <div>{t("coupdeact")}</div>
+            <div>{t('coupdeact')}</div>
             // </Modal>
           );
         }}
@@ -161,4 +157,4 @@ class Couples extends Component {
   }
 }
 
-export default withNamespaces("modals")(Couples);
+export default withNamespaces('modals')(Couples);

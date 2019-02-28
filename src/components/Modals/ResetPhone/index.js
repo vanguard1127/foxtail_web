@@ -38,7 +38,7 @@ class ResetPhone extends Component {
                       className={'dropdown'}
                     />
 
-                    <div className="input">
+                    <div className="phoneText input">
                       <input
                         type="tel"
                         placeholder="Phone Number"

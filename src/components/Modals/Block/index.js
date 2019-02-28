@@ -3,6 +3,7 @@ import { withNamespaces } from 'react-i18next';
 import { BLOCK_PROFILE, FLAG_ITEM } from '../../../queries';
 import { Mutation } from 'react-apollo';
 import { toast } from 'react-toastify';
+import Modal from '../../common/Modal';
 import { flagOptions } from '../../../docs/options';
 
 class BlockModal extends Component {
@@ -114,74 +115,66 @@ class BlockModal extends Component {
       title = t('repblock');
     }
     return (
-      <section className="popup-content show">
-        <div className="container">
-          <div className="col-md-12">
-            <div className="row">
-              <div className="offset-md-3 col-md-6">
-                <div className="modal-popup photo-verification">
-                  <ErrorBoundary>
-                    <div className="m-head">
-                      <span className="heading">{title}</span>
-                      <span className="close" onClick={close} />
-                    </div>
-                    <div className="m-body">
-                      {blockMenu}
-                      <div
-                        style={{
-                          display: other ? 'block' : 'none'
-                        }}
+      <Modal
+        header={title}
+        close={close}
+        description="Please select the reason you are reporting. We will handle it prompty. Thank You."
+        okSpan={
+          <Mutation
+            mutation={FLAG_ITEM}
+            variables={{
+              type,
+              reason,
+              targetID: id
+            }}
+          >
+            {flagItem => {
+              return (
+                <Mutation
+                  mutation={BLOCK_PROFILE}
+                  variables={{
+                    blockedProfileID: id
+                  }}
+                >
+                  {(blockProfile, { loading }) => {
+                    if (loading) {
+                      //TODO: Make nice popup saving
+                      return <div>{t('Saving')}...</div>;
+                    }
+                    return (
+                      <button
+                        onClick={() =>
+                          this.handleSubmit(blockProfile, flagItem)
+                        }
+                        disabled={reason === '' || loading}
                       >
-                        <input
-                          placeholder={t('otherreason')}
-                          onChange={this.handleTextChange}
-                          value={reason}
-                        />
-                      </div>
-                      <Mutation
-                        mutation={FLAG_ITEM}
-                        variables={{
-                          type,
-                          reason,
-                          targetID: id
-                        }}
-                      >
-                        {flagItem => {
-                          return (
-                            <Mutation
-                              mutation={BLOCK_PROFILE}
-                              variables={{
-                                blockedProfileID: id
-                              }}
-                            >
-                              {(blockProfile, { loading }) => {
-                                if (loading) {
-                                  //TODO: Make nice popup saving
-                                  return <div>{t('Saving')}...</div>;
-                                }
-                                return (
-                                  <button
-                                    onClick={() =>
-                                      this.handleSubmit(blockProfile, flagItem)
-                                    }
-                                    disabled={reason === '' || loading}
-                                  >
-                                    {t('repblock')}
-                                  </button>
-                                );
-                              }}
-                            </Mutation>
-                          );
-                        }}
-                      </Mutation>
-                    </div>
-                  </ErrorBoundary>
-                </div>
-              </div>
+                        {t('repblock')}
+                      </button>
+                    );
+                  }}
+                </Mutation>
+              );
+            }}
+          </Mutation>
+        }
+      >
+        <ErrorBoundary>
+          <div>
+            {blockMenu}
+            <div
+              style={{
+                display: other ? 'block' : 'none'
+              }}
+            >
+              <input
+                placeholder={t('otherreason')}
+                onChange={this.handleTextChange}
+                value={reason}
+              />
             </div>
           </div>
-        </div>
-      </section>
+        </ErrorBoundary>
+      </Modal>
     );
   }
 }

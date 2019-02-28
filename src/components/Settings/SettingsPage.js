@@ -576,7 +576,7 @@ class SettingsPage extends Component {
 
               {showDesiresPopup && (
                 <DesiresModal
-                  closePopup={() => this.toggleDesiresPopup()}
+                  close={() => this.toggleDesiresPopup()}
                   onChange={e => this.toggleDesires(e, updateSettings)}
                   desires={desires}
                   updateSettings={updateSettings}
@@ -585,7 +585,7 @@ class SettingsPage extends Component {
               )}
               {showPhotoVerPopup && (
                 <SubmitPhotoModal
-                  closePopup={() => this.togglePhotoVerPopup()}
+                  close={() => this.togglePhotoVerPopup()}
                   type={photoSubmitType}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />

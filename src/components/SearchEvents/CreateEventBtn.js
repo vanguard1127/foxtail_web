@@ -16,7 +16,7 @@ class CreateEventBtn extends Component {
         </div>
         {this.state.showPopup ? (
           <CreateEvent
-            closePopup={() => this.togglePopup()}
+            close={() => this.togglePopup()}
             ErrorHandler={this.props.ErrorHandler}
           />
         ) : null}

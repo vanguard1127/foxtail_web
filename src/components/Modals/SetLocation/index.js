@@ -4,6 +4,7 @@ import { Mutation } from 'react-apollo';
 import AddressSearch from '../../common/AddressSearch';
 import { ErrorBoundary } from '../../common/ErrorHandler';
 import { withNamespaces } from 'react-i18next';
+import Modal from '../../common/Modal';
 
 class SetLocationModal extends Component {
   state = { address: '', long: null, lat: null };
@@ -49,66 +50,55 @@ class SetLocationModal extends Component {
 
     const { address, lat, long } = this.state;
     return (
-      <Mutation
-        mutation={UPDATE_SETTINGS}
-        variables={{
-          city: address,
-          lat,
-          long
-        }}
+      <Modal
+        header={t('common:setloc')}
+        close={close}
+        description={
+          !isBlackMember && (
+            <small>
+              {t('compmsg')}
+              <br />
+              {t('compsecmsg')}
+            </small>
+          )
+        }
+        okSpan={
+          lat !== null ? (
+            <Mutation
+              mutation={UPDATE_SETTINGS}
+              variables={{
+                city: address,
+                lat,
+                long
+              }}
+            >
+              {updateSettings => {
+                return (
+                  <button
+                    onClick={() => this.handleSubmit(updateSettings)}
+                    disabled={lat === null}
+                  >
+                    {t('Save')}
+                  </button>
+                );
+              }}
+            </Mutation>
+          ) : null
+        }
       >
-        {updateSettings => {
-          return (
-            <section className="popup-content show">
-              <div className="container">
-                <div className="col-md-12">
-                  <div className="row">
-                    <div className="offset-md-3 col-md-6">
-                      <div className="modal-popup photo-verification">
-                        <ErrorBoundary>
-                          <div className="m-head">
-                            <span className="heading">
-                              {t('common:setloc')}
-                            </span>
-                            <span className="close" onClick={close} />
-                          </div>
-                          <div className="m-body">
-                            {t('setcity')}:
-                            <AddressSearch
-                              style={{ width: '100%' }}
-                              setLocationValues={this.setLocationValues}
-                              address={address}
-                              type={'(cities)'}
-                              placeholder={t('common:setloc') + '...'}
-                            />
-                            {lat !== null ? (
-                              <button
-                                onClick={() =>
-                                  this.handleSubmit(updateSettings)
-                                }
-                                disabled={lat === null}
-                              >
-                                {t('Save')}
-                              </button>
-                            ) : null}
-                          </div>
-                          {!isBlackMember && (
-                            <small>
-                              {t('compmsg')}
-                              <br />
-                              {t('compsecmsg')}
-                            </small>
-                          )}
-                        </ErrorBoundary>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          );
-        }}
-      </Mutation>
+        <ErrorBoundary>
+          <div className="m-body">
+            {t('setcity')}:
+            <AddressSearch
+              style={{ width: '100%' }}
+              setLocationValues={this.setLocationValues}
+              address={address}
+              type={'(cities)'}
+              placeholder={t('common:setloc') + '...'}
+            />
+          </div>
+        </ErrorBoundary>
+      </Modal>
     );
   }
 }

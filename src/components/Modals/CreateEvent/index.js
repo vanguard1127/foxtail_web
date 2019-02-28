@@ -10,6 +10,7 @@ import DesiresSelector from '../../Modals/Desires/Selector';
 import Select from '../../common/Select';
 import AddressSearch from '../../common/AddressSearch';
 import DatePicker from '../../common/DatePicker';
+import Modal from '../../common/Modal';
 import isEmpty from '../../../utils/isEmpty';
 
 const schema = yup.object().shape({
@@ -106,7 +107,7 @@ class CreateEvent extends Component {
       createEvent()
         .then(async ({ data }) => {
           console.log('2', data);
-          this.props.closePopup();
+          this.props.close();
         })
         .catch(res => {
           console.log('3', res);
@@ -183,7 +184,7 @@ class CreateEvent extends Component {
   };
   //TODO: Min time for date pickers to prevent time overlap
   render() {
-    const { closePopup, t, ErrorHandler } = this.props;
+    const { close, t, ErrorHandler } = this.props;
     const {
       eventname,
       tagline,
@@ -205,248 +206,227 @@ class CreateEvent extends Component {
       filetype
     } = this.state;
     return (
-      <section className="popup-content show">
-        <div className="container">
-          <div className="col-md-12">
-            <div className="row">
-              <div className="offset-md-3 col-md-6">
-                <div className="modal-popup create-event">
-                  <ErrorHandler.ErrorBoundary>
-                    <div className="m-head">
-                      <span className="heading">{t('createeve')}</span>
-                      <span className="title">{t('common:eventsubtitle')}</span>
-                      <span className="close" onClick={() => closePopup()} />
-                    </div>
-                    <div className="m-body">
-                      <div className="page">
-                        <div className="form">
-                          {showInfo && (
-                            <div className="content">
-                              <div className="item">
-                                <div className="input">
-                                  <input
-                                    type="text"
-                                    required
-                                    id="eventname"
-                                    onChange={el =>
-                                      this.setValue({
-                                        name: 'eventname',
-                                        value: el.target.value
-                                      })
-                                    }
-                                    value={eventname}
-                                  />
-                                  <label
-                                    title={t('evename')}
-                                    htmlFor="eventname"
-                                  />
-                                </div>
-                                {this.InputFeedback(errors.eventname)}
-                              </div>
-                              <div className="item">
-                                <div className="input">
-                                  <input
-                                    type="text"
-                                    required
-                                    id="tagline"
-                                    onChange={el =>
-                                      this.setValue({
-                                        name: 'tagline',
-                                        value: el.target.value
-                                      })
-                                    }
-                                    value={tagline}
-                                  />
-                                  <label
-                                    title={t('tagline')}
-                                    htmlFor="tagline"
-                                  />
-                                </div>
-                              </div>
-                              <div className="item">
-                                <div className="textarea">
-                                  <textarea
-                                    placeholder={t('desctitle') + '...'}
-                                    onChange={el =>
-                                      this.setValue({
-                                        name: 'description',
-                                        value: el.target.value
-                                      })
-                                    }
-                                    value={description}
-                                  />
-                                </div>
-                                {this.InputFeedback(errors.description)}
-                              </div>
-                              <div className="item">
-                                <DesiresSelector
-                                  desires={desires}
-                                  togglePopup={() => this.toggleDesiresPopup()}
-                                  ErrorBoundary={ErrorHandler.ErrorBoundary}
-                                />
-                              </div>
-                              <div className="item">
-                                <Select
-                                  label={t('evetype') + ':'}
-                                  onChange={el =>
-                                    this.setValue({
-                                      name: 'type',
-                                      value: el.value
-                                    })
-                                  }
-                                  value={type}
-                                  options={[
-                                    { label: 'Public', value: 'public' },
-                                    { label: 'Private', value: 'private' },
-                                    { label: 'Request', value: 'request' }
-                                  ]}
-                                />
-                              </div>
-                              {this.InputFeedback(errors.type)}
-                              <div className="item nobottom">
-                                <PhotoUpload
-                                  photos={images}
-                                  setPhotos={el =>
-                                    this.setValue({
-                                      name: 'images',
-                                      value: el
-                                    })
-                                  }
-                                />
-                              </div>
-                              <div className="item">
-                                <div className="button mtop">
-                                  <button onClick={() => this.togglePage()}>
-                                    {t('common:Next')}
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          {!showInfo && (
-                            <div className="content">
-                              <div className="item">
-                                <AddressSearch
-                                  style={{
-                                    width: '100%'
-                                  }}
-                                  setLocationValues={({ lat, long, address }) =>
-                                    this.setLocationValues({
-                                      lat,
-                                      long,
-                                      address
-                                    })
-                                  }
-                                  address={address}
-                                  type={'address'}
-                                  placeholder={t('common:Address')}
-                                  hideReset={true}
-                                />
-                              </div>
-                              {this.InputFeedback(errors.address)}
-                              <div className="item">
-                                <DatePicker
-                                  value={startTime}
-                                  p={{
-                                    maxDate: endTime || null,
-                                    minDate: new Date()
-                                  }}
-                                  onChange={e => {
-                                    this.setValue({
-                                      name: 'startTime',
-                                      value: e
-                                    });
-                                  }}
-                                  t={t}
-                                  type="datetime"
-                                  placeholder={t('evestart')}
-                                />
-                              </div>
-                              <div className="item">
-                                <DatePicker
-                                  value={endTime}
-                                  p={{ minDate: startTime || new Date() }}
-                                  onChange={e => {
-                                    this.setValue({
-                                      name: 'endTime',
-                                      value: e
-                                    });
-                                  }}
-                                  t={t}
-                                  placeholder={t('eveend')}
-                                  type="datetime"
-                                />
-                              </div>
-
-                              <div className="item">
-                                <div className="button mtop">
-                                  {' '}
-                                  <Mutation
-                                    mutation={SIGNS3}
-                                    variables={{ filename, filetype }}
-                                  >
-                                    {signS3 => {
-                                      return (
-                                        <Mutation
-                                          mutation={CREATE_EVENT}
-                                          variables={{
-                                            eventname,
-                                            desires,
-                                            interestedIn,
-                                            description,
-                                            address,
-                                            type,
-                                            lat,
-                                            long,
-                                            startTime,
-                                            endTime,
-                                            image
-                                          }}
-                                        >
-                                          {(createEvent, { loading }) => {
-                                            return (
-                                              <button
-                                                onClick={() =>
-                                                  this.handleSubmit({
-                                                    createEvent,
-                                                    signS3
-                                                  })
-                                                }
-                                              >
-                                                {t('common:createevent')}
-                                              </button>
-                                            );
-                                          }}
-                                        </Mutation>
-                                      );
-                                    }}
-                                  </Mutation>
-                                  <button
-                                    style={{
-                                      backgroundColor: '#404040',
-                                      marginTop: '10px'
-                                    }}
-                                    onClick={() => this.togglePage()}
-                                  >
-                                    Back
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          )}
+      <section>
+        <Modal header={t('createeve')} close={close}>
+          <ErrorHandler.ErrorBoundary>
+            <div className="m-body">
+              <div className="page">
+                <div className="form">
+                  {showInfo && (
+                    <div className="content">
+                      <div className="item">
+                        <div className="input">
+                          <input
+                            type="text"
+                            required
+                            id="eventname"
+                            onChange={el =>
+                              this.setValue({
+                                name: 'eventname',
+                                value: el.target.value
+                              })
+                            }
+                            value={eventname}
+                          />
+                          <label title={t('evename')} htmlFor="eventname" />
+                        </div>
+                        {this.InputFeedback(errors.eventname)}
+                      </div>
+                      <div className="item">
+                        <div className="input">
+                          <input
+                            type="text"
+                            required
+                            id="tagline"
+                            onChange={el =>
+                              this.setValue({
+                                name: 'tagline',
+                                value: el.target.value
+                              })
+                            }
+                            value={tagline}
+                          />
+                          <label title={t('tagline')} htmlFor="tagline" />
+                        </div>
+                      </div>
+                      <div className="item">
+                        <div className="textarea">
+                          <textarea
+                            placeholder={t('desctitle') + '...'}
+                            onChange={el =>
+                              this.setValue({
+                                name: 'description',
+                                value: el.target.value
+                              })
+                            }
+                            value={description}
+                          />
+                        </div>
+                        {this.InputFeedback(errors.description)}
+                      </div>
+                      <div className="item">
+                        <DesiresSelector
+                          desires={desires}
+                          togglePopup={() => this.toggleDesiresPopup()}
+                          ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        />
+                      </div>
+                      <div className="item">
+                        <Select
+                          label={t('evetype') + ':'}
+                          onChange={el =>
+                            this.setValue({
+                              name: 'type',
+                              value: el.value
+                            })
+                          }
+                          value={type}
+                          options={[
+                            { label: 'Public', value: 'public' },
+                            { label: 'Private', value: 'private' },
+                            { label: 'Request', value: 'request' }
+                          ]}
+                        />
+                      </div>
+                      {this.InputFeedback(errors.type)}
+                      <div className="item nobottom">
+                        <PhotoUpload
+                          photos={images}
+                          setPhotos={el =>
+                            this.setValue({
+                              name: 'images',
+                              value: el
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="item">
+                        <div className="button mtop">
+                          <button onClick={() => this.togglePage()}>
+                            {t('common:Next')}
+                          </button>
                         </div>
                       </div>
                     </div>
-                  </ErrorHandler.ErrorBoundary>
+                  )}
+                  {!showInfo && (
+                    <div className="content">
+                      <div className="item">
+                        <AddressSearch
+                          style={{
+                            width: '100%'
+                          }}
+                          setLocationValues={({ lat, long, address }) =>
+                            this.setLocationValues({
+                              lat,
+                              long,
+                              address
+                            })
+                          }
+                          address={address}
+                          type={'address'}
+                          placeholder={t('common:Address')}
+                          hideReset={true}
+                        />
+                      </div>
+                      {this.InputFeedback(errors.address)}
+                      <div className="item">
+                        <DatePicker
+                          value={startTime}
+                          p={{
+                            maxDate: endTime || null,
+                            minDate: new Date()
+                          }}
+                          onChange={e => {
+                            this.setValue({
+                              name: 'startTime',
+                              value: e
+                            });
+                          }}
+                          t={t}
+                          type="datetime"
+                          placeholder={t('evestart')}
+                        />
+                      </div>
+                      <div className="item">
+                        <DatePicker
+                          value={endTime}
+                          p={{ minDate: startTime || new Date() }}
+                          onChange={e => {
+                            this.setValue({
+                              name: 'endTime',
+                              value: e
+                            });
+                          }}
+                          t={t}
+                          placeholder={t('eveend')}
+                          type="datetime"
+                        />
+                      </div>
+
+                      <div className="item">
+                        <div className="submit">
+                          {' '}
+                          <Mutation
+                            mutation={SIGNS3}
+                            variables={{ filename, filetype }}
+                          >
+                            {signS3 => {
+                              return (
+                                <Mutation
+                                  mutation={CREATE_EVENT}
+                                  variables={{
+                                    eventname,
+                                    desires,
+                                    interestedIn,
+                                    description,
+                                    address,
+                                    type,
+                                    lat,
+                                    long,
+                                    startTime,
+                                    endTime,
+                                    image
+                                  }}
+                                >
+                                  {(createEvent, { loading }) => {
+                                    return (
+                                      <span
+                                        className="color"
+                                        onClick={() =>
+                                          this.handleSubmit({
+                                            createEvent,
+                                            signS3
+                                          })
+                                        }
+                                      >
+                                        {t('common:createevent')}
+                                      </span>
+                                    );
+                                  }}
+                                </Mutation>
+                              );
+                            }}
+                          </Mutation>
+                          <span
+                            className="border"
+                            onClick={() => this.togglePage()}
+                          >
+                            Back
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </ErrorHandler.ErrorBoundary>
+        </Modal>
 
         {showDesiresPopup && (
           <DesiresModal
-            closePopup={() => this.toggleDesiresPopup()}
+            close={() => this.toggleDesiresPopup()}
             onChange={e => this.toggleDesires(e)}
             desires={desires}
             ErrorBoundary={ErrorHandler.ErrorBoundary}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { toast } from 'react-toastify';
 
+import Modal from '../../common/Modal';
 class Dialog extends Component {
   state = { text: '', errors: {} };
 
@@ -49,44 +50,37 @@ class Dialog extends Component {
     } = this.props;
     const { text, errors } = this.state;
     return (
-      <section className="popup-content show">
-        <div className="container">
-          <div className="col-md-12">
-            <div className="row">
-              <div className="offset-md-3 col-md-6">
-                <div className="modal-popup photo-verification">
-                  <div className="m-head">
-                    <span className="heading">{title}</span>
-                    <span className="close" onClick={() => close()} />
-                  </div>
-                  <div className="m-body">
-                    {msg}
-                    <ErrorBoundary>
-                      <input
-                        placeholder={t('writemsg') + '...'}
-                        value={text}
-                        onChange={this.handleTextChange}
-                      />
-                      {this.InputFeedback(errors.text)}
-                      <button
-                        onClick={async () => {
-                          if (await this.validateForm()) {
-                            setValue(text);
-                            successMsg && this.successMsg(successMsg);
-                            close();
-                          }
-                        }}
-                      >
-                        {btnText}
-                      </button>
-                    </ErrorBoundary>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <Modal
+        header={title}
+        close={close}
+        description={msg}
+        okSpan={
+          <span
+            className="color"
+            onClick={async () => {
+              if (await this.validateForm()) {
+                setValue(text);
+                successMsg && this.successMsg(successMsg);
+                close();
+              }
+            }}
+          >
+            {btnText}
+          </span>
+        }
+      >
+        <ErrorBoundary>
+          <div className="input">
+            <input
+              placeholder={t('writemsg') + '...'}
+              value={text}
+              onChange={this.handleTextChange}
+            />
           </div>
-        </div>
-      </section>
+
+          {this.InputFeedback(errors.text)}
+        </ErrorBoundary>
+      </Modal>
     );
   }
 }

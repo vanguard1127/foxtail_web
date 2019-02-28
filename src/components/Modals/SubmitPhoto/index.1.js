@@ -4,7 +4,6 @@ import { SIGNS3, SUBMIT_PHOTO } from 'queries';
 import axios from 'axios';
 import PhotoUpload from '../../common/PhotoUpload';
 import { withNamespaces } from 'react-i18next';
-import Modal from '../../common/Modal';
 
 class PhotoVerify extends Component {
   state = { photos: [], filename: '', filetype: '', photoKey: '' };
@@ -44,7 +43,7 @@ class PhotoVerify extends Component {
   handleSubmit = async submitPhoto => {
     await submitPhoto()
       .then(({ data }) => {
-        this.props.close();
+        this.props.closePopup();
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -83,7 +82,7 @@ class PhotoVerify extends Component {
   };
 
   render() {
-    const { close, type, t, ErrorBoundary } = this.props;
+    const { closePopup, type, t, ErrorBoundary } = this.props;
     const { photos, filename, filetype, photoKey } = this.state;
     let header, subheader, body, instruction, btnText;
     header = subheader = body = instruction = btnText = '';
@@ -110,70 +109,78 @@ class PhotoVerify extends Component {
       btnText = t('Submit Verify');
     }
     return (
-      <Modal
-        header={header}
-        close={close}
-        description="Information sent for verification is not shared with anyone"
-        okSpan={
-          photos.length !== 0 ? (
-            <Mutation
-              mutation={SUBMIT_PHOTO}
-              variables={{ reason: 'std', photo: photoKey }}
-            >
-              {submitPhoto => {
-                return (
-                  <Mutation
-                    mutation={SIGNS3}
-                    variables={{ filename, filetype }}
-                  >
-                    {signS3 => {
-                      return (
-                        <div
-                          className="submit"
-                          onClick={() =>
-                            this.handleUpload({
-                              signS3,
-                              submitPhoto
-                            })
-                          }
-                        >
-                          <span>{btnText}</span>
+      <section className="popup-content show">
+        <div className="container">
+          <div className="col-md-12">
+            <div className="row">
+              <div className="offset-md-3 col-md-6">
+                <div className="modal-popup photo-verification">
+                  <ErrorBoundary>
+                    <div className="m-head">
+                      <span className="heading">{header}</span>
+                      <span className="title">{subheader}</span>
+                      <span className="close" onClick={closePopup} />
+                    </div>
+                    <div className="m-body">
+                      <div className="verify-account">
+                        <div className="example-image">
+                          <img
+                            src="assets/img/elements/example-verify.png"
+                            alt=""
+                          />
                         </div>
-                      );
-                    }}
-                  </Mutation>
-                );
-              }}
-            </Mutation>
-          ) : null
-        }
-      >
-        <ErrorBoundary>
-          <div className="m-body">
-            <div className="verify-account">
-              <div
-                className="example-image"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  margin: '20px'
-                }}
-              >
-                <img src="assets/img/elements/example-verify.png" alt="" />
-              </div>
-              <span className="instructions">
-                {body}
-                <br />
-                <br />
-                {instruction}
-              </span>
-              <div className="upload-verify">
-                <PhotoUpload photos={photos} setPhotos={this.setPhotos} />
+                        <span className="description">
+                          {body}
+                          <br />
+                          <br />
+                          {instruction}
+                        </span>
+                        <div className="upload-verify">
+                          <PhotoUpload
+                            photos={photos}
+                            setPhotos={this.setPhotos}
+                          />
+                        </div>{' '}
+                        {photos.length !== 0 ? (
+                          <Mutation
+                            mutation={SUBMIT_PHOTO}
+                            variables={{ reason: 'std', photo: photoKey }}
+                          >
+                            {submitPhoto => {
+                              return (
+                                <Mutation
+                                  mutation={SIGNS3}
+                                  variables={{ filename, filetype }}
+                                >
+                                  {signS3 => {
+                                    return (
+                                      <div
+                                        className="submit"
+                                        onClick={() =>
+                                          this.handleUpload({
+                                            signS3,
+                                            submitPhoto
+                                          })
+                                        }
+                                      >
+                                        <span>{btnText}</span>
+                                      </div>
+                                    );
+                                  }}
+                                </Mutation>
+                              );
+                            }}
+                          </Mutation>
+                        ) : null}
+                      </div>
+                    </div>
+                  </ErrorBoundary>
+                </div>
               </div>
             </div>
           </div>
-        </ErrorBoundary>
-      </Modal>
+        </div>
+      </section>
     );
   }
 }

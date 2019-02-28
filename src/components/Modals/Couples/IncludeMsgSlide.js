@@ -1,6 +1,6 @@
-import React from "react";
-import { LINK_PROFILE } from "../../../queries";
-import { Mutation } from "react-apollo";
+import React from 'react';
+import { LINK_PROFILE } from '../../../queries';
+import { Mutation } from 'react-apollo';
 const IncludeMsgSlide = ({
   includeMsgs,
   code,
@@ -12,43 +12,49 @@ const IncludeMsgSlide = ({
 }) => {
   return (
     <div>
-      {t("includeold")}
-      ?
-      <input
-        type="checkbox"
-        id="cbox"
-        checked={includeMsgs ? true : false}
-        onChange={e => {
-          setValue({
-            name: "includeMsgs",
-            value: !includeMsgs ? true : false
-          });
-        }}
-      />
-      <label htmlFor="cbox">
-        <span />
-        <b>{t("includemsg")}?</b>
-      </label>
-      <div className="button">
-        <button disabled={code !== "" ? false : true} onClick={() => prev()}>
-          {t("Back")}
-        </button>
+      <div> {t('includeold')}?</div>
+      <div style={{ padding: '20px' }}>
+        {' '}
+        <input
+          type="checkbox"
+          id="cbox"
+          checked={includeMsgs ? true : false}
+          onChange={e => {
+            setValue({
+              name: 'includeMsgs',
+              value: !includeMsgs ? true : false
+            });
+          }}
+        />
+        <label htmlFor="cbox">
+          <span style={{ paddingLeft: '5px' }}>{t('includemsg')}</span>
+        </label>
       </div>
-      <Mutation
-        mutation={LINK_PROFILE}
-        variables={{
-          code
-        }}
-      >
-        {(linkProfile, { loading }) => (
-          <button
-            disabled={code !== "" ? false : true}
-            onClick={() => handleLink(linkProfile, close)}
-          >
-            {t("Link")}
-          </button>
-        )}
-      </Mutation>
+      <div className="submit">
+        <Mutation
+          mutation={LINK_PROFILE}
+          variables={{
+            code
+          }}
+        >
+          {(linkProfile, { loading }) => (
+            <span
+              disabled={code !== '' ? false : true}
+              onClick={() => handleLink(linkProfile, close)}
+              className="color"
+            >
+              {t('Link')}
+            </span>
+          )}
+        </Mutation>
+        <span
+          className="border"
+          disabled={code !== '' ? false : true}
+          onClick={() => prev()}
+        >
+          {t('Back')}
+        </span>
+      </div>
     </div>
   );
 };

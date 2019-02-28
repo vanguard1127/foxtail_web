@@ -4068,7 +4068,7 @@
   }
   .autocomplete-dropdown-container {
     position: absolute !important;
-    top: 43px !important;
+    /* top: 43px !important; */
     border-radius: 0 0 3px 3px !important;
     overflow: hidden !important;
     width: 100% !important;

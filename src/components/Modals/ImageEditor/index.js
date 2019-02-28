@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import EditCanvasImage from "./ImageEditorWindow/EditCanvasImage";
-import { withNamespaces } from "react-i18next";
+import React, { Component } from 'react';
+import EditCanvasImage from './ImageEditorWindow/EditCanvasImage';
+import { withNamespaces } from 'react-i18next';
+import Modal from '../../common/Modal';
 class ImageEditor extends Component {
-  state = { photos: [], filename: "", filetype: "", photoKey: "" };
+  state = { photos: [], filename: '', filetype: '', photoKey: '' };
   setPhotos = photos => {
     this.setState({ photos });
   };
@@ -20,36 +21,20 @@ class ImageEditor extends Component {
     } = this.props;
 
     return (
-      <section className="popup-content show">
-        <div className="container">
-          <div className="col-md-12">
-            <div className="row">
-              <div className="offset-md-3 col-md-6">
-                <div className="modal-popup">
-                  <div className="m-head">
-                    <span className="heading">{t("editphoto")}</span>
-                    <span className="close" onClick={close} />
-                  </div>
-                  <div className="m-body">
-                    <ErrorBoundary>
-                      <EditCanvasImage
-                        imageObject={file}
-                        setS3PhotoParams={setS3PhotoParams}
-                        uploadToS3={uploadToS3}
-                        signS3={signS3}
-                        handlePhotoListChange={handlePhotoListChange}
-                        close={close}
-                        t={t}
-                      />
-                    </ErrorBoundary>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Modal header={t('editphoto')} close={close}>
+        <ErrorBoundary>
+          <EditCanvasImage
+            imageObject={file}
+            setS3PhotoParams={setS3PhotoParams}
+            uploadToS3={uploadToS3}
+            signS3={signS3}
+            handlePhotoListChange={handlePhotoListChange}
+            close={close}
+            t={t}
+          />
+        </ErrorBoundary>
+      </Modal>
     );
   }
 }
-export default withNamespaces("modals")(ImageEditor);
+export default withNamespaces('modals')(ImageEditor);

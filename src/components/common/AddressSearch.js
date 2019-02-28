@@ -46,7 +46,7 @@ class AddressSearch extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
           return (
-            <div className="search">
+            <div className="search" style={{ position: 'relative' }}>
               {/* <label>Location</label> */}
               <div style={{ display: 'flex' }}>
                 <input
