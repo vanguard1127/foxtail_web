@@ -36,7 +36,7 @@ const ProfileCard = ({
               t={t}
             />
           </span>
-          <DesiresBlock desires={profile.desires} t={t} />
+          <DesiresBlock desires={profile.desires} t={t} id={profile.id} />
           <ProfileActionBtns
             profile={profile}
             likeProfile={likeProfile}

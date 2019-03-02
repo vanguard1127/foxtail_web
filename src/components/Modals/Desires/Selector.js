@@ -12,14 +12,26 @@ class Selector extends Component {
           className="select_desires desires_select_popup"
           onClick={() => togglePopup()}
         >
-          <span className="head">{t('seldesires')}:</span>
+          <span className="label">{t('seldesires')}:</span>
           <ErrorBoundary>
             <ul>
-              {desires.map(desire => {
-                const desireObj = desireOptions.find(el => el.value === desire);
-                if (desireObj)
-                  return <li key={desire}>{t(desireObj.label)}</li>;
-              })}
+              {desires.reduce(function(result, desire, idx) {
+                //TODO: fix key issued using uuid
+                if (result.length < 10) {
+                  const desireObj = desireOptions.find(
+                    el => el.value === desire
+                  );
+                  result.push(<li key={desire}>{t(desireObj.label)}</li>);
+                  if (result.length > 9) {
+                    result.push(<li key={'na'}>...</li>);
+                  }
+                } else {
+                  result[result.length - 1] = (
+                    <li key={idx}>{'+ ' + idx + ' more'}</li>
+                  );
+                }
+                return result;
+              }, [])}
             </ul>
           </ErrorBoundary>
         </div>

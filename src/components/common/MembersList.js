@@ -284,7 +284,6 @@ class MembersList extends Component {
         {membersList}
 
         <div style={{ height: '2vh', backgroundColor: '#fff' }}>
-          {' '}
           {showActionButton && actionButton}
         </div>
       </div>

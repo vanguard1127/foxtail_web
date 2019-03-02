@@ -4956,7 +4956,7 @@
       /* z-index: 99999; */
     }
 
-    .page .form .content .select_desires span.head {
+    .page .form .content .select_desires span.label {
       position: absolute;
       top: 14px;
       left: 15px;
@@ -5206,9 +5206,19 @@
 
   section.desires-popup .modal-popup .m-head {
     width: 100%;
-    padding: 30px;
     display: block;
     float: left;
+    font-size: 25px;
+    color: #321935;
+    font-family: 'Poppins';
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    line-height: 35px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #DCDFE4;
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 30px;
     background-image: -webkit-linear-gradient(top right, #F70016 0%, #791B7D 100%);
     background-image: -o-linear-gradient(top right, #F70016 0%, #791B7D 100%);
     background-image: linear-gradient(to bottom left, #F70016 0%, #791B7D 100%);

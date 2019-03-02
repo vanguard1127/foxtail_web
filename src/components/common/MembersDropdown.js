@@ -11,7 +11,26 @@ import Spinner from './Spinner';
 import MembersList from './MembersList';
 const LIMIT = 5;
 class MembersDropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.wrapperRef = React.createRef();
+  }
+
   state = { visible: false };
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside = event => {
+    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+      this.props.close();
+    }
+  };
 
   handleVisibleChange = flag => {
     this.setState({ visible: flag });
@@ -44,7 +63,7 @@ class MembersDropdown extends Component {
 
             const members = data.getFriends;
             return (
-              <div className="event-inv-toggle">
+              <div className="event-inv-toggle" ref={this.wrapperRef}>
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t('common:invitemems')}</div>
@@ -87,7 +106,7 @@ class MembersDropdown extends Component {
             }
             const members = data.chat.participants;
             return (
-              <div className="event-inv-toggle">
+              <div className="event-inv-toggle" ref={this.wrapperRef}>
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t('common:removemems')}</div>
@@ -129,8 +148,9 @@ class MembersDropdown extends Component {
               return <div>{t('common:nomoremsgs') + ' :)'}</div>;
             }
             const members = data.chat.participants;
+
             return (
-              <div className="event-inv-toggle">
+              <div className="event-inv-toggle" ref={this.wrapperRef}>
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">Participants</div>
@@ -171,7 +191,7 @@ class MembersDropdown extends Component {
             }
             const members = data.event.participants;
             return (
-              <div className="event-inv-toggle">
+              <div className="event-inv-toggle" ref={this.wrapperRef}>
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t('common:removemems')}</div>
@@ -211,8 +231,9 @@ class MembersDropdown extends Component {
               return <div>{t('common:nomorepart')}</div>;
             }
             const members = data.event.participants;
+
             return (
-              <div className="event-inv-toggle">
+              <div className="event-inv-toggle" ref={this.wrapperRef}>
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">Participants</div>
