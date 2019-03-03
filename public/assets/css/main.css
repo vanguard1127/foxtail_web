@@ -7908,3 +7908,6 @@ img {
   font-size: 16px;
   z-index: 99999;
 }
+.invite-member .content .inv-item span.username {
+  padding: 0;
+}
