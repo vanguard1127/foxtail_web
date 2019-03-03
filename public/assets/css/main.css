@@ -7909,5 +7909,5 @@ img {
   z-index: 99999;
 }
 .invite-member .content .inv-item span.username {
-  padding: 0;
+  padding: 0 !important;
 }
