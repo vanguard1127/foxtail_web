@@ -459,7 +459,7 @@
       }
 
       .invite-member .content .inv-item span.username {
-        width: calc(100% - 102px);
+        width: calc(100% - 102px) !important;
         float: left;
         display: block;
         line-height: 32px;
