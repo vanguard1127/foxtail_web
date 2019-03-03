@@ -342,6 +342,7 @@
         box-shadow: 0 1px 0 0 rgba(0,0,0,0.04), 0 15px 65px 0 rgba(17,25,40,0.12);
         border-radius: 3px;
         padding: 5px 15px;
+        display: flex;
       }
 
       .invite-member.open {
@@ -459,7 +460,7 @@
       }
 
       .invite-member .content .inv-item span.username {
-        width: calc(100% - 102px);
+        width: calc(100% - 102px) !important;
         float: left;
         display: block;
         line-height: 32px;

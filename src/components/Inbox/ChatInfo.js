@@ -14,6 +14,25 @@ class ChatInfo extends Component {
     const { invDropOpen, remDropOpen } = this.state;
     return (
       <div className="col-xl-2">
+        {remDropOpen && (
+          <MembersDropdown
+            targetID={chatID}
+            targetType={'chat'}
+            listType={'participants'}
+            t={t}
+            close={() => this.setState({ remDropOpen: false })}
+            isOwner={isOwner}
+          />
+        )}
+        {invDropOpen && (
+          <MembersDropdown
+            targetID={chatID}
+            targetType={'chat'}
+            listType={'friends'}
+            t={t}
+            close={() => this.setState({ invDropOpen: false })}
+          />
+        )}
         <div className="right">
           <div className="head" />
           <div className="content">
@@ -28,16 +47,6 @@ class ChatInfo extends Component {
                   >
                     Participants
                   </span>
-                  {remDropOpen && (
-                    <MembersDropdown
-                      targetID={chatID}
-                      targetType={'chat'}
-                      listType={'participants'}
-                      t={t}
-                      close={() => this.setState({ remDropOpen: false })}
-                      isOwner={isOwner}
-                    />
-                  )}
                 </li>
                 <li className="report">
                   <span
@@ -45,16 +54,7 @@ class ChatInfo extends Component {
                   >
                     Invite Members
                   </span>
-                </li>{' '}
-                {invDropOpen && (
-                  <MembersDropdown
-                    targetID={chatID}
-                    targetType={'chat'}
-                    listType={'friends'}
-                    t={t}
-                    close={() => this.setState({ invDropOpen: false })}
-                  />
-                )}
+                </li>
                 <li className="delete">
                   <span onClick={handleRemoveSelf}>{t('leaveconv')}</span>
                 </li>{' '}

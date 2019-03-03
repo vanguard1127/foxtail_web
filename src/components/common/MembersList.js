@@ -179,9 +179,9 @@ class MembersList extends Component {
             </div>
           )}
           <div className="avatar">
-            <a href="#">
+            <div>
               <img src={el.profilePic} alt="" />
-            </a>
+            </div>
           </div>
           <span className="username">{el.profileName}</span>
         </div>
