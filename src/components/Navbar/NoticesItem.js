@@ -23,7 +23,8 @@ const intialState = {
   count: 0,
   skip: 0,
   visible: false,
-  alertVisible: true
+  alertVisible: true,
+  userAlert: null
 };
 
 class NoticesItem extends Component {
@@ -79,23 +80,71 @@ class NoticesItem extends Component {
   };
 
   handleCloseAlert = (notificationID, updateNotifications, refetch) => {
-    this.setState({ notificationIDs: [notificationID], read: true }, () => {
-      updateNotifications()
-        .then(({ data }) => {
-          refetch();
-        })
-        .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
+    this.setState(
+      {
+        notificationIDs: [notificationID],
+        read: true,
+        alertVisible: false,
+        userAlert: null
+      },
+      () => {
+        updateNotifications()
+          .then(({ data }) => {
+            refetch();
+          })
+          .catch(res => {
+            const errors = res.graphQLErrors.map(error => {
+              return error.message;
+            });
+            //TODO: send errors to analytics from here
+            this.setState({ errors });
           });
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
-        });
-    });
+      }
+    );
   };
 
+  showAlert = alert => {
+    this.setState({ userAlert: alert, alertVisible: true });
+  };
+
+  handleDialog = ({ alert, updateNotifications, refetch, alertVisible }) => {
+    return (
+      <Dialog
+        onClose={() =>
+          this.handleCloseAlert(alert.id, updateNotifications, refetch)
+        }
+        aria-labelledby="Image"
+        open={alertVisible}
+      >
+        {alert.text && (
+          <DialogTitle id="alert-dialog-title">{alert.text}</DialogTitle>
+        )}
+        {alert.body && (
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {alert.body}
+            </DialogContentText>
+          </DialogContent>
+        )}
+        {alert.link && (
+          <DialogActions>
+            <NavLink to={alert.link} color="primary" autoFocus>
+              Go
+            </NavLink>
+          </DialogActions>
+        )}
+      </Dialog>
+    );
+  };
   render() {
-    const { read, seen, notificationIDs, skip, alertVisible } = this.state;
+    const {
+      read,
+      seen,
+      notificationIDs,
+      skip,
+      alertVisible,
+      userAlert
+    } = this.state;
     const { t, count, history } = this.props;
     return (
       <Mutation
@@ -136,7 +185,7 @@ class NoticesItem extends Component {
                 }
 
                 const { notifications, alert } = data.getNotifications;
-                console.log(alert);
+
                 return (
                   <span>
                     <Menu
@@ -158,6 +207,7 @@ class NoticesItem extends Component {
                         t={t}
                         visible={this.state.visible}
                         updateNotifications={updateNotifications}
+                        showAlert={this.showAlert}
                         subscribeToNewNotices={() =>
                           subscribeToMore({
                             document: NEW_NOTICE_SUB,
@@ -180,39 +230,20 @@ class NoticesItem extends Component {
                         }
                       />
                     </Menu>
-                    {alert && (
-                      <Dialog
-                        onClose={() =>
-                          this.handleCloseAlert(
-                            alert.id,
-                            updateNotifications,
-                            refetch
-                          )
-                        }
-                        aria-labelledby="Image"
-                        open={alertVisible}
-                      >
-                        {alert.title && (
-                          <DialogTitle id="alert-dialog-title">
-                            {alert.title}
-                          </DialogTitle>
-                        )}
-                        {alert.body && (
-                          <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                              {alert.body}
-                            </DialogContentText>
-                          </DialogContent>
-                        )}
-                        {alert.link && (
-                          <DialogActions>
-                            <NavLink to={alert.link} color="primary" autoFocus>
-                              Go
-                            </NavLink>
-                          </DialogActions>
-                        )}
-                      </Dialog>
-                    )}
+                    {alert &&
+                      this.handleDialog({
+                        alert,
+                        updateNotifications,
+                        refetch,
+                        alertVisible
+                      })}{' '}
+                    {userAlert &&
+                      this.handleDialog({
+                        alert: userAlert,
+                        updateNotifications,
+                        refetch,
+                        alertVisible
+                      })}
                   </span>
                 );
               }}

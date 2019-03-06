@@ -47,7 +47,7 @@ export default class CustomDatePicker extends Component {
       let date = new Date();
       date.setFullYear(date.getFullYear() - 18);
       return (
-        <div className="input calender">
+        <div className="input calender calender-input-sm">
           <DatePicker
             placeholderText={placeholder}
             selected={selectedDate}

@@ -11,6 +11,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import * as Sentry from '@sentry/browser';
 
 import Landing from './components/Landing';
+import About from './components/Information/About';
+import FAQ from './components/Information/FAQ';
+import Privacy from './components/Information/Privacy';
+import Support from './components/Information/Support';
+import ToS from './components/Information/ToS';
 import EmailConfirm from './components/Landing/EmailConfirm';
 import PhoneConfirm from './components/Landing/PhoneConfirm';
 import Navbar from './components/Navbar/';
@@ -203,19 +208,32 @@ const Root = () => (
 //TODO:https://reacttraining.com/react-router/web/example/animated-transitions
 const Wrapper = withRouter(props => {
   let location = props.location;
-  let isLanding = location.pathname && location.pathname === '/';
+  if (location.pathname) {
+    if (location.pathname === '/') {
+      return <Landing props={props} />;
+    } else if (location.pathname === '/tos') {
+      return <ToS />;
+    } else if (location.pathname === '/abount') {
+      return <About />;
+    } else if (location.pathname === '/faq') {
+      return <FAQ />;
+    } else if (location.pathname === '/privacy') {
+      return <Privacy />;
+    } else if (location.pathname === '/support') {
+      return <Support />;
+    }
 
-  if (isLanding) {
-    return <Landing props={props} />;
+    let showFooter =
+      location.pathname && location.pathname.match(/^\/inbox/) === null;
+
+    return (
+      <div>
+        <Body showFooter={showFooter} />
+      </div>
+    );
+  } else {
+    return null;
   }
-  let showFooter =
-    location.pathname && location.pathname.match(/^\/inbox/) === null;
-
-  return (
-    <div>
-      <Body showFooter={showFooter} />
-    </div>
-  );
 });
 
 const NavBarWithSession = withSession(Navbar);

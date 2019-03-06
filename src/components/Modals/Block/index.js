@@ -55,7 +55,6 @@ class BlockModal extends Component {
           style={{ display: 'flex', flex: '1', margin: '10px' }}
           onChange={this.handleChange}
         >
-          <option value="">{t('reason')}:</option>
           <option value="nopro">{t('nopro')}</option>
           <option value="stolenPic">{t('stolepic')}</option>
           <option value="money">{t('money')}</option>
@@ -74,7 +73,6 @@ class BlockModal extends Component {
           style={{ display: 'flex', flex: '1', margin: '10px' }}
           onChange={this.handleChange}
         >
-          <option value="">{t('reason')}:</option>
           <option value="nopro">{t('nopro')}</option>
         </select>
       );
@@ -142,14 +140,15 @@ class BlockModal extends Component {
                       return <div>{t('Saving')}...</div>;
                     }
                     return (
-                      <button
+                      <span
                         onClick={() =>
                           this.handleSubmit(blockProfile, flagItem)
                         }
+                        className={reason !== '' && 'color'}
                         disabled={reason === '' || loading}
                       >
                         {t('repblock')}
-                      </button>
+                      </span>
                     );
                   }}
                 </Mutation>
@@ -160,17 +159,21 @@ class BlockModal extends Component {
       >
         <ErrorBoundary>
           <div>
-            {blockMenu}
-            <div
-              style={{
-                display: other ? 'block' : 'none'
-              }}
-            >
-              <input
-                placeholder={t('otherreason')}
-                onChange={this.handleTextChange}
-                value={reason}
-              />
+            <div className="select-container">
+              <label>Reason:</label>
+              {blockMenu}
+              <div
+                style={{
+                  display: other ? 'block' : 'none'
+                }}
+              >
+                <input
+                  placeholder={t('otherreason')}
+                  onChange={this.handleTextChange}
+                  value={reason}
+                  style={{ width: '100%' }}
+                />
+              </div>
             </div>
           </div>
         </ErrorBoundary>

@@ -7,6 +7,7 @@ import Waypoint from 'react-waypoint';
 import FeaturedDiv from './FeaturedDiv';
 import DirectMsgModal from '../Modals/DirectMsg';
 import Spinner from '../common/Spinner';
+import { toast } from 'react-toastify';
 
 const LIMIT = 20;
 
@@ -14,13 +15,6 @@ class ProfilesContainer extends Component {
   state = {
     skip: 0,
     loading: false,
-    lat: this.props.searchCriteria.lat,
-    long: this.props.searchCriteria.long,
-    distance: this.props.searchCriteria.distance,
-    distanceMetric: this.props.searchCriteria.distanceMetric,
-    ageRange: this.props.searchCriteria.ageRange,
-    interestedIn: this.props.searchCriteria.interestedIn,
-    location: this.props.searchCriteria.location,
     msgModalVisible: false,
     profile: null
   };
@@ -39,7 +33,10 @@ class ProfilesContainer extends Component {
       likeProfile()
         .then(({ data }) => {
           if (data.likeProfile) {
-            console.log('liked');
+            toast.success('Liked ' + profile.profileName + '!');
+            return;
+          } else {
+            toast.success('UnLiked ' + profile.profileName + '!');
             return;
           }
         })
@@ -90,15 +87,13 @@ class ProfilesContainer extends Component {
   render() {
     const { ErrorHandler, t, history, loading } = this.props;
     const {
-      profile,
-      msgModalVisible,
-      skip,
       long,
       lat,
       distance,
       ageRange,
       interestedIn
-    } = this.state;
+    } = this.props.searchCriteria;
+    const { profile, msgModalVisible, skip } = this.state;
     if (loading) {
       return <Spinner page="searchProfiles" title={t('allmems')} />;
     }

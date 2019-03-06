@@ -5,7 +5,7 @@ import {
   INVITE_PROFILES_EVENT,
   REMOVE_PROFILES_EVENT,
   GET_EVENT
-} from '../../queries';
+} from '../../../queries';
 import { Mutation } from 'react-apollo';
 import { toast } from 'react-toastify';
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MembersDropdown from '../common/MembersDropdown';
+import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
 class EventShare extends Component {
   state = { invDropOpen: false };
   render() {

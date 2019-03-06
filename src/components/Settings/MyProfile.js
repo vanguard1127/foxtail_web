@@ -1,5 +1,5 @@
-import React from "react";
-import DesiresSelector from "../Modals/Desires/Selector";
+import React from 'react';
+import DesiresSelector from '../Modals/Desires/Selector';
 
 const MyProfile = ({
   desires,
@@ -14,7 +14,7 @@ const MyProfile = ({
     <div className="content">
       <div className="row">
         <div className="col-md-12">
-          <span className="heading">{t("myprofile")}</span>
+          <span className="heading">{t('myprofile')}</span>
         </div>
         <div className="col-md-12">
           <div className="item">
@@ -31,12 +31,19 @@ const MyProfile = ({
         <div className="col-md-12">
           <div className="item">
             <div className="textarea">
-              <label>{t("probio")}:</label>
+              <label>{t('probio')}:</label>
               <ErrorBoundary>
                 <textarea
                   onChange={e =>
                     setValue({
-                      name: "about",
+                      name: 'about',
+                      value: e.target.value,
+                      noSave: true
+                    })
+                  }
+                  onBlur={e =>
+                    setValue({
+                      name: 'about',
                       value: e.target.value
                     })
                   }

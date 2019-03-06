@@ -5,9 +5,9 @@ import {
   GET_CHAT_PARTICIPANTS,
   GET_EVENT_PARTICIPANTS,
   INVITE_PROFILES_EVENT
-} from '../../queries';
+} from '../../../queries';
 import { Query, Mutation } from 'react-apollo';
-import Spinner from './Spinner';
+import Spinner from '../Spinner';
 import MembersList from './MembersList';
 const LIMIT = 5;
 class MembersDropdown extends Component {
@@ -43,7 +43,8 @@ class MembersDropdown extends Component {
       clickComponent,
       t,
       close,
-      isOwner
+      isOwner,
+      style
     } = this.props;
     if (listType === 'friends') {
       return (
@@ -63,7 +64,11 @@ class MembersDropdown extends Component {
 
             const members = data.getFriends;
             return (
-              <div className="event-inv-toggle" ref={this.wrapperRef}>
+              <div
+                className="event-inv-toggle"
+                ref={this.wrapperRef}
+                style={{ ...style }}
+              >
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t('common:invitemems')}</div>
@@ -106,7 +111,11 @@ class MembersDropdown extends Component {
             }
             const members = data.chat.participants;
             return (
-              <div className="event-inv-toggle" ref={this.wrapperRef}>
+              <div
+                className="event-inv-toggle"
+                ref={this.wrapperRef}
+                style={{ ...style }}
+              >
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t('common:removemems')}</div>
@@ -150,7 +159,11 @@ class MembersDropdown extends Component {
             const members = data.chat.participants;
 
             return (
-              <div className="event-inv-toggle" ref={this.wrapperRef}>
+              <div
+                className="event-inv-toggle"
+                ref={this.wrapperRef}
+                style={{ ...style }}
+              >
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">Participants</div>
@@ -191,7 +204,11 @@ class MembersDropdown extends Component {
             }
             const members = data.event.participants;
             return (
-              <div className="event-inv-toggle" ref={this.wrapperRef}>
+              <div
+                className="event-inv-toggle"
+                ref={this.wrapperRef}
+                style={{ ...style }}
+              >
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t('common:removemems')}</div>
@@ -233,7 +250,11 @@ class MembersDropdown extends Component {
             const members = data.event.participants;
 
             return (
-              <div className="event-inv-toggle" ref={this.wrapperRef}>
+              <div
+                className="event-inv-toggle"
+                ref={this.wrapperRef}
+                style={{ ...style }}
+              >
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">Participants</div>

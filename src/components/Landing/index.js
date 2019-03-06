@@ -161,7 +161,6 @@ class Landing extends Component {
                       <li>
                         <span
                           onClick={() => {
-                            console.log('Dd');
                             this.setState({
                               resetPhoneVisible: !resetPhoneVisible
                             });
@@ -171,19 +170,45 @@ class Landing extends Component {
                         </span>
                       </li>
                       <li>
-                        <span>{t('common:Terms')}</span>
+                        <span
+                          onClick={() => this.props.props.history.push('/tos')}
+                        >
+                          {t('common:Terms')}
+                        </span>
                       </li>
                       <li>
-                        <span>{t('common:Privacy')}</span>
+                        <span
+                          onClick={() =>
+                            this.props.props.history.push('/privacy')
+                          }
+                        >
+                          {t('common:Privacy')}
+                        </span>
                       </li>
                       <li>
-                        <span>{t('FAQ')}</span>
+                        <span
+                          onClick={() => this.props.props.history.push('/faq')}
+                        >
+                          {t('FAQ')}
+                        </span>
                       </li>
                       <li>
-                        <span>{t('About')}</span>
+                        <span
+                          onClick={() =>
+                            this.props.props.history.push('/about')
+                          }
+                        >
+                          {t('About')}
+                        </span>
                       </li>
                       <li>
-                        <span>{t('Support')}</span>
+                        <span
+                          onClick={() =>
+                            this.props.props.history.push('/support')
+                          }
+                        >
+                          {t('Support')}
+                        </span>
                       </li>
                     </ul>
                   </div>

@@ -24,11 +24,12 @@ class SearchProfilesPage extends Component {
     this.setState({ [name]: value });
   };
 
-  setLocation = async ({ lat, long }) => {
+  setLocation = async ({ lat, long, city, country }) => {
     this.props.ErrorHandler.setBreadcrumb(
       'Set Location: lat:' + lat + ' long:' + long
     );
-    await this.setState({ long, lat });
+
+    this.setState({ long, lat, city, country });
   };
 
   render() {

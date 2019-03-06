@@ -17,18 +17,6 @@ const withLocation = PassedComponent =>
     showConfirm = (setLocModalVisible, caller) => {
       const { t } = i18next;
       setLocModalVisible(true);
-      //TODO: unlock when dialog made
-      // confirm({
-      //   title: t("enableloc"),
-      //   content: t("locuse"),
-      //   cancelText: t("cantshare"),
-      //   onOk() {
-      //     caller.checkLocation();
-      //   },
-      //   onCancel() {
-      //     setLocModalVisible(true);
-      //   }
-      // });
     };
 
     findLocation = (setLocation, setLocModalVisible, caller) => {
@@ -96,14 +84,6 @@ const withLocation = PassedComponent =>
     }
 
     checkLocation() {
-      //TODO:Delete this:
-      // return this.setLocation({
-      //   coords: {
-      //     longitude: 45,
-      //     latitude: 45
-      //   }
-      // });
-
       try {
         if (
           this.props.session &&

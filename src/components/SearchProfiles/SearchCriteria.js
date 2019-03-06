@@ -8,16 +8,14 @@ import DistanceSlider from '../common/DistanceSlider';
 import AgeRange from '../common/AgeRange';
 import getCityCountry from '../../utils/getCityCountry';
 
-const CURRENT_LOC_LABEL = 'My Location';
-
 class SearchCriteria extends Component {
   state = {
     skip: 0,
     loading: false,
     locModalVisible: false,
-    profile: null,
     ...this.props.searchCriteria,
-    city: this.props.searchCriteria.city || 'My Location'
+    city: this.props.searchCriteria.city,
+    country: this.props.searchCriteria.country
   };
 
   setLocModalVisible = visible => {
@@ -25,74 +23,70 @@ class SearchCriteria extends Component {
   };
 
   //TODO: Refactor to use setValue
-  setLocation = async pos => {
+  setLocation = async (pos, updateSettings) => {
     var crd = pos.coords;
-    var city = pos.location ? pos.location : CURRENT_LOC_LABEL;
+
+    const citycntry = await getCityCountry({
+      long: crd.longitude,
+      lat: crd.latitude
+    });
 
     const { long, lat } = this.state;
     if (long !== crd.longitude && lat !== crd.latitude) {
-      this.setState({ long: crd.longitude, lat: crd.latitude, city });
+      await this.setState({
+        long: crd.longitude,
+        lat: crd.latitude,
+        city: citycntry.city,
+        country: citycntry.country
+      });
+
+      if (updateSettings) {
+        this.handleSubmit(updateSettings);
+      }
+      await this.props.setLocation({
+        long: crd.longitude,
+        lat: crd.latitude,
+        city: citycntry.city,
+        country: citycntry.country
+      });
     }
   };
 
   handleSubmit = updateSettings => {
-    updateSettings()
-      .then(({ data }) => {
-        console.log('IN', data);
-        //TODO: REFRESH LIST HERE
-      })
-      .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+    updateSettings().catch(res => {
+      const errors = res.graphQLErrors.map(error => {
+        return error.message;
       });
+
+      //TODO: send errors to analytics from here
+      this.setState({ errors });
+    });
   };
 
-  handleRemoveLocLock = (e, removeLocation) => {
-    e.preventDefault();
-
-    navigator.geolocation.getCurrentPosition(this.setLocation, err => {
-      alert(
-        this.props.t(
-          'Please enable location services to remove your set location.'
-        )
-      );
-      return;
-    });
-
-    removeLocation()
-      .then(async ({ data }) => {
-        this.props.form.setFieldsValue({ location: CURRENT_LOC_LABEL });
-      })
-      .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
-      });
+  handleRemoveLocLock = async updateSettings => {
+    await navigator.geolocation.getCurrentPosition(
+      pos => this.setLocation(pos, updateSettings),
+      err => {
+        alert(
+          this.props.t(
+            'Please enable location services to remove your set location.'
+          )
+        );
+        return;
+      }
+    );
   };
 
   setLocationValues = async ({ lat, long, city, updateSettings }) => {
-    console.log(lat, long, city);
     if (lat && long) {
-      const citycntry = await getCityCountry({
-        long,
-        lat
-      });
-
-      this.setState(
+      this.setLocation(
         {
-          long,
-          lat,
-          city: citycntry.city,
-          country: citycntry.country
+          coords: {
+            longitude: long,
+            latitude: lat
+          }
         },
-        () => this.handleSubmit(updateSettings)
+        updateSettings
       );
     } else {
       this.setState({ city });
@@ -100,8 +94,10 @@ class SearchCriteria extends Component {
   };
 
   setValue = ({ name, value, updateSettings }) => {
-    this.setState({ [name]: value });
-    this.handleSubmit(updateSettings);
+    this.setState({ [name]: value }, () => {
+      this.handleSubmit(updateSettings);
+    });
+
     this.props.setValue({ name, value });
   };
 
@@ -117,7 +113,7 @@ class SearchCriteria extends Component {
       country,
       locModalVisible
     } = this.state;
-    console.log('LL', this.props.searchCriteria);
+
     const lang = localStorage.getItem('i18nextLng');
     const { t, loading } = this.props;
     if (loading) {
@@ -203,6 +199,9 @@ class SearchCriteria extends Component {
                                   address={city}
                                   type={'(cities)'}
                                   placeholder={t('common:setloc') + '...'}
+                                  handleRemoveLocLock={() =>
+                                    this.handleRemoveLocLock(updateSettings)
+                                  }
                                 />
                               </div>
                             </div>

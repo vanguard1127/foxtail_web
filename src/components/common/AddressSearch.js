@@ -7,6 +7,10 @@ import PlacesAutocomplete, {
 
 class AddressSearch extends React.Component {
   handleChange = address => {
+    if (address === 'My Location') {
+      this.props.handleRemoveLocLock();
+      return;
+    }
     this.props.setLocationValues({
       address
     });

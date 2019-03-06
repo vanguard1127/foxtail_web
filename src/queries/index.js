@@ -678,6 +678,7 @@ export const GET_NOTIFICATIONS = gql`
         text
         targetID
         date
+        body
         fromProfile {
           profilePic
           profileName

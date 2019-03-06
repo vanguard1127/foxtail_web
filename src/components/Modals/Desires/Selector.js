@@ -17,18 +17,14 @@ class Selector extends Component {
             <ul>
               {desires.reduce(function(result, desire, idx) {
                 //TODO: fix key issued using uuid
-                if (result.length < 10) {
+                if (result.length < 5) {
                   const desireObj = desireOptions.find(
                     el => el.value === desire
                   );
                   result.push(<li key={desire}>{t(desireObj.label)}</li>);
-                  if (result.length > 9) {
-                    result.push(<li key={'na'}>...</li>);
+                  if (result.length > 4) {
+                    result.push(<li key={'na'}>+{desires.length - 5}</li>);
                   }
-                } else {
-                  result[result.length - 1] = (
-                    <li key={idx}>{'+ ' + idx + ' more'}</li>
-                  );
                 }
                 return result;
               }, [])}

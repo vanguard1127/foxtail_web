@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MembersDropdown from '../common/MembersDropdown';
+import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
 class ChatInfo extends Component {
   state = { invDropOpen: false, remDropOpen: false };
   render() {
@@ -53,6 +53,7 @@ class ChatInfo extends Component {
                     listType={'friends'}
                     t={t}
                     close={() => this.setState({ invDropOpen: false })}
+                    style={{ top: '90px' }}
                   />
                 )}
                 <li className="delete">

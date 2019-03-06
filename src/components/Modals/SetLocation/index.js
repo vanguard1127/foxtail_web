@@ -5,11 +5,13 @@ import AddressSearch from '../../common/AddressSearch';
 import { ErrorBoundary } from '../../common/ErrorHandler';
 import { withNamespaces } from 'react-i18next';
 import Modal from '../../common/Modal';
+import { toast } from 'react-toastify';
 
 class SetLocationModal extends Component {
   state = { address: '', long: null, lat: null };
 
   setLocationValues = ({ lat, long, address }) => {
+    console.log(lat, long, address);
     if (lat && long) {
       return this.setState({ lat, long, address });
     }
@@ -28,14 +30,13 @@ class SetLocationModal extends Component {
             },
             city: this.state.address
           });
-          alert(t('locset') + ': ' + this.state.address);
+          toast.success(t('locset') + ': ' + this.state.address);
           this.props.close();
         } else {
-          alert(t('locnotset'));
+          toast.error(t('locnotset'));
         }
       })
       .catch(res => {
-        console.log(res);
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });
@@ -74,12 +75,13 @@ class SetLocationModal extends Component {
             >
               {updateSettings => {
                 return (
-                  <button
+                  <span
                     onClick={() => this.handleSubmit(updateSettings)}
                     disabled={lat === null}
+                    className="color"
                   >
                     {t('Save')}
-                  </button>
+                  </span>
                 );
               }}
             </Mutation>

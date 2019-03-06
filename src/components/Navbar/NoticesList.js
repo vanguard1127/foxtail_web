@@ -111,6 +111,62 @@ class NoticesList extends Component {
     }
   };
 
+  handleNotice = ({ notif, updateNotifications, t }) => {
+    if (notif.type === 'alert') {
+      return (
+        <span onClick={() => this.props.showAlert(notif)}>
+          <span className="avatar">
+            <img
+              src={'../../../images/girl2.jpg'}
+              alt=""
+              onContextMenu={preventContextMenu}
+            />
+          </span>
+          <div>
+            <span className="text">{t(notif.text)}</span>
+            <span className="when">
+              {moment(notif.date)
+                .locale(localStorage.getItem('i18nextLng'))
+                .fromNow()}
+            </span>
+          </div>
+        </span>
+      );
+    } else {
+      return (
+        <span
+          onClick={() =>
+            this.readAndGo({
+              notifications: [notif.id],
+              targetID: notif.targetID,
+              type: notif.type,
+              updateNotifications
+            })
+          }
+        >
+          <span className="avatar">
+            <img
+              src={notif.fromProfile.profilePic}
+              alt=""
+              onContextMenu={preventContextMenu}
+            />
+          </span>
+          <div>
+            <span className="text">
+              <b> {notif.fromProfile.profileName} </b>
+              {t(notif.text)}
+            </span>
+            <span className="when">
+              {moment(notif.date)
+                .locale(localStorage.getItem('i18nextLng'))
+                .fromNow()}
+            </span>
+          </div>
+        </span>
+      );
+    }
+  };
+
   render() {
     const { t, notifications, updateNotifications, fetchMore } = this.props;
 
@@ -120,35 +176,7 @@ class NoticesList extends Component {
           {notifications.length > 0 ? (
             notifications.map(notif => (
               <div className="item" key={notif.id}>
-                <span
-                  onClick={() =>
-                    this.readAndGo({
-                      notifications: [notif.id],
-                      targetID: notif.targetID,
-                      type: notif.type,
-                      updateNotifications
-                    })
-                  }
-                >
-                  <span className="avatar">
-                    <img
-                      src={notif.fromProfile.profilePic}
-                      alt=""
-                      onContextMenu={preventContextMenu}
-                    />
-                  </span>
-                  <div>
-                    <span className="text">
-                      <b> {notif.fromProfile.profileName} </b>
-                      {t(notif.text)}
-                    </span>
-                    <span className="when">
-                      {moment(notif.date)
-                        .locale(localStorage.getItem('i18nextLng'))
-                        .fromNow()}
-                    </span>
-                  </div>
-                </span>
+                {this.handleNotice({ notif, updateNotifications, t })}
               </div>
             ))
           ) : (
@@ -156,8 +184,8 @@ class NoticesList extends Component {
               <span className="text">No notifcations</span>
             </div>
           )}
-
-          <div className="item" key="way">
+          {/* TODO: Use this if fails to waypoint */}
+          {/* <div className="item" key="way">
             <Waypoint
               onEnter={({ previousPosition }) => {
                 this.handleEnd({ previousPosition, fetchMore });
@@ -165,6 +193,16 @@ class NoticesList extends Component {
               style={{ padding: '5px', backgroundColor: 'blue' }}
             />
             <span className="text">No more notifications :)</span>
+          </div> */}
+          <div
+            key="way"
+            style={{ width: '100%', display: 'block', float: 'left' }}
+          >
+            <Waypoint
+              onEnter={({ previousPosition }) => {
+                this.handleEnd({ previousPosition, fetchMore });
+              }}
+            />
           </div>
         </div>
       </div>

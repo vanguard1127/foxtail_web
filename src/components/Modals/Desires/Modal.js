@@ -4,6 +4,24 @@ import { desireOptions } from '../../../docs/options';
 import SearchBox from './SearchBox';
 class Desires extends Component {
   state = { searchText: '' };
+  constructor(props) {
+    super(props);
+    this.wrapperRef = React.createRef();
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside = event => {
+    if (this.wrapperRef && this.wrapperRef.current === event.target) {
+      this.props.close();
+    }
+  };
   setValue = ({ name, value }) => {
     this.setState({ [name]: value });
   };
@@ -12,7 +30,7 @@ class Desires extends Component {
     const { close, onChange, desires, t, ErrorBoundary } = this.props;
 
     return (
-      <section className="desires-popup show">
+      <section className="desires-popup show" ref={this.wrapperRef}>
         <div className="container">
           <div className="offset-md-3 col-md-6">
             <div className="row">

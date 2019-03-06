@@ -42,12 +42,6 @@ class Settings extends Component {
 
       if (location.state.initial) {
         isInitial = location.state.initial;
-        // if (!toast.isActive("verEmail")) {
-        //   toast.info("Please check your email to confirm your account.", {
-        //     position: toast.POSITION.TOP_CENTER,
-        //     toastId: "verEmail"
-        //   });
-        // }
       }
     }
     return (

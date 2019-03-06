@@ -36,20 +36,20 @@ class SettingsPage extends Component {
     showOnline: true,
     likedOnly: false,
     vibrateNotify: false,
-    couplePartner: null,
-    users: null,
+    couplePartner: undefined,
+    users: undefined,
     publicPics: this.props.settings.photos.filter(
       x => !x.private && x.url !== ''
     ),
     privatePics: this.props.settings.photos.filter(
       x => x.private && x.url !== ''
     ),
-    about: null,
+    about: undefined,
     desires: [],
-    username: null,
-    email: null,
-    gender: null,
-    phone: null,
+    username: undefined,
+    email: undefined,
+    gender: undefined,
+    phone: undefined,
     showDesiresPopup: false,
     showPhotoVerPopup: false,
     showBlackPopup: this.props.showBlkModal || false,
@@ -57,7 +57,7 @@ class SettingsPage extends Component {
     showCouplePopup: this.props.showCplModal || false,
     photoSubmitType: '',
     includeMsgs: false,
-    fileRecieved: null,
+    fileRecieved: undefined,
     isPrivate: false,
     filename: '',
     filetype: '',
@@ -218,8 +218,15 @@ class SettingsPage extends Component {
     }
   };
 
-  setValue = ({ name, value, updateSettings }) => {
-    this.setState({ [name]: value }, () => this.handleSubmit(updateSettings));
+  setValue = ({ name, value, updateSettings, noSave }) => {
+    this.setState({ [name]: value }, () => {
+      if (noSave === true) {
+        console.log('NONO', noSave);
+        return;
+      }
+
+      this.handleSubmit(updateSettings);
+    });
   };
 
   setProfilePic = ({ key, url, updateSettings }) => {
@@ -494,8 +501,13 @@ class SettingsPage extends Component {
                             desires={desires}
                             about={about}
                             togglePopup={this.toggleDesiresPopup}
-                            setValue={({ name, value }) =>
-                              this.setValue({ name, value, updateSettings })
+                            setValue={({ name, value, noSave }) =>
+                              this.setValue({
+                                name,
+                                value,
+                                updateSettings,
+                                noSave
+                              })
                             }
                             t={t}
                             errors={errors}
