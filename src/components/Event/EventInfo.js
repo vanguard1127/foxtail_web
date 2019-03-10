@@ -1,8 +1,16 @@
 import React from 'react';
 import moment from 'moment';
 import AttendEvent from './AttendEvent';
+import EditEventBtn from './EditEventBtn';
 const EventInfo = ({
-  event: {
+  event,
+  t,
+  ErrorHandler,
+  isOwner,
+  openDelete,
+  refetch
+}) => {
+  const {
     id,
     startTime,
     endTime,
@@ -11,16 +19,13 @@ const EventInfo = ({
     distance,
     address,
     participants
-  },
-  t,
-  ErrorHandler
-}) => {
+  } = event;
   return (
     <div className="event-info-content hid-mobile">
       <div className="event-image">
-        <a href="assets/img/events/1001@2x.png">
+        <span>
           <img src="/assets/img/events/1001@2x.png" alt="" />
-        </a>
+        </span>
       </div>
       <ul>
         <li>
@@ -65,12 +70,27 @@ const EventInfo = ({
           <span className="title address">{address}</span>
         </li>
       </ul>
-      <AttendEvent
-        id={id}
-        participants={participants}
-        t={t}
-        ErrorHandler={ErrorHandler}
-      />
+      {!isOwner ? (
+        <AttendEvent
+          id={id}
+          participants={participants}
+          t={t}
+          ErrorHandler={ErrorHandler}
+        />
+      ) : (
+        <div>
+          <EditEventBtn
+            id={id}
+            t={t}
+            ErrorHandler={ErrorHandler}
+            updateEventProps={event}
+            refetch={refetch}
+          />
+          <div className="join-event">
+            <span onClick={() => openDelete()}>Cancel Event</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

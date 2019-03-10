@@ -240,9 +240,9 @@ class ProfileTour extends Component {
                     data-tut="infoM"
                   >
                     <div className="event-image">
-                      <a href="assets/img/events/1001@2x.png">
+                      <span>
                         <img src="assets/img/events/1001@2x.png" alt="" />
-                      </a>
+                      </span>
                     </div>
                     <ul>
                       <li>
@@ -367,9 +367,9 @@ class ProfileTour extends Component {
                     data-tut="info"
                   >
                     <div className="event-image">
-                      <a href="assets/img/events/1001@2x.png">
+                      <span>
                         <img src="assets/img/events/1001@2x.png" alt="" />
-                      </a>
+                      </span>
                     </div>
                     <ul>
                       <li>

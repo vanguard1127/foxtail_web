@@ -1,59 +1,90 @@
 import React from 'react';
-import EventHeading from './EventTitles';
-import EventDate from '../common/Event/EventDate';
-import EventCreator from './EventCreator';
-import EventShare from './EventShare';
+import moment from 'moment';
+import AttendEvent from './AttendEvent';
+import EditEventBtn from './EditEventBtn';
 
 //TODO: Fix this
-const EventInfoMobile = ({
-  event: { id, startTime, eventname, ownerProfile, createdAt, image },
-  t
-}) => {
+const EventInfoMobile = ({ event, t, ErrorHandler, isOwner, openDelete }) => {
+  const {
+    id,
+    startTime,
+    endTime,
+    type,
+    desires,
+    distance,
+    address,
+    participants
+  } = event;
   return (
     <div className="event-info-content hid-desktop">
       <div className="event-image">
-        <a href="assets/img/events/1001@2x.png">
-          <img
-            src={image !== '' ? image : '/assets/img/events/1001@2x.png'}
-            alt=""
-          />
-        </a>
+        <span>
+          <img src="/assets/img/events/1001@2x.png" alt="" />
+        </span>
       </div>
       <ul>
         <li>
           <span className="head">{t('evedate')}:</span>
-          <span className="title">22 December 2018, Monday</span>
+          <span className="title">
+            {moment(startTime)
+              .locale(localStorage.getItem('i18nextLng'))
+              .format('DD MMMM YYYY, dddd')
+              .toString()}
+          </span>
         </li>
         <li>
-          <span className="head">{t('evetime')}:</span>
-          <span className="title">20:00 - 24:00</span>
+          <span className="head">
+            {t('evedate')} - {t('time')}:
+          </span>
+          <span className="title">
+            {moment(startTime)
+              .locale(localStorage.getItem('i18nextLng'))
+              .format('HH:mm')
+              .toString()}{' '}
+            -{' '}
+            {moment(endTime)
+              .locale(localStorage.getItem('i18nextLng'))
+              .format('HH:mm')
+              .toString()}
+          </span>
         </li>
         <li>
           <span className="head">{t('Type')}:</span>
-          <span className="title">Public</span>
-        </li>
-        <li>
-          <span className="head">{t('Interested')}:</span>
-          <span className="title">Flirting, Dating</span>
+          <span className="title">{type}</span>
         </li>
         <li>
           <span className="head">{t('toexpect')}:</span>
-          <span className="title">Expect</span>
+          <span className="title">{desires.map(desire => desire + ',')}</span>
         </li>
         <li>
           <span className="head">{t('Away')}:</span>
-          <span className="title">12.50 Miles</span>
+          <span className="title">{distance} Miles</span>
         </li>
         <li>
           <span className="head">{t('common:Address')}:</span>
-          <span className="title address">
-            <p>3200 16th St, San Francisco, CA 94103United States</p>
-          </span>
+          <span className="title address">{address}</span>
         </li>
       </ul>
-      <div className="join-event">
-        <span>{t('imGoing')}</span>
-      </div>
+      {!isOwner ? (
+        <AttendEvent
+          id={id}
+          participants={participants}
+          t={t}
+          ErrorHandler={ErrorHandler}
+        />
+      ) : (
+        <div>
+          <EditEventBtn
+            id={id}
+            t={t}
+            ErrorHandler={ErrorHandler}
+            updateEventProps={event}
+          />
+          <div className="join-event">
+            <span onClick={() => openDelete()}>Cancel Event</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

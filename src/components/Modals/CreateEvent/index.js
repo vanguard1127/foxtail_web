@@ -12,6 +12,7 @@ import AddressSearch from '../../common/AddressSearch';
 import DatePicker from '../../common/DatePicker';
 import Modal from '../../common/Modal';
 import isEmpty from '../../../utils/isEmpty';
+import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
   eventname: yup
@@ -49,7 +50,8 @@ class CreateEvent extends Component {
     interestedIn: [],
     errors: {},
     showInfo: true,
-    showDesiresPopup: false
+    showDesiresPopup: false,
+    ...this.props.updateEventProps
   };
   componentDidMount() {
     this.props.ErrorHandler.setBreadcrumb('Create Event Modal');
@@ -97,6 +99,7 @@ class CreateEvent extends Component {
     }
   };
 
+  //TODO: SETUP ERRORS ON THIS PAGE
   handleSubmit = async ({ createEvent, signS3 }) => {
     if (await this.validateForm()) {
       if (this.state.images.length > 0) {
@@ -106,7 +109,10 @@ class CreateEvent extends Component {
       }
       createEvent()
         .then(async ({ data }) => {
-          console.log('2', data);
+          toast.success('Event Saved!');
+          if (this.props.refetch) {
+            this.props.refetch();
+          }
           this.props.close();
         })
         .catch(res => {
@@ -184,7 +190,7 @@ class CreateEvent extends Component {
   };
   //TODO: Min time for date pickers to prevent time overlap
   render() {
-    const { close, t, ErrorHandler } = this.props;
+    const { close, t, ErrorHandler, eventID } = this.props;
     const {
       eventname,
       tagline,
@@ -205,9 +211,10 @@ class CreateEvent extends Component {
       filename,
       filetype
     } = this.state;
+
     return (
       <section>
-        <Modal header={t('createeve')} close={close}>
+        <Modal header={eventID ? t('updateeve') : t('createeve')} close={close}>
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
               <div className="page">
@@ -281,6 +288,7 @@ class CreateEvent extends Component {
                             })
                           }
                           value={type}
+                          defaultOptionValue={type}
                           options={[
                             { label: 'Public', value: 'public' },
                             { label: 'Private', value: 'private' },
@@ -334,7 +342,7 @@ class CreateEvent extends Component {
                         <DatePicker
                           value={startTime}
                           p={{
-                            maxDate: endTime || null,
+                            maxDate: new Date(endTime) || null,
                             minDate: new Date()
                           }}
                           onChange={e => {
@@ -351,7 +359,7 @@ class CreateEvent extends Component {
                       <div className="item">
                         <DatePicker
                           value={endTime}
-                          p={{ minDate: startTime || new Date() }}
+                          p={{ minDate: new Date(startTime) || new Date() }}
                           onChange={e => {
                             this.setValue({
                               name: 'endTime',
@@ -380,13 +388,15 @@ class CreateEvent extends Component {
                                     desires,
                                     interestedIn,
                                     description,
+                                    tagline,
                                     address,
                                     type,
                                     lat,
                                     long,
                                     startTime,
                                     endTime,
-                                    image
+                                    image,
+                                    eventID
                                   }}
                                 >
                                   {(createEvent, { loading }) => {
@@ -400,7 +410,9 @@ class CreateEvent extends Component {
                                           })
                                         }
                                       >
-                                        {t('common:createevent')}
+                                        {eventID
+                                          ? t('common:updateevent')
+                                          : t('common:createevent')}
                                       </span>
                                     );
                                   }}

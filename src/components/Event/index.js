@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query, Mutation } from 'react-apollo';
-import { GET_EVENT, DELETE_EVENT, SEARCH_EVENTS } from '../../queries';
+import { GET_EVENT, DELETE_EVENT } from '../../queries';
 import { withNamespaces } from 'react-i18next';
 import BlockModal from '../Modals/Block';
 import moment from 'moment';
 import Spinner from '../common/Spinner';
 import withAuth from '../withAuth';
+import Modal from '../common/Modal';
 import EventHeader from './EventHeader';
 import Tour from './Tour';
 import EventAbout from './EventAbout';
@@ -14,9 +15,27 @@ import EventInfoMobile from './EventInfoMobile';
 import EventDiscussion from './EventDiscussion';
 import EventInfo from './EventInfo';
 import { flagOptions } from '../../docs/options';
+import { toast } from 'react-toastify';
 
 class EventPage extends Component {
-  state = { visible: false, blockModalVisible: false };
+  state = { visible: false, blockModalVisible: false, showDelete: false };
+
+  toggleDeleteDialog = () => {
+    this.props.ErrorHandler.setBreadcrumb('Dialog Modal Toggled:');
+    this.setState({ showDelete: !this.state.showDelete });
+  };
+
+  deleteEvent(deleteEvent) {
+    this.props.ErrorHandler.setBreadcrumb('Delete Event');
+    deleteEvent()
+      .then(({ data }) => {
+        toast.success('Event Deleted');
+        this.props.history.push('/events');
+      })
+      .catch(res => {
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+      });
+  }
 
   setBlockModalVisible = (blockModalVisible, event) => {
     this.props.ErrorHandler.setBreadcrumb(
@@ -43,17 +62,6 @@ class EventPage extends Component {
           this.setState({ errors });
         });
     }
-  };
-
-  showEdit = event => {
-    this.props.ErrorHandler.setBreadcrumb('Show edit event');
-    this.setState({ event }, function() {
-      this.setState({ visible: true });
-    });
-  };
-  closeEdit = () => {
-    this.props.ErrorHandler.setBreadcrumb('Close called');
-    this.setState({ visible: false });
   };
 
   handleSubmit = (e, createEvent) => {
@@ -112,7 +120,7 @@ class EventPage extends Component {
 
   render() {
     const { id } = this.props.match.params;
-    const { visible, blockModalVisible } = this.state;
+    const { blockModalVisible, showDelete } = this.state;
     const { session, history, t, ErrorHandler } = this.props;
     if (session.currentuser.tours.indexOf('e') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Event');
@@ -124,7 +132,7 @@ class EventPage extends Component {
     }
     return (
       <Query query={GET_EVENT} variables={{ id }}>
-        {({ data, loading, error }) => {
+        {({ data, loading, error, refetch }) => {
           if (error) {
             return (
               <ErrorHandler.report error={error} calledName={'getEvent'} />
@@ -171,7 +179,11 @@ class EventPage extends Component {
                         />{' '}
                       </ErrorHandler.ErrorBoundary>{' '}
                       <ErrorHandler.ErrorBoundary>
-                        <EventInfoMobile event={event} t={t} />{' '}
+                        <EventInfoMobile
+                          event={event}
+                          t={t}
+                          openDelete={() => this.toggleDeleteDialog()}
+                        />{' '}
                       </ErrorHandler.ErrorBoundary>{' '}
                       <ErrorHandler.ErrorBoundary>
                         <EventDiscussion
@@ -190,6 +202,12 @@ class EventPage extends Component {
                           event={event}
                           t={t}
                           ErrorHandler={ErrorHandler}
+                          isOwner={
+                            event.ownerProfile.id ===
+                            session.currentuser.profileID
+                          }
+                          openDelete={() => this.toggleDeleteDialog()}
+                          refetch={refetch}
                         />{' '}
                       </ErrorHandler.ErrorBoundary>
                     </div>
@@ -203,6 +221,30 @@ class EventPage extends Component {
                   close={() => this.setBlockModalVisible(false)}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
+              )}
+              {id && showDelete && (
+                <Mutation
+                  mutation={DELETE_EVENT}
+                  variables={{
+                    eventID: id
+                  }}
+                >
+                  {deleteEvent => (
+                    <Modal
+                      header={'Delete Event'}
+                      close={() => this.toggleDeleteDialog()}
+                      description="This can't be undone"
+                      okSpan={
+                        <span
+                          className="color"
+                          onClick={() => this.deleteEvent(deleteEvent)}
+                        >
+                          Delete
+                        </span>
+                      }
+                    />
+                  )}
+                </Mutation>
               )}
             </section>
           );

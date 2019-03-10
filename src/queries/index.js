@@ -27,6 +27,10 @@ export const NEW_INBOX_SUB = gql`
         username
         id
       }
+      fromProfile {
+        profileName
+        id
+      }
       createdAt
       profilePic
       chatID
@@ -125,34 +129,7 @@ export const LINK_PROFILE = gql`
 
 export const READ_CHAT = gql`
   mutation($chatID: ID!) {
-    readChat(chatID: $chatID) {
-      id
-      updatedAt
-      ownerProfile {
-        id
-      }
-      messages {
-        id
-        text
-        fromUser {
-          username
-          id
-        }
-        profilePic
-        createdAt
-      }
-      participants {
-        id
-        profilePic
-        profileName
-        updatedAt
-        online
-        users {
-          username
-          id
-        }
-      }
-    }
+    readChat(chatID: $chatID)
   }
 `;
 
@@ -310,6 +287,12 @@ export const INVITE_PROFILES_EVENT = gql`
 export const REMOVE_PROFILES_EVENT = gql`
   mutation($eventID: ID!, $removedProfiles: [ID]!) {
     removeProfileEvent(eventID: $eventID, removedProfiles: $removedProfiles)
+  }
+`;
+
+export const REMOVE_PROFILES_CHAT = gql`
+  mutation($chatID: ID!, $removedProfiles: [ID]!) {
+    removeProfilesChat(chatID: $chatID, removedProfiles: $removedProfiles)
   }
 `;
 
@@ -546,6 +529,40 @@ export const SEARCH_PROFILES = gql`
     }
   }
 `;
+
+export const READ_CHAT_QUERY = gql`
+  query($chatID: ID!) {
+    readChatQuery(chatID: $chatID) {
+      id
+      updatedAt
+      ownerProfile {
+        id
+      }
+      messages {
+        id
+        text
+        fromUser {
+          username
+          id
+        }
+        profilePic
+        createdAt
+      }
+      participants {
+        id
+        profilePic
+        profileName
+        updatedAt
+        online
+        users {
+          username
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const GET_EVENT = gql`
   query($id: ID!) {
     event(id: $id) {
@@ -575,6 +592,9 @@ export const GET_EVENT = gql`
         id
       }
       createdAt
+      lat
+      long
+      tagline
     }
   }
 `;
@@ -587,6 +607,10 @@ export const GET_INBOX = gql`
       text
       fromUser {
         username
+        id
+      }
+      fromProfile {
+        profileName
         id
       }
       profilePic
@@ -634,8 +658,8 @@ export const GET_MY_EVENTS = gql`
 `;
 
 export const GET_FRIENDS = gql`
-  query($limit: Int!, $skip: Int) {
-    getFriends(limit: $limit, skip: $skip) {
+  query($limit: Int!, $skip: Int, $chatID: ID, $isEvent: Boolean) {
+    getFriends(limit: $limit, skip: $skip, chatID: $chatID, isEvent: $isEvent) {
       profilePic
       profileName
       id

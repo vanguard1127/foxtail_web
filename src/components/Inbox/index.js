@@ -6,8 +6,15 @@ import InboxPanel from './InboxPanel';
 import Header from './Header';
 import ChatInfo from './ChatInfo';
 import BlockModal from '../Modals/Block';
-import { GET_COUNTS, READ_CHAT, GET_INBOX, REMOVE_SELF } from '../../queries';
-import { Mutation } from 'react-apollo';
+import Spinner from '../common/Spinner';
+import {
+  GET_COUNTS,
+  READ_CHAT,
+  GET_INBOX,
+  REMOVE_SELF,
+  READ_CHAT_QUERY
+} from '../../queries';
+import { Mutation, Query } from 'react-apollo';
 import ChatWindow from './ChatWindow';
 import Tour from './Tour';
 import { flagOptions } from '../../docs/options';
@@ -16,7 +23,7 @@ import * as ErrorHandler from '../common/ErrorHandler';
 
 class InboxPage extends Component {
   state = {
-    chatID: null,
+    chatID: this.props.match.params.chatID,
     chat: null,
     unSeenCount: 0,
     blockModalVisible: false
@@ -33,7 +40,7 @@ class InboxPage extends Component {
     this.setState({ chatID, unSeenCount }, () => {
       readChat()
         .then(({ data }) => {
-          this.setState({ chat: data.readChat });
+          this.setState({ chatID: data.readChat });
         })
         .catch(res => {
           ErrorHandler.catchErrors(res.graphQLErrors);
@@ -109,7 +116,6 @@ class InboxPage extends Component {
     const { t } = this.props;
     const { currentuser } = this.props.session;
     let { chatID, chat, blockModalVisible } = this.state;
-    chatID = this.state.chatID;
     if (currentuser.tours.indexOf('i') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Inbox');
       return (
@@ -118,12 +124,7 @@ class InboxPage extends Component {
         </div>
       );
     }
-    if (chatID === null) {
-      chatID = this.props.match.params.chatID;
-      if (chatID === 'null' || chatID === undefined) {
-        chatID = null;
-      }
-    }
+
     const inboxPanel = (
       <Mutation
         mutation={READ_CHAT}
@@ -156,13 +157,47 @@ class InboxPage extends Component {
           <div className="row no-gutters">
             {inboxPanel}
             <ErrorHandler.ErrorBoundary>
-              {' '}
-              <ChatWindow
-                currentChat={chat}
-                currentuser={currentuser}
-                t={t}
-                ErrorHandler={ErrorHandler}
-              />
+              {!chatID && (
+                <ChatWindow
+                  currentChat={null}
+                  currentuser={currentuser}
+                  t={t}
+                  ErrorHandler={ErrorHandler}
+                />
+              )}
+              {chatID && (
+                <Query query={READ_CHAT_QUERY} variables={{ chatID }}>
+                  {({ data, loading, error }) => {
+                    if (error) {
+                      return (
+                        <ErrorHandler.report
+                          error={error}
+                          calledName={'getEvent'}
+                        />
+                      );
+                    }
+
+                    if (loading) {
+                      return (
+                        <Spinner
+                          message={t('common:Loading' + '...')}
+                          size="large"
+                        />
+                      );
+                    }
+
+                    const { readChatQuery } = data;
+                    return (
+                      <ChatWindow
+                        currentChat={readChatQuery}
+                        currentuser={currentuser}
+                        t={t}
+                        ErrorHandler={ErrorHandler}
+                      />
+                    );
+                  }}
+                </Query>
+              )}
               {chatID && (
                 <Mutation
                   mutation={REMOVE_SELF}

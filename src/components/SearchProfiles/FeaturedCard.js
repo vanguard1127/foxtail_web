@@ -23,6 +23,7 @@ const FeaturedCard = ({ profile, showMsgModal, likeProfile, history, t }) => {
       <ProfileActionBtns
         likeProfile={likeProfile}
         showMsgModal={showMsgModal}
+        profile={profile}
       />
     </div>
   );

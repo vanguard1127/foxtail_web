@@ -4,6 +4,8 @@ import {
   INVITE_PROFILES,
   INVITE_PROFILES_EVENT,
   REMOVE_PROFILES_EVENT,
+  REMOVE_PROFILES_CHAT,
+  GET_CHAT_PARTICIPANTS,
   GET_EVENT
 } from '../../../queries';
 import { Mutation } from 'react-apollo';
@@ -110,7 +112,7 @@ class MembersList extends Component {
     } else {
       remove()
         .then(({ data }) => {
-          if (data.removeProfile) {
+          if (data.removeProfilesChat) {
             close();
             toast.success(t('common:removpros'));
           }
@@ -154,6 +156,29 @@ class MembersList extends Component {
         event: {
           ...event,
           participants: event.participants.filter(
+            member => !invitedProfiles.includes(member.id)
+          )
+        }
+      }
+    });
+  };
+
+  updateChatParticipants = cache => {
+    const { invitedProfiles } = this.state;
+    const { targetID } = this.props;
+
+    const { chat } = cache.readQuery({
+      query: GET_CHAT_PARTICIPANTS,
+      variables: { chatID: targetID }
+    });
+
+    cache.writeQuery({
+      query: GET_CHAT_PARTICIPANTS,
+      variables: { chatID: targetID },
+      data: {
+        chat: {
+          ...chat,
+          participants: chat.participants.filter(
             member => !invitedProfiles.includes(member.id)
           )
         }
@@ -230,6 +255,28 @@ class MembersList extends Component {
               <div
                 className="apply-content"
                 onClick={() => this.handleRemove(removeProfileEvent)}
+              >
+                <span> {t('common:remove')}</span>
+              </div>
+            );
+          }}
+        </Mutation>
+      );
+    } else if (targetType === 'chat' && listType === 'participants') {
+      return (
+        <Mutation
+          mutation={REMOVE_PROFILES_CHAT}
+          variables={{
+            chatID: targetID,
+            removedProfiles: invitedProfiles
+          }}
+          update={this.updateChatParticipants}
+        >
+          {removeProfileChat => {
+            return (
+              <div
+                className="apply-content"
+                onClick={() => this.handleRemove(removeProfileChat)}
               >
                 <span> {t('common:remove')}</span>
               </div>

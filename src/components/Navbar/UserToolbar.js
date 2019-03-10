@@ -47,7 +47,8 @@ const UserToolbar = ({ currentuser, href, t, setRef }) => {
 
                 if (
                   newInboxMsgSubscribe === null ||
-                  newInboxMsgSubscribe.fromUser.id === currentuser.userID
+                  (newInboxMsgSubscribe.fromUser &&
+                    newInboxMsgSubscribe.fromUser.id === currentuser.userID)
                 ) {
                   return;
                 }

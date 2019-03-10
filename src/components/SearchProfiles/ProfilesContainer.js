@@ -6,6 +6,7 @@ import ProfilesDiv from './ProfilesDiv';
 import Waypoint from 'react-waypoint';
 import FeaturedDiv from './FeaturedDiv';
 import DirectMsgModal from '../Modals/DirectMsg';
+import Modal from '../common/Modal';
 import Spinner from '../common/Spinner';
 import { toast } from 'react-toastify';
 
@@ -16,7 +17,15 @@ class ProfilesContainer extends Component {
     skip: 0,
     loading: false,
     msgModalVisible: false,
-    profile: null
+    profile: null,
+    matchDlgVisible: false,
+    chatID: null
+  };
+
+  setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
+    this.props.ErrorHandler.setBreadcrumb('Match Dialog Toggled:');
+    if (profile) this.setState({ profile, matchDlgVisible, chatID });
+    else this.setState({ matchDlgVisible });
   };
 
   setMsgModalVisible = (msgModalVisible, profile) => {
@@ -32,12 +41,16 @@ class ProfilesContainer extends Component {
     this.setState({ profile }, () => {
       likeProfile()
         .then(({ data }) => {
-          if (data.likeProfile) {
-            toast.success('Liked ' + profile.profileName + '!');
-            return;
-          } else {
-            toast.success('UnLiked ' + profile.profileName + '!');
-            return;
+          switch (data.likeProfile) {
+            case 'like':
+              toast.success('Liked ' + profile.profileName + '!');
+              break;
+            case 'unlike':
+              toast.success('UnLiked ' + profile.profileName + '!');
+              break;
+            default:
+              this.setMatchDlgVisible(true, profile, data.likeProfile);
+              break;
           }
         })
         .catch(res => {
@@ -93,7 +106,13 @@ class ProfilesContainer extends Component {
       ageRange,
       interestedIn
     } = this.props.searchCriteria;
-    const { profile, msgModalVisible, skip } = this.state;
+    const {
+      profile,
+      msgModalVisible,
+      skip,
+      matchDlgVisible,
+      chatID
+    } = this.state;
     if (loading) {
       return <Spinner page="searchProfiles" title={t('allmems')} />;
     }
@@ -194,6 +213,39 @@ class ProfilesContainer extends Component {
                         close={() => this.setMsgModalVisible(false)}
                         ErrorBoundary={ErrorHandler.ErrorBoundary}
                       />
+                    )}
+                    {profile && chatID && matchDlgVisible && (
+                      <Modal
+                        header={"It's a Match!"}
+                        close={() => this.setMatchDlgVisible(false)}
+                        okSpan={
+                          <span
+                            className="color"
+                            onClick={async () =>
+                              this.props.history.push('/inbox/' + chatID)
+                            }
+                          >
+                            Chat Now
+                          </span>
+                        }
+                        cancelSpan={
+                          <span
+                            className="border"
+                            onClick={async () => this.setMatchDlgVisible(false)}
+                          >
+                            Chat Later
+                          </span>
+                        }
+                      >
+                        <span
+                          className="description"
+                          style={{ fontSize: '20px', paddingBottom: '35px' }}
+                        >
+                          {'You and ' +
+                            profile.profileName +
+                            ' like each other!'}
+                        </span>
+                      </Modal>
                     )}
                   </div>
                 );

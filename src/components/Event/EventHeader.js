@@ -1,11 +1,11 @@
-import React from "react";
-import EventTitles from "./EventTitles";
-import EventDate from "../common/Event/EventDate";
-import EventCreator from "./EventCreator";
-import EventShare from "./EventShare";
+import React from 'react';
+import EventTitles from './EventTitles';
+import EventDate from '../common/Event/EventDate';
+import EventCreator from './EventCreator';
+import EventShare from './EventShare';
 
 const EventHeader = ({
-  event: { id, startTime, eventname, ownerProfile, createdAt },
+  event: { id, startTime, eventname, ownerProfile, createdAt, tagline },
   history,
   t
 }) => {
@@ -13,7 +13,7 @@ const EventHeader = ({
     <div className="header">
       <EventDate time={startTime} />
       <div className="info">
-        <EventTitles eventname={eventname} />
+        <EventTitles eventname={eventname} tagline={tagline} />
         <EventCreator
           ownerProfile={ownerProfile}
           createdAt={createdAt}

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import withSession from '../withSession';
 import { Mutation } from 'react-apollo';
-import { TOGGLE_EVENT_ATTEND, GET_EVENT } from '../../queries';
+import {
+  TOGGLE_EVENT_ATTEND,
+  GET_EVENT,
+  GET_EVENT_PARTICIPANTS
+} from '../../queries';
 
 class AttendEvent extends Component {
   state = {
@@ -48,6 +52,7 @@ class AttendEvent extends Component {
   updateAttend = (cache, { data: { toggleAttendEvent } }) => {
     if (toggleAttendEvent !== null) {
       const { id } = this.props;
+      console.log(id);
       const { event } = cache.readQuery({
         query: GET_EVENT,
         variables: { id }
@@ -63,8 +68,30 @@ class AttendEvent extends Component {
               ? [
                   {
                     id: toggleAttendEvent,
-                    profileName: '',
-                    profilePic: '',
+                    profileName: this.props.session.currentuser.username,
+                    profilePic: this.props.session.currentuser.profilePic,
+                    __typename: 'ProfileType'
+                  },
+                  ...event.participants
+                ]
+              : event.participants.filter(
+                  member => member.id !== toggleAttendEvent
+                )
+          }
+        }
+      });
+
+      cache.writeQuery({
+        query: GET_EVENT_PARTICIPANTS,
+        variables: { eventID: id },
+        data: {
+          event: {
+            participants: this.state.isGoing
+              ? [
+                  {
+                    id: toggleAttendEvent,
+                    profileName: this.props.session.currentuser.username,
+                    profilePic: this.props.session.currentuser.profilePic,
                     __typename: 'ProfileType'
                   },
                   ...event.participants

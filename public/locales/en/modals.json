@@ -43,6 +43,7 @@
   "code": "Couple's Code",
   "Next": "Next",
   "createeve": "Create a New Event",
+  "updateeve": "Update Your Event",
   "evename": "Event Name",
   "evestart": "Date/Time Start",
   "eveend": "Date/Time End",

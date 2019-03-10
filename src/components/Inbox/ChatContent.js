@@ -116,8 +116,8 @@ class ChatContent extends Component {
                 <ErrorHandler.report error={error} calledName={'getSettings'} />
               );
             }
-            if (!data.getMessages) {
-              return <EmptyScreen message={t('commmon:nomsgs')} />;
+            if (!data.getMessages || data.getMessages === null) {
+              return <EmptyScreen message={t('common:nomsgs')} />;
             }
 
             return (

@@ -4,7 +4,6 @@ class GoingBar extends Component {
   state = { remDropOpen: false };
   render() {
     const { id, participants, t, isOwner } = this.props;
-    console.log(isOwner);
     const { remDropOpen } = this.state;
     return (
       <div className="goings">
@@ -71,7 +70,7 @@ class GoingBar extends Component {
               listType={'participants'}
               isOwner={isOwner}
               t={t}
-              close={() => this.setState({ invDropOpen: false })}
+              close={() => this.setState({ remDropOpen: false })}
             />
           )}
         </span>

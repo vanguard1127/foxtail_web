@@ -9,7 +9,7 @@ export default class CustomDatePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedDate: null
+      selectedDate: this.props.value || null
     };
   }
 
@@ -50,7 +50,7 @@ export default class CustomDatePicker extends Component {
         <div className="input calender calender-input-sm">
           <DatePicker
             placeholderText={placeholder}
-            selected={selectedDate}
+            selected={selectedDate && new Date(selectedDate)}
             onChange={this.handleChange}
             peekNextMonth
             showMonthDropdown

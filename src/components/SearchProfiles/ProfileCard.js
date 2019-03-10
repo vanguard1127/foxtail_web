@@ -4,15 +4,7 @@ import DesiresBlock from './DesiresBlock';
 import ProfileActionBtns from './ProfileActionBtns';
 import ProfileInfoBox from './ProfileInfoBox';
 
-const ProfileCard = ({
-  profile,
-  showMsgModal,
-  showBlockModal,
-  showShareModal,
-  likeProfile,
-  history,
-  t
-}) => {
+const ProfileCard = ({ profile, showMsgModal, likeProfile, history, t }) => {
   const stdCheck = profile.users.every(user => user.verifications.std === true);
   const photoCheck = profile.users.every(
     user => user.verifications.photo === true

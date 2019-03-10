@@ -301,7 +301,7 @@ const Body = ({ showFooter }) => (
       </Switch>
     </main>
     {showFooter && <Footer />}
-    <ToastContainer />
+    <ToastContainer position="top-center" />
   </div>
 );
 

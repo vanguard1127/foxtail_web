@@ -343,6 +343,7 @@
         border-radius: 3px;
         padding: 5px 15px;
         display: flex;
+        min-width: 220px;
       }
 
       .invite-member.open {
@@ -1868,6 +1869,7 @@
       transform: scale(1.02);
     }
 
+    section.inbox .left .conversations .item span.inbox-item,
     section.inbox .left .conversations .item a {
       width: 100%;
       height: 100%;
@@ -4995,6 +4997,7 @@
       margin: 0;
       float: left;
       display: inline-block;
+      width:auto !important;
     }
 
     .page .form .content .select_desires ul li {
@@ -5007,6 +5010,7 @@
       padding:  0 5px;
       margin-right: 5px;
       margin-top: 27px;
+      width:auto !important;
     }
 
 /*---- POPUP CONTENTS ----*/
@@ -7297,7 +7301,7 @@
   section.inbox .left .conversations .item .data span.notif {
     margin-top: 2px;
   }
-
+  section.inbox .left .conversations .item span.inbox-item,
   section.inbox .left .conversations .item a {
     padding: 12px 12px;
   }
@@ -7786,6 +7790,7 @@
 }
 
 @media only screen and (min-width : 1200px) {
+  section.inbox .left .conversations .item span.inbox-item,
   section.inbox .left .conversations .item a {
     padding: 12px 15px;
   }

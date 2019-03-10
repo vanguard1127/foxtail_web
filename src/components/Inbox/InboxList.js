@@ -1,32 +1,39 @@
-import React, { Component, Fragment } from "react";
-import TimeAgo from "../../utils/TimeAgo";
+import React, { Component, Fragment } from 'react';
+import TimeAgo from '../../utils/TimeAgo';
 const preventContextMenu = e => {
   e.preventDefault();
   alert(
-    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
+    'Right-click disabled: Saving images on Foxtail will result in your account being banned.'
   );
 };
 class InboxList extends Component {
   state = { chatID: null };
 
-  renderItem = (item, timeAgo, isCurrentChat) => {
+  renderItem = (item, timeAgo) => {
     const { currentUserID, readChat } = this.props;
     let title;
-    if (item.fromUser.id === currentUserID && item.participants.length > 0) {
-      title = item.participants[0].profileName;
+    if (item.fromUser) {
+      if (item.fromUser.id === currentUserID && item.participants.length > 0) {
+        title = item.participants[0].profileName;
+      } else {
+        title = item.fromUser.username;
+      }
     } else {
-      title = item.fromUser.username;
+      title = item.fromProfile.profileName;
     }
 
     return (
       <div className="item unread" key={item.id}>
-        <span onClick={() => readChat(item.chatID, item.unSeenCount)}>
+        <span
+          onClick={() => readChat(item.chatID, item.unSeenCount)}
+          className="inbox-item"
+        >
           <span className="img">
             <img
               src={
-                item.profilePic !== ""
+                item.profilePic !== ''
                   ? item.profilePic
-                  : "assets/img/usr/avatar/1001@2x.png"
+                  : 'assets/img/usr/avatar/1001@2x.png'
               }
               alt=""
               onContextMenu={preventContextMenu}

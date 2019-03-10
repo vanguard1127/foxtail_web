@@ -48,7 +48,14 @@ class MembersDropdown extends Component {
     } = this.props;
     if (listType === 'friends') {
       return (
-        <Query query={GET_FRIENDS} variables={{ limit: LIMIT }}>
+        <Query
+          query={GET_FRIENDS}
+          variables={{
+            limit: LIMIT,
+            chatID: targetID,
+            isEvent: targetType === 'event'
+          }}
+        >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return (

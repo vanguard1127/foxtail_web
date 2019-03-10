@@ -1,11 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const ProfileActionBtns = ({
-  profile,
-  setProfile,
-  likeProfile,
-  showMsgModal
-}) => {
+const ProfileActionBtns = ({ profile, likeProfile, showMsgModal }) => {
   return (
     <div className="function">
       <div

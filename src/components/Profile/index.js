@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import { Query, Mutation } from 'react-apollo';
+import { toast } from 'react-toastify';
 import { GET_PROFILE, LIKE_PROFILE } from '../../queries';
 import Spinner from '../common/Spinner';
 import withAuth from '../withAuth';
@@ -16,6 +17,7 @@ import PhotoSlider from './PhotoSlider';
 import BlockModal from '../Modals/Block';
 import ShareModal from '../Modals/Share';
 import DirectMsgModal from '../Modals/DirectMsg';
+import Modal from '../common/Modal';
 import { flagOptions } from '../../docs/options';
 
 class ProfilePage extends Component {
@@ -23,7 +25,15 @@ class ProfilePage extends Component {
     shareModalVisible: false,
     blockModalVisible: false,
     msgModalVisible: false,
-    profile: null
+    profile: null,
+    matchDlgVisible: false,
+    chatID: null
+  };
+
+  setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
+    this.props.ErrorHandler.setBreadcrumb('Match Dialog Toggled:');
+    if (profile) this.setState({ profile, matchDlgVisible, chatID });
+    else this.setState({ matchDlgVisible });
   };
 
   handleImageClick = event => {
@@ -64,9 +74,17 @@ class ProfilePage extends Component {
     this.props.ErrorHandler.setBreadcrumb('Like Profile:' + likeProfile);
     likeProfile()
       .then(({ data }) => {
-        if (data.likeProfile) {
-          console.log('Liked');
-          return;
+        const { profile } = this.state;
+        switch (data.likeProfile) {
+          case 'like':
+            toast.success('Liked ' + profile.profileName + '!');
+            break;
+          case 'unlike':
+            toast.success('UnLiked ' + profile.profileName + '!');
+            break;
+          default:
+            this.setMatchDlgVisible(true, profile, data.likeProfile);
+            break;
         }
       })
       .catch(res => {
@@ -78,7 +96,9 @@ class ProfilePage extends Component {
     const {
       blockModalVisible,
       shareModalVisible,
-      msgModalVisible
+      msgModalVisible,
+      matchDlgVisible,
+      chatID
     } = this.state;
     const { t, ErrorHandler, session } = this.props;
     ErrorHandler.setBreadcrumb('Open Profile:' + id);
@@ -222,6 +242,39 @@ class ProfilePage extends Component {
                         close={() => this.setMsgModalVisible(false)}
                         ErrorBoundary={ErrorHandler.ErrorBoundary}
                       />
+                    )}
+                    {profile && chatID && matchDlgVisible && (
+                      <Modal
+                        header={"It's a Match!"}
+                        close={() => this.setMatchDlgVisible(false)}
+                        okSpan={
+                          <span
+                            className="color"
+                            onClick={async () =>
+                              this.props.history.push('/inbox/' + chatID)
+                            }
+                          >
+                            Chat Now
+                          </span>
+                        }
+                        cancelSpan={
+                          <span
+                            className="border"
+                            onClick={async () => this.setMatchDlgVisible(false)}
+                          >
+                            Chat Later
+                          </span>
+                        }
+                      >
+                        <span
+                          className="description"
+                          style={{ fontSize: '20px', paddingBottom: '35px' }}
+                        >
+                          {'You and ' +
+                            profile.profileName +
+                            ' like each other!'}
+                        </span>
+                      </Modal>
                     )}
                   </section>
                 );

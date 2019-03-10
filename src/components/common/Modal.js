@@ -21,7 +21,14 @@ class Modal extends Component {
   };
 
   render() {
-    const { close, header, children, description, okSpan } = this.props;
+    const {
+      close,
+      header,
+      children,
+      description,
+      okSpan,
+      cancelSpan
+    } = this.props;
 
     return (
       <section className="login-modal show" ref={this.wrapperRef}>
@@ -37,6 +44,7 @@ class Modal extends Component {
                     <span className="description">{description}</span>
                   )}
                   {okSpan && <div className="submit">{okSpan}</div>}
+                  {cancelSpan && <div className="submit">{cancelSpan}</div>}
                 </div>
               </form>
             </div>
