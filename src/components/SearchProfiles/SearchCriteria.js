@@ -10,12 +10,15 @@ import getCityCountry from '../../utils/getCityCountry';
 
 class SearchCriteria extends Component {
   state = {
-    skip: 0,
-    loading: false,
-    locModalVisible: false,
-    ...this.props.searchCriteria,
-    city: this.props.searchCriteria.city,
-    country: this.props.searchCriteria.country
+    distance: this.props.distance,
+    distanceMetric: this.props.distanceMetric,
+    ageRange: this.props.ageRange,
+    interestedIn: this.props.interestedIn,
+    city: this.props.city,
+    country: this.props.country,
+    lat: this.props.lat,
+    long: this.props.long,
+    locModalVisible: false
   };
 
   setLocModalVisible = visible => {
@@ -25,15 +28,15 @@ class SearchCriteria extends Component {
   //TODO: Refactor to use setValue
   setLocation = async (pos, updateSettings) => {
     var crd = pos.coords;
+    const { long, lat } = this.props;
 
     const citycntry = await getCityCountry({
       long: crd.longitude,
       lat: crd.latitude
     });
 
-    const { long, lat } = this.state;
     if (long !== crd.longitude && lat !== crd.latitude) {
-      await this.setState({
+      await this.props.setLocation({
         long: crd.longitude,
         lat: crd.latitude,
         city: citycntry.city,
@@ -43,24 +46,20 @@ class SearchCriteria extends Component {
       if (updateSettings) {
         this.handleSubmit(updateSettings);
       }
-      await this.props.setLocation({
-        long: crd.longitude,
-        lat: crd.latitude,
-        city: citycntry.city,
-        country: citycntry.country
-      });
     }
   };
 
   handleSubmit = updateSettings => {
-    updateSettings().catch(res => {
-      const errors = res.graphQLErrors.map(error => {
-        return error.message;
-      });
+    updateSettings()
+      .then(() => this.props.refetch())
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => {
+          return error.message;
+        });
 
-      //TODO: send errors to analytics from here
-      this.setState({ errors });
-    });
+        //TODO: send errors to analytics from here
+        this.setState({ errors });
+      });
   };
 
   handleRemoveLocLock = async updateSettings => {
@@ -89,32 +88,18 @@ class SearchCriteria extends Component {
         updateSettings
       );
     } else {
-      this.setState({ city });
+      this.setState({
+        city
+      });
     }
   };
 
   setValue = ({ name, value, updateSettings }) => {
-    this.setState({ [name]: value }, () => {
-      this.handleSubmit(updateSettings);
-    });
-
-    this.props.setValue({ name, value });
+    this.setState({ [name]: value }, () => this.handleSubmit(updateSettings));
   };
 
   render() {
-    const {
-      long,
-      lat,
-      distance,
-      distanceMetric,
-      ageRange,
-      interestedIn,
-      city,
-      country,
-      locModalVisible
-    } = this.state;
-
-    const lang = localStorage.getItem('i18nextLng');
+    const { locModalVisible } = this.state;
     const { t, loading } = this.props;
     if (loading) {
       return (
@@ -140,7 +125,6 @@ class SearchCriteria extends Component {
                       onChange={el => null}
                       value={[]}
                       placeholder={t('common:Interested') + ':'}
-                      lang={lang}
                     />
                   </div>
                 </div>
@@ -156,25 +140,34 @@ class SearchCriteria extends Component {
         </section>
       );
     }
+    const {
+      lang,
+      distance,
+      distanceMetric,
+      ageRange,
+      interestedIn,
+      city
+    } = this.props;
+
     return (
       <div>
         <Mutation mutation={REMOVE_LOCLOCK}>
-          {(removeLocation, { loading }) => {
+          {removeLocation => {
             return (
               <Mutation
                 mutation={UPDATE_SETTINGS}
                 variables={{
-                  distance,
-                  distanceMetric,
-                  ageRange,
-                  interestedIn,
-                  city,
-                  country,
-                  lat,
-                  long
+                  distance: this.state.distance,
+                  distanceMetric: this.state.distanceMetric,
+                  ageRange: this.state.ageRange,
+                  interestedIn: this.state.interestedIn,
+                  city: this.state.city,
+                  country: this.state.country,
+                  lat: this.state.lat,
+                  long: this.state.long
                 }}
               >
-                {(updateSettings, { loading }) => {
+                {updateSettings => {
                   return (
                     <section className="meet-filter">
                       <div className="container">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import { SEND_MESSAGE } from '../../queries';
+import { SEND_MESSAGE, GET_MESSAGES, GET_INBOX } from '../../queries';
 
 class ChatPanel extends Component {
   state = {
@@ -23,6 +23,52 @@ class ChatPanel extends Component {
     this.setState({ text: e.target.value });
   };
 
+  updateChat = cache => {
+    const { chatID, cursor, limit, currentuser } = this.props;
+    const { text } = this.state;
+
+    let { getMessages } = cache.readQuery({
+      query: GET_MESSAGES,
+      variables: { chatID, cursor, limit }
+    });
+
+    getMessages.messages.push({
+      createdAt: Date.now(),
+      fromUser: {
+        username: currentuser.username,
+        id: currentuser.userID,
+        __typename: 'UserType'
+      },
+      text,
+      type: 'msg',
+      __typename: 'MessageType'
+    });
+
+    cache.writeQuery({
+      query: GET_MESSAGES,
+      variables: { chatID, cursor, limit },
+      data: {
+        ...getMessages
+      }
+    });
+
+    let { getInbox } = cache.readQuery({
+      query: GET_INBOX
+    });
+
+    getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
+    getInbox[
+      getInbox.findIndex(el => el.chatID === chatID)
+    ].createdAt = Date.now();
+
+    cache.writeQuery({
+      query: GET_INBOX,
+      data: {
+        ...getInbox
+      }
+    });
+  };
+
   render() {
     const { chatID, t } = this.props;
     const { text } = this.state;
@@ -34,6 +80,7 @@ class ChatPanel extends Component {
           chatID,
           text
         }}
+        update={this.updateChat}
       >
         {sendMessage => (
           <div className="panel">
@@ -46,7 +93,10 @@ class ChatPanel extends Component {
               />
             </div>
             <div className="send">
-              <button onClick={e => this.submitMessage(e, sendMessage)}>
+              <button
+                type="submit"
+                onClick={e => this.submitMessage(e, sendMessage)}
+              >
                 {t('common:Send')}
               </button>
             </div>

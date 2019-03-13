@@ -31,25 +31,6 @@ const withAuth = conditionFunc => Component => props => {
                 />
               );
             }
-            // if (
-            //   !data.currentuser.isEmailOK &&
-            //   ~window.location.href.indexOf('/settings') === 0
-            // ) {
-            //   if (!toast.isActive('ever')) {
-            //     toast.error(
-            //       'Please check your inbox to confirm your email before contacting members! Resend',
-            //       {
-            //         toastId: 'ever',
-            //         position: toast.POSITION.TOP_CENTER,
-            //         autoClose: false,
-            //         hideProgressBar: true,
-            //         closeOnClick: false,
-            //         pauseOnHover: false,
-            //         draggable: false
-            //       }
-            //     );
-            //   }
-            // }
 
             return <Component {...props} session={data} refetch={refetch} />;
           } else {

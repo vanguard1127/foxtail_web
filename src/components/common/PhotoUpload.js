@@ -9,7 +9,6 @@ import { withNamespaces } from 'react-i18next';
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
@@ -19,7 +18,6 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 // Register the plugins
 registerPlugin(
   FilePondPluginImageExifOrientation,
-  FilePondPluginImagePreview,
   FilePondPluginFileValidateSize,
   FilePondPluginFileValidateType
 );

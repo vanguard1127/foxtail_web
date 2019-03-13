@@ -12,10 +12,10 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { withNamespaces } from 'react-i18next';
 
 class Landing extends Component {
-  state = { resetPhoneVisible: false, token: null };
+  state = { resetPhoneVisible: false, token: null, tooltip: false };
   render() {
     const { t, props } = this.props;
-    const { resetPhoneVisible, token } = this.state;
+    const { resetPhoneVisible, token, tooltip } = this.state;
     if (props.location.state) {
       if (props.location.state.emailVer === true) {
         if (!toast.isActive('emailVer')) {
@@ -169,20 +169,76 @@ class Landing extends Component {
                           Reset Phone Number
                         </span>
                       </li>
-                      <li>
+                      <li className="tooltip">
+                        {tooltip && (
+                          <span className="tooltiptext">
+                            <div>
+                              {' '}
+                              <span
+                                onClick={() =>
+                                  this.props.props.history.push('/tos')
+                                }
+                              >
+                                {t('common:Terms')}
+                              </span>
+                            </div>
+                            <div>
+                              {' '}
+                              <span
+                                onClick={() =>
+                                  this.props.props.history.push('/privacy')
+                                }
+                              >
+                                {t('common:Privacy')}
+                              </span>
+                            </div>
+                            <div>
+                              {' '}
+                              <span
+                                onClick={() =>
+                                  this.props.props.history.push('/tos')
+                                }
+                              >
+                                Anti Spam
+                              </span>
+                            </div>
+                            <div>
+                              {' '}
+                              <span
+                                onClick={() =>
+                                  this.props.props.history.push('/tos')
+                                }
+                              >
+                                DCMA
+                              </span>
+                            </div>
+                            <div>
+                              {' '}
+                              <span
+                                onClick={() =>
+                                  this.props.props.history.push('/tos')
+                                }
+                              >
+                                Law Enforcement
+                              </span>
+                            </div>
+                            <div>
+                              {' '}
+                              <span
+                                onClick={() =>
+                                  this.props.props.history.push('/tos')
+                                }
+                              >
+                                Subpoena Compliance
+                              </span>
+                            </div>
+                          </span>
+                        )}
                         <span
-                          onClick={() => this.props.props.history.push('/tos')}
+                          onClick={() => this.setState({ tooltip: !tooltip })}
                         >
-                          {t('common:Terms')}
-                        </span>
-                      </li>
-                      <li>
-                        <span
-                          onClick={() =>
-                            this.props.props.history.push('/privacy')
-                          }
-                        >
-                          {t('common:Privacy')}
+                          {t('common:Terms') + ' '}
+                          {tooltip ? '▽' : '△'}
                         </span>
                       </li>
                       <li>

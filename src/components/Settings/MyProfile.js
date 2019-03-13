@@ -41,12 +41,20 @@ const MyProfile = ({
                       noSave: true
                     })
                   }
-                  onBlur={e =>
+                  onMouseLeave={e => {
+                    console.log('SAVE2');
                     setValue({
                       name: 'about',
                       value: e.target.value
-                    })
-                  }
+                    });
+                  }}
+                  onBlur={e => {
+                    console.log('SAVE');
+                    setValue({
+                      name: 'about',
+                      value: e.target.value
+                    });
+                  }}
                   value={about}
                 />
               </ErrorBoundary>

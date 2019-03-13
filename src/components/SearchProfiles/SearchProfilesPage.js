@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { withNamespaces } from 'react-i18next';
 import withLocation from '../withLocation';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router-dom';
@@ -11,7 +10,6 @@ class SearchProfilesPage extends Component {
   state = {
     lat: this.props.location.lat,
     long: this.props.location.long,
-    ...this.props.searchCriteria,
     city: this.props.location.city || this.props.searchCriteria.city,
     country: this.props.location.country || this.props.searchCriteria.country
   };
@@ -33,7 +31,16 @@ class SearchProfilesPage extends Component {
   };
 
   render() {
-    const { t, ErrorHandler, loading, session } = this.props;
+    const { t, ErrorHandler, session, loading, refetch } = this.props;
+    const {
+      distance,
+      distanceMetric,
+      ageRange,
+      lang,
+      interestedIn
+    } = this.props.searchCriteria;
+
+    const { lat, long, city, country } = this.state;
 
     if (session.currentuser.tours.indexOf('sp') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Search Profiles');
@@ -48,19 +55,32 @@ class SearchProfilesPage extends Component {
       <Fragment>
         <ErrorHandler.ErrorBoundary>
           <SearchCriteria
+            loading={loading}
             t={t}
             setLocation={this.setLocation}
             setValue={this.setValue}
-            loading={loading}
-            searchCriteria={this.state}
+            lat={lat}
+            long={long}
+            lang={lang}
+            distance={distance}
+            distanceMetric={distanceMetric}
+            ageRange={ageRange}
+            interestedIn={interestedIn}
+            city={city}
+            country={country}
+            refetch={refetch}
           />
         </ErrorHandler.ErrorBoundary>
         <ErrorHandler.ErrorBoundary>
           <ProfilesContainer
+            loading={loading}
             t={t}
             history={this.props.history}
-            searchCriteria={this.state}
-            loading={loading}
+            lat={lat}
+            long={long}
+            distance={distance}
+            ageRange={ageRange}
+            interestedIn={interestedIn}
             ErrorHandler={ErrorHandler}
           />
         </ErrorHandler.ErrorBoundary>
@@ -71,6 +91,6 @@ class SearchProfilesPage extends Component {
 
 export default withRouter(
   withAuth(session => session && session.currentuser)(
-    withLocation(withNamespaces('searchprofiles')(SearchProfilesPage))
+    withLocation(SearchProfilesPage)
   )
 );

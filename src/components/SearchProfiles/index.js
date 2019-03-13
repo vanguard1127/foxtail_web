@@ -3,24 +3,15 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { GET_SEARCH_SETTINGS } from '../../queries';
 import SearchProfilesPage from './SearchProfilesPage';
+import { withNamespaces } from 'react-i18next';
 
 const SearchProfiles = ({ t, ErrorHandler }) => {
   ErrorHandler.setBreadcrumb('Enter Search Profiles');
   document.title = 'Profiles';
-
   return (
     <Query query={GET_SEARCH_SETTINGS} fetchPolicy="cache-and-network">
-      {({ data, loading, error }) => {
-        if (loading) {
-          return (
-            <SearchProfilesPage
-              t={t}
-              ErrorHandler={ErrorHandler}
-              loading={loading}
-            />
-          );
-        }
-        if (error || !data.getSettings) {
+      {({ data, loading, error, refetch }) => {
+        if (error) {
           return (
             <ErrorHandler.report
               error={error}
@@ -28,9 +19,10 @@ const SearchProfiles = ({ t, ErrorHandler }) => {
             />
           );
         }
-
         return (
           <SearchProfilesPage
+            refetch={refetch}
+            loading={loading}
             t={t}
             ErrorHandler={ErrorHandler}
             searchCriteria={data.getSettings}
@@ -41,4 +33,4 @@ const SearchProfiles = ({ t, ErrorHandler }) => {
   );
 };
 
-export default SearchProfiles;
+export default withNamespaces('searchprofiles')(SearchProfiles);

@@ -3,34 +3,29 @@ import { Query } from 'react-apollo';
 import { GET_MESSAGES, NEW_MESSAGE_SUB } from '../../queries';
 import Waypoint from 'react-waypoint';
 import Spinner from '../common/Spinner';
-import EmptyScreen from '../common/EmptyScreen';
 import MessageList from './MessageList';
 
-const LIMIT = 6;
 class ChatContent extends Component {
-  state = {
-    loading: false,
-    cursor: null,
-    hasMoreItems: true
-  };
-
   handleEnd = (previousPosition, currentPosition, fetchMore, cursor) => {
     if (
       this.messagesRef &&
       this.messagesRef.current.scrollTop < 100 &&
-      this.state.hasMoreItems &&
-      this.state.loading !== true
+      this.props.hasMoreItems &&
+      this.props.loading !== true
     ) {
       if (
         (!previousPosition && currentPosition === Waypoint.inside) ||
         previousPosition === Waypoint.above
       ) {
-        const { chatID } = this.props;
-        this.setState({ loading: true });
+        const { chatID, limit } = this.props;
+        this.props.setValue({
+          name: 'loading',
+          value: true
+        });
         fetchMore({
           variables: {
             chatID,
-            limit: LIMIT,
+            limit,
             cursor
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -38,8 +33,11 @@ class ChatContent extends Component {
               return previousResult;
             }
 
-            if (fetchMoreResult.getMessages.messages < LIMIT) {
-              this.setState({ hasMoreItems: false });
+            if (fetchMoreResult.getMessages.messages < limit) {
+              this.props.setValue({
+                name: 'hasMoreItems',
+                value: false
+              });
             }
             console.log('NEW', ...fetchMoreResult.getMessages.messages);
             console.log('OLD', ...previousResult.getMessages.messages);
@@ -51,8 +49,9 @@ class ChatContent extends Component {
             return previousResult;
           }
         });
-        this.setState({
-          loading: false
+        this.props.setValue({
+          name: 'loading',
+          value: false
         });
       }
     }
@@ -60,12 +59,15 @@ class ChatContent extends Component {
 
   fetchData = async (fetchMore, cursor) => {
     this.props.ErrorHandler.setBreadcrumb('fetch more messages');
-    const { chatID } = this.props;
-    this.setState({ loading: true });
+    const { chatID, limit } = this.props;
+    this.props.setValue({
+      name: 'loading',
+      value: true
+    });
     fetchMore({
       variables: {
         chatID,
-        limit: LIMIT,
+        limit,
         cursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -73,8 +75,11 @@ class ChatContent extends Component {
           return previousResult;
         }
 
-        if (fetchMoreResult.getMessages.messages < LIMIT) {
-          this.setState({ hasMoreItems: false });
+        if (fetchMoreResult.getMessages.messages < limit) {
+          this.props.setValue({
+            name: 'hasMoreItems',
+            value: false
+          });
         }
 
         previousResult.getMessages.messages = [
@@ -85,15 +90,16 @@ class ChatContent extends Component {
         return previousResult;
       }
     });
-    this.setState({
-      loading: false
+    this.props.setValue({
+      name: 'loading',
+      value: false
     });
   };
   //TODO: use global spinner and error instead of chnaging each
   render() {
     const { chatID, currentUserID, t, ErrorHandler } = this.props;
 
-    const { cursor } = this.state;
+    const { cursor, limit } = this.props;
     return (
       <div
         className="content"
@@ -102,7 +108,7 @@ class ChatContent extends Component {
         {' '}
         <Query
           query={GET_MESSAGES}
-          variables={{ chatID, limit: LIMIT, cursor }}
+          variables={{ chatID, limit, cursor }}
           fetchPolicy="cache-first"
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
@@ -115,9 +121,6 @@ class ChatContent extends Component {
               return (
                 <ErrorHandler.report error={error} calledName={'getSettings'} />
               );
-            }
-            if (!data.getMessages || data.getMessages === null) {
-              return <EmptyScreen message={t('common:nomsgs')} />;
             }
 
             return (
@@ -157,7 +160,7 @@ class ChatContent extends Component {
                 }
                 handleEnd={this.handleEnd}
                 fetchMore={fetchMore}
-                limit={LIMIT}
+                limit={limit}
               />
             );
           }}

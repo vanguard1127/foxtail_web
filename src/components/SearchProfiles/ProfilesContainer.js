@@ -98,20 +98,27 @@ class ProfilesContainer extends Component {
   };
 
   render() {
-    const { ErrorHandler, t, history, loading } = this.props;
+    if (this.props.loading) {
+      return <Spinner page="searchProfiles" title={this.props.t('allmems')} />;
+    }
     const {
+      ErrorHandler,
+      t,
+      history,
       long,
       lat,
       distance,
       ageRange,
       interestedIn
-    } = this.props.searchCriteria;
+    } = this.props;
+
     const {
       profile,
       msgModalVisible,
       skip,
       matchDlgVisible,
-      chatID
+      chatID,
+      loading
     } = this.state;
     if (loading) {
       return <Spinner page="searchProfiles" title={t('allmems')} />;
@@ -166,7 +173,7 @@ class ProfilesContainer extends Component {
                 toProfileID: profile && profile.id
               }}
             >
-              {(likeProfile, { loading }) => {
+              {likeProfile => {
                 return (
                   <div>
                     {result.featuredProfiles.length !== 0 && (
