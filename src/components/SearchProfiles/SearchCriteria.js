@@ -50,16 +50,14 @@ class SearchCriteria extends Component {
   };
 
   handleSubmit = updateSettings => {
-    updateSettings()
-      .then(() => this.props.refetch())
-      .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+    updateSettings().catch(res => {
+      const errors = res.graphQLErrors.map(error => {
+        return error.message;
       });
+
+      //TODO: send errors to analytics from here
+      this.setState({ errors });
+    });
   };
 
   handleRemoveLocLock = async updateSettings => {
@@ -88,6 +86,7 @@ class SearchCriteria extends Component {
         updateSettings
       );
     } else {
+      this.props.setValue({ name: 'city', value: city });
       this.setState({
         city
       });
@@ -95,6 +94,7 @@ class SearchCriteria extends Component {
   };
 
   setValue = ({ name, value, updateSettings }) => {
+    this.props.setValue({ name, value });
     this.setState({ [name]: value }, () => this.handleSubmit(updateSettings));
   };
 

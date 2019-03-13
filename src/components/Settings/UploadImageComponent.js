@@ -1,27 +1,27 @@
-import React, { Component } from "react";
-import Upload from "rc-upload";
-import "./UploadImageComponentStyle.css";
-import AddIcon from "@material-ui/icons/Add";
-import DeleteIcon from "@material-ui/icons/DeleteOutline";
-import ViewIcon from "@material-ui/icons/RemoveRedEye";
-import StarIcon from "@material-ui/icons/Grade";
-import Dialog from "@material-ui/core/Dialog";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React, { Component } from 'react';
+import Upload from 'rc-upload';
+import './UploadImageComponentStyle.css';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import ViewIcon from '@material-ui/icons/RemoveRedEye';
+import StarIcon from '@material-ui/icons/Grade';
+import Dialog from '@material-ui/core/Dialog';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   addIcon: {
     fontSize: 45
   },
   progress: {
-    "margin-top": "25px"
+    'margin-top': '25px'
   }
 });
 
 const dummyRequest = ({ file, onSuccess }) => {
   setTimeout(() => {
-    onSuccess("ok");
+    onSuccess('ok');
   }, 0);
 };
 
@@ -34,31 +34,34 @@ class UploadComponent extends Component {
       fileList: [],
       previewVisible: false,
       selectedImg: null, //for modal dialog
-      loader: "inline-block",
-      uploadImg: "none"
+      loader: 'inline-block',
+      uploadImg: 'none'
     };
   }
 
   imageUploaded = (res, file) => {
     var fileName = file.name;
-    let idxDot = fileName.lastIndexOf(".") + 1;
+    let idxDot = fileName.lastIndexOf('.') + 1;
     let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
     if (
-      extFile == "jpg" ||
-      extFile == "jpeg" ||
-      extFile == "png" ||
-      extFile == "bmp" ||
-      extFile == "gif"
+      extFile == 'jpg' ||
+      extFile == 'jpeg' ||
+      extFile == 'png' ||
+      extFile == 'bmp' ||
+      extFile == 'gif'
     ) {
       this.props.showEditor(file, this.props.isPrivate);
     } else {
-      alert(this.props.t("onlyimg"));
+      alert(this.props.t('onlyimg'));
     }
   };
 
   deleteFile = index => {
     let img = this.props.photos[index];
 
+    if (img.uid) {
+      img.id = img.uid;
+    }
     this.props.deleteImg({ file: img });
   };
   //modal
@@ -82,8 +85,8 @@ class UploadComponent extends Component {
   };
   switchLoader = () => {
     this.setState({
-      loader: "none",
-      uploadImg: "block"
+      loader: 'none',
+      uploadImg: 'block'
     });
   };
 
@@ -114,27 +117,27 @@ class UploadComponent extends Component {
                   alt=""
                 />
                 <div className="btns">
-                  <div title={t("deletepic")}>
+                  <div title={t('deletepic')}>
                     <DeleteIcon
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: 'pointer' }}
                       onClick={() => {
                         this.deleteFile(index);
                       }}
                     />
                   </div>
                   {!this.props.isPrivate && (
-                    <div title={t("updatepro")}>
+                    <div title={t('updatepro')}>
                       <StarIcon
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: 'pointer' }}
                         onClick={() => {
                           this.handleClickProPic({ index, setProfilePic });
                         }}
                       />
                     </div>
-                  )}{" "}
-                  <div title={t("viewpic")}>
+                  )}{' '}
+                  <div title={t('viewpic')}>
                     <ViewIcon
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: 'pointer' }}
                       onClick={() => {
                         this.handleClickOpen(index);
                       }}
@@ -155,7 +158,7 @@ class UploadComponent extends Component {
             >
               <div className="upload-box">
                 <AddIcon className={classes.addIcon} />
-                <p className="text">{t("Upload")}</p>
+                <p className="text">{t('Upload')}</p>
               </div>
             </Upload>
           </div>

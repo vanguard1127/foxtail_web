@@ -80,6 +80,7 @@ class SettingsPage extends Component {
     isDeleted,
     updateSettings
   }) => {
+    console.log('PHOLISTCHANGE');
     this.props.ErrorHandler.setBreadcrumb('Photo list updated');
     if (isPrivate) {
       let { privatePics } = this.state;
@@ -105,6 +106,9 @@ class SettingsPage extends Component {
       let { publicPics, profilePic } = this.state;
 
       if (isDeleted) {
+        if (profilePic === file.key) {
+          this.setState({ profilePic: '', profilePicUrl: '' });
+        }
         publicPics = publicPics.filter(x => x.id !== file.id);
       } else {
         publicPics.push({
@@ -113,7 +117,7 @@ class SettingsPage extends Component {
           url
         });
         if (profilePic === '') {
-          this.setProfilePic({ key, url, updateSettings });
+          this.setState({ profilePic: key, profilePicUrl: url });
         }
       }
 
@@ -364,9 +368,15 @@ class SettingsPage extends Component {
       aboutErr = 'Bio must be more than 20 characters';
     }
 
+    let profilePicErr = '';
+    if (publicPics.length === 0) {
+      profilePicErr = 'Please upload at least 1 photo';
+    } else if (profilePic === '') {
+      profilePicErr = 'Please select a Profile Picture';
+    }
+
     const errors = {
-      profilePic:
-        publicPics.length === 0 ? 'Please upload at least 1 photo' : null,
+      profilePic: profilePicErr !== '' ? profilePicErr : null,
       about: aboutErr !== '' ? aboutErr : null,
       desires: desires.length === 0 ? 'Please select at least 1 desire' : null
     };

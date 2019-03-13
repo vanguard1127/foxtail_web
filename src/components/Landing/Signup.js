@@ -271,8 +271,9 @@ class Signup extends React.Component {
                               </span>{' '}
                               <span
                                 onClick={() => {
-                                  this.setState({ phone: '4' });
-                                  this.handleLogin(login);
+                                  this.setState({ phone: '4' }, () =>
+                                    this.handleLogin(login)
+                                  );
                                 }}
                               >
                                 4

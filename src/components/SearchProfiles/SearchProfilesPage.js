@@ -11,7 +11,12 @@ class SearchProfilesPage extends Component {
     lat: this.props.location.lat,
     long: this.props.location.long,
     city: this.props.location.city || this.props.searchCriteria.city,
-    country: this.props.location.country || this.props.searchCriteria.country
+    country: this.props.location.country || this.props.searchCriteria.country,
+    distance: this.props.searchCriteria.distance,
+    distanceMetric: this.props.searchCriteria.distanceMetric,
+    ageRange: this.props.searchCriteria.ageRange,
+    interestedIn: this.props.searchCriteria.interestedIn,
+    lang: this.props.searchCriteria.lang
   };
 
   componentDidMount() {
@@ -32,15 +37,18 @@ class SearchProfilesPage extends Component {
 
   render() {
     const { t, ErrorHandler, session, loading, refetch } = this.props;
+
     const {
+      lat,
+      long,
+      city,
+      country,
       distance,
       distanceMetric,
       ageRange,
       lang,
       interestedIn
-    } = this.props.searchCriteria;
-
-    const { lat, long, city, country } = this.state;
+    } = this.state;
 
     if (session.currentuser.tours.indexOf('sp') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Search Profiles');

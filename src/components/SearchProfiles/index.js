@@ -19,6 +19,9 @@ const SearchProfiles = ({ t, ErrorHandler }) => {
             />
           );
         }
+        if (!data.getSettings) {
+          return null;
+        }
         return (
           <SearchProfilesPage
             refetch={refetch}
