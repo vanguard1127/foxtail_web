@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { Mutation } from 'react-apollo';
 import { SEEN_TOUR } from '../../queries';
@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-class ProfileTour extends Component {
+class ProfileTour extends PureComponent {
   state = {
     isTourOpen: true
   };

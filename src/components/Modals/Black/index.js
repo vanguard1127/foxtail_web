@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import CreateSubBtn from './CreateSubBtn';
 import Modal from '../../common/Modal';
 import { withNamespaces } from 'react-i18next';
 
-class Black extends Component {
+class Black extends PureComponent {
   state = { token: '', ccLast4: '' };
 
   render() {

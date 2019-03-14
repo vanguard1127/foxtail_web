@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { withNamespaces } from 'react-i18next';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete';
 
-class AddressSearch extends React.Component {
+class AddressSearch extends PureComponent {
   handleChange = address => {
     if (address === 'My Location') {
       this.props.handleRemoveLocLock();

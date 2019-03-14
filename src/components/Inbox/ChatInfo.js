@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
-class ChatInfo extends Component {
+class ChatInfo extends PureComponent {
   state = { invDropOpen: false, remDropOpen: false };
   render() {
     const {

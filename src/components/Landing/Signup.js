@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { CREATE_USER, FB_RESOLVE, LOGIN } from '../../queries';
@@ -15,7 +15,7 @@ const initialState = {
   code: ''
 };
 
-class Signup extends React.Component {
+class Signup extends PureComponent {
   state = { ...initialState };
 
   componentDidMount() {

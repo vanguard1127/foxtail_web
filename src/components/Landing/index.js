@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Signup from './Signup';
 import LoginButton from './LoginButton';
 import LanguageControl from '../common/LanguageControl/LanguageControl';
@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { withNamespaces } from 'react-i18next';
 
-class Landing extends Component {
+class Landing extends PureComponent {
   state = { resetPhoneVisible: false, token: null, tooltip: false };
   render() {
     const { t, props } = this.props;

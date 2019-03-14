@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
-class GoingBar extends Component {
+class GoingBar extends PureComponent {
   state = { remDropOpen: false };
   render() {
     const { id, participants, t, isOwner } = this.props;

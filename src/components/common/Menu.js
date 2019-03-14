@@ -1,6 +1,6 @@
-import React, { Component, cloneElement } from "react";
-import { withNamespaces } from "react-i18next";
-class Menu extends Component {
+import React, { PureComponent, cloneElement } from 'react';
+import { withNamespaces } from 'react-i18next';
+class Menu extends PureComponent {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -11,11 +11,11 @@ class Menu extends Component {
   };
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener('mousedown', this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   handleClickOutside = event => {
@@ -49,4 +49,4 @@ class Menu extends Component {
   }
 }
 
-export default withNamespaces("common")(Menu);
+export default withNamespaces('common')(Menu);

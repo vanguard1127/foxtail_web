@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Dropdown from 'rc-dropdown';
 import {
   GET_FRIENDS,
@@ -10,7 +10,7 @@ import { Query, Mutation } from 'react-apollo';
 import Spinner from '../Spinner';
 import MembersList from './MembersList';
 const LIMIT = 5;
-class MembersDropdown extends Component {
+class MembersDropdown extends PureComponent {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();

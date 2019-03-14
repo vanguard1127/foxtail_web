@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import DistanceSlider from '../common/DistanceSlider';
 import Dropdown from '../common/Dropdown';
 import AgeRange from '../common/AgeRange';
 import AddressSearch from '../common/AddressSearch';
-class Preferences extends Component {
+class Preferences extends PureComponent {
   render() {
     const { values, setValue, setLocationValues, t } = this.props;
     const { distance, distanceMetric, ageRange, interestedIn, city } = values;

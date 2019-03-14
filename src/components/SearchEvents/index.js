@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 
 import { withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
@@ -19,7 +19,7 @@ import Spinner from '../common/Spinner';
 const LIMIT = 6;
 
 //TODO: fix moment date format issue
-class SearchEvents extends Component {
+class SearchEvents extends PureComponent {
   state = {
     skip: 0,
     visible: false,

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import * as yup from 'yup';
 import DatePicker from '../common/DatePicker';
 import Dropdown from '../common/Dropdown';
@@ -23,7 +23,7 @@ const schema = yup.object().shape({
   gender: yup.string().required('Gender is required!')
 });
 
-class SignupForm extends Component {
+class SignupForm extends PureComponent {
   state = {
     username: '',
     email: '',

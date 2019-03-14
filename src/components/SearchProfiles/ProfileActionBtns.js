@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 
-const ProfileActionBtns = ({ profile, likeProfile, showMsgModal }) => {
-  return (
-    <div className="function">
-      <div
-        className="btn heart"
-        onClick={() => {
-          likeProfile(profile);
-        }}
-      />
-      <div
-        className="btn message"
-        onClick={() => {
-          showMsgModal(profile);
-        }}
-      />
-    </div>
-  );
-};
+class ProfileActionBtns extends PureComponent {
+  render() {
+    const { profile, likeProfile, showMsgModal } = this.props;
+
+    return (
+      <div className="function">
+        <div
+          className="btn heart"
+          onClick={() => {
+            likeProfile(profile);
+          }}
+        />
+        <div
+          className="btn message"
+          onClick={() => {
+            showMsgModal(profile);
+          }}
+        />
+      </div>
+    );
+  }
+}
 
 export default ProfileActionBtns;

@@ -1,9 +1,8 @@
-import React, { Component, Fragment } from "react";
-// First way to import
-import { PacmanLoader } from "react-spinners";
-import { EventLoader, ProfileLoader, InboxLoader } from "../common/Skeletons";
+import React, { PureComponent } from 'react';
+import { PacmanLoader } from 'react-spinners';
+import { EventLoader, ProfileLoader, InboxLoader } from '../common/Skeletons';
 
-class Spinner extends Component {
+class Spinner extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +29,7 @@ class Spinner extends Component {
     if (!displayMessage) {
       return null;
     }
-    if (page === "searchProfiles") {
+    if (page === 'searchProfiles') {
       return (
         <section className="members">
           <div className="container">
@@ -40,17 +39,17 @@ class Spinner extends Component {
                   <span className="head">{title}</span>
                 </div>
                 <div className="col-md-6 col-lg-4">
-                  <div className={"card-item "}>
+                  <div className={'card-item '}>
                     <ProfileLoader />
                   </div>
-                </div>{" "}
+                </div>{' '}
                 <div className="col-md-6 col-lg-4">
-                  <div className={"card-item "}>
+                  <div className={'card-item '}>
                     <ProfileLoader />
                   </div>
-                </div>{" "}
+                </div>{' '}
                 <div className="col-md-6 col-lg-4">
-                  <div className={"card-item "}>
+                  <div className={'card-item '}>
                     <ProfileLoader />
                   </div>
                 </div>
@@ -59,18 +58,18 @@ class Spinner extends Component {
           </div>
         </section>
       );
-    } else if (page === "inbox") {
+    } else if (page === 'inbox') {
       return (
         <div className="conversations">
-          <div className="item unread" key={"1"}>
+          <div className="item unread" key={'1'}>
             <InboxLoader />
           </div>
-          <div className="item unread" key={"2"}>
+          <div className="item unread" key={'2'}>
             <InboxLoader />
           </div>
         </div>
       );
-    } else if (page === "searchEvents") {
+    } else if (page === 'searchEvents') {
       return (
         <div className="events-card-content">
           <div className="container">
@@ -79,17 +78,17 @@ class Spinner extends Component {
                 <div className="col-md-12">
                   <span className="head">{title}</span>
                 </div>
-                <div className="col-md-12 col-lg-6" key={"1"}>
+                <div className="col-md-12 col-lg-6" key={'1'}>
                   <div className="card-item">
                     <EventLoader />
                   </div>
-                </div>{" "}
-                <div className="col-md-12 col-lg-6" key={"2"}>
+                </div>{' '}
+                <div className="col-md-12 col-lg-6" key={'2'}>
                   <div className="card-item">
                     <EventLoader />
                   </div>
-                </div>{" "}
-                <div className="col-md-12 col-lg-6" key={"3"}>
+                </div>{' '}
+                <div className="col-md-12 col-lg-6" key={'3'}>
                   <div className="card-item">
                     <EventLoader />
                   </div>
@@ -104,21 +103,21 @@ class Spinner extends Component {
         <div
           className="sweet-loading"
           style={{
-            display: "flex",
-            flex: "1",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column"
+            display: 'flex',
+            flex: '1',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column'
           }}
         >
           <PacmanLoader
-            sizeUnit={"px"}
+            sizeUnit={'px'}
             size={15}
-            color={"#5F00A4"}
+            color={'#5F00A4'}
             loading={this.state.loading}
           />
           <br />
-          <div style={{ marginLeft: "4vw" }}>{this.props.message}</div>
+          <div style={{ marginLeft: '4vw' }}>{this.props.message}</div>
         </div>
       );
     }

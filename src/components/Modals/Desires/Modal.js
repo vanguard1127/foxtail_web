@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { desireOptions } from '../../../docs/options';
 import SearchBox from './SearchBox';
-class Desires extends Component {
+class Desires extends PureComponent {
   state = { searchText: '' };
   constructor(props) {
     super(props);

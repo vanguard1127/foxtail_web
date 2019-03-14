@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { UPDATE_SETTINGS, REMOVE_LOCLOCK } from '../../queries';
 import Dropdown from '../common/Dropdown';
@@ -8,7 +8,7 @@ import DistanceSlider from '../common/DistanceSlider';
 import AgeRange from '../common/AgeRange';
 import getCityCountry from '../../utils/getCityCountry';
 
-class SearchCriteria extends Component {
+class SearchCriteria extends PureComponent {
   state = {
     distance: this.props.distance,
     distanceMetric: this.props.distanceMetric,

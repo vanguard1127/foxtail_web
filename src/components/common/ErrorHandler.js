@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import * as Sentry from '@sentry/browser';
 import i18n from 'i18next';
 
@@ -20,7 +20,7 @@ const catchErrors = errors => {
 };
 
 //TODO: Get session here somehow and quey name
-class report extends Component {
+class report extends PureComponent {
   render() {
     const { error, calledName } = this.props;
     if (calledName) {
@@ -39,7 +39,7 @@ class report extends Component {
     );
   }
 }
-class ErrorBoundary extends Component {
+class ErrorBoundary extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { error: null };

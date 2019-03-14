@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import withLocation from '../withLocation';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router-dom';
@@ -6,7 +6,7 @@ import SearchCriteria from './SearchCriteria';
 import ProfilesContainer from './ProfilesContainer';
 import Tour from './Tour';
 
-class SearchProfilesPage extends Component {
+class SearchProfilesPage extends PureComponent {
   state = {
     lat: this.props.location.lat,
     long: this.props.location.long,

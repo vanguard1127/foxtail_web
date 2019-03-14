@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withNamespaces } from "react-i18next";
-import "./Select.css";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
+import './Select.css';
 
-class Select extends React.Component {
+class Select extends PureComponent {
   static propTypes = {
     multiple: PropTypes.bool,
     label: PropTypes.string.isRequired,
@@ -19,12 +19,12 @@ class Select extends React.Component {
 
   state = {
     menuOpen: false,
-    selectedOption: "",
+    selectedOption: '',
     selectedOptions: []
   };
 
   componentWillMount() {
-    document.addEventListener("mousedown", this.handleClickOutside, false);
+    document.addEventListener('mousedown', this.handleClickOutside, false);
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class Select extends React.Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside, false);
+    document.removeEventListener('mousedown', this.handleClickOutside, false);
   }
 
   handleClickOutside = event => {
@@ -53,7 +53,7 @@ class Select extends React.Component {
       const defaultOptions = defaultOptionValues.map(d => {
         const found = options.find(x => x.value == d.value);
         if (found == undefined)
-          throw "The default value you passed as props can not found in select options array";
+          throw 'The default value you passed as props can not found in select options array';
         return found;
       });
       this.setState({ selectedOptions: defaultOptions });
@@ -116,7 +116,7 @@ class Select extends React.Component {
               <li
                 key={i}
                 onClick={e => this.onSelect(e, d)}
-                className={checked ? "checked" : ""}
+                className={checked ? 'checked' : ''}
               >
                 {t(d.label)}
               </li>
@@ -134,7 +134,7 @@ class Select extends React.Component {
           }
         >
           <div
-            className={"select-container " + className || ""}
+            className={'select-container ' + className || ''}
             onClick={() => this.setState({ menuOpen: menuStatus })}
           >
             <label>{label}</label>
@@ -144,7 +144,7 @@ class Select extends React.Component {
                   if (idx === arr.length - 1) {
                     return <span key={d.value}>{t(d.label)}</span>;
                   }
-                  return <span key={d.value}>{t(d.label) + ","}</span>;
+                  return <span key={d.value}>{t(d.label) + ','}</span>;
                 })}
               </div>
             )}
@@ -157,4 +157,4 @@ class Select extends React.Component {
   }
 }
 
-export default withNamespaces("common")(Select);
+export default withNamespaces('common')(Select);

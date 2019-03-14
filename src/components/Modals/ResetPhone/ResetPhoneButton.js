@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { FB_RESET_PHONE } from '../../../queries';
 import AccountKit from 'react-facebook-account-kit';
@@ -7,7 +7,7 @@ const initialState = {
   csrf: '',
   code: ''
 };
-class ResetPhoneButton extends Component {
+class ResetPhoneButton extends PureComponent {
   state = { ...initialState };
   handleFBReturn = ({ state, code }, fbResetPhone) => {
     const { t } = this.props;

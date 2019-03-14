@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { PureComponent } from 'react';
+import { withRouter } from 'react-router-dom';
 import EventDate from '../common/Event/EventDate';
 import EventCreator from './EventCreator';
 
-class EventCard extends Component {
+class EventCard extends PureComponent {
   render() {
     const { event, t } = this.props;
     const {

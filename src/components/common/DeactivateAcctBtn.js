@@ -1,20 +1,20 @@
-import React from "react";
-import { DELETE_USER } from "../../queries";
-import { Mutation } from "react-apollo";
-import { ApolloConsumer } from "react-apollo";
+import React, { PureComponent } from 'react';
+import { DELETE_USER } from '../../queries';
+import { Mutation } from 'react-apollo';
+import { ApolloConsumer } from 'react-apollo';
 
-const DeactivateAcctBtn = ({ t }) => {
-  const handleSubmit = ({ client, deleteUser }) => {
+class DeactivateAcctBtn extends PureComponent {
+  handleSubmit = ({ client, deleteUser }) => {
     deleteUser()
       .then(({ data }) => {
-        alert(t("common:acctdeleted") + ".");
+        alert(t('common:acctdeleted') + '.');
 
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
         sessionStorage.clear();
         client.resetStore();
 
-        this.props.history.push("/");
+        this.props.history.push('/');
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -25,31 +25,33 @@ const DeactivateAcctBtn = ({ t }) => {
         this.setState({ errors });
       });
   };
-
-  return (
-    <Mutation mutation={DELETE_USER}>
-      {deleteUser => {
-        return (
-          <ApolloConsumer>
-            {client => {
-              return (
-                <button
-                  onClick={() =>
-                    handleSubmit({
-                      client,
-                      deleteUser
-                    })
-                  }
-                >
-                  {t("common:deactacct")}
-                </button>
-              );
-            }}
-          </ApolloConsumer>
-        );
-      }}
-    </Mutation>
-  );
-};
+  render() {
+    const { t } = this.props;
+    return (
+      <Mutation mutation={DELETE_USER}>
+        {deleteUser => {
+          return (
+            <ApolloConsumer>
+              {client => {
+                return (
+                  <button
+                    onClick={() =>
+                      this.handleSubmit({
+                        client,
+                        deleteUser
+                      })
+                    }
+                  >
+                    {t('common:deactacct')}
+                  </button>
+                );
+              }}
+            </ApolloConsumer>
+          );
+        }}
+      </Mutation>
+    );
+  }
+}
 
 export default DeactivateAcctBtn;

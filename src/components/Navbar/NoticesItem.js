@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import NoticesList from './NoticesList';
 import Menu from '../common/Menu';
@@ -27,7 +27,7 @@ const intialState = {
   userAlert: null
 };
 
-class NoticesItem extends Component {
+class NoticesItem extends PureComponent {
   state = {
     ...intialState
   };

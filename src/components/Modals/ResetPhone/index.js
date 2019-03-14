@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withNamespaces } from 'react-i18next';
 import EmailPhoneResetBtn from './EmailPhoneResetBtn';
 import ResetPhoneButton from './ResetPhoneButton';
 import Select from './Select';
 import { countryCodeOptions } from '../../../docs/options';
 
-class ResetPhone extends Component {
+class ResetPhone extends PureComponent {
   state = { text: '', code: '+1' };
   handleTextChange = event => {
     this.setState({ text: event.target.value.replace(/\D/g, '') });

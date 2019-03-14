@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { desireOptions } from '../../../docs/options';
 import { withNamespaces } from 'react-i18next';
 
-class Selector extends Component {
+class Selector extends PureComponent {
   render() {
     const { togglePopup, desires, t, ErrorBoundary } = this.props;
 

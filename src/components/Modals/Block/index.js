@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { BLOCK_PROFILE, FLAG_ITEM } from '../../../queries';
 import { Mutation } from 'react-apollo';
@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import Modal from '../../common/Modal';
 import { flagOptions } from '../../../docs/options';
 
-class BlockModal extends Component {
+class BlockModal extends PureComponent {
   state = { other: false, reason: '', type: this.props.type };
 
   handleChange = e => {

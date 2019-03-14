@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { SIGNS3, SUBMIT_PHOTO } from 'queries';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import PhotoUpload from '../../common/PhotoUpload';
 import { withNamespaces } from 'react-i18next';
 import Modal from '../../common/Modal';
 
-class PhotoVerify extends Component {
+class PhotoVerify extends PureComponent {
   state = { photos: [], filename: '', filetype: '', photoKey: '' };
   setPhotos = photos => {
     this.setState({ photos });

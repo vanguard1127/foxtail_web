@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { withNamespaces } from 'react-i18next';
 import { SEND_MESSAGE } from 'queries';
 import Modal from '../../common/Modal';
 import { toast } from 'react-toastify';
 
-class DirectMsg extends Component {
+class DirectMsg extends PureComponent {
   state = { text: '' };
 
   handleTextChange = event => {
@@ -41,14 +41,14 @@ class DirectMsg extends Component {
       <Modal
         header={
           profile
-            ? t('common:sendmsg') +
+            ? t('common:sendamsg') +
               ' ' +
               profile.users.map((user, index) => {
                 if (index === 0) return user.username;
                 else return +' & ' + user.username;
               }) +
               '?'
-            : t('common:sendmsg')
+            : t('common:sendamsg')
         }
         close={close}
         description="Say something more than 'Hi'!"

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { SEEN_TOUR } from '../../queries';
 import { withNamespaces } from 'react-i18next';
 import CustomTour from '../common/CustomTour';
 import { withRouter } from 'react-router-dom';
-class Tour extends Component {
+class Tour extends PureComponent {
   state = {
     isTourOpen: true
   };

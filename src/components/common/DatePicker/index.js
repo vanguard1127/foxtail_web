@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import fi from 'date-fns/locale/fi';
 import './DatePicker.css';
 registerLocale('fi', fi);
 
-export default class CustomDatePicker extends Component {
+export default class CustomDatePicker extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

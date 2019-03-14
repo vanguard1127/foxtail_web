@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { CREATE_SUBSCRIPTION } from "../../../queries";
-import { Mutation } from "react-apollo";
-import StripeCheckout from "react-stripe-checkout";
+import React, { PureComponent } from 'react';
+import { CREATE_SUBSCRIPTION } from '../../../queries';
+import { Mutation } from 'react-apollo';
+import StripeCheckout from 'react-stripe-checkout';
 
-class CreateSubBtn extends Component {
-  state = { token: "", ccLast4: "" };
+class CreateSubBtn extends PureComponent {
+  state = { token: '', ccLast4: '' };
   handleSubmit = ({ token, ccLast4, createSubscription }) => {
     this.setState({ token, ccLast4 });
     createSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
         this.props.close();
-        alert(this.props.t("welblk"));
+        alert(this.props.t('welblk'));
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {

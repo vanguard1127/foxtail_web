@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -9,7 +9,7 @@ import withAuth from '../withAuth';
 
 import SettingsPage from './SettingsPage';
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
-class Settings extends Component {
+class Settings extends PureComponent {
   componentDidMount() {
     if (!this.props.session.currentuser.isProfileOK) {
       const toastId = 'nopro';
@@ -62,19 +62,18 @@ class Settings extends Component {
         </section>{' '}
         <Query query={GET_SETTINGS} fetchPolicy="network-only">
           {({ data, loading, error }) => {
-            if (loading) {
+            if (loading || !data.getSettings) {
               return (
                 <Spinner message={t('common:Loading') + '...'} size="large" />
               );
             }
-            if (error || !data.getSettings) {
+            if (error) {
               return (
                 <ErrorHandler.report error={error} calledName={'getSettings'} />
               );
             }
 
             const settings = data.getSettings;
-            console.log(settings);
             return (
               <Fragment>
                 <SettingsPage

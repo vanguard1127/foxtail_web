@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Dialog from '../Modals/Dialog';
 import ChangePhoneBtn from './ChangePhoneBtn';
 import * as yup from 'yup';
 //TODO:Add languages dictionary
 
-class AcctSettings extends Component {
+class AcctSettings extends PureComponent {
   state = {
     showDialog: false,
     msg: '',

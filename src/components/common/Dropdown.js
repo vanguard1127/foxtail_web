@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Select from './Select';
 
 const availableLangs = ['en', 'tu', 'de'];
-class Dropdown extends Component {
+class Dropdown extends PureComponent {
   state = {
     options: null,
     isLoading: true,

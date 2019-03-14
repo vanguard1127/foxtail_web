@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import './Select.css';
 
-class Select extends React.Component {
+class Select extends PureComponent {
   static propTypes = {
     multiple: PropTypes.bool,
     label: PropTypes.string,

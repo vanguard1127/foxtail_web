@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
-class EventShare extends Component {
+class EventShare extends PureComponent {
   state = { invDropOpen: false };
   render() {
     const { id, t } = this.props;

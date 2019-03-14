@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Query } from 'react-apollo';
 import { GET_MESSAGES, NEW_MESSAGE_SUB } from '../../queries';
 import Waypoint from 'react-waypoint';
 import Spinner from '../common/Spinner';
 import MessageList from './MessageList';
 
-class ChatContent extends Component {
+class ChatContent extends PureComponent {
   handleEnd = (previousPosition, currentPosition, fetchMore, cursor) => {
     if (
       this.messagesRef &&

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { SEND_PHONE_RESET_EMAIL } from '../../../queries';
 
-class EmailPhoneResetBtn extends Component {
+class EmailPhoneResetBtn extends PureComponent {
   handleClick = sendPhoneResetEmail => {
     const { t, close } = this.props;
 

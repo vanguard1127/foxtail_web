@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import withSession from '../withSession';
 import { Mutation } from 'react-apollo';
 import {
@@ -7,7 +7,7 @@ import {
   GET_EVENT_PARTICIPANTS
 } from '../../queries';
 
-class AttendEvent extends Component {
+class AttendEvent extends PureComponent {
   state = {
     username: '',
     isGoing: false

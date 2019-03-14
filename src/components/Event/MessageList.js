@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import Waypoint from "react-waypoint";
-import Message from "./Message.js";
+import React, { PureComponent } from 'react';
+import Waypoint from 'react-waypoint';
+import Message from './Message.js';
 
-class MessageList extends Component {
+class MessageList extends PureComponent {
   constructor(props) {
     super(props);
     this.scrollWrapperRef = React.createRef();
@@ -50,7 +50,7 @@ class MessageList extends Component {
         // So, for the scroll to start at the bottom when user firsts sees it,
         // either this or fetching more items initial mount
         if (!this.state.hasScrolledBottomInitial) {
-          console.log("Initial Scroll Bottom");
+          console.log('Initial Scroll Bottom');
         }
         this.scrollToBot();
       } else if (this.state.restoreScroll) {
@@ -62,7 +62,7 @@ class MessageList extends Component {
     }
   }
   restoreScroll() {
-    console.log("restoring");
+    console.log('restoring');
     this.scrollWrapperRef.current.scrollTop =
       this.state.previousScrollTop +
       (this.scrollWrapperRef.current.scrollHeight -
@@ -76,7 +76,7 @@ class MessageList extends Component {
   }
   scrollToBot() {
     const { hasScrolledBottomInitial } = this.props;
-    console.log("Scrolling to Bottom");
+    console.log('Scrolling to Bottom');
 
     this.scrollWrapperRef.current.scrollTop = this.scrollWrapperRef.current.scrollHeight;
     this.setState({
@@ -104,7 +104,7 @@ class MessageList extends Component {
     const { chatID, limit, messages, fetchMore } = this.props;
     // Doesn't repeat because frist we are setting loading =  true
     // And on updateQuary, when the fetch it done. We set loading = false
-    console.log("Can i fetch?", !this.state.loading && this.state.hasMoreItems);
+    console.log('Can i fetch?', !this.state.loading && this.state.hasMoreItems);
     // Wait for restoreScroll to take place, then do the call.
     // If not,things are going to play over each other.
     if (
@@ -115,7 +115,7 @@ class MessageList extends Component {
       return;
     const cursor =
       messages.length > 0 ? messages[messages.length - 1].createdAt : null;
-    console.log("c", messages, cursor);
+    console.log('c', messages, cursor);
     this.setState({ loading: true });
     fetchMore({
       variables: {
@@ -131,7 +131,7 @@ class MessageList extends Component {
         if (noMessagesLeft) {
           this.setState({ hasMoreItems: false });
         }
-        console.log("more", noMessagesLeft);
+        console.log('more', noMessagesLeft);
         if (previousResult.getMessages) {
           previousResult.getMessages.messages = [
             ...previousResult.getMessages.messages,
@@ -140,7 +140,7 @@ class MessageList extends Component {
         } else {
           previousResult.getMessages = fetchMoreResult.getMessages;
         }
-        console.log("Fetch done");
+        console.log('Fetch done');
 
         this.setState({
           loading: false,

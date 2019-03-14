@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import Waypoint from 'react-waypoint';
 import Message from './Message.js';
 import moment from 'moment';
 import _ from 'lodash';
 
-class DateItem extends Component {
+class DateItem extends PureComponent {
   state = {
     position: null
   };
@@ -71,7 +71,7 @@ class DateItem extends Component {
     );
   }
 }
-class MessageList extends Component {
+class MessageList extends PureComponent {
   constructor(props) {
     super(props);
     this.scrollWrapperRef = React.createRef();

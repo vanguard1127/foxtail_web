@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Waypoint from 'react-waypoint';
 import {
   INVITE_PROFILES,
@@ -12,7 +12,7 @@ import { Mutation } from 'react-apollo';
 import { toast } from 'react-toastify';
 
 const LIMIT = 5;
-class MembersList extends Component {
+class MembersList extends PureComponent {
   state = {
     skip: 0,
     invitedProfiles: []

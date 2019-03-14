@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { POST_COMMENT } from '../../queries';
 
-class ChatPanel extends Component {
+class ChatPanel extends PureComponent {
   state = {
     text: ''
   };

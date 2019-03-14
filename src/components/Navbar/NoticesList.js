@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import {
   GET_NOTIFICATIONS,
@@ -21,7 +21,7 @@ const intialState = {
   visible: false
 };
 
-class NoticesList extends Component {
+class NoticesList extends PureComponent {
   state = {
     ...intialState
   };

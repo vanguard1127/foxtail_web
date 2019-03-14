@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Upload from 'rc-upload';
 import './UploadImageComponentStyle.css';
 import AddIcon from '@material-ui/icons/Add';
@@ -25,7 +25,7 @@ const dummyRequest = ({ file, onSuccess }) => {
   }, 0);
 };
 
-class UploadComponent extends Component {
+class UploadComponent extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

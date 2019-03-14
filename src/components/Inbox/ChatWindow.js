@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import ChatHeader from './ChatHeader';
 import AdManager from '../common/AdManager';
 import ChatContent from './ChatContent';
 import ChatPanel from './ChatPanel';
 
 const LIMIT = 6;
-class ChatWindow extends Component {
+class ChatWindow extends PureComponent {
   state = {
     loading: false,
     cursor: null,

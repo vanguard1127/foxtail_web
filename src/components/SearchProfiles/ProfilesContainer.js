@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { SEARCH_PROFILES, LIKE_PROFILE } from '../../queries';
 import EmptyScreen from '../common/EmptyScreen';
 import { Query, Mutation } from 'react-apollo';
@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 
 const LIMIT = 20;
 
-class ProfilesContainer extends Component {
+class ProfilesContainer extends PureComponent {
   state = {
     skip: 0,
     loading: false,

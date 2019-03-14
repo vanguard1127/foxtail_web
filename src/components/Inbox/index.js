@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import withAuth from '../withAuth';
 import { withNamespaces } from 'react-i18next';
@@ -21,7 +21,7 @@ import { flagOptions } from '../../docs/options';
 
 import * as ErrorHandler from '../common/ErrorHandler';
 
-class InboxPage extends Component {
+class InboxPage extends PureComponent {
   state = {
     chatID: this.props.match.params.chatID,
     chat: null,

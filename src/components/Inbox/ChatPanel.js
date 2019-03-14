@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { SEND_MESSAGE, GET_MESSAGES, GET_INBOX } from '../../queries';
 
-class ChatPanel extends Component {
+class ChatPanel extends PureComponent {
   state = {
     text: ''
   };
@@ -83,24 +83,21 @@ class ChatPanel extends Component {
         update={this.updateChat}
       >
         {sendMessage => (
-          <div className="panel">
-            <div className="files" />
-            <div className="textarea">
-              <input
-                placeholder={t('typemsg') + '...'}
-                value={text}
-                onChange={e => this.setText(e)}
-              />
-            </div>
-            <div className="send">
-              <button
-                type="submit"
-                onClick={e => this.submitMessage(e, sendMessage)}
-              >
-                {t('common:Send')}
-              </button>
-            </div>
-          </div>
+          <form onSubmit={e => this.submitMessage(e, sendMessage)}>
+            <div className="panel">
+              <div className="files" />
+              <div className="textarea">
+                <input
+                  placeholder={t('typemsg') + '...'}
+                  value={text}
+                  onChange={e => this.setText(e)}
+                />
+              </div>
+              <div className="send">
+                <button type="submit">{t('common:Send')}</button>
+              </div>
+            </div>{' '}
+          </form>
         )}
       </Mutation>
     );

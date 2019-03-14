@@ -1,7 +1,7 @@
-import React from "react";
-import { Rect, Circle, Group } from "react-konva";
+import React, { PureComponent } from 'react';
+import { Rect, Circle, Group } from 'react-konva';
 
-class WithAnchors extends React.Component {
+class WithAnchors extends PureComponent {
   static defaultProps = {
     x: 0,
     y: 0
@@ -33,10 +33,10 @@ class WithAnchors extends React.Component {
   }
   // Indexes of state arrays
   getPositionIndexes = name => {
-    if (name === "topLeft") return { x: 0, y: 0 };
-    if (name === "topRight") return { x: 1, y: 0 };
-    if (name === "bottomLeft") return { x: 0, y: 1 };
-    if (name === "bottomRight") return { x: 1, y: 1 };
+    if (name === 'topLeft') return { x: 0, y: 0 };
+    if (name === 'topRight') return { x: 1, y: 0 };
+    if (name === 'bottomLeft') return { x: 0, y: 1 };
+    if (name === 'bottomRight') return { x: 1, y: 1 };
     return {};
   };
   limitX = newX =>
@@ -160,7 +160,7 @@ class WithAnchors extends React.Component {
   render() {
     const { handlesXs, handlesYs } = this.state;
     const { onDrag, mantainAspectRatio, children, show } = this.props;
-    const anchorNames = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
+    const anchorNames = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
     const x = handlesXs[0];
     const y = handlesYs[0];
     const width = handlesXs[1] - handlesXs[0];
@@ -180,7 +180,7 @@ class WithAnchors extends React.Component {
           {show ? (
             <Group>
               <Rect
-                stroke={"#24242450"}
+                stroke={'#24242450'}
                 x={x}
                 y={y}
                 width={width}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { FB_RESOLVE } from '../../queries';
 import AccountKit from 'react-facebook-account-kit';
@@ -7,7 +7,7 @@ const initialState = {
   csrf: '',
   code: ''
 };
-class LoginButton extends Component {
+class LoginButton extends PureComponent {
   state = { ...initialState };
   handleFBReturn = ({ state, code }, fbResolve) => {
     const { t } = this.props;

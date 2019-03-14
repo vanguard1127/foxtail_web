@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { UPDATE_SUBSCRIPTION } from "../../queries";
-import { Mutation } from "react-apollo";
-import StripeCheckout from "react-stripe-checkout";
+import React, { PureComponent } from 'react';
+import { UPDATE_SUBSCRIPTION } from '../../queries';
+import { Mutation } from 'react-apollo';
+import StripeCheckout from 'react-stripe-checkout';
 
-class UpdateSubBtn extends Component {
-  state = { token: "", ccLast4: "" };
+class UpdateSubBtn extends PureComponent {
+  state = { token: '', ccLast4: '' };
   handleSubmit = ({ token, ccLast4, updateSubscription, t }) => {
     this.setState({ token, ccLast4 });
     updateSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
-        alert(t("common:cardupdated") + ".");
+        alert(t('common:cardupdated') + '.');
       })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => {
@@ -45,7 +45,7 @@ class UpdateSubBtn extends Component {
               }
               stripeKey="pk_test_IdtGRrsuvxCLBd9AbDQBXCS3"
             >
-              <button>{t("common:cardchange")}</button>
+              <button>{t('common:cardchange')}</button>
             </StripeCheckout>
           );
         }}

@@ -1,16 +1,16 @@
-import React from "react";
-import { Image } from "react-konva";
+import React, { PureComponent } from 'react';
+import { Image } from 'react-konva';
 
-class KonvaImage extends React.Component {
+class KonvaImage extends PureComponent {
   state = {
     image: null
   };
 
   componentDidMount() {
     // console.log(this.props.x , this.props.y)
-    const importImage = require("./" + this.props.src);
+    const importImage = require('./' + this.props.src);
     const image = new window.Image();
-    image.setAttribute("crossOrigin", "anonymous");
+    image.setAttribute('crossOrigin', 'anonymous');
     image.src = importImage;
     image.onload = () => {
       this.setState({

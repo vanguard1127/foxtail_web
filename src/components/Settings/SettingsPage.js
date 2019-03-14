@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { UPDATE_SETTINGS, SIGNS3 } from '../../queries';
 
@@ -20,7 +20,7 @@ import BlackModal from '../Modals/Black';
 import axios from 'axios';
 import getCityCountry from '../../utils/getCityCountry';
 
-class SettingsPage extends Component {
+class SettingsPage extends PureComponent {
   //TODO: Do we need to have these setup?
   state = {
     distance: 100,
@@ -361,10 +361,11 @@ class SettingsPage extends Component {
     } = this.state;
 
     const { userID, t, ErrorHandler } = this.props;
+
     let aboutErr = '';
     if (about === '') {
       aboutErr = 'Please fill in your bio';
-    } else if (about.length < 10) {
+    } else if (about.length < 20) {
       aboutErr = 'Bio must be more than 20 characters';
     }
 

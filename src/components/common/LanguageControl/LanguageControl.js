@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import i18n from '../../../i18n';
 
-class LanguageControl extends Component {
+class LanguageControl extends PureComponent {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();

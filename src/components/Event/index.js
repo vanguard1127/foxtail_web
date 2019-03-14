@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query, Mutation } from 'react-apollo';
 import { GET_EVENT, DELETE_EVENT } from '../../queries';
 import { withNamespaces } from 'react-i18next';
 import BlockModal from '../Modals/Block';
-import moment from 'moment';
 import Spinner from '../common/Spinner';
 import withAuth from '../withAuth';
 import Modal from '../common/Modal';
@@ -17,7 +16,7 @@ import EventInfo from './EventInfo';
 import { flagOptions } from '../../docs/options';
 import { toast } from 'react-toastify';
 
-class EventPage extends Component {
+class EventPage extends PureComponent {
   state = { visible: false, blockModalVisible: false, showDelete: false };
 
   toggleDeleteDialog = () => {
@@ -86,36 +85,6 @@ class EventPage extends Component {
 
   saveFormRef = formRef => {
     this.formRef = formRef;
-  };
-
-  updateEvent = (cache, { data: { createEvent } }) => {
-    const { id } = this.props;
-    const {
-      eventname,
-      desires,
-      description,
-      address,
-      type,
-      time
-    } = this.formRef.props.form.getFieldsValue();
-    // const { event } = cache.readQuery({ query: GET_EVENT, variables: { id } });
-    cache.writeQuery({
-      query: GET_EVENT,
-      variables: { id },
-      data: {
-        event: {
-          ...createEvent,
-          eventname,
-          desires,
-          interestedIn: [],
-          invited: [],
-          description,
-          address,
-          type,
-          time: moment(time).toISOString()
-        }
-      }
-    });
   };
 
   render() {

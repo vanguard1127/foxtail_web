@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
 import { toast } from 'react-toastify';
-import { LOGIN, FB_RESOLVE } from '../../queries';
+import { FB_RESOLVE } from '../../queries';
 import AccountKit from 'react-facebook-account-kit';
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
   phone: ''
 };
 
-class ChangePhoneBtn extends Component {
+class ChangePhoneBtn extends PureComponent {
   state = { ...initialState };
   handleFBReturn = ({ state, code }, fbResolve) => {
     if (!state || !code) {

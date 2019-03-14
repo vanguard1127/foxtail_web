@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { GET_MY_EVENTS } from '../../queries';
@@ -7,7 +7,7 @@ import EventCard from './EventCard';
 const LIMIT = 3;
 
 //TODO: Test paginate
-class MyEvents extends Component {
+class MyEvents extends PureComponent {
   state = { skip: 0, current: 1 };
 
   fetchData = fetchMore => {

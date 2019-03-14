@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Query } from 'react-apollo';
 import { GET_COMMENTS, NEW_MESSAGE_SUB } from '../../queries';
 import Waypoint from 'react-waypoint';
@@ -6,7 +6,7 @@ import Spinner from '../common/Spinner';
 import MessageList from './MessageList';
 
 const LIMIT = 6;
-class ChatContent extends Component {
+class ChatContent extends PureComponent {
   state = {
     loading: false,
     cursor: null,

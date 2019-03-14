@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import EditCanvasImage from './ImageEditorWindow/EditCanvasImage';
 import { withNamespaces } from 'react-i18next';
 import Modal from '../../common/Modal';
-class ImageEditor extends Component {
+class ImageEditor extends PureComponent {
   state = { photos: [], filename: '', filetype: '', photoKey: '' };
   setPhotos = photos => {
     this.setState({ photos });

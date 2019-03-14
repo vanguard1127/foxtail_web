@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withNamespaces } from 'react-i18next';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -31,7 +31,7 @@ const schema = yup.object().shape({
     .max(240, 'Description must be less than 240 characters')
     .required('Address is required!')
 });
-class CreateEvent extends Component {
+class CreateEvent extends PureComponent {
   state = {
     eventname: '',
     tagline: '',

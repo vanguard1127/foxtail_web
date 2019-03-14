@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Layer, Stage } from "react-konva";
-import TransformerHandler from "./TransformerHandler";
-import SourceImage from "./SourceImage";
-import KonvaImage from "./KonvaImage";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { Layer, Stage } from 'react-konva';
+import TransformerHandler from './TransformerHandler';
+import SourceImage from './SourceImage';
+import KonvaImage from './KonvaImage';
 
-class EditCanvasImage extends React.Component {
+class EditCanvasImage extends PureComponent {
   constructor(props) {
     super(props);
     let width = 400;
@@ -21,7 +21,7 @@ class EditCanvasImage extends React.Component {
       scaleHeight: height,
       x_pos: 0,
       y_pos: 0,
-      selectedShapeName: "",
+      selectedShapeName: '',
       hideTransformer: false,
       konvaImageList: [],
       crop: initialCrop,
@@ -58,23 +58,23 @@ class EditCanvasImage extends React.Component {
   };
 
   dataURItoBlob = dataURI => {
-    var binary = atob(dataURI.split(",")[1]);
+    var binary = atob(dataURI.split(',')[1]);
     var array = [];
     for (var i = 0; i < binary.length; i++) {
       array.push(binary.charCodeAt(i));
     }
-    return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
+    return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
   };
 
   handleExportClick = () => {
     this.setState({ hideTransformer: true, uploading: true }, () => {
       const dataURL = this.stageRef
         .getStage()
-        .toDataURL({ mimeType: "image/jpeg" });
+        .toDataURL({ mimeType: 'image/jpeg' });
       var blobData = this.dataURItoBlob(dataURL);
       var file = {
         filename: this.props.imageObject.name,
-        filetype: "image/jpeg",
+        filetype: 'image/jpeg',
         filebody: blobData
       };
 
@@ -153,50 +153,6 @@ class EditCanvasImage extends React.Component {
     this.setState({ konvaImageList: filteredList });
   };
 
-  // Crop Functions
-  onAcceptCrop = e => {
-    e.preventDefault();
-    this.setState({
-      isCropping: false,
-      lastCrop: this.state.crop
-    });
-  };
-  onCancelCrop = e => {
-    e.preventDefault();
-    // console.log("last", this.state.lastCrop);
-    this.setState({
-      isCropping: false,
-      crop: this.state.lastCrop
-    });
-  };
-  onStartCrop = e => {
-    e.preventDefault();
-    this.setState({
-      isCropping: true
-    });
-  };
-  onCropChange = (Xs, Ys) => {
-    if (this.state.unduCrop === true) {
-      this.setState({
-        crop: { x: [0, 400], y: [0, 400] },
-        lastCrop: { x: [0, 400], y: [0, 400] },
-        unduCrop: false
-      });
-    } else {
-      this.setState({
-        crop: { x: Xs, y: Ys }
-      });
-    }
-  };
-
-  undoCrop = e => {
-    e.preventDefault();
-    this.setState({
-      unduCrop: true,
-      isCropping: true
-    });
-  };
-
   rotate = () => {
     this.setState({
       rotation: this.state.rotation + 90
@@ -246,21 +202,21 @@ class EditCanvasImage extends React.Component {
       <div
         {...props}
         onClick={() => this.handleStickerClick(props.id, props.name, props.src)}
-        style={{ padding: 5, height: "100%" }}
+        style={{ padding: 5, height: '100%' }}
       >
         <img
-          style={{ height: "100%" }}
-          src={require("./" + props.src)}
+          style={{ height: '100%' }}
+          src={require('./' + props.src)}
           alt="imagepic"
         />
       </div>
     );
 
     return (
-      <div style={{ width: "fit-content" }}>
-        <div style={{ width, height, margin: "0 auto" }}>
+      <div style={{ width: 'fit-content' }}>
+        <div style={{ width, height, margin: '0 auto' }}>
           <Stage
-            style={{ backgroundColor: "gray" }}
+            style={{ backgroundColor: 'gray' }}
             width={width}
             height={height}
             onClick={this.handleStageClick}
@@ -316,34 +272,31 @@ class EditCanvasImage extends React.Component {
           />
         </div>
 
-        <button style={{ marginBottom: 5 }} onClick={this.rotate}>
+        <span style={{ marginBottom: 5 }} onClick={this.rotate}>
           Rotate
-        </button>
+        </span>
 
-        <button
+        <span
           style={{ marginBottom: 5 }}
           onClick={this.handleExportClick}
           disabled={uploading}
         >
-          {t("Upload")}
-        </button>
-        <button style={{ marginBottom: 5 }} onClick={() => this.props.close()}>
-          {t("Close")}
-        </button>
-        <button
-          style={{ marginBottom: 5 }}
-          onClick={this.removeSelectedSticker}
-        >
-          {t("removesticker")}
-        </button>
+          {t('Upload')}
+        </span>
+        <span style={{ marginBottom: 5 }} onClick={() => this.props.close()}>
+          {t('Close')}
+        </span>
+        <span style={{ marginBottom: 5 }} onClick={this.removeSelectedSticker}>
+          {t('removesticker')}
+        </span>
         <div
           style={{
-            display: "flex",
+            display: 'flex',
             height: 70,
             width: width,
-            border: "1px solid silver",
+            border: '1px solid silver',
             marginTop: 5,
-            overflowY: "auto"
+            overflowY: 'auto'
           }}
         >
           <Sticker id="1" name="stc1" src="test_mask_1.png" />

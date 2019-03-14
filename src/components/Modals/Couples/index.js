@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withNamespaces } from 'react-i18next';
-import { GENERATE_CODE, LINK_PROFILE, UNLINK_PROFILE } from '../../../queries';
-import { Query, Mutation } from 'react-apollo';
-import { EmailShareButton, EmailIcon } from 'react-share';
+import { UNLINK_PROFILE } from '../../../queries';
+import { Mutation } from 'react-apollo';
 import Spinner from '../../common/Spinner';
-import Header from './Header';
 import LinkBox from './LinkBox';
 import Modal from '../../common/Modal';
 import IncludeMsgSlide from './IncludeMsgSlide';
 import CodeBox from './CodeBox';
-class Couples extends Component {
+class Couples extends PureComponent {
   state = {
     code: '',
     currentSlide: 0,

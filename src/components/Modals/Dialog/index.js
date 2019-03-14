@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import Modal from '../../common/Modal';
-class Dialog extends Component {
+class Dialog extends PureComponent {
   state = { text: '', errors: {} };
 
   handleTextChange = event => {

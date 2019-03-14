@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { Mutation } from 'react-apollo';
 import { SEEN_TOUR } from '../../queries';
 import CustomTour from '../common/CustomTour';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router-dom';
-class ProfileTour extends Component {
+class ProfileTour extends PureComponent {
   state = {
     isTourOpen: true,
     menuOpen: true

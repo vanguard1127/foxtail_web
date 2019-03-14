@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import { Query, Mutation } from 'react-apollo';
@@ -20,7 +20,7 @@ import DirectMsgModal from '../Modals/DirectMsg';
 import Modal from '../common/Modal';
 import { flagOptions } from '../../docs/options';
 
-class ProfilePage extends Component {
+class ProfilePage extends PureComponent {
   state = {
     shareModalVisible: false,
     blockModalVisible: false,
