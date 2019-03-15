@@ -1,11 +1,15 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import InboxSearchTextBox from './InboxSearchTextBox';
 import { GET_INBOX, NEW_INBOX_SUB } from '../../queries';
 import { Query } from 'react-apollo';
 import Spinner from '../common/Spinner';
 import InboxList from './InboxList';
 let unsubscribe = null;
-class InboxPanel extends PureComponent {
+class InboxPanel extends Component {
+  //TODO: Test if this prevent new messages from getting shown
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { readChat, currentUserID, t, ErrorHandler } = this.props;
 

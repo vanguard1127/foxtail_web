@@ -1,12 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import { withNamespaces } from 'react-i18next';
 import { SEND_MESSAGE } from 'queries';
 import Modal from '../../common/Modal';
 import { toast } from 'react-toastify';
 
-class DirectMsg extends PureComponent {
+class DirectMsg extends Component {
   state = { text: '' };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.text !== nextState.text) {
+      return true;
+    }
+    return false;
+  }
 
   handleTextChange = event => {
     this.setState({ text: event.target.value });

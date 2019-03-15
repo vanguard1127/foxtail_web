@@ -32,17 +32,20 @@ class ChatPanel extends PureComponent {
       variables: { chatID, cursor, limit }
     });
 
-    getMessages.messages.push({
-      createdAt: Date.now(),
-      fromUser: {
-        username: currentuser.username,
-        id: currentuser.userID,
-        __typename: 'UserType'
-      },
-      text,
-      type: 'msg',
-      __typename: 'MessageType'
-    });
+    getMessages.messages = [
+      ...getMessages.messages,
+      {
+        createdAt: Date.now(),
+        fromUser: {
+          username: currentuser.username,
+          id: currentuser.userID,
+          __typename: 'UserType'
+        },
+        text,
+        type: 'msg',
+        __typename: 'MessageType'
+      }
+    ];
 
     cache.writeQuery({
       query: GET_MESSAGES,

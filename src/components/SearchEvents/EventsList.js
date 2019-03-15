@@ -1,7 +1,13 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import EventCard from './EventCard';
 import Waypoint from 'react-waypoint';
-class EventsList extends PureComponent {
+class EventsList extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.events !== nextProps.events) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { events, handleEnd, t } = this.props;
     return (

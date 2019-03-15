@@ -1,6 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
-class ProfileActionBtns extends PureComponent {
+class ProfileActionBtns extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { profile, likeProfile, showMsgModal } = this.props;
 

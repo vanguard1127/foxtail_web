@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { desireOptions } from '../../../docs/options';
 import SearchBox from './SearchBox';
-class Desires extends PureComponent {
+class Desires extends Component {
   state = { searchText: '' };
   constructor(props) {
     super(props);
@@ -25,6 +25,15 @@ class Desires extends PureComponent {
   setValue = ({ name, value }) => {
     this.setState({ [name]: value });
   };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.searchText !== nextState.searchText ||
+      this.props.desires !== nextProps.desires
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { searchText } = this.state;
     const { close, onChange, desires, t, ErrorBoundary } = this.props;

@@ -19,7 +19,7 @@ class EditEventBtn extends PureComponent {
 
         {this.state.showPopup ? (
           <CreateEvent
-            close={() => this.togglePopup()}
+            close={this.togglePopup}
             ErrorHandler={this.props.ErrorHandler}
             eventID={this.props.id}
             updateEventProps={this.props.updateEventProps}

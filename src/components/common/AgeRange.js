@@ -1,10 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 
-class AgeRange extends PureComponent {
+class AgeRange extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { value, setValue, t } = this.props;
     return (

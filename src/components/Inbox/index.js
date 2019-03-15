@@ -227,7 +227,7 @@ class InboxPage extends PureComponent {
             <BlockModal
               type={flagOptions.Chat}
               id={chatID}
-              close={() => this.setBlockModalVisible()}
+              close={this.setBlockModalVisible}
               ErrorBoundary={ErrorHandler.ErrorBoundary}
             />
           )}

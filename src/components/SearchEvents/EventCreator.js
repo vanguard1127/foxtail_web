@@ -1,8 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { preventContextMenu } from '../../utils/image';
 
-class EventCreator extends PureComponent {
+class EventCreator extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { ownerProfile, history } = this.props;
     return (

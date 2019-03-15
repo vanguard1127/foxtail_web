@@ -1,11 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
-class Modal extends PureComponent {
+class Modal extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
   }
-
+  shouldComponentUpdate(nextProps) {
+    if (this.props.children !== nextProps.children) {
+      return true;
+    }
+    return false;
+  }
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
   }

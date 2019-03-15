@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from '../../queries';
 import { Query } from 'react-apollo';
 import NoticesItem from './NoticesItem';
@@ -8,7 +8,16 @@ import { ErrorBoundary } from '../common/ErrorHandler';
 var slapAudio = new Audio(require('../../docs/slap.wav'));
 
 let unsubscribe = null;
-class UserToolbar extends PureComponent {
+class UserToolbar extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.currentuser !== nextProps.currentuser ||
+      this.props.href !== nextProps.href
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { currentuser, href, t, setRef } = this.props;
     return (

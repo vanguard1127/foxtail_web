@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Mutation } from 'react-apollo';
+import axios from 'axios';
 import { UPDATE_SETTINGS, SIGNS3 } from '../../queries';
-
-import { toast } from 'react-toastify';
 import ImageEditor from '../Modals/ImageEditor';
-
 import ProfilePic from './ProfilePic';
 import Photos from './Photos';
 import Menu from './Menu';
@@ -17,7 +15,6 @@ import DesiresModal from '../Modals/Desires/Modal';
 import SubmitPhotoModal from '../Modals/SubmitPhoto';
 import CoupleModal from '../Modals/Couples';
 import BlackModal from '../Modals/Black';
-import axios from 'axios';
 import getCityCountry from '../../utils/getCityCountry';
 
 class SettingsPage extends PureComponent {
@@ -80,7 +77,6 @@ class SettingsPage extends PureComponent {
     isDeleted,
     updateSettings
   }) => {
-    console.log('PHOLISTCHANGE');
     this.props.ErrorHandler.setBreadcrumb('Photo list updated');
     if (isPrivate) {
       let { privatePics } = this.state;
@@ -88,11 +84,14 @@ class SettingsPage extends PureComponent {
       if (isDeleted) {
         privatePics = privatePics.filter(x => x.id !== file.id);
       } else {
-        privatePics.push({
-          uid: Date.now(),
-          key,
-          url
-        });
+        privatePics = [
+          ...privatePics,
+          {
+            uid: Date.now(),
+            key,
+            url
+          }
+        ];
       }
       this.setState(
         {
@@ -111,11 +110,14 @@ class SettingsPage extends PureComponent {
         }
         publicPics = publicPics.filter(x => x.id !== file.id);
       } else {
-        publicPics.push({
-          uid: Date.now(),
-          key,
-          url
-        });
+        publicPics = [
+          ...publicPics,
+          {
+            uid: Date.now(),
+            key,
+            url
+          }
+        ];
         if (profilePic === '') {
           this.setState({ profilePic: key, profilePicUrl: url });
         }
@@ -182,8 +184,6 @@ class SettingsPage extends PureComponent {
           this.setState({ errors });
         });
     }
-    //TODO:REfetchs
-    console.log(this.props);
   };
 
   setLocationValues = async ({ lat, long, city, updateSettings }) => {
@@ -225,7 +225,6 @@ class SettingsPage extends PureComponent {
   setValue = ({ name, value, updateSettings, noSave }) => {
     this.setState({ [name]: value }, () => {
       if (noSave === true) {
-        console.log('NONO', noSave);
         return;
       }
 
@@ -439,13 +438,11 @@ class SettingsPage extends PureComponent {
                           <ErrorHandler.ErrorBoundary>
                             {' '}
                             <Preferences
-                              values={{
-                                distance,
-                                distanceMetric,
-                                ageRange,
-                                interestedIn,
-                                city
-                              }}
+                              distance={distance}
+                              distanceMetric={distanceMetric}
+                              ageRange={ageRange}
+                              interestedIn={interestedIn}
+                              city={city}
                               setValue={({ name, value }) =>
                                 this.setValue({ name, value, updateSettings })
                               }
@@ -530,13 +527,11 @@ class SettingsPage extends PureComponent {
                               setValue={({ name, value }) =>
                                 this.setValue({ name, value, updateSettings })
                               }
-                              values={{
-                                visible,
-                                lang,
-                                emailNotify,
-                                showOnline,
-                                likedOnly
-                              }}
+                              visible={visible}
+                              lang={lang}
+                              emailNotify={emailNotify}
+                              showOnline={showOnline}
+                              likedOnly={likedOnly}
                               t={t}
                               ErrorHandler={ErrorHandler}
                             />
@@ -553,13 +548,6 @@ class SettingsPage extends PureComponent {
                               setValue={({ name, value }) =>
                                 this.setValue({ name, value, updateSettings })
                               }
-                              values={{
-                                visible,
-                                lang,
-                                emailNotify,
-                                showOnline,
-                                likedOnly
-                              }}
                               t={t}
                               ErrorHandler={ErrorHandler}
                             />
@@ -599,7 +587,7 @@ class SettingsPage extends PureComponent {
 
               {showDesiresPopup && (
                 <DesiresModal
-                  close={() => this.toggleDesiresPopup()}
+                  close={this.toggleDesiresPopup}
                   onChange={e => this.toggleDesires(e, updateSettings)}
                   desires={desires}
                   updateSettings={updateSettings}
@@ -608,14 +596,14 @@ class SettingsPage extends PureComponent {
               )}
               {showPhotoVerPopup && (
                 <SubmitPhotoModal
-                  close={() => this.togglePhotoVerPopup()}
+                  close={this.togglePhotoVerPopup}
                   type={photoSubmitType}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
               {showCouplePopup && (
                 <CoupleModal
-                  close={() => this.toggleCouplesPopup()}
+                  close={this.toggleCouplesPopup}
                   setValue={({ name, value }) =>
                     this.setValue({ name, value, updateSettings })
                   }
@@ -627,7 +615,7 @@ class SettingsPage extends PureComponent {
               )}
               {showBlackPopup && (
                 <BlackModal
-                  close={() => this.toggleBlackPopup()}
+                  close={this.toggleBlackPopup}
                   userID={userID}
                   refetchUser={this.props.refetch}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}

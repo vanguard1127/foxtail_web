@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import * as yup from 'yup';
 import DatePicker from '../common/DatePicker';
 import Dropdown from '../common/Dropdown';
@@ -8,22 +8,22 @@ import isEmpty from '../../utils/isEmpty.js';
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email('Invalid email address')
-    .required('Email is required!'),
-  username: yup.string().required('Username is required!'),
+  interestedIn: yup.array().required('Interest is required!'),
+  gender: yup.string().required('Gender is required!'),
   dob: yup
     .date()
     .nullable()
     .default(null)
     .max(date, 'You must be at least 18 years old!')
     .required('Birthdate is required!'),
-  interestedIn: yup.array().required('Interest is required!'),
-  gender: yup.string().required('Gender is required!')
+  email: yup
+    .string()
+    .email('Invalid email address')
+    .required('Email is required!'),
+  username: yup.string().required('Username is required!')
 });
 
-class SignupForm extends PureComponent {
+class SignupForm extends Component {
   state = {
     username: '',
     email: '',
@@ -34,6 +34,12 @@ class SignupForm extends PureComponent {
     isValid: false,
     errors: {}
   };
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('NEW:', nextState);
+    console.log('OLD:', this.state);
+    console.log('EQUALS:', this.state.errors === nextState.errors);
+    return true;
+  }
   componentDidMount() {
     this.props.setBreadcrumb('Signup Form loaded');
   }
@@ -50,8 +56,9 @@ class SignupForm extends PureComponent {
       await schema.validate(this.state);
       this.setState({ isValid: true, errors: {} });
     } catch (e) {
-      let errors = {};
-      e.inner.forEach(err => (errors[err.path] = err.message));
+      console.log(e);
+      let errors = { [e.path]: e.message };
+
       this.setState({ isValid: false, errors });
     }
   };

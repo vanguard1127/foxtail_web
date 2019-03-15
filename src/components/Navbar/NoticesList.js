@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {
   GET_NOTIFICATIONS,
@@ -16,15 +16,25 @@ const intialState = {
   read: null,
   seen: null,
   notificationIDs: [],
-  count: 0,
   skip: 0,
   visible: false
 };
 
-class NoticesList extends PureComponent {
+class NoticesList extends Component {
   state = {
     ...intialState
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.skip !== nextState.skip ||
+      this.state.visible !== nextState.visible ||
+      this.props.notifications !== nextProps.notifications
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   componentDidMount() {
     this.props.subscribeToNewNotices();
@@ -34,7 +44,6 @@ class NoticesList extends PureComponent {
   };
 
   handleEnd = ({ previousPosition, fetchMore }) => {
-    console.log('OOPO', previousPosition);
     //if totoal reach skip and show no more sign
     const { skip } = this.state;
     if (previousPosition === Waypoint.below) {
@@ -54,7 +63,6 @@ class NoticesList extends PureComponent {
         limit: LIMIT
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        console.log(previousResult, fetchMoreResult);
         if (
           !fetchMoreResult ||
           !fetchMoreResult.getNotifications ||

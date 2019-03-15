@@ -83,7 +83,7 @@ class Select extends PureComponent {
           x => x.value != optionProps.value
         );
       } else {
-        selectedOptionsCopy.push(optionProps);
+        selectedOptionsCopy = [...selectedOptionsCopy, optionProps];
       }
 
       this.setState(

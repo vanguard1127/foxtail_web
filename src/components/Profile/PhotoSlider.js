@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import _ from 'lodash';
 import $ from 'jquery';
@@ -19,7 +19,10 @@ const configLightGallery = {
   zoom: true
 };
 
-class PhotoSlider extends PureComponent {
+class PhotoSlider extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   onLightGallery = node => {
     this.lightGallery = node;
     $(node).lightGallery(configLightGallery);

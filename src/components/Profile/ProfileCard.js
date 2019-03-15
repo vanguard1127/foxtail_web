@@ -1,7 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import ProfilePic from './ProfilePic';
 import ProfileActions from './ProfileActions';
-class ProfileCard extends PureComponent {
+class ProfileCard extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { profile, setProfile, likeProfile, showMsgModal, t } = this.props;
 

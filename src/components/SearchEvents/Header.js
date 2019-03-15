@@ -1,5 +1,8 @@
-import React, { PureComponent } from 'react';
-class EventHeader extends PureComponent {
+import React, { Component } from 'react';
+class EventHeader extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { t } = this.props;
     return (

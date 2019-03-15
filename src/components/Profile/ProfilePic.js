@@ -1,7 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { preventContextMenu } from '../../utils/image';
 
-class ProfilePic extends PureComponent {
+class ProfilePic extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { profilePic } = this.props;
     return (

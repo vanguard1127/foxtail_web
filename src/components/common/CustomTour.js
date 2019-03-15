@@ -1,8 +1,17 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Tour from 'reactour';
 
 const accentColor = '#5cb7b7';
-class CustomTour extends PureComponent {
+class CustomTour extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.onTourClose !== nextProps.onTourClose ||
+      this.props.isTourOpen !== nextProps.isTourOpen
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { isTourOpen, tourConfig, onTourClose } = this.props;
     return (

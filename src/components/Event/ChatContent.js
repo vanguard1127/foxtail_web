@@ -89,6 +89,7 @@ class ChatContent extends PureComponent {
       loading: false
     });
   };
+
   render() {
     const { chatID, history, t, ErrorHandler } = this.props;
 

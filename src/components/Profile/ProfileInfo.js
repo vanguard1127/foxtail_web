@@ -1,13 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import moment from 'moment';
 
-class ProfileInfo extends PureComponent {
+class ProfileInfo extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { users, online, t } = this.props;
     return (
       <div className={online ? 'user-info online' : 'user-info'}>
         <div>
-          <span> {users[0].username},</span>
+          <span> {users[0].username + ', '} </span>
           <span>
             {' '}
             {moment()

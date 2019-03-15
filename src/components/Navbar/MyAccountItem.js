@@ -1,7 +1,13 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import MyAccountMenu from './MyAccountMenu';
 import Menu from '../common/Menu';
-class MyAccountItem extends PureComponent {
+class MyAccountItem extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.currentuser !== nextProps.currentuser) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { currentuser, setRef } = this.props;
     if (currentuser === undefined) {

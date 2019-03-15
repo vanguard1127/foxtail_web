@@ -1,13 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import EditCanvasImage from './ImageEditorWindow/EditCanvasImage';
 import { withNamespaces } from 'react-i18next';
 import Modal from '../../common/Modal';
-class ImageEditor extends PureComponent {
-  state = { photos: [], filename: '', filetype: '', photoKey: '' };
-  setPhotos = photos => {
-    this.setState({ photos });
-  };
-
+class ImageEditor extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const {
       close,

@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import i18next from 'i18next';
 import SetLocationModal from './Modals/SetLocation';
 import getCityCountry from '../utils/getCityCountry';
 
 const withLocation = PassedComponent =>
-  class withLocation extends React.Component {
+  class withLocation extends PureComponent {
     state = {
       lat: null,
       long: null,

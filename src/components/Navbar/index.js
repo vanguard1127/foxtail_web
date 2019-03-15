@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
@@ -8,8 +8,18 @@ import axios from 'axios';
 
 import UserToolbar from './UserToolbar';
 
-class Navbar extends PureComponent {
+class Navbar extends Component {
   state = { online: false };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.session !== nextProps.session ||
+      this.state.online !== nextState.online
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   handleToggle = (toggleOnline, online) => {
     this.setState({ online }, () => {
@@ -60,10 +70,20 @@ class Navbar extends PureComponent {
 }
 
 //TODO: check it not id and try to make recursive
-class NavbarAuth extends PureComponent {
+class NavbarAuth extends Component {
   state = {
     mobileMenu: false
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.session !== nextProps.session ||
+      this.state.mobileMenu !== nextState.mobileMenu
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   toggleMobileMenu = () => {
     this.setState({ mobileMenu: !this.state.mobileMenu });

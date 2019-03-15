@@ -1,9 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import EventDate from '../common/Event/EventDate';
 import EventCreator from './EventCreator';
 
-class EventCard extends PureComponent {
+class EventCard extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { event, t } = this.props;
     const {

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
 class EventShare extends PureComponent {
   state = { invDropOpen: false };
+  closeInvDropdown = () => this.setState({ invDropOpen: false });
   render() {
     const { id, t } = this.props;
     const { invDropOpen } = this.state;
@@ -27,7 +28,7 @@ class EventShare extends PureComponent {
             targetType={'event'}
             listType={'friends'}
             t={t}
-            close={() => this.setState({ invDropOpen: false })}
+            close={this.closeInvDropdown}
           />
         )}
       </div>

@@ -29,9 +29,7 @@ class UploadComponent extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      uploadedImagesFile: [],
       photos: [],
-      fileList: [],
       previewVisible: false,
       selectedImg: null, //for modal dialog
       loader: 'inline-block',

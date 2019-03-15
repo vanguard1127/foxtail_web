@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
 class GoingBar extends PureComponent {
   state = { remDropOpen: false };
+  closeRemDropdown = () => this.setState({ remDropOpen: false });
   render() {
     const { id, participants, t, isOwner } = this.props;
     const { remDropOpen } = this.state;
@@ -70,7 +71,7 @@ class GoingBar extends PureComponent {
               listType={'participants'}
               isOwner={isOwner}
               t={t}
-              close={() => this.setState({ remDropOpen: false })}
+              close={this.closeRemDropdown}
             />
           )}
         </span>

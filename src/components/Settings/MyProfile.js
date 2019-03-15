@@ -1,7 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import DesiresSelector from '../Modals/Desires/Selector';
 
-class MyProfile extends PureComponent {
+class MyProfile extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.desires !== nextProps.desires ||
+      this.props.about !== nextProps.about ||
+      this.props.togglePopup !== nextProps.togglePopup ||
+      this.props.errors !== nextProps.errors
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const {
       desires,
@@ -45,14 +56,12 @@ class MyProfile extends PureComponent {
                       })
                     }
                     onMouseLeave={e => {
-                      console.log('SAVE2');
                       setValue({
                         name: 'about',
                         value: e.target.value
                       });
                     }}
                     onBlur={e => {
-                      console.log('SAVE');
                       setValue({
                         name: 'about',
                         value: e.target.value

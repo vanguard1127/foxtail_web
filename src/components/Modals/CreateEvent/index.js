@@ -274,7 +274,7 @@ class CreateEvent extends PureComponent {
                       <div className="item">
                         <DesiresSelector
                           desires={desires}
-                          togglePopup={() => this.toggleDesiresPopup()}
+                          togglePopup={this.toggleDesiresPopup}
                           ErrorBoundary={ErrorHandler.ErrorBoundary}
                         />
                       </div>
@@ -438,7 +438,7 @@ class CreateEvent extends PureComponent {
 
         {showDesiresPopup && (
           <DesiresModal
-            close={() => this.toggleDesiresPopup()}
+            close={this.toggleDesiresPopup}
             onChange={e => this.toggleDesires(e)}
             desires={desires}
             ErrorBoundary={ErrorHandler.ErrorBoundary}

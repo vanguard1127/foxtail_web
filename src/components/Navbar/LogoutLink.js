@@ -1,8 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 
-class Logout extends PureComponent {
+class Logout extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
   handleLogout = (client, history) => {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');

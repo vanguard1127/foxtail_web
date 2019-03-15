@@ -1,7 +1,19 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
-class ChatInfo extends PureComponent {
+class ChatInfo extends Component {
   state = { invDropOpen: false, remDropOpen: false };
+  //TODO: Test if this prevent new messages from getting shown
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.invDropOpen !== nextState.invDropOpen ||
+      this.state.remDropOpen !== nextState.remDropOpen
+    ) {
+      return true;
+    }
+    return false;
+  }
+  closeRemDropdown = () => this.setState({ remDropOpen: false });
+  closeInvDropdown = () => this.setState({ invDropOpen: false });
   render() {
     const {
       chatID,
@@ -27,7 +39,7 @@ class ChatInfo extends PureComponent {
                   targetType={'chat'}
                   listType={'participants'}
                   t={t}
-                  close={() => this.setState({ remDropOpen: false })}
+                  close={this.closeRemDropdown}
                   isOwner={isOwner}
                 />
               )}
@@ -52,7 +64,7 @@ class ChatInfo extends PureComponent {
                     targetType={'chat'}
                     listType={'friends'}
                     t={t}
-                    close={() => this.setState({ invDropOpen: false })}
+                    close={this.closeInvDropdown}
                     style={{ top: '90px' }}
                   />
                 )}

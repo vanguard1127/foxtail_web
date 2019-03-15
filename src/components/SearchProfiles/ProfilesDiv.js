@@ -1,8 +1,14 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import ProfileCard from './ProfileCard';
 import Waypoint from 'react-waypoint';
 
-class ProfilesDiv extends PureComponent {
+class ProfilesDiv extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.profiles !== nextProps.profiles) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const {
       profiles,

@@ -44,6 +44,8 @@ class EventPage extends PureComponent {
     else this.setState({ event: null, blockModalVisible });
   };
 
+  closeBlockModal = () => this.setBlockModalVisible(false);
+
   handleDelete = deleteEvent => {
     this.props.ErrorHandler.setBreadcrumb('Delete Event');
     const confirmDelete = window.confirm(this.props.t('surewarn'));
@@ -151,7 +153,7 @@ class EventPage extends PureComponent {
                         <EventInfoMobile
                           event={event}
                           t={t}
-                          openDelete={() => this.toggleDeleteDialog()}
+                          openDelete={this.toggleDeleteDialog}
                         />{' '}
                       </ErrorHandler.ErrorBoundary>{' '}
                       <ErrorHandler.ErrorBoundary>
@@ -175,7 +177,7 @@ class EventPage extends PureComponent {
                             event.ownerProfile.id ===
                             session.currentuser.profileID
                           }
-                          openDelete={() => this.toggleDeleteDialog()}
+                          openDelete={this.toggleDeleteDialog}
                           refetch={refetch}
                         />{' '}
                       </ErrorHandler.ErrorBoundary>
@@ -187,7 +189,7 @@ class EventPage extends PureComponent {
                 <BlockModal
                   type={flagOptions.Event}
                   id={id}
-                  close={() => this.setBlockModalVisible(false)}
+                  close={this.closeBlockModal}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
@@ -198,21 +200,21 @@ class EventPage extends PureComponent {
                     eventID: id
                   }}
                 >
-                  {deleteEvent => (
-                    <Modal
-                      header={'Delete Event'}
-                      close={() => this.toggleDeleteDialog()}
-                      description="This can't be undone"
-                      okSpan={
-                        <span
-                          className="color"
-                          onClick={() => this.deleteEvent(deleteEvent)}
-                        >
-                          Delete
-                        </span>
-                      }
-                    />
-                  )}
+                  {deleteEvent => {
+                    const okSpan = <span
+                      className="color"
+                      onClick={() => this.deleteEvent(deleteEvent)}
+                    >
+                      Delete
+                    </span>(
+                      <Modal
+                        header={'Delete Event'}
+                        close={this.toggleDeleteDialog}
+                        description="This can't be undone"
+                        okSpan={okSpan}
+                      />
+                    );
+                  }}
                 </Mutation>
               )}
             </section>

@@ -1,7 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import SearchEventsFilters from './SearchEventsFilters';
 import CreateEventBtn from './CreateEventBtn';
-class SearchEventToolbar extends PureComponent {
+class SearchEventToolbar extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.location !== nextProps.location ||
+      this.props.maxDistance !== nextProps.maxDistance
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const {
       location,

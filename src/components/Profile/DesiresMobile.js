@@ -1,5 +1,8 @@
-import React, { PureComponent } from 'react';
-class DesiresMobile extends PureComponent {
+import React, { Component } from 'react';
+class DesiresMobile extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { desires, t } = this.props;
 

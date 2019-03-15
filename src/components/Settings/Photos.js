@@ -1,7 +1,13 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import UploadComponent from './UploadImageComponent';
 
-class Photos extends PureComponent {
+class Photos extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.photos !== nextProps.photos) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const {
       isPrivate,

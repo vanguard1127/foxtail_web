@@ -422,10 +422,11 @@ class ProfileTour extends PureComponent {
           }}
         >
           {seenTour => {
+            const closeTour = () => this.closeTour(seenTour);
             return (
               <div>
                 <CustomTour
-                  onTourClose={() => this.closeTour(seenTour)}
+                  onTourClose={closeTour}
                   tourConfig={tourConfig}
                   isTourOpen={isTourOpen}
                 />

@@ -132,16 +132,16 @@ class EditCanvasImage extends PureComponent {
       x = (x + width) / 2 - 50;
       y = (y + height) / 2 - 50;
 
-      const imgList = [...this.state.konvaImageList];
-      imgList.push({ id, name, src, x, y });
+      let imgList = [...this.state.konvaImageList];
+      imgList = [...imgList, { id, name, src, x, y }];
       this.setState({ konvaImageList: imgList });
     } else {
       //calculations
       x = (x + nwidth) / 2 - 50 + this.state.lastCrop.x[0];
       y = (y + nheight) / 2 - 50 + this.state.lastCrop.y[0];
 
-      const imgList = [...this.state.konvaImageList];
-      imgList.push({ id, name, src, x, y });
+      let imgList = [...this.state.konvaImageList];
+      imgList = [...imgList, { id, name, src, x, y }];
       this.setState({ konvaImageList: imgList });
     }
   };

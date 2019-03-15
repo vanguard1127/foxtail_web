@@ -1,7 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { genderOptions } from '../../docs/options/en';
 import TimeAgo from '../../utils/TimeAgo';
-class ProfileDetails extends PureComponent {
+class ProfileDetails extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { users, profile, showShareModal, showBlockModal, t } = this.props;
     let distance;

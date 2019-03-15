@@ -1,6 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { desireOptions } from '../../docs/options';
-class DesiresSection extends PureComponent {
+class DesiresSection extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { desires, t } = this.props;
     return (

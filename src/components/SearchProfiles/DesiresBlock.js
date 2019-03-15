@@ -1,6 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
-class DesiresBlock extends PureComponent {
+class DesiresBlock extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { desires, t, id } = this.props;
     return (

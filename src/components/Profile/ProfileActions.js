@@ -1,5 +1,8 @@
-import React, { PureComponent } from 'react';
-class ProfileActions extends PureComponent {
+import React, { Component } from 'react';
+class ProfileActions extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { profile, setProfile, likeProfile, showMsgModal, t } = this.props;
 

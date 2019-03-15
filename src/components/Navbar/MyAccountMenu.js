@@ -1,8 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import Logout from './LogoutLink';
 
-class MyAccountMenu extends PureComponent {
+class MyAccountMenu extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
   render() {
     const { t, history } = this.props;
     return (

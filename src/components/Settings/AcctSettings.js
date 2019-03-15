@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Dialog from '../Modals/Dialog';
 import ChangePhoneBtn from './ChangePhoneBtn';
 import * as yup from 'yup';
+
 //TODO:Add languages dictionary
 
-class AcctSettings extends PureComponent {
+class AcctSettings extends Component {
   state = {
     showDialog: false,
     msg: '',
@@ -13,6 +14,12 @@ class AcctSettings extends PureComponent {
     setting: '',
     successMsg: ''
   };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
+  }
   toggleDialog = () => {
     this.props.ErrorHandler.setBreadcrumb('Dialog Modal Toggled:');
     this.setState({ showDialog: !this.state.showDialog });

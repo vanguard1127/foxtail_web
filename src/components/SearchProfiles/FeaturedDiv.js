@@ -1,10 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import FeaturedCard from './FeaturedCard';
 
-class FeaturedDiv extends PureComponent {
+class FeaturedDiv extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.featuredProfiles !== nextProps.featuredProfiles) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { featuredProfiles, showMsgModal, likeProfile, t } = this.props;
 

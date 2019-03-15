@@ -1,6 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
-class Verifications extends PureComponent {
+class Verifications extends Component {
+  shouldComponentUpdate(nextProps) {
+    return false;
+  }
   render() {
     const { openPhotoVerPopup, t } = this.props;
     return (

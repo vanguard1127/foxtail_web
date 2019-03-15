@@ -83,7 +83,7 @@ class Select extends PureComponent {
           x => x.value != optionProps.value
         );
       } else {
-        selectedOptionsCopy.push(optionProps);
+        selectedOptionsCopy = [...selectedOptionsCopy, optionProps];
       }
 
       this.setState(
@@ -98,7 +98,7 @@ class Select extends PureComponent {
 
   render() {
     const { selectedOption, menuOpen } = this.state;
-    const { className, multiple, options, t } = this.props;
+    const { className, options, t } = this.props;
     const menuStatus = !menuOpen;
 
     const SelectList = () => (

@@ -1,7 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-class InboxItem extends PureComponent {
+class InboxItem extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.count !== nextProps.count ||
+      this.props.active !== nextProps.active
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { count, active, t } = this.props;
     let iconstyle = 'inbox hidden-mobile';

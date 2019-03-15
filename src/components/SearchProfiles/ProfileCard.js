@@ -1,10 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import ProfilePic from './ProfilePic';
 import DesiresBlock from './DesiresBlock';
 import ProfileActionBtns from './ProfileActionBtns';
 import ProfileInfoBox from './ProfileInfoBox';
 
-class ProfileCard extends PureComponent {
+class ProfileCard extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.profile !== nextProps.profile) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { profile, showMsgModal, likeProfile, history, t } = this.props;
 

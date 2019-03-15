@@ -1,11 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const SliderWithToolTip = createSliderWithTooltip(Slider);
 const milesToKilometers = miles => Math.floor(miles / 0.621371);
 
-class DistanceSlider extends PureComponent {
+class DistanceSlider extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const { value, setValue, t, metric = 'mi' } = this.props;
 

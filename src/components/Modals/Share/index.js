@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   FacebookShareButton,
   GooglePlusShareButton,
@@ -16,7 +16,11 @@ import {
 import Modal from '../../common/Modal';
 import { withNamespaces } from 'react-i18next';
 
-class Share extends PureComponent {
+class Share extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     const { profile, event, close, t, ErrorBoundary } = this.props;
     let shareUrl = '';

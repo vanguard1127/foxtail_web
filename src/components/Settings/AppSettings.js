@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Select from '../common/Select';
 import i18n from '../../i18n';
 
@@ -8,11 +8,27 @@ const setLang = lang => {
 };
 
 //TODO:Add languages dictionary
-class AppSettings extends PureComponent {
+class AppSettings extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.visible !== nextProps.visible ||
+      this.props.lang !== nextProps.lang ||
+      this.props.emailNotify !== nextProps.emailNotify ||
+      this.props.showOnline !== nextProps.showOnline ||
+      this.props.likedOnly !== nextProps.likedOnly
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const {
       setValue,
-      values: { visible, lang, emailNotify, showOnline, likedOnly },
+      visible,
+      lang,
+      emailNotify,
+      showOnline,
+      likedOnly,
       t
     } = this.props;
 

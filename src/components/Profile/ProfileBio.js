@@ -1,5 +1,8 @@
-import React, { PureComponent } from 'react';
-class ProfileBio extends PureComponent {
+import React, { Component } from 'react';
+class ProfileBio extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     const { about, t } = this.props;
     return (

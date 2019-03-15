@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { UNLINK_PROFILE } from '../../../queries';
 import { Mutation } from 'react-apollo';
@@ -7,14 +7,21 @@ import LinkBox from './LinkBox';
 import Modal from '../../common/Modal';
 import IncludeMsgSlide from './IncludeMsgSlide';
 import CodeBox from './CodeBox';
-class Couples extends PureComponent {
+class Couples extends Component {
   state = {
     code: '',
-    currentSlide: 0,
-    title: this.props.t('joinme'),
-    shareUrl: '',
     currSlide: 1
   };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.code !== nextState.code ||
+      this.state.currSlide !== nextState.currSlide ||
+      this.props.includeMsgs !== nextProps.includeMsgs
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   handleTextChange = code => {
     this.setState({ code });
@@ -63,11 +70,11 @@ class Couples extends PureComponent {
       });
   };
 
-  showLinkModal(visible, close, code, setValue, includeMsgs) {
-    const { title, currSlide } = this.state;
+  showLinkModal(close, code, setValue, includeMsgs) {
+    const { currSlide } = this.state;
     const { t, ErrorBoundary } = this.props;
     return (
-      <Modal header={title} close={close}>
+      <Modal header={t('joinme')} close={close}>
         <section className="couple-popup-content">
           <div className="container">
             <div className="col-md-12">
@@ -117,7 +124,7 @@ class Couples extends PureComponent {
     );
   }
 
-  showDeleteConfirm(visible, close, username, unlinkProfile, setValue) {
+  showDeleteConfirm(close, username, unlinkProfile, setValue) {
     const { t } = this.props;
     return (
       <Mutation mutation={UNLINK_PROFILE}>
@@ -146,12 +153,12 @@ class Couples extends PureComponent {
   }
 
   render() {
-    const { visible, close, username, setValue, includeMsgs } = this.props;
+    const { close, username, setValue, includeMsgs } = this.props;
     const { code } = this.state;
     if (username) {
-      return this.showDeleteConfirm(visible, close, username, setValue);
+      return this.showDeleteConfirm(close, username, setValue);
     }
-    return this.showLinkModal(visible, close, code, setValue, includeMsgs);
+    return this.showLinkModal(close, code, setValue, includeMsgs);
   }
 }
 

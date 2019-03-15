@@ -40,7 +40,7 @@ class MyEvents extends PureComponent {
   };
 
   render() {
-    const { skip, current } = this.state;
+    const { skip } = this.state;
     const { t, ErrorHandler } = this.props;
     return (
       <Query

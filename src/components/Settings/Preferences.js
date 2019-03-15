@@ -1,12 +1,32 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import DistanceSlider from '../common/DistanceSlider';
 import Dropdown from '../common/Dropdown';
 import AgeRange from '../common/AgeRange';
 import AddressSearch from '../common/AddressSearch';
-class Preferences extends PureComponent {
+class Preferences extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.distance !== nextProps.distance ||
+      this.props.distanceMetric !== nextProps.distanceMetric ||
+      this.props.ageRange !== nextProps.ageRange ||
+      this.props.interestedIn !== nextProps.interestedIn ||
+      this.props.city !== nextProps.city
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
-    const { values, setValue, setLocationValues, t } = this.props;
-    const { distance, distanceMetric, ageRange, interestedIn, city } = values;
+    const {
+      distance,
+      distanceMetric,
+      ageRange,
+      interestedIn,
+      city,
+      setValue,
+      setLocationValues,
+      t
+    } = this.props;
 
     const lang = localStorage.getItem('i18nextLng');
 

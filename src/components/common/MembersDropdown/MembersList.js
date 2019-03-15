@@ -132,7 +132,7 @@ class MembersList extends PureComponent {
     let { invitedProfiles } = this.state;
 
     if (e.target.checked) {
-      invitedProfiles.push(e.target.value);
+      invitedProfiles = [...invitedProfiles, e.target.value];
     } else {
       invitedProfiles = invitedProfiles.filter(pro => pro !== e.target.value);
     }

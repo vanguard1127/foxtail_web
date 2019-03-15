@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { UPDATE_SETTINGS } from '../../../queries';
 import { Mutation } from 'react-apollo';
 import AddressSearch from '../../common/AddressSearch';
@@ -7,11 +7,16 @@ import { withNamespaces } from 'react-i18next';
 import Modal from '../../common/Modal';
 import { toast } from 'react-toastify';
 
-class SetLocationModal extends PureComponent {
+class SetLocationModal extends Component {
   state = { address: '', long: null, lat: null };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.address !== nextState.address) {
+      return true;
+    }
+    return false;
+  }
 
   setLocationValues = ({ lat, long, address }) => {
-    console.log(lat, long, address);
     if (lat && long) {
       return this.setState({ lat, long, address });
     }

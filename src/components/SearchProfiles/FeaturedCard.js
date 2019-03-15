@@ -1,9 +1,15 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import ProfileInfoDiv from './ProfileInfoDiv';
 import ProfilePic from './ProfilePic';
 import ProfileActionBtns from './ProfileActionBtns';
 
-class FeaturedCard extends PureComponent {
+class FeaturedCard extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.profile !== nextProps.profile) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { profile, showMsgModal, likeProfile, history, t } = this.props;
 
