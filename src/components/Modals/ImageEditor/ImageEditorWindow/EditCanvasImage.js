@@ -4,6 +4,13 @@ import { Layer, Stage } from 'react-konva';
 import TransformerHandler from './TransformerHandler';
 import SourceImage from './SourceImage';
 import KonvaImage from './KonvaImage';
+import RotateIcon from '@material-ui/icons/RotateRight';
+import ImageIcon from '@material-ui/icons/Image';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
+
+let iconStyles = {
+  fontSize: '48px'
+};
 
 class EditCanvasImage extends PureComponent {
   constructor(props) {
@@ -38,7 +45,7 @@ class EditCanvasImage extends PureComponent {
   };
 
   componentDidMount() {
-    // let's go rotate image relative to it's center!
+    // let's go Image image relative to it's center!
     // we need to set offset to define new "center" of image
     const image = this.stageRef;
     image.offsetX(image.width() / 2);
@@ -103,12 +110,7 @@ class EditCanvasImage extends PureComponent {
         close();
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
@@ -213,8 +215,8 @@ class EditCanvasImage extends PureComponent {
     );
 
     return (
-      <div style={{ width: 'fit-content' }}>
-        <div style={{ width, height, margin: '0 auto' }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Stage
             style={{ backgroundColor: 'gray' }}
             width={width}
@@ -259,49 +261,88 @@ class EditCanvasImage extends PureComponent {
           </Stage>
         </div>
 
-        <div style={{ margin: 5 }}>
-          Zoom: &nbsp; &nbsp;
-          <input
-            name="scale"
-            type="range"
-            onChange={this.handleScale}
-            min="1"
-            max="2"
-            step="0.01"
-            defaultValue="1"
-          />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'baseline',
+            margin: '10px 0 10px 0'
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center'
+            }}
+          >
+            <ImageIcon style={{ fontSize: '18px', color: 'grey' }} />
+            <input
+              name="scale"
+              type="range"
+              onChange={this.handleScale}
+              min="1"
+              max="2"
+              step="0.01"
+              defaultValue="1"
+              style={{ margin: '0 5px 0 5px', cursor: 'hand' }}
+            />
+            <ImageIcon style={{ fontSize: '30px', color: 'grey' }} />
+          </div>
+
+          <span
+            style={{ marginBottom: 5, display: 'flex' }}
+            onClick={this.rotate}
+          >
+            <RotateIcon style={{ fontSize: '30px', color: 'grey' }} />
+          </span>
         </div>
-
-        <span style={{ marginBottom: 5 }} onClick={this.rotate}>
-          Rotate
-        </span>
-
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '10px'
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              height: 70,
+              width: width,
+              border: '1px solid silver',
+              marginTop: 5,
+              overflowY: 'auto',
+              flex: '4'
+            }}
+          >
+            <Sticker id="1" name="stc1" src="test_mask_1.png" />
+            <Sticker id="2" name="stc2" src="test_mask_2.png" />
+          </div>
+          <span
+            style={{
+              display: 'flex',
+              flex: '1'
+            }}
+            onClick={this.removeSelectedSticker}
+          >
+            {selectedShapeName && (
+              <DeleteIcon
+                style={{ fontSize: '50px', color: 'red', margin: '10px' }}
+              />
+            )}
+          </span>
+        </div>
         <span
           style={{ marginBottom: 5 }}
           onClick={this.handleExportClick}
           disabled={uploading}
+          className="greenButton"
         >
           {t('Upload')}
         </span>
-        <span style={{ marginBottom: 5 }} onClick={() => this.props.close()}>
-          {t('Close')}
-        </span>
-        <span style={{ marginBottom: 5 }} onClick={this.removeSelectedSticker}>
-          {t('removesticker')}
-        </span>
-        <div
-          style={{
-            display: 'flex',
-            height: 70,
-            width: width,
-            border: '1px solid silver',
-            marginTop: 5,
-            overflowY: 'auto'
-          }}
-        >
-          <Sticker id="1" name="stc1" src="test_mask_1.png" />
-          <Sticker id="2" name="stc2" src="test_mask_2.png" />
-        </div>
       </div>
     );
   }

@@ -20,6 +20,7 @@ class SearchProfilesPage extends PureComponent {
   };
 
   componentDidMount() {
+    console.log(this.props.location.city, this.props.searchCriteria.city);
     this.props.ErrorHandler.setBreadcrumb('Search Profile Page');
   }
 
@@ -77,6 +78,7 @@ class SearchProfilesPage extends PureComponent {
             city={city}
             country={country}
             refetch={refetch}
+            ErrorHandler={ErrorHandler}
           />
         </ErrorHandler.ErrorBoundary>
         <ErrorHandler.ErrorBoundary>

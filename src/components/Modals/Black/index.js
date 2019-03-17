@@ -27,7 +27,7 @@ class Black extends PureComponent {
             style={{ width: '100%' }}
             src={require('../../../images/girl2.jpg')}
           />
-          <div>
+          <>
             <h3>{t('blkinclude')}:</h3>
             <ul>
               <li>{t('direct')}</li>
@@ -37,7 +37,7 @@ class Black extends PureComponent {
               <li>{t('higher') + '!'}</li>
               <li>{t('phoneblock')}</li>
             </ul>
-          </div>
+          </>
         </ErrorBoundary>
       </Modal>
     );

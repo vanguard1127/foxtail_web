@@ -20,7 +20,8 @@ class ChatInfo extends Component {
       t,
       setBlockModalVisible,
       handleRemoveSelf,
-      isOwner
+      isOwner,
+      ErrorHandler
     } = this.props;
 
     const { invDropOpen, remDropOpen } = this.state;
@@ -41,6 +42,7 @@ class ChatInfo extends Component {
                   t={t}
                   close={this.closeRemDropdown}
                   isOwner={isOwner}
+                  ErrorHandler={ErrorHandler}
                 />
               )}
               <ul>
@@ -66,6 +68,7 @@ class ChatInfo extends Component {
                     t={t}
                     close={this.closeInvDropdown}
                     style={{ top: '90px' }}
+                    ErrorHandler={ErrorHandler}
                   />
                 )}
                 <li className="delete">

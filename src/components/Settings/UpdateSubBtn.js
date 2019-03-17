@@ -13,12 +13,7 @@ class UpdateSubBtn extends PureComponent {
         alert(t('common:cardupdated') + '.');
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
@@ -45,7 +40,10 @@ class UpdateSubBtn extends PureComponent {
               }
               stripeKey="pk_test_IdtGRrsuvxCLBd9AbDQBXCS3"
             >
-              <button>{t('common:cardchange')}</button>
+              <span className="clickverify-btn photo">
+                {' '}
+                {t('common:cardchange')}
+              </span>
             </StripeCheckout>
           );
         }}

@@ -25,7 +25,6 @@ class SearchCriteria extends PureComponent {
     this.setState({ locModalVisible: visible });
   };
 
-  //TODO: Refactor to use setValue
   setLocation = async (pos, updateSettings) => {
     var crd = pos.coords;
     const { long, lat } = this.props;
@@ -42,21 +41,25 @@ class SearchCriteria extends PureComponent {
         city: citycntry.city,
         country: citycntry.country
       });
-
-      if (updateSettings) {
-        this.handleSubmit(updateSettings);
-      }
+      this.setState(
+        {
+          long: crd.longitude,
+          lat: crd.latitude,
+          city: citycntry.city,
+          country: citycntry.country
+        },
+        () => {
+          if (updateSettings) {
+            this.handleSubmit(updateSettings);
+          }
+        }
+      );
     }
   };
 
   handleSubmit = updateSettings => {
     updateSettings().catch(res => {
-      const errors = res.graphQLErrors.map(error => {
-        return error.message;
-      });
-
-      //TODO: send errors to analytics from here
-      this.setState({ errors });
+      this.props.ErrorHandler.catchErrors(res.graphQLErrors);
     });
   };
 
@@ -87,9 +90,7 @@ class SearchCriteria extends PureComponent {
       );
     } else {
       this.props.setValue({ name: 'city', value: city });
-      this.setState({
-        city
-      });
+      this.setState({ city });
     }
   };
 
@@ -150,7 +151,7 @@ class SearchCriteria extends PureComponent {
     } = this.props;
 
     return (
-      <div>
+      <>
         <Mutation mutation={REMOVE_LOCLOCK}>
           {removeLocation => {
             return (
@@ -260,7 +261,7 @@ class SearchCriteria extends PureComponent {
             isBlackMember={this.props.session.currentuser.blackMember.active}
           />
         )}
-      </div>
+      </>
     );
   }
 }

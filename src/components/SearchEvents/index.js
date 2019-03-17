@@ -168,8 +168,8 @@ class SearchEvents extends PureComponent {
     );
 
     return (
-      <div>
-        <div>
+      <>
+        <>
           <Header t={t} />
           <section className="go-events">
             <ErrorHandler.ErrorBoundary>
@@ -228,7 +228,7 @@ class SearchEvents extends PureComponent {
               </Query>
             </ErrorHandler.ErrorBoundary>
           </section>
-        </div>
+        </>
 
         {event && (
           <ShareModal
@@ -238,7 +238,7 @@ class SearchEvents extends PureComponent {
             ErrorBoundary={ErrorHandler.ErrorBoundary}
           />
         )}
-      </div>
+      </>
     );
   }
 }

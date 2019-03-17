@@ -7,7 +7,8 @@ class Menu extends PureComponent {
       couplePartner,
       blackModalToggle,
       t,
-      flashCpl
+      flashCpl,
+      currentuser
     } = this.props;
     return (
       <div className="menu">
@@ -23,10 +24,12 @@ class Menu extends PureComponent {
               {couplePartner === null ? t('common:addcoup') : couplePartner}
             </span>
           </li>
-          <li>
-            <span onClick={() => blackModalToggle()}>
-              {t('common:becomeblk')}
-            </span>
+          <li style={{ color: '#000' }}>
+            {currentuser.blackMember.active ? (
+              <span style={{ cursor: 'auto' }}>{t('common:thanks')}.</span>
+            ) : (
+              <span onClick={blackModalToggle}>{t('common:becomeblk')}</span>
+            )}
           </li>
         </ul>
       </div>

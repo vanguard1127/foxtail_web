@@ -70,11 +70,10 @@ class ProfilePage extends PureComponent {
     else this.setState({ blockModalVisible });
   };
 
-  handleLike = likeProfile => {
+  handleLike = (profile, likeProfile) => {
     this.props.ErrorHandler.setBreadcrumb('Like Profile:' + likeProfile);
     likeProfile()
       .then(({ data }) => {
-        const { profile } = this.state;
         switch (data.likeProfile) {
           case 'like':
             toast.success('Liked ' + profile.profileName + '!');
@@ -165,7 +164,9 @@ class ProfilePage extends PureComponent {
                                 showMsgModal={() =>
                                   this.setMsgModalVisible(true)
                                 }
-                                likeProfile={() => this.handleLike(likeProfile)}
+                                likeProfile={() =>
+                                  this.handleLike(profile, likeProfile)
+                                }
                                 t={t}
                               />
                               <DesiresSection desires={desires} t={t} />
@@ -226,7 +227,7 @@ class ProfilePage extends PureComponent {
                         close={() => this.setBlockModalVisible(false)}
                         goToMain={() => this.props.history.push('/members')}
                         type={flagOptions.Profile}
-                        ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        ErrorHandler={ErrorHandler}
                       />
                     )}
                     {profile && shareModalVisible && (
@@ -240,7 +241,7 @@ class ProfilePage extends PureComponent {
                       <DirectMsgModal
                         profile={profile}
                         close={() => this.setMsgModalVisible(false)}
-                        ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        ErrorHandler={ErrorHandler}
                       />
                     )}
                     {profile && chatID && matchDlgVisible && (

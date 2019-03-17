@@ -15,12 +15,12 @@ class ImageEditor extends Component {
       uploadToS3,
       signS3,
       t,
-      ErrorBoundary
+      ErrorHandler
     } = this.props;
 
     return (
       <Modal header={t('editphoto')} close={close}>
-        <ErrorBoundary>
+        <ErrorHandler.ErrorBoundary>
           <EditCanvasImage
             imageObject={file}
             setS3PhotoParams={setS3PhotoParams}
@@ -29,8 +29,9 @@ class ImageEditor extends Component {
             handlePhotoListChange={handlePhotoListChange}
             close={close}
             t={t}
+            ErrorHandler={ErrorHandler}
           />
-        </ErrorBoundary>
+        </ErrorHandler.ErrorBoundary>
       </Modal>
     );
   }

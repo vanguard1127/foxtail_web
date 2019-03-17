@@ -16,7 +16,6 @@ class Selector extends PureComponent {
           <ErrorBoundary>
             <ul>
               {desires.reduce(function(result, desire, idx) {
-                //TODO: fix key issued using uuid
                 if (result.length < 5) {
                   const desireObj = desireOptions.find(
                     el => el.value === desire

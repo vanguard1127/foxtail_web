@@ -76,7 +76,7 @@ class EventInfoMobile extends PureComponent {
             ErrorHandler={ErrorHandler}
           />
         ) : (
-          <div>
+          <>
             <EditEventBtn
               id={id}
               t={t}
@@ -86,7 +86,7 @@ class EventInfoMobile extends PureComponent {
             <div className="join-event">
               <span onClick={() => openDelete()}>Cancel Event</span>
             </div>
-          </div>
+          </>
         )}
       </div>
     );

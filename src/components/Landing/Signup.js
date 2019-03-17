@@ -19,7 +19,7 @@ class Signup extends PureComponent {
   state = { ...initialState };
 
   componentDidMount() {
-    this.props.setBreadcrumb('Signup loaded');
+    this.props.ErrorHandler.setBreadcrumb('Signup loaded');
     if (localStorage.getItem('token') !== null) {
       //TODO: Check somehow if user active...Possibly use session.
 
@@ -79,19 +79,11 @@ class Signup extends PureComponent {
                 }
               })
               .catch(res => {
-                const errors = res.graphQLErrors.map(error => {
-                  return error.message;
-                });
-                //TODO: send errors to analytics from here
-                this.setState({ errors });
+                this.props.ErrorHandler.catchErrors(res.graphQLErrors);
               });
           })
           .catch(res => {
-            const errors = res.graphQLErrors.map(error => {
-              return error.message;
-            });
-            //TODO: send errors to analytics from here
-            this.setState({ errors });
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
           });
       }
     );
@@ -139,11 +131,7 @@ class Signup extends PureComponent {
             }
           })
           .catch(res => {
-            const errors = res.graphQLErrors.map(error => {
-              return error.message;
-            });
-            //TODO: send errors to analytics from here
-            this.setState({ errors });
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
           })
     );
   };
@@ -178,7 +166,7 @@ class Signup extends PureComponent {
   };
 
   render() {
-    const { t, setBreadcrumb } = this.props;
+    const { t, setBreadcrumb, ErrorHandler } = this.props;
     let {
       csrf,
       code,
@@ -229,6 +217,7 @@ class Signup extends PureComponent {
                       setFormValues={this.setFormValues}
                       setBreadcrumb={setBreadcrumb}
                       t={t}
+                      ErrorHandler={ErrorHandler}
                     />
                     <div className="form terms">
                       <span onClick={() => this.testCreateUser(createUser)}>
@@ -240,7 +229,7 @@ class Signup extends PureComponent {
                       <Mutation mutation={LOGIN} variables={{ phone }}>
                         {(login, { loading, error }) => {
                           return (
-                            <div>
+                            <>
                               <span
                                 onClick={() => {
                                   this.setState({ phone: '1' }, () => {
@@ -287,7 +276,7 @@ class Signup extends PureComponent {
                               >
                                 5
                               </span>
-                            </div>
+                            </>
                           );
                         }}
                       </Mutation>

@@ -6,7 +6,7 @@ class ProfileInfoBox extends PureComponent {
     const { users, online, distance, t } = this.props;
 
     return (
-      <div>
+      <>
         <span className={online ? 'name online' : 'name'}>
           {users[0].username}
           {users[1] && '&' + users[1].username}
@@ -30,7 +30,7 @@ class ProfileInfoBox extends PureComponent {
             </li>
           </ul>
         </span>
-      </div>
+      </>
     );
   }
 }

@@ -14,7 +14,7 @@ class IncludeMsgSlide extends PureComponent {
     } = this.props;
 
     return (
-      <div>
+      <>
         <div> {t('includeold')}?</div>
         <div style={{ padding: '20px' }}>
           {' '}
@@ -58,7 +58,7 @@ class IncludeMsgSlide extends PureComponent {
             {t('Back')}
           </span>
         </div>
-      </div>
+      </>
     );
   }
 }

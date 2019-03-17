@@ -30,18 +30,13 @@ class Navbar extends Component {
           }
         })
         .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     });
   };
 
   render() {
-    const { session, history, t } = this.props;
+    const { session, history, t, ErrorHandler } = this.props;
     const { online } = this.state;
 
     return (
@@ -58,6 +53,7 @@ class Navbar extends Component {
                 session={session}
                 toggleOnline={online => this.handleToggle(toggleOnline, online)}
                 t={t}
+                ErrorHandler={ErrorHandler}
               />
             )}
           </Mutation>

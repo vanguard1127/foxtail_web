@@ -17,12 +17,7 @@ class ChatPanel extends PureComponent {
         this.setState({ text: '' });
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   }
 

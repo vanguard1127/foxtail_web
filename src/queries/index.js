@@ -1,5 +1,5 @@
 //TODO: Remove apollo boost and replace with something smaller or already used
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 /* Subscriptions */
 export const NEW_MESSAGE_SUB = gql`
@@ -68,7 +68,6 @@ export const NEW_NOTICE_SUB = gql`
 `;
 
 /* Mutations */
-//TODO: fix App version issue
 export const CREATE_USER = gql`
   mutation(
     $username: String!

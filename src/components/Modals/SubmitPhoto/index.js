@@ -32,12 +32,7 @@ class PhotoVerify extends PureComponent {
         await this.handleSubmit(submitPhoto);
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
@@ -47,12 +42,7 @@ class PhotoVerify extends PureComponent {
         this.props.close();
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
@@ -83,7 +73,12 @@ class PhotoVerify extends PureComponent {
   };
 
   render() {
-    const { close, type, t, ErrorBoundary } = this.props;
+    const {
+      close,
+      type,
+      t,
+      ErrorHandler: { ErrorBoundary }
+    } = this.props;
     const { photos, filename, filetype, photoKey } = this.state;
     let header, subheader, body, instruction, btnText;
     header = subheader = body = instruction = btnText = '';

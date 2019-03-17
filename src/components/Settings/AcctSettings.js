@@ -52,7 +52,7 @@ class AcctSettings extends Component {
       });
     }
     return (
-      <div className="content">
+      <div className="content mtop">
         <div className="row">
           <div className="col-md-12">
             <span className="heading">Account Setting</span>

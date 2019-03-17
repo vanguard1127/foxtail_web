@@ -15,7 +15,7 @@ class CustomTour extends Component {
   render() {
     const { isTourOpen, tourConfig, onTourClose } = this.props;
     return (
-      <div>
+      <>
         <Tour
           onRequestClose={onTourClose}
           steps={tourConfig}
@@ -25,7 +25,7 @@ class CustomTour extends Component {
           rounded={5}
           accentColor={accentColor}
         />
-      </div>
+      </>
     );
   }
 }

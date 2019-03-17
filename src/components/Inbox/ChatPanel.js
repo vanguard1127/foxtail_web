@@ -97,7 +97,9 @@ class ChatPanel extends PureComponent {
                 />
               </div>
               <div className="send">
-                <button type="submit">{t('common:Send')}</button>
+                <button type="submit" disabled={!text.trim()}>
+                  {t('common:Send')}
+                </button>
               </div>
             </div>{' '}
           </form>

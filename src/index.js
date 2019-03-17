@@ -56,7 +56,10 @@ let wsurl = `ws://${server}/subscriptions`;
 // let httpurl = `https://${server}/graphql`;
 // let HTTPSurl = `https://${server}`;
 // let wsurl = `wss://${server}/subscriptions`;
-
+// if (process.env.NODE_ENV !== "production") {
+//   const { whyDidYouUpdate } = require("why-did-you-update");
+//   whyDidYouUpdate(React);
+// }
 const wsLink = new WebSocketLink({
   uri: wsurl,
   options: {
@@ -249,7 +252,7 @@ const Body = ({ showFooter }) => (
     }}
   >
     <header>
-      <NavBarWithSession />
+      <NavBarWithSession ErrorHandler={ErrorHandler} />
     </header>
     <main style={{ display: 'flex', flex: '3', flexDirection: 'column' }}>
       <Switch>

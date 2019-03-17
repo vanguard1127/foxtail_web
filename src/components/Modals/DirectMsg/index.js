@@ -30,18 +30,17 @@ class DirectMsg extends Component {
         }
       })
       .catch(res => {
-        console.log(res);
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
   render() {
-    const { close, profile, t, ErrorBoundary } = this.props;
+    const {
+      close,
+      profile,
+      t,
+      ErrorHandler: { ErrorBoundary }
+    } = this.props;
     const { text } = this.state;
     return (
       <Modal

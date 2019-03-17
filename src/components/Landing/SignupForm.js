@@ -41,7 +41,7 @@ class SignupForm extends Component {
     return true;
   }
   componentDidMount() {
-    this.props.setBreadcrumb('Signup Form loaded');
+    this.props.ErrorHandler.setBreadcrumb('Signup Form loaded');
   }
   setValue = ({ name, value }) => {
     this.setState({ [name]: value }, () => {

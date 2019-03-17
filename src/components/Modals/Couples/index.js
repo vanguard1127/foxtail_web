@@ -35,12 +35,7 @@ class Couples extends Component {
           this.props.setPartnerID(data.linkProfile.partnerName);
         })
         .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
   };
@@ -61,18 +56,16 @@ class Couples extends Component {
         this.props.setPartnerID('addpartner');
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
   showLinkModal(close, code, setValue, includeMsgs) {
     const { currSlide } = this.state;
-    const { t, ErrorBoundary } = this.props;
+    const {
+      t,
+      ErrorHandler: { ErrorBoundary }
+    } = this.props;
     return (
       <Modal header={t('joinme')} close={close}>
         <section className="couple-popup-content">

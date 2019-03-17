@@ -10,6 +10,7 @@ import Preferences from './Preferences';
 import AppSettings from './AppSettings';
 import AcctSettings from './AcctSettings';
 import Verifications from './Verifications';
+import ManageBlackSub from './ManageBlackSub';
 import MyProfile from './MyProfile';
 import DesiresModal from '../Modals/Desires/Modal';
 import SubmitPhotoModal from '../Modals/SubmitPhoto';
@@ -153,13 +154,7 @@ class SettingsPage extends PureComponent {
             })
             .then(() => this.props.refetchUser())
             .catch(res => {
-              console.log(res);
-              const errors = res.graphQLErrors.map(error => {
-                return error.message;
-              });
-
-              //TODO: send errors to analytics from here
-              this.setState({ errors });
+              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
             });
         }
       );
@@ -174,14 +169,7 @@ class SettingsPage extends PureComponent {
         })
         .then(() => this.props.refetchUser())
         .catch(res => {
-          console.log(res);
-
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
   };
@@ -319,6 +307,8 @@ class SettingsPage extends PureComponent {
 
   render() {
     const {
+      lat,
+      long,
       city,
       country,
       visible,
@@ -359,7 +349,7 @@ class SettingsPage extends PureComponent {
       flashCpl
     } = this.state;
 
-    const { userID, t, ErrorHandler } = this.props;
+    const { userID, t, ErrorHandler, currentuser, refetchUser } = this.props;
 
     let aboutErr = '';
     if (about === '') {
@@ -385,6 +375,8 @@ class SettingsPage extends PureComponent {
       <Mutation
         mutation={UPDATE_SETTINGS}
         variables={{
+          lat,
+          long,
           distance,
           distanceMetric,
           ageRange,
@@ -428,6 +420,8 @@ class SettingsPage extends PureComponent {
                             blackModalToggle={this.toggleBlackPopup}
                             t={t}
                             flashCpl={flashCpl}
+                            currentuser={currentuser}
+                            refetchUser={refetchUser}
                           />
                         </ErrorHandler.ErrorBoundary>
                       </div>
@@ -542,6 +536,16 @@ class SettingsPage extends PureComponent {
                               t={t}
                             />
                           </ErrorHandler.ErrorBoundary>
+                          {currentuser.blackMember.active && (
+                            <ErrorHandler.ErrorBoundary>
+                              <ManageBlackSub
+                                ErrorHandler={ErrorHandler}
+                                currentuser={currentuser}
+                                refetchUser={refetchUser}
+                                t={t}
+                              />
+                            </ErrorHandler.ErrorBoundary>
+                          )}
                           <ErrorHandler.ErrorBoundary>
                             {' '}
                             <AcctSettings
@@ -578,7 +582,7 @@ class SettingsPage extends PureComponent {
                         uploadToS3={this.uploadToS3}
                         signS3={signS3}
                         close={this.toggleImgEditorPopup}
-                        ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        ErrorHandler={ErrorHandler}
                       />
                     );
                   }}
@@ -598,7 +602,7 @@ class SettingsPage extends PureComponent {
                 <SubmitPhotoModal
                   close={this.togglePhotoVerPopup}
                   type={photoSubmitType}
-                  ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  ErrorHandler={ErrorHandler}
                 />
               )}
               {showCouplePopup && (
@@ -610,7 +614,7 @@ class SettingsPage extends PureComponent {
                   username={couplePartner}
                   includeMsgs={includeMsgs}
                   setPartnerID={this.setPartnerID}
-                  ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  ErrorHandler={ErrorHandler}
                 />
               )}
               {showBlackPopup && (

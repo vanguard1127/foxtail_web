@@ -175,7 +175,7 @@ class ProfilesContainer extends PureComponent {
             >
               {likeProfile => {
                 return (
-                  <div>
+                  <>
                     {result.featuredProfiles.length !== 0 && (
                       <FeaturedDiv
                         featuredProfiles={result.featuredProfiles}
@@ -218,7 +218,7 @@ class ProfilesContainer extends PureComponent {
                       <DirectMsgModal
                         profile={profile}
                         close={() => this.setMsgModalVisible(false)}
-                        ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        ErrorHandler={ErrorHandler}
                       />
                     )}
                     {profile && chatID && matchDlgVisible && (
@@ -254,7 +254,7 @@ class ProfilesContainer extends PureComponent {
                         </span>
                       </Modal>
                     )}
-                  </div>
+                  </>
                 );
               }}
             </Mutation>

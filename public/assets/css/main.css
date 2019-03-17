@@ -1307,6 +1307,7 @@
     position: relative;
     border-radius: 1px 0 0 1px;
     overflow: hidden;
+    cursor: pointer;
   }
 
   section.members .card-item .image img {
@@ -1460,6 +1461,7 @@
     border-radius: 2px;
     transition: .3s all;
     position: relative;
+    cursor: pointer;
   }
 
   section.members .card-item .info .function .btn a {
@@ -2555,7 +2557,7 @@
 
   section.profile .avatar-card .avatar {
     width: 100%;
-    height: 230px;
+    max-height: 230px;
     display: inline-block;
     float: left;
     overflow: hidden;
@@ -2604,9 +2606,11 @@
   section.profile .avatar-card .functions .btn.send-msg {
     background-color: #46CD61;
     margin-bottom: 10px;
+    cursor: pointer;
   }
   section.profile .avatar-card .functions .btn.heart {
     background-color: #D7004A;
+    cursor: pointer;
   }
 
   section.profile .avatar-card .functions .btn.heart::before {
@@ -2798,6 +2802,7 @@
     transition: .3s all;
     position: relative;
     top: -2px;
+    cursor: pointer;
   }
 
   section.profile .data-info .functions .btn button {
@@ -2808,6 +2813,7 @@
     position: absolute;
     left: 0;
     top: 0;
+    cursor: pointer;
   }
 
   section.profile .data-info .functions .btn:hover {
@@ -2918,7 +2924,7 @@
 
   section.profile .photos-slider .slider-content .item img {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     display: inline-block;
     float: left;
     background-size: 100%;
@@ -3094,6 +3100,7 @@
     line-height: 45px;
     font-size: 14px;
     transition: .3s all;
+    cursor: pointer;
   }
 
   section.go-events .header .create-event-btn:hover {
@@ -3985,6 +3992,7 @@
     cursor: pointer;
     margin-top: 10px;
     transition: .3s all;
+    cursor: pointer;
   }
 
   section.event-detail .discuss-content .send-message button:hover {
@@ -4313,6 +4321,10 @@
   .page .form .content .item.sticky {
     position: relative;
     top: -1px;
+  }
+
+  .page .form .content .item button {
+    cursor: pointer;
   }
 
   .page .form .content .item.sticky .button button {
@@ -4932,6 +4944,7 @@
       padding-bottom: 10px;
     }
 
+    .page .form .content .verification-box span.clickverify-btn,
     .page .form .content .verification-box a.clickverify-btn {
       height: 40px;
       line-height: 40px;
@@ -4948,6 +4961,7 @@
       transition: .3s all;
     }
 
+    .page .form .content .verification-box span.clickverify-btn:hover,
     .page .form .content .verification-box a.clickverify-btn:hover {
       background-color: #00BE4F;
     }
@@ -5596,6 +5610,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+    cursor: pointer;
   }
 
   section.couple-popup-content .create-profile .SocialMediaShareButton > div > svg {
@@ -6860,6 +6875,7 @@
     transition: .3s all;
     cursor: pointer;
     display: inline-block;
+    cursor: pointer;
   }
 
   section.login-modal .popup form .form-content .submit span.color,
@@ -7375,6 +7391,7 @@
     font-size: 17px;
     right: 20px;
     border-radius: 100px;
+    cursor: pointer;
   }
 
   section.inbox .chat .panel .textarea input {
@@ -7452,7 +7469,8 @@
     width: 100%;
   }
   section.profile .avatar-card .avatar {
-    height: 150px;
+    min-height: 100px;
+    height: auto;
   }
 
   section.profile .user-info {
@@ -7721,7 +7739,7 @@
   }
 
   section.profile .avatar-card .avatar {
-    height: 200px;
+    max-height: 200px;
   }
 
   section.profile .photos-slider .slider-content .item {
@@ -7841,7 +7859,7 @@
   }
 
   section.profile .avatar-card .avatar {
-    height: 230px;
+    max-height: 230px;
   }
 
   section.go-events .events-card-content .card-item .content .goings ul li:nth-child(4),
@@ -7962,4 +7980,31 @@ img {
 
 .tooltip .tooltiptext div{
   width: max-content;
+}
+
+.suggestion-item--active {
+  padding: 5px 15px !important;
+  font-size: 14px !important;
+}
+
+.greenButton {
+  width: 100%;
+  height: 50px;
+  outline: none;
+  line-height: 50px;
+  text-align: center;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  text-transform: uppercase;
+  font-size: 15px;
+  background-color: #00D157;
+  transition: .3s all;
+  cursor: pointer;
+}
+
+.greenButton:hover {
+  background-color: #00AF49;
 }

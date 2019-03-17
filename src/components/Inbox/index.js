@@ -149,7 +149,7 @@ class InboxPage extends PureComponent {
     );
 
     return (
-      <div>
+      <>
         <ErrorHandler.ErrorBoundary>
           <Header t={t} />
         </ErrorHandler.ErrorBoundary>
@@ -207,6 +207,7 @@ class InboxPage extends PureComponent {
                   {removeSelf => {
                     return (
                       <ChatInfo
+                        ErrorHandler={ErrorHandler}
                         t={t}
                         setBlockModalVisible={this.setBlockModalVisible}
                         handleRemoveSelf={() =>
@@ -228,11 +229,11 @@ class InboxPage extends PureComponent {
               type={flagOptions.Chat}
               id={chatID}
               close={this.setBlockModalVisible}
-              ErrorBoundary={ErrorHandler.ErrorBoundary}
+              ErrorHandler={ErrorHandler}
             />
           )}
         </section>
-      </div>
+      </>
     );
   }
 }

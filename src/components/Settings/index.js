@@ -86,6 +86,7 @@ class Settings extends PureComponent {
                   showCplModal={showCplModal}
                   ErrorHandler={ErrorHandler}
                   history={history}
+                  currentuser={session.currentuser}
                 />
               </Fragment>
             );

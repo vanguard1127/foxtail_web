@@ -44,7 +44,8 @@ class MembersDropdown extends PureComponent {
       t,
       close,
       isOwner,
-      style
+      style,
+      ErrorHandler
     } = this.props;
     if (listType === 'friends') {
       return (
@@ -89,6 +90,7 @@ class MembersDropdown extends PureComponent {
                       close={close}
                       showActionButton={true}
                       t={t}
+                      ErrorHandler={ErrorHandler}
                     />
                   </div>
                 </div>
@@ -136,6 +138,7 @@ class MembersDropdown extends PureComponent {
                       showActionButton={true}
                       close={close}
                       t={t}
+                      ErrorHandler={ErrorHandler}
                     />
                   </div>
                 </div>
@@ -184,6 +187,7 @@ class MembersDropdown extends PureComponent {
                       showActionButton={false}
                       close={close}
                       t={t}
+                      ErrorHandler={ErrorHandler}
                     />
                   </div>
                 </div>
@@ -229,6 +233,7 @@ class MembersDropdown extends PureComponent {
                       close={close}
                       showActionButton={true}
                       t={t}
+                      ErrorHandler={ErrorHandler}
                     />
                   </div>
                 </div>
@@ -275,6 +280,7 @@ class MembersDropdown extends PureComponent {
                       close={close}
                       showActionButton={false}
                       t={t}
+                      ErrorHandler={ErrorHandler}
                     />
                   </div>
                 </div>

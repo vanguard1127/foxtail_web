@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { UPDATE_SETTINGS } from '../../../queries';
 import { Mutation } from 'react-apollo';
 import AddressSearch from '../../common/AddressSearch';
-import { ErrorBoundary } from '../../common/ErrorHandler';
+import { ErrorBoundary, catchErrors } from '../../common/ErrorHandler';
 import { withNamespaces } from 'react-i18next';
 import Modal from '../../common/Modal';
 import { toast } from 'react-toastify';
@@ -42,12 +42,7 @@ class SetLocationModal extends Component {
         }
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        catchErrors(res.graphQLErrors);
       });
   };
 

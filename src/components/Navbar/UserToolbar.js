@@ -4,7 +4,7 @@ import { Query } from 'react-apollo';
 import NoticesItem from './NoticesItem';
 import InboxItem from './InboxItem';
 import MyAccountItem from './MyAccountItem';
-import { ErrorBoundary } from '../common/ErrorHandler';
+import * as ErrorHandler from '../common/ErrorHandler';
 var slapAudio = new Audio(require('../../docs/slap.wav'));
 
 let unsubscribe = null;
@@ -86,7 +86,7 @@ class UserToolbar extends Component {
 
           return (
             <div className="function">
-              <ErrorBoundary>
+              <ErrorHandler.ErrorBoundary>
                 <InboxItem
                   count={msgsCount}
                   active={href === 'inbox' && true}
@@ -94,17 +94,17 @@ class UserToolbar extends Component {
                   data-name="inbox"
                   ref={setRef}
                 />
-              </ErrorBoundary>
-              <ErrorBoundary>
+              </ErrorHandler.ErrorBoundary>
+              <ErrorHandler.ErrorBoundary>
                 {' '}
-                <NoticesItem count={noticesCount} />
-              </ErrorBoundary>
-              <ErrorBoundary>
+                <NoticesItem count={noticesCount} ErrorHandler={ErrorHandler} />
+              </ErrorHandler.ErrorBoundary>
+              <ErrorHandler.ErrorBoundary>
                 {' '}
                 <div className="user hidden-mobile">
                   <MyAccountItem currentuser={currentuser} setRef={setRef} />
                 </div>
-              </ErrorBoundary>
+              </ErrorHandler.ErrorBoundary>
             </div>
           );
         }}

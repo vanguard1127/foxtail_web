@@ -47,17 +47,12 @@ class BlockModal extends Component {
         }
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
   menu = () => {
-    const { t, ErrorBoundary } = this.props;
+    const { t } = this.props;
     if (this.state.type === flagOptions.Profile) {
       return (
         <select
@@ -103,7 +98,13 @@ class BlockModal extends Component {
     }
   };
   render() {
-    const { profile, close, id, t, ErrorBoundary } = this.props;
+    const {
+      profile,
+      close,
+      id,
+      t,
+      ErrorHandler: { ErrorBoundary }
+    } = this.props;
 
     const { other, reason, type } = this.state;
     const blockMenu = this.menu();
@@ -168,7 +169,7 @@ class BlockModal extends Component {
         }
       >
         <ErrorBoundary>
-          <div>
+          <>
             <div className="select-container">
               <label>Reason:</label>
               {blockMenu}
@@ -185,7 +186,7 @@ class BlockModal extends Component {
                 />
               </div>
             </div>
-          </div>
+          </>
         </ErrorBoundary>
       </Modal>
     );

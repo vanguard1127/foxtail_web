@@ -6,15 +6,10 @@ class CancelSubBtn extends PureComponent {
     cancelSubscription()
       .then(({ data }) => {
         this.props.refetchUser();
-        alert(t('common:cancelsubmsg' + '.'));
+        alert(this.props.t('common:cancelsubmsg' + '.'));
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-
-        //TODO: send errors to analytics from here
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
   render() {
@@ -23,15 +18,16 @@ class CancelSubBtn extends PureComponent {
       <Mutation mutation={CANCEL_SUBSCRIPTION}>
         {cancelSubscription => {
           return (
-            <button
+            <span
               onClick={() =>
                 this.handleSubmit({
                   cancelSubscription
                 })
               }
+              className="clickverify-btn photo"
             >
               {t('common:subcancel')}
-            </button>
+            </span>
           );
         }}
       </Mutation>

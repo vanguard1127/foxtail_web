@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Signup from './Signup';
 import LoginButton from './LoginButton';
 import LanguageControl from '../common/LanguageControl/LanguageControl';
-import { ErrorBoundary, setBreadcrumb } from '../common/ErrorHandler';
+import * as ErrorHandler from '../common/ErrorHandler';
 import CountUp from 'react-countup';
 import ResetPhoneModal from '../Modals/ResetPhone';
 import { ToastContainer, toast } from 'react-toastify';
@@ -53,7 +53,7 @@ class Landing extends PureComponent {
       }
     }
     return (
-      <div>
+      <>
         <header className="landing">
           <div className="container">
             <div className="col-md-12">
@@ -65,13 +65,13 @@ class Landing extends PureComponent {
                 </div>
                 <div className="offset-md-3 col-md-5">
                   <div className="content">
-                    <ErrorBoundary>
+                    <ErrorHandler.ErrorBoundary>
                       <LoginButton t={t} history={props.history} />
-                    </ErrorBoundary>
-                    <ErrorBoundary>
+                    </ErrorHandler.ErrorBoundary>
+                    <ErrorHandler.ErrorBoundary>
                       {' '}
                       <LanguageControl />
-                    </ErrorBoundary>
+                    </ErrorHandler.ErrorBoundary>
                   </div>
                 </div>
               </div>
@@ -95,7 +95,7 @@ class Landing extends PureComponent {
                           <span> {t('Welcome')}</span>{' '}
                           <span> {t('Foxtail Stats')}</span>
                         </div>
-                        <ErrorBoundary>
+                        <ErrorHandler.ErrorBoundary>
                           <ul>
                             <li>
                               <span className="counter">
@@ -130,15 +130,15 @@ class Landing extends PureComponent {
                               <span>{t('Couple Profiles')}</span>
                             </li>
                           </ul>
-                        </ErrorBoundary>
+                        </ErrorHandler.ErrorBoundary>
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-5 col-md-12">
-                    <ErrorBoundary>
+                    <ErrorHandler.ErrorBoundary>
                       {' '}
-                      <Signup t={t} setBreadcrumb={setBreadcrumb} />
-                    </ErrorBoundary>
+                      <Signup t={t} ErrorHandler={ErrorHandler} />
+                    </ErrorHandler.ErrorBoundary>
                   </div>
                 </div>
               </div>
@@ -278,12 +278,12 @@ class Landing extends PureComponent {
             t={t}
             token={token}
             close={() => this.setState({ resetPhoneVisible: false })}
-            ErrorBoundary={ErrorBoundary}
+            ErrorBoundary={ErrorHandler.ErrorBoundary}
             history={this.props.props.history}
           />
         )}
         <ToastContainer />
-      </div>
+      </>
     );
   }
 }

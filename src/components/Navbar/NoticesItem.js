@@ -93,11 +93,7 @@ class NoticesItem extends PureComponent {
             refetch();
           })
           .catch(res => {
-            const errors = res.graphQLErrors.map(error => {
-              return error.message;
-            });
-            //TODO: send errors to analytics from here
-            this.setState({ errors });
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
           });
       }
     );
@@ -145,7 +141,7 @@ class NoticesItem extends PureComponent {
       alertVisible,
       userAlert
     } = this.state;
-    const { t, count, history } = this.props;
+    const { t, count, history, ErrorHandler } = this.props;
     return (
       <Mutation
         mutation={UPDATE_NOTIFICATIONS}
@@ -208,6 +204,7 @@ class NoticesItem extends PureComponent {
                         visible={this.state.visible}
                         updateNotifications={updateNotifications}
                         showAlert={this.showAlert}
+                        ErrorHandler={ErrorHandler}
                         subscribeToNewNotices={() =>
                           subscribeToMore({
                             document: NEW_NOTICE_SUB,

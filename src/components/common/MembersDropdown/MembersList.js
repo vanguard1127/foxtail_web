@@ -64,13 +64,7 @@ class MembersList extends PureComponent {
           }
         })
         .catch(res => {
-          console.error(res);
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     } else {
       invite()
@@ -81,12 +75,7 @@ class MembersList extends PureComponent {
           }
         })
         .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
   };
@@ -102,12 +91,7 @@ class MembersList extends PureComponent {
           }
         })
         .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     } else {
       remove()
@@ -118,12 +102,7 @@ class MembersList extends PureComponent {
           }
         })
         .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-
-          //TODO: send errors to analytics from here
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
   };
@@ -187,7 +166,7 @@ class MembersList extends PureComponent {
   };
 
   handleFriendList = ({ members, t }) => (
-    <div>
+    <>
       {members.map(el => (
         <div className="inv-item" key={el.id}>
           {this.props.showActionButton && (
@@ -216,7 +195,7 @@ class MembersList extends PureComponent {
           onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
         />
       )}
-    </div>
+    </>
   );
   actionButton = ({ targetID, invitedProfiles, targetType, listType, t }) => {
     if (targetType === 'event' && listType === 'friends') {
@@ -327,13 +306,13 @@ class MembersList extends PureComponent {
       t
     });
     return (
-      <div>
+      <>
         {membersList}
 
         <div style={{ height: '2vh', backgroundColor: '#fff' }}>
           {showActionButton && actionButton}
         </div>
-      </div>
+      </>
     );
   }
 }
