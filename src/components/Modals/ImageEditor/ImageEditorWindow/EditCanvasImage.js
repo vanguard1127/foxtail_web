@@ -45,6 +45,7 @@ class EditCanvasImage extends PureComponent {
   };
 
   componentDidMount() {
+    this.mounted = true;
     // let's go Image image relative to it's center!
     // we need to set offset to define new "center" of image
     const image = this.stageRef;
@@ -58,10 +59,16 @@ class EditCanvasImage extends PureComponent {
     image.y(image.y() + image.height() / 2);
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handleStageClick = e => {
-    this.setState({
-      selectedShapeName: e.target.name()
-    });
+    if (this.mounted) {
+      this.setState({
+        selectedShapeName: e.target.name()
+      });
+    }
   };
 
   dataURItoBlob = dataURI => {
@@ -74,19 +81,21 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleExportClick = () => {
-    this.setState({ hideTransformer: true, uploading: true }, () => {
-      const dataURL = this.stageRef
-        .getStage()
-        .toDataURL({ mimeType: 'image/jpeg' });
-      var blobData = this.dataURItoBlob(dataURL);
-      var file = {
-        filename: this.props.imageObject.name,
-        filetype: 'image/jpeg',
-        filebody: blobData
-      };
+    if (this.mounted) {
+      this.setState({ hideTransformer: true, uploading: true }, () => {
+        const dataURL = this.stageRef
+          .getStage()
+          .toDataURL({ mimeType: 'image/jpeg' });
+        var blobData = this.dataURItoBlob(dataURL);
+        var file = {
+          filename: this.props.imageObject.name,
+          filetype: 'image/jpeg',
+          filebody: blobData
+        };
 
-      this.handleUpload(file);
-    });
+        this.handleUpload(file);
+      });
+    }
   };
 
   handleUpload = async file => {
@@ -117,7 +126,9 @@ class EditCanvasImage extends PureComponent {
   handleDragStart = e => {
     const shapeName = e.target.attrs.name;
     if (this.state.selectedShapeName !== shapeName) {
-      this.setState({ selectedShapeName: shapeName });
+      if (this.mounted) {
+        this.setState({ selectedShapeName: shapeName });
+      }
     }
   };
 
@@ -136,7 +147,9 @@ class EditCanvasImage extends PureComponent {
 
       let imgList = [...this.state.konvaImageList];
       imgList = [...imgList, { id, name, src, x, y }];
-      this.setState({ konvaImageList: imgList });
+      if (this.mounted) {
+        this.setState({ konvaImageList: imgList });
+      }
     } else {
       //calculations
       x = (x + nwidth) / 2 - 50 + this.state.lastCrop.x[0];
@@ -144,7 +157,9 @@ class EditCanvasImage extends PureComponent {
 
       let imgList = [...this.state.konvaImageList];
       imgList = [...imgList, { id, name, src, x, y }];
-      this.setState({ konvaImageList: imgList });
+      if (this.mounted) {
+        this.setState({ konvaImageList: imgList });
+      }
     }
   };
 
@@ -152,36 +167,46 @@ class EditCanvasImage extends PureComponent {
     const filteredList = this.state.konvaImageList.filter(
       x => x.name !== this.state.selectedShapeName
     );
-    this.setState({ konvaImageList: filteredList });
+    if (this.mounted) {
+      this.setState({ konvaImageList: filteredList, selectedShapeName: '' });
+    }
   };
 
   rotate = () => {
-    this.setState({
-      rotation: this.state.rotation + 90
-    });
+    if (this.mounted) {
+      this.setState({
+        rotation: this.state.rotation + 90
+      });
+    }
   };
 
   handleScale = e => {
     const scale = parseFloat(e.target.value);
-    this.setState({
-      scaleWidth: this.state.width * scale,
-      scaleHeight: this.state.height * scale,
-      scale: scale
-    });
+    if (this.mounted) {
+      this.setState({
+        scaleWidth: this.state.width * scale,
+        scaleHeight: this.state.height * scale,
+        scale: scale
+      });
+    }
   };
 
   handleXPosition = e => {
     const x = parseFloat(e.target.value);
-    this.setState({
-      x_pos: x
-    });
+    if (this.mounted) {
+      this.setState({
+        x_pos: x
+      });
+    }
   };
 
   handleYPosition = e => {
     const y = parseFloat(e.target.value);
-    this.setState({
-      y_pos: y
-    });
+    if (this.mounted) {
+      this.setState({
+        y_pos: y
+      });
+    }
   };
 
   render() {
@@ -286,7 +311,7 @@ class EditCanvasImage extends PureComponent {
               max="2"
               step="0.01"
               defaultValue="1"
-              style={{ margin: '0 5px 0 5px', cursor: 'hand' }}
+              style={{ margin: '0 5px 0 5px', cursor: 'grabbing' }}
             />
             <ImageIcon style={{ fontSize: '30px', color: 'grey' }} />
           </div>

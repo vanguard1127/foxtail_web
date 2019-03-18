@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
-
+import axios from 'axios';
 class Logout extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return false;
   }
   handleLogout = (client, history) => {
+    axios.get(
+      'http://localhost:4444/offline?token=' + localStorage.getItem('token')
+    );
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     sessionStorage.clear();

@@ -8,29 +8,42 @@ class DateItem extends PureComponent {
   state = {
     position: null
   };
+
   componentDidMount() {
+    this.mounted = true;
     // When Waypoint mountsit only calls waypoints on screen. But the parent needs
     // to know everyone's position. So we asume position = above if waypoint did called
     if (!this.state.position) {
-      this.setState({
-        position: 'above'
-      });
+      if (this.mounted) {
+        this.setState({
+          position: 'above'
+        });
+      }
       if (this.props.onAbove) this.props.onAbove();
     }
   }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   onEnter = ({ previousPosition, currentPosition }) => {
     if (currentPosition === Waypoint.inside) {
-      this.setState({
-        position: 'inside'
-      });
+      if (this.mounted) {
+        this.setState({
+          position: 'inside'
+        });
+      }
       if (this.props.onInside) this.props.onInside();
     }
   };
   onLeave = ({ previousPosition, currentPosition }) => {
     if (currentPosition === Waypoint.above) {
-      this.setState({
-        position: 'above'
-      });
+      if (this.mounted) {
+        this.setState({
+          position: 'above'
+        });
+      }
       if (this.props.onAbove) this.props.onAbove();
     }
   };
@@ -88,6 +101,7 @@ class MessageList extends PureComponent {
   };
   unsubscribe = null;
   componentDidMount() {
+    this.mounted = true;
     this.checkScrollTopToFetch(10);
     this.scrollToBot();
     if (this.props.subscribe) {
@@ -95,6 +109,7 @@ class MessageList extends PureComponent {
     }
   }
   componentWillUnmount() {
+    this.mounted = false;
     if (this.unsubscribe) {
       this.unsubscribe();
     }
@@ -136,23 +151,26 @@ class MessageList extends PureComponent {
       this.state.previousScrollTop +
       (this.scrollWrapperRef.current.scrollHeight -
         this.state.previousScrollHeight);
-
-    this.setState({
-      previousScrollHeight: this.scrollWrapperRef.current.scrollHeight,
-      previousScrollTop: this.scrollWrapperRef.current.scrollTop,
-      restoreScroll: false
-    });
+    if (this.mounted) {
+      this.setState({
+        previousScrollHeight: this.scrollWrapperRef.current.scrollHeight,
+        previousScrollTop: this.scrollWrapperRef.current.scrollTop,
+        restoreScroll: false
+      });
+    }
   }
   scrollToBot() {
     const { hasScrolledBottomInitial } = this.props;
     console.log('Scrolling to Bottom');
 
     this.scrollWrapperRef.current.scrollTop = this.scrollWrapperRef.current.scrollHeight;
-    this.setState({
-      previousClientHeight: this.scrollWrapperRef.current.clientHeight,
-      previousScrollHeight: this.scrollWrapperRef.current.scrollHeight,
-      previousScrollTop: this.scrollWrapperRef.current.scrollTop
-    });
+    if (this.mounted) {
+      this.setState({
+        previousClientHeight: this.scrollWrapperRef.current.clientHeight,
+        previousScrollHeight: this.scrollWrapperRef.current.scrollHeight,
+        previousScrollTop: this.scrollWrapperRef.current.scrollTop
+      });
+    }
 
     // So view always should start at the bottom.
     // The idea is to scroll to bottom when the component is rendered with the messages
@@ -164,9 +182,11 @@ class MessageList extends PureComponent {
       !hasScrolledBottomInitial &&
       this.scrollWrapperRef.current.scrollTop !== 0
     ) {
-      this.setState({
-        hasScrolledBottomInitial: true
-      });
+      if (this.mounted) {
+        this.setState({
+          hasScrolledBottomInitial: true
+        });
+      }
     }
   }
   fetchMore = () => {
@@ -185,7 +205,9 @@ class MessageList extends PureComponent {
     const cursor =
       messages.length > 0 ? messages[messages.length - 1].createdAt : null;
     console.log('c', messages, cursor);
-    this.setState({ loading: true });
+    if (this.mounted) {
+      this.setState({ loading: true });
+    }
     fetchMore({
       variables: {
         chatID,
@@ -210,17 +232,18 @@ class MessageList extends PureComponent {
           previousResult.getMessages = fetchMoreResult.getMessages;
         }
         console.log('Fetch done');
-
-        this.setState({
-          loading: false,
-          // When no more messages don't restore. It is not needed and it caused
-          // the chat to restore on the next componentDidUpdate
-          restoreScroll:
-            !noMessagesLeft &&
-            this.scrollWrapperRef.current.scrollHeight >
-              this.scrollWrapperRef.current.clientHeight,
-          dateWaypoints: []
-        });
+        if (this.mounted) {
+          this.setState({
+            loading: false,
+            // When no more messages don't restore. It is not needed and it caused
+            // the chat to restore on the next componentDidUpdate
+            restoreScroll:
+              !noMessagesLeft &&
+              this.scrollWrapperRef.current.scrollHeight >
+                this.scrollWrapperRef.current.clientHeight,
+            dateWaypoints: []
+          });
+        }
 
         return previousResult;
       }
@@ -234,9 +257,11 @@ class MessageList extends PureComponent {
     // parent needs children position to tell the alst above item to render as absolute
     const newDateWaypoints = this.state.dateWaypoints;
     newDateWaypoints[i] = position;
-    this.setState({
-      dateWaypoints: newDateWaypoints
-    });
+    if (this.mounted) {
+      this.setState({
+        dateWaypoints: newDateWaypoints
+      });
+    }
   };
   onScroll = ev => {
     // Create scroll event handler here instead of on render for better performance.
@@ -248,9 +273,11 @@ class MessageList extends PureComponent {
       this.scrollWrapperRef.current.scrollTop = this.state.previousScrollTop;
     }
     // Keep around the scrollTop around to use later on restoreScroll & scrolltoBottom
-    this.setState({
-      previousScrollTop: this.scrollWrapperRef.current.scrollTop
-    });
+    if (this.mounted) {
+      this.setState({
+        previousScrollTop: this.scrollWrapperRef.current.scrollTop
+      });
+    }
     // If is close to the top, then fetch
     if (this.scrollWrapperRef.current.scrollTop < THRESHOLD) {
       this.fetchMore();

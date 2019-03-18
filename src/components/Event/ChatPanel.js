@@ -7,6 +7,13 @@ class ChatPanel extends PureComponent {
     text: ''
   };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   //TODO: Optimistic UI new message to prevent empty msg problem
   submitMessage(e, postComment) {
     this.props.ErrorHandler.setBreadcrumb('Send comment (event)');
@@ -14,7 +21,9 @@ class ChatPanel extends PureComponent {
 
     postComment()
       .then(({ data }) => {
-        this.setState({ text: '' });
+        if (this.mounted) {
+          this.setState({ text: '' });
+        }
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);

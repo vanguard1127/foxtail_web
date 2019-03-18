@@ -32,12 +32,23 @@ class NoticesItem extends PureComponent {
     ...intialState
   };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   clearState = () => {
-    this.setState({ ...intialState });
+    if (this.mounted) {
+      this.setState({ ...intialState });
+    }
   };
 
   handleVisibleChange = flag => {
-    this.setState({ visible: flag });
+    if (this.mounted) {
+      this.setState({ visible: flag });
+    }
   };
 
   updateRead = cache => {
@@ -80,27 +91,31 @@ class NoticesItem extends PureComponent {
   };
 
   handleCloseAlert = (notificationID, updateNotifications, refetch) => {
-    this.setState(
-      {
-        notificationIDs: [notificationID],
-        read: true,
-        alertVisible: false,
-        userAlert: null
-      },
-      () => {
-        updateNotifications()
-          .then(({ data }) => {
-            refetch();
-          })
-          .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-          });
-      }
-    );
+    if (this.mounted) {
+      this.setState(
+        {
+          notificationIDs: [notificationID],
+          read: true,
+          alertVisible: false,
+          userAlert: null
+        },
+        () => {
+          updateNotifications()
+            .then(({ data }) => {
+              refetch();
+            })
+            .catch(res => {
+              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+            });
+        }
+      );
+    }
   };
 
   showAlert = alert => {
-    this.setState({ userAlert: alert, alertVisible: true });
+    if (this.mounted) {
+      this.setState({ userAlert: alert, alertVisible: true });
+    }
   };
 
   handleDialog = ({ alert, updateNotifications, refetch, alertVisible }) => {

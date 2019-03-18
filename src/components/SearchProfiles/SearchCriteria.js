@@ -21,8 +21,17 @@ class SearchCriteria extends PureComponent {
     locModalVisible: false
   };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   setLocModalVisible = visible => {
-    this.setState({ locModalVisible: visible });
+    if (this.mounted) {
+      this.setState({ locModalVisible: visible });
+    }
   };
 
   setLocation = async (pos, updateSettings) => {
@@ -41,19 +50,22 @@ class SearchCriteria extends PureComponent {
         city: citycntry.city,
         country: citycntry.country
       });
-      this.setState(
-        {
-          long: crd.longitude,
-          lat: crd.latitude,
-          city: citycntry.city,
-          country: citycntry.country
-        },
-        () => {
-          if (updateSettings) {
-            this.handleSubmit(updateSettings);
+
+      if (this.mounted) {
+        this.setState(
+          {
+            long: crd.longitude,
+            lat: crd.latitude,
+            city: citycntry.city,
+            country: citycntry.country
+          },
+          () => {
+            if (updateSettings) {
+              this.handleSubmit(updateSettings);
+            }
           }
-        }
-      );
+        );
+      }
     }
   };
 
@@ -90,13 +102,18 @@ class SearchCriteria extends PureComponent {
       );
     } else {
       this.props.setValue({ name: 'city', value: city });
-      this.setState({ city });
+
+      if (this.mounted) {
+        this.setState({ city });
+      }
     }
   };
 
   setValue = ({ name, value, updateSettings }) => {
     this.props.setValue({ name, value });
-    this.setState({ [name]: value }, () => this.handleSubmit(updateSettings));
+    if (this.mounted) {
+      this.setState({ [name]: value }, () => this.handleSubmit(updateSettings));
+    }
   };
 
   render() {

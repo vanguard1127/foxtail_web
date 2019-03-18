@@ -832,6 +832,7 @@ export const GET_SETTINGS = gql`
       profilePicUrl
       couplePartner
       includeMsgs
+      lastActive
       users {
         username
         verifications {

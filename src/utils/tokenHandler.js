@@ -34,7 +34,7 @@ const refreshToken = ({ operation, forward, HTTPSurl }) => {
       return forward(operation);
     })
     .catch(function(error) {
-      // handle error
+      //TODO: Error handle error
       console.log('Token Refresh Error:', error);
     });
 };

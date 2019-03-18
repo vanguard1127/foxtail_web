@@ -11,7 +11,12 @@ class Tour extends PureComponent {
   state = {
     isTourOpen: true
   };
-
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   closeTour = (seenTour, isProfile) => {
     seenTour()
       .then(({ data }) => {
@@ -25,11 +30,16 @@ class Tour extends PureComponent {
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
-    this.setState({ isTourOpen: false });
+
+    if (this.mounted) {
+      this.setState({ isTourOpen: false });
+    }
   };
 
   openTour = () => {
-    this.setState({ isTourOpen: true });
+    if (this.mounted) {
+      this.setState({ isTourOpen: true });
+    }
   };
 
   render() {

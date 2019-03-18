@@ -7,6 +7,12 @@ import { toast } from 'react-toastify';
 
 class DirectMsg extends Component {
   state = { text: '' };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.text !== nextState.text) {
       return true;
@@ -15,7 +21,9 @@ class DirectMsg extends Component {
   }
 
   handleTextChange = event => {
-    this.setState({ text: event.target.value });
+    if (this.mounted) {
+      this.setState({ text: event.target.value });
+    }
   };
 
   handleSubmit = sendMessage => {
@@ -23,7 +31,10 @@ class DirectMsg extends Component {
       .then(async ({ data }) => {
         if (data.sendMessage) {
           toast.success('Message Sent');
-          this.setState({ text: '' });
+
+          if (this.mounted) {
+            this.setState({ text: '' });
+          }
           this.props.close();
         } else {
           toast.error('Message not sent.');

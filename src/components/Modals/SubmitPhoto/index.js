@@ -8,8 +8,18 @@ import Modal from '../../common/Modal';
 
 class PhotoVerify extends PureComponent {
   state = { photos: [], filename: '', filetype: '', photoKey: '' };
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   setPhotos = photos => {
-    this.setState({ photos });
+    if (this.mounted) {
+      this.setState({ photos });
+    }
   };
 
   //TODO: Are all of these async await needed?
@@ -28,7 +38,9 @@ class PhotoVerify extends PureComponent {
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
         await this.uploadToS3(file, signedRequest);
-        this.setState({ photoKey: key });
+        if (this.mounted) {
+          this.setState({ photoKey: key });
+        }
         await this.handleSubmit(submitPhoto);
       })
       .catch(res => {
@@ -47,10 +59,12 @@ class PhotoVerify extends PureComponent {
   };
 
   setS3PhotoParams = (name, type) => {
-    this.setState({
-      filename: name,
-      filetype: type
-    });
+    if (this.mounted) {
+      this.setState({
+        filename: name,
+        filetype: type
+      });
+    }
   };
 
   uploadToS3 = async (file, signedRequest) => {

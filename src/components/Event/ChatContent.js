@@ -111,10 +111,10 @@ class ChatContent extends PureComponent {
               <ErrorHandler.report error={error} calledName={'getCommets'} />
             );
           }
-          if (!data.getComments) {
+          console.log('LOOK PUT0', data.getComments, !data.getComments);
+          if (!data.getComments || data.getComments === null) {
             return <div>No comments yet.</div>;
           }
-
           return (
             <MessageList
               chatID={chatID}

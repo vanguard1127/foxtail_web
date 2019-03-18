@@ -6,6 +6,12 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 
 class AddressSearch extends Component {
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   handleChange = address => {
     if (address === 'My Location') {
       this.props.handleRemoveLocLock();
@@ -25,13 +31,19 @@ class AddressSearch extends Component {
 
   handleSelect = address => {
     geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
+      .then(results => {
+        if (this.mounted) {
+          getLatLng(results[0]);
+        }
+      })
       .then(latLng => {
-        this.props.setLocationValues({
-          lat: latLng.lat,
-          long: latLng.lng,
-          address
-        });
+        if (this.mounted) {
+          this.props.setLocationValues({
+            lat: latLng.lat,
+            long: latLng.lng,
+            address
+          });
+        }
       })
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error));

@@ -9,12 +9,21 @@ const initialState = {
 };
 class ResetPhoneButton extends PureComponent {
   state = { ...initialState };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   handleFBReturn = ({ state, code }, fbResetPhone) => {
     const { t } = this.props;
-    this.setState({
-      csrf: state,
-      code
-    });
+
+    if (this.mounted) {
+      this.setState({
+        csrf: state,
+        code
+      });
+    }
     fbResetPhone()
       .then(async ({ data }) => {
         if (data.fbResetPhone === null) {
@@ -35,7 +44,7 @@ class ResetPhoneButton extends PureComponent {
         }
       })
       .catch(res => {
-        console.log(res);
+        //TODO: Add error handler
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });

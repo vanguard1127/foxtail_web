@@ -5,8 +5,16 @@ import StripeCheckout from 'react-stripe-checkout';
 
 class CreateSubBtn extends PureComponent {
   state = { token: '', ccLast4: '' };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   handleSubmit = ({ token, ccLast4, createSubscription }) => {
-    this.setState({ token, ccLast4 });
+    if (this.mounted) {
+      this.setState({ token, ccLast4 });
+    }
     createSubscription()
       .then(({ data }) => {
         this.props.refetchUser();

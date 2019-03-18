@@ -12,6 +12,12 @@ class Couples extends Component {
     code: '',
     currSlide: 1
   };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.code !== nextState.code ||
@@ -24,7 +30,9 @@ class Couples extends Component {
   }
 
   handleTextChange = code => {
-    this.setState({ code });
+    if (this.mounted) {
+      this.setState({ code });
+    }
   };
 
   handleLink = (linkProfile, close) => {
@@ -41,11 +49,15 @@ class Couples extends Component {
   };
 
   next = () => {
-    this.setState({ currSlide: 2 });
+    if (this.mounted) {
+      this.setState({ currSlide: 2 });
+    }
   };
 
   prev = () => {
-    this.setState({ currSlide: 1 });
+    if (this.mounted) {
+      this.setState({ currSlide: 1 });
+    }
   };
 
   handleUnLink = async (unlinkProfile, close) => {

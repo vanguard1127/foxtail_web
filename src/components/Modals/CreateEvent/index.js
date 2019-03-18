@@ -54,23 +54,32 @@ class CreateEvent extends PureComponent {
     ...this.props.updateEventProps
   };
   componentDidMount() {
+    this.mounted = true;
     this.props.ErrorHandler.setBreadcrumb('Create Event Modal');
   }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   setValue = ({ name, value }) => {
-    console.log(value);
-    this.setState({ [name]: value }, () => {
-      if (!isEmpty(this.state.errors)) {
-        this.validateForm();
-      }
-    });
+    if (this.mounted) {
+      this.setState({ [name]: value }, () => {
+        if (!isEmpty(this.state.errors)) {
+          this.validateForm();
+        }
+      });
+    }
   };
 
   validateForm = async () => {
     try {
-      await schema.validate(this.state, { abortEarly: false });
-      this.setState({ errors: {} });
+      if (this.mounted) {
+        await schema.validate(this.state, { abortEarly: false });
+        this.setState({ errors: {} });
+      }
       return true;
     } catch (e) {
+      //TODO: Erorr handler here
       let errors = {};
       e.inner.forEach(err => (errors[err.path] = err.message));
       this.setState({ errors });
@@ -85,17 +94,21 @@ class CreateEvent extends PureComponent {
     ) : null;
 
   toggleDesiresPopup = () => {
-    this.setState({
-      showDesiresPopup: !this.state.showDesiresPopup
-    });
+    if (this.mounted) {
+      this.setState({
+        showDesiresPopup: !this.state.showDesiresPopup
+      });
+    }
   };
   toggleDesires = ({ checked, value, updateSettings }) => {
     const { desires } = this.state;
 
-    if (checked) {
-      this.setState({ desires: [...desires, value] });
-    } else {
-      this.setState({ desires: desires.filter(desire => desire !== value) });
+    if (this.mounted) {
+      if (checked) {
+        this.setState({ desires: [...desires, value] });
+      } else {
+        this.setState({ desires: desires.filter(desire => desire !== value) });
+      }
     }
   };
 
@@ -137,7 +150,10 @@ class CreateEvent extends PureComponent {
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
         await this.uploadToS3(file, signedRequest);
-        this.setState({ image: key });
+
+        if (this.mounted) {
+          this.setState({ image: key });
+        }
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -145,10 +161,12 @@ class CreateEvent extends PureComponent {
   };
 
   setS3PhotoParams = (name, type) => {
-    this.setState({
-      filename: name,
-      filetype: type
-    });
+    if (this.mounted) {
+      this.setState({
+        filename: name,
+        filetype: type
+      });
+    }
   };
 
   uploadToS3 = async (file, signedRequest) => {
@@ -169,19 +187,26 @@ class CreateEvent extends PureComponent {
       console.log(e);
     }
   };
+
   setLocationValues = ({ lat, long, address }) => {
     if (lat && long) {
-      return this.setState({ lat, long, address });
+      if (this.mounted) {
+        return this.setState({ lat, long, address });
+      }
     }
-    this.setState({ address });
+    if (this.mounted) {
+      this.setState({ address });
+    }
     if (!isEmpty(this.state.errors)) {
       this.validateForm();
     }
   };
   togglePage = () => {
-    this.setState({
-      showInfo: !this.state.showInfo
-    });
+    if (this.mounted) {
+      this.setState({
+        showInfo: !this.state.showInfo
+      });
+    }
   };
   //TODO: Min time for date pickers to prevent time overlap
   render() {

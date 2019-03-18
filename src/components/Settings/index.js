@@ -21,6 +21,7 @@ class Settings extends PureComponent {
       }
     }
   }
+
   //TODO: Set time below
   render() {
     //TODO: If on Settigns make popup show
@@ -45,54 +46,52 @@ class Settings extends PureComponent {
       }
     }
     return (
-      <Fragment>
-        <section className="breadcrumb settings">
-          <div className="container">
-            <div className="col-md-12">
-              <span className="head">
-                <span>
-                  {t('Hello')}, {session.currentuser.username} 👋
-                </span>
-              </span>
-              <span className="title">
-                {t('loggedin')}: 03 October 2018 13:34
-              </span>
-            </div>
-          </div>
-        </section>{' '}
-        <Query query={GET_SETTINGS} fetchPolicy="network-only">
-          {({ data, loading, error }) => {
-            if (loading || !data.getSettings) {
-              return (
-                <Spinner message={t('common:Loading') + '...'} size="large" />
-              );
-            }
-            if (error) {
-              return (
-                <ErrorHandler.report error={error} calledName={'getSettings'} />
-              );
-            }
-
-            const settings = data.getSettings;
+      <Query query={GET_SETTINGS} fetchPolicy="network-only">
+        {({ data, loading, error }) => {
+          if (loading || !data.getSettings) {
             return (
-              <Fragment>
-                <SettingsPage
-                  settings={settings}
-                  refetchUser={refetch}
-                  t={t}
-                  isCouple={isCouple}
-                  isInitial={isInitial}
-                  showBlkModal={showBlkModal}
-                  showCplModal={showCplModal}
-                  ErrorHandler={ErrorHandler}
-                  history={history}
-                  currentuser={session.currentuser}
-                />
-              </Fragment>
+              <Spinner message={t('common:Loading') + '...'} size="large" />
             );
-          }}
-        </Query>
-      </Fragment>
+          }
+          if (error) {
+            return (
+              <ErrorHandler.report error={error} calledName={'getSettings'} />
+            );
+          }
+
+          const settings = data.getSettings;
+          return (
+            <Fragment>
+              <section className="breadcrumb settings">
+                <div className="container">
+                  <div className="col-md-12">
+                    <span className="head">
+                      <span>
+                        {t('Hello')}, {session.currentuser.username} 👋
+                      </span>
+                    </span>
+                    <span className="title">
+                      {t('loggedin')}: {settings.lastActive}
+                    </span>
+                  </div>
+                </div>
+              </section>{' '}
+              <SettingsPage
+                settings={settings}
+                refetchUser={refetch}
+                t={t}
+                isCouple={isCouple}
+                isInitial={isInitial}
+                showBlkModal={showBlkModal}
+                showCplModal={showCplModal}
+                ErrorHandler={ErrorHandler}
+                history={history}
+                currentuser={session.currentuser}
+              />
+            </Fragment>
+          );
+        }}
+      </Query>
     );
   }
 }

@@ -29,10 +29,22 @@ class InboxPage extends PureComponent {
     blockModalVisible: false
   };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    sessionStorage.setItem('page', null);
+    sessionStorage.setItem('pid', null);
+  }
+
   setBlockModalVisible = () => {
     const { chatID, blockModalVisible } = this.state;
     ErrorHandler.setBreadcrumb('Block modal visible:' + !blockModalVisible);
-    this.setState({ chatID, blockModalVisible: !blockModalVisible });
+    if (this.mounted) {
+      this.setState({ chatID, blockModalVisible: !blockModalVisible });
+    }
   };
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
@@ -40,7 +52,9 @@ class InboxPage extends PureComponent {
     this.setState({ chatID, unSeenCount }, () => {
       readChat()
         .then(({ data }) => {
-          this.setState({ chatID: data.readChat });
+          if (this.mounted) {
+            this.setState({ chatID: data.readChat });
+          }
         })
         .catch(res => {
           ErrorHandler.catchErrors(res.graphQLErrors);
@@ -52,7 +66,9 @@ class InboxPage extends PureComponent {
     ErrorHandler.setBreadcrumb('Remove Self from Chat:' + this.state.chatID);
     removeSelf()
       .then(({ data }) => {
-        this.setState({ chat: null });
+        if (this.mounted) {
+          this.setState({ chat: null });
+        }
       })
       .catch(res => {
         ErrorHandler.catchErrors(res.graphQLErrors);
@@ -105,11 +121,6 @@ class InboxPage extends PureComponent {
       });
     }
   };
-
-  componentWillUnmount() {
-    sessionStorage.setItem('page', null);
-    sessionStorage.setItem('pid', null);
-  }
 
   render() {
     sessionStorage.setItem('page', 'inbox');

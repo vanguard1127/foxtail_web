@@ -22,78 +22,99 @@ class ProfilesContainer extends PureComponent {
     chatID: null
   };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
     this.props.ErrorHandler.setBreadcrumb('Match Dialog Toggled:');
-    if (profile) this.setState({ profile, matchDlgVisible, chatID });
-    else this.setState({ matchDlgVisible });
+    if (this.mounted) {
+      if (profile) this.setState({ profile, matchDlgVisible, chatID });
+      else this.setState({ matchDlgVisible });
+    }
   };
 
   setMsgModalVisible = (msgModalVisible, profile) => {
     this.props.ErrorHandler.setBreadcrumb(
       'Message Modal visible:' + msgModalVisible
     );
-    if (profile) this.setState({ profile, msgModalVisible });
-    else this.setState({ msgModalVisible });
+    if (this.mounted) {
+      if (profile) this.setState({ profile, msgModalVisible });
+      else this.setState({ msgModalVisible });
+    }
   };
 
   handleLike = (likeProfile, profile) => {
     this.props.ErrorHandler.setBreadcrumb('Liked:' + likeProfile);
-    this.setState({ profile }, () => {
-      likeProfile()
-        .then(({ data }) => {
-          switch (data.likeProfile) {
-            case 'like':
-              toast.success('Liked ' + profile.profileName + '!');
-              break;
-            case 'unlike':
-              toast.success('UnLiked ' + profile.profileName + '!');
-              break;
-            default:
-              this.setMatchDlgVisible(true, profile, data.likeProfile);
-              break;
-          }
-        })
-        .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-        });
-    });
+
+    if (this.mounted) {
+      this.setState({ profile }, () => {
+        likeProfile()
+          .then(({ data }) => {
+            switch (data.likeProfile) {
+              case 'like':
+                toast.success('Liked ' + profile.profileName + '!');
+                break;
+              case 'unlike':
+                toast.success('UnLiked ' + profile.profileName + '!');
+                break;
+              default:
+                this.setMatchDlgVisible(true, profile, data.likeProfile);
+                break;
+            }
+          })
+          .catch(res => {
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          });
+      });
+    }
   };
 
   fetchData = async fetchMore => {
     this.props.ErrorHandler.setBreadcrumb('Fetch more profiles');
-    this.setState({ loading: true });
-    fetchMore({
-      variables: {
-        limit: LIMIT,
-        skip: this.state.skip
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
+    if (this.mounted) {
+      this.setState({ loading: true }, () =>
+        fetchMore({
+          variables: {
+            limit: LIMIT,
+            skip: this.state.skip
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            if (!fetchMoreResult) {
+              return previousResult;
+            }
 
-        return {
-          searchProfiles: {
-            ...previousResult.searchProfiles,
-            profiles: [
-              ...previousResult.searchProfiles.profiles,
-              ...fetchMoreResult.searchProfiles.profiles
-            ]
+            return {
+              searchProfiles: {
+                ...previousResult.searchProfiles,
+                profiles: [
+                  ...previousResult.searchProfiles.profiles,
+                  ...fetchMoreResult.searchProfiles.profiles
+                ]
+              }
+            };
           }
-        };
-      }
-    });
-    this.setState({
-      loading: false
-    });
+        })
+      );
+    }
+    if (this.mounted) {
+      this.setState({
+        loading: false
+      });
+    }
   };
 
   handleEnd = ({ previousPosition, fetchMore }) => {
     if (previousPosition === Waypoint.below) {
-      this.setState(
-        state => ({ skip: this.state.skip + LIMIT }),
-        () => this.fetchData(fetchMore)
-      );
+      if (this.mounted) {
+        this.setState(
+          state => ({ skip: this.state.skip + LIMIT }),
+          () => this.fetchData(fetchMore)
+        );
+      }
     }
   };
 

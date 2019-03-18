@@ -1879,6 +1879,7 @@
       display: block;
       padding: 12px 15px;
       float: left;
+      cursor: pointer;
     }
 
     section.inbox .left .conversations .item .img {
@@ -2048,6 +2049,7 @@
       letter-spacing: -0.2px;
       transition: .3s all;
       position: relative;
+      cursor:pointer;
     }
 
     section.inbox .right .content .functions ul li::before {
@@ -3253,6 +3255,7 @@
     display: inline-block;
     border-radius: 100px;
     overflow: hidden;
+    cursor: pointer;
   }
 
   section.go-events .events-card-content .card-item .thumbnail .created span.avatar img {
@@ -3276,6 +3279,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-top: 7px;
+    cursor: pointer;
+    width: auto;
   }
 
   section.go-events .events-card-content .card-item .content {
@@ -3847,6 +3852,7 @@
     background-color: #F6F7F8;
     border-radius: 100px;
     padding: 10px;
+    cursor: pointer;
   }
 
   section.event-detail .about-event-content .goings .content ul {
@@ -4270,6 +4276,11 @@
     z-index: 9999999 !important;
   }
   .suggestion-item {
+    padding: 5px 15px !important;
+    font-size: 14px !important;
+  }
+
+  .suggestion-item--active {
     padding: 5px 15px !important;
     font-size: 14px !important;
   }
@@ -4959,6 +4970,7 @@
       float: left;
       text-transform: uppercase;
       transition: .3s all;
+      cursor: pointer;
     }
 
     .page .form .content .verification-box span.clickverify-btn:hover,
@@ -4977,6 +4989,7 @@
       position: relative;
       overflow: hidden;
       margin-bottom: 5px;
+      cursor: pointer;
     }
 
     .page .form .content .select_desires::before {
@@ -5215,7 +5228,16 @@
   section.desires-popup.show {
     display: inline-block;
     visibility: visible;
+    flex-direction: row;
+    align-items: center;
+    height: 60vh;
+    justify-content: center;
+    position: absolute
   }
+
+ .settings section.desires-popup.show {
+   height: 100vh;
+ }
 
   section.desires-popup::before {
     content: '';
@@ -5232,12 +5254,13 @@
 
 
   section.desires-popup .modal-popup {
-    width: 100%;
-    display: block;
-    float: left;
-    position: relative;
+    width: 630px;
+    display: inline-flex;
+    position: fixed;
     background-color: #fff;
     border-radius: 2px;
+    align-content: center;
+    flex-direction: column;
   }
 
   section.desires-popup .modal-popup .m-head {
@@ -6615,7 +6638,6 @@
     left: 0;
     top: 0;
     z-index: 999;
-    padding-top: 200px;
     display: none;
     visibility: hidden;
 
@@ -6682,6 +6704,8 @@
     width: 100%;
     display: block;
     float: left;
+    max-height: 400px;
+    overflow-y: auto;
   }
 
   section.login-modal .popup form .form-content .input {
@@ -7818,6 +7842,9 @@
     padding: 12px 15px;
   }
 
+  section.desires-popup .modal-popup .m-body .desires-list-con {
+    max-height: 300px;
+  }
   section.inbox .left .conversations .item .data span.notif {
     margin-top: 5px;
   }
@@ -7982,9 +8009,11 @@ img {
   width: max-content;
 }
 
-.suggestion-item--active {
-  padding: 5px 15px !important;
-  font-size: 14px !important;
+.modal-center {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  padding-top: 65px;
 }
 
 .greenButton {

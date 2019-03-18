@@ -25,6 +25,15 @@ class NoticesList extends Component {
     ...intialState
   };
 
+  componentDidMount() {
+    this.mounted = true;
+    this.props.subscribeToNewNotices();
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.skip !== nextState.skip ||
@@ -36,27 +45,29 @@ class NoticesList extends Component {
     return false;
   }
 
-  componentDidMount() {
-    this.props.subscribeToNewNotices();
-  }
   clearState = () => {
-    this.setState({ ...intialState });
+    if (this.mounted) {
+      this.setState({ ...intialState });
+    }
   };
 
   handleEnd = ({ previousPosition, fetchMore }) => {
     //if totoal reach skip and show no more sign
     const { skip } = this.state;
     if (previousPosition === Waypoint.below) {
-      this.setState(
-        state => ({ skip: skip + LIMIT }),
-        () => this.fetchData(fetchMore)
-      );
+      if (this.mounted) {
+        this.setState(
+          state => ({ skip: skip + LIMIT }),
+          () => this.fetchData(fetchMore)
+        );
+      }
     }
   };
 
   fetchData = fetchMore => {
-    this.setState({ loading: true });
-
+    if (this.mounted) {
+      this.setState({ loading: true });
+    }
     fetchMore({
       variables: {
         skip: this.state.skip,
@@ -81,15 +92,17 @@ class NoticesList extends Component {
   };
 
   readNotices = (notificationIDs, updateNotifications) => {
-    this.setState({ notificationIDs, read: true }, () => {
-      updateNotifications()
-        .then(({ data }) => {
-          this.clearState();
-        })
-        .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-        });
-    });
+    if (this.mounted) {
+      this.setState({ notificationIDs, read: true }, () => {
+        updateNotifications()
+          .then(({ data }) => {
+            this.clearState();
+          })
+          .catch(res => {
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          });
+      });
+    }
   };
 
   readAndGo = ({ notifications, targetID, type, updateNotifications }) => {

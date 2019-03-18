@@ -69,7 +69,13 @@ class SettingsPage extends PureComponent {
 
   componentDidMount() {
     this.props.history.replace({ state: {} });
+    this.mounted = true;
   }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handlePhotoListChange = ({
     file,
     key,
@@ -94,20 +100,24 @@ class SettingsPage extends PureComponent {
           }
         ];
       }
-      this.setState(
-        {
-          privatePics,
-          publicPhotoList: undefined,
-          privatePhotoList: privatePics.map(file => JSON.stringify(file))
-        },
-        () => this.handleSubmit(updateSettings, true)
-      );
+      if (this.mounted) {
+        this.setState(
+          {
+            privatePics,
+            publicPhotoList: undefined,
+            privatePhotoList: privatePics.map(file => JSON.stringify(file))
+          },
+          () => this.handleSubmit(updateSettings, true)
+        );
+      }
     } else {
       let { publicPics, profilePic } = this.state;
 
       if (isDeleted) {
         if (profilePic === file.key) {
-          this.setState({ profilePic: '', profilePicUrl: '' });
+          if (this.mounted) {
+            this.setState({ profilePic: '', profilePicUrl: '' });
+          }
         }
         publicPics = publicPics.filter(x => x.id !== file.id);
       } else {
@@ -120,50 +130,59 @@ class SettingsPage extends PureComponent {
           }
         ];
         if (profilePic === '') {
-          this.setState({ profilePic: key, profilePicUrl: url });
+          if (this.mounted) {
+            this.setState({ profilePic: key, profilePicUrl: url });
+          }
         }
       }
-
-      this.setState(
-        {
-          publicPics,
-          privatePhotoList: undefined,
-          publicPhotoList: publicPics.map(file => JSON.stringify(file))
-        },
-        () => this.handleSubmit(updateSettings, true)
-      );
+      if (this.mounted) {
+        this.setState(
+          {
+            publicPics,
+            privatePhotoList: undefined,
+            publicPhotoList: publicPics.map(file => JSON.stringify(file))
+          },
+          () => this.handleSubmit(updateSettings, true)
+        );
+      }
     }
   };
 
   handleSubmit = (updateSettings, saveImage) => {
     this.props.ErrorHandler.setBreadcrumb('Settings updated');
     if (!saveImage) {
-      this.setState(
-        {
-          privatePhotoList: undefined,
-          publicPhotoList: undefined
-        },
-        () => {
-          updateSettings()
-            .then(({ data }) => {
-              if (data.updateSettings) {
-                if (this.props.isCouple && this.props.isInitial) {
-                  this.setState({ flashCpl: true });
+      if (this.mounted) {
+        this.setState(
+          {
+            privatePhotoList: undefined,
+            publicPhotoList: undefined
+          },
+          () => {
+            updateSettings()
+              .then(({ data }) => {
+                if (data.updateSettings) {
+                  if (this.props.isCouple && this.props.isInitial) {
+                    if (this.mounted) {
+                      this.setState({ flashCpl: true });
+                    }
+                  }
                 }
-              }
-            })
-            .then(() => this.props.refetchUser())
-            .catch(res => {
-              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-            });
-        }
-      );
+              })
+              .then(() => this.props.refetchUser())
+              .catch(res => {
+                this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+              });
+          }
+        );
+      }
     } else {
       updateSettings()
         .then(({ data }) => {
           if (data.updateSettings) {
             if (this.props.isCouple && this.props.isInitial) {
-              this.setState({ flashCpl: true });
+              if (this.mounted) {
+                this.setState({ flashCpl: true });
+              }
             }
           }
         })
@@ -181,96 +200,119 @@ class SettingsPage extends PureComponent {
         lat
       });
 
-      this.setState(
-        {
-          long,
-          lat,
-          city: citycntry.city,
-          country: citycntry.country
-        },
-        () => this.handleSubmit(updateSettings)
-      );
+      if (this.mounted) {
+        this.setState(
+          {
+            long,
+            lat,
+            city: citycntry.city,
+            country: citycntry.country
+          },
+          () => this.handleSubmit(updateSettings)
+        );
+      }
     } else {
-      this.setState({ city });
+      if (this.mounted) {
+        this.setState({ city });
+      }
     }
   };
 
   toggleDesires = ({ checked, value }, updateSettings) => {
     const { desires } = this.state;
-
-    if (checked) {
-      this.setState({ desires: [...desires, value] }, () =>
-        this.handleSubmit(updateSettings)
-      );
-    } else {
-      this.setState(
-        { desires: desires.filter(desire => desire !== value) },
-        () => this.handleSubmit(updateSettings)
-      );
+    if (this.mounted) {
+      if (checked) {
+        this.setState({ desires: [...desires, value] }, () =>
+          this.handleSubmit(updateSettings)
+        );
+      } else {
+        this.setState(
+          { desires: desires.filter(desire => desire !== value) },
+          () => this.handleSubmit(updateSettings)
+        );
+      }
     }
   };
 
   setValue = ({ name, value, updateSettings, noSave }) => {
-    this.setState({ [name]: value }, () => {
-      if (noSave === true) {
-        return;
-      }
+    if (this.mounted) {
+      this.setState({ [name]: value }, () => {
+        if (noSave === true) {
+          return;
+        }
 
-      this.handleSubmit(updateSettings);
-    });
+        this.handleSubmit(updateSettings);
+      });
+    }
   };
 
   setProfilePic = ({ key, url, updateSettings }) => {
-    this.setState({ profilePic: key, profilePicUrl: url }, () => {
-      this.handleSubmit(updateSettings);
-    });
+    if (this.mounted) {
+      this.setState({ profilePic: key, profilePicUrl: url }, () => {
+        this.handleSubmit(updateSettings);
+      });
+    }
   };
 
   toggleDesiresPopup = () => {
     this.props.ErrorHandler.setBreadcrumb('Desires popup toggled');
-    this.setState({
-      showDesiresPopup: !this.state.showDesiresPopup
-    });
+    if (this.mounted) {
+      this.setState({
+        showDesiresPopup: !this.state.showDesiresPopup
+      });
+    }
   };
 
   toggleImgEditorPopup = (file, isPrivate) => {
     this.props.ErrorHandler.setBreadcrumb('Toggle image editor');
-    this.setState(
-      {
-        fileRecieved: file,
-        isPrivate
-      },
-      () => {
-        this.setState({
-          showImgEditorPopup: !this.state.showImgEditorPopup
-        });
-      }
-    );
+    if (this.mounted) {
+      this.setState(
+        {
+          fileRecieved: file,
+          isPrivate
+        },
+        () => {
+          this.setState({
+            showImgEditorPopup: !this.state.showImgEditorPopup
+          });
+        }
+      );
+    }
   };
 
   togglePhotoVerPopup = () => {
     this.props.ErrorHandler.setBreadcrumb('Toggle Photo Ver Popup');
-    this.setState({
-      showPhotoVerPopup: !this.state.showPhotoVerPopup
-    });
+    if (this.mounted) {
+      this.setState({
+        showPhotoVerPopup: !this.state.showPhotoVerPopup
+      });
+    }
   };
 
   toggleCouplesPopup = () => {
     this.props.ErrorHandler.setBreadcrumb('Toggle Couple popup');
-    this.setState({
-      showCouplePopup: !this.state.showCouplePopup
-    });
+    if (this.mounted) {
+      this.setState({
+        showCouplePopup: !this.state.showCouplePopup
+      });
+    }
   };
 
   toggleBlackPopup = () => {
     this.props.ErrorHandler.setBreadcrumb('Toggle Blk popup');
-    this.setState({
-      showBlackPopup: !this.state.showBlackPopup
-    });
+    if (this.mounted) {
+      this.setState({
+        showBlackPopup: !this.state.showBlackPopup
+      });
+    }
   };
 
   openPhotoVerPopup = type => {
-    this.setState({ photoSubmitType: type }, () => this.togglePhotoVerPopup());
+    if (this.mounted) {
+      this.setState({ photoSubmitType: type }, () =>
+        this.togglePhotoVerPopup()
+      );
+    }
   };
 
   setPartnerID = id => {
@@ -279,10 +321,12 @@ class SettingsPage extends PureComponent {
   };
 
   setS3PhotoParams = (name, type) => {
-    this.setState({
-      filename: name,
-      filetype: type
-    });
+    if (this.mounted) {
+      this.setState({
+        filename: name,
+        filetype: type
+      });
+    }
   };
 
   uploadToS3 = async (file, signedRequest) => {

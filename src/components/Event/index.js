@@ -19,9 +19,18 @@ import { toast } from 'react-toastify';
 class EventPage extends PureComponent {
   state = { visible: false, blockModalVisible: false, showDelete: false };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   toggleDeleteDialog = () => {
     this.props.ErrorHandler.setBreadcrumb('Dialog Modal Toggled:');
-    this.setState({ showDelete: !this.state.showDelete });
+    if (this.mounted) {
+      this.setState({ showDelete: !this.state.showDelete });
+    }
   };
 
   deleteEvent(deleteEvent) {
@@ -40,8 +49,10 @@ class EventPage extends PureComponent {
     this.props.ErrorHandler.setBreadcrumb(
       'Block modal visible:' + blockModalVisible
     );
-    if (event) this.setState({ event, blockModalVisible });
-    else this.setState({ event: null, blockModalVisible });
+    if (this.mounted) {
+      if (event) this.setState({ event, blockModalVisible });
+      else this.setState({ event: null, blockModalVisible });
+    }
   };
 
   closeBlockModal = () => this.setBlockModalVisible(false);
@@ -71,7 +82,9 @@ class EventPage extends PureComponent {
 
       createEvent()
         .then(({ data }) => {
-          this.setState({ visible: false });
+          if (this.mounted) {
+            this.setState({ visible: false });
+          }
         })
 
         .catch(res => {

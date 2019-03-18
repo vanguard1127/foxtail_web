@@ -17,16 +17,24 @@ class MembersList extends PureComponent {
     skip: 0,
     invitedProfiles: []
   };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
   handleEnd = previousPosition => {
     //if totoal reach skip and show no more sign
     const { skip } = this.state;
     if (previousPosition === Waypoint.below) {
       const { fetchMore } = this.props;
-      this.setState(
-        state => ({ skip: skip + LIMIT }),
-        () => this.fetchData(fetchMore)
-      );
+      if (this.mounted) {
+        this.setState(
+          state => ({ skip: skip + LIMIT }),
+          () => this.fetchData(fetchMore)
+        );
+      }
     }
   };
 

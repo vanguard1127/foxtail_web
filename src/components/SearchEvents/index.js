@@ -33,9 +33,18 @@ class SearchEvents extends PureComponent {
     all: true
   };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   showModal = () => {
     this.props.ErrorHandler.setBreadcrumb('Show Modal in Events');
-    this.setState({ visible: true });
+    if (this.mounted) {
+      this.setState({ visible: true });
+    }
   };
 
   saveFormRef = formRef => {
@@ -44,36 +53,48 @@ class SearchEvents extends PureComponent {
 
   handleCancel = () => {
     this.props.ErrorHandler.setBreadcrumb('Cancel event popup');
-    this.setState({ event: null, visible: false });
+    if (this.mounted) {
+      this.setState({ event: null, visible: false });
+    }
   };
 
   setShareModalVisible = (shareModalVisible, event) => {
     this.props.ErrorHandler.setBreadcrumb(
       'share modal visible:' + shareModalVisible
     );
-    if (event) this.setState({ event, shareModalVisible });
-    else this.setState({ event: null, shareModalVisible });
+    if (this.mounted) {
+      if (event) this.setState({ event, shareModalVisible });
+      else this.setState({ event: null, shareModalVisible });
+    }
   };
 
   setBlockModalVisible = (blockModalVisible, event) => {
     this.props.ErrorHandler.setBreadcrumb(
       'Block Modal visible:' + blockModalVisible
     );
-    if (event) this.setState({ event, blockModalVisible });
-    else this.setState({ event: null, blockModalVisible });
+    if (this.mounted) {
+      if (event) this.setState({ event, blockModalVisible });
+      else this.setState({ event: null, blockModalVisible });
+    }
   };
 
   handleChangeSelect = e => {
     this.props.ErrorHandler.setBreadcrumb('Change max distance');
-    this.setState({ maxDistance: parseInt(e.value) });
+    if (this.mounted) {
+      this.setState({ maxDistance: parseInt(e.value) });
+    }
   };
 
   setLocationValues = ({ lat, long, address }) => {
     this.props.ErrorHandler.setBreadcrumb('Set location');
     if (lat && long) {
-      this.setState({ lat, long, location: address });
+      if (this.mounted) {
+        this.setState({ lat, long, location: address });
+      }
     } else {
-      this.setState({ location: address });
+      if (this.mounted) {
+        this.setState({ location: address });
+      }
     }
   };
 
@@ -98,7 +119,9 @@ class SearchEvents extends PureComponent {
 
   fetchData = fetchMore => {
     this.props.ErrorHandler.setBreadcrumb('Fetch more events');
-    this.setState({ loading: true });
+    if (this.mounted) {
+      this.setState({ loading: true });
+    }
     fetchMore({
       variables: {
         limit: LIMIT,
@@ -117,18 +140,21 @@ class SearchEvents extends PureComponent {
         };
       }
     });
-
-    this.setState({
-      loading: false
-    });
+    if (this.mounted) {
+      this.setState({
+        loading: false
+      });
+    }
   };
 
   handleEnd = (previousPosition, fetchMore) => {
     if (previousPosition === Waypoint.below) {
-      this.setState(
-        state => ({ skip: this.state.skip + LIMIT }),
-        () => this.fetchData(fetchMore)
-      );
+      if (this.mounted) {
+        this.setState(
+          state => ({ skip: this.state.skip + LIMIT }),
+          () => this.fetchData(fetchMore)
+        );
+      }
     }
   };
 

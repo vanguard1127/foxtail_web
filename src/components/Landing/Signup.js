@@ -19,6 +19,7 @@ class Signup extends PureComponent {
   state = { ...initialState };
 
   componentDidMount() {
+    this.mounted = true;
     this.props.ErrorHandler.setBreadcrumb('Signup loaded');
     if (localStorage.getItem('token') !== null) {
       //TODO: Check somehow if user active...Possibly use session.
@@ -27,142 +28,156 @@ class Signup extends PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   clearState = () => {
-    this.setState({ ...initialState });
+    if (this.mounted) {
+      this.setState({ ...initialState });
+    }
   };
 
   setFormValues = values => {
-    this.setState(values);
+    if (this.mounted) {
+      this.setState(values);
+    }
   };
 
   handleFBReturn = ({ state, code }, fbResolve, createUser) => {
-    this.setState(
-      {
-        csrf: state,
-        code
-      },
-      () => {
-        fbResolve()
-          .then(({ data }) => {
-            const { isCouple } = this.state;
-            if (data.fbResolve === null) {
-              alert('Phone verification failed.');
-              return;
-            }
-            this.setState({ phone: data.fbResolve });
-            createUser()
-              .then(({ data }) => {
-                if (data.createUser === null) {
-                  alert('Signup failed.');
-                  return;
-                }
-                localStorage.setItem(
-                  'token',
-                  data.createUser.find(token => token.access === 'auth').token
-                );
-                localStorage.setItem(
-                  'refreshToken',
-                  data.createUser.find(token => token.access === 'refresh')
-                    .token
-                );
+    if (this.mounted) {
+      this.setState(
+        {
+          csrf: state,
+          code
+        },
+        () => {
+          fbResolve()
+            .then(({ data }) => {
+              const { isCouple } = this.state;
+              if (data.fbResolve === null) {
+                alert('Phone verification failed.');
+                return;
+              }
+              this.setState({ phone: data.fbResolve });
+              createUser()
+                .then(({ data }) => {
+                  if (data.createUser === null) {
+                    alert('Signup failed.');
+                    return;
+                  }
+                  localStorage.setItem(
+                    'token',
+                    data.createUser.find(token => token.access === 'auth').token
+                  );
+                  localStorage.setItem(
+                    'refreshToken',
+                    data.createUser.find(token => token.access === 'refresh')
+                      .token
+                  );
 
-                if (isCouple) {
-                  this.props.history.push({
-                    pathname: '/settings',
-                    state: { couple: true, initial: true }
-                  });
-                } else {
-                  this.props.history.push({
-                    pathname: '/settings',
-                    state: { initial: true }
-                  });
-                }
-              })
-              .catch(res => {
-                this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-              });
-          })
-          .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-          });
-      }
-    );
+                  if (isCouple) {
+                    this.props.history.push({
+                      pathname: '/settings',
+                      state: { couple: true, initial: true }
+                    });
+                  } else {
+                    this.props.history.push({
+                      pathname: '/settings',
+                      state: { initial: true }
+                    });
+                  }
+                })
+                .catch(res => {
+                  this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+                });
+            })
+            .catch(res => {
+              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+            });
+        }
+      );
+    }
   };
 
   testCreateUser = createUser => {
-    const rand = Math.floor(10000000 + Math.random() * 1000);
-    this.setState(
-      {
-        phone: rand.toString(),
-        username: 'TEST USER2',
-        email: rand.toString() + '@test.com',
-        dob: '12/12/1990',
-        interestedIn: ['M'],
-        gender: 'M',
-        isCouple: true
-      },
-      () =>
-        createUser()
-          .then(({ data }) => {
-            if (data.createUser === null) {
-              alert('Signup failed.');
-              return;
-            }
-            localStorage.setItem(
-              'token',
-              data.createUser.find(token => token.access === 'auth').token
-            );
-            localStorage.setItem(
-              'refreshToken',
-              data.createUser.find(token => token.access === 'refresh').token
-            );
+    if (this.mounted) {
+      const rand = Math.floor(10000000 + Math.random() * 1000);
+      this.setState(
+        {
+          phone: rand.toString(),
+          username: 'TEST USER2',
+          email: rand.toString() + '@test.com',
+          dob: '12/12/1990',
+          interestedIn: ['M'],
+          gender: 'M',
+          isCouple: true
+        },
+        () =>
+          createUser()
+            .then(({ data }) => {
+              if (data.createUser === null) {
+                alert('Signup failed.');
+                return;
+              }
+              localStorage.setItem(
+                'token',
+                data.createUser.find(token => token.access === 'auth').token
+              );
+              localStorage.setItem(
+                'refreshToken',
+                data.createUser.find(token => token.access === 'refresh').token
+              );
 
-            const { isCouple } = this.state;
-            if (isCouple) {
-              this.props.history.push({
-                pathname: '/settings',
-                state: { couple: true, initial: true }
-              });
-            } else {
-              this.props.history.push({
-                pathname: '/settings',
-                state: { initial: true }
-              });
-            }
-          })
-          .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-          })
-    );
+              const { isCouple } = this.state;
+              if (isCouple) {
+                this.props.history.push({
+                  pathname: '/settings',
+                  state: { couple: true, initial: true }
+                });
+              } else {
+                this.props.history.push({
+                  pathname: '/settings',
+                  state: { initial: true }
+                });
+              }
+            })
+            .catch(res => {
+              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+            })
+      );
+    }
   };
 
   //TODO:DELETE THIS
   handleLogin = login => {
-    login()
-      .then(async ({ data }) => {
-        if (data.login === null) {
-          alert("User doesn't exist.");
-          return;
-        }
+    if (this.mounted) {
+      login()
+        .then(async ({ data }) => {
+          if (data.login === null) {
+            alert("User doesn't exist.");
+            return;
+          }
 
-        localStorage.setItem(
-          'token',
-          data.login.find(token => token.access === 'auth').token
-        );
-        localStorage.setItem(
-          'refreshToken',
-          data.login.find(token => token.access === 'refresh').token
-        );
-        // await this.props.refetch();
-        this.props.history.push('/members');
-      })
-      .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
+          localStorage.setItem(
+            'token',
+            data.login.find(token => token.access === 'auth').token
+          );
+          localStorage.setItem(
+            'refreshToken',
+            data.login.find(token => token.access === 'refresh').token
+          );
+          // await this.props.refetch();
+          this.props.history.push('/members');
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          return errors;
         });
-
-        return errors;
-      });
+    }
   };
 
   render() {

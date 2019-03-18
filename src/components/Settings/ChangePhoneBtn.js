@@ -12,15 +12,23 @@ const initialState = {
 
 class ChangePhoneBtn extends PureComponent {
   state = { ...initialState };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   handleFBReturn = ({ state, code }, fbResolve) => {
     if (!state || !code) {
       return toast.error('Error validating phone number');
     }
     const { t } = this.props;
-    this.setState({
-      csrf: state,
-      code
-    });
+    if (this.mounted) {
+      this.setState({
+        csrf: state,
+        code
+      });
+    }
     fbResolve()
       .then(({ data }) => {
         if (data.fbResolve === null) {
@@ -31,6 +39,7 @@ class ChangePhoneBtn extends PureComponent {
         toast.success('Phone number has been changed');
       })
       .catch(res => {
+        //TODO: Add event handler
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });

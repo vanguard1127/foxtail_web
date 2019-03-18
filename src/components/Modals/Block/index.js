@@ -8,7 +8,12 @@ import { flagOptions } from '../../../docs/options';
 
 class BlockModal extends Component {
   state = { other: false, reason: '', type: this.props.type };
-
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.reason !== nextState.reason ||
@@ -20,15 +25,19 @@ class BlockModal extends Component {
   }
 
   handleChange = e => {
-    if (e.target.value === 'other') {
-      this.setState({ other: true, reason: '' });
-    } else {
-      this.setState({ reason: e.target.value, other: false });
+    if (this.mounted) {
+      if (e.target.value === 'other') {
+        this.setState({ other: true, reason: '' });
+      } else {
+        this.setState({ reason: e.target.value, other: false });
+      }
     }
   };
 
   handleTextChange = event => {
-    this.setState({ reason: event.target.value });
+    if (this.mounted) {
+      this.setState({ reason: event.target.value });
+    }
   };
 
   handleSubmit = (blockProfile, flagItem) => {

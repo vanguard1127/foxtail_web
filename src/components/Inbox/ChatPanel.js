@@ -6,13 +6,22 @@ class ChatPanel extends PureComponent {
   state = {
     text: ''
   };
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   submitMessage(e, sendMessage) {
     this.props.ErrorHandler.setBreadcrumb('Send message (chat)');
     e.preventDefault();
 
     sendMessage()
       .then(({ data }) => {
-        this.setState({ text: '' });
+        if (this.mounted) {
+          this.setState({ text: '' });
+        }
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -20,7 +29,9 @@ class ChatPanel extends PureComponent {
   }
 
   setText = e => {
-    this.setState({ text: e.target.value });
+    if (this.mounted) {
+      this.setState({ text: e.target.value });
+    }
   };
 
   updateChat = cache => {

@@ -5,16 +5,25 @@ import StripeCheckout from 'react-stripe-checkout';
 
 class UpdateSubBtn extends PureComponent {
   state = { token: '', ccLast4: '' };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handleSubmit = ({ token, ccLast4, updateSubscription, t }) => {
-    this.setState({ token, ccLast4 });
-    updateSubscription()
-      .then(({ data }) => {
-        this.props.refetchUser();
-        alert(t('common:cardupdated') + '.');
-      })
-      .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-      });
+    if (this.mounted) {
+      this.setState({ token, ccLast4 });
+      updateSubscription()
+        .then(({ data }) => {
+          this.props.refetchUser();
+          alert(t('common:cardupdated') + '.');
+        })
+        .catch(res => {
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        });
+    }
   };
 
   render() {

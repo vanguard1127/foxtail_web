@@ -21,6 +21,7 @@ class Dropdown extends Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     this.fetchData(this.props.lang);
   }
 
@@ -31,8 +32,7 @@ class Dropdown extends Component {
   }
 
   componentWillUnmount() {
-    //TODO: unmount dynamic import to prevent error
-    //console.log("componentWillUnmount");
+    this.mounted = false;
   }
 
   fetchData = langSel => {
@@ -49,8 +49,9 @@ class Dropdown extends Component {
         } else {
           ops = els.sexOptions;
         }
-
-        this.setState({ options: ops, isLoading: false });
+        if (this.mounted) {
+          this.setState({ options: ops, isLoading: false });
+        }
       })
       .catch(console.log('Lang file error'));
   };

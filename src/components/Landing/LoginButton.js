@@ -9,12 +9,22 @@ const initialState = {
 };
 class LoginButton extends PureComponent {
   state = { ...initialState };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   handleFBReturn = ({ state, code }, fbResolve) => {
     const { t } = this.props;
-    this.setState({
-      csrf: state,
-      code
-    });
+
+    if (this.mounted) {
+      this.setState({
+        csrf: state,
+        code
+      });
+    }
+
     fbResolve()
       .then(async ({ data }) => {
         if (data.fbResolve === null) {
@@ -34,6 +44,7 @@ class LoginButton extends PureComponent {
         }
       })
       .catch(res => {
+        //TODO: Add error setter here
         console.log(res);
         const errors = res.graphQLErrors.map(error => {
           return error.message;

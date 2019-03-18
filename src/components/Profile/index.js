@@ -30,44 +30,63 @@ class ProfilePage extends PureComponent {
     chatID: null
   };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
     this.props.ErrorHandler.setBreadcrumb('Match Dialog Toggled:');
-    if (profile) this.setState({ profile, matchDlgVisible, chatID });
-    else this.setState({ matchDlgVisible });
+    if (this.mounted) {
+      if (profile) this.setState({ profile, matchDlgVisible, chatID });
+      else this.setState({ matchDlgVisible });
+    }
   };
 
   handleImageClick = event => {
     this.props.ErrorHandler.setBreadcrumb('Click image in profile');
     const { name } = event.target;
-    this.setState({ selectedPhoto: parseInt(name, 10) });
+    if (this.mounted) {
+      this.setState({ selectedPhoto: parseInt(name, 10) });
+    }
   };
 
   setProfile = profile => {
-    this.setState({ profile });
+    if (this.mounted) {
+      this.setState({ profile });
+    }
   };
 
   setMsgModalVisible = (msgModalVisible, profile) => {
     this.props.ErrorHandler.setBreadcrumb(
       'Message Modal Opened:' + msgModalVisible
     );
-    if (profile) this.setState({ profile, msgModalVisible });
-    else this.setState({ msgModalVisible });
+    if (this.mounted) {
+      if (profile) this.setState({ profile, msgModalVisible });
+      else this.setState({ msgModalVisible });
+    }
   };
 
   setShareModalVisible = (shareModalVisible, profile) => {
     this.props.ErrorHandler.setBreadcrumb(
       'Share Modal Opened:' + shareModalVisible
     );
-    if (profile) this.setState({ profile, shareModalVisible });
-    else this.setState({ shareModalVisible });
+    if (this.mounted) {
+      if (profile) this.setState({ profile, shareModalVisible });
+      else this.setState({ shareModalVisible });
+    }
   };
 
   setBlockModalVisible = (blockModalVisible, profile) => {
     this.props.ErrorHandler.setBreadcrumb(
       'Block Modal Opened:' + blockModalVisible
     );
-    if (profile) this.setState({ profile, blockModalVisible });
-    else this.setState({ blockModalVisible });
+    if (this.mounted) {
+      if (profile) this.setState({ profile, blockModalVisible });
+      else this.setState({ blockModalVisible });
+    }
   };
 
   handleLike = (profile, likeProfile) => {

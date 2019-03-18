@@ -9,6 +9,12 @@ import { toast } from 'react-toastify';
 
 class SetLocationModal extends Component {
   state = { address: '', long: null, lat: null };
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.address !== nextState.address) {
       return true;
@@ -18,9 +24,13 @@ class SetLocationModal extends Component {
 
   setLocationValues = ({ lat, long, address }) => {
     if (lat && long) {
-      return this.setState({ lat, long, address });
+      if (this.mounted) {
+        return this.setState({ lat, long, address });
+      }
     }
-    return this.setState({ address });
+    if (this.mounted) {
+      return this.setState({ address });
+    }
   };
 
   handleSubmit = updateSettings => {

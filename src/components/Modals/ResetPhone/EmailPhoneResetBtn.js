@@ -14,6 +14,7 @@ class EmailPhoneResetBtn extends PureComponent {
         close();
       })
       .catch(res => {
+        //TODO: Add error handler
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });

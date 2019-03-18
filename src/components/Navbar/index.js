@@ -10,7 +10,12 @@ import UserToolbar from './UserToolbar';
 
 class Navbar extends Component {
   state = { online: false };
-
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.session !== nextProps.session ||
@@ -22,17 +27,19 @@ class Navbar extends Component {
   }
 
   handleToggle = (toggleOnline, online) => {
-    this.setState({ online }, () => {
-      toggleOnline()
-        .then(async ({ data }) => {
-          if (data.toggleOnline !== null) {
-            await this.props.refetch();
-          }
-        })
-        .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-        });
-    });
+    if (this.mounted) {
+      this.setState({ online }, () => {
+        toggleOnline()
+          .then(async ({ data }) => {
+            if (data.toggleOnline !== null) {
+              await this.props.refetch();
+            }
+          })
+          .catch(res => {
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          });
+      });
+    }
   };
 
   render() {
