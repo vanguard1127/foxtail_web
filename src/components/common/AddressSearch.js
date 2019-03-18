@@ -32,7 +32,6 @@ class AddressSearch extends Component {
   handleSelect = address => {
     geocodeByAddress(address)
       .then(results => {
-        console.log(results[0]);
         if (this.mounted) {
           getLatLng(results[0]);
         }

@@ -5228,16 +5228,7 @@
   section.desires-popup.show {
     display: inline-block;
     visibility: visible;
-    flex-direction: row;
-    align-items: center;
-    height: 60vh;
-    justify-content: center;
-    position: absolute
   }
-
- .settings section.desires-popup.show {
-   height: 100vh;
- }
 
   section.desires-popup::before {
     content: '';
@@ -5254,13 +5245,12 @@
 
 
   section.desires-popup .modal-popup {
-    width: 630px;
-    display: inline-flex;
-    position: fixed;
+    width: 100%;
+    display: block;
+    float: left;
+    position: relative;
     background-color: #fff;
     border-radius: 2px;
-    align-content: center;
-    flex-direction: column;
   }
 
   section.desires-popup .modal-popup .m-head {
@@ -6638,6 +6628,7 @@
     left: 0;
     top: 0;
     z-index: 999;
+    padding-top: 200px;
     display: none;
     visibility: hidden;
 
@@ -6704,8 +6695,6 @@
     width: 100%;
     display: block;
     float: left;
-    max-height: 400px;
-    overflow-y: auto;
   }
 
   section.login-modal .popup form .form-content .input {
@@ -7842,9 +7831,6 @@
     padding: 12px 15px;
   }
 
-  section.desires-popup .modal-popup .m-body .desires-list-con {
-    max-height: 300px;
-  }
   section.inbox .left .conversations .item .data span.notif {
     margin-top: 5px;
   }
@@ -8007,13 +7993,6 @@ img {
 
 .tooltip .tooltiptext div{
   width: max-content;
-}
-
-.modal-center {
-  display: flex;
-  align-items: center;
-  height: 100vh;
-  padding-top: 65px;
 }
 
 .greenButton {

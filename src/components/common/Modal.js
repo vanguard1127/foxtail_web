@@ -38,7 +38,7 @@ class Modal extends Component {
     return (
       <section className="login-modal show" ref={this.wrapperRef}>
         <div className="container">
-          <div className="offset-md-3 col-md-6 modal-center">
+          <div className="offset-md-3 col-md-6">
             <div className="popup">
               <span className="head">{header}</span>
               <a className="close" onClick={() => close()} />

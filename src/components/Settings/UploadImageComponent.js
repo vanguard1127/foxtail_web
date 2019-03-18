@@ -37,6 +37,13 @@ class UploadComponent extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   imageUploaded = (res, file) => {
     var fileName = file.name;
     let idxDot = fileName.lastIndexOf('.') + 1;
@@ -66,10 +73,12 @@ class UploadComponent extends PureComponent {
   handleClickOpen = index => {
     let img = this.props.photos[index];
 
-    this.setState({
-      selectedImg: img.url,
-      previewVisible: true
-    });
+    if (this.mounted) {
+      this.setState({
+        selectedImg: img.url,
+        previewVisible: true
+      });
+    }
   };
 
   handleClickProPic = ({ index, setProfilePic }) => {
@@ -79,13 +88,17 @@ class UploadComponent extends PureComponent {
   };
 
   handleClose = () => {
-    this.setState({ previewVisible: false });
+    if (this.mounted) {
+      this.setState({ previewVisible: false });
+    }
   };
   switchLoader = () => {
-    this.setState({
-      loader: 'none',
-      uploadImg: 'block'
-    });
+    if (this.mounted) {
+      this.setState({
+        loader: 'none',
+        uploadImg: 'block'
+      });
+    }
   };
 
   render() {
@@ -146,7 +159,7 @@ class UploadComponent extends PureComponent {
             </div>
           );
         })}
-        {photos.length >= 4 ? null : (
+        {photos.length >= 7 ? null : (
           <div className="box">
             <Upload
               onSuccess={this.imageUploaded}

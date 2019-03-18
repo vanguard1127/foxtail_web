@@ -166,7 +166,7 @@ class ProfilePage extends PureComponent {
                   photoObject => !photoObject.private && photoObject.url !== ''
                 );
                 const privatePics = photos
-                  .slice(4, 8)
+                  .slice(7, 14)
                   .filter(
                     photoObject => photoObject.private && photoObject.url !== ''
                   );

@@ -29,7 +29,7 @@ class Photos extends Component {
           <div className="col-md-12">
             <UploadComponent
               setProfilePic={setProfilePic}
-              max={4}
+              max={7}
               showEditor={showEditor}
               photos={photos}
               isPrivate={isPrivate}

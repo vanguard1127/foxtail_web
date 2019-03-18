@@ -53,7 +53,7 @@ class PhotoSlider extends Component {
 
   render() {
     const { isPublic, photos, t } = this.props;
-
+    console.log(photos);
     return (
       <div
         className={isPublic ? 'photos-slider public' : 'photos-slider private'}
