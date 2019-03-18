@@ -111,18 +111,17 @@ class ChatContent extends PureComponent {
               <ErrorHandler.report error={error} calledName={'getCommets'} />
             );
           }
-          console.log('LOOK PUT0', data.getComments, !data.getComments);
-          if (!data.getComments || data.getComments === null) {
-            return <div>No comments yet.</div>;
+
+          let messages = [];
+          if (data.getComments && data.getComments.messages) {
+            messages = data.getComments.messages;
           }
           return (
             <MessageList
               chatID={chatID}
               ref={this.MessageList}
               history={history}
-              messages={
-                data && data.getComments ? data.getComments.messages : []
-              }
+              messages={messages}
               subscribe={() =>
                 subscribeToMore({
                   document: NEW_MESSAGE_SUB,

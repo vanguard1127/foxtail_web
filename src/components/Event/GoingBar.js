@@ -14,48 +14,11 @@ class GoingBar extends PureComponent {
             onClick={() => this.setState({ remDropOpen: !remDropOpen })}
           >
             <ul>
-              <li>
-                <img src="/assets/img/usr/avatar/1001@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1002@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1003@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1004@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1005@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1006@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1003@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1004@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1005@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1006@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1003@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1004@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1005@2x.png" alt="" />
-              </li>
-              <li>
-                <img src="/assets/img/usr/avatar/1006@2x.png" alt="" />
-              </li>
+              {participants.map(el => (
+                <li key={el.id}>
+                  <img src={el.profilePic} alt="" />
+                </li>
+              ))}
             </ul>
             <span className="stats">
               <b>
