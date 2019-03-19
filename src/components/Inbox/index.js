@@ -21,7 +21,7 @@ import Tour from './Tour';
 import { flagOptions } from '../../docs/options';
 
 import * as ErrorHandler from '../common/ErrorHandler';
-require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+//require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
 
 class InboxPage extends PureComponent {
   state = {
@@ -160,7 +160,6 @@ class InboxPage extends PureComponent {
         }}
       </Mutation>
     );
-
     return (
       <>
         <ErrorHandler.ErrorBoundary>

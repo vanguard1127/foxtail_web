@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
-require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 const LIMIT = 5;
 const intialState = {

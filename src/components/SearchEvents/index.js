@@ -18,7 +18,7 @@ import EventsList from './EventsList';
 import Spinner from '../common/Spinner';
 import getCityCountry from '../../utils/getCityCountry';
 
-require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 const LIMIT = 6;
 

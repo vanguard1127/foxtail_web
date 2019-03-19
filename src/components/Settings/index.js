@@ -10,7 +10,7 @@ import Spinner from '../common/Spinner';
 import withAuth from '../withAuth';
 
 import SettingsPage from './SettingsPage';
-require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends PureComponent {
   componentDidMount() {

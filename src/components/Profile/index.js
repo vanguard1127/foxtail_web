@@ -20,7 +20,7 @@ import ShareModal from '../Modals/Share';
 import DirectMsgModal from '../Modals/DirectMsg';
 import Modal from '../common/Modal';
 import { flagOptions } from '../../docs/options';
-require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 class ProfilePage extends PureComponent {
   state = {

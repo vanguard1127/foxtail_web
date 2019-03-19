@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import SearchCriteria from './SearchCriteria';
 import ProfilesContainer from './ProfilesContainer';
 import Tour from './Tour';
-require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 class SearchProfilesPage extends PureComponent {
   state = {

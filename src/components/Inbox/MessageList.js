@@ -292,6 +292,7 @@ class MessageList extends PureComponent {
       t,
       dayjs
     } = this.props;
+
     let topMessage = '';
     if (loading) {
       topMessage = t('common:Loading') + '...';
@@ -332,7 +333,7 @@ class MessageList extends PureComponent {
                 // Attach a ref to the last element for later measurement
                 props.ref = this.lastMessageRef;
               }
-              return <Message key={message.id} {...props} />;
+              return <Message key={message.id} {...props} dayjs={dayjs} />;
             })
             .reverse();
           // At the start of every date group insert a date element.
