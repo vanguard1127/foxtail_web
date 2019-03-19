@@ -9,7 +9,11 @@ import {
 import { Query, Mutation, withApollo } from 'react-apollo';
 import Waypoint from 'react-waypoint';
 import { preventContextMenu } from '../../utils/image';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
+require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 const LIMIT = 5;
 const intialState = {
@@ -142,7 +146,7 @@ class NoticesList extends Component {
           <div>
             <span className="text">{t(notif.text)}</span>
             <span className="when">
-              {moment(notif.date)
+              {dayjs(notif.date)
                 .locale(localStorage.getItem('i18nextLng'))
                 .fromNow()}
             </span>
@@ -174,7 +178,7 @@ class NoticesList extends Component {
               {t(notif.text)}
             </span>
             <span className="when">
-              {moment(notif.date)
+              {dayjs(notif.date)
                 .locale(localStorage.getItem('i18nextLng'))
                 .fromNow()}
             </span>

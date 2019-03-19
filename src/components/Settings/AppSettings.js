@@ -3,7 +3,6 @@ import Select from '../common/Select';
 import i18n from '../../i18n';
 
 const setLang = lang => {
-  import('moment/locale/' + lang);
   i18n.changeLanguage(lang);
 };
 

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng
+  geocodeByAddress
 } from 'react-places-autocomplete';
 
 class AddressSearch extends Component {
@@ -33,19 +32,14 @@ class AddressSearch extends Component {
     geocodeByAddress(address)
       .then(results => {
         if (this.mounted) {
-          getLatLng(results[0]);
-        }
-      })
-      .then(latLng => {
-        if (this.mounted) {
           this.props.setLocationValues({
-            lat: latLng.lat,
-            long: latLng.lng,
-            address
+            lat: results[0].geometry.location.lat(),
+            long: results[0].geometry.location.lng(),
+            address: results[0].formatted_address
           });
         }
       })
-      .then(latLng => console.log('Success', latLng))
+      .then(results => console.log('Success', results))
       .catch(error => console.error('Error', error));
   };
 

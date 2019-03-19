@@ -97,7 +97,7 @@ class ChatContent extends PureComponent {
   };
   //TODO: use global spinner and error instead of chnaging each
   render() {
-    const { chatID, currentUserID, t, ErrorHandler } = this.props;
+    const { chatID, currentUserID, t, ErrorHandler, dayjs } = this.props;
 
     const { cursor, limit } = this.props;
     return (
@@ -161,6 +161,7 @@ class ChatContent extends PureComponent {
                 handleEnd={this.handleEnd}
                 fetchMore={fetchMore}
                 limit={limit}
+                dayjs={dayjs}
               />
             );
           }}

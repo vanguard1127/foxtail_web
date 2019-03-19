@@ -18,7 +18,7 @@ class ChatWindow extends PureComponent {
   };
 
   render() {
-    const { currentChat, currentuser, t, ErrorHandler } = this.props;
+    const { currentChat, currentuser, t, ErrorHandler, dayjs } = this.props;
     if (currentChat !== null) {
       sessionStorage.setItem('pid', currentChat.id);
     } else {
@@ -42,6 +42,7 @@ class ChatWindow extends PureComponent {
               cursor={null}
               hasMoreItems={true}
               limit={LIMIT}
+              dayjs={dayjs}
             />
             <ChatPanel
               chatID={currentChat.id}

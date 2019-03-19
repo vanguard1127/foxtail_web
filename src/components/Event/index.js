@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query, Mutation } from 'react-apollo';
+import dayjs from 'dayjs';
 import { GET_EVENT, DELETE_EVENT } from '../../queries';
 import { withNamespaces } from 'react-i18next';
 import BlockModal from '../Modals/Block';
@@ -15,6 +16,7 @@ import EventDiscussion from './EventDiscussion';
 import EventInfo from './EventInfo';
 import { flagOptions } from '../../docs/options';
 import { toast } from 'react-toastify';
+require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 class EventPage extends PureComponent {
   state = { visible: false, blockModalVisible: false, showDelete: false };
@@ -101,7 +103,7 @@ class EventPage extends PureComponent {
     const { id } = this.props.match.params;
     const { blockModalVisible, showDelete } = this.state;
     const { session, history, t, ErrorHandler } = this.props;
-    if (session.currentuser.tours.indexOf('e') < 0) {
+    if (id === 'tour' && session.currentuser.tours.indexOf('e') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Event');
       return (
         <div>
@@ -140,7 +142,12 @@ class EventPage extends PureComponent {
                   <div className="row">
                     <div className="col-md-12">
                       <ErrorHandler.ErrorBoundary>
-                        <EventHeader event={event} history={history} t={t} />
+                        <EventHeader
+                          event={event}
+                          history={history}
+                          t={t}
+                          dayjs={dayjs}
+                        />
                       </ErrorHandler.ErrorBoundary>
                     </div>
                     <div className="col-lg-9 col-md-12">
@@ -162,6 +169,7 @@ class EventPage extends PureComponent {
                           event={event}
                           t={t}
                           openDelete={this.toggleDeleteDialog}
+                          dayjs={dayjs}
                         />{' '}
                       </ErrorHandler.ErrorBoundary>{' '}
                       <ErrorHandler.ErrorBoundary>
@@ -171,6 +179,7 @@ class EventPage extends PureComponent {
                           history={history}
                           t={t}
                           ErrorHandler={ErrorHandler}
+                          dayjs={dayjs}
                         />
                       </ErrorHandler.ErrorBoundary>
                     </div>
@@ -187,6 +196,7 @@ class EventPage extends PureComponent {
                           }
                           openDelete={this.toggleDeleteDialog}
                           refetch={refetch}
+                          dayjs={dayjs}
                         />{' '}
                       </ErrorHandler.ErrorBoundary>
                     </div>

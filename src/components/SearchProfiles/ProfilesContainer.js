@@ -130,7 +130,8 @@ class ProfilesContainer extends PureComponent {
       lat,
       distance,
       ageRange,
-      interestedIn
+      interestedIn,
+      dayjs
     } = this.props;
 
     const {
@@ -208,6 +209,7 @@ class ProfilesContainer extends PureComponent {
                         }
                         history={history}
                         t={t}
+                        dayjs={dayjs}
                       />
                     )}
                     {result.profiles.length !== 0 && (
@@ -227,6 +229,7 @@ class ProfilesContainer extends PureComponent {
                           })
                         }
                         t={t}
+                        dayjs={dayjs}
                       />
                     )}
 

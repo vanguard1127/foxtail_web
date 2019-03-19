@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
-import moment from 'moment';
 import AttendEvent from './AttendEvent';
 import EditEventBtn from './EditEventBtn';
 
 //TODO: Fix this
 class EventInfoMobile extends PureComponent {
   render() {
-    const { event, t, ErrorHandler, isOwner, openDelete } = this.props;
+    const { event, t, ErrorHandler, isOwner, openDelete, dayjs } = this.props;
 
     const {
       id,
@@ -29,7 +28,7 @@ class EventInfoMobile extends PureComponent {
           <li>
             <span className="head">{t('evedate')}:</span>
             <span className="title">
-              {moment(startTime)
+              {dayjs(startTime)
                 .locale(localStorage.getItem('i18nextLng'))
                 .format('DD MMMM YYYY, dddd')
                 .toString()}
@@ -40,12 +39,12 @@ class EventInfoMobile extends PureComponent {
               {t('evedate')} - {t('time')}:
             </span>
             <span className="title">
-              {moment(startTime)
+              {dayjs(startTime)
                 .locale(localStorage.getItem('i18nextLng'))
                 .format('HH:mm')
                 .toString()}{' '}
               -{' '}
-              {moment(endTime)
+              {dayjs(endTime)
                 .locale(localStorage.getItem('i18nextLng'))
                 .format('HH:mm')
                 .toString()}

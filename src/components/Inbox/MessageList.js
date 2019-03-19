@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import Waypoint from 'react-waypoint';
 import Message from './Message.js';
-import moment from 'moment';
 import _ from 'lodash';
 
 class DateItem extends PureComponent {
@@ -285,7 +284,14 @@ class MessageList extends PureComponent {
   }
   render() {
     const { loading } = this.state;
-    const { messages, hasMoreItems, children, currentUserID, t } = this.props;
+    const {
+      messages,
+      hasMoreItems,
+      children,
+      currentUserID,
+      t,
+      dayjs
+    } = this.props;
     let topMessage = '';
     if (loading) {
       topMessage = t('common:Loading') + '...';
@@ -304,7 +310,7 @@ class MessageList extends PureComponent {
     const messageElements = _.flatten(
       _.chain(messages)
         .groupBy(datum =>
-          moment(datum.createdAt)
+          dayjs(datum.createdAt)
             .locale(localStorage.getItem('i18nextLng'))
             .format('dddd, MMMM Do YYYY')
             .toLocaleUpperCase()

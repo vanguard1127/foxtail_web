@@ -204,13 +204,20 @@ class MessageList extends PureComponent {
   }
   render() {
     const { loading } = this.state;
-    const { messages, hasMoreItems, children, history } = this.props;
+    const { messages, hasMoreItems, children, history, dayjs } = this.props;
 
     if (messages.length === 0) {
       return <div>No messages yet</div>;
     }
     const messageElements = messages.map(message => {
-      return <Message key={message.id} message={message} history={history} />;
+      return (
+        <Message
+          key={message.id}
+          message={message}
+          history={history}
+          dayjs={dayjs}
+        />
+      );
     });
 
     return (

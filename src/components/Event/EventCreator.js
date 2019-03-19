@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
-import moment from 'moment';
 import { preventContextMenu } from '../../utils/image';
 class EventCreator extends PureComponent {
   render() {
-    const { ownerProfile, createdAt, history, t } = this.props;
+    const { ownerProfile, createdAt, history, t, dayjs } = this.props;
 
     return (
       <div className="created">
@@ -23,10 +22,9 @@ class EventCreator extends PureComponent {
             <span className="name">{ownerProfile.profileName}</span>
             <span className="created-date">
               {t('createdon')}{' '}
-              {moment(createdAt)
+              {dayjs(createdAt)
                 .locale(localStorage.getItem('i18nextLng'))
-                .format('MMM Do')
-                .toString()}
+                .format('MMMM D YYYY')}
             </span>
           </div>
         </span>

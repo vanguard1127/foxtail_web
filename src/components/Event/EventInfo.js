@@ -1,10 +1,17 @@
 import React, { PureComponent } from 'react';
-import moment from 'moment';
 import AttendEvent from './AttendEvent';
 import EditEventBtn from './EditEventBtn';
 class EventInfo extends PureComponent {
   render() {
-    const { event, t, ErrorHandler, isOwner, openDelete, refetch } = this.props;
+    const {
+      event,
+      t,
+      ErrorHandler,
+      isOwner,
+      openDelete,
+      refetch,
+      dayjs
+    } = this.props;
 
     const {
       id,
@@ -27,7 +34,7 @@ class EventInfo extends PureComponent {
           <li>
             <span className="head">{t('evedate')}:</span>
             <span className="title">
-              {moment(startTime)
+              {dayjs(startTime)
                 .locale(localStorage.getItem('i18nextLng'))
                 .format('DD MMMM YYYY, dddd')
                 .toString()}
@@ -38,12 +45,12 @@ class EventInfo extends PureComponent {
               {t('evedate')} - {t('time')}:
             </span>
             <span className="title">
-              {moment(startTime)
+              {dayjs(startTime)
                 .locale(localStorage.getItem('i18nextLng'))
                 .format('HH:mm')
                 .toString()}{' '}
               -{' '}
-              {moment(endTime)
+              {dayjs(endTime)
                 .locale(localStorage.getItem('i18nextLng'))
                 .format('HH:mm')
                 .toString()}

@@ -12,7 +12,14 @@ class ProfileCard extends Component {
     return false;
   }
   render() {
-    const { profile, showMsgModal, likeProfile, history, t } = this.props;
+    const {
+      profile,
+      showMsgModal,
+      likeProfile,
+      history,
+      t,
+      dayjs
+    } = this.props;
 
     const stdCheck = profile.users.every(
       user => user.verifications.std === true
@@ -37,6 +44,7 @@ class ProfileCard extends Component {
                 online={profile.showOnline && profile.online}
                 distance={profile.distance}
                 t={t}
+                dayjs={dayjs}
               />
             </span>
             <DesiresBlock desires={profile.desires} t={t} id={profile.id} />

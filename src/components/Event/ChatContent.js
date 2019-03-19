@@ -91,7 +91,7 @@ class ChatContent extends PureComponent {
   };
 
   render() {
-    const { chatID, history, t, ErrorHandler } = this.props;
+    const { chatID, history, t, ErrorHandler, dayjs } = this.props;
 
     const { cursor } = this.state;
     return (
@@ -151,6 +151,7 @@ class ChatContent extends PureComponent {
               handleEnd={this.handleEnd}
               fetchMore={fetchMore}
               limit={LIMIT}
+              dayjs={dayjs}
             />
           );
         }}

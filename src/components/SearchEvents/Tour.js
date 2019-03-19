@@ -212,7 +212,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -297,7 +300,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -393,7 +399,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -478,7 +487,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -563,7 +575,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -648,7 +663,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -733,7 +751,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -818,7 +839,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -903,7 +927,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>
@@ -988,7 +1015,10 @@ class Tour extends PureComponent {
                                   <b>32 people</b> going
                                 </span>
                               </div>
-                              <div className="functions">
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
                                 <div className="btn go-detail">
                                   <a href="#">Event Detail</a>
                                 </div>

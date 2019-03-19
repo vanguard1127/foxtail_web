@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import UpdateSubBtn from './UpdateSubBtn';
 import CancelSubBtn from './CancelSubBtn';
-import moment from 'moment';
-
 class ManageBlackSub extends Component {
   shouldComponentUpdate(nextProps) {
     return false;
   }
   render() {
-    const { refetchUser, ErrorHandler, t, currentuser } = this.props;
+    const { refetchUser, ErrorHandler, t, currentuser, dayjs } = this.props;
     return (
       <div className="content mtop">
         <div className="row">
@@ -21,7 +19,7 @@ class ManageBlackSub extends Component {
             <div className="col-md-12">
               {t('common:creditend')} {currentuser.ccLast4}{' '}
               {t('common:renewdate')}:{' '}
-              {moment(currentuser.blackMember.renewalDate)
+              {dayjs(currentuser.blackMember.renewalDate)
                 .locale(localStorage.getItem('i18nextLng'))
                 .format('MMMM DD YYYY')}
             </div>
@@ -29,7 +27,7 @@ class ManageBlackSub extends Component {
           {!currentuser.ccLast4 && (
             <div className="col-md-12">
               {t('common:blkend')}:{' '}
-              {moment(currentuser.blackMember.renewalDate)
+              {dayjs(currentuser.blackMember.renewalDate)
                 .locale(localStorage.getItem('i18nextLng'))
                 .format('MMMM DD YYYY')}
             </div>

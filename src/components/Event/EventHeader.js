@@ -9,12 +9,13 @@ class EventHeader extends PureComponent {
     const {
       event: { id, startTime, eventname, ownerProfile, createdAt, tagline },
       history,
-      t
+      t,
+      dayjs
     } = this.props;
 
     return (
       <div className="header">
-        <EventDate time={startTime} />
+        <EventDate time={startTime} dayjs={dayjs} />
         <div className="info">
           <EventTitles eventname={eventname} tagline={tagline} />
           <EventCreator
@@ -22,6 +23,7 @@ class EventHeader extends PureComponent {
             createdAt={createdAt}
             history={history}
             t={t}
+            dayjs={dayjs}
           />
           <EventShare id={id} t={t} />
         </div>

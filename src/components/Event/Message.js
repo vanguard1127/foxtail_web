@@ -1,7 +1,6 @@
 import React from 'react';
-import moment from 'moment';
 
-const Message = React.forwardRef(({ message, history }, ref) => {
+const Message = React.forwardRef(({ message, history, dayjs }, ref) => {
   const messageText = message.text;
   return (
     <div className="item" ref={ref}>
@@ -26,7 +25,7 @@ const Message = React.forwardRef(({ message, history }, ref) => {
         </span>
         <span className="date">
           {' '}
-          {moment(message.createdAt)
+          {dayjs(message.createdAt)
             .locale(localStorage.getItem('i18nextLng'))
             .format('MMMM D, YYYY - HH:mm')
             .toString()}

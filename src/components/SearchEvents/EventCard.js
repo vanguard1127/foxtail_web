@@ -8,7 +8,7 @@ class EventCard extends Component {
     return false;
   }
   render() {
-    const { event, t } = this.props;
+    const { event, t, dayjs } = this.props;
     const {
       id,
       eventname,
@@ -23,7 +23,7 @@ class EventCard extends Component {
       <div className="col-md-12 col-lg-6" key={id}>
         <div className="card-item">
           <div className="thumbnail">
-            <EventDate time={startTime} />
+            <EventDate time={startTime} dayjs={dayjs} />
             <EventCreator ownerProfile={ownerProfile} />
             <span onClick={() => this.props.history.push('/event/' + id)}>
               <img
@@ -47,24 +47,11 @@ class EventCard extends Component {
             </span>
             <div className="goings">
               <ul>
-                <li>
-                  <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
-                </li>
-                <li>
-                  <img src="assets/img/usr/avatar/1002@2x.png" alt="" />
-                </li>
-                <li>
-                  <img src="assets/img/usr/avatar/1003@2x.png" alt="" />
-                </li>
-                <li>
-                  <img src="assets/img/usr/avatar/1004@2x.png" alt="" />
-                </li>
-                <li>
-                  <img src="assets/img/usr/avatar/1005@2x.png" alt="" />
-                </li>
-                <li>
-                  <img src="assets/img/usr/avatar/1006@2x.png" alt="" />
-                </li>
+                {participants.map(el => (
+                  <li key={el.id}>
+                    <img src={el.profilePic} alt="" />
+                  </li>
+                ))}
               </ul>
               <span className="stats">
                 <b>

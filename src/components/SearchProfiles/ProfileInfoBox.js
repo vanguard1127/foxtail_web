@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
-import moment from 'moment';
 
 class ProfileInfoBox extends PureComponent {
   render() {
-    const { users, online, distance, t } = this.props;
+    const { users, online, distance, t, dayjs } = this.props;
 
     return (
       <>
@@ -14,13 +13,13 @@ class ProfileInfoBox extends PureComponent {
         <span className="detail">
           <ul>
             <li className={'gender ' + users[0].gender}>
-              {moment()
+              {dayjs()
                 .locale(localStorage.getItem('i18nextLng'))
                 .diff(users[0].dob, 'years')}
             </li>
             {users[1] && (
               <li className={'gender ' + users[1].gender}>
-                {moment()
+                {dayjs()
                   .locale(localStorage.getItem('i18nextLng'))
                   .diff(users[1].dob, 'years')}
               </li>

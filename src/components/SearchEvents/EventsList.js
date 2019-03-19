@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EventCard from './EventCard';
 import Waypoint from 'react-waypoint';
+
 class EventsList extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.events !== nextProps.events) {
@@ -9,7 +10,7 @@ class EventsList extends Component {
     return false;
   }
   render() {
-    const { events, handleEnd, t } = this.props;
+    const { events, handleEnd, t, dayjs } = this.props;
     return (
       <div className="events-card-content">
         <div className="container">
@@ -19,7 +20,7 @@ class EventsList extends Component {
                 <span className="head">{t('upcomingevent')}</span>
               </div>
               {events.map(event => (
-                <EventCard key={event.id} event={event} t={t} />
+                <EventCard key={event.id} event={event} t={t} dayjs={dayjs} />
               ))}
               <Waypoint
                 onEnter={({ previousPosition }) => handleEnd(previousPosition)}

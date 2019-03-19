@@ -41,7 +41,7 @@ class MyEvents extends PureComponent {
 
   render() {
     const { skip } = this.state;
-    const { t, ErrorHandler } = this.props;
+    const { t, ErrorHandler, dayjs } = this.props;
     return (
       <Query
         query={GET_MY_EVENTS}
@@ -71,7 +71,12 @@ class MyEvents extends PureComponent {
                     </div>
 
                     {myEvents.map(event => (
-                      <EventCard key={event.id} event={event} t={t} />
+                      <EventCard
+                        key={event.id}
+                        event={event}
+                        t={t}
+                        dayjs={dayjs}
+                      />
                     ))}
                   </div>
                 </div>

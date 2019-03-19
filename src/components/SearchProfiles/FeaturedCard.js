@@ -11,7 +11,14 @@ class FeaturedCard extends Component {
     return false;
   }
   render() {
-    const { profile, showMsgModal, likeProfile, history, t } = this.props;
+    const {
+      profile,
+      showMsgModal,
+      likeProfile,
+      history,
+      t,
+      dayjs
+    } = this.props;
 
     const stdCheck = profile.users.every(
       user => user.verifications.std === true
@@ -27,7 +34,7 @@ class FeaturedCard extends Component {
       <div className={'item ' + badge}>
         <div className="info">
           <span onClick={() => history.push('/member/' + profile.id)}>
-            <ProfileInfoDiv profile={profile} t={t} />
+            <ProfileInfoDiv profile={profile} t={t} dayjs={dayjs} />
             <ProfilePic profilePic={profile.profilePic} />
           </span>
         </div>

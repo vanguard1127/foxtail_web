@@ -5245,9 +5245,10 @@
 
 
   section.desires-popup .modal-popup {
-    width: 100%;
-    display: block;
-    float: left;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
     position: relative;
     background-color: #fff;
     border-radius: 2px;

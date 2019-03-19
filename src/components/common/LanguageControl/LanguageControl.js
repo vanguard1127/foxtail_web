@@ -15,7 +15,6 @@ class LanguageControl extends PureComponent {
 
   setLang = lang => {
     i18n.changeLanguage(lang);
-    import('moment/locale/' + lang);
     this.setState({ selectedLang: lang, menuOpen: false });
   };
 

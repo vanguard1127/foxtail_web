@@ -12,7 +12,13 @@ class FeaturedDiv extends Component {
     return false;
   }
   render() {
-    const { featuredProfiles, showMsgModal, likeProfile, t } = this.props;
+    const {
+      featuredProfiles,
+      showMsgModal,
+      likeProfile,
+      t,
+      dayjs
+    } = this.props;
 
     return (
       <section className="featured-profiles" key="na">
@@ -58,6 +64,7 @@ class FeaturedDiv extends Component {
                     showMsgModal={showMsgModal}
                     likeProfile={likeProfile}
                     t={t}
+                    dayjs={dayjs}
                   />
                 );
               })}

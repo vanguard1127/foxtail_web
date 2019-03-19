@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import { Query, Mutation } from 'react-apollo';
 import { toast } from 'react-toastify';
+import dayjs from 'dayjs';
 import { GET_PROFILE, LIKE_PROFILE } from '../../queries';
 import Spinner from '../common/Spinner';
 import withAuth from '../withAuth';
@@ -19,6 +20,7 @@ import ShareModal from '../Modals/Share';
 import DirectMsgModal from '../Modals/DirectMsg';
 import Modal from '../common/Modal';
 import { flagOptions } from '../../docs/options';
+require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 class ProfilePage extends PureComponent {
   state = {
@@ -121,7 +123,7 @@ class ProfilePage extends PureComponent {
     const { t, ErrorHandler, session } = this.props;
     ErrorHandler.setBreadcrumb('Open Profile:' + id);
 
-    if (session.currentuser.tours.indexOf('p') < 0) {
+    if (id === 'tour' && session.currentuser.tours.indexOf('p') < 0) {
       ErrorHandler.setBreadcrumb('Opened Tour: Profile');
       return (
         <div>
@@ -197,6 +199,7 @@ class ProfilePage extends PureComponent {
                                 users={users}
                                 online={profile.online}
                                 t={t}
+                                dayjs={dayjs}
                               />
                             </ErrorHandler.ErrorBoundary>
                             <ErrorHandler.ErrorBoundary>

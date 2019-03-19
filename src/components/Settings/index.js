@@ -1,6 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
+import dayjs from 'dayjs';
+
 import { toast } from 'react-toastify';
 import { Query } from 'react-apollo';
 import { GET_SETTINGS } from '../../queries';
@@ -8,6 +10,7 @@ import Spinner from '../common/Spinner';
 import withAuth from '../withAuth';
 
 import SettingsPage from './SettingsPage';
+require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends PureComponent {
   componentDidMount() {
@@ -71,7 +74,10 @@ class Settings extends PureComponent {
                       </span>
                     </span>
                     <span className="title">
-                      {t('loggedin')}: {settings.lastActive}
+                      {t('loggedin')}:{' '}
+                      {dayjs(settings.lastActive)
+                        .locale(localStorage.getItem('i18nextLng'))
+                        .format('MMMM DD YYYY')}
                     </span>
                   </div>
                 </div>

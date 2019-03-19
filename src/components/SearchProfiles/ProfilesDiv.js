@@ -16,7 +16,8 @@ class ProfilesDiv extends Component {
       likeProfile,
       history,
       handleEnd,
-      t
+      t,
+      dayjs
     } = this.props;
     return (
       <section className="members">
@@ -35,6 +36,7 @@ class ProfilesDiv extends Component {
                     likeProfile={likeProfile}
                     t={t}
                     history={history}
+                    dayjs={dayjs}
                   />
                 );
               })}

@@ -3,6 +3,23 @@ import AddressSearch from '../common/AddressSearch';
 import Select from '../common/Select';
 
 class SearchEventsFilters extends PureComponent {
+  handleRemoveLocLock = async () => {
+    await navigator.geolocation.getCurrentPosition(
+      pos => {
+        const { latitude, longitude } = pos.coords;
+        this.props.setLocationValues({ lat: latitude, long: longitude });
+      },
+      err => {
+        alert(
+          this.props.t(
+            'Please enable location services to remove your set location.'
+          )
+        );
+        return;
+      }
+    );
+  };
+
   render() {
     const {
       location,
@@ -33,6 +50,7 @@ class SearchEventsFilters extends PureComponent {
             address={location}
             type={'(cities)'}
             placeholder={t('srchcity') + '...'}
+            handleRemoveLocLock={() => this.handleRemoveLocLock()}
           />
         </div>
       </div>

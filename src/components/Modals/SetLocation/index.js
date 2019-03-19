@@ -22,7 +22,9 @@ class SetLocationModal extends Component {
     return false;
   }
 
-  setLocationValues = ({ lat, long, address }) => {
+  setLocationValues = pos => {
+    const { lat, long, address } = pos;
+    console.log('SET:', lat, long, address, pos);
     if (lat && long) {
       if (this.mounted) {
         return this.setState({ lat, long, address });
@@ -56,35 +58,49 @@ class SetLocationModal extends Component {
       });
   };
 
+  handleRemoveLocLock = async updateSettings => {
+    await navigator.geolocation.getCurrentPosition(
+      pos => this.setLocation(pos, updateSettings),
+      err => {
+        alert(
+          this.props.t(
+            'Please enable location services to remove your set location.'
+          )
+        );
+        return;
+      }
+    );
+  };
+
   render() {
     const { close, isBlackMember, t } = this.props;
 
     const { address, lat, long } = this.state;
     return (
-      <Modal
-        header={t('common:setloc')}
-        close={close}
-        description={
-          !isBlackMember && (
-            <small>
-              {t('compmsg')}
-              <br />
-              {t('compsecmsg')}
-            </small>
-          )
-        }
-        okSpan={
-          lat !== null ? (
-            <Mutation
-              mutation={UPDATE_SETTINGS}
-              variables={{
-                city: address,
-                lat,
-                long
-              }}
-            >
-              {updateSettings => {
-                return (
+      <Mutation
+        mutation={UPDATE_SETTINGS}
+        variables={{
+          city: address,
+          lat,
+          long
+        }}
+      >
+        {updateSettings => {
+          return (
+            <Modal
+              header={t('common:setloc')}
+              close={close}
+              description={
+                !isBlackMember && (
+                  <small>
+                    {t('compmsg')}
+                    <br />
+                    {t('compsecmsg')}
+                  </small>
+                )
+              }
+              okSpan={
+                lat !== null ? (
                   <span
                     onClick={() => this.handleSubmit(updateSettings)}
                     disabled={lat === null}
@@ -92,25 +108,28 @@ class SetLocationModal extends Component {
                   >
                     {t('Save')}
                   </span>
-                );
-              }}
-            </Mutation>
-          ) : null
-        }
-      >
-        <ErrorBoundary>
-          <div className="m-body">
-            {t('setcity')}:
-            <AddressSearch
-              style={{ width: '100%' }}
-              setLocationValues={this.setLocationValues}
-              address={address}
-              type={'(cities)'}
-              placeholder={t('common:setloc') + '...'}
-            />
-          </div>
-        </ErrorBoundary>
-      </Modal>
+                ) : null
+              }
+            >
+              <ErrorBoundary>
+                <div className="m-body">
+                  {t('setcity')}:
+                  <AddressSearch
+                    style={{ width: '100%' }}
+                    setLocationValues={this.setLocationValues}
+                    address={address}
+                    type={'(cities)'}
+                    placeholder={t('common:setloc') + '...'}
+                    handleRemoveLocLock={() =>
+                      this.handleRemoveLocLock(updateSettings)
+                    }
+                  />
+                </div>
+              </ErrorBoundary>
+            </Modal>
+          );
+        }}
+      </Mutation>
     );
   }
 }

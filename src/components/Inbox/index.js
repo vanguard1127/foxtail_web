@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import dayjs from 'dayjs';
 
 import withAuth from '../withAuth';
 import { withNamespaces } from 'react-i18next';
@@ -20,6 +21,7 @@ import Tour from './Tour';
 import { flagOptions } from '../../docs/options';
 
 import * as ErrorHandler from '../common/ErrorHandler';
+require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 class InboxPage extends PureComponent {
   state = {
@@ -174,6 +176,7 @@ class InboxPage extends PureComponent {
                   currentuser={currentuser}
                   t={t}
                   ErrorHandler={ErrorHandler}
+                  dayjs={dayjs}
                 />
               )}
               {chatID && (
@@ -204,6 +207,7 @@ class InboxPage extends PureComponent {
                         currentuser={currentuser}
                         t={t}
                         ErrorHandler={ErrorHandler}
+                        dayjs={dayjs}
                       />
                     );
                   }}

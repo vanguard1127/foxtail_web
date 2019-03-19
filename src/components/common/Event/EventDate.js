@@ -1,25 +1,24 @@
 import React, { PureComponent } from 'react';
-import moment from 'moment';
 
 class EventDate extends PureComponent {
   render() {
-    const { time } = this.props;
+    const { time, dayjs } = this.props;
     return (
       <div className="date">
         <span>
           {' '}
-          {moment(time)
+          {dayjs(time)
             .locale(localStorage.getItem('i18nextLng'))
             .format('D')}{' '}
         </span>
         <span>
-          {moment(time)
+          {dayjs(time)
             .locale(localStorage.getItem('i18nextLng'))
             .format('MMM')}{' '}
         </span>
         <span>
           {' '}
-          {moment(time)
+          {dayjs(time)
             .locale(localStorage.getItem('i18nextLng'))
             .format('HH:mm')}{' '}
         </span>

@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
+import dayjs from 'dayjs';
 import { SEARCH_EVENTS } from '../../queries';
 import EmptyScreen from '../common/EmptyScreen';
 import Waypoint from 'react-waypoint';
@@ -15,10 +16,12 @@ import Header from './Header';
 import Tour from './Tour';
 import EventsList from './EventsList';
 import Spinner from '../common/Spinner';
+import getCityCountry from '../../utils/getCityCountry';
+
+require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 const LIMIT = 6;
 
-//TODO: fix moment date format issue
 class SearchEvents extends PureComponent {
   state = {
     skip: 0,
@@ -29,7 +32,7 @@ class SearchEvents extends PureComponent {
     lat: this.props.location.lat,
     long: this.props.location.long,
     maxDistance: 50,
-    location: 'My Location',
+    location: this.props.location.city,
     all: true
   };
 
@@ -85,11 +88,15 @@ class SearchEvents extends PureComponent {
     }
   };
 
-  setLocationValues = ({ lat, long, address }) => {
+  setLocationValues = async ({ lat, long, address }) => {
     this.props.ErrorHandler.setBreadcrumb('Set location');
     if (lat && long) {
+      const citycntry = await getCityCountry({
+        long,
+        lat
+      });
       if (this.mounted) {
-        this.setState({ lat, long, location: address });
+        this.setState({ lat, long, location: citycntry.city });
       }
     } else {
       if (this.mounted) {
@@ -209,7 +216,7 @@ class SearchEvents extends PureComponent {
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
-              <MyEvents t={t} ErrorHandler={ErrorHandler} />
+              <MyEvents t={t} ErrorHandler={ErrorHandler} dayjs={dayjs} />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
               {' '}
@@ -248,6 +255,7 @@ class SearchEvents extends PureComponent {
                         this.handleEnd(previous, fetchMore)
                       }
                       t={t}
+                      dayjs={dayjs}
                     />
                   );
                 }}
