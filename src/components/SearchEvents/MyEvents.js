@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
-import { withRouter } from 'react-router-dom';
-import { Query } from 'react-apollo';
-import { GET_MY_EVENTS } from '../../queries';
-import EventCard from './EventCard';
+import React, { PureComponent } from "react";
+import { withRouter } from "react-router-dom";
+import { Query } from "react-apollo";
+import { GET_MY_EVENTS } from "../../queries";
+import EventCard from "./EventCard";
 
 const LIMIT = 3;
 
@@ -29,7 +29,7 @@ class MyEvents extends PureComponent {
   };
 
   handlePaginate = (page, fetchMore) => {
-    this.props.ErrorHandler.setBreadcrumb('Page my events');
+    this.props.ErrorHandler.setBreadcrumb("Page my events");
     this.setState(
       state => ({
         skip: (page - 1) * LIMIT,
@@ -54,7 +54,7 @@ class MyEvents extends PureComponent {
           }
           if (error) {
             return (
-              <ErrorHandler.report error={error} calledName={'getMyEvents'} />
+              <ErrorHandler.report error={error} calledName={"getMyEvents"} />
             );
           }
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
@@ -67,7 +67,7 @@ class MyEvents extends PureComponent {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <span className="head">{t('myevents')}</span>
+                      <span className="head">{t("myevents")}</span>
                     </div>
 
                     {myEvents.map(event => (

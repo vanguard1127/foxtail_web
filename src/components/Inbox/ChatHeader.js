@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import TimeAgo from "../../utils/TimeAgo";
 class ChatHeader extends PureComponent {
   render() {
-    const { currentChat, currentuser, t, otherUser } = this.props;
+    const { currentChat, currentuser, t } = this.props;
 
     let chatTitle = t("nothere");
     let chatLastSeen = "";

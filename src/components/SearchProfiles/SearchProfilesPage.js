@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
 import Tour from "./Tour";
+import validateLang from "../../utils/validateLang";
 
 class SearchProfilesPage extends PureComponent {
   state = {
@@ -22,7 +23,7 @@ class SearchProfilesPage extends PureComponent {
 
   componentDidMount() {
     this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
-    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
   }
 
   setValue = ({ name, value }) => {

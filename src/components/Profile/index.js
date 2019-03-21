@@ -19,6 +19,7 @@ import BlockModal from "../Modals/Block";
 import ShareModal from "../Modals/Share";
 import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
+import validateLang from "../../utils/validateLang";
 import { flagOptions } from "../../docs/options";
 
 class ProfilePage extends PureComponent {
@@ -33,7 +34,7 @@ class ProfilePage extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
   }
   componentWillUnmount() {
     this.mounted = false;

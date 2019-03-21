@@ -8,12 +8,13 @@ import { Query } from "react-apollo";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
+import validateLang from "../../utils/validateLang";
 
 import SettingsPage from "./SettingsPage";
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends PureComponent {
   componentDidMount() {
-    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
     if (!this.props.session.currentuser.isProfileOK) {
       const toastId = "nopro";
       if (!toast.isActive(toastId)) {

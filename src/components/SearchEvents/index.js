@@ -16,6 +16,7 @@ import Header from "./Header";
 import Tour from "./Tour";
 import EventsList from "./EventsList";
 import Spinner from "../common/Spinner";
+import validateLang from "../../utils/validateLang";
 import getCityCountry from "../../utils/getCityCountry";
 
 const LIMIT = 6;
@@ -36,7 +37,7 @@ class SearchEvents extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
   }
   componentWillUnmount() {
     this.mounted = false;

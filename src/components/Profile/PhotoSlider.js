@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
-import OwlCarousel from 'react-owl-carousel';
-import _ from 'lodash';
-import $ from 'jquery';
-import 'lightgallery';
-import 'lg-thumbnail';
-import 'lg-fullscreen';
-import 'lg-zoom';
-import 'lg-autoplay';
-import { preventContextMenu } from '../../utils/image';
+import React, { Component } from "react";
+import OwlCarousel from "react-owl-carousel";
+import $ from "jquery";
+import "lightgallery";
+import "lg-thumbnail";
+import "lg-fullscreen";
+import "lg-zoom";
+import "lg-autoplay";
+import { preventContextMenu } from "../../utils/image";
 
 const configLightGallery = {
   thumbnail: true,
-  selector: 'a',
-  width: '100%',
+  selector: "a",
+  width: "100%",
   thumbnail: true,
   download: false,
   mousewheel: true,
@@ -29,7 +28,7 @@ class PhotoSlider extends Component {
   };
 
   componentWillMount() {
-    document.addEventListener('contextmenu', this.handleContextMenu);
+    document.addEventListener("contextmenu", this.handleContextMenu);
   }
 
   handleContextMenu = event => {
@@ -37,8 +36,8 @@ class PhotoSlider extends Component {
     const { target } = event;
     const { classList, offsetParent } = target;
     if (
-      classList.contains('lg-image') ||
-      offsetParent.classList.contains('lg-thumb')
+      classList.contains("lg-image") ||
+      offsetParent.classList.contains("lg-thumb")
     ) {
       preventContextMenu(event);
     }
@@ -46,8 +45,8 @@ class PhotoSlider extends Component {
 
   componentWillUnmount() {
     try {
-      document.removeEventListener('contextmenu', this.handleContextMenu);
-      $(this.lightGallery).lightGallery('destroy');
+      document.removeEventListener("contextmenu", this.handleContextMenu);
+      $(this.lightGallery).lightGallery("destroy");
     } catch (e) {}
   }
 
@@ -56,10 +55,10 @@ class PhotoSlider extends Component {
     console.log(photos);
     return (
       <div
-        className={isPublic ? 'photos-slider public' : 'photos-slider private'}
+        className={isPublic ? "photos-slider public" : "photos-slider private"}
       >
         <div className="profile-head">
-          {isPublic ? t('Public') : t('Private')} {t('Photos')} ({photos.length}
+          {isPublic ? t("Public") : t("Private")} {t("Photos")} ({photos.length}
           )
         </div>
         <div id="lightgallery" ref={this.onLightGallery}>

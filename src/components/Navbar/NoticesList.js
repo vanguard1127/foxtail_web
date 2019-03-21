@@ -11,6 +11,7 @@ import Waypoint from "react-waypoint";
 import { preventContextMenu } from "../../utils/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import validateLang from "../../utils/validateLang";
 
 dayjs.extend(relativeTime);
 
@@ -31,7 +32,7 @@ class NoticesList extends Component {
   componentDidMount() {
     this.mounted = true;
     this.props.subscribeToNewNotices();
-    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
   }
 
   componentWillUnmount() {

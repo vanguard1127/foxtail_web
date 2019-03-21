@@ -16,13 +16,14 @@ import EventDiscussion from "./EventDiscussion";
 import EventInfo from "./EventInfo";
 import { flagOptions } from "../../docs/options";
 import { toast } from "react-toastify";
+import validateLang from "../../utils/validateLang";
 
 class EventPage extends PureComponent {
   state = { visible: false, blockModalVisible: false, showDelete: false };
 
   componentDidMount() {
     this.mounted = true;
-    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
   }
   componentWillUnmount() {
     this.mounted = false;

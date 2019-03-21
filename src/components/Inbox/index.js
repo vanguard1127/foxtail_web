@@ -19,6 +19,7 @@ import { Mutation, Query } from "react-apollo";
 import ChatWindow from "./ChatWindow";
 import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
+import validateLang from "../../utils/validateLang";
 
 import * as ErrorHandler from "../common/ErrorHandler";
 
@@ -32,7 +33,7 @@ class InboxPage extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
   }
 
   componentWillUnmount() {
