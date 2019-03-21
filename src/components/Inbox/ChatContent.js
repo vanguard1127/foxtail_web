@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import { Query } from 'react-apollo';
-import { GET_MESSAGES, NEW_MESSAGE_SUB } from '../../queries';
-import Waypoint from 'react-waypoint';
-import Spinner from '../common/Spinner';
-import MessageList from './MessageList';
+import React, { PureComponent } from "react";
+import { Query } from "react-apollo";
+import { GET_MESSAGES, NEW_MESSAGE_SUB } from "../../queries";
+import Waypoint from "react-waypoint";
+import Spinner from "../common/Spinner";
+import MessageList from "./MessageList";
 
 class ChatContent extends PureComponent {
   handleEnd = (previousPosition, currentPosition, fetchMore, cursor) => {
@@ -19,7 +19,7 @@ class ChatContent extends PureComponent {
       ) {
         const { chatID, limit } = this.props;
         this.props.setValue({
-          name: 'loading',
+          name: "loading",
           value: true
         });
         fetchMore({
@@ -35,12 +35,12 @@ class ChatContent extends PureComponent {
 
             if (fetchMoreResult.getMessages.messages < limit) {
               this.props.setValue({
-                name: 'hasMoreItems',
+                name: "hasMoreItems",
                 value: false
               });
             }
-            console.log('NEW', ...fetchMoreResult.getMessages.messages);
-            console.log('OLD', ...previousResult.getMessages.messages);
+            console.log("NEW", ...fetchMoreResult.getMessages.messages);
+            console.log("OLD", ...previousResult.getMessages.messages);
             previousResult.getMessages.messages = [
               ...previousResult.getMessages.messages,
               ...fetchMoreResult.getMessages.messages
@@ -50,7 +50,7 @@ class ChatContent extends PureComponent {
           }
         });
         this.props.setValue({
-          name: 'loading',
+          name: "loading",
           value: false
         });
       }
@@ -58,10 +58,10 @@ class ChatContent extends PureComponent {
   };
 
   fetchData = async (fetchMore, cursor) => {
-    this.props.ErrorHandler.setBreadcrumb('fetch more messages');
+    this.props.ErrorHandler.setBreadcrumb("fetch more messages");
     const { chatID, limit } = this.props;
     this.props.setValue({
-      name: 'loading',
+      name: "loading",
       value: true
     });
     fetchMore({
@@ -77,7 +77,7 @@ class ChatContent extends PureComponent {
 
         if (fetchMoreResult.getMessages.messages < limit) {
           this.props.setValue({
-            name: 'hasMoreItems',
+            name: "hasMoreItems",
             value: false
           });
         }
@@ -91,7 +91,7 @@ class ChatContent extends PureComponent {
       }
     });
     this.props.setValue({
-      name: 'loading',
+      name: "loading",
       value: false
     });
   };
@@ -103,9 +103,9 @@ class ChatContent extends PureComponent {
     return (
       <div
         className="content"
-        style={{ display: 'flex', flexDirection: ' column-reverse' }}
+        style={{ display: "flex", flexDirection: " column-reverse" }}
       >
-        {' '}
+        {" "}
         <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit, cursor }}
@@ -114,12 +114,12 @@ class ChatContent extends PureComponent {
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (loading) {
               return (
-                <Spinner message={t('common:Loading') + '...'} size="large" />
+                <Spinner message={t("common:Loading") + "..."} size="large" />
               );
             }
             if (error) {
               return (
-                <ErrorHandler.report error={error} calledName={'getSettings'} />
+                <ErrorHandler.report error={error} calledName={"getSettings"} />
               );
             }
 
@@ -151,7 +151,7 @@ class ChatContent extends PureComponent {
                       } else {
                         prev.getMessages = {
                           messages: [newMessageSubscribe],
-                          __typename: 'ChatType'
+                          __typename: "ChatType"
                         };
                       }
                       return prev;

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import InboxSearchTextBox from './InboxSearchTextBox';
-import { GET_INBOX, NEW_INBOX_SUB } from '../../queries';
-import { Query } from 'react-apollo';
-import Spinner from '../common/Spinner';
-import InboxList from './InboxList';
+import React, { Component } from "react";
+import InboxSearchTextBox from "./InboxSearchTextBox";
+import { GET_INBOX, NEW_INBOX_SUB } from "../../queries";
+import { Query } from "react-apollo";
+import Spinner from "../common/Spinner";
+import InboxList from "./InboxList";
 let unsubscribe = null;
 class InboxPanel extends Component {
   //TODO: Test if this prevent new messages from getting shown
@@ -11,7 +11,7 @@ class InboxPanel extends Component {
     return false;
   }
   render() {
-    const { readChat, currentUserID, t, ErrorHandler } = this.props;
+    const { readChat, currentuser, t, ErrorHandler } = this.props;
 
     return (
       <Query query={GET_INBOX} fetchPolicy="cache-and-network">
@@ -21,21 +21,21 @@ class InboxPanel extends Component {
               <div className="col-md-4 col-lg-3 col-xl-3">
                 <div className="left">
                   <InboxSearchTextBox t={t} />
-                  <Spinner page="inbox" title={t('allmems')} />
+                  <Spinner page="inbox" title={t("allmems")} />
                 </div>
               </div>
             );
           }
           if (error) {
             return (
-              <ErrorHandler.report error={error} calledName={'getSettings'} />
+              <ErrorHandler.report error={error} calledName={"getSettings"} />
             );
           }
 
           const messages = data.getInbox;
 
           if (!messages) {
-            return <div>{t('common:error')}.</div>;
+            return <div>{t("common:error")}.</div>;
           }
 
           if (!unsubscribe) {
@@ -53,8 +53,8 @@ class InboxPanel extends Component {
                   );
 
                   if (
-                    sessionStorage.getItem('page') === 'inbox' &&
-                    sessionStorage.getItem('pid') ===
+                    sessionStorage.getItem("page") === "inbox" &&
+                    sessionStorage.getItem("pid") ===
                       newInboxMsgSubscribe.chatID
                   ) {
                     newInboxMsgSubscribe.unSeenCount = 0;
@@ -78,7 +78,7 @@ class InboxPanel extends Component {
                 <InboxList
                   messages={messages}
                   readChat={readChat}
-                  currentUserID={currentUserID}
+                  currentuser={currentuser}
                 />
               </div>
             </div>

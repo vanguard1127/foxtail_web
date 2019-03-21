@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
-import ChatHeader from './ChatHeader';
-import AdManager from '../common/AdManager';
-import ChatContent from './ChatContent';
-import ChatPanel from './ChatPanel';
+import React, { PureComponent } from "react";
+import ChatHeader from "./ChatHeader";
+import AdManager from "../common/AdManager";
+import ChatContent from "./ChatContent";
+import ChatPanel from "./ChatPanel";
 
 const LIMIT = 6;
 class ChatWindow extends PureComponent {
@@ -20,9 +20,9 @@ class ChatWindow extends PureComponent {
   render() {
     const { currentChat, currentuser, t, ErrorHandler, dayjs } = this.props;
     if (currentChat !== null) {
-      sessionStorage.setItem('pid', currentChat.id);
+      sessionStorage.setItem("pid", currentChat.id);
     } else {
-      sessionStorage.setItem('pid', null);
+      sessionStorage.setItem("pid", null);
     }
     return (
       <div className="col-md-8 col-lg-9 col-xl-7">

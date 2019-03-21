@@ -1,7 +1,7 @@
-import React, { PureComponent, Fragment } from 'react';
-import Waypoint from 'react-waypoint';
-import Message from './Message.js';
-import _ from 'lodash';
+import React, { PureComponent, Fragment } from "react";
+import Waypoint from "react-waypoint";
+import Message from "./Message.js";
+import _ from "lodash";
 
 class DateItem extends PureComponent {
   state = {
@@ -15,7 +15,7 @@ class DateItem extends PureComponent {
     if (!this.state.position) {
       if (this.mounted) {
         this.setState({
-          position: 'above'
+          position: "above"
         });
       }
       if (this.props.onAbove) this.props.onAbove();
@@ -30,7 +30,7 @@ class DateItem extends PureComponent {
     if (currentPosition === Waypoint.inside) {
       if (this.mounted) {
         this.setState({
-          position: 'inside'
+          position: "inside"
         });
       }
       if (this.props.onInside) this.props.onInside();
@@ -40,7 +40,7 @@ class DateItem extends PureComponent {
     if (currentPosition === Waypoint.above) {
       if (this.mounted) {
         this.setState({
-          position: 'above'
+          position: "above"
         });
       }
       if (this.props.onAbove) this.props.onAbove();
@@ -50,10 +50,10 @@ class DateItem extends PureComponent {
     return (
       <div
         style={{
-          margin: '0 -20px 0 -20px',
-          background: '#ffffff70',
-          padding: '20px 0',
-          textAlign: 'center',
+          margin: "0 -20px 0 -20px",
+          background: "#ffffff70",
+          padding: "20px 0",
+          textAlign: "center",
           ...style
         }}
       >
@@ -64,14 +64,14 @@ class DateItem extends PureComponent {
   render() {
     const { stickZIndex, showDate, children } = this.props;
     const stickStyles = {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
       right: 0,
       zIndex: stickZIndex || 10,
-      backgroundColor: '#add8e6',
-      padding: '20px 37px 20px 20px',
-      margin: '0 17px 0 0'
+      backgroundColor: "#add8e6",
+      padding: "20px 37px 20px 20px",
+      margin: "0 17px 0 0"
     };
 
     return (
@@ -133,7 +133,7 @@ class MessageList extends PureComponent {
         // So, for the scroll to start at the bottom when user firsts sees it,
         // either this or fetching more items initial mount
         if (!this.state.hasScrolledBottomInitial) {
-          console.log('Initial Scroll Bottom');
+          console.log("Initial Scroll Bottom");
         }
         this.scrollToBot();
       } else if (this.state.restoreScroll) {
@@ -145,7 +145,7 @@ class MessageList extends PureComponent {
     }
   }
   restoreScroll() {
-    console.log('restoring');
+    console.log("restoring");
     this.scrollWrapperRef.current.scrollTop =
       this.state.previousScrollTop +
       (this.scrollWrapperRef.current.scrollHeight -
@@ -160,7 +160,7 @@ class MessageList extends PureComponent {
   }
   scrollToBot() {
     const { hasScrolledBottomInitial } = this.props;
-    console.log('Scrolling to Bottom');
+    console.log("Scrolling to Bottom");
 
     this.scrollWrapperRef.current.scrollTop = this.scrollWrapperRef.current.scrollHeight;
     if (this.mounted) {
@@ -192,7 +192,7 @@ class MessageList extends PureComponent {
     const { chatID, limit, messages, fetchMore } = this.props;
     // Doesn't repeat because frist we are setting loading =  true
     // And on updateQuary, when the fetch it done. We set loading = false
-    console.log('Can i fetch?', !this.state.loading && this.state.hasMoreItems);
+    console.log("Can i fetch?", !this.state.loading && this.state.hasMoreItems);
     // Wait for restoreScroll to take place, then do the call.
     // If not,things are going to play over each other.
     if (
@@ -203,7 +203,7 @@ class MessageList extends PureComponent {
       return;
     const cursor =
       messages.length > 0 ? messages[messages.length - 1].createdAt : null;
-    console.log('c', messages, cursor);
+    console.log("c", messages, cursor);
     if (this.mounted) {
       this.setState({ loading: true });
     }
@@ -221,7 +221,7 @@ class MessageList extends PureComponent {
         if (noMessagesLeft) {
           this.setState({ hasMoreItems: false });
         }
-        console.log('more', noMessagesLeft);
+        console.log("more", noMessagesLeft);
         if (previousResult.getMessages) {
           previousResult.getMessages.messages = [
             ...previousResult.getMessages.messages,
@@ -230,7 +230,7 @@ class MessageList extends PureComponent {
         } else {
           previousResult.getMessages = fetchMoreResult.getMessages;
         }
-        console.log('Fetch done');
+        console.log("Fetch done");
         if (this.mounted) {
           this.setState({
             loading: false,
@@ -293,16 +293,16 @@ class MessageList extends PureComponent {
       dayjs
     } = this.props;
 
-    let topMessage = '';
+    let topMessage = "";
     if (loading) {
-      topMessage = t('common:Loading') + '...';
+      topMessage = t("common:Loading") + "...";
     }
     // else if (!hasMoreItems) {
     //   topMessage = "Looks like there is nothing else to see here";
     // }
     const lastAboveDateWaypointIndex = this.state.dateWaypoints.reduce(
       (res, cur, i) => {
-        if (cur === 'above') return i;
+        if (cur === "above") return i;
         return res;
       },
       0
@@ -312,8 +312,8 @@ class MessageList extends PureComponent {
       _.chain(messages)
         .groupBy(datum =>
           dayjs(datum.createdAt)
-            .locale(localStorage.getItem('i18nextLng'))
-            .format('dddd, MMMM Do YYYY')
+            .locale(localStorage.getItem("i18nextLng"))
+            .format("dddd, MMMM Do YYYY")
             .toLocaleUpperCase()
         )
         .map((messages, date) => ({ date, messages })) //using ES6 shorthand to generate the objects
@@ -341,10 +341,10 @@ class MessageList extends PureComponent {
             <DateItem
               stickZIndex={index + 10}
               onAbove={() => {
-                this.onDateWaypointPostion(index, 'above');
+                this.onDateWaypointPostion(index, "above");
               }}
               onInside={() => {
-                this.onDateWaypointPostion(index, 'inside');
+                this.onDateWaypointPostion(index, "inside");
               }}
               // showDate={lastAboveDateWaypointIndex === index}
               // Keys won't collied because DateItems's dates are days appart from each other
@@ -363,12 +363,12 @@ class MessageList extends PureComponent {
         {/** Parent for abs position elements because scroll does weird things for abs items */}
         <div
           style={{
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            flexWrap: 'wrap',
-            height: '100%',
-            overflow: 'hidden'
+            position: "relative",
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "wrap",
+            height: "100%",
+            overflow: "hidden"
           }}
         >
           {messageElements}

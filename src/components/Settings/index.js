@@ -1,23 +1,23 @@
-import React, { PureComponent, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
-import { withNamespaces } from 'react-i18next';
-import dayjs from 'dayjs';
+import React, { PureComponent, Fragment } from "react";
+import { withRouter } from "react-router-dom";
+import { withNamespaces } from "react-i18next";
+import dayjs from "dayjs";
 
-import { toast } from 'react-toastify';
-import { Query } from 'react-apollo';
-import { GET_SETTINGS } from '../../queries';
-import Spinner from '../common/Spinner';
-import withAuth from '../withAuth';
+import { toast } from "react-toastify";
+import { Query } from "react-apollo";
+import { GET_SETTINGS } from "../../queries";
+import Spinner from "../common/Spinner";
+import withAuth from "../withAuth";
 
-import SettingsPage from './SettingsPage';
-//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+import SettingsPage from "./SettingsPage";
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends PureComponent {
   componentDidMount() {
+    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
     if (!this.props.session.currentuser.isProfileOK) {
-      const toastId = 'nopro';
+      const toastId = "nopro";
       if (!toast.isActive(toastId)) {
-        toast.info('Please complete your profile.', {
+        toast.info("Please complete your profile.", {
           position: toast.POSITION.TOP_CENTER,
           toastId: toastId
         });
@@ -53,12 +53,12 @@ class Settings extends PureComponent {
         {({ data, loading, error }) => {
           if (loading || !data.getSettings) {
             return (
-              <Spinner message={t('common:Loading') + '...'} size="large" />
+              <Spinner message={t("common:Loading") + "..."} size="large" />
             );
           }
           if (error) {
             return (
-              <ErrorHandler.report error={error} calledName={'getSettings'} />
+              <ErrorHandler.report error={error} calledName={"getSettings"} />
             );
           }
 
@@ -70,18 +70,18 @@ class Settings extends PureComponent {
                   <div className="col-md-12">
                     <span className="head">
                       <span>
-                        {t('Hello')}, {session.currentuser.username} 👋
+                        {t("Hello")}, {session.currentuser.username} 👋
                       </span>
                     </span>
                     <span className="title">
-                      {t('loggedin')}:{' '}
+                      {t("loggedin")}:{" "}
                       {dayjs(settings.lastActive)
-                        .locale(localStorage.getItem('i18nextLng'))
-                        .format('MMMM DD YYYY')}
+                        .locale(localStorage.getItem("i18nextLng"))
+                        .format("MMMM DD YYYY")}
                     </span>
                   </div>
                 </div>
-              </section>{' '}
+              </section>{" "}
               <SettingsPage
                 settings={settings}
                 refetchUser={refetch}
@@ -104,6 +104,6 @@ class Settings extends PureComponent {
 
 export default withRouter(
   withAuth(session => session && session.currentuser)(
-    withNamespaces('settings')(Settings)
+    withNamespaces("settings")(Settings)
   )
 );

@@ -1,26 +1,25 @@
-import React, { PureComponent } from 'react';
-import { withRouter } from 'react-router-dom';
-import { withNamespaces } from 'react-i18next';
-import { Query, Mutation } from 'react-apollo';
-import { toast } from 'react-toastify';
-import dayjs from 'dayjs';
-import { GET_PROFILE, LIKE_PROFILE } from '../../queries';
-import Spinner from '../common/Spinner';
-import withAuth from '../withAuth';
-import DesiresSection from './DesiresSection';
-import ProfileCard from './ProfileCard';
-import Tour from './Tour';
-import ProfileInfo from './ProfileInfo';
-import ProfileBio from './ProfileBio';
-import DesiresMobile from './DesiresMobile';
-import ProfileDetails from './ProfileDetails';
-import PhotoSlider from './PhotoSlider';
-import BlockModal from '../Modals/Block';
-import ShareModal from '../Modals/Share';
-import DirectMsgModal from '../Modals/DirectMsg';
-import Modal from '../common/Modal';
-import { flagOptions } from '../../docs/options';
-//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+import React, { PureComponent } from "react";
+import { withRouter } from "react-router-dom";
+import { withNamespaces } from "react-i18next";
+import { Query, Mutation } from "react-apollo";
+import { toast } from "react-toastify";
+import dayjs from "dayjs";
+import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
+import Spinner from "../common/Spinner";
+import withAuth from "../withAuth";
+import DesiresSection from "./DesiresSection";
+import ProfileCard from "./ProfileCard";
+import Tour from "./Tour";
+import ProfileInfo from "./ProfileInfo";
+import ProfileBio from "./ProfileBio";
+import DesiresMobile from "./DesiresMobile";
+import ProfileDetails from "./ProfileDetails";
+import PhotoSlider from "./PhotoSlider";
+import BlockModal from "../Modals/Block";
+import ShareModal from "../Modals/Share";
+import DirectMsgModal from "../Modals/DirectMsg";
+import Modal from "../common/Modal";
+import { flagOptions } from "../../docs/options";
 
 class ProfilePage extends PureComponent {
   state = {
@@ -34,13 +33,14 @@ class ProfilePage extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
   }
   componentWillUnmount() {
     this.mounted = false;
   }
 
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
-    this.props.ErrorHandler.setBreadcrumb('Match Dialog Toggled:');
+    this.props.ErrorHandler.setBreadcrumb("Match Dialog Toggled:");
     if (this.mounted) {
       if (profile) this.setState({ profile, matchDlgVisible, chatID });
       else this.setState({ matchDlgVisible });
@@ -48,7 +48,7 @@ class ProfilePage extends PureComponent {
   };
 
   handleImageClick = event => {
-    this.props.ErrorHandler.setBreadcrumb('Click image in profile');
+    this.props.ErrorHandler.setBreadcrumb("Click image in profile");
     const { name } = event.target;
     if (this.mounted) {
       this.setState({ selectedPhoto: parseInt(name, 10) });
@@ -63,7 +63,7 @@ class ProfilePage extends PureComponent {
 
   setMsgModalVisible = (msgModalVisible, profile) => {
     this.props.ErrorHandler.setBreadcrumb(
-      'Message Modal Opened:' + msgModalVisible
+      "Message Modal Opened:" + msgModalVisible
     );
     if (this.mounted) {
       if (profile) this.setState({ profile, msgModalVisible });
@@ -73,7 +73,7 @@ class ProfilePage extends PureComponent {
 
   setShareModalVisible = (shareModalVisible, profile) => {
     this.props.ErrorHandler.setBreadcrumb(
-      'Share Modal Opened:' + shareModalVisible
+      "Share Modal Opened:" + shareModalVisible
     );
     if (this.mounted) {
       if (profile) this.setState({ profile, shareModalVisible });
@@ -83,7 +83,7 @@ class ProfilePage extends PureComponent {
 
   setBlockModalVisible = (blockModalVisible, profile) => {
     this.props.ErrorHandler.setBreadcrumb(
-      'Block Modal Opened:' + blockModalVisible
+      "Block Modal Opened:" + blockModalVisible
     );
     if (this.mounted) {
       if (profile) this.setState({ profile, blockModalVisible });
@@ -92,15 +92,15 @@ class ProfilePage extends PureComponent {
   };
 
   handleLike = (profile, likeProfile) => {
-    this.props.ErrorHandler.setBreadcrumb('Like Profile:' + likeProfile);
+    this.props.ErrorHandler.setBreadcrumb("Like Profile:" + likeProfile);
     likeProfile()
       .then(({ data }) => {
         switch (data.likeProfile) {
-          case 'like':
-            toast.success('Liked ' + profile.profileName + '!');
+          case "like":
+            toast.success("Liked " + profile.profileName + "!");
             break;
-          case 'unlike':
-            toast.success('UnLiked ' + profile.profileName + '!');
+          case "unlike":
+            toast.success("UnLiked " + profile.profileName + "!");
             break;
           default:
             this.setMatchDlgVisible(true, profile, data.likeProfile);
@@ -121,10 +121,10 @@ class ProfilePage extends PureComponent {
       chatID
     } = this.state;
     const { t, ErrorHandler, session } = this.props;
-    ErrorHandler.setBreadcrumb('Open Profile:' + id);
+    ErrorHandler.setBreadcrumb("Open Profile:" + id);
 
-    if (id === 'tour' && session.currentuser.tours.indexOf('p') < 0) {
-      ErrorHandler.setBreadcrumb('Opened Tour: Profile');
+    if (id === "tour" && session.currentuser.tours.indexOf("p") < 0) {
+      ErrorHandler.setBreadcrumb("Opened Tour: Profile");
       return (
         <div>
           <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
@@ -146,31 +146,31 @@ class ProfilePage extends PureComponent {
                   return (
                     <ErrorHandler.report
                       error={error}
-                      calledName={'getProfile'}
+                      calledName={"getProfile"}
                     />
                   );
                 }
                 if (loading) {
                   return (
                     <Spinner
-                      message={t('common:Loading') + '...'}
+                      message={t("common:Loading") + "..."}
                       size="large"
                     />
                   );
                 } else if (!data || !data.profile) {
-                  return <div>{t('notexist')}</div>;
+                  return <div>{t("notexist")}</div>;
                 }
                 const profile = data.profile;
 
                 const { users, photos, desires, about } = profile;
 
                 const publicPics = photos.filter(
-                  photoObject => !photoObject.private && photoObject.url !== ''
+                  photoObject => !photoObject.private && photoObject.url !== ""
                 );
                 const privatePics = photos
                   .slice(7, 14)
                   .filter(
-                    photoObject => photoObject.private && photoObject.url !== ''
+                    photoObject => photoObject.private && photoObject.url !== ""
                   );
                 return (
                   <section className="profile">
@@ -247,7 +247,7 @@ class ProfilePage extends PureComponent {
                         id={profile.id}
                         profile={profile}
                         close={() => this.setBlockModalVisible(false)}
-                        goToMain={() => this.props.history.push('/members')}
+                        goToMain={() => this.props.history.push("/members")}
                         type={flagOptions.Profile}
                         ErrorHandler={ErrorHandler}
                       />
@@ -274,7 +274,7 @@ class ProfilePage extends PureComponent {
                           <span
                             className="color"
                             onClick={async () =>
-                              this.props.history.push('/inbox/' + chatID)
+                              this.props.history.push("/inbox/" + chatID)
                             }
                           >
                             Chat Now
@@ -291,11 +291,11 @@ class ProfilePage extends PureComponent {
                       >
                         <span
                           className="description"
-                          style={{ fontSize: '20px', paddingBottom: '35px' }}
+                          style={{ fontSize: "20px", paddingBottom: "35px" }}
                         >
-                          {'You and ' +
+                          {"You and " +
                             profile.profileName +
-                            ' like each other!'}
+                            " like each other!"}
                         </span>
                       </Modal>
                     )}
@@ -311,5 +311,5 @@ class ProfilePage extends PureComponent {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces('profile')(ProfilePage))
+  withRouter(withNamespaces("profile")(ProfilePage))
 );

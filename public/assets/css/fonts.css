@@ -36,12 +36,12 @@
 
 @font-face {
   font-family: "foxtail-icon";
-  src: url("../fonts/fontello.eot?27061464");
-  src: url("../fonts/fontello.eot?27061464#iefix") format("embedded-opentype"),
-    url("../fonts/fontello.woff2?27061464") format("woff2"),
-    url("../fonts/fontello.woff?27061464") format("woff"),
-    url("../fonts/fontello.ttf?27061464") format("truetype"),
-    url("../fonts/fontello.svg?27061464#fontello") format("svg");
+  src: url("../fonts/fontello.eot?55061415");
+  src: url("../fonts/fontello.eot?55061415#iefix") format("embedded-opentype"),
+    url("../fonts/fontello.woff2?55061415") format("woff2"),
+    url("../fonts/fontello.woff?55061415") format("woff"),
+    url("../fonts/fontello.ttf?55061415") format("truetype"),
+    url("../fonts/fontello.svg?55061415#fontello") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -80,7 +80,7 @@
 .icon-danger:before {
   content: "\e805";
 } /* '' */
-.icon-heart:before {
+.icon-hearth:before {
   content: "\e806";
 } /* '' */
 .icon-magnifier:before {
@@ -101,18 +101,21 @@
 .icon-email:before {
   content: "\e80c";
 } /* '' */
-.icon-group:before {
-  content: "\e80e";
-} /* '' */
 .icon-members:before {
   content: "\e80d";
 } /* '' */
+.icon-group:before {
+  content: "\e80e";
+} /* '' */
 .icon-notification:before {
   content: "\e80f";
 } /* '' */
 .icon-gender:before {
   content: "\e810";
 } /* '' */
+.icon-location-1:before {
+  content: "\e811";
+} /* '' */
 .icon-interested:before {
   content: "\e813";
 } /* '' */
@@ -131,12 +134,18 @@
 .icon-instagram:before {
   content: "\e818";
 } /* '' */
-.icon-attachment:before {
-  content: "\e81d";
-} /* '' */
 .icon-twitter:before {
   content: "\e819";
 } /* '' */
+.icon-attachment:before {
+  content: "\e81d";
+} /* '' */
+.icon-more-(1):before {
+  content: "\e81e";
+} /* '' */
+.icon-spin3:before {
+  content: "\e832";
+} /* '' */
 .icon-down-open:before {
   content: "\f004";
 } /* '' */
@@ -149,15 +158,15 @@
 .icon-left-open:before {
   content: "\f007";
 } /* '' */
-.icon-more:before {
-  content: "\e81e";
-} /* '' */
 .icon-location:before {
   content: "\f031";
 } /* '' */
+.icon-circle-empty:before {
+  content: "\f10c";
+} /* '' */
+.icon-circle:before {
+  content: "\f111";
+} /* '' */
 .icon-calendar:before {
   content: "\f4c5";
 } /* '' */
-.icon-spin3:before {
-  content: "\e832";
-} /* '' */

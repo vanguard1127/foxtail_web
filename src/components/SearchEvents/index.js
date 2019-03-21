@@ -1,24 +1,22 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 
-import { withNamespaces } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
-import { Query } from 'react-apollo';
-import dayjs from 'dayjs';
-import { SEARCH_EVENTS } from '../../queries';
-import EmptyScreen from '../common/EmptyScreen';
-import Waypoint from 'react-waypoint';
-import ShareModal from '../Modals/Share';
-import MyEvents from './MyEvents';
-import withLocation from '../withLocation';
-import withAuth from '../withAuth';
-import SearchEventToolbar from './SearchEventToolbar';
-import Header from './Header';
-import Tour from './Tour';
-import EventsList from './EventsList';
-import Spinner from '../common/Spinner';
-import getCityCountry from '../../utils/getCityCountry';
-
-//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+import { withNamespaces } from "react-i18next";
+import { withRouter } from "react-router-dom";
+import { Query } from "react-apollo";
+import dayjs from "dayjs";
+import { SEARCH_EVENTS } from "../../queries";
+import EmptyScreen from "../common/EmptyScreen";
+import Waypoint from "react-waypoint";
+import ShareModal from "../Modals/Share";
+import MyEvents from "./MyEvents";
+import withLocation from "../withLocation";
+import withAuth from "../withAuth";
+import SearchEventToolbar from "./SearchEventToolbar";
+import Header from "./Header";
+import Tour from "./Tour";
+import EventsList from "./EventsList";
+import Spinner from "../common/Spinner";
+import getCityCountry from "../../utils/getCityCountry";
 
 const LIMIT = 6;
 
@@ -38,13 +36,14 @@ class SearchEvents extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
   }
   componentWillUnmount() {
     this.mounted = false;
   }
 
   showModal = () => {
-    this.props.ErrorHandler.setBreadcrumb('Show Modal in Events');
+    this.props.ErrorHandler.setBreadcrumb("Show Modal in Events");
     if (this.mounted) {
       this.setState({ visible: true });
     }
@@ -55,7 +54,7 @@ class SearchEvents extends PureComponent {
   };
 
   handleCancel = () => {
-    this.props.ErrorHandler.setBreadcrumb('Cancel event popup');
+    this.props.ErrorHandler.setBreadcrumb("Cancel event popup");
     if (this.mounted) {
       this.setState({ event: null, visible: false });
     }
@@ -63,7 +62,7 @@ class SearchEvents extends PureComponent {
 
   setShareModalVisible = (shareModalVisible, event) => {
     this.props.ErrorHandler.setBreadcrumb(
-      'share modal visible:' + shareModalVisible
+      "share modal visible:" + shareModalVisible
     );
     if (this.mounted) {
       if (event) this.setState({ event, shareModalVisible });
@@ -73,7 +72,7 @@ class SearchEvents extends PureComponent {
 
   setBlockModalVisible = (blockModalVisible, event) => {
     this.props.ErrorHandler.setBreadcrumb(
-      'Block Modal visible:' + blockModalVisible
+      "Block Modal visible:" + blockModalVisible
     );
     if (this.mounted) {
       if (event) this.setState({ event, blockModalVisible });
@@ -82,14 +81,14 @@ class SearchEvents extends PureComponent {
   };
 
   handleChangeSelect = e => {
-    this.props.ErrorHandler.setBreadcrumb('Change max distance');
+    this.props.ErrorHandler.setBreadcrumb("Change max distance");
     if (this.mounted) {
       this.setState({ maxDistance: parseInt(e.value) });
     }
   };
 
   setLocationValues = async ({ lat, long, address }) => {
-    this.props.ErrorHandler.setBreadcrumb('Set location');
+    this.props.ErrorHandler.setBreadcrumb("Set location");
     if (lat && long) {
       const citycntry = await getCityCountry({
         long,
@@ -106,7 +105,7 @@ class SearchEvents extends PureComponent {
   };
 
   handleSubmit = (e, createEvent, t) => {
-    this.props.ErrorHandler.setBreadcrumb('Create event');
+    this.props.ErrorHandler.setBreadcrumb("Create event");
     e.preventDefault();
     this.formRef.props.form.validateFields((err, fieldsValue) => {
       if (err) {
@@ -115,8 +114,8 @@ class SearchEvents extends PureComponent {
 
       createEvent()
         .then(({ data }) => {
-          alert(t('eventcreated'));
-          this.props.history.push('/event/' + data.createEvent.id);
+          alert(t("eventcreated"));
+          this.props.history.push("/event/" + data.createEvent.id);
         })
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -125,7 +124,7 @@ class SearchEvents extends PureComponent {
   };
 
   fetchData = fetchMore => {
-    this.props.ErrorHandler.setBreadcrumb('Fetch more events');
+    this.props.ErrorHandler.setBreadcrumb("Fetch more events");
     if (this.mounted) {
       this.setState({ loading: true });
     }
@@ -166,7 +165,7 @@ class SearchEvents extends PureComponent {
   };
 
   render() {
-    document.title = 'Events';
+    document.title = "Events";
     const {
       event,
       shareModalVisible,
@@ -178,10 +177,10 @@ class SearchEvents extends PureComponent {
       skip
     } = this.state;
     const { t, ErrorHandler, session } = this.props;
-    ErrorHandler.setBreadcrumb('Search Events');
+    ErrorHandler.setBreadcrumb("Search Events");
 
-    if (session.currentuser.tours.indexOf('se') < 0) {
-      ErrorHandler.setBreadcrumb('Opened Tour: Search Events');
+    if (session.currentuser.tours.indexOf("se") < 0) {
+      ErrorHandler.setBreadcrumb("Opened Tour: Search Events");
       return (
         <div>
           <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
@@ -190,7 +189,7 @@ class SearchEvents extends PureComponent {
     }
     //TODO: Do we still need this
     sessionStorage.setItem(
-      'searchEventQuery',
+      "searchEventQuery",
       JSON.stringify({
         lat,
         long,
@@ -219,7 +218,7 @@ class SearchEvents extends PureComponent {
               <MyEvents t={t} ErrorHandler={ErrorHandler} dayjs={dayjs} />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
-              {' '}
+              {" "}
               <Query
                 query={SEARCH_EVENTS}
                 variables={{ lat, long, maxDistance, all, limit: LIMIT, skip }}
@@ -228,14 +227,14 @@ class SearchEvents extends PureComponent {
                 {({ data, loading, error, fetchMore }) => {
                   if (loading) {
                     return (
-                      <Spinner page="searchEvents" title={t('upcomingevent')} />
+                      <Spinner page="searchEvents" title={t("upcomingevent")} />
                     );
                   }
                   if (error) {
                     return (
                       <ErrorHandler.report
                         error={error}
-                        calledName={'searchEvents'}
+                        calledName={"searchEvents"}
                       />
                     );
                   }
@@ -245,7 +244,7 @@ class SearchEvents extends PureComponent {
                     data.searchEvents.length === 0
                   ) {
                     //TODO: Add label to empty. for when My events and no events
-                    return <EmptyScreen message={t('noeventavailable')} />;
+                    return <EmptyScreen message={t("noeventavailable")} />;
                   }
 
                   return (
@@ -279,6 +278,6 @@ class SearchEvents extends PureComponent {
 
 export default withRouter(
   withAuth(session => session && session.currentuser)(
-    withLocation(withNamespaces('searchevents')(SearchEvents))
+    withLocation(withNamespaces("searchevents")(SearchEvents))
   )
 );

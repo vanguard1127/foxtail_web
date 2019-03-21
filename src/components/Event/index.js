@@ -1,46 +1,46 @@
-import React, { PureComponent } from 'react';
-import { withRouter } from 'react-router-dom';
-import { Query, Mutation } from 'react-apollo';
-import dayjs from 'dayjs';
-import { GET_EVENT, DELETE_EVENT } from '../../queries';
-import { withNamespaces } from 'react-i18next';
-import BlockModal from '../Modals/Block';
-import Spinner from '../common/Spinner';
-import withAuth from '../withAuth';
-import Modal from '../common/Modal';
-import EventHeader from './EventHeader';
-import Tour from './Tour';
-import EventAbout from './EventAbout';
-import EventInfoMobile from './EventInfoMobile';
-import EventDiscussion from './EventDiscussion';
-import EventInfo from './EventInfo';
-import { flagOptions } from '../../docs/options';
-import { toast } from 'react-toastify';
-//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+import React, { PureComponent } from "react";
+import { withRouter } from "react-router-dom";
+import { Query, Mutation } from "react-apollo";
+import dayjs from "dayjs";
+import { GET_EVENT, DELETE_EVENT } from "../../queries";
+import { withNamespaces } from "react-i18next";
+import BlockModal from "../Modals/Block";
+import Spinner from "../common/Spinner";
+import withAuth from "../withAuth";
+import Modal from "../common/Modal";
+import EventHeader from "./EventHeader";
+import Tour from "./Tour";
+import EventAbout from "./EventAbout";
+import EventInfoMobile from "./EventInfoMobile";
+import EventDiscussion from "./EventDiscussion";
+import EventInfo from "./EventInfo";
+import { flagOptions } from "../../docs/options";
+import { toast } from "react-toastify";
 
 class EventPage extends PureComponent {
   state = { visible: false, blockModalVisible: false, showDelete: false };
 
   componentDidMount() {
     this.mounted = true;
+    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
   }
   componentWillUnmount() {
     this.mounted = false;
   }
 
   toggleDeleteDialog = () => {
-    this.props.ErrorHandler.setBreadcrumb('Dialog Modal Toggled:');
+    this.props.ErrorHandler.setBreadcrumb("Dialog Modal Toggled:");
     if (this.mounted) {
       this.setState({ showDelete: !this.state.showDelete });
     }
   };
 
   deleteEvent(deleteEvent) {
-    this.props.ErrorHandler.setBreadcrumb('Delete Event');
+    this.props.ErrorHandler.setBreadcrumb("Delete Event");
     deleteEvent()
       .then(({ data }) => {
-        toast.success('Event Deleted');
-        this.props.history.push('/events');
+        toast.success("Event Deleted");
+        this.props.history.push("/events");
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -49,7 +49,7 @@ class EventPage extends PureComponent {
 
   setBlockModalVisible = (blockModalVisible, event) => {
     this.props.ErrorHandler.setBreadcrumb(
-      'Block modal visible:' + blockModalVisible
+      "Block modal visible:" + blockModalVisible
     );
     if (this.mounted) {
       if (event) this.setState({ event, blockModalVisible });
@@ -60,8 +60,8 @@ class EventPage extends PureComponent {
   closeBlockModal = () => this.setBlockModalVisible(false);
 
   handleDelete = deleteEvent => {
-    this.props.ErrorHandler.setBreadcrumb('Delete Event');
-    const confirmDelete = window.confirm(this.props.t('surewarn'));
+    this.props.ErrorHandler.setBreadcrumb("Delete Event");
+    const confirmDelete = window.confirm(this.props.t("surewarn"));
     if (confirmDelete) {
       deleteEvent()
         .then(({ data }) => {
@@ -74,7 +74,7 @@ class EventPage extends PureComponent {
   };
 
   handleSubmit = (e, createEvent) => {
-    this.props.ErrorHandler.setBreadcrumb('update event');
+    this.props.ErrorHandler.setBreadcrumb("update event");
     e.preventDefault();
 
     this.formRef.props.form.validateFields((err, fieldsValue) => {
@@ -103,8 +103,8 @@ class EventPage extends PureComponent {
     const { id } = this.props.match.params;
     const { blockModalVisible, showDelete } = this.state;
     const { session, history, t, ErrorHandler } = this.props;
-    if (id === 'tour' && session.currentuser.tours.indexOf('e') < 0) {
-      ErrorHandler.setBreadcrumb('Opened Tour: Event');
+    if (id === "tour" && session.currentuser.tours.indexOf("e") < 0) {
+      ErrorHandler.setBreadcrumb("Opened Tour: Event");
       return (
         <div>
           <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
@@ -116,23 +116,23 @@ class EventPage extends PureComponent {
         {({ data, loading, error, refetch }) => {
           if (error) {
             return (
-              <ErrorHandler.report error={error} calledName={'getEvent'} />
+              <ErrorHandler.report error={error} calledName={"getEvent"} />
             );
           }
 
           if (loading) {
             return (
-              <Spinner message={t('common:Loading' + '...')} size="large" />
+              <Spinner message={t("common:Loading" + "...")} size="large" />
             );
           } else if (!data || !data.event) {
-            return <div>{t('noevent')}.</div>;
+            return <div>{t("noevent")}.</div>;
           }
 
           const { event } = data;
 
           const { description, participants, chatID } = event;
           const queryParams = JSON.parse(
-            sessionStorage.getItem('searchEventQuery')
+            sessionStorage.getItem("searchEventQuery")
           );
 
           return (
@@ -152,7 +152,7 @@ class EventPage extends PureComponent {
                     </div>
                     <div className="col-lg-9 col-md-12">
                       <ErrorHandler.ErrorBoundary>
-                        {' '}
+                        {" "}
                         <EventAbout
                           id={id}
                           participants={participants}
@@ -162,16 +162,16 @@ class EventPage extends PureComponent {
                             session.currentuser.profileID
                           }
                           t={t}
-                        />{' '}
-                      </ErrorHandler.ErrorBoundary>{' '}
+                        />{" "}
+                      </ErrorHandler.ErrorBoundary>{" "}
                       <ErrorHandler.ErrorBoundary>
                         <EventInfoMobile
                           event={event}
                           t={t}
                           openDelete={this.toggleDeleteDialog}
                           dayjs={dayjs}
-                        />{' '}
-                      </ErrorHandler.ErrorBoundary>{' '}
+                        />{" "}
+                      </ErrorHandler.ErrorBoundary>{" "}
                       <ErrorHandler.ErrorBoundary>
                         <EventDiscussion
                           id={id}
@@ -185,7 +185,7 @@ class EventPage extends PureComponent {
                     </div>
                     <div className="col-lg-3 col-md-12">
                       <ErrorHandler.ErrorBoundary>
-                        {' '}
+                        {" "}
                         <EventInfo
                           event={event}
                           t={t}
@@ -197,7 +197,7 @@ class EventPage extends PureComponent {
                           openDelete={this.toggleDeleteDialog}
                           refetch={refetch}
                           dayjs={dayjs}
-                        />{' '}
+                        />{" "}
                       </ErrorHandler.ErrorBoundary>
                     </div>
                   </div>
@@ -226,7 +226,7 @@ class EventPage extends PureComponent {
                       Delete
                     </span>(
                       <Modal
-                        header={'Delete Event'}
+                        header={"Delete Event"}
                         close={this.toggleDeleteDialog}
                         description="This can't be undone"
                         okSpan={okSpan}
@@ -244,5 +244,5 @@ class EventPage extends PureComponent {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces('event')(EventPage))
+  withRouter(withNamespaces("event")(EventPage))
 );

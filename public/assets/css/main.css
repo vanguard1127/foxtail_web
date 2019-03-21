@@ -541,6 +541,26 @@
         padding-bottom: 10px;
         padding-top: 10px;
       }
+      header .toggle .notification .item.unread::after {
+        content: '\f10c';
+        font-family: 'foxtail-icon';
+        color: #D4D4D4;
+        font-size: 14px;
+        position: absolute;
+        right: 23px;
+        top: 20px;
+      }
+
+
+      header .toggle .notification .item.read::after {
+        content: '\f111';
+        font-family: 'foxtail-icon';
+        color: #D4D4D4;
+        font-size: 14px;
+        position: absolute;
+        right: 23px;
+        top: 20px;
+      }
 
       header .toggle .notification .item span.avatar {
         width: 36px;
@@ -2882,7 +2902,7 @@
 
   section.profile .photos-slider .slider-content .item {
     width: 100%;
-    height: 95px;
+    height: auto;
     display: block;
     float: left;
     border-radius: 2px;
@@ -2897,7 +2917,6 @@
     height: 100%;
     display: inline-block;
     float: left;
-    position: absolute;
     left: 0;
     top: 0;
   }
@@ -2926,7 +2945,7 @@
 
   section.profile .photos-slider .slider-content .item img {
     width: 100%;
-    min-height: 100%;
+    height: auto;
     display: inline-block;
     float: left;
     background-size: 100%;
@@ -6319,7 +6338,6 @@
     float: left;
     margin-bottom: 15px;
     z-index: 100;
-    overflow: hidden;
   }
   section.landing .register-form form .form-content .dropdown.nobottom {
     margin-bottom: none;
@@ -6920,6 +6938,10 @@
 
  a {
   color: inherit !important;
+ }
+
+ .rc-slider-tooltip {
+z-index: 999;
  }
 
  .rc-slider-rail, .rc-slider-track {
@@ -7757,7 +7779,7 @@
   }
 
   section.profile .photos-slider .slider-content .item {
-    height: 114px;
+    height: auto;
   }
 
   section.profile .data-info ul li {

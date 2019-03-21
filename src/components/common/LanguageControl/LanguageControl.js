@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import i18n from '../../../i18n';
+import React, { PureComponent } from "react";
+import i18n from "../../../i18n";
 
 class LanguageControl extends PureComponent {
   constructor(props) {
@@ -9,8 +9,8 @@ class LanguageControl extends PureComponent {
 
   state = {
     menuOpen: false,
-    selectedLang: localStorage.getItem('i18nextLng'),
-    languages: ['en', 'de', 'tu']
+    selectedLang: localStorage.getItem("i18nextLng") || "en",
+    languages: ["en", "de", "tu"]
   };
 
   setLang = lang => {
@@ -19,11 +19,11 @@ class LanguageControl extends PureComponent {
   };
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   handleClickOutside = event => {
@@ -38,8 +38,8 @@ class LanguageControl extends PureComponent {
 
   render() {
     let convertLang = this.state.selectedLang;
-    if (convertLang === 'en-US') {
-      convertLang = 'en';
+    if (convertLang === "en-US") {
+      convertLang = "en";
     }
 
     return (
@@ -51,7 +51,7 @@ class LanguageControl extends PureComponent {
           <i className={`flag ${convertLang}`} />
         </div>
         <div
-          className={`language-dropdown ${this.state.menuOpen ? 'click' : ''}`}
+          className={`language-dropdown ${this.state.menuOpen ? "click" : ""}`}
         >
           <ul>
             {this.state.languages

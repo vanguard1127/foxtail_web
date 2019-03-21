@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
   NEW_NOTICE_SUB,
   GET_COUNTS
-} from '../../queries';
-import { Query, Mutation, withApollo } from 'react-apollo';
-import Waypoint from 'react-waypoint';
-import { preventContextMenu } from '../../utils/image';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+} from "../../queries";
+import { Query, Mutation, withApollo } from "react-apollo";
+import Waypoint from "react-waypoint";
+import { preventContextMenu } from "../../utils/image";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
-//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
 
 const LIMIT = 5;
 const intialState = {
@@ -32,6 +31,7 @@ class NoticesList extends Component {
   componentDidMount() {
     this.mounted = true;
     this.props.subscribeToNewNotices();
+    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
   }
 
   componentWillUnmount() {
@@ -116,11 +116,11 @@ class NoticesList extends Component {
         this.readNotices(notifications, updateNotifications);
 
         switch (type) {
-          case 'chat':
-            this.props.history.push('/inbox/' + targetID);
+          case "chat":
+            this.props.history.push("/inbox/" + targetID);
             break;
-          case 'event':
-            this.props.history.push('/event/' + targetID);
+          case "event":
+            this.props.history.push("/event/" + targetID);
             break;
           default:
             break;
@@ -133,12 +133,13 @@ class NoticesList extends Component {
   };
 
   handleNotice = ({ notif, updateNotifications, t }) => {
-    if (notif.type === 'alert') {
+    console.log(notif);
+    if (notif.type === "alert") {
       return (
         <span onClick={() => this.props.showAlert(notif)}>
           <span className="avatar">
             <img
-              src={'../../../images/girl2.jpg'}
+              src={"../../../images/girl2.jpg"}
               alt=""
               onContextMenu={preventContextMenu}
             />
@@ -147,7 +148,7 @@ class NoticesList extends Component {
             <span className="text">{t(notif.text)}</span>
             <span className="when">
               {dayjs(notif.date)
-                .locale(localStorage.getItem('i18nextLng'))
+                .locale(localStorage.getItem("i18nextLng"))
                 .fromNow()}
             </span>
           </div>
@@ -179,7 +180,7 @@ class NoticesList extends Component {
             </span>
             <span className="when">
               {dayjs(notif.date)
-                .locale(localStorage.getItem('i18nextLng'))
+                .locale(localStorage.getItem("i18nextLng"))
                 .fromNow()}
             </span>
           </div>
@@ -196,7 +197,10 @@ class NoticesList extends Component {
         <div className="notification open">
           {notifications.length > 0 ? (
             notifications.map(notif => (
-              <div className="item" key={notif.id}>
+              <div
+                className={notif.read ? "item read" : "item unread"}
+                key={notif.id}
+              >
                 {this.handleNotice({ notif, updateNotifications, t })}
               </div>
             ))
@@ -217,7 +221,7 @@ class NoticesList extends Component {
           </div> */}
           <div
             key="way"
-            style={{ width: '100%', display: 'block', float: 'left' }}
+            style={{ width: "100%", display: "block", float: "left" }}
           >
             <Waypoint
               onEnter={({ previousPosition }) => {

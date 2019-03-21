@@ -1,25 +1,35 @@
-import React, { PureComponent, Fragment } from 'react';
-import TimeAgo from '../../utils/TimeAgo';
+import React, { PureComponent, Fragment } from "react";
+import TimeAgo from "../../utils/TimeAgo";
 const preventContextMenu = e => {
   e.preventDefault();
   alert(
-    'Right-click disabled: Saving images on Foxtail will result in your account being banned.'
+    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
   );
 };
 class InboxList extends PureComponent {
   state = { chatID: null };
 
   renderItem = (item, timeAgo) => {
-    const { currentUserID, readChat } = this.props;
+    const { currentuser, readChat } = this.props;
     let title;
     if (item.fromUser) {
-      if (item.fromUser.id === currentUserID && item.participants.length > 0) {
+      if (
+        item.fromUser.id === currentuser.userID &&
+        item.participants.length > 0
+      ) {
         title = item.participants[0].profileName;
       } else {
         title = item.fromUser.username;
       }
     } else {
       title = item.fromProfile.profileName;
+    }
+
+    let notME = item.participants.filter(
+      el => el.id.toString() !== currentuser.profileID
+    );
+    if (item.fromUser.id === currentuser.userID && notME.length > 0) {
+      item.profilePic = notME[0].profilePic;
     }
 
     return (
@@ -31,9 +41,9 @@ class InboxList extends PureComponent {
           <span className="img">
             <img
               src={
-                item.profilePic !== ''
+                item.profilePic !== ""
                   ? item.profilePic
-                  : 'assets/img/usr/avatar/1001@2x.png'
+                  : "assets/img/usr/avatar/1001@2x.png"
               }
               alt=""
               onContextMenu={preventContextMenu}
@@ -73,6 +83,7 @@ class InboxList extends PureComponent {
   //Variables by text
   render() {
     const { messages } = this.props;
+
     return (
       <div className="conversations">
         {this.renderMsgList({ messages })}

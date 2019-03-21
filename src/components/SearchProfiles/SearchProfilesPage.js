@@ -1,12 +1,11 @@
-import React, { PureComponent, Fragment } from 'react';
-import dayjs from 'dayjs';
-import withLocation from '../withLocation';
-import withAuth from '../withAuth';
-import { withRouter } from 'react-router-dom';
-import SearchCriteria from './SearchCriteria';
-import ProfilesContainer from './ProfilesContainer';
-import Tour from './Tour';
-//require('dayjs/locale/' + localStorage.getItem('i18nextLng'));
+import React, { PureComponent, Fragment } from "react";
+import dayjs from "dayjs";
+import withLocation from "../withLocation";
+import withAuth from "../withAuth";
+import { withRouter } from "react-router-dom";
+import SearchCriteria from "./SearchCriteria";
+import ProfilesContainer from "./ProfilesContainer";
+import Tour from "./Tour";
 
 class SearchProfilesPage extends PureComponent {
   state = {
@@ -22,8 +21,8 @@ class SearchProfilesPage extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(this.props.location.city, this.props.searchCriteria.city);
-    this.props.ErrorHandler.setBreadcrumb('Search Profile Page');
+    this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
+    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
   }
 
   setValue = ({ name, value }) => {
@@ -32,7 +31,7 @@ class SearchProfilesPage extends PureComponent {
 
   setLocation = async ({ lat, long, city, country }) => {
     this.props.ErrorHandler.setBreadcrumb(
-      'Set Location: lat:' + lat + ' long:' + long
+      "Set Location: lat:" + lat + " long:" + long
     );
 
     this.setState({ long, lat, city, country });
@@ -53,8 +52,8 @@ class SearchProfilesPage extends PureComponent {
       interestedIn
     } = this.state;
 
-    if (session.currentuser.tours.indexOf('sp') < 0) {
-      ErrorHandler.setBreadcrumb('Opened Tour: Search Profiles');
+    if (session.currentuser.tours.indexOf("sp") < 0) {
+      ErrorHandler.setBreadcrumb("Opened Tour: Search Profiles");
       return (
         <div>
           <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />

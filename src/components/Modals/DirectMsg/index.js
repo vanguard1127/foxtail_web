@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
-import { withNamespaces } from 'react-i18next';
-import { SEND_MESSAGE } from 'queries';
-import Modal from '../../common/Modal';
-import { toast } from 'react-toastify';
+import React, { Component } from "react";
+import { Mutation } from "react-apollo";
+import { withNamespaces } from "react-i18next";
+import { SEND_MESSAGE } from "queries";
+import Modal from "../../common/Modal";
+import { toast } from "react-toastify";
 
 class DirectMsg extends Component {
-  state = { text: '' };
+  state = { text: "" };
   componentDidMount() {
     this.mounted = true;
   }
@@ -26,18 +26,20 @@ class DirectMsg extends Component {
     }
   };
 
-  handleSubmit = sendMessage => {
+  handleSubmit = (e, sendMessage) => {
+    this.props.ErrorHandler.setBreadcrumb("send direct message");
+    e.preventDefault();
     sendMessage()
       .then(async ({ data }) => {
         if (data.sendMessage) {
-          toast.success('Message Sent');
+          toast.success("Message Sent");
 
           if (this.mounted) {
-            this.setState({ text: '' });
+            this.setState({ text: "" });
           }
           this.props.close();
         } else {
-          toast.error('Message not sent.');
+          toast.error("Message not sent.");
         }
       })
       .catch(res => {
@@ -57,19 +59,19 @@ class DirectMsg extends Component {
       <Modal
         header={
           profile
-            ? t('common:sendamsg') +
-              ' ' +
+            ? t("common:sendamsg") +
+              " " +
               profile.users.map((user, index) => {
                 if (index === 0) return user.username;
-                else return +' & ' + user.username;
+                else return +" & " + user.username;
               }) +
-              '?'
-            : t('common:sendamsg')
+              "?"
+            : t("common:sendamsg")
         }
         close={close}
         description="Say something more than 'Hi'!"
         okSpan={
-          text !== '' ? (
+          text !== "" ? (
             <Mutation
               mutation={SEND_MESSAGE}
               variables={{
@@ -79,23 +81,24 @@ class DirectMsg extends Component {
             >
               {(sendMessage, { loading, error }) => {
                 return (
-                  <span
+                  <button
                     className="color"
-                    onClick={() => this.handleSubmit(sendMessage)}
+                    type="submit"
+                    onClick={e => this.handleSubmit(e, sendMessage)}
                   >
-                    {t('common:Send')}
-                  </span>
+                    {t("common:Send")}
+                  </button>
                 );
               }}
             </Mutation>
           ) : null
         }
       >
-        {' '}
+        {" "}
         <ErrorBoundary>
           <div className="input">
             <input
-              placeholder={t('writemsg') + '...'}
+              placeholder={t("writemsg") + "..."}
               value={text}
               onChange={this.handleTextChange}
             />
@@ -105,4 +108,4 @@ class DirectMsg extends Component {
     );
   }
 }
-export default withNamespaces('modals')(DirectMsg);
+export default withNamespaces("modals")(DirectMsg);

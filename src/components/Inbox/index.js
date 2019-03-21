@@ -1,27 +1,26 @@
-import React, { PureComponent } from 'react';
-import dayjs from 'dayjs';
+import React, { PureComponent } from "react";
+import dayjs from "dayjs";
 
-import withAuth from '../withAuth';
-import { withNamespaces } from 'react-i18next';
-import InboxPanel from './InboxPanel';
-import Header from './Header';
-import ChatInfo from './ChatInfo';
-import BlockModal from '../Modals/Block';
-import Spinner from '../common/Spinner';
+import withAuth from "../withAuth";
+import { withNamespaces } from "react-i18next";
+import InboxPanel from "./InboxPanel";
+import Header from "./Header";
+import ChatInfo from "./ChatInfo";
+import BlockModal from "../Modals/Block";
+import Spinner from "../common/Spinner";
 import {
   GET_COUNTS,
   READ_CHAT,
   GET_INBOX,
   REMOVE_SELF,
   READ_CHAT_QUERY
-} from '../../queries';
-import { Mutation, Query } from 'react-apollo';
-import ChatWindow from './ChatWindow';
-import Tour from './Tour';
-import { flagOptions } from '../../docs/options';
+} from "../../queries";
+import { Mutation, Query } from "react-apollo";
+import ChatWindow from "./ChatWindow";
+import Tour from "./Tour";
+import { flagOptions } from "../../docs/options";
 
-import * as ErrorHandler from '../common/ErrorHandler';
-//require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
+import * as ErrorHandler from "../common/ErrorHandler";
 
 class InboxPage extends PureComponent {
   state = {
@@ -33,24 +32,25 @@ class InboxPage extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    require("dayjs/locale/" + localStorage.getItem("i18nextLng"));
   }
 
   componentWillUnmount() {
     this.mounted = false;
-    sessionStorage.setItem('page', null);
-    sessionStorage.setItem('pid', null);
+    sessionStorage.setItem("page", null);
+    sessionStorage.setItem("pid", null);
   }
 
   setBlockModalVisible = () => {
     const { chatID, blockModalVisible } = this.state;
-    ErrorHandler.setBreadcrumb('Block modal visible:' + !blockModalVisible);
+    ErrorHandler.setBreadcrumb("Block modal visible:" + !blockModalVisible);
     if (this.mounted) {
       this.setState({ chatID, blockModalVisible: !blockModalVisible });
     }
   };
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
-    ErrorHandler.setBreadcrumb('Open Chat:' + chatID);
+    ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
     this.setState({ chatID, unSeenCount }, () => {
       readChat()
         .then(({ data }) => {
@@ -65,7 +65,7 @@ class InboxPage extends PureComponent {
   };
 
   handleRemoveSelf = removeSelf => {
-    ErrorHandler.setBreadcrumb('Remove Self from Chat:' + this.state.chatID);
+    ErrorHandler.setBreadcrumb("Remove Self from Chat:" + this.state.chatID);
     removeSelf()
       .then(({ data }) => {
         if (this.mounted) {
@@ -125,12 +125,12 @@ class InboxPage extends PureComponent {
   };
 
   render() {
-    sessionStorage.setItem('page', 'inbox');
+    sessionStorage.setItem("page", "inbox");
     const { t } = this.props;
     const { currentuser } = this.props.session;
     let { chatID, chat, blockModalVisible } = this.state;
-    if (currentuser.tours.indexOf('i') < 0) {
-      ErrorHandler.setBreadcrumb('Opened Tour: Inbox');
+    if (currentuser.tours.indexOf("i") < 0) {
+      ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
       return (
         <div>
           <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
@@ -151,7 +151,7 @@ class InboxPage extends PureComponent {
                 readChat={(id, unSeenCount) =>
                   this.handleChatClick(id, unSeenCount, readChat)
                 }
-                currentUserID={currentuser.userID}
+                currentuser={currentuser}
                 ErrorHandler={ErrorHandler}
                 t={t}
               />
@@ -185,7 +185,7 @@ class InboxPage extends PureComponent {
                       return (
                         <ErrorHandler.report
                           error={error}
-                          calledName={'getEvent'}
+                          calledName={"getEvent"}
                         />
                       );
                     }
@@ -193,7 +193,7 @@ class InboxPage extends PureComponent {
                     if (loading) {
                       return (
                         <Spinner
-                          message={t('common:Loading' + '...')}
+                          message={t("common:Loading" + "...")}
                           size="large"
                         />
                       );
@@ -253,5 +253,5 @@ class InboxPage extends PureComponent {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withNamespaces('inbox')(InboxPage)
+  withNamespaces("inbox")(InboxPage)
 );

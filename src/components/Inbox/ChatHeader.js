@@ -1,28 +1,34 @@
-import React, { PureComponent } from 'react';
-import TimeAgo from '../../utils/TimeAgo';
+import React, { PureComponent } from "react";
+import TimeAgo from "../../utils/TimeAgo";
 class ChatHeader extends PureComponent {
   render() {
-    const { currentChat, currentuser, t } = this.props;
+    const { currentChat, currentuser, t, otherUser } = this.props;
 
-    let chatTitle = t('nothere');
-    let chatLastSeen = '';
-    let chatTitleExtra = '';
+    let chatTitle = t("nothere");
+    let chatLastSeen = "";
+    let chatTitleExtra = "";
+    let chatProfilePic = "";
 
     if (currentChat) {
       let notME = currentChat.participants.filter(
         el => el.id.toString() !== currentuser.profileID
       );
+
       if (notME.length > 0) {
         chatTitle = notME[0].profileName;
+        chatProfilePic = notME[0].profilePic;
       } else {
         chatTitle = currentuser.username;
+        chatProfilePic = currentChat.participants[0].profilePic;
       }
+
       if (currentChat.participants.length > 2) {
         chatTitleExtra =
-          ` + ${currentChat.participants.length - 2}` + t('participants');
+          ` + ${currentChat.participants.length - 2}` + t("participants");
       }
+
       chatLastSeen = currentChat.participants[0].online
-        ? t('common:Online')
+        ? t("common:Online")
         : TimeAgo(currentChat.participants[0].updatedAt);
     }
     return (
@@ -30,7 +36,7 @@ class ChatHeader extends PureComponent {
         <div className="user">
           <div className="avatar">
             <span>
-              <img src={currentChat.participants[0].profilePic} alt="" />
+              <img src={chatProfilePic} alt="" />
             </span>
           </div>
           <span className="name couple">
@@ -45,10 +51,10 @@ class ChatHeader extends PureComponent {
         <div className="more-dropdown">
           <ul>
             <li>
-              <span>{t('leaveconv')}</span>
+              <span>{t("leaveconv")}</span>
             </li>
             <li>
-              <span>{t('reportconv')}</span>
+              <span>{t("reportconv")}</span>
             </li>
           </ul>
         </div>

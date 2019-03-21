@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import { SEND_MESSAGE, GET_MESSAGES, GET_INBOX } from '../../queries';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import { SEND_MESSAGE, GET_MESSAGES, GET_INBOX } from "../../queries";
 
 class ChatPanel extends PureComponent {
   state = {
-    text: ''
+    text: ""
   };
 
   componentDidMount() {
@@ -14,13 +14,13 @@ class ChatPanel extends PureComponent {
     this.mounted = false;
   }
   submitMessage(e, sendMessage) {
-    this.props.ErrorHandler.setBreadcrumb('Send message (chat)');
+    this.props.ErrorHandler.setBreadcrumb("Send message (chat)");
     e.preventDefault();
 
     sendMessage()
       .then(({ data }) => {
         if (this.mounted) {
-          this.setState({ text: '' });
+          this.setState({ text: "" });
         }
       })
       .catch(res => {
@@ -50,11 +50,11 @@ class ChatPanel extends PureComponent {
         fromUser: {
           username: currentuser.username,
           id: currentuser.userID,
-          __typename: 'UserType'
+          __typename: "UserType"
         },
         text,
-        type: 'msg',
-        __typename: 'MessageType'
+        type: "msg",
+        __typename: "MessageType"
       }
     ];
 
@@ -102,17 +102,17 @@ class ChatPanel extends PureComponent {
               <div className="files" />
               <div className="textarea">
                 <input
-                  placeholder={t('typemsg') + '...'}
+                  placeholder={t("typemsg") + "..."}
                   value={text}
                   onChange={e => this.setText(e)}
                 />
               </div>
               <div className="send">
                 <button type="submit" disabled={!text.trim()}>
-                  {t('common:Send')}
+                  {t("common:Send")}
                 </button>
               </div>
-            </div>{' '}
+            </div>{" "}
           </form>
         )}
       </Mutation>
