@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import AttendEvent from './AttendEvent';
-import EditEventBtn from './EditEventBtn';
+import React, { PureComponent } from "react";
+import AttendEvent from "./AttendEvent";
+import EditEventBtn from "./EditEventBtn";
 class EventInfo extends PureComponent {
   render() {
     const {
@@ -21,55 +21,56 @@ class EventInfo extends PureComponent {
       desires,
       distance,
       address,
-      participants
+      participants,
+      image
     } = event;
     return (
       <div className="event-info-content hid-mobile">
         <div className="event-image">
           <span>
-            <img src="/assets/img/events/1001@2x.png" alt="" />
+            <img src={image || "/assets/img/events/1001@2x.png"} alt="" />
           </span>
         </div>
         <ul>
           <li>
-            <span className="head">{t('evedate')}:</span>
+            <span className="head">{t("evedate")}:</span>
             <span className="title">
               {dayjs(startTime)
-                .locale(localStorage.getItem('i18nextLng'))
-                .format('DD MMMM YYYY, dddd')
+                .locale(localStorage.getItem("i18nextLng"))
+                .format("DD MMMM YYYY, dddd")
                 .toString()}
             </span>
           </li>
           <li>
             <span className="head">
-              {t('evedate')} - {t('time')}:
+              {t("evedate")} - {t("time")}:
             </span>
             <span className="title">
               {dayjs(startTime)
-                .locale(localStorage.getItem('i18nextLng'))
-                .format('HH:mm')
-                .toString()}{' '}
-              -{' '}
+                .locale(localStorage.getItem("i18nextLng"))
+                .format("HH:mm")
+                .toString()}{" "}
+              -{" "}
               {dayjs(endTime)
-                .locale(localStorage.getItem('i18nextLng'))
-                .format('HH:mm')
+                .locale(localStorage.getItem("i18nextLng"))
+                .format("HH:mm")
                 .toString()}
             </span>
           </li>
           <li>
-            <span className="head">{t('Type')}:</span>
+            <span className="head">{t("Type")}:</span>
             <span className="title">{type}</span>
           </li>
           <li>
-            <span className="head">{t('toexpect')}:</span>
-            <span className="title">{desires.map(desire => desire + ',')}</span>
+            <span className="head">{t("toexpect")}:</span>
+            <span className="title">{desires.map(desire => desire + ",")}</span>
           </li>
           <li>
-            <span className="head">{t('Away')}:</span>
+            <span className="head">{t("Away")}:</span>
             <span className="title">{distance} Miles</span>
           </li>
           <li>
-            <span className="head">{t('common:Address')}:</span>
+            <span className="head">{t("common:Address")}:</span>
             <span className="title address">{address}</span>
           </li>
         </ul>

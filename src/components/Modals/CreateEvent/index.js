@@ -1,52 +1,52 @@
-import React, { PureComponent } from 'react';
-import { withNamespaces } from 'react-i18next';
-import * as yup from 'yup';
-import axios from 'axios';
-import { Mutation } from 'react-apollo';
-import { SIGNS3, CREATE_EVENT, SEARCH_EVENTS } from '../../../queries';
-import PhotoUpload from '../../common/PhotoUpload';
-import DesiresModal from '../../Modals/Desires/Modal';
-import DesiresSelector from '../../Modals/Desires/Selector';
-import Select from '../../common/Select';
-import AddressSearch from '../../common/AddressSearch';
-import DatePicker from '../../common/DatePicker';
-import Modal from '../../common/Modal';
-import isEmpty from '../../../utils/isEmpty';
-import { toast } from 'react-toastify';
+import React, { PureComponent } from "react";
+import { withNamespaces } from "react-i18next";
+import * as yup from "yup";
+import axios from "axios";
+import { Mutation } from "react-apollo";
+import { SIGNS3, CREATE_EVENT, SEARCH_EVENTS } from "../../../queries";
+import PhotoUpload from "../../common/PhotoUpload";
+import DesiresModal from "../../Modals/Desires/Modal";
+import DesiresSelector from "../../Modals/Desires/Selector";
+import Select from "../../common/Select";
+import AddressSearch from "../../common/AddressSearch";
+import DatePicker from "../../common/DatePicker";
+import Modal from "../../common/Modal";
+import isEmpty from "../../../utils/isEmpty";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   eventname: yup
     .string()
-    .min(3, 'Event Name must be at least 3 characters')
-    .max(120, 'Event Name must be less than 120 characters')
-    .required('Event Name is required!'),
+    .min(3, "Event Name must be at least 3 characters")
+    .max(120, "Event Name must be less than 120 characters")
+    .required("Event Name is required!"),
   description: yup
     .string()
-    .min(10, 'Description must be at least 10 characters')
-    .max(500, 'Description must be less than 500 characters')
-    .required('Description is required!'),
-  type: yup.string().required('Event Type is required!'),
+    .min(10, "Description must be at least 10 characters")
+    .max(500, "Description must be less than 500 characters")
+    .required("Description is required!"),
+  type: yup.string().required("Event Type is required!"),
   address: yup
     .string()
-    .max(240, 'Description must be less than 240 characters')
-    .required('Address is required!')
+    .max(240, "Description must be less than 240 characters")
+    .required("Address is required!")
 });
 class CreateEvent extends PureComponent {
   state = {
-    eventname: '',
-    tagline: '',
-    description: '',
-    filename: '',
-    filetype: '',
+    eventname: "",
+    tagline: "",
+    description: "",
+    filename: "",
+    filetype: "",
     desires: [],
     lat: null,
     long: null,
-    address: '',
+    address: "",
     images: [],
-    image: '',
-    type: '',
-    startTime: '',
-    endTime: '',
+    image: "",
+    type: "",
+    startTime: "",
+    endTime: "",
     interestedIn: [],
     errors: {},
     showInfo: true,
@@ -55,7 +55,7 @@ class CreateEvent extends PureComponent {
   };
   componentDidMount() {
     this.mounted = true;
-    this.props.ErrorHandler.setBreadcrumb('Create Event Modal');
+    this.props.ErrorHandler.setBreadcrumb("Create Event Modal");
   }
 
   componentWillUnmount() {
@@ -88,7 +88,7 @@ class CreateEvent extends PureComponent {
   };
   InputFeedback = error =>
     error ? (
-      <div className="input-feedback" style={{ color: 'red' }}>
+      <div className="input-feedback" style={{ color: "red" }}>
         {error}
       </div>
     ) : null;
@@ -116,20 +116,18 @@ class CreateEvent extends PureComponent {
   handleSubmit = async ({ createEvent, signS3 }) => {
     if (await this.validateForm()) {
       if (this.state.images.length > 0) {
-        await signS3().catch(res => {
-          console.log('!', res);
-        });
+        await this.handleUpload({ signS3 });
       }
       createEvent()
         .then(async ({ data }) => {
-          toast.success('Event Saved!');
+          toast.success("Event Saved!");
           if (this.props.refetch) {
             this.props.refetch();
           }
           this.props.close();
         })
         .catch(res => {
-          console.log('3', res);
+          console.log("3", res);
         });
     }
   };
@@ -174,14 +172,14 @@ class CreateEvent extends PureComponent {
       //ORIGINAL
       const options = {
         headers: {
-          'Content-Type': file.type
+          "Content-Type": file.type
         }
       };
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status === 200) {
-        console.log('upload ok');
+        console.log("upload ok");
       } else {
-        console.log('Something went wrong');
+        console.log("Something went wrong");
       }
     } catch (e) {
       console.log(e);
@@ -234,7 +232,7 @@ class CreateEvent extends PureComponent {
 
     return (
       <section>
-        <Modal header={eventID ? t('updateeve') : t('createeve')} close={close}>
+        <Modal header={eventID ? t("updateeve") : t("createeve")} close={close}>
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
               <div className="page">
@@ -249,13 +247,13 @@ class CreateEvent extends PureComponent {
                             id="eventname"
                             onChange={el =>
                               this.setValue({
-                                name: 'eventname',
+                                name: "eventname",
                                 value: el.target.value
                               })
                             }
                             value={eventname}
                           />
-                          <label title={t('evename')} htmlFor="eventname" />
+                          <label title={t("evename")} htmlFor="eventname" />
                         </div>
                         {this.InputFeedback(errors.eventname)}
                       </div>
@@ -267,22 +265,22 @@ class CreateEvent extends PureComponent {
                             id="tagline"
                             onChange={el =>
                               this.setValue({
-                                name: 'tagline',
+                                name: "tagline",
                                 value: el.target.value
                               })
                             }
                             value={tagline}
                           />
-                          <label title={t('tagline')} htmlFor="tagline" />
+                          <label title={t("tagline")} htmlFor="tagline" />
                         </div>
                       </div>
                       <div className="item">
                         <div className="textarea">
                           <textarea
-                            placeholder={t('desctitle') + '...'}
+                            placeholder={t("desctitle") + "..."}
                             onChange={el =>
                               this.setValue({
-                                name: 'description',
+                                name: "description",
                                 value: el.target.value
                               })
                             }
@@ -300,19 +298,19 @@ class CreateEvent extends PureComponent {
                       </div>
                       <div className="item">
                         <Select
-                          label={t('evetype') + ':'}
+                          label={t("evetype") + ":"}
                           onChange={el =>
                             this.setValue({
-                              name: 'type',
+                              name: "type",
                               value: el.value
                             })
                           }
                           value={type}
                           defaultOptionValue={type}
                           options={[
-                            { label: 'Public', value: 'public' },
-                            { label: 'Private', value: 'private' },
-                            { label: 'Request', value: 'request' }
+                            { label: "Public", value: "public" },
+                            { label: "Private", value: "private" },
+                            { label: "Request", value: "request" }
                           ]}
                         />
                       </div>
@@ -322,7 +320,7 @@ class CreateEvent extends PureComponent {
                           photos={images}
                           setPhotos={el =>
                             this.setValue({
-                              name: 'images',
+                              name: "images",
                               value: el
                             })
                           }
@@ -331,7 +329,7 @@ class CreateEvent extends PureComponent {
                       <div className="item">
                         <div className="button mtop">
                           <button onClick={() => this.togglePage()}>
-                            {t('common:Next')}
+                            {t("common:Next")}
                           </button>
                         </div>
                       </div>
@@ -342,7 +340,7 @@ class CreateEvent extends PureComponent {
                       <div className="item">
                         <AddressSearch
                           style={{
-                            width: '100%'
+                            width: "100%"
                           }}
                           setLocationValues={({ lat, long, address }) =>
                             this.setLocationValues({
@@ -352,8 +350,8 @@ class CreateEvent extends PureComponent {
                             })
                           }
                           address={address}
-                          type={'address'}
-                          placeholder={t('common:Address')}
+                          type={"address"}
+                          placeholder={t("common:Address")}
                           hideReset={true}
                         />
                       </div>
@@ -367,13 +365,13 @@ class CreateEvent extends PureComponent {
                           }}
                           onChange={e => {
                             this.setValue({
-                              name: 'startTime',
+                              name: "startTime",
                               value: e
                             });
                           }}
                           t={t}
                           type="datetime"
-                          placeholder={t('evestart')}
+                          placeholder={t("evestart")}
                         />
                       </div>
                       <div className="item">
@@ -382,19 +380,19 @@ class CreateEvent extends PureComponent {
                           p={{ minDate: new Date(startTime) || new Date() }}
                           onChange={e => {
                             this.setValue({
-                              name: 'endTime',
+                              name: "endTime",
                               value: e
                             });
                           }}
                           t={t}
-                          placeholder={t('eveend')}
+                          placeholder={t("eveend")}
                           type="datetime"
                         />
                       </div>
 
                       <div className="item">
                         <div className="submit">
-                          {' '}
+                          {" "}
                           <Mutation
                             mutation={SIGNS3}
                             variables={{ filename, filetype }}
@@ -431,8 +429,8 @@ class CreateEvent extends PureComponent {
                                         }
                                       >
                                         {eventID
-                                          ? t('common:updateevent')
-                                          : t('common:createevent')}
+                                          ? t("common:updateevent")
+                                          : t("common:createevent")}
                                       </span>
                                     );
                                   }}
@@ -468,4 +466,4 @@ class CreateEvent extends PureComponent {
     );
   }
 }
-export default withNamespaces('modals')(CreateEvent);
+export default withNamespaces("modals")(CreateEvent);

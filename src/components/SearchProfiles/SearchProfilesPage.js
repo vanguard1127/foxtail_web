@@ -23,7 +23,8 @@ class SearchProfilesPage extends PureComponent {
 
   componentDidMount() {
     this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
-    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
+    const lang = validateLang(localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + lang);
   }
 
   setValue = ({ name, value }) => {

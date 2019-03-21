@@ -14,7 +14,8 @@ import SettingsPage from "./SettingsPage";
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends PureComponent {
   componentDidMount() {
-    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
+    const lang = validateLang(localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + lang);
     if (!this.props.session.currentuser.isProfileOK) {
       const toastId = "nopro";
       if (!toast.isActive(toastId)) {

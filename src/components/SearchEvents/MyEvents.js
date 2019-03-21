@@ -60,6 +60,7 @@ class MyEvents extends PureComponent {
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
             return null;
           }
+          console.log(data.getMyEvents);
           const myEvents = data.getMyEvents.docs;
           return (
             <div className="events-card-content my-events">

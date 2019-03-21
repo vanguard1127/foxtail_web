@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import EventDate from '../common/Event/EventDate';
-import EventCreator from './EventCreator';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import EventDate from "../common/Event/EventDate";
+import EventCreator from "./EventCreator";
 
 class EventCard extends Component {
   shouldComponentUpdate() {
@@ -18,19 +18,19 @@ class EventCard extends Component {
       ownerProfile,
       image
     } = event;
-
+    console.log("hjjhhj", image);
     return (
       <div className="col-md-12 col-lg-6" key={id}>
         <div className="card-item">
           <div className="thumbnail">
             <EventDate time={startTime} dayjs={dayjs} />
             <EventCreator ownerProfile={ownerProfile} />
-            <span onClick={() => this.props.history.push('/event/' + id)}>
+            <span onClick={() => this.props.history.push("/event/" + id)}>
               <img
                 src={
-                  image !== '' && image !== undefined && image !== null
+                  image !== "" && image !== undefined && image !== null
                     ? image
-                    : 'assets/img/events/1001@2x.png'
+                    : "assets/img/events/1001@2x.png"
                 }
                 alt=""
               />
@@ -38,12 +38,12 @@ class EventCard extends Component {
           </div>
           <div className="content">
             <div className="event-name">
-              <span onClick={() => this.props.history.push('/event/' + id)}>
+              <span onClick={() => this.props.history.push("/event/" + id)}>
                 {eventname}
               </span>
             </div>
             <span className="distance">
-              {distance} {t('common:' + 'miaway')}
+              {distance} {t("common:" + "miaway")}
             </span>
             <div className="goings">
               <ul>
@@ -55,17 +55,17 @@ class EventCard extends Component {
               </ul>
               <span className="stats">
                 <b>
-                  {participants.length} {t('common:people')}
-                </b>{' '}
-                {t('common:going')}
+                  {participants.length} {t("common:people")}
+                </b>{" "}
+                {t("common:going")}
               </span>
             </div>
             <div className="functions">
               <div
                 className="btn go-detail"
-                onClick={() => this.props.history.push('/event/' + id)}
+                onClick={() => this.props.history.push("/event/" + id)}
               >
-                <span>{t('eventdetail')}</span>
+                <span>{t("eventdetail")}</span>
               </div>
               <div className="btn share">
                 <span />

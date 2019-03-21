@@ -324,7 +324,8 @@ class MessageList extends PureComponent {
               let props = {
                 key: message.id,
                 message,
-                currentUserID
+                currentUserID,
+                t
               };
               if (
                 j === messageList.length - 1 &&

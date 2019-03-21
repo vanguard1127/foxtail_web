@@ -1,5 +1,5 @@
 //TODO: Remove apollo boost and replace with something smaller or already used
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 /* Subscriptions */
 export const NEW_MESSAGE_SUB = gql`
@@ -314,6 +314,7 @@ export const CREATE_EVENT = gql`
     $type: String!
     $startTime: String!
     $endTime: String!
+    $image: String
     $eventID: ID
   ) {
     createEvent(
@@ -328,6 +329,7 @@ export const CREATE_EVENT = gql`
       endTime: $endTime
       eventID: $eventID
       address: $address
+      image: $image
       type: $type
     ) {
       id
@@ -346,6 +348,7 @@ export const CREATE_EVENT = gql`
       address
       startTime
       endTime
+      image
     }
   }
 `;

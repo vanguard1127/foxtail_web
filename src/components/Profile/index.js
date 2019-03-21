@@ -34,7 +34,8 @@ class ProfilePage extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    require("dayjs/locale/" + validateLang(localStorage.getItem("i18nextLng")));
+    const lang = validateLang(localStorage.getItem("i18nextLng"));
+    require("dayjs/locale/" + lang);
   }
   componentWillUnmount() {
     this.mounted = false;
