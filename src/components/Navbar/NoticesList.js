@@ -97,25 +97,11 @@ class NoticesList extends Component {
     });
   };
 
-  readNotices = (notificationIDs, updateNotifications) => {
-    if (this.mounted) {
-      this.setState({ notificationIDs, read: true }, () => {
-        updateNotifications()
-          .then(({ data }) => {
-            this.clearState();
-          })
-          .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-          });
-      });
-    }
-  };
-
-  readAndGo = ({ notifications, targetID, type, updateNotifications }) => {
+  readAndGo = ({ notifications, targetID, type }) => {
     try {
       const { close } = this.props;
-      if (notifications.length !== 0) {
-        this.readNotices(notifications, updateNotifications);
+      if (notifications.length > 0) {
+        this.props.readNotices(notifications);
 
         switch (type) {
           case "chat":
@@ -134,7 +120,7 @@ class NoticesList extends Component {
     }
   };
 
-  handleNotice = ({ notif, updateNotifications, t }) => {
+  handleNotice = ({ notif, t }) => {
     if (notif.type === "alert") {
       return (
         <span onClick={() => this.props.showAlert(notif)}>
@@ -162,8 +148,7 @@ class NoticesList extends Component {
             this.readAndGo({
               notifications: [notif.id],
               targetID: notif.targetID,
-              type: notif.type,
-              updateNotifications
+              type: notif.type
             })
           }
         >
@@ -191,8 +176,8 @@ class NoticesList extends Component {
   };
 
   render() {
-    const { t, notifications, updateNotifications, fetchMore } = this.props;
-
+    const { t, notifications, fetchMore } = this.props;
+    console.log(notifications);
     return (
       <div className="toggle">
         <div className="notification open">
@@ -202,7 +187,7 @@ class NoticesList extends Component {
                 className={notif.read ? "item read" : "item unread"}
                 key={notif.id}
               >
-                {this.handleNotice({ notif, updateNotifications, t })}
+                {this.handleNotice({ notif, t })}
               </div>
             ))
           ) : (

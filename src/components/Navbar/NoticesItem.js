@@ -60,24 +60,22 @@ class NoticesItem extends PureComponent {
       query: GET_NOTIFICATIONS,
       variables: { limit: LIMIT, skip }
     });
-    console.log("GETNOTIF", getNotifications, "SDDS", notifications);
-    // const [id] = notificationIDs;
-    // var index = notifications.findIndex(notice => notice.id === id);
-    // const readNotice = notifications[index];
-    // // Replace item at index using native splice
-    // notifications.splice(index, 1, { ...readNotice, read: true });
-    // cache.writeQuery({
-    //   query: GET_NOTIFICATIONS,
-    //   variables: { limit: LIMIT },
-    //   data: {
-    //     getNotifications: { ...getNotifications, notifications }
-    //   }
-    // });
+
+    const [id] = notificationIDs;
+    var readNotice = notifications.find(notice => notice.id === id);
+    readNotice.read = true;
+
+    cache.writeQuery({
+      query: GET_NOTIFICATIONS,
+      variables: { limit: LIMIT },
+      data: {
+        getNotifications: { ...getNotifications, notifications }
+      }
+    });
   };
 
   //TODO: Ensure this causes instant update to nums
   updateSeen = numSeen => {
-    console.log("SDDSDS", numSeen);
     const { client } = this.props;
     const { getCounts } = client.readQuery({
       query: GET_COUNTS
@@ -91,6 +89,20 @@ class NoticesItem extends PureComponent {
       }
     });
     this.handleVisibleChange(false);
+  };
+
+  readNotices = (notificationIDs, updateNotifications) => {
+    if (this.mounted) {
+      this.setState({ notificationIDs, read: true }, () => {
+        updateNotifications()
+          .then(({ data }) => {
+            this.clearState();
+          })
+          .catch(res => {
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          });
+      });
+    }
   };
 
   handleCloseAlert = (notificationID, updateNotifications, refetch) => {
@@ -118,6 +130,7 @@ class NoticesItem extends PureComponent {
   showAlert = alert => {
     if (this.mounted) {
       this.setState({ userAlert: alert, alertVisible: true });
+      //handleCloseAlert = (alert.id, updateNotifications, refetch)
     }
   };
 
@@ -228,7 +241,9 @@ class NoticesItem extends PureComponent {
                         close={() => this.updateSeen(unseen)}
                         t={t}
                         visible={this.state.visible}
-                        updateNotifications={updateNotifications}
+                        readNotices={e =>
+                          this.readNotices(e, updateNotifications)
+                        }
                         showAlert={this.showAlert}
                         ErrorHandler={ErrorHandler}
                         subscribeToNewNotices={() =>
