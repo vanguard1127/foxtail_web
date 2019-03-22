@@ -135,7 +135,6 @@ class NoticesList extends Component {
   };
 
   handleNotice = ({ notif, updateNotifications, t }) => {
-    console.log(notif);
     if (notif.type === "alert") {
       return (
         <span onClick={() => this.props.showAlert(notif)}>

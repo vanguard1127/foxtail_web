@@ -1,19 +1,19 @@
-import React, { PureComponent } from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
-import NoticesList from './NoticesList';
-import Menu from '../common/Menu';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { PureComponent } from "react";
+import { withRouter, NavLink } from "react-router-dom";
+import NoticesList from "./NoticesList";
+import Menu from "../common/Menu";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
   NEW_NOTICE_SUB,
   GET_COUNTS
-} from '../../queries';
-import { Query, Mutation, withApollo } from 'react-apollo';
+} from "../../queries";
+import { Query, Mutation, withApollo } from "react-apollo";
 
 const LIMIT = 5;
 const intialState = {
@@ -52,14 +52,15 @@ class NoticesItem extends PureComponent {
   };
 
   updateRead = cache => {
-    // const { notificationIDs } = this.state;
-    // const {
-    //   getNotifications,
-    //   getNotifications: { notifications }
-    // } = cache.readQuery({
-    //   query: GET_NOTIFICATIONS,
-    //   variables: { limit: LIMIT }
-    // });
+    const { notificationIDs, skip } = this.state;
+    const {
+      getNotifications,
+      getNotifications: { notifications }
+    } = cache.readQuery({
+      query: GET_NOTIFICATIONS,
+      variables: { limit: LIMIT, skip }
+    });
+    console.log("GETNOTIF", getNotifications, "SDDS", notifications);
     // const [id] = notificationIDs;
     // var index = notifications.findIndex(notice => notice.id === id);
     // const readNotice = notifications[index];
@@ -76,6 +77,7 @@ class NoticesItem extends PureComponent {
 
   //TODO: Ensure this causes instant update to nums
   updateSeen = numSeen => {
+    console.log("SDDSDS", numSeen);
     const { client } = this.props;
     const { getCounts } = client.readQuery({
       query: GET_COUNTS
@@ -88,6 +90,7 @@ class NoticesItem extends PureComponent {
         getCounts
       }
     });
+    this.handleVisibleChange(false);
   };
 
   handleCloseAlert = (notificationID, updateNotifications, refetch) => {
@@ -190,31 +193,39 @@ class NoticesItem extends PureComponent {
                   !data.getNotifications ||
                   !data.getNotifications.notifications
                 ) {
-                  return <div>{t('common:error')}!</div>;
+                  return <div>{t("common:error")}!</div>;
                 } else if (!data.getNotifications.notifications.length === 0) {
-                  return <div>{t('nonots')} :)</div>;
+                  return <div>{t("nonots")} :)</div>;
                 }
 
                 const { notifications, alert } = data.getNotifications;
+
+                const unseen = notifications.reduce((res, el) => {
+                  if (!el.seen) {
+                    res++;
+                  }
+                  return res;
+                }, 0);
 
                 return (
                   <span>
                     <Menu
                       activeStyle="notification active"
                       notActiveStyle={
-                        count > 0 ? 'notification active' : 'notification'
+                        count > 0 ? "notification active" : "notification"
                       }
                       menuOpener={
                         <span className="icon alert">
                           {count > 0 && <span className="count">{count}</span>}
                         </span>
                       }
+                      closeAction={() => this.updateSeen(unseen)}
                     >
                       <NoticesList
                         notifications={notifications}
                         history={history}
                         fetchMore={fetchMore}
-                        close={() => this.handleVisibleChange(false)}
+                        close={() => this.updateSeen(unseen)}
                         t={t}
                         visible={this.state.visible}
                         updateNotifications={updateNotifications}
@@ -248,7 +259,7 @@ class NoticesItem extends PureComponent {
                         updateNotifications,
                         refetch,
                         alertVisible
-                      })}{' '}
+                      })}{" "}
                     {userAlert &&
                       this.handleDialog({
                         alert: userAlert,

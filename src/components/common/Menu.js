@@ -1,5 +1,5 @@
-import React, { PureComponent, cloneElement } from 'react';
-import { withNamespaces } from 'react-i18next';
+import React, { PureComponent, cloneElement } from "react";
+import { withNamespaces } from "react-i18next";
 class Menu extends PureComponent {
   constructor(props) {
     super(props);
@@ -11,11 +11,11 @@ class Menu extends PureComponent {
   };
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   handleClickOutside = event => {
@@ -24,6 +24,9 @@ class Menu extends PureComponent {
       !this.wrapperRef.current.contains(event.target) &&
       this.state.menuOpen
     ) {
+      if (this.props.closeAction) {
+        this.props.closeAction();
+      }
       this.setState({ menuOpen: false });
     }
   };
@@ -49,4 +52,4 @@ class Menu extends PureComponent {
   }
 }
 
-export default withNamespaces('common')(Menu);
+export default withNamespaces("common")(Menu);
