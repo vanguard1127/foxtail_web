@@ -6986,7 +6986,8 @@ z-index: 999;
 
  .select-list {
   width: 100% !important;
-  top: 43px !important;
+  top: 48px !important;
+  left: 0 !important;
  }
 
 .select-list ul::-webkit-scrollbar {
