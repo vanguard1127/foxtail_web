@@ -6338,8 +6338,7 @@
     width: 100%;
     position: relative;
     float: left;
-    margin-bottom: 15px;
-    z-index: 100;
+    margin-bottom: 15px;    
   }
   section.landing .register-form form .form-content .dropdown.nobottom {
     margin-bottom: none;
@@ -6974,21 +6973,21 @@ z-index: 999;
   background-color: #fff !important;
  }
 
- section.settings .rc-slider-handle {
+section.settings .rc-slider-handle {
   width: 20px;
   height: 20px;
   margin-top: -6px;
- }
+}
 
- .rc-slider {
+.rc-slider {
   z-index: 100;
- }
+}
 
- .select-list {
+.select-list {
   width: 100% !important;
   top: 48px !important;
   left: 0 !important;
- }
+}
 
 .select-list ul::-webkit-scrollbar {
   width: 9px !important;
@@ -7009,18 +7008,18 @@ z-index: 999;
 }
 
 
- .multiple-options {
+.multiple-options {
   position: relative;
   top: -3px;
- }
- .select-container {
+}
+.select-container {
   background-color: #fff !important;
   border: 1px solid #e3e3e3 !important;
   height: 45px !important;
- }
- .filepond--drop-label label {
+}
+.filepond--drop-label label {
   text-transform: none;
- }
+}
 
 
  section.settings .select-container {
