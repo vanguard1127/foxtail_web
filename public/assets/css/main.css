@@ -6338,7 +6338,7 @@
     width: 100%;
     position: relative;
     float: left;
-    margin-bottom: 15px;    
+    margin-bottom: 15px;
   }
   section.landing .register-form form .form-content .dropdown.nobottom {
     margin-bottom: none;
@@ -7017,10 +7017,14 @@ section.settings .rc-slider-handle {
   border: 1px solid #e3e3e3 !important;
   height: 45px !important;
 }
+
+.select-container .option-counter {
+  text-align: right;
+}
+
 .filepond--drop-label label {
   text-transform: none;
 }
-
 
  section.settings .select-container {
   height: 60px !important;

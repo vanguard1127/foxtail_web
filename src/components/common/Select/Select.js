@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
-import './Select.css';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import { withNamespaces } from "react-i18next";
+import "./Select.css";
 
 class Select extends PureComponent {
   static propTypes = {
@@ -19,12 +19,12 @@ class Select extends PureComponent {
 
   state = {
     menuOpen: false,
-    selectedOption: '',
+    selectedOption: "",
     selectedOptions: []
   };
 
   componentWillMount() {
-    document.addEventListener('mousedown', this.handleClickOutside, false);
+    document.addEventListener("mousedown", this.handleClickOutside, false);
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class Select extends PureComponent {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside, false);
+    document.removeEventListener("mousedown", this.handleClickOutside, false);
   }
 
   handleClickOutside = event => {
@@ -53,7 +53,7 @@ class Select extends PureComponent {
       const defaultOptions = defaultOptionValues.map(d => {
         const found = options.find(x => x.value == d.value);
         if (found == undefined)
-          throw 'The default value you passed as props can not found in select options array';
+          throw "The default value you passed as props can not found in select options array";
         return found;
       });
       this.setState({ selectedOptions: defaultOptions });
@@ -100,6 +100,7 @@ class Select extends PureComponent {
     const { selectedOptions, selectedOption, menuOpen } = this.state;
     const { className, label, multiple, options, t } = this.props;
     const menuStatus = multiple ? true : !menuOpen;
+    const optionCounter = selectedOptions.length;
 
     const SelectList = () => (
       <div className="select-list">
@@ -114,9 +115,9 @@ class Select extends PureComponent {
             }
             return (
               <li
-                key={i}
+                key={Math.random()}
                 onClick={e => this.onSelect(e, d)}
-                className={checked ? 'checked' : ''}
+                className={checked ? "checked" : ""}
               >
                 {t(d.label)}
               </li>
@@ -134,7 +135,7 @@ class Select extends PureComponent {
           }
         >
           <div
-            className={'select-container ' + className || ''}
+            className={"select-container " + className || ""}
             onClick={() => this.setState({ menuOpen: menuStatus })}
           >
             <label>{label}</label>
@@ -142,13 +143,16 @@ class Select extends PureComponent {
               <div className="multiple-options">
                 {selectedOptions.map((d, idx, arr) => {
                   if (idx === arr.length - 1) {
-                    return <span key={d.value}>{t(d.label)}</span>;
+                    return <span key={Math.random()}>{t(d.label)}</span>;
                   }
-                  return <span key={d.value}>{t(d.label) + ','}</span>;
+                  return <span key={Math.random()}>{t(d.label) + ","}</span>;
                 })}
               </div>
             )}
             {!multiple && <span>{t(selectedOption.label)}</span>}
+            {multiple && optionCounter > 0 && (
+              <span className="option-counter">{`(${optionCounter})`}</span>
+            )}
             {menuOpen && <SelectList />}
           </div>
         </div>
@@ -157,4 +161,4 @@ class Select extends PureComponent {
   }
 }
 
-export default withNamespaces('common')(Select);
+export default withNamespaces("common")(Select);
