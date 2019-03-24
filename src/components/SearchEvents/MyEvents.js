@@ -1,8 +1,16 @@
 import React, { PureComponent } from "react";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
+import OwlCarousel from "react-owl-carousel";
+import $ from "jquery";
+import "lightgallery";
 import { GET_MY_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
+
+const configLightGallery = {
+  selector: "a",
+  width: "100%"
+};
 
 const LIMIT = 3;
 
@@ -39,6 +47,17 @@ class MyEvents extends PureComponent {
     );
   };
 
+  onLightGallery = node => {
+    this.lightGallery = node;
+    $(node).lightGallery(configLightGallery);
+  };
+
+  componentWillUnmount() {
+    try {
+      $(this.lightGallery).lightGallery("destroy");
+    } catch (e) {}
+  }
+
   render() {
     const { skip } = this.state;
     const { t, ErrorHandler, dayjs } = this.props;
@@ -49,9 +68,7 @@ class MyEvents extends PureComponent {
         fetchPolicy="cache-and-network"
       >
         {({ data, loading, error, fetchMore }) => {
-          if (loading) {
-            return null;
-          }
+          if (loading) return null;
           if (error) {
             return (
               <ErrorHandler.report error={error} calledName={"getMyEvents"} />
@@ -60,25 +77,50 @@ class MyEvents extends PureComponent {
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
             return null;
           }
-          console.log(data.getMyEvents);
           const myEvents = data.getMyEvents.docs;
           return (
             <div className="events-card-content my-events">
               <div className="container">
                 <div className="col-md-12">
-                  <div className="row">
+                  <div
+                    className="row"
+                    id="lightgallery"
+                    ref={this.onLightGallery}
+                  >
                     <div className="col-md-12">
                       <span className="head">{t("myevents")}</span>
                     </div>
-
-                    {myEvents.map(event => (
-                      <EventCard
-                        key={event.id}
-                        event={event}
-                        t={t}
-                        dayjs={dayjs}
-                      />
-                    ))}
+                    <OwlCarousel
+                      nav
+                      autoplay
+                      lazyLoad
+                      margin={30}
+                      navText={[
+                        '<i class="icon-left-open">',
+                        '<i class="icon-right-open">'
+                      ]}
+                      className="owl-carousel slider-content"
+                      autoplayTimeout={2400}
+                      responsive={{
+                        0: {
+                          items: 1,
+                          margin: 15
+                        },
+                        992: {
+                          items: 2,
+                          margin: 15
+                        }
+                      }}
+                    >
+                      {myEvents.map(event => (
+                        <EventCard
+                          key={Math.random()}
+                          event={event}
+                          t={t}
+                          dayjs={dayjs}
+                        />
+                      ))}
+                    </OwlCarousel>
                   </div>
                 </div>
               </div>
