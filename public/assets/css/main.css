@@ -772,11 +772,6 @@
     z-index: 200;
   }
 
-
-  section.meet-filter .dropdown .multiple-options {
-    top: 10px !important;
-  }
-
   section.meet-filter .dropdown select {
     width: 100%;
     height: 70px;
@@ -7007,11 +7002,15 @@ section.settings .rc-slider-handle {
   background: inherit !important;
 }
 
-
 .multiple-options {
   position: relative;
   top: -3px;
+  width: 85%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 .select-container {
   background-color: #fff !important;
   border: 1px solid #e3e3e3 !important;
@@ -7019,7 +7018,9 @@ section.settings .rc-slider-handle {
 }
 
 .select-container .option-counter {
-  text-align: right;
+  position: absolute;
+  right: 40px;
+  top: 23px;
 }
 
 .filepond--drop-label label {
@@ -7027,8 +7028,7 @@ section.settings .rc-slider-handle {
 }
 
  section.settings .select-container {
-  height: 60px !important;
-  padding: 13px 15px;
+  height: 60px !important;  
  }
 
  section.settings .select-list {
