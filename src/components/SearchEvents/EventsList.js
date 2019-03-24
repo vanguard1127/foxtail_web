@@ -1,6 +1,14 @@
-import React, { Component } from 'react';
-import EventCard from './EventCard';
-import Waypoint from 'react-waypoint';
+import React, { Component } from "react";
+import EventCard from "./EventCard";
+import Waypoint from "react-waypoint";
+import OwlCarousel from "react-owl-carousel";
+import $ from "jquery";
+import "lightgallery";
+
+const configLightGallery = {
+  selector: "a",
+  width: "100%"
+};
 
 class EventsList extends Component {
   shouldComponentUpdate(nextProps) {
@@ -9,6 +17,18 @@ class EventsList extends Component {
     }
     return false;
   }
+
+  onLightGallery = node => {
+    this.lightGallery = node;
+    $(node).lightGallery(configLightGallery);
+  };
+
+  componentWillUnmount() {
+    try {
+      $(this.lightGallery).lightGallery("destroy");
+    } catch (e) {}
+  }
+
   render() {
     const { events, handleEnd, t, dayjs } = this.props;
     return (
@@ -17,17 +37,47 @@ class EventsList extends Component {
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-12">
-                <span className="head">{t('upcomingevent')}</span>
+                <span className="head">{t("upcomingevent")}</span>
               </div>
-              {events.map(event => (
-                <EventCard key={event.id} event={event} t={t} dayjs={dayjs} />
-              ))}
+              <div id="lightgallery" ref={this.onLightGallery}>
+                <OwlCarousel
+                  nav
+                  autoplay
+                  lazyLoad
+                  margin={30}
+                  navText={[
+                    '<i class="icon-left-open">',
+                    '<i class="icon-right-open">'
+                  ]}
+                  className="owl-carousel slider-content"
+                  autoplayTimeout={2400}
+                  responsive={{
+                    0: {
+                      items: 1,
+                      margin: 15
+                    },
+                    992: {
+                      items: 2,
+                      margin: 15
+                    }
+                  }}
+                >
+                  {events.map(event => (
+                    <EventCard
+                      key={Math.random()}
+                      event={event}
+                      t={t}
+                      dayjs={dayjs}
+                    />
+                  ))}
+                </OwlCarousel>
+              </div>
               <Waypoint
                 onEnter={({ previousPosition }) => handleEnd(previousPosition)}
               />
               <div className="col-md-12">
                 <div className="more-content-btn">
-                  <span>{t('noevent')}</span>
+                  <span>{t("noevent")}</span>
                 </div>
               </div>
             </div>
