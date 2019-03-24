@@ -210,7 +210,7 @@ class SearchEvents extends PureComponent {
               <SearchEventToolbar
                 location={location}
                 setLocationValues={this.setLocationValues}
-                handleChangeSelect={e => this.handleChangeSelect(e)}
+                handleChangeSelect={this.handleChangeSelect}
                 maxDistance={maxDistance}
                 t={t}
                 ErrorHandler={ErrorHandler}
