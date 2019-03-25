@@ -37,7 +37,8 @@ class MyEvents extends PureComponent {
   };
 
   handlePaginate = (page, fetchMore) => {
-    this.props.ErrorHandler.setBreadcrumb("Page my events");
+    const { ErrorHandler } = this.props;
+    ErrorHandler.setBreadcrumb("Page my events");
     this.setState(
       state => ({
         skip: (page - 1) * LIMIT,

@@ -6658,7 +6658,7 @@
     left: 0;
     top: 0;
     z-index: 999;
-    padding-top: 200px;
+    padding: 200px 0;
     display: none;
     visibility: hidden;
 
@@ -6667,6 +6667,7 @@
   section.login-modal.show {
     display: inline-block;
     visibility: visible;
+    overflow-y: auto;
   }
 
   section.login-modal .popup {
