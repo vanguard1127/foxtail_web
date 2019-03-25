@@ -5251,6 +5251,7 @@
   section.desires-popup.show {
     display: inline-block;
     visibility: visible;
+    overflow-y: auto;
   }
 
   section.desires-popup::before {
