@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import { desireOptions } from '../../../docs/options';
-import { withNamespaces } from 'react-i18next';
+import React, { PureComponent } from "react";
+import { desireOptions } from "../../../docs/options";
+import { withNamespaces } from "react-i18next";
 
 class Selector extends PureComponent {
   render() {
@@ -12,7 +12,7 @@ class Selector extends PureComponent {
           className="select_desires desires_select_popup"
           onClick={() => togglePopup()}
         >
-          <span className="label">{t('seldesires')}:</span>
+          <span className="label">{t("seldesires")}:</span>
           <ErrorBoundary>
             <ul>
               {desires.reduce(function(result, desire, idx) {
@@ -21,9 +21,6 @@ class Selector extends PureComponent {
                     el => el.value === desire
                   );
                   result.push(<li key={desire}>{t(desireObj.label)}</li>);
-                  if (result.length > 4) {
-                    result.push(<li key={'na'}>+{desires.length - 5}</li>);
-                  }
                 }
                 return result;
               }, [])}
@@ -35,4 +32,4 @@ class Selector extends PureComponent {
   }
 }
 
-export default withNamespaces('modals')(Selector);
+export default withNamespaces("modals")(Selector);
