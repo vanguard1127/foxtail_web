@@ -16,15 +16,12 @@ class Selector extends PureComponent {
           <ErrorBoundary>
             <ul>
               {desires.reduce(function(result, desire, idx) {
-                if (result.length < 5) {
-                  const desireObj = desireOptions.find(
-                    el => el.value === desire
-                  );
-                  result.push(<li key={desire}>{t(desireObj.label)}</li>);
-                }
+                const desireObj = desireOptions.find(el => el.value === desire);
+                result.push(<li key={desire}>{t(desireObj.label)}</li>);
                 return result;
               }, [])}
             </ul>
+            <span className="counter">{`(${desires.length})`}</span>
           </ErrorBoundary>
         </div>
       </span>

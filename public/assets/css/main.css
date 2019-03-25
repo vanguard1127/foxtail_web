@@ -5041,7 +5041,7 @@
       margin: 0;
       float: left;
       display: inline-block;
-      width:auto !important;
+      width: 90% !important;
     }
 
     .page .form .content .select_desires ul li {
@@ -5055,6 +5055,13 @@
       margin-right: 5px;
       margin-top: 27px;
       width:auto !important;
+    }
+
+    .page .form .content .select_desires .counter {
+      position: absolute;
+      right: 45px;
+      top: 53%;
+      font-size: 14px;
     }
 
 /*---- POPUP CONTENTS ----*/
@@ -7028,7 +7035,7 @@ section.settings .rc-slider-handle {
 }
 
  section.settings .select-container {
-  height: 60px !important;  
+  height: 60px !important;
  }
 
  section.settings .select-list {
