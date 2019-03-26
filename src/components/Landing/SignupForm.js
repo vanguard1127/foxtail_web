@@ -1,47 +1,47 @@
-import React, { Component } from 'react';
-import * as yup from 'yup';
-import DatePicker from '../common/DatePicker';
-import Dropdown from '../common/Dropdown';
-import SignupButton from './SignupButton';
-import isEmpty from '../../utils/isEmpty.js';
+import React, { Component } from "react";
+import * as yup from "yup";
+import DatePicker from "../common/DatePicker";
+import Dropdown from "../common/Dropdown";
+import SignupButton from "./SignupButton";
+import isEmpty from "../../utils/isEmpty.js";
 
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
 const schema = yup.object().shape({
-  interestedIn: yup.array().required('Interest is required!'),
-  gender: yup.string().required('Gender is required!'),
+  interestedIn: yup.array().required("Interest is required!"),
+  gender: yup.string().required("Gender is required!"),
   dob: yup
     .date()
     .nullable()
     .default(null)
-    .max(date, 'You must be at least 18 years old!')
-    .required('Birthdate is required!'),
+    .max(date, "You must be at least 18 years old!")
+    .required("Birthdate is required!"),
   email: yup
     .string()
-    .email('Invalid email address')
-    .required('Email is required!'),
-  username: yup.string().required('Username is required!')
+    .email("Invalid email address")
+    .required("Email is required!"),
+  username: yup.string().required("Username is required!")
 });
 
 class SignupForm extends Component {
   state = {
-    username: '',
-    email: '',
+    username: "",
+    email: "",
     dob: null,
-    gender: '',
+    gender: "",
     interestedIn: [],
     isCouple: false,
     isValid: false,
     errors: {}
   };
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('NEW:', nextState);
-    console.log('OLD:', this.state);
-    console.log('EQUALS:', this.state.errors === nextState.errors);
+    console.log("NEW:", nextState);
+    console.log("OLD:", this.state);
+    console.log("EQUALS:", this.state.errors === nextState.errors);
     return true;
   }
   componentDidMount() {
-    this.props.ErrorHandler.setBreadcrumb('Signup Form loaded');
+    this.props.ErrorHandler.setBreadcrumb("Signup Form loaded");
   }
   setValue = ({ name, value }) => {
     this.setState({ [name]: value }, () => {
@@ -65,7 +65,7 @@ class SignupForm extends Component {
 
   InputFeedback = error =>
     error ? (
-      <div className="input-feedback" style={{ color: 'red' }}>
+      <div className="input-feedback" style={{ color: "red" }}>
         {error}
       </div>
     ) : null;
@@ -82,18 +82,19 @@ class SignupForm extends Component {
       isValid,
       errors
     } = this.state;
-    const lang = localStorage.getItem('i18nextLng');
+    const lang = localStorage.getItem("i18nextLng");
 
     return (
       <form>
         <div className="form-content">
           <div className="input username">
             <input
-              placeholder={t('userLbl')}
+              aria-label="username"
+              placeholder={t("userLbl")}
               type="text"
               onChange={e => {
                 this.setValue({
-                  name: 'username',
+                  name: "username",
                   value: e.target.value
                 });
               }}
@@ -103,11 +104,12 @@ class SignupForm extends Component {
           </div>
           <div className="input email">
             <input
-              placeholder={t('emailLbl')}
+              aria-label="email"
+              placeholder={t("emailLbl")}
               type="email"
               onChange={e => {
                 this.setValue({
-                  name: 'email',
+                  name: "email",
                   value: e.target.value
                 });
               }}
@@ -119,7 +121,7 @@ class SignupForm extends Component {
             value={dob}
             onChange={e => {
               this.setValue({
-                name: 'dob',
+                name: "dob",
                 value: e
               });
             }}
@@ -129,28 +131,28 @@ class SignupForm extends Component {
           {this.InputFeedback(errors.dob)}
           <Dropdown
             value={gender}
-            type={'gender'}
+            type={"gender"}
             onChange={e => {
               this.setValue({
-                name: 'gender',
+                name: "gender",
                 value: e.value
               });
             }}
-            placeholder={t('common:Gender') + ':'}
+            placeholder={t("common:Gender") + ":"}
             lang={lang}
           />
           {this.InputFeedback(errors.gender)}
 
           <Dropdown
             value={interestedIn}
-            type={'interestedIn'}
+            type={"interestedIn"}
             onChange={el => {
               this.setValue({
-                name: 'interestedIn',
+                name: "interestedIn",
                 value: el.map(e => e.value)
               });
             }}
-            placeholder={t('common:Interested') + ':'}
+            placeholder={t("common:Interested") + ":"}
             lang={lang}
           />
           {this.InputFeedback(errors.interestedIn)}
@@ -162,14 +164,14 @@ class SignupForm extends Component {
                 checked={isCouple}
                 onChange={el => {
                   this.setValue({
-                    name: 'isCouple',
+                    name: "isCouple",
                     value: el.target.checked
                   });
                 }}
               />
               <label htmlFor="cbox">
                 <span />
-                <b>{t('coupleBox')}</b>
+                <b>{t("coupleBox")}</b>
               </label>
             </div>
           </div>
@@ -183,8 +185,8 @@ class SignupForm extends Component {
             t={t}
           />
           <div className="terms">
-            {t('signupMsg')}
-            <span>{t('tnp')}</span>
+            {t("signupMsg")}
+            <span>{t("tnp")}</span>
           </div>
         </div>
       </form>
