@@ -772,11 +772,6 @@
     z-index: 200;
   }
 
-
-  section.meet-filter .dropdown .multiple-options {
-    top: 10px !important;
-  }
-
   section.meet-filter .dropdown select {
     width: 100%;
     height: 70px;
@@ -5043,7 +5038,7 @@
       margin: 0;
       float: left;
       display: inline-block;
-      width:auto !important;
+      width: 90% !important;
     }
 
     .page .form .content .select_desires ul li {
@@ -5057,6 +5052,13 @@
       margin-right: 5px;
       margin-top: 27px;
       width:auto !important;
+    }
+
+    .page .form .content .select_desires .counter {
+      position: absolute;
+      right: 45px;
+      top: 53%;
+      font-size: 14px;
     }
 
 /*---- POPUP CONTENTS ----*/
@@ -5246,6 +5248,7 @@
   section.desires-popup.show {
     display: inline-block;
     visibility: visible;
+    overflow-y: auto;
   }
 
   section.desires-popup::before {
@@ -6336,7 +6339,6 @@
     position: relative;
     float: left;
     margin-bottom: 15px;
-    z-index: 100;
   }
   section.landing .register-form form .form-content .dropdown.nobottom {
     margin-bottom: none;
@@ -6971,20 +6973,21 @@ z-index: 999;
   background-color: #fff !important;
  }
 
- section.settings .rc-slider-handle {
+section.settings .rc-slider-handle {
   width: 20px;
   height: 20px;
   margin-top: -6px;
- }
+}
 
- .rc-slider {
+.rc-slider {
   z-index: 100;
- }
+}
 
- .select-list {
+.select-list {
   width: 100% !important;
-  top: 43px !important;
- }
+  top: 48px !important;
+  left: 0 !important;
+}
 
 .select-list ul::-webkit-scrollbar {
   width: 9px !important;
@@ -7004,24 +7007,33 @@ z-index: 999;
   background: inherit !important;
 }
 
-
- .multiple-options {
+.multiple-options {
   position: relative;
   top: -3px;
- }
- .select-container {
+  width: 85%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-container {
   background-color: #fff !important;
   border: 1px solid #e3e3e3 !important;
   height: 45px !important;
- }
- .filepond--drop-label label {
-  text-transform: none;
- }
+}
 
+.select-container .option-counter {
+  position: absolute;
+  right: 40px;
+  top: 23px;
+}
+
+.filepond--drop-label label {
+  text-transform: none;
+}
 
  section.settings .select-container {
   height: 60px !important;
-  padding: 13px 15px;
  }
 
  section.settings .select-list {
