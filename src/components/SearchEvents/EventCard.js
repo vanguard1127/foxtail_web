@@ -7,6 +7,12 @@ class EventCard extends Component {
   shouldComponentUpdate() {
     return false;
   }
+
+  onEventClick = id => {
+    const { history } = this.props;
+    history.push("/event/" + id);
+  };
+
   render() {
     const { event, t, dayjs } = this.props;
     const {
@@ -18,14 +24,14 @@ class EventCard extends Component {
       ownerProfile,
       image
     } = event;
-    console.log("hjjhhj", image);
+
     return (
-      <div className="col-md-12 col-lg-6" key={id}>
+      <div className="col-md-12">
         <div className="card-item">
           <div className="thumbnail">
             <EventDate time={startTime} dayjs={dayjs} />
             <EventCreator ownerProfile={ownerProfile} />
-            <span onClick={() => this.props.history.push("/event/" + id)}>
+            <span onClick={() => this.onEventClick(id)}>
               <img
                 src={
                   image !== "" && image !== undefined && image !== null
@@ -38,9 +44,7 @@ class EventCard extends Component {
           </div>
           <div className="content">
             <div className="event-name">
-              <span onClick={() => this.props.history.push("/event/" + id)}>
-                {eventname}
-              </span>
+              <span onClick={() => this.onEventClick(id)}>{eventname}</span>
             </div>
             <span className="distance">
               {distance} {t("common:" + "miaway")}
@@ -48,7 +52,7 @@ class EventCard extends Component {
             <div className="goings">
               <ul>
                 {participants.map(el => (
-                  <li key={el.id}>
+                  <li key={Math.random()}>
                     <img src={el.profilePic} alt="" />
                   </li>
                 ))}
@@ -63,7 +67,7 @@ class EventCard extends Component {
             <div className="functions">
               <div
                 className="btn go-detail"
-                onClick={() => this.props.history.push("/event/" + id)}
+                onClick={() => this.onEventClick(id)}
               >
                 <span>{t("eventdetail")}</span>
               </div>

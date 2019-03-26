@@ -12,7 +12,6 @@ const configLightGallery = {
   thumbnail: true,
   selector: "a",
   width: "100%",
-  thumbnail: true,
   download: false,
   mousewheel: true,
   zoom: true
@@ -52,7 +51,6 @@ class PhotoSlider extends Component {
 
   render() {
     const { isPublic, photos, t } = this.props;
-    console.log(photos);
     return (
       <div
         className={isPublic ? "photos-slider public" : "photos-slider private"}
@@ -63,16 +61,16 @@ class PhotoSlider extends Component {
         </div>
         <div id="lightgallery" ref={this.onLightGallery}>
           <OwlCarousel
-            className="owl-carousel slider-content"
-            autoplay
-            margin={30}
             nav
+            autoplay
+            lazyLoad
+            margin={30}
             dots={false}
             navText={[
               '<i class="icon-left-open">',
               '<i class="icon-right-open">'
             ]}
-            lazyLoad
+            className="owl-carousel slider-content"
             autoplayTimeout={2400}
             autoplayHoverPause={false}
             responsive={{
@@ -96,7 +94,7 @@ class PhotoSlider extends Component {
             {photos.map(photo => (
               <div
                 className="item"
-                key={photo.id}
+                key={Math.random()}
                 onContextMenu={preventContextMenu}
               >
                 <a href={photo.url}>

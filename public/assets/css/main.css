@@ -2959,12 +2959,14 @@
     background-repeat: no-repeat;
   }
 
-  section.profile .photos-slider .owl-carousel {
+  section.profile .photos-slider .owl-carousel,
+  .owl-carousel {
     display: inline-block;
     visibility: visible;
   }
 
-  section.profile .photos-slider .owl-carousel .owl-nav {
+  section.profile .photos-slider .owl-carousel .owl-nav,
+  .owl-carousel .owl-nav {
     color: white !important;
     position: absolute;
     top: 30%;
@@ -2975,28 +2977,35 @@
   }
 
   section.profile .photos-slider .owl-carousel .owl-nav .owl-prev,
-  section.profile .photos-slider .owl-carousel .owl-nav .owl-next {
+  section.profile .photos-slider .owl-carousel .owl-nav .owl-next,
+  #lightgallery .owl-carousel .owl-nav .owl-prev,
+  #lightgallery .owl-carousel .owl-nav .owl-next {
     position: absolute;
     width: 30px;
     height: 44px !important;
     background-color: rgba(0,0,0,0.7);
     color: #fff;
     box-shadow: 4px 9px 8px 0 rgba(0,0,0,0.03);
+    outline: none;
   }
 
   section.profile .photos-slider .owl-carousel .owl-nav .owl-prev i,
-  section.profile .photos-slider .owl-carousel .owl-nav .owl-next i {
+  section.profile .photos-slider .owl-carousel .owl-nav .owl-next i,
+  .owl-carousel .owl-nav .owl-prev i,
+  .owl-carousel .owl-nav .owl-next i {
     position: relative;
     line-height: 44px;
     font-size: 14px;
   }
 
-  section.profile .photos-slider .owl-carousel .owl-nav .owl-next {
+  section.profile .photos-slider .owl-carousel .owl-nav .owl-next,
+  .owl-carousel .owl-nav .owl-next {
     right: 0 !important;
     border-radius: 2px 0 0 2px;
    }
 
-  section.profile .photos-slider .owl-carousel .owl-nav .owl-prev {
+  section.profile .photos-slider .owl-carousel .owl-nav .owl-prev,
+  .owl-carousel .owl-nav .owl-prev {
     left: 0;
     border-radius: 0 2px 2px 0;
   }
@@ -6658,15 +6667,15 @@
     left: 0;
     top: 0;
     z-index: 999;
-    padding-top: 200px;
+    padding: 200px 0;
     display: none;
     visibility: hidden;
-
   }
 
   section.login-modal.show {
     display: inline-block;
     visibility: visible;
+    overflow-y: auto;
   }
 
   section.login-modal .popup {
