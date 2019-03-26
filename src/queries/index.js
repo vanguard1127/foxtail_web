@@ -628,8 +628,8 @@ export const GET_INBOX = gql`
 `;
 
 export const GET_MY_EVENTS = gql`
-  query($skip: Int!, $limit: Int!) {
-    getMyEvents(skip: $skip, limit: $limit) {
+  query {
+    getMyEvents {
       docs {
         id
         eventname

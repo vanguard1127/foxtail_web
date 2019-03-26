@@ -31,9 +31,9 @@ class ChatInfo extends Component {
         <div className="right">
           <div className="head" />
           <div className="content">
-            <div className="visit-profile">
+            {/* <div className="visit-profile">
               <span>{t("visit")}</span>
-            </div>
+            </div> */}
             <div className="functions">
               {remDropOpen && (
                 <MembersDropdown
@@ -47,14 +47,14 @@ class ChatInfo extends Component {
                 />
               )}
               <ul>
-                <li className="report">
+                <li className="members">
                   <span
                     onClick={() => this.setState({ remDropOpen: !remDropOpen })}
                   >
                     Participants
                   </span>
                 </li>
-                <li className="report">
+                <li className="invite">
                   <span
                     onClick={() => this.setState({ invDropOpen: !invDropOpen })}
                   >
@@ -72,7 +72,7 @@ class ChatInfo extends Component {
                     ErrorHandler={ErrorHandler}
                   />
                 )}
-                <li className="delete">
+                <li className="leave">
                   <span onClick={leaveDialog}>{t("leaveconv")}</span>
                 </li>{" "}
                 <li className="report">

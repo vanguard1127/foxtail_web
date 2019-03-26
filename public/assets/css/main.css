@@ -2087,9 +2087,19 @@
       top: 14px;
     }
 
-    section.inbox .right .content .functions ul li.delete::before {
-      content: '\e80a';
+    section.inbox .right .content .functions ul li.leave::before {
+      content: '\f235';
       top: 14px;
+      padding-left: 2px;
+    }
+
+    section.inbox .right .content .functions ul li.members::before {
+      content: '\e80d';
+      padding-left: 2px;
+    }
+
+    section.inbox .right .content .functions ul li.invite::before {
+      content: '\f234';
       padding-left: 2px;
     }
 
@@ -3689,8 +3699,8 @@
     font-size: 15px;
   }
 
-  section.event-detail .header .info .share-event ul li.mail::before {
-    content: '\e80c';
+  section.event-detail .header .info .share-event ul li.add::before {
+    content: '\f234';
   }
 
   section.event-detail .header .info .share-event ul li:hover {

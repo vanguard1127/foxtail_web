@@ -4,12 +4,8 @@ import { Query } from "react-apollo";
 import { GET_MY_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 
-const LIMIT = 3;
-
-//TODO: Test paginate
+//TODO: APPLY SHOULD RERENDER
 class MyEvents extends PureComponent {
-  state = { skip: 0, current: 1 };
-
   fetchData = fetchMore => {
     this.setState({ loading: true });
     fetchMore({
@@ -28,26 +24,10 @@ class MyEvents extends PureComponent {
     });
   };
 
-  handlePaginate = (page, fetchMore) => {
-    this.props.ErrorHandler.setBreadcrumb("Page my events");
-    this.setState(
-      state => ({
-        skip: (page - 1) * LIMIT,
-        current: page
-      }),
-      () => this.fetchData(fetchMore)
-    );
-  };
-
   render() {
-    const { skip } = this.state;
     const { t, ErrorHandler, dayjs } = this.props;
     return (
-      <Query
-        query={GET_MY_EVENTS}
-        variables={{ skip, limit: LIMIT }}
-        fetchPolicy="cache-and-network"
-      >
+      <Query query={GET_MY_EVENTS} fetchPolicy="cache-and-network">
         {({ data, loading, error, fetchMore }) => {
           if (loading) {
             return null;
@@ -60,7 +40,7 @@ class MyEvents extends PureComponent {
           if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
             return null;
           }
-          console.log(data.getMyEvents);
+
           const myEvents = data.getMyEvents.docs;
           return (
             <div className="events-card-content my-events">

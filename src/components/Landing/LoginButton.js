@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import { FB_RESOLVE } from '../../queries';
-import AccountKit from 'react-facebook-account-kit';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import { FB_RESOLVE } from "../../queries";
+import AccountKit from "react-facebook-account-kit";
 
 const initialState = {
-  csrf: '',
-  code: ''
+  csrf: "",
+  code: ""
 };
 class LoginButton extends PureComponent {
   state = { ...initialState };
@@ -16,6 +16,9 @@ class LoginButton extends PureComponent {
     this.mounted = false;
   }
   handleFBReturn = ({ state, code }, fbResolve) => {
+    if (!state || !code) {
+      return null;
+    }
     const { t } = this.props;
 
     if (this.mounted) {
@@ -28,19 +31,19 @@ class LoginButton extends PureComponent {
     fbResolve()
       .then(async ({ data }) => {
         if (data.fbResolve === null) {
-          alert(t('noUserError') + '.');
+          alert(t("noUserError") + ".");
           return;
         } else {
           localStorage.setItem(
-            'token',
-            data.fbResolve.find(token => token.access === 'auth').token
+            "token",
+            data.fbResolve.find(token => token.access === "auth").token
           );
           localStorage.setItem(
-            'refreshToken',
-            data.fbResolve.find(token => token.access === 'refresh').token
+            "refreshToken",
+            data.fbResolve.find(token => token.access === "refresh").token
           );
           //  await this.props.refetch();
-          this.props.history.push('/members');
+          this.props.history.push("/members");
         }
       })
       .catch(res => {
@@ -55,6 +58,7 @@ class LoginButton extends PureComponent {
   render() {
     const { csrf, code } = this.state;
     const { t } = this.props;
+
     return (
       <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
         {fbResolve => {
@@ -65,15 +69,15 @@ class LoginButton extends PureComponent {
               onResponse={resp => {
                 this.handleFBReturn(resp, fbResolve);
               }}
-              csrf={'889306f7553962e44db6ed508b4e8266'} // Required for security
-              countryCode={'+1'} // eg. +60
-              phoneNumber={''} // eg. 12345678
-              emailAddress={'noreply@foxtailapp.com'} // eg. me@site.com
-              language={localStorage.getItem('i18nextLng')}
+              csrf={"889306f7553962e44db6ed508b4e8266"} // Required for security
+              countryCode={"+1"} // eg. +60
+              phoneNumber={""} // eg. 12345678
+              emailAddress={"noreply@foxtailapp.com"} // eg. me@site.com
+              language={localStorage.getItem("i18nextLng")}
             >
               {p => (
                 <a {...p} className="login-btn">
-                  {t('loginBtn')}
+                  {t("loginBtn")}
                 </a>
               )}
             </AccountKit>

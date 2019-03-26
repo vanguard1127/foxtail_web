@@ -21,15 +21,14 @@ class InboxList extends PureComponent {
       } else {
         title = item.fromUser.username;
       }
+      let notME = item.participants.filter(
+        el => el.id.toString() !== currentuser.profileID
+      );
+      if (item.fromUser.id === currentuser.userID && notME.length > 0) {
+        item.profilePic = notME[0].profilePic;
+      }
     } else {
       title = item.fromProfile.profileName;
-    }
-
-    let notME = item.participants.filter(
-      el => el.id.toString() !== currentuser.profileID
-    );
-    if (item.fromUser.id === currentuser.userID && notME.length > 0) {
-      item.profilePic = notME[0].profilePic;
     }
 
     return (

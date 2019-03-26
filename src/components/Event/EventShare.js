@@ -13,7 +13,7 @@ class EventShare extends PureComponent {
           <li className="share">
             <span onClick={() => showShareModal()} />
           </li>
-          <li className="mail">
+          <li className="add">
             <span
               onClick={() => this.setState({ invDropOpen: !invDropOpen })}
             />
