@@ -229,7 +229,7 @@ class CreateEvent extends PureComponent {
       filename,
       filetype
     } = this.state;
-
+    console.log(this.props.updateEventProps);
     return (
       <section>
         <Modal header={eventID ? t("updateeve") : t("createeve")} close={close}>
@@ -317,7 +317,7 @@ class CreateEvent extends PureComponent {
                       {this.InputFeedback(errors.type)}
                       <div className="item nobottom">
                         <PhotoUpload
-                          photos={images}
+                          photos={[image]}
                           setPhotos={el =>
                             this.setValue({
                               name: "images",
@@ -389,7 +389,18 @@ class CreateEvent extends PureComponent {
                           type="datetime"
                         />
                       </div>
-
+                      {!isEmpty(this.state.errors) && (
+                        <div
+                          style={{
+                            textAlign: "center"
+                          }}
+                        >
+                          {" "}
+                          {this.InputFeedback(
+                            "Please fix the required fields on both pages"
+                          )}
+                        </div>
+                      )}
                       <div className="item">
                         <div className="submit">
                           {" "}

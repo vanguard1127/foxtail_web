@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from '../../queries';
-import { Query } from 'react-apollo';
-import NoticesItem from './NoticesItem';
-import InboxItem from './InboxItem';
-import MyAccountItem from './MyAccountItem';
-import * as ErrorHandler from '../common/ErrorHandler';
-var slapAudio = new Audio(require('../../docs/slap.wav'));
+import React, { Component } from "react";
+import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from "../../queries";
+import { Query } from "react-apollo";
+import NoticesItem from "./NoticesItem";
+import InboxItem from "./InboxItem";
+import MyAccountItem from "./MyAccountItem";
+import * as ErrorHandler from "../common/ErrorHandler";
+var slapAudio = new Audio(require("../../docs/slap.wav"));
 
 let unsubscribe = null;
 class UserToolbar extends Component {
@@ -71,8 +71,8 @@ class UserToolbar extends Component {
                   slapAudio.play();
 
                   if (
-                    sessionStorage.getItem('page') === 'inbox' &&
-                    sessionStorage.getItem('pid') ===
+                    sessionStorage.getItem("page") === "inbox" &&
+                    sessionStorage.getItem("pid") ===
                       newInboxMsgSubscribe.chatID
                   ) {
                     return;
@@ -89,18 +89,18 @@ class UserToolbar extends Component {
               <ErrorHandler.ErrorBoundary>
                 <InboxItem
                   count={msgsCount}
-                  active={href === 'inbox' && true}
+                  active={href === "inbox" && true}
                   t={t}
                   data-name="inbox"
                   ref={setRef}
                 />
               </ErrorHandler.ErrorBoundary>
               <ErrorHandler.ErrorBoundary>
-                {' '}
+                {" "}
                 <NoticesItem count={noticesCount} ErrorHandler={ErrorHandler} />
               </ErrorHandler.ErrorBoundary>
               <ErrorHandler.ErrorBoundary>
-                {' '}
+                {" "}
                 <div className="user hidden-mobile">
                   <MyAccountItem currentuser={currentuser} setRef={setRef} />
                 </div>

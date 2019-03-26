@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
-import Waypoint from 'react-waypoint';
-import Message from './Message.js';
+import React, { Component } from "react";
+import Waypoint from "react-waypoint";
+import Message from "./Message.js";
 
-class MessageList extends PureComponent {
+class MessageList extends Component {
   constructor(props) {
     super(props);
     this.scrollWrapperRef = React.createRef();
@@ -18,6 +18,12 @@ class MessageList extends PureComponent {
     dateWaypoints: []
   };
   unsubscribe = null;
+  shouldComponentUpdate(nextProps) {
+    if (this.props.messages.length !== nextProps.messages.length) {
+      return true;
+    }
+    return false;
+  }
   componentDidMount() {
     // this.checkScrollTopToFetch(10);
     // this.scrollToBot();
@@ -52,7 +58,7 @@ class MessageList extends PureComponent {
         // So, for the scroll to start at the bottom when user firsts sees it,
         // either this or fetching more items initial mount
         if (!this.state.hasScrolledBottomInitial) {
-          console.log('Initial Scroll Bottom');
+          console.log("Initial Scroll Bottom");
         }
         this.scrollToBot();
       } else if (this.state.restoreScroll) {
@@ -64,7 +70,7 @@ class MessageList extends PureComponent {
     }
   }
   restoreScroll() {
-    console.log('restoring');
+    console.log("restoring");
     this.scrollWrapperRef.current.scrollTop =
       this.state.previousScrollTop +
       (this.scrollWrapperRef.current.scrollHeight -
@@ -79,7 +85,7 @@ class MessageList extends PureComponent {
   }
   scrollToBot() {
     const { hasScrolledBottomInitial } = this.props;
-    console.log('Scrolling to Bottom');
+    console.log("Scrolling to Bottom");
 
     this.scrollWrapperRef.current.scrollTop = this.scrollWrapperRef.current.scrollHeight;
     if (this.mounted) {
@@ -111,7 +117,7 @@ class MessageList extends PureComponent {
     const { chatID, limit, messages, fetchMore } = this.props;
     // Doesn't repeat because frist we are setting loading =  true
     // And on updateQuary, when the fetch it done. We set loading = false
-    console.log('Can i fetch?', !this.state.loading && this.state.hasMoreItems);
+    console.log("Can i fetch?", !this.state.loading && this.state.hasMoreItems);
     // Wait for restoreScroll to take place, then do the call.
     // If not,things are going to play over each other.
     if (
@@ -141,7 +147,7 @@ class MessageList extends PureComponent {
             this.setState({ hasMoreItems: false });
           }
         }
-        console.log('more', noMessagesLeft);
+        console.log("more", noMessagesLeft);
         if (previousResult.getMessages) {
           previousResult.getMessages.messages = [
             ...previousResult.getMessages.messages,
@@ -203,12 +209,10 @@ class MessageList extends PureComponent {
     }
   }
   render() {
+    console.log("POPOPOP");
     const { loading } = this.state;
     const { messages, hasMoreItems, children, history, dayjs } = this.props;
 
-    if (messages.length === 0) {
-      return <div>No messages yet</div>;
-    }
     const messageElements = messages.map(message => {
       return (
         <Message

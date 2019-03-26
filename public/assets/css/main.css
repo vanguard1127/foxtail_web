@@ -1657,8 +1657,8 @@
     content: '\e819';
     color: #00A9FF;
   }
-  footer .brand .medias ul li.instagram i::before {
-    content: '\e818';
+  footer .brand .medias ul li.mail i::before {
+    content: '\e80c';
     color: #F50043;
     font-size: 17px;
   }
@@ -3626,7 +3626,7 @@
 
   section.event-detail .header .info .share-event {
     float: right;
-    width: 206px;
+    width: 160px;
     padding-top: 27px;
     display: none;
     visibility: hidden;
@@ -3689,14 +3689,11 @@
     font-size: 18px;
   }
 
-  section.event-detail .header .info .share-event ul li.facebook::before {
-    content: '\e816';
+  section.event-detail .header .info .share-event ul li.share::before {
+    content: '\e809';
     font-size: 15px;
   }
-  section.event-detail .header .info .share-event ul li.twitter::before {
-    content: '\e819';
-    font-size: 14px;
-  }
+
   section.event-detail .header .info .share-event ul li.mail::before {
     content: '\e80c';
   }

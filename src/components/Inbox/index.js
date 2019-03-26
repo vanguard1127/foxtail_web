@@ -16,19 +16,25 @@ import {
   READ_CHAT_QUERY
 } from "../../queries";
 import { Mutation, Query } from "react-apollo";
+import { toast } from "react-toastify";
 import ChatWindow from "./ChatWindow";
 import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
 import validateLang from "../../utils/validateLang";
 
 import * as ErrorHandler from "../common/ErrorHandler";
+import Modal from "../common/Modal";
 
 class InboxPage extends PureComponent {
   state = {
     chatID: this.props.match.params.chatID,
     chat: null,
     unSeenCount: 0,
-    blockModalVisible: false
+    blockModalVisible: false,
+    showModal: false,
+    msg: "",
+    btnText: "",
+    title: ""
   };
 
   componentDidMount() {
@@ -51,6 +57,15 @@ class InboxPage extends PureComponent {
     }
   };
 
+  toggleDialog = () => {
+    ErrorHandler.setBreadcrumb("Dialog Modal Toggled:");
+    this.setState({ showModal: !this.state.showModal });
+  };
+
+  setDialogContent = ({ title, msg, btnText }) => {
+    this.setState({ title, msg, btnText }, () => this.toggleDialog());
+  };
+
   handleChatClick = (chatID, unSeenCount, readChat) => {
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
     this.setState({ chatID, unSeenCount }, () => {
@@ -71,7 +86,10 @@ class InboxPage extends PureComponent {
     removeSelf()
       .then(({ data }) => {
         if (this.mounted) {
+          toast.success("Successfully left Chat");
           this.setState({ chat: null });
+          this.props.refetch();
+          this.props.history.push("/inbox");
         }
       })
       .catch(res => {
@@ -126,11 +144,21 @@ class InboxPage extends PureComponent {
     }
   };
 
+  //TODO: Find how to set Modal Ok in fuctions---like Settigns page delete photo
   render() {
+    document.title = "Inbox";
     sessionStorage.setItem("page", "inbox");
     const { t } = this.props;
     const { currentuser } = this.props.session;
-    let { chatID, chat, blockModalVisible } = this.state;
+    let {
+      chatID,
+      chat,
+      blockModalVisible,
+      showModal,
+      msg,
+      btnText,
+      title
+    } = this.state;
     if (currentuser.tours.indexOf("i") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
       return (
@@ -199,6 +227,12 @@ class InboxPage extends PureComponent {
                           size="large"
                         />
                       );
+                    } else if (!data || !data.readChatQuery) {
+                      return (
+                        <div className="col-md-7">
+                          No Messages found for this chat
+                        </div>
+                      );
                     }
 
                     const { readChatQuery } = data;
@@ -222,18 +256,43 @@ class InboxPage extends PureComponent {
                 >
                   {removeSelf => {
                     return (
-                      <ChatInfo
-                        ErrorHandler={ErrorHandler}
-                        t={t}
-                        setBlockModalVisible={this.setBlockModalVisible}
-                        handleRemoveSelf={() =>
-                          this.handleRemoveSelf(removeSelf)
-                        }
-                        chatID={chatID}
-                        isOwner={
-                          chat && chat.ownerProfile.id === currentuser.profileID
-                        }
-                      />
+                      <>
+                        <ChatInfo
+                          ErrorHandler={ErrorHandler}
+                          t={t}
+                          setBlockModalVisible={this.setBlockModalVisible}
+                          chatID={chatID}
+                          isOwner={
+                            chat &&
+                            chat.ownerProfile.id === currentuser.profileID
+                          }
+                          leaveDialog={() =>
+                            this.setDialogContent({
+                              title: "Leave Conversation",
+                              msg:
+                                "Please enter an email that you check often. We use this only for communications from Foxtail and our members.",
+                              btnText: "Update"
+                            })
+                          }
+                        />
+                        {showModal && (
+                          <Modal
+                            header={title}
+                            close={() => this.toggleDialog()}
+                            description={msg}
+                            okSpan={
+                              <span
+                                className="color"
+                                onClick={() =>
+                                  this.handleRemoveSelf(removeSelf)
+                                }
+                              >
+                                {btnText}
+                              </span>
+                            }
+                          />
+                        )}
+                      </>
                     );
                   }}
                 </Mutation>

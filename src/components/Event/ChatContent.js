@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import { Query } from 'react-apollo';
-import { GET_COMMENTS, NEW_MESSAGE_SUB } from '../../queries';
-import Waypoint from 'react-waypoint';
-import Spinner from '../common/Spinner';
-import MessageList from './MessageList';
+import React, { PureComponent } from "react";
+import { Query } from "react-apollo";
+import { GET_COMMENTS, NEW_MESSAGE_SUB } from "../../queries";
+import Waypoint from "react-waypoint";
+import Spinner from "../common/Spinner";
+import MessageList from "./MessageList";
 
 const LIMIT = 6;
 class ChatContent extends PureComponent {
@@ -40,8 +40,8 @@ class ChatContent extends PureComponent {
             if (fetchMoreResult.getComments.messages < LIMIT) {
               this.setState({ hasMoreItems: false });
             }
-            console.log('NEW', ...fetchMoreResult.getComments.messages);
-            console.log('OLD', ...previousResult.getComments.messages);
+            console.log("NEW", ...fetchMoreResult.getComments.messages);
+            console.log("OLD", ...previousResult.getComments.messages);
             previousResult.getComments.messages = [
               ...previousResult.getComments.messages,
               ...fetchMoreResult.getComments.messages
@@ -58,7 +58,7 @@ class ChatContent extends PureComponent {
   };
 
   fetchData = async (fetchMore, cursor) => {
-    this.props.ErrorHandler.setBreadcrumb('Fetch more comments');
+    this.props.ErrorHandler.setBreadcrumb("Fetch more comments");
     // not beign used
     const { chatID } = this.props;
     this.setState({ loading: true });
@@ -103,18 +103,21 @@ class ChatContent extends PureComponent {
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
             return (
-              <Spinner message={t('common:Loading') + '...'} size="large" />
+              <Spinner message={t("common:Loading") + "..."} size="large" />
             );
           }
           if (error || !data) {
             return (
-              <ErrorHandler.report error={error} calledName={'getCommets'} />
+              <ErrorHandler.report error={error} calledName={"getCommets"} />
             );
           }
 
           let messages = [];
           if (data.getComments && data.getComments.messages) {
             messages = data.getComments.messages;
+          }
+          if (messages.length === 0) {
+            return <div>No messages yet</div>;
           }
           return (
             <MessageList
@@ -141,7 +144,7 @@ class ChatContent extends PureComponent {
                     } else {
                       prev.getComments = {
                         messages: [newMessageSubscribe],
-                        __typename: 'ChatType'
+                        __typename: "ChatType"
                       };
                     }
                     return prev;

@@ -1,35 +1,37 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import axios from 'axios';
-import { UPDATE_SETTINGS, SIGNS3 } from '../../queries';
-import ImageEditor from '../Modals/ImageEditor';
-import ProfilePic from './ProfilePic';
-import Photos from './Photos';
-import Menu from './Menu';
-import Preferences from './Preferences';
-import AppSettings from './AppSettings';
-import AcctSettings from './AcctSettings';
-import Verifications from './Verifications';
-import ManageBlackSub from './ManageBlackSub';
-import MyProfile from './MyProfile';
-import DesiresModal from '../Modals/Desires/Modal';
-import SubmitPhotoModal from '../Modals/SubmitPhoto';
-import CoupleModal from '../Modals/Couples';
-import BlackModal from '../Modals/Black';
-import getCityCountry from '../../utils/getCityCountry';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import axios from "axios";
+import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
+import ImageEditor from "../Modals/ImageEditor";
+import ProfilePic from "./ProfilePic";
+import Photos from "./Photos";
+import Menu from "./Menu";
+import Preferences from "./Preferences";
+import AppSettings from "./AppSettings";
+import AcctSettings from "./AcctSettings";
+import Verifications from "./Verifications";
+import ManageBlackSub from "./ManageBlackSub";
+import MyProfile from "./MyProfile";
+import DesiresModal from "../Modals/Desires/Modal";
+import SubmitPhotoModal from "../Modals/SubmitPhoto";
+import CoupleModal from "../Modals/Couples";
+import BlackModal from "../Modals/Black";
+import getCityCountry from "../../utils/getCityCountry";
+import Modal from "../common/Modal";
+import { toast } from "react-toastify";
 
 class SettingsPage extends PureComponent {
   //TODO: Do we need to have these setup?
   state = {
     distance: 100,
-    distanceMetric: 'mi',
+    distanceMetric: "mi",
     ageRange: [18, 80],
-    interestedIn: ['M', 'F'],
-    city: '',
-    country: '',
+    interestedIn: ["M", "F"],
+    city: "",
+    country: "",
     visible: true,
     newMsgNotify: true,
-    lang: 'en',
+    lang: "en",
     emailNotify: true,
     showOnline: true,
     likedOnly: false,
@@ -37,10 +39,10 @@ class SettingsPage extends PureComponent {
     couplePartner: undefined,
     users: undefined,
     publicPics: this.props.settings.photos.filter(
-      x => !x.private && x.url !== ''
+      x => !x.private && x.url !== ""
     ),
     privatePics: this.props.settings.photos.filter(
-      x => x.private && x.url !== ''
+      x => x.private && x.url !== ""
     ),
     about: undefined,
     desires: [],
@@ -53,18 +55,23 @@ class SettingsPage extends PureComponent {
     showBlackPopup: this.props.showBlkModal || false,
     showImgEditorPopup: false,
     showCouplePopup: this.props.showCplModal || false,
-    photoSubmitType: '',
+    photoSubmitType: "",
     includeMsgs: false,
     fileRecieved: undefined,
     isPrivate: false,
-    filename: '',
-    filetype: '',
-    profilePic: '',
-    profilePicUrl: '',
+    filename: "",
+    filetype: "",
+    profilePic: "",
+    profilePicUrl: "",
     flashCpl: false,
     ...this.props.settings,
     publicPhotoList: undefined,
-    privatePhotoList: undefined
+    privatePhotoList: undefined,
+    showModal: false,
+    msg: "",
+    btnText: "",
+    title: "",
+    okAction: null
   };
 
   componentDidMount() {
@@ -84,12 +91,15 @@ class SettingsPage extends PureComponent {
     isDeleted,
     updateSettings
   }) => {
-    this.props.ErrorHandler.setBreadcrumb('Photo list updated');
+    this.props.ErrorHandler.setBreadcrumb("Photo list updated");
     if (isPrivate) {
       let { privatePics } = this.state;
 
       if (isDeleted) {
         privatePics = privatePics.filter(x => x.id !== file.id);
+
+        this.setState({ showModal: false });
+        toast.success("Photo deleted successfully");
       } else {
         privatePics = [
           ...privatePics,
@@ -116,10 +126,12 @@ class SettingsPage extends PureComponent {
       if (isDeleted) {
         if (profilePic === file.key) {
           if (this.mounted) {
-            this.setState({ profilePic: '', profilePicUrl: '' });
+            this.setState({ profilePic: "", profilePicUrl: "" });
           }
         }
         publicPics = publicPics.filter(x => x.id !== file.id);
+        this.setState({ showModal: false });
+        toast.success("Photo deleted successfully");
       } else {
         publicPics = [
           ...publicPics,
@@ -129,7 +141,7 @@ class SettingsPage extends PureComponent {
             url
           }
         ];
-        if (profilePic === '') {
+        if (profilePic === "") {
           if (this.mounted) {
             this.setState({ profilePic: key, profilePicUrl: url });
           }
@@ -149,7 +161,7 @@ class SettingsPage extends PureComponent {
   };
 
   handleSubmit = (updateSettings, saveImage) => {
-    this.props.ErrorHandler.setBreadcrumb('Settings updated');
+    this.props.ErrorHandler.setBreadcrumb("Settings updated");
     if (!saveImage) {
       if (this.mounted) {
         this.setState(
@@ -255,7 +267,7 @@ class SettingsPage extends PureComponent {
   };
 
   toggleDesiresPopup = () => {
-    this.props.ErrorHandler.setBreadcrumb('Desires popup toggled');
+    this.props.ErrorHandler.setBreadcrumb("Desires popup toggled");
     if (this.mounted) {
       this.setState({
         showDesiresPopup: !this.state.showDesiresPopup
@@ -264,7 +276,7 @@ class SettingsPage extends PureComponent {
   };
 
   toggleImgEditorPopup = (file, isPrivate) => {
-    this.props.ErrorHandler.setBreadcrumb('Toggle image editor');
+    this.props.ErrorHandler.setBreadcrumb("Toggle image editor");
     if (this.mounted) {
       this.setState(
         {
@@ -281,7 +293,7 @@ class SettingsPage extends PureComponent {
   };
 
   togglePhotoVerPopup = () => {
-    this.props.ErrorHandler.setBreadcrumb('Toggle Photo Ver Popup');
+    this.props.ErrorHandler.setBreadcrumb("Toggle Photo Ver Popup");
     if (this.mounted) {
       this.setState({
         showPhotoVerPopup: !this.state.showPhotoVerPopup
@@ -290,7 +302,7 @@ class SettingsPage extends PureComponent {
   };
 
   toggleCouplesPopup = () => {
-    this.props.ErrorHandler.setBreadcrumb('Toggle Couple popup');
+    this.props.ErrorHandler.setBreadcrumb("Toggle Couple popup");
     if (this.mounted) {
       this.setState({
         showCouplePopup: !this.state.showCouplePopup
@@ -299,7 +311,7 @@ class SettingsPage extends PureComponent {
   };
 
   toggleBlackPopup = () => {
-    this.props.ErrorHandler.setBreadcrumb('Toggle Blk popup');
+    this.props.ErrorHandler.setBreadcrumb("Toggle Blk popup");
     if (this.mounted) {
       this.setState({
         showBlackPopup: !this.state.showBlackPopup
@@ -316,7 +328,7 @@ class SettingsPage extends PureComponent {
   };
 
   setPartnerID = id => {
-    this.props.ErrorHandler.setBreadcrumb('Set Partner ID');
+    this.props.ErrorHandler.setBreadcrumb("Set Partner ID");
     this.props.form.setFieldsValue({ couplePartner: id });
   };
 
@@ -330,23 +342,32 @@ class SettingsPage extends PureComponent {
   };
 
   uploadToS3 = async (file, signedRequest) => {
-    this.props.ErrorHandler.setBreadcrumb('Upload to S3');
+    this.props.ErrorHandler.setBreadcrumb("Upload to S3");
     try {
       //ORIGINAL
       const options = {
         headers: {
-          'Content-Type': file.type
+          "Content-Type": file.type
         }
       };
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status === 200) {
-        console.log('upload ok');
+        console.log("upload ok");
       } else {
-        console.log('Something went wrong');
+        console.log("Something went wrong");
       }
     } catch (e) {
       console.log(e);
     }
+  };
+
+  toggleDialog = () => {
+    this.props.ErrorHandler.setBreadcrumb("Dialog Modal Toggled:");
+    this.setState({ showModal: !this.state.showModal });
+  };
+
+  setDialogContent = ({ title, msg, btnText, okAction }) => {
+    this.setState({ title, msg, btnText, okAction }, () => this.toggleDialog());
   };
 
   render() {
@@ -390,29 +411,34 @@ class SettingsPage extends PureComponent {
       profilePic,
       profilePicUrl,
       phone,
-      flashCpl
+      flashCpl,
+      showModal,
+      msg,
+      btnText,
+      title,
+      okAction
     } = this.state;
 
     const { userID, t, ErrorHandler, currentuser, refetchUser } = this.props;
 
-    let aboutErr = '';
-    if (about === '') {
-      aboutErr = 'Please fill in your bio';
+    let aboutErr = "";
+    if (about === "") {
+      aboutErr = "Please fill in your bio";
     } else if (about.length < 20) {
-      aboutErr = 'Bio must be more than 20 characters';
+      aboutErr = "Bio must be more than 20 characters";
     }
 
-    let profilePicErr = '';
+    let profilePicErr = "";
     if (publicPics.length === 0) {
-      profilePicErr = 'Please upload at least 1 photo';
-    } else if (profilePic === '') {
-      profilePicErr = 'Please select a Profile Picture';
+      profilePicErr = "Please upload at least 1 photo";
+    } else if (profilePic === "") {
+      profilePicErr = "Please select a Profile Picture";
     }
 
     const errors = {
-      profilePic: profilePicErr !== '' ? profilePicErr : null,
-      about: aboutErr !== '' ? aboutErr : null,
-      desires: desires.length === 0 ? 'Please select at least 1 desire' : null
+      profilePic: profilePicErr !== "" ? profilePicErr : null,
+      about: aboutErr !== "" ? aboutErr : null,
+      desires: desires.length === 0 ? "Please select at least 1 desire" : null
     };
 
     return (
@@ -456,7 +482,7 @@ class SettingsPage extends PureComponent {
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
                         <ErrorHandler.ErrorBoundary>
-                          {' '}
+                          {" "}
                           <ProfilePic profilePic={profilePicUrl} />
                           <Menu
                             coupleModalToggle={this.toggleCouplesPopup}
@@ -474,7 +500,7 @@ class SettingsPage extends PureComponent {
                       <div className="page mtop">
                         <div className="form">
                           <ErrorHandler.ErrorBoundary>
-                            {' '}
+                            {" "}
                             <Preferences
                               distance={distance}
                               distanceMetric={distanceMetric}
@@ -496,7 +522,7 @@ class SettingsPage extends PureComponent {
                             />
                           </ErrorHandler.ErrorBoundary>
                           <ErrorHandler.ErrorBoundary>
-                            {' '}
+                            {" "}
                             <Photos
                               isPrivate={false}
                               showEditor={this.toggleImgEditorPopup}
@@ -509,12 +535,19 @@ class SettingsPage extends PureComponent {
                                 })
                               }
                               deleteImg={({ file, key }) =>
-                                this.handlePhotoListChange({
-                                  file,
-                                  key,
-                                  isPrivate: false,
-                                  isDeleted: true,
-                                  updateSettings
+                                this.setDialogContent({
+                                  title: "Delete Photo",
+                                  msg:
+                                    "This remove your photo from our server and can not be undone.",
+                                  btnText: "Delete",
+                                  okAction: () =>
+                                    this.handlePhotoListChange({
+                                      file,
+                                      key,
+                                      isPrivate: false,
+                                      isDeleted: true,
+                                      updateSettings
+                                    })
                                 })
                               }
                               t={t}
@@ -526,7 +559,7 @@ class SettingsPage extends PureComponent {
                             </label>
                           )}
                           <ErrorHandler.ErrorBoundary>
-                            {' '}
+                            {" "}
                             <Photos
                               isPrivate={true}
                               showEditor={this.toggleImgEditorPopup}
@@ -560,7 +593,7 @@ class SettingsPage extends PureComponent {
                             ErrorBoundary={ErrorHandler.ErrorBoundary}
                           />
                           <ErrorHandler.ErrorBoundary>
-                            {' '}
+                            {" "}
                             <AppSettings
                               setValue={({ name, value }) =>
                                 this.setValue({ name, value, updateSettings })
@@ -580,6 +613,18 @@ class SettingsPage extends PureComponent {
                               t={t}
                             />
                           </ErrorHandler.ErrorBoundary>
+                          {showModal && (
+                            <Modal
+                              header={title}
+                              close={() => this.toggleDialog()}
+                              description={msg}
+                              okSpan={
+                                <span className="color" onClick={okAction}>
+                                  {btnText}
+                                </span>
+                              }
+                            />
+                          )}
                           {currentuser.blackMember.active && (
                             <ErrorHandler.ErrorBoundary>
                               <ManageBlackSub
@@ -591,7 +636,7 @@ class SettingsPage extends PureComponent {
                             </ErrorHandler.ErrorBoundary>
                           )}
                           <ErrorHandler.ErrorBoundary>
-                            {' '}
+                            {" "}
                             <AcctSettings
                               setValue={({ name, value }) =>
                                 this.setValue({ name, value, updateSettings })

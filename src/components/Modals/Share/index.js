@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   FacebookShareButton,
   GooglePlusShareButton,
@@ -12,9 +12,9 @@ import {
   RedditIcon,
   TumblrIcon,
   EmailIcon
-} from 'react-share';
-import Modal from '../../common/Modal';
-import { withNamespaces } from 'react-i18next';
+} from "react-share";
+import Modal from "../../common/Modal";
+import { withNamespaces } from "react-i18next";
 
 class Share extends Component {
   shouldComponentUpdate() {
@@ -23,26 +23,26 @@ class Share extends Component {
 
   render() {
     const { profile, event, close, t, ErrorBoundary } = this.props;
-    let shareUrl = '';
-    let title = '';
+    let shareUrl = "";
+    let title = "";
     const body = (profile, event, t) => {
       if (profile) {
-        shareUrl = 'http://localhost:3000/member/' + profile.id;
-        title = t('intrstmsg') + ':';
+        shareUrl = "http://localhost:3000/member/" + profile.id;
+        title = t("intrstmsg") + ":";
         return (
           <div>
-            {t('meetques')}{' '}
+            {t("meetques")}{" "}
             {profile.users.map((user, index) => {
               if (index === 0) return user.username;
-              else return +' & ' + user.username;
+              else return +" & " + user.username;
             })}
             ?
           </div>
         );
       } else if (event) {
-        shareUrl = 'http://localhost:3000/event/' + event.id;
-        title = t('invitation') + ' ' + event.eventname;
-        return <div>{t('shareevent')}?</div>;
+        shareUrl = "http://localhost:3000/event/" + event.id;
+        title = t("invitation") + " " + event.eventname;
+        return <div>{t("shareevent")}?</div>;
       } else {
         return null;
       }
@@ -51,40 +51,29 @@ class Share extends Component {
 
     return (
       <Modal header={modalBody} close={close}>
-        {' '}
+        {" "}
         <ErrorBoundary>
           <div
             style={{
-              justifyContent: 'center',
-              display: 'flex'
+              justifyContent: "center",
+              display: "flex"
             }}
           >
             <div
               style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '10px',
-                width: '20vw'
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "10px",
+                width: "20vw"
               }}
             >
-              <FacebookShareButton
-                url={shareUrl}
-                quote={title}
-                className="Demo__some-network__share-button"
-              >
+              <FacebookShareButton url={shareUrl} quote={title}>
                 <FacebookIcon size={32} round />
               </FacebookShareButton>
-              <TwitterShareButton
-                url={shareUrl}
-                title={title}
-                className="Demo__some-network__share-button"
-              >
+              <TwitterShareButton url={shareUrl} title={title}>
                 <TwitterIcon size={32} round />
               </TwitterShareButton>
-              <GooglePlusShareButton
-                url={shareUrl}
-                className="Demo__some-network__share-button"
-              >
+              <GooglePlusShareButton url={shareUrl}>
                 <GooglePlusIcon size={32} round />
               </GooglePlusShareButton>
               <RedditShareButton
@@ -92,7 +81,6 @@ class Share extends Component {
                 title={title}
                 windowWidth={660}
                 windowHeight={460}
-                className="Demo__some-network__share-button"
               >
                 <RedditIcon size={32} round />
               </RedditShareButton>
@@ -101,15 +89,13 @@ class Share extends Component {
                 title={title}
                 windowWidth={660}
                 windowHeight={460}
-                className="Demo__some-network__share-button"
               >
                 <TumblrIcon size={32} round />
               </TumblrShareButton>
               <EmailShareButton
                 url={shareUrl}
                 subject={title}
-                body={title + '.' + t('checkout') + ':' + shareUrl}
-                className="Demo__some-network__share-button"
+                body={title + "." + t("checkout") + ":" + shareUrl}
               >
                 <EmailIcon size={32} round />
               </EmailShareButton>
@@ -121,4 +107,4 @@ class Share extends Component {
   }
 }
 
-export default withNamespaces('modals')(Share);
+export default withNamespaces("modals")(Share);

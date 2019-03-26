@@ -45,7 +45,7 @@ class MyEvents extends PureComponent {
     return (
       <Query
         query={GET_MY_EVENTS}
-        variables={{ skip }}
+        variables={{ skip, limit: LIMIT }}
         fetchPolicy="cache-and-network"
       >
         {({ data, loading, error, fetchMore }) => {

@@ -167,7 +167,7 @@ class SearchEvents extends PureComponent {
   };
 
   render() {
-    document.title = "Events";
+    document.title = "Search Events";
     const {
       event,
       shareModalVisible,

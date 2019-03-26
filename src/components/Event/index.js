@@ -17,9 +17,15 @@ import EventInfo from "./EventInfo";
 import { flagOptions } from "../../docs/options";
 import { toast } from "react-toastify";
 import validateLang from "../../utils/validateLang";
+import ShareModal from "../Modals/Share";
 
 class EventPage extends PureComponent {
-  state = { visible: false, blockModalVisible: false, showDelete: false };
+  state = {
+    visible: false,
+    shareModalVisible: false,
+    blockModalVisible: false,
+    showDelete: false
+  };
 
   componentDidMount() {
     this.mounted = true;
@@ -48,6 +54,16 @@ class EventPage extends PureComponent {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   }
+
+  setShareModalVisible = (shareModalVisible, profile) => {
+    this.props.ErrorHandler.setBreadcrumb(
+      "Share Modal Opened:" + shareModalVisible
+    );
+    if (this.mounted) {
+      if (profile) this.setState({ profile, shareModalVisible });
+      else this.setState({ shareModalVisible });
+    }
+  };
 
   setBlockModalVisible = (blockModalVisible, event) => {
     this.props.ErrorHandler.setBreadcrumb(
@@ -103,7 +119,7 @@ class EventPage extends PureComponent {
 
   render() {
     const { id } = this.props.match.params;
-    const { blockModalVisible, showDelete } = this.state;
+    const { blockModalVisible, showDelete, shareModalVisible } = this.state;
     const { session, history, t, ErrorHandler } = this.props;
     if (id === "tour" && session.currentuser.tours.indexOf("e") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Event");
@@ -117,12 +133,14 @@ class EventPage extends PureComponent {
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error, refetch }) => {
           if (error) {
+            document.title = "Error Occured";
             return (
               <ErrorHandler.report error={error} calledName={"getEvent"} />
             );
           }
 
           if (loading) {
+            document.title = "Loading...";
             return (
               <Spinner message={t("common:Loading" + "...")} size="large" />
             );
@@ -131,6 +149,7 @@ class EventPage extends PureComponent {
           }
 
           const { event } = data;
+          document.title = event.eventname;
 
           const { description, participants, chatID } = event;
           const queryParams = JSON.parse(
@@ -149,6 +168,9 @@ class EventPage extends PureComponent {
                           history={history}
                           t={t}
                           dayjs={dayjs}
+                          showShareModal={() =>
+                            this.setShareModalVisible(true, event)
+                          }
                         />
                       </ErrorHandler.ErrorBoundary>
                     </div>
@@ -205,6 +227,13 @@ class EventPage extends PureComponent {
                   </div>
                 </div>
               </div>
+              {event && shareModalVisible && (
+                <ShareModal
+                  event={event}
+                  close={() => this.setShareModalVisible(false)}
+                  ErrorBoundary={ErrorHandler.ErrorBoundary}
+                />
+              )}
               {blockModalVisible && (
                 <BlockModal
                   type={flagOptions.Event}

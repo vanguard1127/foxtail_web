@@ -1,13 +1,19 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import { SEEN_TOUR } from '../../queries';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  EmailShareButton
+} from "react-share";
+import { SEEN_TOUR } from "../../queries";
 
-import { withNamespaces } from 'react-i18next';
+import { withNamespaces } from "react-i18next";
 
 class Footer extends PureComponent {
   render() {
     const { t } = this.props;
-
+    const shareUrl = "www.fotxtailapp.com";
+    const title = "Foxtail";
     return (
       <footer>
         <div className="brand">
@@ -19,19 +25,25 @@ class Footer extends PureComponent {
               <div className="medias">
                 <ul>
                   <li className="facebook">
-                    <span>
-                      <i />
-                    </span>
+                    <FacebookShareButton url={shareUrl} quote={title}>
+                      <span>
+                        <i />
+                      </span>
+                    </FacebookShareButton>
                   </li>
                   <li className="twitter">
-                    <span>
-                      <i />
-                    </span>
+                    <TwitterShareButton url={shareUrl} title={title}>
+                      <span>
+                        <i />
+                      </span>
+                    </TwitterShareButton>
                   </li>
-                  <li className="instagram">
-                    <span>
-                      <i />
-                    </span>
+                  <li className="mail">
+                    <EmailShareButton url={shareUrl} title={title}>
+                      <span>
+                        <i />
+                      </span>
+                    </EmailShareButton>
                   </li>
                 </ul>
               </div>
@@ -42,7 +54,7 @@ class Footer extends PureComponent {
           <div className="container">
             <div className="col-md-12">
               <span className="text">
-                © 2019 - 2020 Foxtail App Inc. {t('register')}.
+                © 2019 - 2020 Foxtail App Inc. {t("register")}.
               </span>
               <div className="menu">
                 <ul>
@@ -50,7 +62,7 @@ class Footer extends PureComponent {
                     <Mutation
                       mutation={SEEN_TOUR}
                       variables={{
-                        tour: 'reset'
+                        tour: "reset"
                       }}
                     >
                       {seenTour => {
@@ -61,13 +73,13 @@ class Footer extends PureComponent {
                     </Mutation>
                   </li>
                   <li>
-                    <span>{t('termscon')}</span>
+                    <span>{t("termscon")}</span>
                   </li>
                   <li>
-                    <span>{t('privacy')}</span>
+                    <span>{t("privacy")}</span>
                   </li>
                   <li>
-                    <span>{t('contact')}</span>
+                    <span>{t("contact")}</span>
                   </li>
                 </ul>
               </div>
@@ -79,4 +91,4 @@ class Footer extends PureComponent {
   }
 }
 
-export default withNamespaces('footer')(Footer);
+export default withNamespaces("footer")(Footer);

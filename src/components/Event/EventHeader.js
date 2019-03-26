@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
-import EventTitles from './EventTitles';
-import EventDate from '../common/Event/EventDate';
-import EventCreator from './EventCreator';
-import EventShare from './EventShare';
+import React, { PureComponent } from "react";
+import EventTitles from "./EventTitles";
+import EventDate from "../common/Event/EventDate";
+import EventCreator from "./EventCreator";
+import EventShare from "./EventShare";
 
 class EventHeader extends PureComponent {
   render() {
@@ -10,7 +10,8 @@ class EventHeader extends PureComponent {
       event: { id, startTime, eventname, ownerProfile, createdAt, tagline },
       history,
       t,
-      dayjs
+      dayjs,
+      showShareModal
     } = this.props;
 
     return (
@@ -25,7 +26,7 @@ class EventHeader extends PureComponent {
             t={t}
             dayjs={dayjs}
           />
-          <EventShare id={id} t={t} />
+          <EventShare id={id} t={t} showShareModal={showShareModal} />
         </div>
       </div>
     );

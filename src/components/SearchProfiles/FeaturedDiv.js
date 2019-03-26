@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
-import FeaturedCard from './FeaturedCard';
+import React, { Component } from "react";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
+import FeaturedCard from "./FeaturedCard";
 
 class FeaturedDiv extends Component {
   shouldComponentUpdate(nextProps) {
@@ -17,6 +17,7 @@ class FeaturedDiv extends Component {
       showMsgModal,
       likeProfile,
       t,
+      history,
       dayjs
     } = this.props;
 
@@ -24,7 +25,7 @@ class FeaturedDiv extends Component {
       <section className="featured-profiles" key="na">
         <div className="container">
           <div className="col-md-12">
-            <span className="head">{t('featmems')}</span>
+            <span className="head">{t("featmems")}</span>
             <OwlCarousel
               className="owl-carousel slider"
               autoplay
@@ -65,6 +66,7 @@ class FeaturedDiv extends Component {
                     likeProfile={likeProfile}
                     t={t}
                     dayjs={dayjs}
+                    history={history}
                   />
                 );
               })}

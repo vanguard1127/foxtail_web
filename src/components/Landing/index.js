@@ -1,36 +1,37 @@
-import React, { PureComponent } from 'react';
-import Signup from './Signup';
-import LoginButton from './LoginButton';
-import LanguageControl from '../common/LanguageControl/LanguageControl';
-import * as ErrorHandler from '../common/ErrorHandler';
-import CountUp from 'react-countup';
-import ResetPhoneModal from '../Modals/ResetPhone';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { PureComponent } from "react";
+import Signup from "./Signup";
+import LoginButton from "./LoginButton";
+import LanguageControl from "../common/LanguageControl/LanguageControl";
+import * as ErrorHandler from "../common/ErrorHandler";
+import CountUp from "react-countup";
+import ResetPhoneModal from "../Modals/ResetPhone";
+import { ToastContainer, toast } from "react-toastify";
 //import 'react-toastify/dist/ReactToastify.css';
 // minified version is also included
-import 'react-toastify/dist/ReactToastify.min.css';
-import { withNamespaces } from 'react-i18next';
+import "react-toastify/dist/ReactToastify.min.css";
+import { withNamespaces } from "react-i18next";
 
 class Landing extends PureComponent {
   state = { resetPhoneVisible: false, token: null, tooltip: false };
   render() {
+    document.title = "Foxtail";
     const { t, props } = this.props;
     const { resetPhoneVisible, token, tooltip } = this.state;
     if (props.location.state) {
       if (props.location.state.emailVer === true) {
-        if (!toast.isActive('emailVer')) {
-          toast.success('Email has been confirmed.', {
+        if (!toast.isActive("emailVer")) {
+          toast.success("Email has been confirmed.", {
             position: toast.POSITION.TOP_CENTER,
-            toastId: 'emailVer'
+            toastId: "emailVer"
           });
 
           props.history.replace({ state: {} });
         }
       } else if (props.location.state.emailVer === false) {
-        if (!toast.isActive('errVer')) {
-          toast.error('Email confirmation failed, please try again.', {
+        if (!toast.isActive("errVer")) {
+          toast.error("Email confirmation failed, please try again.", {
             position: toast.POSITION.TOP_CENTER,
-            toastId: 'errVer'
+            toastId: "errVer"
           });
 
           props.history.replace({ state: {} });
@@ -42,10 +43,10 @@ class Landing extends PureComponent {
         });
         props.history.replace({ state: {} });
       } else if (props.location.state.phoneReset === false) {
-        if (!toast.isActive('errVer')) {
-          toast.error('Phone reset failed, please try again.', {
+        if (!toast.isActive("errVer")) {
+          toast.error("Phone reset failed, please try again.", {
             position: toast.POSITION.TOP_CENTER,
-            toastId: 'errVer'
+            toastId: "errVer"
           });
 
           props.history.replace({ state: {} });
@@ -69,7 +70,7 @@ class Landing extends PureComponent {
                       <LoginButton t={t} history={props.history} />
                     </ErrorHandler.ErrorBoundary>
                     <ErrorHandler.ErrorBoundary>
-                      {' '}
+                      {" "}
                       <LanguageControl />
                     </ErrorHandler.ErrorBoundary>
                   </div>
@@ -87,13 +88,13 @@ class Landing extends PureComponent {
                   <div className="col-lg-7 col-md-12">
                     <div className="left">
                       <div className="welcome-text">
-                        <h1>{t('title')}</h1>
-                        <span className="title">{t('subtitle')}</span>
+                        <h1>{t("title")}</h1>
+                        <span className="title">{t("subtitle")}</span>
                       </div>
                       <div className="stats">
                         <div className="head">
-                          <span> {t('Welcome')}</span>{' '}
-                          <span> {t('Foxtail Stats')}</span>
+                          <span> {t("Welcome")}</span>{" "}
+                          <span> {t("Foxtail Stats")}</span>
                         </div>
                         <ErrorHandler.ErrorBoundary>
                           <ul>
@@ -105,29 +106,29 @@ class Landing extends PureComponent {
                                   separator="."
                                 />
                               </span>
-                              <span>{t('Male Members')}</span>
+                              <span>{t("Male Members")}</span>
                             </li>
                             <li>
                               <span className="counter">
-                                {' '}
+                                {" "}
                                 <CountUp
                                   end={19538}
                                   duration={1.75}
                                   separator="."
                                 />
                               </span>
-                              <span>{t('Female Members')}</span>
+                              <span>{t("Female Members")}</span>
                             </li>
                             <li>
                               <span className="counter">
-                                {' '}
+                                {" "}
                                 <CountUp
                                   end={19538}
                                   duration={1.75}
                                   separator="."
                                 />
                               </span>
-                              <span>{t('Couple Profiles')}</span>
+                              <span>{t("Couple Profiles")}</span>
                             </li>
                           </ul>
                         </ErrorHandler.ErrorBoundary>
@@ -136,7 +137,7 @@ class Landing extends PureComponent {
                   </div>
                   <div className="col-lg-5 col-md-12">
                     <ErrorHandler.ErrorBoundary>
-                      {' '}
+                      {" "}
                       <Signup t={t} ErrorHandler={ErrorHandler} />
                     </ErrorHandler.ErrorBoundary>
                   </div>
@@ -152,7 +153,7 @@ class Landing extends PureComponent {
               <div className="row">
                 <div className="col-md-4">
                   <span className="created">
-                    Foxtail © 2018 {t('Created by')} <span>Foxtail</span>
+                    Foxtail © 2018 {t("Created by")} <span>Foxtail</span>
                   </span>
                 </div>
                 <div className="offset-md-2 col-md-6">
@@ -173,60 +174,60 @@ class Landing extends PureComponent {
                         {tooltip && (
                           <span className="tooltiptext">
                             <div>
-                              {' '}
+                              {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push('/tos')
+                                  this.props.props.history.push("/tos")
                                 }
                               >
-                                {t('common:Terms')}
+                                {t("common:Terms")}
                               </span>
                             </div>
                             <div>
-                              {' '}
+                              {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push('/privacy')
+                                  this.props.props.history.push("/privacy")
                                 }
                               >
-                                {t('common:Privacy')}
+                                {t("common:Privacy")}
                               </span>
                             </div>
                             <div>
-                              {' '}
+                              {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push('/tos')
+                                  this.props.props.history.push("/tos")
                                 }
                               >
                                 Anti Spam
                               </span>
                             </div>
                             <div>
-                              {' '}
+                              {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push('/tos')
+                                  this.props.props.history.push("/tos")
                                 }
                               >
                                 DCMA
                               </span>
                             </div>
                             <div>
-                              {' '}
+                              {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push('/tos')
+                                  this.props.props.history.push("/tos")
                                 }
                               >
                                 Law Enforcement
                               </span>
                             </div>
                             <div>
-                              {' '}
+                              {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push('/tos')
+                                  this.props.props.history.push("/tos")
                                 }
                               >
                                 Subpoena Compliance
@@ -237,33 +238,33 @@ class Landing extends PureComponent {
                         <span
                           onClick={() => this.setState({ tooltip: !tooltip })}
                         >
-                          {t('common:Terms') + ' '}
-                          {tooltip ? '▽' : '△'}
+                          {t("common:Terms") + " "}
+                          {tooltip ? "▽" : "△"}
                         </span>
                       </li>
                       <li>
                         <span
-                          onClick={() => this.props.props.history.push('/faq')}
+                          onClick={() => this.props.props.history.push("/faq")}
                         >
-                          {t('FAQ')}
-                        </span>
-                      </li>
-                      <li>
-                        <span
-                          onClick={() =>
-                            this.props.props.history.push('/about')
-                          }
-                        >
-                          {t('About')}
+                          {t("FAQ")}
                         </span>
                       </li>
                       <li>
                         <span
                           onClick={() =>
-                            this.props.props.history.push('/support')
+                            this.props.props.history.push("/about")
                           }
                         >
-                          {t('Support')}
+                          {t("About")}
+                        </span>
+                      </li>
+                      <li>
+                        <span
+                          onClick={() =>
+                            this.props.props.history.push("/support")
+                          }
+                        >
+                          {t("Support")}
                         </span>
                       </li>
                     </ul>
@@ -288,4 +289,4 @@ class Landing extends PureComponent {
   }
 }
 
-export default withNamespaces('landing')(Landing);
+export default withNamespaces("landing")(Landing);

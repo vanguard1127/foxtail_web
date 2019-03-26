@@ -52,7 +52,7 @@ class NoticesItem extends PureComponent {
   };
 
   updateRead = cache => {
-    const { notificationIDs, skip } = this.state;
+    const { notificationIDs, skip, read } = this.state;
     const {
       getNotifications,
       getNotifications: { notifications }
@@ -61,9 +61,29 @@ class NoticesItem extends PureComponent {
       variables: { limit: LIMIT, skip }
     });
 
-    const [id] = notificationIDs;
-    var readNotice = notifications.find(notice => notice.id === id);
-    readNotice.read = true;
+    if (read) {
+      const [id] = notificationIDs;
+      var readNotice = notifications.find(notice => notice.id === id);
+      readNotice.read = true;
+    } else {
+      notificationIDs.forEach(notifID => {
+        var seenNotice = notifications.find(notice => notice.id === notifID);
+        seenNotice.seen = true;
+      });
+
+      const { getCounts } = cache.readQuery({
+        query: GET_COUNTS
+      });
+      console.log(getCounts.noticesCount, notificationIDs.length);
+      getCounts.noticesCount = getCounts.noticesCount - notificationIDs.length;
+
+      cache.writeQuery({
+        query: GET_COUNTS,
+        data: {
+          getCounts
+        }
+      });
+    }
 
     cache.writeQuery({
       query: GET_NOTIFICATIONS,
@@ -74,26 +94,30 @@ class NoticesItem extends PureComponent {
     });
   };
 
-  //TODO: Ensure this causes instant update to nums
-  updateSeen = numSeen => {
-    const { client } = this.props;
-    const { getCounts } = client.readQuery({
-      query: GET_COUNTS
-    });
-    getCounts.noticesCount = getCounts.noticesCount - numSeen;
-
-    client.writeQuery({
-      query: GET_COUNTS,
-      data: {
-        getCounts
-      }
-    });
-    this.handleVisibleChange(false);
-  };
-
   readNotices = (notificationIDs, updateNotifications) => {
     if (this.mounted) {
       this.setState({ notificationIDs, read: true }, () => {
+        updateNotifications()
+          .then(({ data }) => {
+            this.clearState();
+          })
+          .catch(res => {
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          });
+      });
+    }
+  };
+
+  seeNotices = (notifications, updateNotifications) => {
+    if (this.mounted) {
+      const unseenIDs = notifications.reduce((res, el) => {
+        if (!el.seen) {
+          res.push(el.id);
+        }
+        return res;
+      }, []);
+
+      this.setState({ notificationIDs: unseenIDs, seen: true }, () => {
         updateNotifications()
           .then(({ data }) => {
             this.clearState();
@@ -212,13 +236,7 @@ class NoticesItem extends PureComponent {
                 }
 
                 const { notifications, alert } = data.getNotifications;
-
-                const unseen = notifications.reduce((res, el) => {
-                  if (!el.seen) {
-                    res++;
-                  }
-                  return res;
-                }, 0);
+                console.log(notifications);
 
                 return (
                   <span>
@@ -232,13 +250,17 @@ class NoticesItem extends PureComponent {
                           {count > 0 && <span className="count">{count}</span>}
                         </span>
                       }
-                      closeAction={() => this.updateSeen(unseen)}
+                      closeAction={() =>
+                        this.seeNotices(notifications, updateNotifications)
+                      }
                     >
                       <NoticesList
                         notifications={notifications}
                         history={history}
                         fetchMore={fetchMore}
-                        close={() => this.updateSeen(unseen)}
+                        close={() =>
+                          this.seeNotices(notifications, updateNotifications)
+                        }
                         t={t}
                         visible={this.state.visible}
                         readNotices={e =>

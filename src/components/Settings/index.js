@@ -29,6 +29,7 @@ class Settings extends PureComponent {
 
   //TODO: Set time below
   render() {
+    document.title = "My Account";
     //TODO: If on Settigns make popup show
     const { session, refetch, t, ErrorHandler, location, history } = this.props;
     let isCouple = false;
@@ -79,7 +80,7 @@ class Settings extends PureComponent {
                       {t("loggedin")}:{" "}
                       {dayjs(settings.lastActive)
                         .locale(localStorage.getItem("i18nextLng"))
-                        .format("MMMM DD YYYY")}
+                        .format("MMMM DD, YYYY @ HH:mm")}
                     </span>
                   </div>
                 </div>

@@ -628,8 +628,8 @@ export const GET_INBOX = gql`
 `;
 
 export const GET_MY_EVENTS = gql`
-  query($skip: Int!) {
-    getMyEvents(skip: $skip) {
+  query($skip: Int!, $limit: Int!) {
+    getMyEvents(skip: $skip, limit: $limit) {
       docs {
         id
         eventname
@@ -658,7 +658,6 @@ export const GET_MY_EVENTS = gql`
     }
   }
 `;
-
 export const GET_FRIENDS = gql`
   query($limit: Int!, $skip: Int, $chatID: ID, $isEvent: Boolean) {
     getFriends(limit: $limit, skip: $skip, chatID: $chatID, isEvent: $isEvent) {

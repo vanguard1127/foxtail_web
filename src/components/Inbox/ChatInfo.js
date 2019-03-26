@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
+import React, { Component } from "react";
+import MembersDropdown from "../common/MembersDropdown/MembersDropdown";
 class ChatInfo extends Component {
   state = { invDropOpen: false, remDropOpen: false };
   //TODO: Test if this prevent new messages from getting shown
@@ -21,7 +21,8 @@ class ChatInfo extends Component {
       setBlockModalVisible,
       handleRemoveSelf,
       isOwner,
-      ErrorHandler
+      ErrorHandler,
+      leaveDialog
     } = this.props;
 
     const { invDropOpen, remDropOpen } = this.state;
@@ -31,14 +32,14 @@ class ChatInfo extends Component {
           <div className="head" />
           <div className="content">
             <div className="visit-profile">
-              <span>{t('visit')}</span>
+              <span>{t("visit")}</span>
             </div>
             <div className="functions">
               {remDropOpen && (
                 <MembersDropdown
                   targetID={chatID}
-                  targetType={'chat'}
-                  listType={'participants'}
+                  targetType={"chat"}
+                  listType={"participants"}
                   t={t}
                   close={this.closeRemDropdown}
                   isOwner={isOwner}
@@ -59,23 +60,23 @@ class ChatInfo extends Component {
                   >
                     Invite Members
                   </span>
-                </li>{' '}
+                </li>{" "}
                 {invDropOpen && (
                   <MembersDropdown
                     targetID={chatID}
-                    targetType={'chat'}
-                    listType={'friends'}
+                    targetType={"chat"}
+                    listType={"friends"}
                     t={t}
                     close={this.closeInvDropdown}
-                    style={{ top: '90px' }}
+                    style={{ top: "90px" }}
                     ErrorHandler={ErrorHandler}
                   />
                 )}
                 <li className="delete">
-                  <span onClick={handleRemoveSelf}>{t('leaveconv')}</span>
-                </li>{' '}
+                  <span onClick={leaveDialog}>{t("leaveconv")}</span>
+                </li>{" "}
                 <li className="report">
-                  <span onClick={setBlockModalVisible}>{t('reportconv')}</span>
+                  <span onClick={setBlockModalVisible}>{t("reportconv")}</span>
                 </li>
               </ul>
             </div>

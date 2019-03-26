@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
-import { GENERATE_CODE } from '../../../queries';
-import { Query } from 'react-apollo';
-import { EmailShareButton, EmailIcon } from 'react-share';
-import Spinner from '../../common/Spinner';
+import React, { PureComponent } from "react";
+import { GENERATE_CODE } from "../../../queries";
+import { Query } from "react-apollo";
+import { EmailShareButton, EmailIcon } from "react-share";
+import Spinner from "../../common/Spinner";
 
 class CodeBox extends PureComponent {
   render() {
@@ -11,18 +11,18 @@ class CodeBox extends PureComponent {
     return (
       <div className="create-profile">
         <div className="couple-head">
-          <span className="first">{t('createcoup')}?</span>
-          <span className="second">{t('sendcode')} :</span>
+          <span className="first">{t("createcoup")}?</span>
+          <span className="second">{t("sendcode")} :</span>
         </div>
         <Query query={GENERATE_CODE} fetchPolicy="cache-first">
           {({ data, loading, error }) => {
             if (loading) {
               return (
-                <Spinner message={t('common:Loading') + '...'} size="large" />
+                <Spinner message={t("common:Loading") + "..."} size="large" />
               );
             }
             if (!data.generateCode) {
-              return <div>{t('common:error')}</div>;
+              return <div>{t("common:error")}</div>;
             }
             const code = data.generateCode;
             return (
@@ -37,22 +37,21 @@ class CodeBox extends PureComponent {
                       checked={includeMsgs ? true : false}
                       onChange={e => {
                         setValue({
-                          name: 'includeMsgs',
+                          name: "includeMsgs",
                           value: !includeMsgs ? true : false
                         });
                       }}
                     />
                     <label htmlFor="cbox">
                       <span />
-                      <b>{t('includemsg')}?</b>
+                      <b>{t("includemsg")}?</b>
                     </label>
                   </div>
                 </div>
                 <EmailShareButton
                   url={code}
-                  subject={t('jointitle') + '.'}
-                  body={t('joindets') + '.' + code + t('expires')}
-                  className="Demo__some-network__share-button"
+                  subject={t("jointitle") + "."}
+                  body={t("joindets") + "." + code + t("expires")}
                 >
                   <EmailIcon size={32} round />
                 </EmailShareButton>

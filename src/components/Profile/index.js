@@ -145,6 +145,7 @@ class ProfilePage extends PureComponent {
             <Query query={GET_PROFILE} variables={{ id }}>
               {({ data, loading, error }) => {
                 if (error) {
+                  document.title = "Error Occurred";
                   return (
                     <ErrorHandler.report
                       error={error}
@@ -153,6 +154,7 @@ class ProfilePage extends PureComponent {
                   );
                 }
                 if (loading) {
+                  document.title = "Loading...";
                   return (
                     <Spinner
                       message={t("common:Loading") + "..."}
@@ -163,6 +165,7 @@ class ProfilePage extends PureComponent {
                   return <div>{t("notexist")}</div>;
                 }
                 const profile = data.profile;
+                document.title = profile.profileName;
 
                 const { users, photos, desires, about } = profile;
 

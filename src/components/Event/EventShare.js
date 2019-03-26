@@ -1,20 +1,17 @@
-import React, { PureComponent } from 'react';
-import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
+import React, { PureComponent } from "react";
+import MembersDropdown from "../common/MembersDropdown/MembersDropdown";
 class EventShare extends PureComponent {
   state = { invDropOpen: false };
   closeInvDropdown = () => this.setState({ invDropOpen: false });
   render() {
-    const { id, t } = this.props;
+    const { id, t, showShareModal } = this.props;
     const { invDropOpen } = this.state;
     return (
       <div className="share-event">
-        <span className="title">{t('share')}:</span>
+        <span className="title">{t("share")}:</span>
         <ul>
-          <li className="facebook">
-            <span />
-          </li>
-          <li className="twitter">
-            <span />
+          <li className="share">
+            <span onClick={() => showShareModal()} />
           </li>
           <li className="mail">
             <span
@@ -25,8 +22,8 @@ class EventShare extends PureComponent {
         {invDropOpen && (
           <MembersDropdown
             targetID={id}
-            targetType={'event'}
-            listType={'friends'}
+            targetType={"event"}
+            listType={"friends"}
             t={t}
             close={this.closeInvDropdown}
           />

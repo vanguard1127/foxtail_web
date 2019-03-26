@@ -1,16 +1,16 @@
 // @flow
-import React, { PureComponent } from 'react';
-import { Query } from 'react-apollo';
-import { GET_SEARCH_SETTINGS } from '../../queries';
-import SearchProfilesPage from './SearchProfilesPage';
-import { withNamespaces } from 'react-i18next';
+import React, { PureComponent } from "react";
+import { Query } from "react-apollo";
+import { GET_SEARCH_SETTINGS } from "../../queries";
+import SearchProfilesPage from "./SearchProfilesPage";
+import { withNamespaces } from "react-i18next";
 
 class SearchProfiles extends PureComponent {
   render() {
+    document.title = "Search Profiles";
     const { t, ErrorHandler } = this.props;
 
-    ErrorHandler.setBreadcrumb('Enter Search Profiles');
-    document.title = 'Profiles';
+    ErrorHandler.setBreadcrumb("Enter Search Profiles");
     return (
       <Query query={GET_SEARCH_SETTINGS} fetchPolicy="cache-and-network">
         {({ data, loading, error, refetch }) => {
@@ -18,11 +18,12 @@ class SearchProfiles extends PureComponent {
             return (
               <ErrorHandler.report
                 error={error}
-                calledName={'getSearchSettings'}
+                calledName={"getSearchSettings"}
               />
             );
           }
           if (!data.getSettings) {
+            console.log("ROROOR");
             return null;
           }
           return (
@@ -40,4 +41,4 @@ class SearchProfiles extends PureComponent {
   }
 }
 
-export default withNamespaces('searchprofiles')(SearchProfiles);
+export default withNamespaces("searchprofiles")(SearchProfiles);
