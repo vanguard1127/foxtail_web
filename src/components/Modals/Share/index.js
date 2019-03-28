@@ -64,7 +64,7 @@ class Share extends Component {
                 display: "flex",
                 justifyContent: "space-between",
                 padding: "10px",
-                width: "86%"
+                width: "100%"
               }}
             >
               <FacebookShareButton url={shareUrl} quote={title}>
