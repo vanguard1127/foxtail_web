@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Tour from 'reactour';
+import React, { Component } from "react";
+import Tour from "reactour";
 
-const accentColor = '#5cb7b7';
+const accentColor = "#5cb7b7";
 class CustomTour extends Component {
   shouldComponentUpdate(nextProps) {
     if (
@@ -13,7 +13,7 @@ class CustomTour extends Component {
     return false;
   }
   render() {
-    const { isTourOpen, tourConfig, onTourClose } = this.props;
+    const { isTourOpen, tourConfig, onTourClose, goToStep } = this.props;
     return (
       <>
         <Tour
@@ -24,6 +24,7 @@ class CustomTour extends Component {
           className="helper"
           rounded={5}
           accentColor={accentColor}
+          goToStep={goToStep}
         />
       </>
     );

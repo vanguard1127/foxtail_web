@@ -733,6 +733,7 @@
       display: inline-block;
       float: left;
       padding: 15px 0;
+      cursor: pointer;
     }
 
     header .mobile-toggle ul li:last-child {

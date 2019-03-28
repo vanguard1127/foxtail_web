@@ -8,7 +8,8 @@ import { withRouter } from "react-router-dom";
 class ProfileTour extends PureComponent {
   state = {
     isTourOpen: true,
-    menuOpen: true
+    menuOpen: true,
+    goToStep: 0
   };
   componentDidMount() {
     this.mounted = true;
@@ -39,23 +40,23 @@ class ProfileTour extends PureComponent {
 
   toggleMenu = () => {
     if (this.mounted) {
-      this.setState({ menuOpen: false });
+      this.setState({ menuOpen: false, goToStep: 0 });
     }
   };
 
   render() {
     const lang = localStorage.getItem("i18nextLng");
     const { t } = this.props;
-    const { isTourOpen, menuOpen } = this.state;
+    const { isTourOpen, menuOpen, goToStep } = this.state;
 
     let tourConfig = [
       {
         selector: '[data-tut=""]',
-        content: `Welcome to your inbox.`
+        content: `Welcome to your Inbox.`
       },
       {
         selector: '[data-tut="list"]',
-        content: `These are all of your messages. You can search by member name`
+        content: `These are all of your chats.  Click on these to see messages.`
       },
       {
         selector: '[data-tut="item"]',
@@ -64,23 +65,34 @@ class ProfileTour extends PureComponent {
       },
       {
         selector: '[data-tut="actions"]',
-        content: `These links allow you to take action on the chat from. Please report any behavior that makes you uncomfortable.`
+        content: `Your chat actions can be found here including leaving and reporting a chat. Please report any behavior that makes you uncomfortable.`
       },
       {
         selector: '[data-tut="na"]',
-        content: `Click the chat to see all of the messages. If no chat is selected there will be random information or ads here.`
+        content: `If no chat is selected there will be random information or ads here.`
       }
     ];
     //TODO: fiure out next page tour to complete as above
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 768 && menuOpen) {
       tourConfig = [
         {
-          selector: '[data-tut="page"]',
-          content: `Ok, let's start with the name of the Tour that is about to begin.`
+          selector: '[data-tut=""]',
+          content: `Welcome to your Inbox.`
         },
         {
           selector: '[data-tut="list"]',
-          content: `Ok, let's start with the name of the Tour that is about to begin.`
+          content: `These are all of your chats. Click one to see messages.`
+        }
+      ];
+    } else if (window.innerWidth < 768) {
+      tourConfig = [
+        {
+          selector: '[data-tut="menubtn"]',
+          content: `Members message will show as their name but couples profiles have both names in the chat title. Clicking the menu to the right open chat actions including leaving and reporting bad behavior.`
+        },
+        {
+          selector: '[data-tut="na"]',
+          content: `If no chat is selected there will be random information or ads here.`
         }
       ];
     }
@@ -100,7 +112,7 @@ class ProfileTour extends PureComponent {
             </div>
           </div>
         </section>
-        <section className="inbox" data-tut="page">
+        <section className="inbox">
           <div className="row no-gutters">
             <div className="col-md-4 col-lg-3 col-xl-3">
               <div
@@ -180,7 +192,7 @@ class ProfileTour extends PureComponent {
             </div>
             <div className="col-md-8 col-lg-9 col-xl-7">
               <div className={menuOpen ? "chat" : "chat show"}>
-                <div className="navbar">
+                <div className="navbar" data-tut="menubtn">
                   <div className="user">
                     <div className="avatar">
                       <a href="#">
@@ -193,7 +205,7 @@ class ProfileTour extends PureComponent {
                     <span className="last-seen online">Active Now</span>
                   </div>
                   <div className="more" />
-                  <div className="more-dropdown open" data-tut="actionsM">
+                  <div className="more-dropdown open">
                     <ul>
                       <li>
                         <a href="#">Search for Conversation</a>
@@ -298,6 +310,7 @@ class ProfileTour extends PureComponent {
                   onTourClose={() => this.closeTour(seenTour)}
                   tourConfig={tourConfig}
                   isTourOpen={isTourOpen}
+                  goToStep={goToStep}
                 />
               </div>
             );
