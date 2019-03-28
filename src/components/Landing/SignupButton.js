@@ -1,5 +1,5 @@
-import React from 'react';
-import AccountKit from 'react-facebook-account-kit';
+import React from "react";
+import AccountKit from "./AccountKit";
 
 //POSIBLE BACKUP:https://github.com/floodfx/react-account-kit-web
 const SignupButton = ({
@@ -18,24 +18,16 @@ const SignupButton = ({
       onResponse={resp => {
         handleFBReturn(resp, fbResolve, createUser);
       }}
-      csrf={'889306f7553962e44db6ed508b4e8266'} // Required for security
-      countryCode={'+1'} // eg. +60
-      phoneNumber={''} // eg. 12345678
-      emailAddress={''} // eg. me@site.com
-      language={localStorage.getItem('i18nextLng')}
+      csrf={"889306f7553962e44db6ed508b4e8266"} // Required for security
+      countryCode={"+1"} // eg. +60
+      phoneNumber={""} // eg. 12345678
+      emailAddress={""} // eg. me@site.com
+      language={localStorage.getItem("i18nextLng")}
+      validateForm={validateForm}
     >
-      {p => (
-        <div className="submit">
-          <button
-            className="btn"
-            type="submit"
-            onMouseEnter={validateForm}
-            {...p}
-          >
-            {t('getstarted')}
-          </button>
-        </div>
-      )}
+      <div className="submit">
+        <button className="btn">{t("getstarted")}</button>
+      </div>
     </AccountKit>
   );
 };
