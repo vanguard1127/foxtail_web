@@ -31,7 +31,6 @@ class NoticesList extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    this.props.subscribeToNewNotices();
     const lang = validateLang(localStorage.getItem("i18nextLng"));
     require("dayjs/locale/" + lang);
   }

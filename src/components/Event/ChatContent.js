@@ -1,12 +1,12 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { GET_COMMENTS, NEW_MESSAGE_SUB } from "../../queries";
 import Waypoint from "react-waypoint";
 import Spinner from "../common/Spinner";
 import MessageList from "./MessageList";
-
+let unsubscribe = null;
 const LIMIT = 6;
-class ChatContent extends PureComponent {
+class ChatContent extends Component {
   state = {
     loading: false,
     cursor: null,
@@ -95,11 +95,7 @@ class ChatContent extends PureComponent {
 
     const { cursor } = this.state;
     return (
-      <Query
-        query={GET_COMMENTS}
-        variables={{ chatID, limit: LIMIT, cursor }}
-        fetchPolicy="cache-and-network"
-      >
+      <Query query={GET_COMMENTS} variables={{ chatID, limit: LIMIT, cursor }}>
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
             return (
@@ -113,9 +109,38 @@ class ChatContent extends PureComponent {
           }
 
           let messages = [];
+
           if (data.getComments && data.getComments.messages) {
             messages = data.getComments.messages;
           }
+
+          if (!unsubscribe) {
+            unsubscribe = subscribeToMore({
+              document: NEW_MESSAGE_SUB,
+              variables: {
+                chatID: chatID
+              },
+              updateQuery: (prev, { subscriptionData }) => {
+                const { newMessageSubscribe } = subscriptionData.data;
+                if (!newMessageSubscribe) {
+                  return prev;
+                }
+                if (prev.getComments) {
+                  prev.getComments.messages = [
+                    newMessageSubscribe,
+                    ...prev.getComments.messages
+                  ];
+                } else {
+                  prev.getComments = {
+                    messages: [newMessageSubscribe],
+                    __typename: "ChatType"
+                  };
+                }
+                return prev;
+              }
+            });
+          }
+
           if (messages.length === 0) {
             return <div>No messages yet</div>;
           }

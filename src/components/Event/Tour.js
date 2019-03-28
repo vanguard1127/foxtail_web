@@ -1,10 +1,10 @@
-import React, { PureComponent, Fragment } from 'react';
-import { withNamespaces } from 'react-i18next';
-import { Mutation } from 'react-apollo';
-import { SEEN_TOUR } from '../../queries';
-import CustomTour from '../common/CustomTour';
-import withAuth from '../withAuth';
-import { withRouter } from 'react-router-dom';
+import React, { PureComponent, Fragment } from "react";
+import { withNamespaces } from "react-i18next";
+import { Mutation } from "react-apollo";
+import { SEEN_TOUR } from "../../queries";
+import CustomTour from "../common/CustomTour";
+import withAuth from "../withAuth";
+import { withRouter } from "react-router-dom";
 class ProfileTour extends PureComponent {
   state = {
     isTourOpen: true
@@ -21,7 +21,7 @@ class ProfileTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        this.props.history.push('/events');
+        this.props.history.push("/events");
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -38,7 +38,7 @@ class ProfileTour extends PureComponent {
   };
 
   render() {
-    const lang = localStorage.getItem('i18nextLng');
+    const lang = localStorage.getItem("i18nextLng");
     const { t } = this.props;
     const { isTourOpen } = this.state;
 
@@ -49,30 +49,30 @@ class ProfileTour extends PureComponent {
 
     const tourConfig = [
       {
-        selector: '[data-tut="page"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        selector: '[data-tut=""]',
+        content: `This event looks fun!`
       },
       {
         selector: '[data-tut="going"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `You can see members attending here.`
       },
       {
         selector: showinfo,
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Event info is here, but check back before going in case any details have changed.`
       },
       {
         selector: '[data-tut="discuss"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `All event info should be on this page. If you need more info don't hesitate to post a comment after deciding you want to attend. *Only attendees can comment.`
       },
       {
         selector: '[data-tut="na"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Feel free to like and message members in an event before going. It's more fun that way.`
       }
     ];
 
     return (
       <Fragment>
-        <section className="event-detail" data-tut="page">
+        <section className="event-detail">
           <div className="container">
             <div className="col-md-12">
               <div className="row">
@@ -90,7 +90,7 @@ class ProfileTour extends PureComponent {
                       <span className="event-description">
                         It is a long established fact that a reader will be
                         distracted by the readable content of a page when
-                        looking at its layout.{' '}
+                        looking at its layout.{" "}
                       </span>
                       <div className="created">
                         <span className="avatar">
@@ -430,7 +430,7 @@ class ProfileTour extends PureComponent {
         <Mutation
           mutation={SEEN_TOUR}
           variables={{
-            tour: 'e'
+            tour: "e"
           }}
         >
           {seenTour => {
@@ -452,5 +452,5 @@ class ProfileTour extends PureComponent {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces('profile')(ProfileTour))
+  withRouter(withNamespaces("profile")(ProfileTour))
 );

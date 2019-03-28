@@ -7,11 +7,14 @@ import InboxList from "./InboxList";
 let unsubscribe = null;
 class InboxPanel extends Component {
   //TODO: Test if this prevent new messages from getting shown
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.chatOpen !== nextProps.chatOpen) {
+      return true;
+    }
     return false;
   }
   render() {
-    const { readChat, currentuser, t, ErrorHandler } = this.props;
+    const { readChat, currentuser, t, ErrorHandler, chatOpen } = this.props;
 
     return (
       <Query query={GET_INBOX} fetchPolicy="cache-and-network">
@@ -73,7 +76,7 @@ class InboxPanel extends Component {
 
           return (
             <div className="col-md-4 col-lg-3 col-xl-3">
-              <div className="left">
+              <div className={chatOpen ? "left hide" : "left"}>
                 <InboxSearchTextBox t={t} />
                 <InboxList
                   messages={messages}

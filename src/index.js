@@ -60,10 +60,10 @@ let wsurl = `ws://${server}/subscriptions`;
 //   const { whyDidYouUpdate } = require("why-did-you-update");
 //   whyDidYouUpdate(React);
 // }
-if (process.env.NODE_ENV !== "production") {
-  var axe = require("react-axe");
-  axe(React, ReactDOM, 1000);
-}
+// if (process.env.NODE_ENV !== "production") {
+//   var axe = require("react-axe");
+//   axe(React, ReactDOM, 1000);
+// }
 const wsLink = new WebSocketLink({
   uri: wsurl,
   options: {

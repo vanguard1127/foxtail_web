@@ -14,7 +14,7 @@ import {
   GET_COUNTS
 } from "../../queries";
 import { Query, Mutation, withApollo } from "react-apollo";
-
+let unsubscribe = null;
 const LIMIT = 5;
 const intialState = {
   read: null,
@@ -235,6 +235,25 @@ class NoticesItem extends PureComponent {
                   return <div>{t("nonots")} :)</div>;
                 }
 
+                if (!unsubscribe) {
+                  unsubscribe = subscribeToMore({
+                    document: NEW_NOTICE_SUB,
+                    updateQuery: (prev, { subscriptionData }) => {
+                      const { newNoticeSubscribe } = subscriptionData.data;
+
+                      if (!newNoticeSubscribe) {
+                        return prev;
+                      }
+                      prev.getNotifications.notifications = [
+                        newNoticeSubscribe,
+                        ...prev.getNotifications.notifications
+                      ];
+
+                      return prev;
+                    }
+                  });
+                }
+
                 const { notifications, alert } = data.getNotifications;
                 console.log(notifications);
 
@@ -268,26 +287,6 @@ class NoticesItem extends PureComponent {
                         }
                         showAlert={this.showAlert}
                         ErrorHandler={ErrorHandler}
-                        subscribeToNewNotices={() =>
-                          subscribeToMore({
-                            document: NEW_NOTICE_SUB,
-                            updateQuery: (prev, { subscriptionData }) => {
-                              const {
-                                newNoticeSubscribe
-                              } = subscriptionData.data;
-
-                              if (!newNoticeSubscribe) {
-                                return prev;
-                              }
-                              prev.getNotifications.notifications = [
-                                newNoticeSubscribe,
-                                ...prev.getNotifications.notifications
-                              ];
-
-                              return prev;
-                            }
-                          })
-                        }
                       />
                     </Menu>
                     {alert &&

@@ -1,12 +1,13 @@
-import React, { Fragment, Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
-import { Mutation } from 'react-apollo';
-import { withNamespaces } from 'react-i18next';
-import { TOGGLE_ONLINE } from '../../queries';
-import axios from 'axios';
+import React, { Fragment, Component } from "react";
+import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { Mutation } from "react-apollo";
+import { withNamespaces } from "react-i18next";
+import { TOGGLE_ONLINE } from "../../queries";
+import axios from "axios";
+import Logout from "./LogoutLink";
 
-import UserToolbar from './UserToolbar';
+import UserToolbar from "./UserToolbar";
 
 class Navbar extends Component {
   state = { online: false };
@@ -61,11 +62,12 @@ class Navbar extends Component {
                 toggleOnline={online => this.handleToggle(toggleOnline, online)}
                 t={t}
                 ErrorHandler={ErrorHandler}
+                history={history}
               />
             )}
           </Mutation>
         ) : (
-          history.push('/')
+          history.push("/")
         )}
       </Fragment>
     );
@@ -98,22 +100,22 @@ class NavbarAuth extends Component {
     toggleOnline(true);
 
     //I don't know why but we need both
-    window.addEventListener('beforeunload', () => {
+    window.addEventListener("beforeunload", () => {
       navigator.sendBeacon(
-        'http://localhost:4444/offline?token=' + localStorage.getItem('token')
+        "http://localhost:4444/offline?token=" + localStorage.getItem("token")
       );
     });
-    window.addEventListener('unload', this.logData, false);
+    window.addEventListener("unload", this.logData, false);
   }
   logData = () => {
     axios.get(
-      'http://localhost:4444/offline?token=' + localStorage.getItem('token')
+      "http://localhost:4444/offline?token=" + localStorage.getItem("token")
     );
   };
   render() {
-    let href = window.location.href.split('/');
+    let href = window.location.href.split("/");
     href = href[3];
-    const { session, t } = this.props;
+    const { session, t, history } = this.props;
     const { mobileMenu } = this.state;
 
     return (
@@ -125,8 +127,8 @@ class NavbarAuth extends Component {
                 <div
                   className={
                     mobileMenu === true
-                      ? 'hamburger hamburger--spring is-active'
-                      : 'hamburger hamburger--spring'
+                      ? "hamburger hamburger--spring is-active"
+                      : "hamburger hamburger--spring"
                   }
                 >
                   <span
@@ -139,46 +141,111 @@ class NavbarAuth extends Component {
               </div>
               <div
                 className={
-                  mobileMenu === true ? 'mobile-toggle show' : 'mobile-toggle'
+                  mobileMenu === true ? "mobile-toggle show" : "mobile-toggle"
                 }
               >
                 <ul>
                   <li>
-                    <NavLink to="/members">{t('meetmembers')}</NavLink>
+                    <span
+                      onClick={() => {
+                        history.push("/members");
+                        this.toggleMobileMenu();
+                      }}
+                    >
+                      {t("meetmembers")}
+                    </span>
                   </li>
                   <li>
-                    <NavLink to="/events">{t('goevents')}</NavLink>
+                    {" "}
+                    <span
+                      onClick={() => {
+                        history.push("/events");
+                        this.toggleMobileMenu();
+                      }}
+                    >
+                      {t("goevents")}
+                    </span>
                   </li>
                   <li>
-                    <NavLink to="/inbox">{t('common:Inbox')}</NavLink>
+                    <span
+                      onClick={() => {
+                        history.push("/inbox");
+                        this.toggleMobileMenu();
+                      }}
+                    >
+                      {t("common:Inbox")}
+                    </span>
                   </li>
                   <li>
-                    <span>{t('common:becomeblk')}</span>
+                    <span
+                      onClick={() => {
+                        history.push("/settings");
+                        this.toggleMobileMenu();
+                      }}
+                    >
+                      {t("common:myaccount")}
+                    </span>
                   </li>
                   <li>
-                    <span>{t('common:myaccount')}</span>
+                    <span
+                      onClick={() => {
+                        history.push({
+                          pathname: "/settings",
+                          state: { showBlkMdl: true }
+                        });
+                        this.toggleMobileMenu();
+                      }}
+                    >
+                      {t("common:becomeblk")}
+                    </span>
                   </li>
                   <li>
-                    <span>{t('common:addcoup')}</span>
+                    <span
+                      onClick={() => {
+                        history.push({
+                          pathname: "/settings",
+                          state: { showCplMdl: true }
+                        });
+                        this.toggleMobileMenu();
+                      }}
+                    >
+                      {t("common:addcoup")}
+                    </span>
                   </li>
                   <li>
-                    <span>{t('common:Logout')}</span>
+                    <span>
+                      <Logout t={t} />
+                    </span>
                   </li>
                 </ul>
               </div>
             </div>
             <div className="col-md-5 hidden-mobile">
               <ul className="menu">
-                <li className={href === 'members' ? 'active' : ''}>
-                  <NavLink to="/members">{t('meetmembers')}</NavLink>
+                <li className={href === "members" ? "active" : ""}>
+                  <NavLink to="/members">
+                    <span role="heading" aria-level="1">
+                      {t("meetmembers")}
+                    </span>
+                  </NavLink>
                 </li>
-                <li className={href === 'events' ? 'active' : ''}>
-                  <NavLink to="/events">{t('goevents')}</NavLink>
+                <li className={href === "events" ? "active" : ""}>
+                  <NavLink to="/events">
+                    {" "}
+                    <span role="heading" aria-level="1">
+                      {t("goevents")}
+                    </span>
+                  </NavLink>
                 </li>
               </ul>
             </div>
             <div className="col-md-2 col-12">
-              <div className={mobileMenu === true ? 'logo white' : 'logo'}>
+              <div
+                onClick={() => {
+                  history.push("/members");
+                }}
+                className={mobileMenu === true ? "logo white" : "logo"}
+              >
                 <span />
               </div>
             </div>
@@ -198,4 +265,4 @@ class NavbarAuth extends Component {
   }
 }
 
-export default withNamespaces('common')(withRouter(Navbar));
+export default withNamespaces("common")(withRouter(Navbar));

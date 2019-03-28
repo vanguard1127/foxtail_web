@@ -1,13 +1,13 @@
-import React, { PureComponent, Fragment } from 'react';
-import { withNamespaces } from 'react-i18next';
-import { Mutation } from 'react-apollo';
-import { SEEN_TOUR } from '../../queries';
-import CustomTour from '../common/CustomTour';
-import withAuth from '../withAuth';
-import { withRouter } from 'react-router-dom';
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import React, { PureComponent, Fragment } from "react";
+import { withNamespaces } from "react-i18next";
+import { Mutation } from "react-apollo";
+import { SEEN_TOUR } from "../../queries";
+import CustomTour from "../common/CustomTour";
+import withAuth from "../withAuth";
+import { withRouter } from "react-router-dom";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 class ProfileTour extends PureComponent {
   state = {
     isTourOpen: true
@@ -23,7 +23,7 @@ class ProfileTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        this.props.history.push('/members');
+        this.props.history.push("/members");
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -40,7 +40,7 @@ class ProfileTour extends PureComponent {
   };
 
   render() {
-    const lang = localStorage.getItem('i18nextLng');
+    const lang = localStorage.getItem("i18nextLng");
     const { t } = this.props;
     const { isTourOpen } = this.state;
 
@@ -52,23 +52,23 @@ class ProfileTour extends PureComponent {
     const tourConfig = [
       {
         selector: '[data-tut="page"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
-      },
-      {
-        selector: '[data-tut="info"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `The profile page has all the information this user has allowed the public to see. Private images can only be seen after matching or chatting with this user.`
       },
       {
         selector: showDesire,
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Here's a list of this users desires. Desires are simply user intrests and are NOT to be expected of them.`
       },
       {
         selector: '[data-tut="btns"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Use the Heart button to like the member. Or click Send Message to send a message now (only BLACK members).`
+      },
+      {
+        selector: '[data-tut="report"]',
+        content: `If you feel something is not right about this user's profile, please click the flag to report and block this user.`
       },
       {
         selector: '[data-tut="na"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `That's all for now. Have fun!`
       }
     ];
 
@@ -101,7 +101,7 @@ class ProfileTour extends PureComponent {
                     </ul>
                   </div>
                 </div>
-                <div className="col-md-9" data-tut="info">
+                <div className="col-md-9">
                   <div className="user-info online">
                     <div>
                       <span> Meg,</span>
@@ -138,7 +138,7 @@ class ProfileTour extends PureComponent {
                       <div className="share btn">
                         <button>Share</button>
                       </div>
-                      <div className="report btn">
+                      <div className="report btn" data-tut="report">
                         <button>Report</button>
                       </div>
                     </div>
@@ -154,8 +154,8 @@ class ProfileTour extends PureComponent {
                       <li>dating</li>
                     </ul>
                   </div>
-                  <div className={'photos-slider public'}>
-                    <div className="profile-head">{t('Public')} (4)</div>
+                  <div className={"photos-slider public"}>
+                    <div className="profile-head">{t("Public")} (4)</div>
                     <div id="lightgallery" ref={this.onLightGallery}>
                       <OwlCarousel
                         className="owl-carousel slider-content"
@@ -189,33 +189,33 @@ class ProfileTour extends PureComponent {
                         }}
                       >
                         <div className="item" key={Math.random()}>
-                          <a href={'/assets/img/usr/big-avatar/1003@2x.png'}>
+                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
                             <img
-                              src={'/assets/img/usr/big-avatar/1003@2x.png'}
+                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
                               alt=""
                             />
                           </a>
-                        </div>{' '}
+                        </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={'/assets/img/usr/big-avatar/1003@2x.png'}>
+                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
                             <img
-                              src={'/assets/img/usr/big-avatar/1003@2x.png'}
+                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
                               alt=""
                             />
                           </a>
-                        </div>{' '}
+                        </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={'/assets/img/usr/big-avatar/1003@2x.png'}>
+                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
                             <img
-                              src={'/assets/img/usr/big-avatar/1003@2x.png'}
+                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
                               alt=""
                             />
                           </a>
-                        </div>{' '}
+                        </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={'/assets/img/usr/big-avatar/1003@2x.png'}>
+                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
                             <img
-                              src={'/assets/img/usr/big-avatar/1003@2x.png'}
+                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
                               alt=""
                             />
                           </a>
@@ -223,8 +223,8 @@ class ProfileTour extends PureComponent {
                       </OwlCarousel>
                     </div>
                   </div>
-                  <div className={'photos-slider private'}>
-                    <div className="profile-head">{t('Private')} (4)</div>
+                  <div className={"photos-slider private"}>
+                    <div className="profile-head">{t("Private")} (4)</div>
                     <div id="lightgallery" ref={this.onLightGallery}>
                       <OwlCarousel
                         className="owl-carousel slider-content"
@@ -258,33 +258,33 @@ class ProfileTour extends PureComponent {
                         }}
                       >
                         <div className="item" key={Math.random()}>
-                          <a href={'/assets/img/usr/big-avatar/1003@2x.png'}>
+                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
                             <img
-                              src={'/assets/img/usr/big-avatar/1003@2x.png'}
+                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
                               alt=""
                             />
                           </a>
-                        </div>{' '}
+                        </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={'/assets/img/usr/big-avatar/1003@2x.png'}>
+                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
                             <img
-                              src={'/assets/img/usr/big-avatar/1003@2x.png'}
+                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
                               alt=""
                             />
                           </a>
-                        </div>{' '}
+                        </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={'/assets/img/usr/big-avatar/1003@2x.png'}>
+                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
                             <img
-                              src={'/assets/img/usr/big-avatar/1003@2x.png'}
+                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
                               alt=""
                             />
                           </a>
-                        </div>{' '}
+                        </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={'/assets/img/usr/big-avatar/1003@2x.png'}>
+                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
                             <img
-                              src={'/assets/img/usr/big-avatar/1003@2x.png'}
+                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
                               alt=""
                             />
                           </a>
@@ -300,7 +300,7 @@ class ProfileTour extends PureComponent {
         <Mutation
           mutation={SEEN_TOUR}
           variables={{
-            tour: 'p'
+            tour: "p"
           }}
         >
           {seenTour => {
@@ -321,5 +321,5 @@ class ProfileTour extends PureComponent {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces('profile')(ProfileTour))
+  withRouter(withNamespaces("profile")(ProfileTour))
 );

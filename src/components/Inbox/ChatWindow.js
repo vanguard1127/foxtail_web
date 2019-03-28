@@ -5,6 +5,7 @@ import ChatContent from "./ChatContent";
 import ChatPanel from "./ChatPanel";
 
 const LIMIT = 6;
+//TODO: Why is cursor null?
 class ChatWindow extends PureComponent {
   state = {
     loading: false,
@@ -18,7 +19,19 @@ class ChatWindow extends PureComponent {
   };
 
   render() {
-    const { currentChat, currentuser, t, ErrorHandler, dayjs } = this.props;
+    const {
+      currentChat,
+      currentuser,
+      t,
+      ErrorHandler,
+      dayjs,
+      chatOpen,
+      chatID,
+      setBlockModalVisible,
+      handleRemoveSelf,
+      isOwner,
+      leaveDialog
+    } = this.props;
     if (currentChat !== null) {
       sessionStorage.setItem("pid", currentChat.id);
     } else {
@@ -27,11 +40,17 @@ class ChatWindow extends PureComponent {
     return (
       <div className="col-md-8 col-lg-9 col-xl-7">
         {currentChat !== null ? (
-          <div className="chat">
+          <div className={chatOpen ? "chat show" : "chat"}>
             <ChatHeader
               currentChat={currentChat}
               currentuser={currentuser}
               t={t}
+              chatID={currentChat.id}
+              setBlockModalVisible={setBlockModalVisible}
+              handleRemoveSelf={handleRemoveSelf}
+              isOwner={isOwner}
+              ErrorHandler={ErrorHandler}
+              leaveDialog={leaveDialog}
             />
             <ChatContent
               chatID={currentChat.id}

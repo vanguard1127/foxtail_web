@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 
 class InboxItem extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -13,21 +13,21 @@ class InboxItem extends Component {
   }
   render() {
     const { count, active, t } = this.props;
-    let iconstyle = 'inbox hidden-mobile';
+    let iconstyle = "inbox hidden-mobile";
     if (count > 0) {
-      iconstyle += ' new';
+      iconstyle += " new";
     }
     if (active) {
-      iconstyle += ' active';
+      iconstyle += " active";
     }
 
     return (
-      <div className={iconstyle}>
+      <div className={iconstyle} role="heading" aria-level="1">
         <NavLink to="/inbox">
           <span className="icon mail">
             <span className="count">{count}</span>
           </span>
-          <span className="text">{t('common:Inbox')}</span>
+          <span className="text">{t("common:Inbox")}</span>
         </NavLink>
       </div>
     );

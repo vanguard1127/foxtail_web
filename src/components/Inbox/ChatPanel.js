@@ -105,6 +105,7 @@ class ChatPanel extends PureComponent {
                   placeholder={t("typemsg") + "..."}
                   value={text}
                   onChange={e => this.setText(e)}
+                  aria-label="message search"
                 />
               </div>
               <div className="send">

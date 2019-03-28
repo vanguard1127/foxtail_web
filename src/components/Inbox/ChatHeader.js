@@ -1,9 +1,25 @@
 import React, { PureComponent } from "react";
 import TimeAgo from "../../utils/TimeAgo";
+import ChatActions from "./ChatActions";
 class ChatHeader extends PureComponent {
+  state = { open: false };
+  toggleMenu = () => {
+    this.setState({ open: !this.state.open });
+  };
   render() {
-    const { currentChat, currentuser, t } = this.props;
+    const {
+      currentChat,
+      currentuser,
+      t,
+      chatID,
+      setBlockModalVisible,
+      isOwner,
+      ErrorHandler,
+      leaveDialog,
+      handleRemoveSelf
+    } = this.props;
 
+    const { open } = this.state;
     let chatTitle = t("nothere");
     let chatLastSeen = "";
     let chatTitleExtra = "";
@@ -47,16 +63,17 @@ class ChatHeader extends PureComponent {
           </span>
           <span className="last-seen online">{chatLastSeen}</span>
         </div>
-        <div className="more" />
-        <div className="more-dropdown">
-          <ul>
-            <li>
-              <span>{t("leaveconv")}</span>
-            </li>
-            <li>
-              <span>{t("reportconv")}</span>
-            </li>
-          </ul>
+        <div className="more" onClick={this.toggleMenu} />
+        <div className={open ? "more-dropdown open" : "more-dropdown"}>
+          <ChatActions
+            chatID={chatID}
+            t={t}
+            setBlockModalVisible={setBlockModalVisible}
+            handleRemoveSelf={handleRemoveSelf}
+            isOwner={isOwner}
+            ErrorHandler={ErrorHandler}
+            leaveDialog={leaveDialog}
+          />
         </div>
       </div>
     );

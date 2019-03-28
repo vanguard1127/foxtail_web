@@ -194,6 +194,7 @@ class EventPage extends PureComponent {
                           t={t}
                           openDelete={this.toggleDeleteDialog}
                           dayjs={dayjs}
+                          ErrorHandler={ErrorHandler}
                         />{" "}
                       </ErrorHandler.ErrorBoundary>{" "}
                       <ErrorHandler.ErrorBoundary>
@@ -204,6 +205,7 @@ class EventPage extends PureComponent {
                           t={t}
                           ErrorHandler={ErrorHandler}
                           dayjs={dayjs}
+                          currentuser={session.currentuser}
                         />
                       </ErrorHandler.ErrorBoundary>
                     </div>

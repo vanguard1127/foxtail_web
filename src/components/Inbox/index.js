@@ -34,7 +34,8 @@ class InboxPage extends PureComponent {
     showModal: false,
     msg: "",
     btnText: "",
-    title: ""
+    title: "",
+    chatOpen: false
   };
 
   componentDidMount() {
@@ -68,7 +69,7 @@ class InboxPage extends PureComponent {
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
-    this.setState({ chatID, unSeenCount }, () => {
+    this.setState({ chatID, unSeenCount, chatOpen: true }, () => {
       readChat()
         .then(({ data }) => {
           if (this.mounted) {
@@ -79,6 +80,10 @@ class InboxPage extends PureComponent {
           ErrorHandler.catchErrors(res.graphQLErrors);
         });
     });
+  };
+
+  closeChat = () => {
+    this.setState({ chatID: null, chatOpen: false });
   };
 
   handleRemoveSelf = removeSelf => {
@@ -157,7 +162,8 @@ class InboxPage extends PureComponent {
       showModal,
       msg,
       btnText,
-      title
+      title,
+      chatOpen
     } = this.state;
     if (currentuser.tours.indexOf("i") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
@@ -181,6 +187,7 @@ class InboxPage extends PureComponent {
                 readChat={(id, unSeenCount) =>
                   this.handleChatClick(id, unSeenCount, readChat)
                 }
+                chatOpen={chatOpen}
                 currentuser={currentuser}
                 ErrorHandler={ErrorHandler}
                 t={t}
@@ -193,7 +200,7 @@ class InboxPage extends PureComponent {
     return (
       <>
         <ErrorHandler.ErrorBoundary>
-          <Header t={t} />
+          <Header t={t} chatOpen={chatOpen} closeChat={this.closeChat} />
         </ErrorHandler.ErrorBoundary>
         <section className="inbox">
           <div className="row no-gutters">
@@ -206,6 +213,7 @@ class InboxPage extends PureComponent {
                   t={t}
                   ErrorHandler={ErrorHandler}
                   dayjs={dayjs}
+                  chatOpen={chatOpen}
                 />
               )}
               {chatID && (
@@ -243,6 +251,19 @@ class InboxPage extends PureComponent {
                         t={t}
                         ErrorHandler={ErrorHandler}
                         dayjs={dayjs}
+                        chatOpen={chatOpen}
+                        setBlockModalVisible={this.setBlockModalVisible}
+                        isOwner={
+                          chat && chat.ownerProfile.id === currentuser.profileID
+                        }
+                        leaveDialog={() =>
+                          this.setDialogContent({
+                            title: "Leave Conversation",
+                            msg:
+                              "Please enter an email that you check often. We use this only for communications from Foxtail and our members.",
+                            btnText: "Update"
+                          })
+                        }
                       />
                     );
                   }}

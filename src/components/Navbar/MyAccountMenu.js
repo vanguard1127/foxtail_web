@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import Logout from './LogoutLink';
+import React, { Component } from "react";
+import { NavLink, withRouter } from "react-router-dom";
+import Logout from "./LogoutLink";
 
 class MyAccountMenu extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -13,30 +13,34 @@ class MyAccountMenu extends Component {
         <div className="dropdown hidden-mobile open">
           <ul>
             <li>
-              <NavLink to="/settings">{t('common:myaccount')}</NavLink>
+              <NavLink to="/settings">{t("common:myaccount")}</NavLink>
             </li>
             <li>
               <span
+                role="heading"
+                aria-level="2"
                 onClick={() =>
                   history.push({
-                    pathname: '/settings',
+                    pathname: "/settings",
                     state: { showCplMdl: true }
                   })
                 }
               >
-                {t('common:addcoup')}
+                {t("common:addcoup")}
               </span>
             </li>
             <li className="border">
               <span
+                role="heading"
+                aria-level="2"
                 onClick={() =>
                   history.push({
-                    pathname: '/settings',
+                    pathname: "/settings",
                     state: { showBlkMdl: true }
                   })
                 }
               >
-                {t('common:becomeblk')}
+                {t("common:becomeblk")}
               </span>
             </li>
             <li>

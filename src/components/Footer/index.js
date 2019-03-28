@@ -26,21 +26,21 @@ class Footer extends PureComponent {
                 <ul>
                   <li className="facebook">
                     <FacebookShareButton url={shareUrl} quote={title}>
-                      <span>
+                      <span aria-label="facebook share">
                         <i />
                       </span>
                     </FacebookShareButton>
                   </li>
                   <li className="twitter">
                     <TwitterShareButton url={shareUrl} title={title}>
-                      <span>
+                      <span aria-label="twitter share">
                         <i />
                       </span>
                     </TwitterShareButton>
                   </li>
                   <li className="mail">
                     <EmailShareButton url={shareUrl} title={title}>
-                      <span>
+                      <span aria-label="email share">
                         <i />
                       </span>
                     </EmailShareButton>

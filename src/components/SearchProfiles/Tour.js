@@ -1,12 +1,12 @@
-import React, { PureComponent, Fragment } from 'react';
-import { withNamespaces } from 'react-i18next';
-import { Mutation } from 'react-apollo';
-import { SEEN_TOUR } from '../../queries';
-import CustomTour from '../common/CustomTour';
-import { withRouter } from 'react-router-dom';
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import React, { PureComponent, Fragment } from "react";
+import { withNamespaces } from "react-i18next";
+import { Mutation } from "react-apollo";
+import { SEEN_TOUR } from "../../queries";
+import CustomTour from "../common/CustomTour";
+import { withRouter } from "react-router-dom";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 class Tour extends PureComponent {
   state = {
     isTourOpen: true
@@ -22,9 +22,9 @@ class Tour extends PureComponent {
       .then(({ data }) => {
         this.props.refetchUser();
         if (isProfile) {
-          this.props.history.push('/member/tour');
+          this.props.history.push("/member/tour");
         } else {
-          this.props.history.push('/members');
+          this.props.history.push("/members");
         }
       })
       .catch(res => {
@@ -43,31 +43,27 @@ class Tour extends PureComponent {
   };
 
   render() {
-    const lang = localStorage.getItem('i18nextLng');
+    const lang = localStorage.getItem("i18nextLng");
 
     const { t } = this.props;
     const { isTourOpen } = this.state;
 
     const tourConfig = [
       {
-        selector: '[data-tut="page"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        selector: "",
+        content: `Welcome to the Member Search page.`
       },
       {
         selector: '[data-tut="criteria"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
-      },
-      {
-        selector: '[data-tut="featured"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Set your preferences to find your ideals members to meet. This uses your current location unless you have a Black membership.`
       },
       {
         selector: '[data-tut="profiles"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Here are all the users that meet your criteria.`
       },
       {
         selector: '[data-tut="single"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `When you find someone you're interested in, click their name to go to their profile.`
       }
     ];
 
@@ -75,12 +71,12 @@ class Tour extends PureComponent {
       <Mutation
         mutation={SEEN_TOUR}
         variables={{
-          tour: 'sp'
+          tour: "sp"
         }}
       >
         {seenTour => {
           return (
-            <div data-tut="page">
+            <div>
               <section className="meet-filter">
                 <div className="container" data-tut="criteria">
                   <div className="col-md-12">
@@ -88,20 +84,20 @@ class Tour extends PureComponent {
                       <div className="col-md-6">
                         <div className="item">
                           <div className="search">
-                            <div style={{ display: 'flex' }}>
+                            <div style={{ display: "flex" }}>
                               <input
-                                className={'location-search-input'}
+                                className={"location-search-input"}
                                 value="  My Location"
                                 readOnly
                               />
                               <span
                                 style={{
-                                  flex: '1',
-                                  backgroundColor: 'transparent',
-                                  marginLeft: '-7%'
+                                  flex: "1",
+                                  backgroundColor: "transparent",
+                                  marginLeft: "-7%"
                                 }}
                               >
-                                {t('Reset')}
+                                {t("Reset")}
                               </span>
                             </div>
                           </div>
@@ -124,7 +120,7 @@ class Tour extends PureComponent {
                             <div className="rc-slider-rail" />
                             <div
                               className="rc-slider-track"
-                              style={{ left: '0%', width: '100%' }}
+                              style={{ left: "0%", width: "100%" }}
                             />
                             <div className="rc-slider-step" />
                             <div
@@ -135,7 +131,7 @@ class Tour extends PureComponent {
                               aria-valuemax="100"
                               aria-valuenow="100"
                               aria-disabled="false"
-                              style={{ left: '100%' }}
+                              style={{ left: "100%" }}
                             />
                             <div className="rc-slider-mark" />
                           </div>
@@ -152,7 +148,7 @@ class Tour extends PureComponent {
                             <div className="rc-slider-rail" />
                             <div
                               className="rc-slider-track rc-slider-track-1"
-                              style={{ left: '0%', width: '100%' }}
+                              style={{ left: "0%", width: "100%" }}
                             />
                             <div className="rc-slider-step" />
                             <div
@@ -163,7 +159,7 @@ class Tour extends PureComponent {
                               aria-valuemax="80"
                               aria-valuenow="18"
                               aria-disabled="false"
-                              style={{ left: '0%' }}
+                              style={{ left: "0%" }}
                             />
                             <div
                               tabIndex="0"
@@ -173,7 +169,7 @@ class Tour extends PureComponent {
                               aria-valuemax="80"
                               aria-valuenow="80"
                               aria-disabled="false"
-                              style={{ left: '100%' }}
+                              style={{ left: "100%" }}
                             />
                             <div className="rc-slider-mark" />
                           </div>
@@ -187,14 +183,10 @@ class Tour extends PureComponent {
                   </div>
                 </div>
               </section>
-              <section
-                className="featured-profiles"
-                key="na"
-                data-tut="featured"
-              >
+              <section className="featured-profiles" key="na">
                 <div className="container">
                   <div className="col-md-12">
-                    <span className="head">{t('featmems')}</span>
+                    <span className="head">{t("featmems")}</span>
                     <OwlCarousel
                       className="owl-carousel slider"
                       autoplay
@@ -751,4 +743,4 @@ class Tour extends PureComponent {
   }
 }
 
-export default withRouter(withNamespaces('searchprofiles')(Tour));
+export default withRouter(withNamespaces("searchprofiles")(Tour));

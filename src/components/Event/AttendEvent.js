@@ -1,15 +1,15 @@
-import React, { PureComponent } from 'react';
-import withSession from '../withSession';
-import { Mutation } from 'react-apollo';
+import React, { PureComponent } from "react";
+import withSession from "../withSession";
+import { Mutation } from "react-apollo";
 import {
   TOGGLE_EVENT_ATTEND,
   GET_EVENT,
   GET_EVENT_PARTICIPANTS
-} from '../../queries';
+} from "../../queries";
 
 class AttendEvent extends PureComponent {
   state = {
-    username: '',
+    username: "",
     isGoing: false
   };
 
@@ -28,7 +28,7 @@ class AttendEvent extends PureComponent {
   }
 
   handleAttend = toggleAttend => {
-    this.props.ErrorHandler.setBreadcrumb('Toggle Attend');
+    this.props.ErrorHandler.setBreadcrumb("Toggle Attend");
     toggleAttend()
       .then(async ({ data }) => {
         if (data.toggleAttendEvent !== null) {
@@ -52,7 +52,7 @@ class AttendEvent extends PureComponent {
   updateAttend = (cache, { data: { toggleAttendEvent } }) => {
     if (toggleAttendEvent !== null) {
       const { id } = this.props;
-      console.log(id);
+
       const { event } = cache.readQuery({
         query: GET_EVENT,
         variables: { id }
@@ -70,7 +70,7 @@ class AttendEvent extends PureComponent {
                     id: toggleAttendEvent,
                     profileName: this.props.session.currentuser.username,
                     profilePic: this.props.session.currentuser.profilePic,
-                    __typename: 'ProfileType'
+                    __typename: "ProfileType"
                   },
                   ...event.participants
                 ]
@@ -81,26 +81,31 @@ class AttendEvent extends PureComponent {
         }
       });
 
+      const getEvent = cache.readQuery({
+        query: GET_EVENT_PARTICIPANTS,
+        variables: { eventID: id }
+      });
+
+      if (this.state.isGoing) {
+        getEvent.event.participants = [
+          {
+            id: toggleAttendEvent,
+            profileName: this.props.session.currentuser.username,
+            profilePic: this.props.session.currentuser.profilePic,
+            __typename: "ProfileType"
+          },
+          ...getEvent.event.participants
+        ];
+      } else {
+        getEvent.event.participants = getEvent.event.participants.filter(
+          member => member.id !== toggleAttendEvent
+        );
+      }
+
       cache.writeQuery({
         query: GET_EVENT_PARTICIPANTS,
         variables: { eventID: id },
-        data: {
-          event: {
-            participants: this.state.isGoing
-              ? [
-                  {
-                    id: toggleAttendEvent,
-                    profileName: this.props.session.currentuser.username,
-                    profilePic: this.props.session.currentuser.profilePic,
-                    __typename: 'ProfileType'
-                  },
-                  ...event.participants
-                ]
-              : event.participants.filter(
-                  member => member.id !== toggleAttendEvent
-                )
-          }
-        }
+        data: { getEvent }
       });
     }
   };
@@ -119,7 +124,7 @@ class AttendEvent extends PureComponent {
             username && (
               <div className="join-event">
                 <span onClick={() => this.handleClick(toggleAttendEvent)}>
-                  {isGoing ? t('notgoing') : t('Going')}
+                  {isGoing ? t("notgoing") : t("Going")}
                 </span>
               </div>
             )

@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import { SEEN_TOUR } from '../../queries';
-import { withNamespaces } from 'react-i18next';
-import CustomTour from '../common/CustomTour';
-import { withRouter } from 'react-router-dom';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import { SEEN_TOUR } from "../../queries";
+import { withNamespaces } from "react-i18next";
+import CustomTour from "../common/CustomTour";
+import { withRouter } from "react-router-dom";
 class Tour extends PureComponent {
   state = {
     isTourOpen: true
@@ -21,9 +21,9 @@ class Tour extends PureComponent {
       .then(({ data }) => {
         this.props.refetchUser();
         if (isEvent) {
-          this.props.history.push('/event/tour');
+          this.props.history.push("/event/tour");
         } else {
-          this.props.history.push('/events');
+          this.props.history.push("/events");
         }
       })
       .catch(res => {
@@ -41,34 +41,34 @@ class Tour extends PureComponent {
   };
 
   render() {
-    const lang = localStorage.getItem('i18nextLng');
+    const lang = localStorage.getItem("i18nextLng");
     const { t } = this.props;
     const { isTourOpen } = this.state;
     const tourConfig = [
       {
-        selector: '[data-tut="page"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        selector: '[data-tut=""]',
+        content: `Ok, let's find an event near by to attend.`
       },
 
       {
         selector: '[data-tut="search"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Here you can limit your search to events near you. *Only BLACK members can chage their location.`
       },
       {
         selector: '[data-tut="create"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `If you want to create your own event for the Foxtail community to attend. Click "Create Event"`
       },
       {
         selector: '[data-tut="myevents"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `These are the events you have already said you are looking to attend`
       },
       {
         selector: '[data-tut="events"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Events meeting your criteria are here sorted by date.`
       },
       {
         selector: '[data-tut="item"]',
-        content: `Ok, let's start with the name of the Tour that is about to begin.`
+        content: `Let's look at this event. Click the Event Name.`
       }
     ];
 
@@ -76,7 +76,7 @@ class Tour extends PureComponent {
       <Mutation
         mutation={SEEN_TOUR}
         variables={{
-          tour: 'se'
+          tour: "se"
         }}
       >
         {seenTour => {
@@ -92,7 +92,7 @@ class Tour extends PureComponent {
                   </div>
                 </div>
               </section>
-              <section className="go-events" data-tut="page">
+              <section className="go-events">
                 <div className="header">
                   <div className="container">
                     <div className="col-md-12">
@@ -106,7 +106,7 @@ class Tour extends PureComponent {
                         <div>
                           <label>From:</label>
                           <div className="search">
-                            <div style={{ display: 'flex' }}>
+                            <div style={{ display: "flex" }}>
                               <input
                                 type="text"
                                 aria-autocomplete="list"
@@ -325,7 +325,10 @@ class Tour extends PureComponent {
                         <div className="col-md-12">
                           <span className="head">Oncoming Events</span>
                         </div>
-                        <div className="col-md-12 col-lg-6">
+                        <div
+                          className="col-md-12 col-lg-6"
+                          onClick={() => this.closeTour(seenTour, true)}
+                        >
                           <div className="card-item" data-tut="item">
                             <div className="thumbnail">
                               <div className="date">
@@ -1056,4 +1059,4 @@ class Tour extends PureComponent {
   }
 }
 
-export default withRouter(withNamespaces('searchevents')(Tour));
+export default withRouter(withNamespaces("searchevents")(Tour));

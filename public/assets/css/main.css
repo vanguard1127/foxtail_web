@@ -140,10 +140,10 @@
       border-right: 1px solid #EAEAEA;
     }
 
-    header .function .inbox.hidden-mobile {
+    /* header .function .inbox.hidden-mobile {
       display: inline-block !important;
       visibility: visible !important;
-    }
+    } */
 
     header .function .inbox span.icon {
       float: left;
@@ -410,6 +410,7 @@
         padding: 0 0 15px 0 !important;
         background-color: #fff !important;
         float: none !important;
+        height: auto !important;
       }
 
       .invite-member .removeContent {
@@ -1780,9 +1781,6 @@
     line-height: 16px;
     display: none;
     visibility: hidden;
-    width: 100%;
-    display: block;
-    float: left;
   }
 
 /*---- INBOX ----*/
@@ -2203,6 +2201,7 @@
       transition: .3s all;
     }
 
+    section.inbox .chat .navbar .more-dropdown ul li span,
     section.inbox .chat .navbar .more-dropdown ul li a {
       width: 100%;
       height: 100%;
@@ -2212,10 +2211,13 @@
       padding: 12px 15px;
     }
 
+    section.inbox .chat .navbar .more-dropdown ul li:last-child span,
     section.inbox .chat .navbar .more-dropdown ul li:last-child a {
       border-bottom: none;
       padding-bottom: 9px;
     }
+
+    section.inbox .chat .navbar .more-dropdown ul li:first-child span,
     section.inbox .chat .navbar .more-dropdown ul li:first-child a {
       padding-top: 9px;
     }

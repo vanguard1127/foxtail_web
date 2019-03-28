@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Select from './Select';
+import React, { Component } from "react";
+import Select from "./Select";
 
-const availableLangs = ['en', 'tu', 'de'];
+const availableLangs = ["en", "tu", "de"];
 class Dropdown extends Component {
   state = {
     options: null,
@@ -39,12 +39,12 @@ class Dropdown extends Component {
     let lang = langSel;
 
     if (availableLangs.indexOf(lang) < 0) {
-      lang = 'en';
+      lang = "en";
     }
-    import('../../docs/options/' + lang)
+    import("../../docs/options/" + lang)
       .then(els => {
         let ops;
-        if (this.props.type === 'gender') {
+        if (this.props.type === "gender") {
           ops = els.genderOptions;
         } else {
           ops = els.sexOptions;
@@ -53,14 +53,16 @@ class Dropdown extends Component {
           this.setState({ options: ops, isLoading: false });
         }
       })
-      .catch(console.log('Lang file error'));
+      .catch(error => {
+        console.log("Lang file error", error); /* Error handling */
+      });
   };
 
   render() {
     const { onChange, value, placeholder, type } = this.props;
     const { options, isLoading } = this.state;
     let multiple = false;
-    if (type === 'interestedIn') {
+    if (type === "interestedIn") {
       multiple = true;
     }
 
@@ -78,7 +80,7 @@ class Dropdown extends Component {
             : null
         }
         options={options}
-        className={'dropdown'}
+        className={"dropdown"}
       />
     );
   }

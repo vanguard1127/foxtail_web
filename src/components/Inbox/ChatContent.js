@@ -4,7 +4,7 @@ import { GET_MESSAGES, NEW_MESSAGE_SUB } from "../../queries";
 import Waypoint from "react-waypoint";
 import Spinner from "../common/Spinner";
 import MessageList from "./MessageList";
-
+let unsubscribe = null;
 class ChatContent extends PureComponent {
   handleEnd = (previousPosition, currentPosition, fetchMore, cursor) => {
     if (
@@ -123,6 +123,33 @@ class ChatContent extends PureComponent {
               );
             }
 
+            if (!unsubscribe) {
+              unsubscribe = subscribeToMore({
+                document: NEW_MESSAGE_SUB,
+                variables: {
+                  chatID: chatID
+                },
+                updateQuery: (prev, { subscriptionData }) => {
+                  const { newMessageSubscribe } = subscriptionData.data;
+                  if (!newMessageSubscribe) {
+                    return prev;
+                  }
+                  if (prev.getMessages) {
+                    prev.getMessages.messages = [
+                      newMessageSubscribe,
+                      ...prev.getMessages.messages
+                    ];
+                  } else {
+                    prev.getMessages = {
+                      messages: [newMessageSubscribe],
+                      __typename: "ChatType"
+                    };
+                  }
+                  return prev;
+                }
+              });
+            }
+
             return (
               <MessageList
                 chatID={chatID}
@@ -131,32 +158,6 @@ class ChatContent extends PureComponent {
                 t={t}
                 messages={
                   data && data.getMessages ? data.getMessages.messages : []
-                }
-                subscribe={() =>
-                  subscribeToMore({
-                    document: NEW_MESSAGE_SUB,
-                    variables: {
-                      chatID: chatID
-                    },
-                    updateQuery: (prev, { subscriptionData }) => {
-                      const { newMessageSubscribe } = subscriptionData.data;
-                      if (!newMessageSubscribe) {
-                        return prev;
-                      }
-                      if (prev.getMessages) {
-                        prev.getMessages.messages = [
-                          newMessageSubscribe,
-                          ...prev.getMessages.messages
-                        ];
-                      } else {
-                        prev.getMessages = {
-                          messages: [newMessageSubscribe],
-                          __typename: "ChatType"
-                        };
-                      }
-                      return prev;
-                    }
-                  })
                 }
                 handleEnd={this.handleEnd}
                 fetchMore={fetchMore}
