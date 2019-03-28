@@ -98,7 +98,14 @@ class PhotoSlider extends Component {
                 onContextMenu={preventContextMenu}
               >
                 <a href={photo.url}>
-                  <img src={photo.url} alt="" />
+                  <img
+                    src={
+                      photo.url !== "private"
+                        ? photo.url
+                        : "../assets/img/events/1001@2x.png"
+                    }
+                    alt=""
+                  />
                 </a>
               </div>
             ))}

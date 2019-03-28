@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import AddressSearch from '../common/AddressSearch';
-import Select from '../common/Select';
+import React, { PureComponent } from "react";
+import AddressSearch from "../common/AddressSearch";
+import Select from "../common/Select";
 
 class SearchEventsFilters extends PureComponent {
   handleRemoveLocLock = async () => {
@@ -12,7 +12,7 @@ class SearchEventsFilters extends PureComponent {
       err => {
         alert(
           this.props.t(
-            'Please enable location services to remove your set location.'
+            "Please enable location services to remove your set location."
           )
         );
         return;
@@ -32,25 +32,25 @@ class SearchEventsFilters extends PureComponent {
       <div className="settings-con">
         <Select
           onChange={handleChangeSelect}
-          label={t('disway') + ':'}
+          label={t("disway") + ":"}
           defaultOptionValue={maxDistance.toString()}
           options={[
-            { label: '5' + ' ' + t('miles'), value: '5' },
-            { label: '10' + ' ' + t('miles'), value: '10' },
-            { label: '20' + ' ' + t('miles'), value: '20' },
-            { label: '50' + ' ' + t('miles'), value: '50' }
+            { label: "5" + " " + t("miles"), value: "5" },
+            { label: "10" + " " + t("miles"), value: "10" },
+            { label: "20" + " " + t("miles"), value: "20" },
+            { label: "50" + " " + t("miles"), value: "50" }
           ]}
-          className={'dropdown'}
+          className={"dropdown"}
         />
         <div>
-          <label>{t('From')}:</label>
+          <label>{t("From")}:</label>
           <AddressSearch
             style={{ width: 150 }}
             setLocationValues={setLocationValues}
             address={location}
-            type={'(cities)'}
-            placeholder={t('srchcity') + '...'}
-            handleRemoveLocLock={() => this.handleRemoveLocLock()}
+            type={"(cities)"}
+            placeholder={t("srchcity") + "..."}
+            handleRemoveLocLock={this.handleRemoveLocLock}
           />
         </div>
       </div>
