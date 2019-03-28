@@ -55,11 +55,13 @@ class SignupForm extends Component {
     try {
       await schema.validate(this.state);
       this.setState({ isValid: true, errors: {} });
+      return true;
     } catch (e) {
       console.log(e);
       let errors = { [e.path]: e.message };
 
       this.setState({ isValid: false, errors });
+      return false;
     }
   };
 
