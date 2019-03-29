@@ -54,9 +54,7 @@ const PhotoUpload = ({ photos, setPhotos, t }) => {
         `</span>.`
       }
       allowFileRename={true}
-      fileRenameFunction={file => {
-        return `my_new_name${file.extension}`;
-      }}
+      fileRenameFunction={file => `my_new_name`}
       labelFileProcessing={t("upload")}
       labelFileProcessingComplete={t("uploadcomp")}
       labelFileProcessingAborted={t("uploadcan")}
