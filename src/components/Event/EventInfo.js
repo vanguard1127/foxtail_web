@@ -1,7 +1,23 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
-class EventInfo extends PureComponent {
+class EventInfo extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    const { event: eventProps } = this.props;
+    const { event: nextEventProps } = nextProps;
+
+    if (
+      eventProps.address !== nextEventProps.address ||
+      !eventProps.desires.every(e => nextEventProps.desires.includes(e)) ||
+      eventProps.distance !== nextEventProps.distance ||
+      eventProps.endTime !== nextEventProps.endTime ||
+      eventProps.startTime !== nextEventProps.startTime ||
+      eventProps.type !== nextEventProps.type
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const {
       event,

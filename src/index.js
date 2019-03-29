@@ -56,10 +56,7 @@ let wsurl = `ws://${server}/subscriptions`;
 // let httpurl = `https://${server}/graphql`;
 // let HTTPSurl = `https://${server}`;
 // let wsurl = `wss://${server}/subscriptions`;
-// if (process.env.NODE_ENV !== "production") {
-//   const { whyDidYouUpdate } = require("why-did-you-update");
-//   whyDidYouUpdate(React);
-// }
+
 // if (process.env.NODE_ENV !== "production") {
 //   var axe = require("react-axe");
 //   axe(React, ReactDOM, 1000);

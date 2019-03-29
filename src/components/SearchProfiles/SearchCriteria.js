@@ -1,12 +1,12 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import { UPDATE_SETTINGS, REMOVE_LOCLOCK } from '../../queries';
-import Dropdown from '../common/Dropdown';
-import AddressSearch from '../common/AddressSearch';
-import SetLocationModal from '../Modals/SetLocation';
-import DistanceSlider from '../common/DistanceSlider';
-import AgeRange from '../common/AgeRange';
-import getCityCountry from '../../utils/getCityCountry';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import { UPDATE_SETTINGS, REMOVE_LOCLOCK } from "../../queries";
+import Dropdown from "../common/Dropdown";
+import AddressSearch from "../common/AddressSearch";
+import SetLocationModal from "../Modals/SetLocation";
+import DistanceSlider from "../common/DistanceSlider";
+import AgeRange from "../common/AgeRange";
+import getCityCountry from "../../utils/getCityCountry";
 
 class SearchCriteria extends PureComponent {
   state = {
@@ -81,7 +81,7 @@ class SearchCriteria extends PureComponent {
       err => {
         alert(
           this.props.t(
-            'Please enable location services to remove your set location.'
+            "Please enable location services to remove your set location."
           )
         );
         return;
@@ -101,7 +101,7 @@ class SearchCriteria extends PureComponent {
         updateSettings
       );
     } else {
-      this.props.setValue({ name: 'city', value: city });
+      this.props.setValue({ name: "city", value: city });
 
       if (this.mounted) {
         this.setState({ city });
@@ -130,19 +130,19 @@ class SearchCriteria extends PureComponent {
                     <AddressSearch
                       style={{ width: 150 }}
                       setLocationValues={null}
-                      address={''}
-                      type={'(cities)'}
-                      placeholder={t('common:setloc') + '...'}
+                      address={""}
+                      type={"(cities)"}
+                      placeholder={t("common:setloc") + "..."}
                     />
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="item">
                     <Dropdown
-                      type={'interestedIn'}
+                      type={"interestedIn"}
                       onChange={el => null}
                       value={[]}
-                      placeholder={t('common:Interested') + ':'}
+                      placeholder={t("common:Interested") + ":"}
                     />
                   </div>
                 </div>
@@ -208,8 +208,8 @@ class SearchCriteria extends PureComponent {
                                     });
                                   }}
                                   address={city}
-                                  type={'(cities)'}
-                                  placeholder={t('common:setloc') + '...'}
+                                  type={"(cities)"}
+                                  placeholder={t("common:setloc") + "..."}
                                   handleRemoveLocLock={() =>
                                     this.handleRemoveLocLock(updateSettings)
                                   }
@@ -219,16 +219,16 @@ class SearchCriteria extends PureComponent {
                             <div className="col-md-6">
                               <div className="item">
                                 <Dropdown
-                                  type={'interestedIn'}
+                                  type={"interestedIn"}
                                   onChange={el =>
                                     this.setValue({
-                                      name: 'interestedIn',
+                                      name: "interestedIn",
                                       value: el.map(e => e.value),
                                       updateSettings
                                     })
                                   }
                                   value={interestedIn}
-                                  placeholder={t('common:Interested') + ':'}
+                                  placeholder={t("common:Interested") + ":"}
                                   lang={lang}
                                 />
                               </div>
@@ -238,7 +238,7 @@ class SearchCriteria extends PureComponent {
                                 value={distance}
                                 setValue={el =>
                                   this.setValue({
-                                    name: 'distance',
+                                    name: "distance",
                                     value: el,
                                     updateSettings
                                   })
@@ -252,7 +252,7 @@ class SearchCriteria extends PureComponent {
                                 value={ageRange}
                                 setValue={el =>
                                   this.setValue({
-                                    name: 'ageRange',
+                                    name: "ageRange",
                                     value: el,
                                     updateSettings
                                   })

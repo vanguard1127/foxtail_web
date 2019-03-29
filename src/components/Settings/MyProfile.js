@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import DesiresSelector from '../Modals/Desires/Selector';
+import React, { Component } from "react";
+import DesiresSelector from "../Modals/Desires/Selector";
 
 class MyProfile extends Component {
   shouldComponentUpdate(nextProps) {
@@ -7,7 +7,8 @@ class MyProfile extends Component {
       this.props.desires !== nextProps.desires ||
       this.props.about !== nextProps.about ||
       this.props.togglePopup !== nextProps.togglePopup ||
-      this.props.errors !== nextProps.errors
+      this.props.errors.about !== nextProps.errors.about ||
+      this.props.errors.desires !== nextProps.errors.desires
     ) {
       return true;
     }
@@ -28,7 +29,7 @@ class MyProfile extends Component {
       <div className="content">
         <div className="row">
           <div className="col-md-12">
-            <span className="heading">{t('myprofile')}</span>
+            <span className="heading">{t("myprofile")}</span>
           </div>
           <div className="col-md-12">
             <div className="item">
@@ -45,25 +46,25 @@ class MyProfile extends Component {
           <div className="col-md-12">
             <div className="item">
               <div className="textarea">
-                <label>{t('probio')}:</label>
+                <label>{t("probio")}:</label>
                 <ErrorBoundary>
                   <textarea
                     onChange={e =>
                       setValue({
-                        name: 'about',
+                        name: "about",
                         value: e.target.value,
                         noSave: true
                       })
                     }
                     onMouseLeave={e => {
                       setValue({
-                        name: 'about',
+                        name: "about",
                         value: e.target.value
                       });
                     }}
                     onBlur={e => {
                       setValue({
-                        name: 'about',
+                        name: "about",
                         value: e.target.value
                       });
                     }}

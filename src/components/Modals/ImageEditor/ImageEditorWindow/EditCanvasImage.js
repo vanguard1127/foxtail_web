@@ -1,16 +1,12 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Layer, Stage } from 'react-konva';
-import TransformerHandler from './TransformerHandler';
-import SourceImage from './SourceImage';
-import KonvaImage from './KonvaImage';
-import RotateIcon from '@material-ui/icons/RotateRight';
-import ImageIcon from '@material-ui/icons/Image';
-import DeleteIcon from '@material-ui/icons/DeleteForever';
-
-let iconStyles = {
-  fontSize: '48px'
-};
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import { Layer, Stage } from "react-konva";
+import TransformerHandler from "./TransformerHandler";
+import SourceImage from "./SourceImage";
+import KonvaImage from "./KonvaImage";
+import RotateIcon from "@material-ui/icons/RotateRight";
+import ImageIcon from "@material-ui/icons/Image";
+import DeleteIcon from "@material-ui/icons/DeleteForever";
 
 class EditCanvasImage extends PureComponent {
   constructor(props) {
@@ -28,7 +24,7 @@ class EditCanvasImage extends PureComponent {
       scaleHeight: height,
       x_pos: 0,
       y_pos: 0,
-      selectedShapeName: '',
+      selectedShapeName: "",
       hideTransformer: false,
       konvaImageList: [],
       crop: initialCrop,
@@ -72,12 +68,12 @@ class EditCanvasImage extends PureComponent {
   };
 
   dataURItoBlob = dataURI => {
-    var binary = atob(dataURI.split(',')[1]);
+    var binary = atob(dataURI.split(",")[1]);
     var array = [];
     for (var i = 0; i < binary.length; i++) {
       array.push(binary.charCodeAt(i));
     }
-    return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+    return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
   };
 
   handleExportClick = () => {
@@ -85,11 +81,11 @@ class EditCanvasImage extends PureComponent {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         const dataURL = this.stageRef
           .getStage()
-          .toDataURL({ mimeType: 'image/jpeg' });
+          .toDataURL({ mimeType: "image/jpeg" });
         var blobData = this.dataURItoBlob(dataURL);
         var file = {
           filename: this.props.imageObject.name,
-          filetype: 'image/jpeg',
+          filetype: "image/jpeg",
           filebody: blobData
         };
 
@@ -168,7 +164,7 @@ class EditCanvasImage extends PureComponent {
       x => x.name !== this.state.selectedShapeName
     );
     if (this.mounted) {
-      this.setState({ konvaImageList: filteredList, selectedShapeName: '' });
+      this.setState({ konvaImageList: filteredList, selectedShapeName: "" });
     }
   };
 
@@ -229,21 +225,21 @@ class EditCanvasImage extends PureComponent {
       <div
         {...props}
         onClick={() => this.handleStickerClick(props.id, props.name, props.src)}
-        style={{ padding: 5, height: '100%' }}
+        style={{ padding: 5, height: "100%" }}
       >
         <img
-          style={{ height: '100%' }}
-          src={require('./' + props.src)}
+          style={{ height: "100%" }}
+          src={require("./" + props.src)}
           alt="imagepic"
         />
       </div>
     );
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <Stage
-            style={{ backgroundColor: 'gray' }}
+            style={{ backgroundColor: "gray" }}
             width={width}
             height={height}
             onClick={this.handleStageClick}
@@ -288,21 +284,21 @@ class EditCanvasImage extends PureComponent {
 
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'baseline',
-            margin: '10px 0 10px 0'
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems: "baseline",
+            margin: "10px 0 10px 0"
           }}
         >
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center'
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center"
             }}
           >
-            <ImageIcon style={{ fontSize: '18px', color: 'grey' }} />
+            <ImageIcon style={{ fontSize: "18px", color: "grey" }} />
             <input
               name="scale"
               type="range"
@@ -311,36 +307,36 @@ class EditCanvasImage extends PureComponent {
               max="2"
               step="0.01"
               defaultValue="1"
-              style={{ margin: '0 5px 0 5px', cursor: 'grabbing' }}
+              style={{ margin: "0 5px 0 5px", cursor: "grabbing" }}
             />
-            <ImageIcon style={{ fontSize: '30px', color: 'grey' }} />
+            <ImageIcon style={{ fontSize: "30px", color: "grey" }} />
           </div>
 
           <span
-            style={{ marginBottom: 5, display: 'flex' }}
+            style={{ marginBottom: 5, display: "flex" }}
             onClick={this.rotate}
           >
-            <RotateIcon style={{ fontSize: '30px', color: 'grey' }} />
+            <RotateIcon style={{ fontSize: "30px", color: "grey" }} />
           </span>
         </div>
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: '10px'
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "10px"
           }}
         >
           <div
             style={{
-              display: 'flex',
+              display: "flex",
               height: 70,
               width: width,
-              border: '1px solid silver',
+              border: "1px solid silver",
               marginTop: 5,
-              overflowY: 'auto',
-              flex: '4'
+              overflowY: "auto",
+              flex: "4"
             }}
           >
             <Sticker id="1" name="stc1" src="test_mask_1.png" />
@@ -348,14 +344,14 @@ class EditCanvasImage extends PureComponent {
           </div>
           <span
             style={{
-              display: 'flex',
-              flex: '1'
+              display: "flex",
+              flex: "1"
             }}
             onClick={this.removeSelectedSticker}
           >
             {selectedShapeName && (
               <DeleteIcon
-                style={{ fontSize: '50px', color: 'red', margin: '10px' }}
+                style={{ fontSize: "50px", color: "red", margin: "10px" }}
               />
             )}
           </span>
@@ -366,7 +362,7 @@ class EditCanvasImage extends PureComponent {
           disabled={uploading}
           className="greenButton"
         >
-          {t('Upload')}
+          {t("Upload")}
         </span>
       </div>
     );

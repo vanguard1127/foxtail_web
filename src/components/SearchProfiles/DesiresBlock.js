@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class DesiresBlock extends Component {
   shouldComponentUpdate() {
@@ -14,7 +14,7 @@ class DesiresBlock extends Component {
             if (result.length < 2) {
               result.push(<li key={desire}>{t(desire)}</li>);
               if (result.length > 1) {
-                result.push(<li key={'na' + id}>+{desires.length - 2}</li>);
+                result.push(<li key={"na" + id}>+{desires.length - 2}</li>);
               }
             }
             return result;

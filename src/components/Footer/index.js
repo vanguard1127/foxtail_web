@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import {
   FacebookShareButton,
@@ -9,7 +9,10 @@ import { SEEN_TOUR } from "../../queries";
 
 import { withNamespaces } from "react-i18next";
 
-class Footer extends PureComponent {
+class Footer extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
   render() {
     const { t } = this.props;
     const shareUrl = "www.fotxtailapp.com";

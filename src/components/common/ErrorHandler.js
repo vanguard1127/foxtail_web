@@ -1,17 +1,17 @@
-import React, { PureComponent } from 'react';
-import * as Sentry from '@sentry/browser';
-import i18n from 'i18next';
+import React, { PureComponent } from "react";
+import * as Sentry from "@sentry/browser";
+import i18n from "i18next";
 
 Sentry.init({
-  dsn: 'https://e26c22fc85dc4315bddcad2103c61cee@sentry.io/1380381'
+  dsn: "https://e26c22fc85dc4315bddcad2103c61cee@sentry.io/1380381"
 });
 
 const setBreadcrumb = msg => {
   Sentry.addBreadcrumb({
-    category: 'ui',
+    category: "ui",
     message: msg,
-    level: 'info',
-    type: 'user'
+    level: "info",
+    type: "user"
   });
 };
 
@@ -25,15 +25,15 @@ class report extends PureComponent {
     const { error, calledName } = this.props;
     if (calledName) {
       Sentry.configureScope(scope => {
-        scope.setTag('calledName', calledName);
+        scope.setTag("calledName", calledName);
       });
     }
     Sentry.captureException(error);
     return (
       <span>
-        {i18n.t('common:errMsg')}:
+        {i18n.t("common:errMsg")}:
         <span onClick={() => Sentry.showReportDialog()}>
-          {i18n.t('common:reportErr')}
+          {i18n.t("common:reportErr")}
         </span>
       </span>
     );
@@ -65,10 +65,10 @@ class ErrorBoundary extends PureComponent {
       //render fallback UI
       return (
         <span>
-          {i18n.t('common:errMsg')}:
+          {i18n.t("common:errMsg")}:
           <span onClick={() => Sentry.showReportDialog()}>
-            {' '}
-            {i18n.t('common:reportErr')}
+            {" "}
+            {i18n.t("common:reportErr")}
           </span>
         </span>
       );

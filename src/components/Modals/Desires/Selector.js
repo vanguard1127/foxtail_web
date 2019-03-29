@@ -1,8 +1,14 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { desireOptions } from "../../../docs/options";
 import { withNamespaces } from "react-i18next";
 
-class Selector extends PureComponent {
+class Selector extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.desires !== nextProps.desires) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { togglePopup, desires, t, ErrorBoundary } = this.props;
 
@@ -10,7 +16,7 @@ class Selector extends PureComponent {
       <span>
         <div
           className="select_desires desires_select_popup"
-          onClick={() => togglePopup()}
+          onClick={togglePopup}
         >
           <span className="label">{t("seldesires")}:</span>
           <ErrorBoundary>

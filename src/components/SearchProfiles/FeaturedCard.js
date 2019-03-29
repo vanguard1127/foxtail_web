@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import ProfileInfoDiv from './ProfileInfoDiv';
-import ProfilePic from './ProfilePic';
-import ProfileActionBtns from './ProfileActionBtns';
+import React, { Component } from "react";
+import ProfileInfoDiv from "./ProfileInfoDiv";
+import ProfilePic from "./ProfilePic";
+import ProfileActionBtns from "./ProfileActionBtns";
 
 class FeaturedCard extends Component {
   shouldComponentUpdate(nextProps) {
@@ -26,14 +26,14 @@ class FeaturedCard extends Component {
     const photoCheck = profile.users.every(
       user => user.verifications.photo === true
     );
-    let badge = '';
+    let badge = "";
     if (photoCheck) {
-      badge = 'verified';
+      badge = "verified";
     }
     return (
-      <div className={'item ' + badge}>
+      <div className={"item " + badge}>
         <div className="info">
-          <span onClick={() => history.push('/member/' + profile.id)}>
+          <span onClick={() => history.push("/member/" + profile.id)}>
             <ProfileInfoDiv profile={profile} t={t} dayjs={dayjs} />
             <ProfilePic profilePic={profile.profilePic} />
           </span>

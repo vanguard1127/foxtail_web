@@ -197,17 +197,14 @@ class EventPage extends PureComponent {
                           ErrorHandler={ErrorHandler}
                         />{" "}
                       </ErrorHandler.ErrorBoundary>{" "}
-                      <ErrorHandler.ErrorBoundary>
-                        <EventDiscussion
-                          id={id}
-                          chatID={chatID}
-                          history={history}
-                          t={t}
-                          ErrorHandler={ErrorHandler}
-                          dayjs={dayjs}
-                          currentuser={session.currentuser}
-                        />
-                      </ErrorHandler.ErrorBoundary>
+                      <EventDiscussion
+                        chatID={chatID}
+                        history={history}
+                        t={t}
+                        ErrorHandler={ErrorHandler}
+                        dayjs={dayjs}
+                        currentuser={session.currentuser}
+                      />
                     </div>
                     <div className="col-lg-3 col-md-12">
                       <ErrorHandler.ErrorBoundary>

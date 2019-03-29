@@ -1720,7 +1720,6 @@ aws4@^1.8.0:
 axe-core@^3.0.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-3.2.2.tgz#b06d6e9ae4636d706068843272bfaeed3fe97362"
-  integrity sha512-gAy4kMSPpuRJV3mwictJqlg5LhE84Vw2CydKdC4tvrLhR6+G3KW51zbL/vYujcLA2jvWOq3HMHrVeNuw+mrLVA==
 
 axios@^0.18.0:
   version "0.18.0"
@@ -8258,7 +8257,6 @@ react-avatar@^3.5.0:
 react-axe@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-axe/-/react-axe-3.1.0.tgz#77f920642ab34a39f971c8195ea3b44c02c05b8f"
-  integrity sha512-aUkgYpYVFhQ9hAF3DkvUqWTN5eOIN5K+WqQItgBzSbL5MpJssnd2hN09QoloYEAo6BhBsV0k0O9S0tNquyni2w==
   dependencies:
     axe-core "^3.0.0"
     requestidlecallback "^0.3.0"
@@ -8349,10 +8347,6 @@ react-facebook-account-kit@^0.1.3:
   resolved "https://registry.yarnpkg.com/react-facebook-account-kit/-/react-facebook-account-kit-0.1.3.tgz#7fcc96a3615ba51fd2db98cd88ccd349aabe6e44"
   dependencies:
     prop-types "^15.5.0"
-
-react-fast-compare@^2.0.3:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
 
 react-filepond@^5.0.0:
   version "5.0.0"
@@ -8859,7 +8853,6 @@ request@^2.87.0, request@^2.88.0:
 requestidlecallback@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/requestidlecallback/-/requestidlecallback-0.3.0.tgz#6fb74e0733f90df3faa4838f9f6a2a5f9b742ac5"
-  integrity sha1-b7dOBzP5DfP6pIOPn2oqX5t0KsU=
 
 require-directory@^2.1.1:
   version "2.1.1"
@@ -10388,13 +10381,6 @@ which@^1.2.10, which@^1.2.12, which@^1.2.14, which@^1.2.9, which@^1.3.0:
   resolved "https://registry.yarnpkg.com/which/-/which-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
   dependencies:
     isexe "^2.0.0"
-
-why-did-you-update@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/why-did-you-update/-/why-did-you-update-1.0.6.tgz#2e2c6a04291e715755ecdff1ac8272f721df6f04"
-  dependencies:
-    lodash "^4.17.11"
-    react-fast-compare "^2.0.3"
 
 wide-align@^1.1.0:
   version "1.1.3"

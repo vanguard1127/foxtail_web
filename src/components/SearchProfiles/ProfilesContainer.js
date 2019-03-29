@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react';
-import { SEARCH_PROFILES, LIKE_PROFILE } from '../../queries';
-import EmptyScreen from '../common/EmptyScreen';
-import { Query, Mutation } from 'react-apollo';
-import ProfilesDiv from './ProfilesDiv';
-import Waypoint from 'react-waypoint';
-import FeaturedDiv from './FeaturedDiv';
-import DirectMsgModal from '../Modals/DirectMsg';
-import Modal from '../common/Modal';
-import Spinner from '../common/Spinner';
-import { toast } from 'react-toastify';
+import React, { PureComponent } from "react";
+import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
+import EmptyScreen from "../common/EmptyScreen";
+import { Query, Mutation } from "react-apollo";
+import ProfilesDiv from "./ProfilesDiv";
+import Waypoint from "react-waypoint";
+import FeaturedDiv from "./FeaturedDiv";
+import DirectMsgModal from "../Modals/DirectMsg";
+import Modal from "../common/Modal";
+import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 const LIMIT = 20;
 
@@ -30,7 +30,7 @@ class ProfilesContainer extends PureComponent {
   }
 
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
-    this.props.ErrorHandler.setBreadcrumb('Match Dialog Toggled:');
+    this.props.ErrorHandler.setBreadcrumb("Match Dialog Toggled:");
     if (this.mounted) {
       if (profile) this.setState({ profile, matchDlgVisible, chatID });
       else this.setState({ matchDlgVisible });
@@ -39,7 +39,7 @@ class ProfilesContainer extends PureComponent {
 
   setMsgModalVisible = (msgModalVisible, profile) => {
     this.props.ErrorHandler.setBreadcrumb(
-      'Message Modal visible:' + msgModalVisible
+      "Message Modal visible:" + msgModalVisible
     );
     if (this.mounted) {
       if (profile) this.setState({ profile, msgModalVisible });
@@ -48,18 +48,18 @@ class ProfilesContainer extends PureComponent {
   };
 
   handleLike = (likeProfile, profile) => {
-    this.props.ErrorHandler.setBreadcrumb('Liked:' + likeProfile);
+    this.props.ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
 
     if (this.mounted) {
       this.setState({ profile }, () => {
         likeProfile()
           .then(({ data }) => {
             switch (data.likeProfile) {
-              case 'like':
-                toast.success('Liked ' + profile.profileName + '!');
+              case "like":
+                toast.success("Liked " + profile.profileName + "!");
                 break;
-              case 'unlike':
-                toast.success('UnLiked ' + profile.profileName + '!');
+              case "unlike":
+                toast.success("UnLiked " + profile.profileName + "!");
                 break;
               default:
                 this.setMatchDlgVisible(true, profile, data.likeProfile);
@@ -74,7 +74,7 @@ class ProfilesContainer extends PureComponent {
   };
 
   fetchData = async fetchMore => {
-    this.props.ErrorHandler.setBreadcrumb('Fetch more profiles');
+    this.props.ErrorHandler.setBreadcrumb("Fetch more profiles");
     if (this.mounted) {
       this.setState({ loading: true }, () =>
         fetchMore({
@@ -120,7 +120,7 @@ class ProfilesContainer extends PureComponent {
 
   render() {
     if (this.props.loading) {
-      return <Spinner page="searchProfiles" title={this.props.t('allmems')} />;
+      return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
     }
     const {
       ErrorHandler,
@@ -143,7 +143,7 @@ class ProfilesContainer extends PureComponent {
       loading
     } = this.state;
     if (loading) {
-      return <Spinner page="searchProfiles" title={t('allmems')} />;
+      return <Spinner page="searchProfiles" title={t("allmems")} />;
     }
 
     return (
@@ -162,29 +162,29 @@ class ProfilesContainer extends PureComponent {
       >
         {({ data, loading, fetchMore, error }) => {
           if (error) {
-            if (error.message.indexOf('invisible') > -1) {
-              return <div>{t('novis')}</div>;
+            if (error.message.indexOf("invisible") > -1) {
+              return <div>{t("novis")}</div>;
             } else {
               return (
                 <ErrorHandler.report
                   error={error}
-                  calledName={'searchProfiles'}
+                  calledName={"searchProfiles"}
                 />
               );
             }
           }
 
           if (loading) {
-            return <Spinner page="searchProfiles" title={t('allmems')} />;
+            return <Spinner page="searchProfiles" title={t("allmems")} />;
           } else if (data === undefined || data.searchProfiles === null) {
-            return <EmptyScreen message={t('nomems')} />;
+            return <EmptyScreen message={t("nomems")} />;
           } else if (
             (data &&
               data.searchProfiles.profiles.length === 0 &&
               data.searchProfiles.featuredProfiles.length === 0) ||
             !data
           ) {
-            return <EmptyScreen message={t('nomems')} />;
+            return <EmptyScreen message={t("nomems")} />;
           }
 
           const result = data.searchProfiles;
@@ -235,7 +235,7 @@ class ProfilesContainer extends PureComponent {
 
                     <div className="col-md-12">
                       <div className="more-content-btn">
-                        <span>{t('nopros')}</span>
+                        <span>{t("nopros")}</span>
                       </div>
                     </div>
                     {profile && msgModalVisible && (
@@ -253,7 +253,7 @@ class ProfilesContainer extends PureComponent {
                           <span
                             className="color"
                             onClick={async () =>
-                              this.props.history.push('/inbox/' + chatID)
+                              this.props.history.push("/inbox/" + chatID)
                             }
                           >
                             Chat Now
@@ -270,11 +270,11 @@ class ProfilesContainer extends PureComponent {
                       >
                         <span
                           className="description"
-                          style={{ fontSize: '20px', paddingBottom: '35px' }}
+                          style={{ fontSize: "20px", paddingBottom: "35px" }}
                         >
-                          {'You and ' +
+                          {"You and " +
                             profile.profileName +
-                            ' like each other!'}
+                            " like each other!"}
                         </span>
                       </Modal>
                     )}

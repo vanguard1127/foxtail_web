@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import ProfileInfoBox from './ProfileInfoBox';
-import DesiresBlock from './DesiresBlock';
+import React, { PureComponent } from "react";
+import ProfileInfoBox from "./ProfileInfoBox";
+import DesiresBlock from "./DesiresBlock";
 
 class ProfileInfoDiv extends PureComponent {
   render() {

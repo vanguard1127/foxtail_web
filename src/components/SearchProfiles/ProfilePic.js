@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 
 const preventContextMenu = e => {
   e.preventDefault();
   alert(
-    'Right-click disabled: Saving images on Foxtail will result in your account being banned.'
+    "Right-click disabled: Saving images on Foxtail will result in your account being banned."
   );
 };
 
@@ -14,9 +14,9 @@ class ProfilePic extends PureComponent {
       <div className="image">
         <img
           src={
-            profilePic !== ''
+            profilePic !== ""
               ? profilePic
-              : 'assets/img/usr/medium-avatar/1001@2x.png'
+              : "assets/img/usr/medium-avatar/1001@2x.png"
           }
           alt=""
           onContextMenu={preventContextMenu}

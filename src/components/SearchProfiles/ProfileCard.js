@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import ProfilePic from './ProfilePic';
-import DesiresBlock from './DesiresBlock';
-import ProfileActionBtns from './ProfileActionBtns';
-import ProfileInfoBox from './ProfileInfoBox';
+import React, { Component } from "react";
+import ProfilePic from "./ProfilePic";
+import DesiresBlock from "./DesiresBlock";
+import ProfileActionBtns from "./ProfileActionBtns";
+import ProfileInfoBox from "./ProfileInfoBox";
 
 class ProfileCard extends Component {
   shouldComponentUpdate(nextProps) {
@@ -27,18 +27,18 @@ class ProfileCard extends Component {
     const photoCheck = profile.users.every(
       user => user.verifications.photo === true
     );
-    let badge = '';
+    let badge = "";
     if (photoCheck) {
-      badge = 'verified';
+      badge = "verified";
     }
     return (
       <div className="col-md-6 col-lg-4">
-        <div className={'card-item ' + badge}>
-          <span onClick={() => history.push('/member/' + profile.id)}>
+        <div className={"card-item " + badge}>
+          <span onClick={() => history.push("/member/" + profile.id)}>
             <ProfilePic profilePic={profile.profilePic} />
           </span>
           <div className="info">
-            <span onClick={() => history.push('/member/' + profile.id)}>
+            <span onClick={() => history.push("/member/" + profile.id)}>
               <ProfileInfoBox
                 users={profile.users}
                 online={profile.showOnline && profile.online}

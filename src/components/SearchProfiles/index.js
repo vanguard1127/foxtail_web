@@ -1,13 +1,17 @@
 // @flow
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { GET_SEARCH_SETTINGS } from "../../queries";
 import SearchProfilesPage from "./SearchProfilesPage";
 import { withNamespaces } from "react-i18next";
 
-class SearchProfiles extends PureComponent {
+class SearchProfiles extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
   render() {
     document.title = "Search Profiles";
+
     const { t, ErrorHandler } = this.props;
 
     ErrorHandler.setBreadcrumb("Enter Search Profiles");
@@ -23,7 +27,6 @@ class SearchProfiles extends PureComponent {
             );
           }
           if (!data.getSettings) {
-            console.log("ROROOR");
             return null;
           }
           return (

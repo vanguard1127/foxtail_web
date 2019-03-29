@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import ProfileCard from './ProfileCard';
-import Waypoint from 'react-waypoint';
+import React, { Component } from "react";
+import ProfileCard from "./ProfileCard";
+import Waypoint from "react-waypoint";
 
 class ProfilesDiv extends Component {
   shouldComponentUpdate(nextProps) {
@@ -25,7 +25,7 @@ class ProfilesDiv extends Component {
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-12">
-                <span className="head">{t('allmems')}</span>
+                <span className="head">{t("allmems")}</span>
               </div>
               {profiles.map(profile => {
                 return (
