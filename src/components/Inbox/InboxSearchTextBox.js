@@ -1,11 +1,15 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 class InboxSearchTextBox extends PureComponent {
   render() {
-    const { t } = this.props;
+    const { t, handleSearchTextChange } = this.props;
 
     return (
       <div className="search">
-        <input type="text" placeholder={t('search') + '...'} />
+        <input
+          type="text"
+          placeholder={t("search") + "..."}
+          onChange={handleSearchTextChange}
+        />
       </div>
     );
   }

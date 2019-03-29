@@ -62,6 +62,7 @@ class InboxList extends PureComponent {
   };
 
   renderMsgList = ({ messages }) => {
+    const { searchTerm } = this.props;
     return (
       <Fragment>
         {messages.map((message, i) => {
@@ -71,6 +72,12 @@ class InboxList extends PureComponent {
             isCurrentChat = true;
           } else if (!this.state.chatID) {
             isCurrentChat = i === 0;
+          }
+
+          if (searchTerm !== "") {
+            if (message.participants[0].profileName.indexOf(searchTerm) < 0) {
+              return null;
+            }
           }
 
           return this.renderItem(message, timeAgo, isCurrentChat);
