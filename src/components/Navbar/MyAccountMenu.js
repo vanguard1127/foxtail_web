@@ -6,6 +6,23 @@ class MyAccountMenu extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return false;
   }
+
+  onMenuClick = state => {
+    const { history } = this.props;
+    history.push({
+      state,
+      pathname: "/settings"
+    });
+  };
+
+  onAddCouple = () => {
+    this.onMenuClick({ showCplMdl: true });
+  };
+
+  onShowBlackMember = () => {
+    this.onMenuClick({ showBlkMdl: true });
+  };
+
   render() {
     const { t, history } = this.props;
     return (
@@ -16,16 +33,7 @@ class MyAccountMenu extends Component {
               <NavLink to="/settings">{t("common:myaccount")}</NavLink>
             </li>
             <li>
-              <span
-                role="heading"
-                aria-level="2"
-                onClick={() =>
-                  history.push({
-                    pathname: "/settings",
-                    state: { showCplMdl: true }
-                  })
-                }
-              >
+              <span role="heading" aria-level="2" onClick={this.onAddCouple}>
                 {t("common:addcoup")}
               </span>
             </li>
@@ -33,12 +41,7 @@ class MyAccountMenu extends Component {
               <span
                 role="heading"
                 aria-level="2"
-                onClick={() =>
-                  history.push({
-                    pathname: "/settings",
-                    state: { showBlkMdl: true }
-                  })
-                }
+                onClick={this.onShowBlackMember}
               >
                 {t("common:becomeblk")}
               </span>
