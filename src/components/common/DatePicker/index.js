@@ -8,43 +8,45 @@ registerLocale("fi", fi);
 export default class CustomDatePicker extends Component {
   constructor(props) {
     super(props);
+    const { value } = this.props;
     this.state = {
-      selectedDate: this.props.value || null
+      selectedDate: value || null
     };
   }
 
   handleChange = date => {
+    const { onChange } = this.props;
     this.setState(
       {
         selectedDate: date
       },
-      () => this.props.onChange(date)
+      () => onChange(date)
     );
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.value !== this.props.value) {
-      return true;
-    } else {
-      return false;
-    }
+    const { value } = this.props;
+    if (nextProps.value !== value) return true;
+    else return false;
   }
 
   render() {
     const { t, type, placeholder, p } = this.props;
     const { selectedDate } = this.state;
+
+    let date = new Date();
+    date.setFullYear(date.getFullYear() - 18);
+
     if (type === "birthday") {
-      let date = new Date();
-      date.setFullYear(date.getFullYear() - 18);
       return (
         <div className="input calender calender-input-sm">
           <DatePicker
-            placeholderText={t("Birthday")}
-            selected={selectedDate}
-            onChange={this.handleChange}
             peekNextMonth
             showMonthDropdown
             showYearDropdown
+            placeholderText={t("Birthday")}
+            selected={selectedDate}
+            onChange={this.handleChange}
             dropdownMode="select"
             maxDate={date}
             locale="fi"
@@ -52,21 +54,19 @@ export default class CustomDatePicker extends Component {
         </div>
       );
     } else if (type === "datetime") {
-      let date = new Date();
-      date.setFullYear(date.getFullYear() - 18);
       return (
         <div className="input calender calender-input-sm">
           <DatePicker
-            placeholderText={placeholder}
-            selected={selectedDate && new Date(selectedDate)}
-            onChange={this.handleChange}
             peekNextMonth
             showMonthDropdown
             showYearDropdown
+            showTimeSelect
+            placeholderText={placeholder}
+            selected={selectedDate && new Date(selectedDate)}
+            onChange={this.handleChange}
             dropdownMode="select"
             minDate={date}
             shouldCloseOnSelect={false}
-            showTimeSelect
             timeFormat="HH:mm"
             dateFormat="MMMM d, yyyy h:mm aa"
             timeCaption="time"
