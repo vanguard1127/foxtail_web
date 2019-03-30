@@ -27,7 +27,7 @@ export default class CustomDatePicker extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { value } = this.props;
     if (nextProps.value !== value) return true;
-    else return false;
+    return false;
   }
 
   render() {
