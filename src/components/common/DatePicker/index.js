@@ -66,7 +66,6 @@ export default class CustomDatePicker extends Component {
             onChange={this.handleChange}
             dropdownMode="select"
             minDate={date}
-            shouldCloseOnSelect={false}
             timeFormat="HH:mm"
             dateFormat="MMMM d, yyyy h:mm aa"
             timeCaption="time"
