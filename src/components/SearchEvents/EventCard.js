@@ -26,7 +26,7 @@ class EventCard extends Component {
     } = event;
 
     return (
-      <div className="col-md-12">
+      <div className="col-md-12 col-lg-6">
         <div className="card-item">
           <div className="thumbnail">
             <EventDate time={startTime} dayjs={dayjs} />
