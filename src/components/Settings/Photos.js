@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import UploadComponent from './UploadImageComponent';
+import React, { Component } from "react";
+import UploadComponent from "./UploadImageComponent";
 
 class Photos extends Component {
   shouldComponentUpdate(nextProps) {
@@ -15,30 +15,33 @@ class Photos extends Component {
       photos,
       deleteImg,
       t,
-      setProfilePic
+      setProfilePic,
+      ErrorBoundary
     } = this.props;
     return (
-      <div className="content mtop">
-        <div className="row">
-          <div className="col-md-12">
-            <span className="heading">
-              {!isPrivate ? t('pubphotos') : t('privphotos')}
-              <i> {!isPrivate ? '- ' + t('nonude') : '- ' + t('nudeok')}</i>
-            </span>
-          </div>
-          <div className="col-md-12">
-            <UploadComponent
-              setProfilePic={setProfilePic}
-              max={7}
-              showEditor={showEditor}
-              photos={photos}
-              isPrivate={isPrivate}
-              deleteImg={deleteImg}
-              t={t}
-            />
+      <ErrorBoundary>
+        <div className="content mtop">
+          <div className="row">
+            <div className="col-md-12">
+              <span className="heading">
+                {!isPrivate ? t("pubphotos") : t("privphotos")}
+                <i> {!isPrivate ? "- " + t("nonude") : "- " + t("nudeok")}</i>
+              </span>
+            </div>
+            <div className="col-md-12">
+              <UploadComponent
+                setProfilePic={setProfilePic}
+                max={7}
+                showEditor={showEditor}
+                photos={photos}
+                isPrivate={isPrivate}
+                deleteImg={deleteImg}
+                t={t}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </ErrorBoundary>
     );
   }
 }

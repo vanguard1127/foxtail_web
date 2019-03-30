@@ -13,12 +13,26 @@ class EventAbout extends Component {
     return false;
   }
   render() {
-    const { id, participants, description, isOwner, t } = this.props;
+    const {
+      id,
+      participants,
+      description,
+      isOwner,
+      t,
+      ErrorBoundary
+    } = this.props;
     return (
-      <div className="about-event-content">
-        <p>{description}</p>
-        <GoingBar id={id} participants={participants} t={t} isOwner={isOwner} />
-      </div>
+      <ErrorBoundary>
+        <div className="about-event-content">
+          <p>{description}</p>
+          <GoingBar
+            id={id}
+            participants={participants}
+            t={t}
+            isOwner={isOwner}
+          />
+        </div>
+      </ErrorBoundary>
     );
   }
 }

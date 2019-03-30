@@ -481,101 +481,96 @@ class SettingsPage extends PureComponent {
                   <div className="row">
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
-                        <ErrorHandler.ErrorBoundary>
-                          {" "}
-                          <ProfilePic profilePic={profilePicUrl} />
-                          <Menu
-                            coupleModalToggle={this.toggleCouplesPopup}
-                            couplePartner={couplePartner}
-                            blackModalToggle={this.toggleBlackPopup}
-                            t={t}
-                            flashCpl={flashCpl}
-                            currentuser={currentuser}
-                            refetchUser={refetchUser}
-                          />
-                        </ErrorHandler.ErrorBoundary>
+                        <ProfilePic
+                          profilePic={profilePicUrl}
+                          ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        />
+                        <Menu
+                          coupleModalToggle={this.toggleCouplesPopup}
+                          couplePartner={couplePartner}
+                          blackModalToggle={this.toggleBlackPopup}
+                          t={t}
+                          flashCpl={flashCpl}
+                          currentuser={currentuser}
+                          refetchUser={refetchUser}
+                          ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        />
                       </div>
                     </div>
                     <div className="col-md-12 col-lg-9">
                       <div className="page mtop">
                         <div className="form">
-                          <ErrorHandler.ErrorBoundary>
-                            {" "}
-                            <Preferences
-                              distance={distance}
-                              distanceMetric={distanceMetric}
-                              ageRange={ageRange}
-                              interestedIn={interestedIn}
-                              city={city}
-                              setValue={({ name, value }) =>
-                                this.setValue({ name, value, updateSettings })
-                              }
-                              setLocationValues={({ lat, long, city }) =>
-                                this.setLocationValues({
-                                  lat,
-                                  long,
-                                  city,
-                                  updateSettings
-                                })
-                              }
-                              t={t}
-                            />
-                          </ErrorHandler.ErrorBoundary>
-                          <ErrorHandler.ErrorBoundary>
-                            {" "}
-                            <Photos
-                              isPrivate={false}
-                              showEditor={this.toggleImgEditorPopup}
-                              photos={publicPics}
-                              setProfilePic={({ key, url }) =>
-                                this.setProfilePic({
-                                  key,
-                                  url,
-                                  updateSettings
-                                })
-                              }
-                              deleteImg={({ file, key }) =>
-                                this.setDialogContent({
-                                  title: "Delete Photo",
-                                  msg:
-                                    "This remove your photo from our server and can not be undone.",
-                                  btnText: "Delete",
-                                  okAction: () =>
-                                    this.handlePhotoListChange({
-                                      file,
-                                      key,
-                                      isPrivate: false,
-                                      isDeleted: true,
-                                      updateSettings
-                                    })
-                                })
-                              }
-                              t={t}
-                            />
-                          </ErrorHandler.ErrorBoundary>
+                          <Preferences
+                            distance={distance}
+                            distanceMetric={distanceMetric}
+                            ageRange={ageRange}
+                            interestedIn={interestedIn}
+                            city={city}
+                            setValue={({ name, value }) =>
+                              this.setValue({ name, value, updateSettings })
+                            }
+                            setLocationValues={({ lat, long, city }) =>
+                              this.setLocationValues({
+                                lat,
+                                long,
+                                city,
+                                updateSettings
+                              })
+                            }
+                            t={t}
+                            ErrorBoundary={ErrorHandler.ErrorBoundary}
+                          />
+                          <Photos
+                            isPrivate={false}
+                            showEditor={this.toggleImgEditorPopup}
+                            photos={publicPics}
+                            setProfilePic={({ key, url }) =>
+                              this.setProfilePic({
+                                key,
+                                url,
+                                updateSettings
+                              })
+                            }
+                            deleteImg={({ file, key }) =>
+                              this.setDialogContent({
+                                title: "Delete Photo",
+                                msg:
+                                  "This remove your photo from our server and can not be undone.",
+                                btnText: "Delete",
+                                okAction: () =>
+                                  this.handlePhotoListChange({
+                                    file,
+                                    key,
+                                    isPrivate: false,
+                                    isDeleted: true,
+                                    updateSettings
+                                  })
+                              })
+                            }
+                            t={t}
+                            ErrorBoundary={ErrorHandler.ErrorBoundary}
+                          />
                           {errors.profilePic && (
                             <label className="errorLbl">
                               {errors.profilePic}
                             </label>
                           )}
-                          <ErrorHandler.ErrorBoundary>
-                            {" "}
-                            <Photos
-                              isPrivate={true}
-                              showEditor={this.toggleImgEditorPopup}
-                              photos={privatePics}
-                              deleteImg={({ file, key }) =>
-                                this.handlePhotoListChange({
-                                  file,
-                                  key,
-                                  isPrivate: true,
-                                  isDeleted: true,
-                                  updateSettings
-                                })
-                              }
-                              t={t}
-                            />
-                          </ErrorHandler.ErrorBoundary>
+                          <Photos
+                            isPrivate={true}
+                            showEditor={this.toggleImgEditorPopup}
+                            photos={privatePics}
+                            deleteImg={({ file, key }) =>
+                              this.handlePhotoListChange({
+                                file,
+                                key,
+                                isPrivate: true,
+                                isDeleted: true,
+                                updateSettings
+                              })
+                            }
+                            t={t}
+                            ErrorBoundary={ErrorHandler.ErrorBoundary}
+                          />
                           <MyProfile
                             desires={desires}
                             about={about}
@@ -592,27 +587,23 @@ class SettingsPage extends PureComponent {
                             errors={errors}
                             ErrorBoundary={ErrorHandler.ErrorBoundary}
                           />
-                          <ErrorHandler.ErrorBoundary>
-                            {" "}
-                            <AppSettings
-                              setValue={({ name, value }) =>
-                                this.setValue({ name, value, updateSettings })
-                              }
-                              visible={visible}
-                              lang={lang}
-                              emailNotify={emailNotify}
-                              showOnline={showOnline}
-                              likedOnly={likedOnly}
-                              t={t}
-                              ErrorHandler={ErrorHandler}
-                            />
-                          </ErrorHandler.ErrorBoundary>
-                          <ErrorHandler.ErrorBoundary>
-                            <Verifications
-                              openPhotoVerPopup={this.openPhotoVerPopup}
-                              t={t}
-                            />
-                          </ErrorHandler.ErrorBoundary>
+                          <AppSettings
+                            setValue={({ name, value }) =>
+                              this.setValue({ name, value, updateSettings })
+                            }
+                            visible={visible}
+                            lang={lang}
+                            emailNotify={emailNotify}
+                            showOnline={showOnline}
+                            likedOnly={likedOnly}
+                            t={t}
+                            ErrorBoundary={ErrorHandler.ErrorBoundary}
+                          />
+                          <Verifications
+                            openPhotoVerPopup={this.openPhotoVerPopup}
+                            t={t}
+                            ErrorBoundary={ErrorHandler.ErrorBoundary}
+                          />
                           {showModal && (
                             <Modal
                               header={title}
@@ -626,25 +617,20 @@ class SettingsPage extends PureComponent {
                             />
                           )}
                           {currentuser.blackMember.active && (
-                            <ErrorHandler.ErrorBoundary>
-                              <ManageBlackSub
-                                ErrorHandler={ErrorHandler}
-                                currentuser={currentuser}
-                                refetchUser={refetchUser}
-                                t={t}
-                              />
-                            </ErrorHandler.ErrorBoundary>
-                          )}
-                          <ErrorHandler.ErrorBoundary>
-                            {" "}
-                            <AcctSettings
-                              setValue={({ name, value }) =>
-                                this.setValue({ name, value, updateSettings })
-                              }
-                              t={t}
+                            <ManageBlackSub
                               ErrorHandler={ErrorHandler}
+                              currentuser={currentuser}
+                              refetchUser={refetchUser}
+                              t={t}
                             />
-                          </ErrorHandler.ErrorBoundary>
+                          )}
+                          <AcctSettings
+                            setValue={({ name, value }) =>
+                              this.setValue({ name, value, updateSettings })
+                            }
+                            t={t}
+                            ErrorHandler={ErrorHandler}
+                          />
                         </div>
                       </div>
                     </div>

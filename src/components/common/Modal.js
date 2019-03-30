@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Modal extends Component {
   constructor(props) {
@@ -12,11 +12,11 @@ class Modal extends Component {
     return false;
   }
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   handleClickOutside = event => {

@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import Waypoint from 'react-waypoint';
+import React, { PureComponent } from "react";
+import Waypoint from "react-waypoint";
 import {
   INVITE_PROFILES,
   INVITE_PROFILES_EVENT,
@@ -7,9 +7,9 @@ import {
   REMOVE_PROFILES_CHAT,
   GET_CHAT_PARTICIPANTS,
   GET_EVENT
-} from '../../../queries';
-import { Mutation } from 'react-apollo';
-import { toast } from 'react-toastify';
+} from "../../../queries";
+import { Mutation } from "react-apollo";
+import { toast } from "react-toastify";
 
 const LIMIT = 5;
 class MembersList extends PureComponent {
@@ -63,12 +63,12 @@ class MembersList extends PureComponent {
   handleInvite = invite => {
     const { targetType, close, t } = this.props;
 
-    if (targetType === 'event') {
+    if (targetType === "event") {
       invite()
         .then(({ data }) => {
           if (data.inviteProfileEvent) {
             close();
-            toast.success(t('common:invitesent'));
+            toast.success(t("common:invitesent"));
           }
         })
         .catch(res => {
@@ -79,7 +79,7 @@ class MembersList extends PureComponent {
         .then(({ data }) => {
           if (data.inviteProfile) {
             close();
-            toast.success(t('common:invitesent'));
+            toast.success(t("common:invitesent"));
           }
         })
         .catch(res => {
@@ -90,12 +90,12 @@ class MembersList extends PureComponent {
 
   handleRemove = remove => {
     const { targetType, close, t } = this.props;
-    if (targetType === 'event') {
+    if (targetType === "event") {
       remove()
         .then(({ data }) => {
           if (data.removeProfileEvent) {
             close();
-            toast.success(t('common:memsremove'));
+            toast.success(t("common:memsremove"));
           }
         })
         .catch(res => {
@@ -106,7 +106,7 @@ class MembersList extends PureComponent {
         .then(({ data }) => {
           if (data.removeProfilesChat) {
             close();
-            toast.success(t('common:removpros'));
+            toast.success(t("common:removpros"));
           }
         })
         .catch(res => {
@@ -198,7 +198,7 @@ class MembersList extends PureComponent {
           <span className="username">{el.profileName}</span>
         </div>
       ))}
-      {this.props.listType === 'friends' && (
+      {this.props.listType === "friends" && (
         <Waypoint
           onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
         />
@@ -206,7 +206,7 @@ class MembersList extends PureComponent {
     </>
   );
   actionButton = ({ targetID, invitedProfiles, targetType, listType, t }) => {
-    if (targetType === 'event' && listType === 'friends') {
+    if (targetType === "event" && listType === "friends") {
       return (
         <Mutation
           mutation={INVITE_PROFILES_EVENT}
@@ -221,13 +221,13 @@ class MembersList extends PureComponent {
                 className="apply-content"
                 onClick={() => this.handleInvite(inviteProfileEvent)}
               >
-                <span> {t('common:invite')}</span>
+                <span> {t("common:invite")}</span>
               </div>
             );
           }}
         </Mutation>
       );
-    } else if (targetType === 'event' && listType === 'participants') {
+    } else if (targetType === "event" && listType === "participants") {
       return (
         <Mutation
           mutation={REMOVE_PROFILES_EVENT}
@@ -243,13 +243,13 @@ class MembersList extends PureComponent {
                 className="apply-content"
                 onClick={() => this.handleRemove(removeProfileEvent)}
               >
-                <span> {t('common:remove')}</span>
+                <span> {t("common:remove")}</span>
               </div>
             );
           }}
         </Mutation>
       );
-    } else if (targetType === 'chat' && listType === 'participants') {
+    } else if (targetType === "chat" && listType === "participants") {
       return (
         <Mutation
           mutation={REMOVE_PROFILES_CHAT}
@@ -265,7 +265,7 @@ class MembersList extends PureComponent {
                 className="apply-content"
                 onClick={() => this.handleRemove(removeProfileChat)}
               >
-                <span> {t('common:remove')}</span>
+                <span> {t("common:remove")}</span>
               </div>
             );
           }}
@@ -286,7 +286,7 @@ class MembersList extends PureComponent {
                 className="apply-content"
                 onClick={() => this.handleInvite(inviteProfile)}
               >
-                <span> {t('common:invite')}</span>
+                <span> {t("common:invite")}</span>
               </div>
             );
           }}
@@ -317,7 +317,7 @@ class MembersList extends PureComponent {
       <>
         {membersList}
 
-        <div style={{ height: '2vh', backgroundColor: '#fff' }}>
+        <div style={{ height: "2vh", backgroundColor: "#fff" }}>
           {showActionButton && actionButton}
         </div>
       </>

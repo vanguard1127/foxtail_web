@@ -162,41 +162,36 @@ class EventPage extends PureComponent {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <ErrorHandler.ErrorBoundary>
-                        <EventHeader
-                          event={event}
-                          history={history}
-                          t={t}
-                          dayjs={dayjs}
-                          showShareModal={() =>
-                            this.setShareModalVisible(true, event)
-                          }
-                        />
-                      </ErrorHandler.ErrorBoundary>
+                      <EventHeader
+                        event={event}
+                        history={history}
+                        t={t}
+                        dayjs={dayjs}
+                        showShareModal={() =>
+                          this.setShareModalVisible(true, event)
+                        }
+                        ErrorBoundary={ErrorHandler.ErrorBoundary}
+                      />
                     </div>
                     <div className="col-lg-9 col-md-12">
-                      <ErrorHandler.ErrorBoundary>
-                        {" "}
-                        <EventAbout
-                          id={id}
-                          participants={participants}
-                          description={description}
-                          isOwner={
-                            event.ownerProfile.id ===
-                            session.currentuser.profileID
-                          }
-                          t={t}
-                        />{" "}
-                      </ErrorHandler.ErrorBoundary>{" "}
-                      <ErrorHandler.ErrorBoundary>
-                        <EventInfoMobile
-                          event={event}
-                          t={t}
-                          openDelete={this.toggleDeleteDialog}
-                          dayjs={dayjs}
-                          ErrorHandler={ErrorHandler}
-                        />{" "}
-                      </ErrorHandler.ErrorBoundary>{" "}
+                      <EventAbout
+                        id={id}
+                        participants={participants}
+                        description={description}
+                        isOwner={
+                          event.ownerProfile.id ===
+                          session.currentuser.profileID
+                        }
+                        t={t}
+                        ErrorBoundary={ErrorHandler.ErrorBoundary}
+                      />{" "}
+                      <EventInfoMobile
+                        event={event}
+                        t={t}
+                        openDelete={this.toggleDeleteDialog}
+                        dayjs={dayjs}
+                        ErrorHandler={ErrorHandler}
+                      />{" "}
                       <EventDiscussion
                         chatID={chatID}
                         history={history}
@@ -207,21 +202,18 @@ class EventPage extends PureComponent {
                       />
                     </div>
                     <div className="col-lg-3 col-md-12">
-                      <ErrorHandler.ErrorBoundary>
-                        {" "}
-                        <EventInfo
-                          event={event}
-                          t={t}
-                          ErrorHandler={ErrorHandler}
-                          isOwner={
-                            event.ownerProfile.id ===
-                            session.currentuser.profileID
-                          }
-                          openDelete={this.toggleDeleteDialog}
-                          refetch={refetch}
-                          dayjs={dayjs}
-                        />{" "}
-                      </ErrorHandler.ErrorBoundary>
+                      <EventInfo
+                        event={event}
+                        t={t}
+                        ErrorHandler={ErrorHandler}
+                        isOwner={
+                          event.ownerProfile.id ===
+                          session.currentuser.profileID
+                        }
+                        openDelete={this.toggleDeleteDialog}
+                        refetch={refetch}
+                        dayjs={dayjs}
+                      />
                     </div>
                   </div>
                 </div>

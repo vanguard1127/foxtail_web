@@ -7,7 +7,6 @@ import InboxList from "./InboxList";
 let unsubscribe = null;
 class InboxPanel extends Component {
   state = { searchTerm: "" };
-  //TODO: Test if this prevent new messages from getting shown
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.chatOpen !== nextProps.chatOpen ||

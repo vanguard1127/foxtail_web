@@ -75,14 +75,23 @@ class ProfilesContainer extends PureComponent {
 
   fetchData = async fetchMore => {
     this.props.ErrorHandler.setBreadcrumb("Fetch more profiles");
+    const { long, lat, distance, ageRange, interestedIn } = this.props;
+    const { skip } = this.state;
+    console.log(long, lat, distance, ageRange, interestedIn, skip);
     if (this.mounted) {
       this.setState({ loading: true }, () =>
         fetchMore({
           variables: {
-            limit: LIMIT,
-            skip: this.state.skip
+            long,
+            lat,
+            distance,
+            ageRange,
+            interestedIn,
+            skip: 0,
+            limit: LIMIT
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
+            console.log(fetchMoreResult, previousResult);
             if (!fetchMoreResult) {
               return previousResult;
             }

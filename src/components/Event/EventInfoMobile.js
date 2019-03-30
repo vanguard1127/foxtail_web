@@ -1,9 +1,25 @@
-import React, { PureComponent } from 'react';
-import AttendEvent from './AttendEvent';
-import EditEventBtn from './EditEventBtn';
+import React, { Component } from "react";
+import AttendEvent from "./AttendEvent";
+import EditEventBtn from "./EditEventBtn";
 
 //TODO: Fix this
-class EventInfoMobile extends PureComponent {
+class EventInfoMobile extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    const { event: eventProps } = this.props;
+    const { event: nextEventProps } = nextProps;
+
+    if (
+      eventProps.address !== nextEventProps.address ||
+      !eventProps.desires.every(e => nextEventProps.desires.includes(e)) ||
+      eventProps.distance !== nextEventProps.distance ||
+      eventProps.endTime !== nextEventProps.endTime ||
+      eventProps.startTime !== nextEventProps.startTime ||
+      eventProps.type !== nextEventProps.type
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { event, t, ErrorHandler, isOwner, openDelete, dayjs } = this.props;
 
@@ -26,44 +42,44 @@ class EventInfoMobile extends PureComponent {
         </div>
         <ul>
           <li>
-            <span className="head">{t('evedate')}:</span>
+            <span className="head">{t("evedate")}:</span>
             <span className="title">
               {dayjs(startTime)
-                .locale(localStorage.getItem('i18nextLng'))
-                .format('DD MMMM YYYY, dddd')
+                .locale(localStorage.getItem("i18nextLng"))
+                .format("DD MMMM YYYY, dddd")
                 .toString()}
             </span>
           </li>
           <li>
             <span className="head">
-              {t('evedate')} - {t('time')}:
+              {t("evedate")} - {t("time")}:
             </span>
             <span className="title">
               {dayjs(startTime)
-                .locale(localStorage.getItem('i18nextLng'))
-                .format('HH:mm')
-                .toString()}{' '}
-              -{' '}
+                .locale(localStorage.getItem("i18nextLng"))
+                .format("HH:mm")
+                .toString()}{" "}
+              -{" "}
               {dayjs(endTime)
-                .locale(localStorage.getItem('i18nextLng'))
-                .format('HH:mm')
+                .locale(localStorage.getItem("i18nextLng"))
+                .format("HH:mm")
                 .toString()}
             </span>
           </li>
           <li>
-            <span className="head">{t('Type')}:</span>
+            <span className="head">{t("Type")}:</span>
             <span className="title">{type}</span>
           </li>
           <li>
-            <span className="head">{t('toexpect')}:</span>
-            <span className="title">{desires.map(desire => desire + ',')}</span>
+            <span className="head">{t("toexpect")}:</span>
+            <span className="title">{desires.map(desire => desire + ",")}</span>
           </li>
           <li>
-            <span className="head">{t('Away')}:</span>
+            <span className="head">{t("Away")}:</span>
             <span className="title">{distance} Miles</span>
           </li>
           <li>
-            <span className="head">{t('common:Address')}:</span>
+            <span className="head">{t("common:Address")}:</span>
             <span className="title address">{address}</span>
           </li>
         </ul>

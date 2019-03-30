@@ -229,7 +229,7 @@ class CreateEvent extends PureComponent {
       filename,
       filetype
     } = this.state;
-    console.log(this.props.updateEventProps);
+
     return (
       <section>
         <Modal header={eventID ? t("updateeve") : t("createeve")} close={close}>

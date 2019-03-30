@@ -26,7 +26,6 @@ class ChatWindow extends PureComponent {
       ErrorHandler,
       dayjs,
       chatOpen,
-      chatID,
       setBlockModalVisible,
       handleRemoveSelf,
       isOwner,

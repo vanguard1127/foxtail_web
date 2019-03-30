@@ -201,7 +201,6 @@ class MessageList extends Component {
     }
   }
   render() {
-    console.log("POPOPOP");
     const { loading } = this.state;
     const { messages, hasMoreItems, children, history, dayjs } = this.props;
 

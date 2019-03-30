@@ -21,7 +21,6 @@ class ChatPanel extends PureComponent {
 
     postComment()
       .then(({ data }) => {
-        console.log(data);
         if (this.mounted) {
           this.setState({ text: "" });
         }
@@ -43,7 +42,7 @@ class ChatPanel extends PureComponent {
       query: GET_COMMENTS,
       variables: { chatID, cursor: null, limit: 6 }
     });
-    console.log(getComments.messages);
+
     getComments.messages = [
       {
         createdAt: Date.now(),
@@ -60,7 +59,6 @@ class ChatPanel extends PureComponent {
       },
       ...getComments.messages
     ];
-    console.log(getComments.messages);
 
     // .push({
     //   createdAt: Date.now(),

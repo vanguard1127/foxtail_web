@@ -176,7 +176,6 @@ class NoticesList extends Component {
 
   render() {
     const { t, notifications, fetchMore } = this.props;
-    console.log(notifications);
     return (
       <div className="toggle">
         <div className="notification open">

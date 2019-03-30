@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import ChatActions from "./ChatActions";
-class ChatInfo extends Component {
-  //TODO: Test if this prevent new messages from getting shown
+class ChatInfo extends PureComponent {
   render() {
     const {
       chatID,

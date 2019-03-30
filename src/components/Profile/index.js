@@ -183,65 +183,68 @@ class ProfilePage extends PureComponent {
                       <div className="col-md-12">
                         <div className="row">
                           <div className="col-md-3">
-                            <ErrorHandler.ErrorBoundary>
-                              <ProfileCard
-                                profile={profile}
-                                setProfile={this.setProfile}
-                                showMsgModal={() =>
-                                  this.setMsgModalVisible(true)
-                                }
-                                likeProfile={() =>
-                                  this.handleLike(profile, likeProfile)
-                                }
-                                t={t}
-                              />
-                              <DesiresSection desires={desires} t={t} />
-                            </ErrorHandler.ErrorBoundary>
+                            <ProfileCard
+                              profile={profile}
+                              setProfile={this.setProfile}
+                              showMsgModal={() => this.setMsgModalVisible(true)}
+                              likeProfile={() =>
+                                this.handleLike(profile, likeProfile)
+                              }
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            />
+                            <DesiresSection
+                              desires={desires}
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            />
                           </div>
                           <div className="col-md-9">
-                            <ErrorHandler.ErrorBoundary>
-                              <ProfileInfo
-                                users={users}
-                                online={profile.online}
-                                t={t}
-                                dayjs={dayjs}
-                              />
-                            </ErrorHandler.ErrorBoundary>
-                            <ErrorHandler.ErrorBoundary>
-                              <ProfileDetails
-                                users={users}
-                                profile={profile}
-                                showBlockModal={() =>
-                                  this.setBlockModalVisible(true, profile)
-                                }
-                                showShareModal={() =>
-                                  this.setShareModalVisible(true, profile)
-                                }
-                                t={t}
-                              />
-                              <ProfileBio about={about} t={t} />
-                            </ErrorHandler.ErrorBoundary>
+                            <ProfileInfo
+                              users={users}
+                              online={profile.online}
+                              t={t}
+                              dayjs={dayjs}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            />
+                            <ProfileDetails
+                              users={users}
+                              profile={profile}
+                              showBlockModal={() =>
+                                this.setBlockModalVisible(true, profile)
+                              }
+                              showShareModal={() =>
+                                this.setShareModalVisible(true, profile)
+                              }
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            />
+                            <ProfileBio
+                              about={about}
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            />
 
-                            <ErrorHandler.ErrorBoundary>
-                              <DesiresMobile desires={desires} t={t} />
-                            </ErrorHandler.ErrorBoundary>
+                            <DesiresMobile
+                              desires={desires}
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            />
                             {publicPics.length > 0 && (
-                              <ErrorHandler.ErrorBoundary>
-                                <PhotoSlider
-                                  isPublic={true}
-                                  photos={publicPics}
-                                  t={t}
-                                />
-                              </ErrorHandler.ErrorBoundary>
+                              <PhotoSlider
+                                isPublic={true}
+                                photos={publicPics}
+                                t={t}
+                                ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              />
                             )}
                             {privatePics.length > 0 && (
-                              <ErrorHandler.ErrorBoundary>
-                                <PhotoSlider
-                                  isPublic={false}
-                                  photos={privatePics}
-                                  t={t}
-                                />
-                              </ErrorHandler.ErrorBoundary>
+                              <PhotoSlider
+                                isPublic={false}
+                                photos={privatePics}
+                                t={t}
+                                ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              />
                             )}
                           </div>
                         </div>

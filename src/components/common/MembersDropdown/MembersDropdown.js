@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react';
-import Dropdown from 'rc-dropdown';
+import React, { PureComponent } from "react";
+import Dropdown from "rc-dropdown";
 import {
   GET_FRIENDS,
   GET_CHAT_PARTICIPANTS,
   GET_EVENT_PARTICIPANTS,
   INVITE_PROFILES_EVENT
-} from '../../../queries';
-import { Query, Mutation } from 'react-apollo';
-import Spinner from '../Spinner';
-import MembersList from './MembersList';
+} from "../../../queries";
+import { Query, Mutation } from "react-apollo";
+import Spinner from "../Spinner";
+import MembersList from "./MembersList";
 const LIMIT = 5;
 class MembersDropdown extends PureComponent {
   constructor(props) {
@@ -19,11 +19,11 @@ class MembersDropdown extends PureComponent {
   state = { visible: false };
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   handleClickOutside = event => {
@@ -47,27 +47,27 @@ class MembersDropdown extends PureComponent {
       style,
       ErrorHandler
     } = this.props;
-    if (listType === 'friends') {
+    if (listType === "friends") {
       return (
         <Query
           query={GET_FRIENDS}
           variables={{
             limit: LIMIT,
             chatID: targetID,
-            isEvent: targetType === 'event'
+            isEvent: targetType === "event"
           }}
         >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return (
-                <Spinner message={t('common:Loading') + '...'} size="large" />
+                <Spinner message={t("common:Loading") + "..."} size="large" />
               );
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.getFriends) {
-              return <div>{t('common:error') + '!'}</div>;
+              return <div>{t("common:error") + "!"}</div>;
             } else if (!data.getFriends.length === 0) {
-              return <div>{t('common:nomoremsgs') + ' :)'}</div>;
+              return <div>{t("common:nomoremsgs") + " :)"}</div>;
             }
 
             const members = data.getFriends;
@@ -79,7 +79,7 @@ class MembersDropdown extends PureComponent {
               >
                 <div className="invite-member">
                   <div className="content">
-                    <div className="head">{t('common:invitemems')}</div>
+                    <div className="head">{t("common:invitemems")}</div>
                     {members.length === 0 && <div>No Members Available</div>}
                     <MembersList
                       members={members}
@@ -100,8 +100,8 @@ class MembersDropdown extends PureComponent {
         </Query>
       );
     } else if (
-      listType === 'participants' &&
-      targetType === 'chat' &&
+      listType === "participants" &&
+      targetType === "chat" &&
       isOwner
     ) {
       return (
@@ -109,14 +109,14 @@ class MembersDropdown extends PureComponent {
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return (
-                <Spinner message={t('common:Loading') + '...'} size="large" />
+                <Spinner message={t("common:Loading") + "..."} size="large" />
               );
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.chat) {
-              return <div>{t('common:error') + '!'}</div>;
+              return <div>{t("common:error") + "!"}</div>;
             } else if (!data.chat.participants.length === 0) {
-              return <div>{t('common:nomoremsgs') + ' :)'}</div>;
+              return <div>{t("common:nomoremsgs") + " :)"}</div>;
             }
             const members = data.chat.participants;
             return (
@@ -127,7 +127,7 @@ class MembersDropdown extends PureComponent {
               >
                 <div className="invite-member">
                   <div className="content">
-                    <div className="head">{t('common:removemems')}</div>
+                    <div className="head">{t("common:removemems")}</div>
                     {members.length === 0 && <div>No Members Available</div>}
                     <MembersList
                       members={members}
@@ -148,8 +148,8 @@ class MembersDropdown extends PureComponent {
         </Query>
       );
     } else if (
-      listType === 'participants' &&
-      targetType === 'chat' &&
+      listType === "participants" &&
+      targetType === "chat" &&
       !isOwner
     ) {
       return (
@@ -157,14 +157,14 @@ class MembersDropdown extends PureComponent {
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return (
-                <Spinner message={t('common:Loading') + '...'} size="large" />
+                <Spinner message={t("common:Loading") + "..."} size="large" />
               );
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.chat) {
-              return <div>{t('common:error') + '!'}</div>;
+              return <div>{t("common:error") + "!"}</div>;
             } else if (!data.chat.participants.length === 0) {
-              return <div>{t('common:nomoremsgs') + ' :)'}</div>;
+              return <div>{t("common:nomoremsgs") + " :)"}</div>;
             }
             const members = data.chat.participants;
 
@@ -197,8 +197,8 @@ class MembersDropdown extends PureComponent {
         </Query>
       );
     } else if (
-      listType === 'participants' &&
-      targetType === 'event' &&
+      listType === "participants" &&
+      targetType === "event" &&
       isOwner
     ) {
       return (
@@ -209,11 +209,12 @@ class MembersDropdown extends PureComponent {
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.event) {
-              return <div>{t('common:error') + '!'}</div>;
+              return <div>{t("common:error") + "!"}</div>;
             } else if (!data.event.participants.length === 0) {
-              return <div>{t('common:nomorepart')}</div>;
+              return <div>{t("common:nomorepart")}</div>;
             }
             const members = data.event.participants;
+            console.log(members);
             return (
               <div
                 className="event-inv-toggle"
@@ -222,7 +223,7 @@ class MembersDropdown extends PureComponent {
               >
                 <div className="invite-member">
                   <div className="content">
-                    <div className="head">{t('common:removemems')}</div>
+                    <div className="head">{t("common:removemems")}</div>
                     {members.length === 0 && <div>No Members Available</div>}
                     <MembersList
                       members={members}
@@ -243,8 +244,8 @@ class MembersDropdown extends PureComponent {
         </Query>
       );
     } else if (
-      listType === 'participants' &&
-      targetType === 'event' &&
+      listType === "participants" &&
+      targetType === "event" &&
       !isOwner
     ) {
       return (
@@ -255,9 +256,9 @@ class MembersDropdown extends PureComponent {
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.event) {
-              return <div>{t('common:error') + '!'}</div>;
+              return <div>{t("common:error") + "!"}</div>;
             } else if (!data.event.participants.length === 0) {
-              return <div>{t('common:nomorepart')}</div>;
+              return <div>{t("common:nomorepart")}</div>;
             }
             const members = data.event.participants;
 

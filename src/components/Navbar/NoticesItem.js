@@ -255,7 +255,6 @@ class NoticesItem extends PureComponent {
                 }
 
                 const { notifications, alert } = data.getNotifications;
-                console.log(notifications);
 
                 return (
                   <span>

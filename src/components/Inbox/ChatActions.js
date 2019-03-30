@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import MembersDropdown from "../common/MembersDropdown/MembersDropdown";
 class ChatActions extends Component {
   state = { invDropOpen: false, remDropOpen: false };
-  //TODO: Test if this prevent new messages from getting shown
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.invDropOpen !== nextState.invDropOpen ||
