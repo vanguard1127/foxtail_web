@@ -27,7 +27,9 @@ class Selector extends Component {
                 return result;
               }, [])}
             </ul>
-            <span className="counter">{`(${desires.length})`}</span>
+            {desires.length > 0 && (
+              <span className="counter">{`(${desires.length})`}</span>
+            )}
           </ErrorBoundary>
         </div>
       </span>
