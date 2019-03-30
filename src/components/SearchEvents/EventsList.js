@@ -22,6 +22,7 @@ class EventsList extends Component {
               </div>
               {events.map(event => (
                 <EventCard
+                  upcomingEvents
                   key={Math.random()}
                   event={event}
                   t={t}
