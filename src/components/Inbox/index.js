@@ -42,6 +42,9 @@ class InboxPage extends PureComponent {
     this.mounted = true;
     const lang = validateLang(localStorage.getItem("i18nextLng"));
     require("dayjs/locale/" + lang);
+
+    document.title = "Inbox";
+    sessionStorage.setItem("page", "inbox");
   }
 
   componentWillUnmount() {
@@ -151,8 +154,6 @@ class InboxPage extends PureComponent {
 
   //TODO: Find how to set Modal Ok in fuctions---like Settigns page delete photo
   render() {
-    document.title = "Inbox";
-    sessionStorage.setItem("page", "inbox");
     const { t } = this.props;
     const { currentuser } = this.props.session;
     let {

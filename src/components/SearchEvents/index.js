@@ -39,6 +39,8 @@ class SearchEvents extends PureComponent {
     this.mounted = true;
     const lang = validateLang(localStorage.getItem("i18nextLng"));
     require("dayjs/locale/" + lang);
+
+    document.title = "Search Events";
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -167,7 +169,6 @@ class SearchEvents extends PureComponent {
   };
 
   render() {
-    document.title = "Search Events";
     const {
       event,
       shareModalVisible,
