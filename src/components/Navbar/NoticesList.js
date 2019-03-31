@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {
-  GET_NOTIFICATIONS,
-  UPDATE_NOTIFICATIONS,
-  NEW_NOTICE_SUB,
-  GET_COUNTS
-} from "../../queries";
-import { Query, Mutation, withApollo } from "react-apollo";
-import Waypoint from "react-waypoint";
+
+import { Waypoint } from "react-waypoint";
 import { preventContextMenu } from "../../utils/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -219,4 +213,4 @@ class NoticesList extends Component {
   }
 }
 
-export default withApollo(withRouter(NoticesList));
+export default withRouter(NoticesList);

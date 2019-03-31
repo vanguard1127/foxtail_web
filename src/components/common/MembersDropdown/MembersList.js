@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import Waypoint from "react-waypoint";
+import { Waypoint } from "react-waypoint";
 import {
   INVITE_PROFILES,
   INVITE_PROFILES_EVENT,

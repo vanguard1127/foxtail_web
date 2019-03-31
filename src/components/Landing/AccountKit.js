@@ -101,7 +101,6 @@ AccountKit.propTypes = {
   csrf: PropTypes.string.isRequired,
   appId: PropTypes.string.isRequired,
   version: PropTypes.string.isRequired,
-  children: PropTypes.func.isRequired,
   onResponse: PropTypes.func.isRequired,
   loginType: PropTypes.oneOf(["PHONE", "EMAIL"]),
   debug: PropTypes.bool,

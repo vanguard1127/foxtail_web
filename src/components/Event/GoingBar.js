@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react';
-import MembersDropdown from '../common/MembersDropdown/MembersDropdown';
+import React, { PureComponent } from "react";
+import MembersDropdown from "../common/MembersDropdown/MembersDropdown";
 class GoingBar extends PureComponent {
   state = { remDropOpen: false };
   closeRemDropdown = () => this.setState({ remDropOpen: false });
   render() {
     const { id, participants, t, isOwner } = this.props;
     const { remDropOpen } = this.state;
+    console.log("BAP");
     return (
       <div className="goings">
         <span className="stats">
@@ -22,16 +23,16 @@ class GoingBar extends PureComponent {
             </ul>
             <span className="stats">
               <b>
-                {participants.length} {t('common:people')}
-              </b>{' '}
-              {t('common:going')}
+                {participants.length} {t("common:people")}
+              </b>{" "}
+              {t("common:going")}
             </span>
           </div>
           {remDropOpen && (
             <MembersDropdown
               targetID={id}
-              targetType={'event'}
-              listType={'participants'}
+              targetType={"event"}
+              listType={"participants"}
               isOwner={isOwner}
               t={t}
               close={this.closeRemDropdown}

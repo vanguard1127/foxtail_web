@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ProfileCard from "./ProfileCard";
-import Waypoint from "react-waypoint";
+import { Waypoint } from "react-waypoint";
 
 class ProfilesDiv extends Component {
   shouldComponentUpdate(nextProps) {

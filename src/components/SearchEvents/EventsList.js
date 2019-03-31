@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import EventCard from "./EventCard";
-import Waypoint from "react-waypoint";
+import { Waypoint } from "react-waypoint";
 
 class EventsList extends Component {
   shouldComponentUpdate(nextProps) {

@@ -177,6 +177,12 @@ export const DELETE_USER = gql`
   }
 `;
 
+export const UPDATE_LOCATION = gql`
+  mutation($lat: Float!, $long: Float!, $city: String!, $country: String) {
+    updateLocation(lat: $lat, long: $long, city: $city, country: $country)
+  }
+`;
+
 export const UPDATE_SETTINGS = gql`
   mutation(
     $distance: Int

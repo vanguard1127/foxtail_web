@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { UPDATE_SETTINGS } from '../../../queries';
-import { Mutation } from 'react-apollo';
-import AddressSearch from '../../common/AddressSearch';
-import { ErrorBoundary, catchErrors } from '../../common/ErrorHandler';
-import { withNamespaces } from 'react-i18next';
-import Modal from '../../common/Modal';
-import { toast } from 'react-toastify';
+import React, { Component } from "react";
+import { UPDATE_LOCATION } from "../../../queries";
+import { Mutation } from "react-apollo";
+import AddressSearch from "../../common/AddressSearch";
+import { ErrorBoundary, catchErrors } from "../../common/ErrorHandler";
+import { withNamespaces } from "react-i18next";
+import Modal from "../../common/Modal";
+import { toast } from "react-toastify";
 
 class SetLocationModal extends Component {
-  state = { address: '', long: null, lat: null };
+  state = { address: "", long: null, lat: null };
   componentDidMount() {
     this.mounted = true;
   }
@@ -24,7 +24,7 @@ class SetLocationModal extends Component {
 
   setLocationValues = pos => {
     const { lat, long, address } = pos;
-    console.log('SET:', lat, long, address, pos);
+    console.log("SET:", lat, long, address, pos);
     if (lat && long) {
       if (this.mounted) {
         return this.setState({ lat, long, address });
@@ -35,11 +35,11 @@ class SetLocationModal extends Component {
     }
   };
 
-  handleSubmit = updateSettings => {
+  handleSubmit = updateLocation => {
     const { t } = this.props;
-    updateSettings()
+    updateLocation()
       .then(async ({ data }) => {
-        if (data.updateSettings) {
+        if (data.updateLocation) {
           this.props.setLocation({
             coords: {
               longitude: this.state.long,
@@ -47,10 +47,10 @@ class SetLocationModal extends Component {
             },
             city: this.state.address
           });
-          toast.success(t('locset') + ': ' + this.state.address);
+          toast.success(t("locset") + ": " + this.state.address);
           this.props.close();
         } else {
-          toast.error(t('locnotset'));
+          toast.error(t("locnotset"));
         }
       })
       .catch(res => {
@@ -58,13 +58,13 @@ class SetLocationModal extends Component {
       });
   };
 
-  handleRemoveLocLock = async updateSettings => {
+  handleRemoveLocLock = async updateLocation => {
     await navigator.geolocation.getCurrentPosition(
-      pos => this.setLocation(pos, updateSettings),
+      pos => this.setLocation(pos, updateLocation),
       err => {
         alert(
           this.props.t(
-            'Please enable location services to remove your set location.'
+            "Please enable location services to remove your set location."
           )
         );
         return;
@@ -78,50 +78,50 @@ class SetLocationModal extends Component {
     const { address, lat, long } = this.state;
     return (
       <Mutation
-        mutation={UPDATE_SETTINGS}
+        mutation={UPDATE_LOCATION}
         variables={{
           city: address,
           lat,
           long
         }}
       >
-        {updateSettings => {
+        {updateLocation => {
           return (
             <Modal
-              header={t('common:setloc')}
+              header={t("common:setloc")}
               close={close}
               description={
                 !isBlackMember && (
                   <small>
-                    {t('compmsg')}
+                    {t("compmsg")}
                     <br />
-                    {t('compsecmsg')}
+                    {t("compsecmsg")}
                   </small>
                 )
               }
               okSpan={
                 lat !== null ? (
                   <span
-                    onClick={() => this.handleSubmit(updateSettings)}
+                    onClick={() => this.handleSubmit(updateLocation)}
                     disabled={lat === null}
                     className="color"
                   >
-                    {t('Save')}
+                    {t("Save")}
                   </span>
                 ) : null
               }
             >
               <ErrorBoundary>
                 <div className="m-body">
-                  {t('setcity')}:
+                  {t("setcity")}:
                   <AddressSearch
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                     setLocationValues={this.setLocationValues}
                     address={address}
-                    type={'(cities)'}
-                    placeholder={t('common:setloc') + '...'}
+                    type={"(cities)"}
+                    placeholder={t("common:setloc") + "..."}
                     handleRemoveLocLock={() =>
-                      this.handleRemoveLocLock(updateSettings)
+                      this.handleRemoveLocLock(updateLocation)
                     }
                   />
                 </div>
@@ -134,4 +134,4 @@ class SetLocationModal extends Component {
   }
 }
 
-export default withNamespaces('modals')(SetLocationModal);
+export default withNamespaces("modals")(SetLocationModal);

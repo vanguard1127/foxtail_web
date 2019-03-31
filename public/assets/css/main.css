@@ -3589,6 +3589,7 @@
     width: 320px;
     display: block;
     margin-top: 17px;
+    cursor: pointer;
   }
 
   section.event-detail .header .info .created span.avatar {

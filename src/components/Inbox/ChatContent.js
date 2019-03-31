@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
 import { GET_MESSAGES, NEW_MESSAGE_SUB } from "../../queries";
-import Waypoint from "react-waypoint";
+import { Waypoint } from "react-waypoint";
 import Spinner from "../common/Spinner";
 import MessageList from "./MessageList";
 let unsubscribe = null;

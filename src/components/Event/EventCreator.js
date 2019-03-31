@@ -1,18 +1,21 @@
-import React, { PureComponent } from 'react';
-import { preventContextMenu } from '../../utils/image';
+import React, { PureComponent } from "react";
+import { preventContextMenu } from "../../utils/image";
 class EventCreator extends PureComponent {
   render() {
     const { ownerProfile, createdAt, history, t, dayjs } = this.props;
 
     return (
-      <div className="created">
-        <span onClick={() => history.push('/member/' + ownerProfile.id)}>
+      <div
+        className="created"
+        onClick={() => history.push("/member/" + ownerProfile.id)}
+      >
+        <span>
           <span className="avatar">
             <img
               src={
-                ownerProfile.profilePic !== ''
+                ownerProfile.profilePic !== ""
                   ? ownerProfile.profilePic
-                  : '/assets/img/usr/avatar/1003@2x.png'
+                  : "/assets/img/usr/avatar/1003@2x.png"
               }
               alt=""
               onContextMenu={preventContextMenu}
@@ -21,10 +24,10 @@ class EventCreator extends PureComponent {
           <div className="detail">
             <span className="name">{ownerProfile.profileName}</span>
             <span className="created-date">
-              {t('createdon')}{' '}
+              {t("createdon")}{" "}
               {dayjs(createdAt)
-                .locale(localStorage.getItem('i18nextLng'))
-                .format('MMMM D YYYY')}
+                .locale(localStorage.getItem("i18nextLng"))
+                .format("MMMM D YYYY")}
             </span>
           </div>
         </span>

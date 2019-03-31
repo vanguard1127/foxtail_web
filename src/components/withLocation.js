@@ -1,7 +1,7 @@
-import React, { Fragment, PureComponent } from 'react';
-import i18next from 'i18next';
-import SetLocationModal from './Modals/SetLocation';
-import getCityCountry from '../utils/getCityCountry';
+import React, { Fragment, PureComponent } from "react";
+import i18next from "i18next";
+import SetLocationModal from "./Modals/SetLocation";
+import getCityCountry from "../utils/getCityCountry";
 
 const withLocation = PassedComponent =>
   class withLocation extends PureComponent {
@@ -21,7 +21,7 @@ const withLocation = PassedComponent =>
 
     findLocation = (setLocation, setLocModalVisible, caller) => {
       if (!navigator.geolocation) {
-        alert(i18next.t('geonotlocated'));
+        alert(i18next.t("geonotlocated"));
         const session = this.props.session;
         if (session && session.location) {
           this.setLocation({
@@ -69,12 +69,17 @@ const withLocation = PassedComponent =>
           lat: crd.latitude
         });
 
-        this.setState({
-          long: crd.longitude,
-          lat: crd.latitude,
-          city: citycntry.city,
-          country: citycntry.country
-        });
+        if (citycntry === null) {
+          const { toast } = require("react-toastify");
+          toast.error("Location error, please set your location in settings");
+        } else {
+          this.setState({
+            long: crd.longitude,
+            lat: crd.latitude,
+            city: citycntry.city,
+            country: citycntry.country
+          });
+        }
       }
       await this.props.refetch();
     };

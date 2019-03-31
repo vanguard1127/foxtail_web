@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from "react";
-import Waypoint from "react-waypoint";
+import { Waypoint } from "react-waypoint";
 import Message from "./Message.js";
 import _ from "lodash";
 

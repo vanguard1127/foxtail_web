@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Waypoint from "react-waypoint";
 import Message from "./Message.js";
 
 class MessageList extends Component {

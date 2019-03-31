@@ -6,7 +6,7 @@ import { Query } from "react-apollo";
 import dayjs from "dayjs";
 import { SEARCH_EVENTS } from "../../queries";
 import EmptyScreen from "../common/EmptyScreen";
-import Waypoint from "react-waypoint";
+import { Waypoint } from "react-waypoint";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
 import withLocation from "../withLocation";

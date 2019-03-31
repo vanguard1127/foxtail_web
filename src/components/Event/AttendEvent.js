@@ -53,6 +53,33 @@ class AttendEvent extends PureComponent {
     if (toggleAttendEvent !== null) {
       const { id } = this.props;
 
+      const getEvent = cache.readQuery({
+        query: GET_EVENT_PARTICIPANTS,
+        variables: { eventID: id }
+      });
+
+      if (this.state.isGoing) {
+        getEvent.event.participants = [
+          {
+            id: toggleAttendEvent,
+            profileName: this.props.session.currentuser.username,
+            profilePic: this.props.session.currentuser.profilePic,
+            __typename: "ProfileType"
+          },
+          ...getEvent.event.participants
+        ];
+      } else {
+        getEvent.event.participants = getEvent.event.participants.filter(
+          member => member.id !== toggleAttendEvent
+        );
+      }
+
+      cache.writeQuery({
+        query: GET_EVENT_PARTICIPANTS,
+        variables: { eventID: id },
+        data: { getEvent }
+      });
+
       const { event } = cache.readQuery({
         query: GET_EVENT,
         variables: { id }
@@ -79,33 +106,6 @@ class AttendEvent extends PureComponent {
                 )
           }
         }
-      });
-
-      const getEvent = cache.readQuery({
-        query: GET_EVENT_PARTICIPANTS,
-        variables: { eventID: id }
-      });
-
-      if (this.state.isGoing) {
-        getEvent.event.participants = [
-          {
-            id: toggleAttendEvent,
-            profileName: this.props.session.currentuser.username,
-            profilePic: this.props.session.currentuser.profilePic,
-            __typename: "ProfileType"
-          },
-          ...getEvent.event.participants
-        ];
-      } else {
-        getEvent.event.participants = getEvent.event.participants.filter(
-          member => member.id !== toggleAttendEvent
-        );
-      }
-
-      cache.writeQuery({
-        query: GET_EVENT_PARTICIPANTS,
-        variables: { eventID: id },
-        data: { getEvent }
       });
     }
   };
