@@ -2,10 +2,13 @@ import React from "react";
 
 const Message = React.forwardRef(({ message, history, dayjs }, ref) => {
   const messageText = message.text;
+  console.log(message);
   return (
     <div className="item" ref={ref}>
       <span className="avatar">
-        <span onClick={() => history.push("/member/" + message.fromUser.id)}>
+        <span
+          onClick={() => history.push("/member/" + message.fromUser.profile.id)}
+        >
           <img
             src={
               message.profilePic !== ""
@@ -18,7 +21,11 @@ const Message = React.forwardRef(({ message, history, dayjs }, ref) => {
       </span>
       <div className="info">
         <span className="name">
-          <span onClick={() => history.push("/member/" + message.fromUser.id)}>
+          <span
+            onClick={() =>
+              history.push("/member/" + message.fromUser.profile.id)
+            }
+          >
             {" "}
             {message.fromUser.username}
           </span>

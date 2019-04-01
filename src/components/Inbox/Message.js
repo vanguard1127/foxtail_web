@@ -1,28 +1,28 @@
-import React from 'react';
-import { preventContextMenu } from '../../utils/image';
+import React from "react";
+import { preventContextMenu } from "../../utils/image";
 
 const Message = React.forwardRef(
   ({ message, currentUserID, t, dayjs }, ref) => {
     const messageText =
-      message.type === 'msg'
+      message.type === "msg"
         ? message.text
-        : `${message.fromUser.username}` + t('leftchat');
+        : `${message.fromUser.username}` + t("leftchat");
 
     return (
       <div
         className={
           message.fromUser.id === currentUserID
-            ? 'msg-item response'
-            : 'msg-item'
+            ? "msg-item response"
+            : "msg-item"
         }
         ref={ref}
       >
         <div className="avatar">
           <img
             src={
-              message.profilePic !== ''
+              message.profilePic !== ""
                 ? message.profilePic
-                : 'assets/img/usr/avatar/1001@2x.png'
+                : "assets/img/usr/avatar/1001@2x.png"
             }
             alt=""
             onContextMenu={preventContextMenu}
@@ -30,11 +30,11 @@ const Message = React.forwardRef(
         </div>
         <div className="bubble">{messageText}</div>
         <span className="time">
-          {' '}
-          {message.fromUser.username},{' '}
+          {" "}
+          {message.fromUser.username},{" "}
           {dayjs(message.createdAt)
-            .locale(localStorage.getItem('i18nextLng'))
-            .format('HH:mm')
+            .locale(localStorage.getItem("i18nextLng"))
+            .format("HH:mm")
             .toString()}
         </span>
       </div>

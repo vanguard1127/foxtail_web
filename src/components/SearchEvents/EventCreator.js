@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { preventContextMenu } from '../../utils/image';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { preventContextMenu } from "../../utils/image";
 
 class EventCreator extends Component {
   shouldComponentUpdate() {
     return false;
   }
   render() {
-    const { ownerProfile, history } = this.props;
+    const { ownerProfile } = this.props;
     return (
       <div className="created">
-        <span onClick={() => history.push('/member/' + ownerProfile.id)}>
+        <span>
           <span className="avatar">
             <img
               src={
-                ownerProfile.profilePic !== ''
+                ownerProfile.profilePic !== ""
                   ? ownerProfile.profilePic
-                  : 'assets/img/usr/avatar/1002@2x.png'
+                  : "assets/img/usr/avatar/1002@2x.png"
               }
               alt=""
               onContextMenu={preventContextMenu}

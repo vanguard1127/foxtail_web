@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
 import { withRouter } from "react-router-dom";
+import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
 import Tour from "./Tour";
@@ -40,7 +41,7 @@ class SearchProfilesPage extends PureComponent {
   };
 
   render() {
-    const { t, ErrorHandler, session, loading, refetch } = this.props;
+    const { t, ErrorHandler, session, loading, refetch, client } = this.props;
 
     const {
       lat,
@@ -96,6 +97,7 @@ class SearchProfilesPage extends PureComponent {
             interestedIn={interestedIn}
             ErrorHandler={ErrorHandler}
             dayjs={dayjs}
+            client={client}
           />
         </ErrorHandler.ErrorBoundary>
       </Fragment>
@@ -105,6 +107,6 @@ class SearchProfilesPage extends PureComponent {
 
 export default withRouter(
   withAuth(session => session && session.currentuser)(
-    withLocation(SearchProfilesPage)
+    withApollo(withLocation(SearchProfilesPage))
   )
 );

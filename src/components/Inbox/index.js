@@ -153,8 +153,10 @@ class InboxPage extends PureComponent {
   render() {
     document.title = "Inbox";
     sessionStorage.setItem("page", "inbox");
-    const { t } = this.props;
-    const { currentuser } = this.props.session;
+    const {
+      t,
+      session: { currentuser }
+    } = this.props;
     let {
       chatID,
       chat,

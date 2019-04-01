@@ -740,6 +740,9 @@ export const GET_MESSAGES = gql`
         fromUser {
           username
           id
+          profile {
+            id
+          }
         }
         profilePic
         type
@@ -758,6 +761,9 @@ export const GET_COMMENTS = gql`
         fromUser {
           username
           id
+          profile {
+            id
+          }
         }
         profilePic
         type

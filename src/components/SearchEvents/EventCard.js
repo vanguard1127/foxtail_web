@@ -28,10 +28,10 @@ class EventCard extends Component {
     return (
       <div className="col-md-12">
         <div className="card-item">
-          <div className="thumbnail">
+          <div className="thumbnail" onClick={() => this.onEventClick(id)}>
             <EventDate time={startTime} dayjs={dayjs} />
             <EventCreator ownerProfile={ownerProfile} />
-            <span onClick={() => this.onEventClick(id)}>
+            <span>
               <img
                 src={
                   image !== "" && image !== undefined && image !== null

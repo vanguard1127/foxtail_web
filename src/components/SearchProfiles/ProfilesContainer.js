@@ -82,13 +82,7 @@ class ProfilesContainer extends PureComponent {
       this.setState({ loading: true }, () =>
         fetchMore({
           variables: {
-            long,
-            lat,
-            distance,
-            ageRange,
-            interestedIn,
-            skip,
-            limit: LIMIT
+            skip
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             console.log(fetchMoreResult, previousResult);
