@@ -14,9 +14,10 @@ import SettingsPage from "./SettingsPage";
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends PureComponent {
   componentDidMount() {
+    const { session } = this.props;
     const lang = validateLang(localStorage.getItem("i18nextLng"));
     require("dayjs/locale/" + lang);
-    if (!this.props.session.currentuser.isProfileOK) {
+    if (!session.currentuser.isProfileOK) {
       const toastId = "nopro";
       if (!toast.isActive(toastId)) {
         toast.info("Please complete your profile.", {
@@ -32,25 +33,20 @@ class Settings extends PureComponent {
     document.title = "My Account";
     //TODO: If on Settigns make popup show
     const { session, refetch, t, ErrorHandler, location, history } = this.props;
+    const { state } = location;
+
     let isCouple = false;
     let isInitial = false;
     let showBlkModal = false;
     let showCplModal = false;
-    if (location.state) {
-      if (location.state.couple) {
-        isCouple = location.state.couple;
-      }
-      if (location.state.showBlkMdl) {
-        showBlkModal = location.state.showBlkMdl;
-      }
-      if (location.state.showCplMdl) {
-        showCplModal = location.state.showCplMdl;
-      }
 
-      if (location.state.initial) {
-        isInitial = location.state.initial;
-      }
+    if (state) {
+      if (state.couple) isCouple = state.couple;
+      if (state.showBlkMdl) showBlkModal = state.showBlkMdl;
+      if (state.showCplMdl) showCplModal = state.showCplMdl;
+      if (state.initial) isInitial = state.initial;
     }
+
     return (
       <Query query={GET_SETTINGS} fetchPolicy="network-only">
         {({ data, loading, error }) => {
@@ -61,7 +57,7 @@ class Settings extends PureComponent {
           }
           if (error) {
             return (
-              <ErrorHandler.report error={error} calledName={"getSettings"} />
+              <ErrorHandler.report error={error} calledName="getSettings" />
             );
           }
 
@@ -86,9 +82,9 @@ class Settings extends PureComponent {
                 </div>
               </section>{" "}
               <SettingsPage
+                t={t}
                 settings={settings}
                 refetchUser={refetch}
-                t={t}
                 isCouple={isCouple}
                 isInitial={isInitial}
                 showBlkModal={showBlkModal}

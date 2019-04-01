@@ -75,7 +75,8 @@ class SettingsPage extends PureComponent {
   };
 
   componentDidMount() {
-    this.props.history.replace({ state: {} });
+    const { history } = this.props;
+    history.replace({ state: {} });
     this.mounted = true;
   }
 
@@ -91,7 +92,7 @@ class SettingsPage extends PureComponent {
     isDeleted,
     updateSettings
   }) => {
-    this.props.ErrorHandler.setBreadcrumb("Photo list updated");
+    this.setErrorHandler("Photo list updated");
     if (isPrivate) {
       let { privatePics } = this.state;
 
@@ -161,7 +162,8 @@ class SettingsPage extends PureComponent {
   };
 
   handleSubmit = (updateSettings, saveImage) => {
-    this.props.ErrorHandler.setBreadcrumb("Settings updated");
+    const { ErrorHandler, isCouple, isInitial, refetchUser } = this.props;
+    this.setErrorHandler("Settings updated");
     if (!saveImage) {
       if (this.mounted) {
         this.setState(
@@ -173,16 +175,14 @@ class SettingsPage extends PureComponent {
             updateSettings()
               .then(({ data }) => {
                 if (data.updateSettings) {
-                  if (this.props.isCouple && this.props.isInitial) {
-                    if (this.mounted) {
-                      this.setState({ flashCpl: true });
-                    }
+                  if (isCouple && isInitial) {
+                    if (this.mounted) this.setState({ flashCpl: true });
                   }
                 }
               })
-              .then(() => this.props.refetchUser())
+              .then(() => refetchUser())
               .catch(res => {
-                this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+                ErrorHandler.catchErrors(res.graphQLErrors);
               });
           }
         );
@@ -191,16 +191,14 @@ class SettingsPage extends PureComponent {
       updateSettings()
         .then(({ data }) => {
           if (data.updateSettings) {
-            if (this.props.isCouple && this.props.isInitial) {
-              if (this.mounted) {
-                this.setState({ flashCpl: true });
-              }
+            if (isCouple && isInitial) {
+              if (this.mounted) this.setState({ flashCpl: true });
             }
           }
         })
-        .then(() => this.props.refetchUser())
+        .then(() => refetchUser())
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
   };
@@ -224,9 +222,7 @@ class SettingsPage extends PureComponent {
         );
       }
     } else {
-      if (this.mounted) {
-        this.setState({ city });
-      }
+      if (this.mounted) this.setState({ city });
     }
   };
 
@@ -258,6 +254,11 @@ class SettingsPage extends PureComponent {
     }
   };
 
+  setErrorHandler = message => {
+    const { ErrorHandler } = this.props;
+    ErrorHandler.setBreadcrumb(message);
+  };
+
   setProfilePic = ({ key, url, updateSettings }) => {
     if (this.mounted) {
       this.setState({ profilePic: key, profilePicUrl: url }, () => {
@@ -267,7 +268,7 @@ class SettingsPage extends PureComponent {
   };
 
   toggleDesiresPopup = () => {
-    this.props.ErrorHandler.setBreadcrumb("Desires popup toggled");
+    this.setErrorHandler("Desires popup toggled");
     if (this.mounted) {
       this.setState({
         showDesiresPopup: !this.state.showDesiresPopup
@@ -276,7 +277,7 @@ class SettingsPage extends PureComponent {
   };
 
   toggleImgEditorPopup = (file, isPrivate) => {
-    this.props.ErrorHandler.setBreadcrumb("Toggle image editor");
+    this.setErrorHandler("Toggle image editor");
     if (this.mounted) {
       this.setState(
         {
@@ -293,28 +294,31 @@ class SettingsPage extends PureComponent {
   };
 
   togglePhotoVerPopup = () => {
-    this.props.ErrorHandler.setBreadcrumb("Toggle Photo Ver Popup");
+    const { showPhotoVerPopup } = this.state;
+    this.setErrorHandler("Toggle Photo Ver Popup");
     if (this.mounted) {
       this.setState({
-        showPhotoVerPopup: !this.state.showPhotoVerPopup
+        showPhotoVerPopup: !showPhotoVerPopup
       });
     }
   };
 
   toggleCouplesPopup = () => {
-    this.props.ErrorHandler.setBreadcrumb("Toggle Couple popup");
+    const { showCouplePopup } = this.state;
+    this.setErrorHandler("Toggle Couple popup");
     if (this.mounted) {
       this.setState({
-        showCouplePopup: !this.state.showCouplePopup
+        showCouplePopup: !showCouplePopup
       });
     }
   };
 
   toggleBlackPopup = () => {
-    this.props.ErrorHandler.setBreadcrumb("Toggle Blk popup");
+    const { showBlackPopup } = this.state;
+    this.setErrorHandler("Toggle Blk popup");
     if (this.mounted) {
       this.setState({
-        showBlackPopup: !this.state.showBlackPopup
+        showBlackPopup: !showBlackPopup
       });
     }
   };
@@ -328,8 +332,9 @@ class SettingsPage extends PureComponent {
   };
 
   setPartnerID = id => {
-    this.props.ErrorHandler.setBreadcrumb("Set Partner ID");
-    this.props.form.setFieldsValue({ couplePartner: id });
+    const { form } = this.props;
+    this.setErrorHandler("Set Partner ID");
+    form.setFieldsValue({ couplePartner: id });
   };
 
   setS3PhotoParams = (name, type) => {
@@ -342,7 +347,7 @@ class SettingsPage extends PureComponent {
   };
 
   uploadToS3 = async (file, signedRequest) => {
-    this.props.ErrorHandler.setBreadcrumb("Upload to S3");
+    this.setErrorHandler("Upload to S3");
     try {
       //ORIGINAL
       const options = {
@@ -362,8 +367,9 @@ class SettingsPage extends PureComponent {
   };
 
   toggleDialog = () => {
-    this.props.ErrorHandler.setBreadcrumb("Dialog Modal Toggled:");
-    this.setState({ showModal: !this.state.showModal });
+    const { showModal } = this.state;
+    this.setErrorHandler("Dialog Modal Toggled:");
+    this.setState({ showModal: !showModal });
   };
 
   setDialogContent = ({ title, msg, btnText, okAction }) => {
@@ -607,7 +613,7 @@ class SettingsPage extends PureComponent {
                           {showModal && (
                             <Modal
                               header={title}
-                              close={() => this.toggleDialog()}
+                              close={this.toggleDialog}
                               description={msg}
                               okSpan={
                                 <span className="color" onClick={okAction}>
