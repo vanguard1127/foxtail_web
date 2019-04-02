@@ -3,7 +3,7 @@ import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import EmptyScreen from "../common/EmptyScreen";
 import { Query, Mutation } from "react-apollo";
 import ProfilesDiv from "./ProfilesDiv";
-import { Waypoint } from "react-waypoint";
+import Waypoint from "react-waypoint";
 import FeaturedDiv from "./FeaturedDiv";
 import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
@@ -77,7 +77,6 @@ class ProfilesContainer extends PureComponent {
     this.props.ErrorHandler.setBreadcrumb("Fetch more profiles");
     const { long, lat, distance, ageRange, interestedIn } = this.props;
     const { skip } = this.state;
-    console.log(long, lat, distance, ageRange, interestedIn, skip);
     if (this.mounted) {
       this.setState({ loading: true }, () =>
         fetchMore({
@@ -87,11 +86,10 @@ class ProfilesContainer extends PureComponent {
             distance,
             ageRange,
             interestedIn,
-            skip,
+            skip: skip,
             limit: LIMIT
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
-            console.log(fetchMoreResult, previousResult);
             if (!fetchMoreResult) {
               return previousResult;
             }
@@ -165,7 +163,7 @@ class ProfilesContainer extends PureComponent {
           ageRange,
           interestedIn,
           limit: LIMIT,
-          skip
+          skip: 0
         }}
         fetchPolicy="cache-first"
       >
