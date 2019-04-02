@@ -112,7 +112,7 @@ class ChatContent extends PureComponent {
           fetchPolicy="cache-first"
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
-            if (!loading) {
+            if (loading) {
               return (
                 <Spinner message={t("common:Loading") + "..."} size="large" />
               );
