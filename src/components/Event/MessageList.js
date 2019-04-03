@@ -202,14 +202,7 @@ class MessageList extends Component {
   }
   render() {
     const { loading } = this.state;
-    const {
-      messages,
-      hasMoreItems,
-      children,
-      history,
-      dayjs,
-      handleEnd
-    } = this.props;
+    const { messages, history, dayjs, handleEnd, fetchMore } = this.props;
 
     const messageElements = messages.map(message => {
       return (
@@ -229,12 +222,20 @@ class MessageList extends Component {
         onScroll={this.onScroll}
       >
         {messageElements}
-
-        {children}
-
-        {/* <Waypoint
-          onEnter={({ previousPosition }) => handleEnd(previousPosition)}
-        /> */}
+        <div
+          className="item"
+          style={{ padding: "0px", position: "absolute", bottom: "10%" }}
+        >
+          <Waypoint
+            onEnter={({ previousPosition }) =>
+              handleEnd({
+                previousPosition,
+                fetchMore,
+                cursor: messages[messages.length - 1].createdAt
+              })
+            }
+          />
+        </div>
       </div>
     );
   }
