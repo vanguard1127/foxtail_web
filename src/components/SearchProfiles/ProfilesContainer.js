@@ -90,6 +90,10 @@ class ProfilesContainer extends PureComponent {
             limit: LIMIT
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
+            this.setState({
+              loading: false
+            });
+
             if (!fetchMoreResult) {
               return previousResult;
             }
@@ -107,11 +111,6 @@ class ProfilesContainer extends PureComponent {
         })
       );
     }
-    if (this.mounted) {
-      this.setState({
-        loading: false
-      });
-    }
   };
 
   handleEnd = ({ previousPosition, fetchMore }) => {
@@ -126,9 +125,6 @@ class ProfilesContainer extends PureComponent {
   };
 
   render() {
-    if (this.props.loading) {
-      return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
-    }
     const {
       ErrorHandler,
       t,
@@ -149,8 +145,8 @@ class ProfilesContainer extends PureComponent {
       chatID,
       loading
     } = this.state;
-    if (loading) {
-      return <Spinner page="searchProfiles" title={t("allmems")} />;
+    if (this.props.loading && loading) {
+      return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
     }
 
     return (
@@ -242,7 +238,11 @@ class ProfilesContainer extends PureComponent {
 
                     <div className="col-md-12">
                       <div className="more-content-btn">
-                        <span>{t("nopros")}</span>
+                        {this.state.loading ? (
+                          <span>Loading...</span>
+                        ) : (
+                          <span>{t("nopros")}</span>
+                        )}
                       </div>
                     </div>
                     {profile && msgModalVisible && (
