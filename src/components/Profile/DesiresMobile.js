@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import _ from "lodash";
 
 class DesiresMobile extends Component {
   shouldComponentUpdate() {
@@ -16,7 +15,9 @@ class DesiresMobile extends Component {
           <ul>
             {desires.reduce(function(result, desire) {
               result.push(
-                <li key={Math.random()}>{_.capitalize(t(desire))}</li>
+                <li key={Math.random()} className="capitalize">
+                  {t(desire)}
+                </li>
               );
               return result;
             }, [])}

@@ -8086,3 +8086,7 @@ img {
 .greenButton:hover {
   background-color: #00AF49;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
