@@ -81,8 +81,8 @@ class NoticesList extends Component {
           return previousResult;
         }
         previousResult.getNotifications.notifications = [
-          ...fetchMoreResult.getNotifications.notifications,
-          ...previousResult.getNotifications.notifications
+          ...previousResult.getNotifications.notifications,
+          ...fetchMoreResult.getNotifications.notifications
         ];
 
         return previousResult;
