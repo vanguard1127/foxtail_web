@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -46,16 +46,16 @@ Sentry.init({
 });
 
 //FOR LOCAL
-// let server = "localhost:4444";
-// let httpurl = `http://${server}/graphql`;
-// let HTTPSurl = `http://${server}`;
-// let wsurl = `ws://${server}/subscriptions`;
+let server = "localhost:4444";
+let httpurl = `http://${server}/graphql`;
+let HTTPSurl = `http://${server}`;
+let wsurl = `ws://${server}/subscriptions`;
 
 //FOR DEV
-let server = "prod.foxtailapi.com";
-let httpurl = `https://${server}/graphql`;
-let HTTPSurl = `https://${server}`;
-let wsurl = `wss://${server}/subscriptions`;
+// let server = "prod.foxtailapi.com";
+// let httpurl = `https://${server}/graphql`;
+// let HTTPSurl = `https://${server}`;
+// let wsurl = `wss://${server}/subscriptions`;
 
 // if (process.env.NODE_ENV !== "production") {
 //   var axe = require("react-axe");
@@ -309,7 +309,7 @@ const Body = ({ showFooter }) => (
   </div>
 );
 
-ReactDOM.render(
+render(
   <ApolloProvider client={client}>
     <Root />
   </ApolloProvider>,

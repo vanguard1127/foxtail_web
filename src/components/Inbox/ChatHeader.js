@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import TimeAgo from "../../utils/TimeAgo";
 import ChatActions from "./ChatActions";
+import { NavLink } from "react-router-dom";
 class ChatHeader extends PureComponent {
   state = { open: false };
   toggleMenu = () => {
@@ -16,7 +17,8 @@ class ChatHeader extends PureComponent {
       isOwner,
       ErrorHandler,
       leaveDialog,
-      handleRemoveSelf
+      handleRemoveSelf,
+      history
     } = this.props;
 
     const { open } = this.state;
@@ -24,6 +26,7 @@ class ChatHeader extends PureComponent {
     let chatLastSeen = "";
     let chatTitleExtra = "";
     let chatProfilePic = "";
+    let chatProfileID = "";
 
     if (currentChat) {
       let notME = currentChat.participants.filter(
@@ -33,6 +36,7 @@ class ChatHeader extends PureComponent {
       if (notME.length > 0) {
         chatTitle = notME[0].profileName;
         chatProfilePic = notME[0].profilePic;
+        chatProfileID = notME[0].id;
       } else {
         chatTitle = currentuser.username;
         chatProfilePic = currentChat.participants[0].profilePic;
@@ -50,18 +54,20 @@ class ChatHeader extends PureComponent {
     return (
       <div className="navbar">
         <div className="user">
-          <div className="avatar">
-            <span>
-              <img src={chatProfilePic} alt="" />
+          <NavLink to={"/member/" + chatProfileID}>
+            <div className="avatar">
+              <span>
+                <img src={chatProfilePic} alt="" />
+              </span>
+            </div>
+            <span className="name couple">
+              <span>
+                {chatTitle}
+                {chatTitleExtra}
+              </span>
             </span>
-          </div>
-          <span className="name couple">
-            <span>
-              {chatTitle}
-              {chatTitleExtra}
-            </span>
-          </span>
-          <span className="last-seen online">{chatLastSeen}</span>
+            <span className="last-seen online">{chatLastSeen}</span>
+          </NavLink>
         </div>
         <div className="more" onClick={this.toggleMenu} />
         <div className={open ? "more-dropdown open" : "more-dropdown"}>

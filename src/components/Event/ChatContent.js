@@ -5,65 +5,26 @@ import { Waypoint } from "react-waypoint";
 import Spinner from "../common/Spinner";
 import MessageList from "./MessageList";
 let unsubscribe = null;
-const LIMIT = 6;
+const LIMIT = 4;
 class ChatContent extends Component {
   state = {
-    loading: false,
+    msgLoading: false,
     cursor: null,
     hasMoreItems: true
   };
 
-  handleEnd = (previousPosition, currentPosition, fetchMore, cursor) => {
-    if (
-      this.messagesRef &&
-      this.messagesRef.current.scrollTop < 100 &&
-      this.state.hasMoreItems &&
-      this.state.loading !== true
-    ) {
-      if (
-        (!previousPosition && currentPosition === Waypoint.inside) ||
-        previousPosition === Waypoint.above
-      ) {
-        console.log(previousPosition, currentPosition, fetchMore, cursor);
-
-        const { chatID } = this.props;
-        this.setState({ loading: true });
-        fetchMore({
-          variables: {
-            chatID,
-            limit: LIMIT,
-            cursor
-          },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (!fetchMoreResult) {
-              return previousResult;
-            }
-
-            if (fetchMoreResult.getComments.messages < LIMIT) {
-              this.setState({ hasMoreItems: false });
-            }
-            console.log("NEW", ...fetchMoreResult.getComments.messages);
-            console.log("OLD", ...previousResult.getComments.messages);
-            previousResult.getComments.messages = [
-              ...previousResult.getComments.messages,
-              ...fetchMoreResult.getComments.messages
-            ];
-
-            return previousResult;
-          }
-        });
-        this.setState({
-          loading: false
-        });
-      }
+  handleEnd = ({ previousPosition, fetchMore, cursor }) => {
+    if (previousPosition === Waypoint.below) {
+      this.setState({ msgLoading: true }, () =>
+        this.fetchData(fetchMore, cursor)
+      );
     }
   };
 
   fetchData = async (fetchMore, cursor) => {
     this.props.ErrorHandler.setBreadcrumb("Fetch more comments");
-    // not beign used
+
     const { chatID } = this.props;
-    this.setState({ loading: true });
     fetchMore({
       variables: {
         chatID,
@@ -88,22 +49,17 @@ class ChatContent extends Component {
       }
     });
     this.setState({
-      loading: false
+      msgLoading: false
     });
   };
 
   render() {
     const { chatID, history, t, ErrorHandler, dayjs } = this.props;
 
-    const { cursor } = this.state;
+    const { cursor, msgLoading } = this.state;
     return (
       <Query query={GET_COMMENTS} variables={{ chatID, limit: LIMIT, cursor }}>
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
-          if (loading) {
-            return (
-              <Spinner message={t("common:Loading") + "..."} size="large" />
-            );
-          }
           if (error || !data) {
             return (
               <ErrorHandler.report error={error} calledName={"getCommets"} />
@@ -148,6 +104,7 @@ class ChatContent extends Component {
           }
           return (
             <MessageList
+              loading={msgLoading}
               chatID={chatID}
               ref={this.MessageList}
               history={history}
@@ -182,6 +139,7 @@ class ChatContent extends Component {
               fetchMore={fetchMore}
               limit={LIMIT}
               dayjs={dayjs}
+              t={t}
             />
           );
         }}

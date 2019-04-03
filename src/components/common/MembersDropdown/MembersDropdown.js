@@ -59,9 +59,7 @@ class MembersDropdown extends PureComponent {
         >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
-              return (
-                <Spinner message={t("common:Loading") + "..."} size="large" />
-              );
+              return null;
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.getFriends) {
@@ -108,9 +106,7 @@ class MembersDropdown extends PureComponent {
         <Query query={GET_CHAT_PARTICIPANTS} variables={{ chatID: targetID }}>
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
-              return (
-                <Spinner message={t("common:Loading") + "..."} size="large" />
-              );
+              return null;
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.chat) {
@@ -156,9 +152,7 @@ class MembersDropdown extends PureComponent {
         <Query query={GET_CHAT_PARTICIPANTS} variables={{ chatID: targetID }}>
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
-              return (
-                <Spinner message={t("common:Loading") + "..."} size="large" />
-              );
+              return null;
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.chat) {
@@ -205,7 +199,7 @@ class MembersDropdown extends PureComponent {
         <Query query={GET_EVENT_PARTICIPANTS} variables={{ eventID: targetID }}>
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
-              return <Spinner message="Loading..." size="large" />;
+              return null;
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.event) {
@@ -214,7 +208,7 @@ class MembersDropdown extends PureComponent {
               return <div>{t("common:nomorepart")}</div>;
             }
             const members = data.event.participants;
-            console.log(members);
+
             return (
               <div
                 className="event-inv-toggle"
@@ -252,7 +246,7 @@ class MembersDropdown extends PureComponent {
         <Query query={GET_EVENT_PARTICIPANTS} variables={{ eventID: targetID }}>
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
-              return <Spinner message="Loading..." size="large" />;
+              return null;
             } else if (error) {
               return <div>{error.message}</div>;
             } else if (!data.event) {

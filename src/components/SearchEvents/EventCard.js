@@ -8,30 +8,31 @@ class EventCard extends Component {
     return false;
   }
 
-  onEventClick = id => {
-    const { history } = this.props;
+  onEventClick = () => {
+    const { history, event } = this.props;
+    const { id } = event;
     history.push("/event/" + id);
   };
 
   render() {
-    const { event, t, dayjs } = this.props;
+    const { event, t, dayjs, upcomingEvents } = this.props;
     const {
-      id,
       eventname,
       startTime,
       participants,
       distance,
       ownerProfile,
-      image
+      image,
+      id
     } = event;
 
     return (
-      <div className="col-md-12">
+      <div className={upcomingEvents ? "col-md-12 col-lg-6" : "col-md-12"}>
         <div className="card-item">
-          <div className="thumbnail">
+          <div className="thumbnail" onClick={() => this.onEventClick(id)}>
             <EventDate time={startTime} dayjs={dayjs} />
             <EventCreator ownerProfile={ownerProfile} />
-            <span onClick={() => this.onEventClick(id)}>
+            <span onClick={this.onEventClick}>
               <img
                 src={
                   image !== "" && image !== undefined && image !== null
@@ -44,7 +45,7 @@ class EventCard extends Component {
           </div>
           <div className="content">
             <div className="event-name">
-              <span onClick={() => this.onEventClick(id)}>{eventname}</span>
+              <span onClick={this.onEventClick}>{eventname}</span>
             </div>
             <span className="distance">
               {distance} {t("common:" + "miaway")}
@@ -65,10 +66,7 @@ class EventCard extends Component {
               </span>
             </div>
             <div className="functions">
-              <div
-                className="btn go-detail"
-                onClick={() => this.onEventClick(id)}
-              >
+              <div className="btn go-detail" onClick={this.onEventClick}>
                 <span>{t("eventdetail")}</span>
               </div>
               <div className="btn share">

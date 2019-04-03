@@ -89,13 +89,14 @@ class MyEvents extends PureComponent {
                       nav
                       autoplay
                       lazyLoad
+                      loop={true}
                       margin={30}
                       navText={[
                         '<i class="icon-left-open">',
                         '<i class="icon-right-open">'
                       ]}
                       className="owl-carousel slider-content"
-                      autoplayTimeout={2400}
+                      autoplayTimeout={5000}
                       responsive={{
                         0: {
                           items: 1,

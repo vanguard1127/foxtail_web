@@ -10,6 +10,7 @@ import {
 } from "../../../queries";
 import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
 
 const LIMIT = 5;
 class MembersList extends PureComponent {
@@ -190,12 +191,14 @@ class MembersList extends PureComponent {
               </label>
             </div>
           )}
-          <div className="avatar">
-            <div>
-              <img src={el.profilePic} alt="" />
+          <NavLink to={"/member/" + el.id}>
+            <div className="avatar">
+              <div>
+                <img src={el.profilePic} alt="" />
+              </div>
             </div>
-          </div>
-          <span className="username">{el.profileName}</span>
+            <span className="username">{el.profileName}</span>
+          </NavLink>
         </div>
       ))}
       {this.props.listType === "friends" && (

@@ -11,19 +11,23 @@ import UserToolbar from "./UserToolbar";
 
 class Navbar extends Component {
   state = { online: false };
+
   componentDidMount() {
     this.mounted = true;
   }
+
   componentWillUnmount() {
     this.mounted = false;
   }
+
   shouldComponentUpdate(nextProps, nextState) {
+    const { session, location } = this.props;
+    const { online } = this.state;
     if (
-      this.props.session.currentuser.username !==
-        nextProps.session.currentuser.username ||
-      this.props.session.currentuser.userID !==
-        nextProps.session.currentuser.userID ||
-      this.state.online !== nextState.online
+      location.pathname !== nextProps.location.pathname ||
+      session.currentuser.username !== nextProps.session.currentuser.username ||
+      session.currentuser.userID !== nextProps.session.currentuser.userID ||
+      online !== nextState.online
     ) {
       return true;
     }
@@ -31,16 +35,17 @@ class Navbar extends Component {
   }
 
   handleToggle = (toggleOnline, online) => {
+    const { refetch, ErrorHandler } = this.props;
     if (this.mounted) {
       this.setState({ online }, () => {
         toggleOnline()
           .then(async ({ data }) => {
             if (data.toggleOnline !== null) {
-              await this.props.refetch();
+              await refetch();
             }
           })
           .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+            ErrorHandler.catchErrors(res.graphQLErrors);
           });
       });
     }
