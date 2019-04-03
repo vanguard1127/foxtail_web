@@ -21,9 +21,10 @@ class Navbar extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { session } = this.props;
+    const { session, location } = this.props;
     const { online } = this.state;
     if (
+      location.pathname !== nextProps.location.pathname ||
       session.currentuser.username !== nextProps.session.currentuser.username ||
       session.currentuser.userID !== nextProps.session.currentuser.userID ||
       online !== nextState.online
