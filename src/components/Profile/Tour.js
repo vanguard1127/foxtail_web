@@ -160,15 +160,15 @@ class ProfileTour extends PureComponent {
                       <OwlCarousel
                         className="owl-carousel slider-content"
                         autoplay
-                        margin={30}
                         nav
+                        margin={30}
                         dots={false}
                         navText={[
                           '<i class="icon-left-open">',
                           '<i class="icon-right-open">'
                         ]}
                         lazyLoad
-                        autoplayTimeout={2400}
+                        autoplayTimeout={5000}
                         autoplayHoverPause={false}
                         responsive={{
                           0: {
@@ -229,15 +229,16 @@ class ProfileTour extends PureComponent {
                       <OwlCarousel
                         className="owl-carousel slider-content"
                         autoplay
-                        margin={30}
                         nav
+                        margin={30}
+                        loop={true}
                         dots={false}
                         navText={[
                           '<i class="icon-left-open">',
                           '<i class="icon-right-open">'
                         ]}
                         lazyLoad
-                        autoplayTimeout={2400}
+                        autoplayTimeout={5000}
                         autoplayHoverPause={false}
                         responsive={{
                           0: {

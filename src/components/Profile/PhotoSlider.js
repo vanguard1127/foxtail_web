@@ -67,6 +67,7 @@ class PhotoSlider extends Component {
               nav
               autoplay
               lazyLoad
+              loop={true}
               margin={30}
               dots={false}
               navText={[
@@ -74,7 +75,7 @@ class PhotoSlider extends Component {
                 '<i class="icon-right-open">'
               ]}
               className="owl-carousel slider-content"
-              autoplayTimeout={2400}
+              autoplayTimeout={5000}
               autoplayHoverPause={false}
               responsive={{
                 0: {
