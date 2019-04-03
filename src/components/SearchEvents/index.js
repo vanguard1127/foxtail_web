@@ -136,6 +136,7 @@ class SearchEvents extends PureComponent {
         skip: this.state.skip
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
+        console.log(previousResult, "prev", fetchMoreResult, "fetchMore");
         if (!fetchMoreResult || fetchMoreResult.searchEvents.length === 0) {
           return previousResult;
         }
@@ -223,7 +224,14 @@ class SearchEvents extends PureComponent {
               {" "}
               <Query
                 query={SEARCH_EVENTS}
-                variables={{ lat, long, maxDistance, all, limit: LIMIT, skip }}
+                variables={{
+                  lat,
+                  long,
+                  maxDistance,
+                  all,
+                  limit: LIMIT,
+                  skip: 0
+                }}
                 fetchPolicy="cache-first"
               >
                 {({ data, loading, error, fetchMore }) => {

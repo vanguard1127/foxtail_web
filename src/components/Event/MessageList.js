@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Message from "./Message.js";
+import { Waypoint } from "react-waypoint";
 
 class MessageList extends Component {
   constructor(props) {
@@ -201,7 +202,14 @@ class MessageList extends Component {
   }
   render() {
     const { loading } = this.state;
-    const { messages, hasMoreItems, children, history, dayjs } = this.props;
+    const {
+      messages,
+      hasMoreItems,
+      children,
+      history,
+      dayjs,
+      handleEnd
+    } = this.props;
 
     const messageElements = messages.map(message => {
       return (
@@ -223,6 +231,10 @@ class MessageList extends Component {
         {messageElements}
 
         {children}
+
+        {/* <Waypoint
+          onEnter={({ previousPosition }) => handleEnd(previousPosition)}
+        /> */}
       </div>
     );
   }

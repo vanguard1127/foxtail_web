@@ -3,7 +3,7 @@ import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import EmptyScreen from "../common/EmptyScreen";
 import { Query, Mutation } from "react-apollo";
 import ProfilesDiv from "./ProfilesDiv";
-import Waypoint from "react-waypoint";
+import { Waypoint } from "react-waypoint";
 import FeaturedDiv from "./FeaturedDiv";
 import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";

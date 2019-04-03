@@ -24,6 +24,8 @@ class ChatContent extends Component {
         (!previousPosition && currentPosition === Waypoint.inside) ||
         previousPosition === Waypoint.above
       ) {
+        console.log(previousPosition, currentPosition, fetchMore, cursor);
+
         const { chatID } = this.props;
         this.setState({ loading: true });
         fetchMore({

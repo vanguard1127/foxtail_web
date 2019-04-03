@@ -28,15 +28,15 @@ class EventsList extends Component {
                   dayjs={dayjs}
                 />
               ))}
-              <Waypoint
-                onEnter={({ previousPosition }) => handleEnd(previousPosition)}
-              />
               <div className="col-md-12">
                 <div className="more-content-btn">
                   <span>{t("noevent")}</span>
                 </div>
               </div>
             </div>
+            <Waypoint
+              onEnter={({ previousPosition }) => handleEnd(previousPosition)}
+            />
           </div>
         </div>
       </div>
