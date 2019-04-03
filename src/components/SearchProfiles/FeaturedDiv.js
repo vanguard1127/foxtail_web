@@ -29,15 +29,16 @@ class FeaturedDiv extends Component {
             <OwlCarousel
               className="owl-carousel slider"
               autoplay
-              margin={30}
               nav
+              margin={30}
+              loop={true}
               dots={false}
               navText={[
                 '<i className="icon-left-open">',
                 '<i className="icon-right-open">'
               ]}
               lazyLoad
-              autoplayTimeout={2400}
+              autoplayTimeout={5000}
               autoplayHoverPause={false}
               responsive={{
                 0: {

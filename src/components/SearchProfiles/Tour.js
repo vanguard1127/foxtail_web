@@ -190,15 +190,16 @@ class Tour extends PureComponent {
                     <OwlCarousel
                       className="owl-carousel slider"
                       autoplay
-                      margin={30}
                       nav
                       dots={false}
+                      loop={true}
+                      margin={30}
                       navText={[
                         '<i className="icon-left-open">',
                         '<i className="icon-right-open">'
                       ]}
                       lazyLoad
-                      autoplayTimeout={2400}
+                      autoplayTimeout={5000}
                       autoplayHoverPause={false}
                       responsive={{
                         0: {
