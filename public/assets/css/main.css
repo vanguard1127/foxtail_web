@@ -595,10 +595,17 @@
       }
 
       header .toggle .notification .item div span.text {
+        display: -webkit-box;
+        max-width: 190px;
+        word-break: break-all;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 13px;
         color: #464648;
         letter-spacing: -0.12px;
-        line-height: 15px;
+        line-height: 18px;
         padding-top: 2px;
         padding-bottom: 2px;
         margin-top: 0;
