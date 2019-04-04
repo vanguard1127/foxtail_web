@@ -45,7 +45,7 @@ class EventsList extends Component {
               </div>
             </div>
             <div
-              style={{ padding: "0px", position: "absolute", bottom: "20%" }}
+              style={{ padding: "0px", position: "absolute", bottom: "30%" }}
             >
               <Waypoint
                 onEnter={({ previousPosition }) => handleEnd(previousPosition)}

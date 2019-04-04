@@ -63,6 +63,7 @@ class DateItem extends PureComponent {
   }
   render() {
     const { stickZIndex, showDate, children } = this.props;
+    console.log(children);
     const stickStyles = {
       position: "absolute",
       top: 0,
