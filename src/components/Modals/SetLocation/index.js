@@ -24,7 +24,7 @@ class SetLocationModal extends Component {
 
   setLocationValues = pos => {
     const { lat, long, address } = pos;
-    console.log("SET:", lat, long, address, pos);
+
     if (lat && long) {
       if (this.mounted) {
         return this.setState({ lat, long, address });

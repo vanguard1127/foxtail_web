@@ -1,6 +1,5 @@
 import React from "react";
 const DistanceMetricSwitch = ({ distanceMetric, setValue, t }) => {
-  console.log(distanceMetric);
   return (
     <div className="switch-con border-top">
       <div className="sw-head">{t("dmetric")}:</div>

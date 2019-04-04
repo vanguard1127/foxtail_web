@@ -14,7 +14,6 @@ class ChatContent extends Component {
   };
 
   handleEnd = ({ previousPosition, fetchMore, cursor }) => {
-    console.log(previousPosition, "prevposition", cursor, "cursor");
     if (previousPosition === Waypoint.below) {
       this.setState({ msgLoading: true }, () =>
         this.fetchData(fetchMore, cursor)
@@ -103,7 +102,7 @@ class ChatContent extends Component {
               }
             });
           }
-          console.log(messages);
+
           if (messages.length === 0) {
             return <div>No messages yet</div>;
           }

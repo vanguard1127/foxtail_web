@@ -357,9 +357,9 @@ class SettingsPage extends PureComponent {
       };
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status === 200) {
-        console.log("upload ok");
+        toast.success("Upload Successful");
       } else {
-        console.log("Something went wrong");
+        toast.error("Upload Error");
       }
     } catch (e) {
       console.log(e);

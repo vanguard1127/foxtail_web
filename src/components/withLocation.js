@@ -62,13 +62,13 @@ const withLocation = PassedComponent =>
     setLocation = async pos => {
       var crd = pos.coords;
       const { long, lat } = this.state;
-
+      console.log("EEEEEE", crd);
       if (long !== crd.longitude && lat !== crd.latitude) {
         const citycntry = await getCityCountry({
           long: crd.longitude,
           lat: crd.latitude
         });
-
+        console.log(citycntry);
         if (citycntry === null) {
           const { toast } = require("react-toastify");
           toast.error("Location error, please set your location in settings");

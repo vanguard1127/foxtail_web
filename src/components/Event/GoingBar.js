@@ -6,7 +6,7 @@ class GoingBar extends PureComponent {
   render() {
     const { id, participants, t, isOwner } = this.props;
     const { remDropOpen } = this.state;
-    console.log("BAP");
+
     return (
       <div className="goings">
         <span className="stats">

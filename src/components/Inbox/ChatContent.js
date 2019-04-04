@@ -96,6 +96,7 @@ class ChatContent extends PureComponent {
     });
   };
   //TODO: use global spinner and error instead of chnaging each
+  //TODO: consider cache and network
   render() {
     const { chatID, currentUserID, t, ErrorHandler, dayjs } = this.props;
 

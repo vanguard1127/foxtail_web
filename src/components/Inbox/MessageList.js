@@ -27,6 +27,11 @@ class DateItem extends PureComponent {
   }
 
   onEnter = ({ previousPosition, currentPosition }) => {
+    console.log(
+      " previousPosition, currentPosition",
+      previousPosition,
+      currentPosition
+    );
     if (currentPosition === Waypoint.inside) {
       if (this.mounted) {
         this.setState({
@@ -272,6 +277,12 @@ class MessageList extends PureComponent {
         previousScrollTop: this.scrollWrapperRef.current.scrollTop
       });
     }
+    console.log(
+      "FETCH:::",
+      this.scrollWrapperRef.current.scrollTop < THRESHOLD,
+      this.scrollWrapperRef.current.scrollTop,
+      THRESHOLD
+    );
     // If is close to the top, then fetch
     if (this.scrollWrapperRef.current.scrollTop < THRESHOLD) {
       this.fetchMore();
@@ -308,7 +319,7 @@ class MessageList extends PureComponent {
         .groupBy(datum =>
           dayjs(datum.createdAt)
             .locale(localStorage.getItem("i18nextLng"))
-            .format("dddd, MMMM Do YYYY")
+            .format("dddd, MMMM D, YYYY")
             .toLocaleUpperCase()
         )
         .map((messages, date) => ({ date, messages })) //using ES6 shorthand to generate the objects
