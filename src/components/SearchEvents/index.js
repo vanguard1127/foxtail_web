@@ -128,36 +128,36 @@ class SearchEvents extends PureComponent {
   fetchData = fetchMore => {
     this.props.ErrorHandler.setBreadcrumb("Fetch more events");
     if (this.mounted) {
-      this.setState({ loading: true });
-    }
-    fetchMore({
-      variables: {
-        limit: LIMIT,
-        skip: this.state.skip
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        console.log(previousResult, "prev", fetchMoreResult, "fetchMore");
-        if (!fetchMoreResult || fetchMoreResult.searchEvents.length === 0) {
-          return previousResult;
-        }
+      this.setState({ loading: true }, () =>
+        fetchMore({
+          variables: {
+            limit: LIMIT,
+            skip: this.state.skip
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            if (this.mounted) {
+              this.setState({
+                loading: false
+              });
+            }
 
-        return {
-          searchEvents: [
-            ...previousResult.searchEvents,
-            ...fetchMoreResult.searchEvents
-          ]
-        };
-      }
-    });
-    if (this.mounted) {
-      this.setState({
-        loading: false
-      });
+            if (!fetchMoreResult || fetchMoreResult.searchEvents.length === 0) {
+              return previousResult;
+            }
+
+            return {
+              searchEvents: [
+                ...previousResult.searchEvents,
+                ...fetchMoreResult.searchEvents
+              ]
+            };
+          }
+        })
+      );
     }
   };
 
   handleEnd = (previousPosition, fetchMore) => {
-    console.log(previousPosition, "previousPosition");
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         this.setState(
@@ -266,6 +266,7 @@ class SearchEvents extends PureComponent {
                       }
                       t={t}
                       dayjs={dayjs}
+                      loading={this.state.loading}
                     />
                   );
                 }}

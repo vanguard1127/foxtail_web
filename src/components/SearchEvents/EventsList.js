@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import EventCard from "./EventCard";
 import { Waypoint } from "react-waypoint";
+import { concatSeries } from "async";
 
 class EventsList extends Component {
   shouldComponentUpdate(nextProps) {
     //TODO: Compare better see if it breaks waypoint
-    const { events } = this.props;
-    if (events !== nextProps.events) return true;
+    if (
+      this.props.events !== nextProps.events ||
+      this.props.loading !== nextProps.loading
+    ) {
+      return true;
+    }
     return false;
   }
 
@@ -31,7 +36,11 @@ class EventsList extends Component {
               ))}
               <div className="col-md-12">
                 <div className="more-content-btn">
-                  <span>{t("noevent")}</span>
+                  {this.props.loading ? (
+                    <span>Loading...</span>
+                  ) : (
+                    <span>{t("noevent")}</span>
+                  )}
                 </div>
               </div>
             </div>
