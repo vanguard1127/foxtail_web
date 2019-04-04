@@ -81,8 +81,8 @@ class NoticesList extends Component {
           return previousResult;
         }
         previousResult.getNotifications.notifications = [
-          ...fetchMoreResult.getNotifications.notifications,
-          ...previousResult.getNotifications.notifications
+          ...previousResult.getNotifications.notifications,
+          ...fetchMoreResult.getNotifications.notifications
         ];
 
         return previousResult;
@@ -199,13 +199,20 @@ class NoticesList extends Component {
           </div> */}
           <div
             key="way"
-            style={{ width: "100%", display: "block", float: "left" }}
+            style={{
+              width: "100%",
+              display: "block",
+              float: "left"
+            }}
           >
             <Waypoint
               onEnter={({ previousPosition }) => {
                 this.handleEnd({ previousPosition, fetchMore });
               }}
             />
+          </div>
+          <div className="item" style={{ textAlign: "center" }} key="na">
+            <span className="text">There is no more notification.</span>
           </div>
         </div>
       </div>

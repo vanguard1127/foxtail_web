@@ -14,6 +14,7 @@ class ChatContent extends Component {
   };
 
   handleEnd = ({ previousPosition, fetchMore, cursor }) => {
+    console.log(previousPosition, "prevposition", cursor, "cursor");
     if (previousPosition === Waypoint.below) {
       this.setState({ msgLoading: true }, () =>
         this.fetchData(fetchMore, cursor)
@@ -58,7 +59,7 @@ class ChatContent extends Component {
 
     const { cursor, msgLoading } = this.state;
     return (
-      <Query query={GET_COMMENTS} variables={{ chatID, limit: LIMIT, cursor }}>
+      <Query query={GET_COMMENTS} variables={{ chatID, limit: LIMIT }}>
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (error || !data) {
             return (

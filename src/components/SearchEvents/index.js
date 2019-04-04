@@ -157,6 +157,7 @@ class SearchEvents extends PureComponent {
   };
 
   handleEnd = (previousPosition, fetchMore) => {
+    console.log(previousPosition, "previousPosition");
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         this.setState(
