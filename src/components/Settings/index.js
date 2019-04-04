@@ -26,11 +26,12 @@ class Settings extends PureComponent {
         });
       }
     }
+
+    document.title = "My Account";
   }
 
   //TODO: Set time below
   render() {
-    document.title = "My Account";
     //TODO: If on Settigns make popup show
     const { session, refetch, t, ErrorHandler, location, history } = this.props;
     const { state } = location;

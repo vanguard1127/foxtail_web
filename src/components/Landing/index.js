@@ -13,8 +13,12 @@ import { withNamespaces } from "react-i18next";
 
 class Landing extends PureComponent {
   state = { resetPhoneVisible: false, token: null, tooltip: false };
-  render() {
+
+  componentDidMount() {
     document.title = "Foxtail";
+  }
+
+  render() {
     const { t, props } = this.props;
     const { resetPhoneVisible, token, tooltip } = this.state;
     if (props.location.state) {
