@@ -5,7 +5,7 @@ import { Waypoint } from "react-waypoint";
 import Spinner from "../common/Spinner";
 import MessageList from "./MessageList";
 let unsubscribe = null;
-const LIMIT = 4;
+
 class ChatContent extends Component {
   state = {
     msgLoading: false,
@@ -25,11 +25,11 @@ class ChatContent extends Component {
   fetchData = async (fetchMore, cursor) => {
     this.props.ErrorHandler.setBreadcrumb("Fetch more comments");
 
-    const { chatID } = this.props;
+    const { chatID, limit } = this.props;
     fetchMore({
       variables: {
         chatID,
-        limit: LIMIT,
+        limit,
         cursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -37,7 +37,7 @@ class ChatContent extends Component {
           return previousResult;
         }
 
-        if (fetchMoreResult.getComments.messages < LIMIT) {
+        if (fetchMoreResult.getComments.messages < limit) {
           this.setState({ hasMoreItems: false });
         }
 
@@ -55,11 +55,15 @@ class ChatContent extends Component {
   };
 
   render() {
-    const { chatID, history, t, ErrorHandler, dayjs } = this.props;
+    const { chatID, history, t, ErrorHandler, dayjs, limit } = this.props;
 
     const { cursor, msgLoading } = this.state;
     return (
-      <Query query={GET_COMMENTS} variables={{ chatID, limit: LIMIT }}>
+      <Query
+        query={GET_COMMENTS}
+        variables={{ chatID, limit, cursor }}
+        fetch-policy="cache-and-network"
+      >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (error || !data) {
             return (
@@ -99,7 +103,7 @@ class ChatContent extends Component {
               }
             });
           }
-
+          console.log(messages);
           if (messages.length === 0) {
             return <div>No messages yet</div>;
           }
@@ -138,7 +142,7 @@ class ChatContent extends Component {
               }
               handleEnd={this.handleEnd}
               fetchMore={fetchMore}
-              limit={LIMIT}
+              limit={limit}
               dayjs={dayjs}
               t={t}
             />

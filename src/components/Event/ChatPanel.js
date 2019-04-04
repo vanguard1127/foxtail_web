@@ -35,14 +35,14 @@ class ChatPanel extends PureComponent {
   };
 
   updateComments = cache => {
-    const { chatID, currentuser } = this.props;
+    const { chatID, currentuser, limit } = this.props;
     const { text } = this.state;
+    console.log(cache);
 
     let { getComments } = cache.readQuery({
       query: GET_COMMENTS,
-      variables: { chatID, cursor: null, limit: 6 }
+      variables: { chatID, cursor: null, limit }
     });
-
     getComments.messages = [
       {
         createdAt: Date.now(),
@@ -60,26 +60,11 @@ class ChatPanel extends PureComponent {
       ...getComments.messages
     ];
 
-    // .push({
-    //   createdAt: Date.now(),
-    //   fromUser: {
-    //     username: currentuser.username,
-    //     id: currentuser.userID,
-    //     __typename: "UserType"
-    //   },
-    //   id: Date.now(),
-    //   profilePic: currentuser.profilePic,
-    //   text,
-    //   type: "comment",
-    //   __typename: "MessageType"
-    // });
-    // console.log(dffdfd, getComments);
+    console.log(getComments.messages);
     cache.writeQuery({
       query: GET_COMMENTS,
-      variables: { chatID, cursor: null, limit: 6 },
-      data: {
-        getComments
-      }
+      variables: { chatID, cursor: null, limit },
+      data: { getComments }
     });
   };
 
@@ -94,6 +79,7 @@ class ChatPanel extends PureComponent {
           chatID,
           text
         }}
+        //  update={this.updateComments}
       >
         {(postComment, { data, loading, error }) => (
           <div className="send-message">

@@ -24,6 +24,7 @@ registerPlugin(
 );
 //https://pqina.nl/filepond/docs/patterns/api/filepond-instance/#labels --- LABELS
 // Our app
+//TODO: Change to use files prop
 const PhotoUpload = ({ photos, setPhotos, t }) => {
   return (
     <FilePond
@@ -43,7 +44,6 @@ const PhotoUpload = ({ photos, setPhotos, t }) => {
           };
         }
       }}
-      acceptedFileTypes={["image/png", "image/jpeg"]}
       labelFileTypeNotAllowed={t("onlyformat")}
       maxFileSize="5MB"
       labelIdle={
@@ -53,8 +53,7 @@ const PhotoUpload = ({ photos, setPhotos, t }) => {
         t("browse") +
         `</span>.`
       }
-      allowFileRename={true}
-      fileRenameFunction={file => `my_new_name`}
+      fileRenameFunction={file => `New File`}
       labelFileProcessing={t("upload")}
       labelFileProcessingComplete={t("uploadcomp")}
       labelFileProcessingAborted={t("uploadcan")}
