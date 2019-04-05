@@ -41,7 +41,7 @@ class MessageList extends Component {
         {messageElements}
         <div
           className="item"
-          style={{ padding: "0px", position: "absolute", bottom: "30%" }}
+          style={{ padding: "0px", position: "absolute", bottom: "20%" }}
         >
           <Waypoint
             onEnter={({ previousPosition }) =>
@@ -53,9 +53,14 @@ class MessageList extends Component {
             }
           />
         </div>
-        {loading && (
+
+        {loading ? (
           <div className="item">
             <Spinner message={t("common:Loading") + "..."} size="large" />
+          </div>
+        ) : (
+          <div className="item" style={{ textAlign: "center" }}>
+            No more messages.
           </div>
         )}
       </div>
