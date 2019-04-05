@@ -295,6 +295,9 @@ class MessageList extends PureComponent {
       hasMoreItems,
       children,
       currentUserID,
+      history,
+      handleEndScrollUp,
+      fetchMore,
       t,
       dayjs
     } = this.props;
@@ -378,6 +381,23 @@ class MessageList extends PureComponent {
             overflow: "hidden"
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              top: "30%"
+            }}
+          >
+            <Waypoint
+              onEnter={({ previousPosition }) => {
+                console.log(previousPosition, "previous in messa");
+                handleEndScrollUp({
+                  previousPosition,
+                  fetchMore,
+                  cursor: messages[messages.length - 1].createdAt
+                });
+              }}
+            />
+          </div>
           {messageElements}
 
           {children}

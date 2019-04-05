@@ -15,7 +15,8 @@ const intialState = {
   seen: null,
   notificationIDs: [],
   skip: 0,
-  visible: false
+  visible: false,
+  loading: false
 };
 
 class NoticesList extends Component {
@@ -37,7 +38,8 @@ class NoticesList extends Component {
     if (
       this.state.skip !== nextState.skip ||
       this.state.visible !== nextState.visible ||
-      this.props.notifications !== nextProps.notifications
+      this.props.notifications !== nextProps.notifications ||
+      this.state.loading !== nextState.loading
     ) {
       return true;
     }
@@ -56,7 +58,7 @@ class NoticesList extends Component {
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         this.setState(
-          state => ({ skip: skip + LIMIT }),
+          state => ({ skip: skip + LIMIT, loading: true }),
           () => this.fetchData(fetchMore)
         );
       }
@@ -65,29 +67,33 @@ class NoticesList extends Component {
 
   fetchData = fetchMore => {
     if (this.mounted) {
-      this.setState({ loading: true });
-    }
-    fetchMore({
-      variables: {
-        skip: this.state.skip,
-        limit: LIMIT
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (
-          !fetchMoreResult ||
-          !fetchMoreResult.getNotifications ||
-          fetchMoreResult.getNotifications.notifications.length === 0
-        ) {
-          return previousResult;
-        }
-        previousResult.getNotifications.notifications = [
-          ...previousResult.getNotifications.notifications,
-          ...fetchMoreResult.getNotifications.notifications
-        ];
+      this.setState({ loading: true }, () =>
+        fetchMore({
+          variables: {
+            skip: this.state.skip,
+            limit: LIMIT
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            if (this.mounted) {
+              this.setState({ loading: false });
+            }
 
-        return previousResult;
-      }
-    });
+            if (
+              !fetchMoreResult ||
+              !fetchMoreResult.getNotifications ||
+              fetchMoreResult.getNotifications.notifications.length === 0
+            ) {
+              return previousResult;
+            }
+            previousResult.getNotifications.notifications = [
+              ...previousResult.getNotifications.notifications,
+              ...fetchMoreResult.getNotifications.notifications
+            ];
+            return previousResult;
+          }
+        })
+      );
+    }
   };
 
   readAndGo = ({ notifications, targetID, type }) => {
@@ -211,9 +217,17 @@ class NoticesList extends Component {
               }}
             />
           </div>
-          <div className="item" style={{ textAlign: "center" }} key="na">
-            <span className="text">There is no more notification.</span>
-          </div>
+          {notifications.length > 0 ? (
+            <div className="item" style={{ textAlign: "center" }} key="na">
+              {this.state.loading ? (
+                <span className="text">Loading...</span>
+              ) : (
+                <span className="text">There is no more notification.</span>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

@@ -6,6 +6,40 @@ import Spinner from "../common/Spinner";
 import MessageList from "./MessageList";
 let unsubscribe = null;
 class ChatContent extends PureComponent {
+  handleEndScrollUp = ({ previousPosition, fetchMore, cursor }) => {
+    console.log("previous", previousPosition);
+    if (previousPosition === Waypoint.above) {
+      this.setState({ msgLoading: true }, () =>
+        this.fetchDataForScrollUp(fetchMore, cursor)
+      );
+    }
+  };
+
+  fetchDataForScrollUp = async (fetchMore, cursor) => {
+    this.props.ErrorHandler.setBreadcrumb("fetch more messages");
+    const { chatID, limit } = this.props;
+    fetchMore({
+      variables: {
+        chatID,
+        limit,
+        cursor
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        this.setState({ msgLoading: false });
+        if (!fetchMoreResult) {
+          return previousResult;
+        }
+
+        previousResult.getMessages.messages = [
+          ...previousResult.getMessages.messages,
+          ...fetchMoreResult.getMessages.messages
+        ];
+
+        return previousResult;
+      }
+    });
+  };
+
   handleEnd = (previousPosition, currentPosition, fetchMore, cursor) => {
     if (
       this.messagesRef &&
@@ -160,8 +194,8 @@ class ChatContent extends PureComponent {
                 messages={
                   data && data.getMessages ? data.getMessages.messages : []
                 }
-                handleEnd={this.handleEnd}
                 fetchMore={fetchMore}
+                handleEndScrollUp={this.handleEndScrollUp}
                 limit={limit}
                 dayjs={dayjs}
               />
