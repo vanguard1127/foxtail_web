@@ -63,7 +63,7 @@ class DateItem extends PureComponent {
   }
   render() {
     const { stickZIndex, showDate, children } = this.props;
-    // console.log(children);
+    console.log(children);
     const stickStyles = {
       position: "absolute",
       top: 0,
@@ -87,7 +87,7 @@ class DateItem extends PureComponent {
 class MessageList extends PureComponent {
   constructor(props) {
     super(props);
-    // this.scrollWrapperRef = React.createRef();
+    this.scrollWrapperRef = React.createRef();
     this.lastMessageRef = React.createRef();
   }
   state = {
@@ -102,8 +102,8 @@ class MessageList extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    // this.checkScrollTopToFetch(10);
-    // this.scrollToBot();
+    this.checkScrollTopToFetch(10);
+    this.scrollToBot();
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -113,12 +113,12 @@ class MessageList extends PureComponent {
       let isUserOnBottom = null;
       if (this.lastMessageRef.current) {
         // If the user is on the bottom waiting for new messages, scroll him whenever one gets received
-        // isUserOnBottom =
-        //   this.scrollWrapperRef.current.clientHeight +
-        //     this.scrollWrapperRef.current.scrollTop >
-        //   this.scrollWrapperRef.current.scrollHeight -
-        //     this.lastMessageRef.current.clientHeight -
-        //     20;
+        isUserOnBottom =
+          this.scrollWrapperRef.current.clientHeight +
+            this.scrollWrapperRef.current.scrollTop >
+          this.scrollWrapperRef.current.scrollHeight -
+            this.lastMessageRef.current.clientHeight -
+            20;
       }
       if (!this.state.hasScrolledBottomInitial || isUserOnBottom) {
         // ComponentDidMount does not scrolls to bottom on initial mount. Since on
@@ -128,20 +128,19 @@ class MessageList extends PureComponent {
         // So, for the scroll to start at the bottom when user firsts sees it,
         // either this or fetching more items initial mount
         if (!this.state.hasScrolledBottomInitial) {
-          // console.log("Initial Scroll Bottom");
+          console.log("Initial Scroll Bottom");
         }
-        // this.scrollToBot();
+        this.scrollToBot();
       } else if (this.state.restoreScroll) {
         // When loading items, we dont want to have the scroll not move up or down.
         // We want the user to view the same items, without the scroll moving all over the place
         // So we restore it
-        // this.restoreScroll();
+        this.restoreScroll();
       }
     }
   }
-
   restoreScroll() {
-    // console.log("restoring");
+    console.log("restoring");
     this.scrollWrapperRef.current.scrollTop =
       this.state.previousScrollTop +
       (this.scrollWrapperRef.current.scrollHeight -
@@ -154,10 +153,9 @@ class MessageList extends PureComponent {
       });
     }
   }
-
   scrollToBot() {
     const { hasScrolledBottomInitial } = this.props;
-    // console.log("Scrolling to Bottom");
+    console.log("Scrolling to Bottom");
 
     this.scrollWrapperRef.current.scrollTop = this.scrollWrapperRef.current.scrollHeight;
     if (this.mounted) {
@@ -185,6 +183,66 @@ class MessageList extends PureComponent {
       }
     }
   }
+  fetchMore = () => {
+    const { chatID, limit, messages, fetchMore } = this.props;
+    // Doesn't repeat because frist we are setting loading =  true
+    // And on updateQuary, when the fetch it done. We set loading = false
+    console.log("Can i fetch?", !this.state.loading && this.state.hasMoreItems);
+    // Wait for restoreScroll to take place, then do the call.
+    // If not,things are going to play over each other.
+    if (
+      this.state.loading ||
+      !this.state.hasMoreItems ||
+      this.state.restoreScroll
+    )
+      return;
+    const cursor =
+      messages.length > 0 ? messages[messages.length - 1].createdAt : null;
+    console.log("c", messages, cursor);
+    if (this.mounted) {
+      this.setState({ loading: true });
+    }
+    fetchMore({
+      variables: {
+        chatID,
+        limit,
+        cursor
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        console.log(previousResult, fetchMoreResult);
+        const noMessagesLeft =
+          fetchMoreResult.getMessages &&
+          fetchMoreResult.getMessages.messages < this.props.limit;
+        if (noMessagesLeft) {
+          this.setState({ hasMoreItems: false });
+        }
+        console.log("more", noMessagesLeft);
+        if (previousResult.getMessages) {
+          previousResult.getMessages.messages = [
+            ...previousResult.getMessages.messages,
+            ...fetchMoreResult.getMessages.messages
+          ];
+        } else {
+          previousResult.getMessages = fetchMoreResult.getMessages;
+        }
+        console.log("Fetch done");
+        if (this.mounted) {
+          this.setState({
+            loading: false,
+            // When no more messages don't restore. It is not needed and it caused
+            // the chat to restore on the next componentDidUpdate
+            restoreScroll:
+              !noMessagesLeft &&
+              this.scrollWrapperRef.current.scrollHeight >
+                this.scrollWrapperRef.current.clientHeight,
+            dateWaypoints: []
+          });
+        }
+
+        return previousResult;
+      }
+    });
+  };
 
   onDateWaypointPostion = (i, position) => {
     if (this.state.dateWaypoints[i] === position) return;
@@ -199,12 +257,10 @@ class MessageList extends PureComponent {
       });
     }
   };
-
   onScroll = ev => {
     // Create scroll event handler here instead of on render for better performance.
     this.checkScrollTopToFetch(100);
   };
-
   checkScrollTopToFetch(THRESHOLD) {
     // Dont allow the user to scroll if loading more messages
     if (this.state.loading) {
@@ -221,15 +277,15 @@ class MessageList extends PureComponent {
       this.fetchMore();
     }
   }
-
   render() {
     const { loading } = this.state;
     const {
       messages,
+      hasMoreItems,
       children,
       currentUserID,
       history,
-      handleEnd,
+      handleEndScrollUp,
       fetchMore,
       t,
       dayjs
@@ -302,7 +358,7 @@ class MessageList extends PureComponent {
     );
 
     return (
-      <div>
+      <div ref={this.scrollWrapperRef} onScroll={this.onScroll}>
         {/** Parent for abs position elements because scroll does weird things for abs items */}
         <div
           style={{
@@ -323,7 +379,7 @@ class MessageList extends PureComponent {
             <Waypoint
               onEnter={({ previousPosition }) => {
                 console.log(previousPosition, "previous in messa");
-                handleEnd({
+                handleEndScrollUp({
                   previousPosition,
                   fetchMore,
                   cursor: messages[messages.length - 1].createdAt
@@ -331,7 +387,6 @@ class MessageList extends PureComponent {
               }}
             />
           </div>
-
           {messageElements}
 
           {children}
