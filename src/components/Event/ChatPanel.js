@@ -86,7 +86,10 @@ class ChatPanel extends PureComponent {
               onChange={e => this.setText(e)}
               placeholder={t("nowyoucan") + "..."}
             />
-            <button onClick={e => this.submitMessage(e, postComment)}>
+            <button
+              onClick={e => this.submitMessage(e, postComment)}
+              disabled={text.trim() === ""}
+            >
               {t("common:sendmsg")}
             </button>
           </div>

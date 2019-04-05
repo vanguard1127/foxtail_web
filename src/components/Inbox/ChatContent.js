@@ -7,7 +7,6 @@ import MessageList from "./MessageList";
 let unsubscribe = null;
 class ChatContent extends PureComponent {
   handleEndScrollUp = ({ previousPosition, fetchMore, cursor }) => {
-    console.log("previous", previousPosition);
     if (previousPosition === Waypoint.above) {
       this.setState({ msgLoading: true }, () =>
         this.fetchDataForScrollUp(fetchMore, cursor)
@@ -40,95 +39,6 @@ class ChatContent extends PureComponent {
     });
   };
 
-  handleEnd = (previousPosition, currentPosition, fetchMore, cursor) => {
-    if (
-      this.messagesRef &&
-      this.messagesRef.current.scrollTop < 100 &&
-      this.props.hasMoreItems &&
-      this.props.loading !== true
-    ) {
-      if (
-        (!previousPosition && currentPosition === Waypoint.inside) ||
-        previousPosition === Waypoint.above
-      ) {
-        const { chatID, limit } = this.props;
-        this.props.setValue({
-          name: "loading",
-          value: true
-        });
-        fetchMore({
-          variables: {
-            chatID,
-            limit,
-            cursor
-          },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (!fetchMoreResult) {
-              return previousResult;
-            }
-
-            if (fetchMoreResult.getMessages.messages < limit) {
-              this.props.setValue({
-                name: "hasMoreItems",
-                value: false
-              });
-            }
-            console.log("NEW", ...fetchMoreResult.getMessages.messages);
-            console.log("OLD", ...previousResult.getMessages.messages);
-            previousResult.getMessages.messages = [
-              ...previousResult.getMessages.messages,
-              ...fetchMoreResult.getMessages.messages
-            ];
-
-            return previousResult;
-          }
-        });
-        this.props.setValue({
-          name: "loading",
-          value: false
-        });
-      }
-    }
-  };
-
-  fetchData = async (fetchMore, cursor) => {
-    this.props.ErrorHandler.setBreadcrumb("fetch more messages");
-    const { chatID, limit } = this.props;
-    this.props.setValue({
-      name: "loading",
-      value: true
-    });
-    fetchMore({
-      variables: {
-        chatID,
-        limit,
-        cursor
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return previousResult;
-        }
-
-        if (fetchMoreResult.getMessages.messages < limit) {
-          this.props.setValue({
-            name: "hasMoreItems",
-            value: false
-          });
-        }
-
-        previousResult.getMessages.messages = [
-          ...previousResult.getMessages.messages,
-          ...fetchMoreResult.getMessages.messages
-        ];
-
-        return previousResult;
-      }
-    });
-    this.props.setValue({
-      name: "loading",
-      value: false
-    });
-  };
   //TODO: use global spinner and error instead of chnaging each
   //TODO: consider cache and network
   render() {
