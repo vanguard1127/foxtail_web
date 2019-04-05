@@ -14,6 +14,7 @@ class ChatContent extends Component {
   };
 
   handleEnd = ({ previousPosition, fetchMore, cursor }) => {
+    console.log(previousPosition, cursor);
     if (previousPosition === Waypoint.below) {
       this.setState({ msgLoading: true }, () =>
         this.fetchData(fetchMore, cursor)

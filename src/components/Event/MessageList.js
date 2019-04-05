@@ -41,7 +41,7 @@ class MessageList extends Component {
         {messageElements}
         <div
           className="item"
-          style={{ padding: "0px", position: "absolute", bottom: "30%" }}
+          style={{ padding: "0px", position: "absolute", bottom: "20%" }}
         >
           <Waypoint
             onEnter={({ previousPosition }) =>

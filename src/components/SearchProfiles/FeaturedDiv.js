@@ -31,7 +31,6 @@ class FeaturedDiv extends Component {
               autoplay
               nav
               margin={30}
-              loop={true}
               dots={false}
               navText={[
                 '<i className="icon-left-open">',

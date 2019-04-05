@@ -42,7 +42,7 @@ class ChatPanel extends PureComponent {
       query: GET_MESSAGES,
       variables: { chatID, cursor, limit }
     });
-
+    console.log(getMessages, currentuser.profileID);
     getMessages.messages = [
       ...getMessages.messages,
       {
@@ -50,6 +50,7 @@ class ChatPanel extends PureComponent {
         fromUser: {
           username: currentuser.username,
           id: currentuser.userID,
+          profile: { id: currentuser.profileID, __typename: "ProfileType" },
           __typename: "UserType"
         },
         text,
