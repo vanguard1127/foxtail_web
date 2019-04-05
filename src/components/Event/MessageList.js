@@ -25,6 +25,10 @@ class MessageList extends Component {
       t
     } = this.props;
 
+    if (messages.length === 0) {
+      return <div>No messages yet</div>;
+    }
+
     const messageElements = messages.map(message => {
       return (
         <Message
