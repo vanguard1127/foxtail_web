@@ -53,9 +53,14 @@ class MessageList extends Component {
             }
           />
         </div>
-        {loading && (
+
+        {loading ? (
           <div className="item">
             <Spinner message={t("common:Loading") + "..."} size="large" />
+          </div>
+        ) : (
+          <div className="item" style={{ textAlign: "center" }}>
+            No more messages.
           </div>
         )}
       </div>

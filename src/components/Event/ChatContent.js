@@ -33,6 +33,10 @@ class ChatContent extends Component {
         cursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
+        this.setState({
+          msgLoading: false
+        });
+
         if (!fetchMoreResult) {
           return previousResult;
         }
@@ -48,9 +52,6 @@ class ChatContent extends Component {
 
         return previousResult;
       }
-    });
-    this.setState({
-      msgLoading: false
     });
   };
 
