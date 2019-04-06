@@ -54,7 +54,7 @@ class ChatContent extends PureComponent {
         <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit, cursor }}
-          fetchPolicy="cache-first"
+          fetchPolicy="cache--and-network"
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (loading) {

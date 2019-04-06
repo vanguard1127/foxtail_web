@@ -61,48 +61,48 @@ class ChatPanel extends PureComponent {
     const { chatID, cursor, limit, currentuser } = this.props;
     const { text } = this.state;
 
-    let { getMessages } = cache.readQuery({
-      query: GET_MESSAGES,
-      variables: { chatID, cursor, limit }
-    });
-    console.log(getMessages, currentuser.profileID);
-    getMessages.messages = [
-      ...getMessages.messages,
-      {
-        createdAt: Date.now(),
-        fromUser: {
-          username: currentuser.username,
-          id: currentuser.userID,
-          profile: { id: currentuser.profileID, __typename: "ProfileType" },
-          __typename: "UserType"
-        },
-        text,
-        type: "msg",
-        __typename: "MessageType"
-      }
-    ];
-    console.log("SAVING THS", [
-      ...getMessages.messages,
-      {
-        createdAt: Date.now(),
-        fromUser: {
-          username: currentuser.username,
-          id: currentuser.userID,
-          profile: { id: currentuser.profileID, __typename: "ProfileType" },
-          __typename: "UserType"
-        },
-        text,
-        type: "msg",
-        __typename: "MessageType"
-      }
-    ]);
-    cache.writeQuery({
-      query: GET_MESSAGES,
-      variables: { chatID, cursor, limit },
-      data: {
-        ...getMessages
-      }
-    });
+    // let { getMessages } = cache.readQuery({
+    //   query: GET_MESSAGES,
+    //   variables: { chatID, cursor, limit }
+    // });
+    // console.log(getMessages, currentuser.profileID);
+    // getMessages.messages = [
+    //   ...getMessages.messages,
+    //   {
+    //     createdAt: Date.now(),
+    //     fromUser: {
+    //       username: currentuser.username,
+    //       id: currentuser.userID,
+    //       profile: { id: currentuser.profileID, __typename: "ProfileType" },
+    //       __typename: "UserType"
+    //     },
+    //     text,
+    //     type: "msg",
+    //     __typename: "MessageType"
+    //   }
+    // ];
+    // console.log("SAVING THS", [
+    //   ...getMessages.messages,
+    //   {
+    //     createdAt: Date.now(),
+    //     fromUser: {
+    //       username: currentuser.username,
+    //       id: currentuser.userID,
+    //       profile: { id: currentuser.profileID, __typename: "ProfileType" },
+    //       __typename: "UserType"
+    //     },
+    //     text,
+    //     type: "msg",
+    //     __typename: "MessageType"
+    //   }
+    // ]);
+    // cache.writeQuery({
+    //   query: GET_MESSAGES,
+    //   variables: { chatID, cursor, limit },
+    //   data: {
+    //     ...getMessages
+    //   }
+    // });
 
     let { getInbox } = cache.readQuery({
       query: GET_INBOX
