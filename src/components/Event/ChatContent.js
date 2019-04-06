@@ -14,6 +14,7 @@ class ChatContent extends Component {
   };
 
   handleEnd = ({ previousPosition, fetchMore, cursor }) => {
+    console.log(previousPosition, "prevposition", cursor, "cursor");
     if (previousPosition === Waypoint.below) {
       this.setState({ msgLoading: true }, () =>
         this.fetchData(fetchMore, cursor)
@@ -32,10 +33,6 @@ class ChatContent extends Component {
         cursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        this.setState({
-          msgLoading: false
-        });
-
         if (!fetchMoreResult) {
           return previousResult;
         }
@@ -49,10 +46,11 @@ class ChatContent extends Component {
           ...fetchMoreResult.getComments.messages
         ];
 
-        return previousResult.getComments
-          ? previousResult.getComments
-          : { data: previousResult };
+        return previousResult;
       }
+    });
+    this.setState({
+      msgLoading: false
     });
   };
 
@@ -76,7 +74,7 @@ class ChatContent extends Component {
           let messages = [];
 
           if (data.getComments && data.getComments.messages) {
-            messages = data.getComments.messages || [];
+            messages = data.getComments.messages;
           }
 
           if (!unsubscribe) {
@@ -88,29 +86,27 @@ class ChatContent extends Component {
               updateQuery: (prev, { subscriptionData }) => {
                 const { newMessageSubscribe } = subscriptionData.data;
                 if (!newMessageSubscribe) {
+                  return prev;
+                }
+                if (prev.getComments) {
+                  prev.getComments.messages = [
+                    newMessageSubscribe,
+                    ...prev.getComments.messages
+                  ];
+                } else {
                   prev.getComments = {
-                    messages: [],
+                    messages: [newMessageSubscribe],
                     __typename: "ChatType"
                   };
-                  return prev;
-                } else {
-                  if (prev.getComments) {
-                    prev.getComments.messages = [
-                      newMessageSubscribe,
-                      ...prev.getComments.messages
-                    ];
-                  } else {
-                    prev.getComments = {
-                      messages: [newMessageSubscribe],
-                      __typename: "ChatType"
-                    };
-                  }
                 }
-                return prev.getComments ? prev.getComments : { data: prev };
+                return prev;
               }
             });
           }
-
+          console.log(messages);
+          if (messages.length === 0) {
+            return <div>No messages yet</div>;
+          }
           return (
             <MessageList
               loading={msgLoading}
