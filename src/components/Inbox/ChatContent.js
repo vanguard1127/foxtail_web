@@ -40,7 +40,7 @@ class ChatContent extends PureComponent {
   };
 
   //TODO: use global spinner and error instead of chnaging each
-  //TODO: consider cache and network
+  //TODO: consider cache and network or change backt o cache-first
   render() {
     const { chatID, currentUserID, t, ErrorHandler, dayjs } = this.props;
 

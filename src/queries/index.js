@@ -126,6 +126,12 @@ export const LINK_PROFILE = gql`
   }
 `;
 
+export const RESET_CHAT = gql`
+  mutation($chatID: ID!) {
+    resetChat(chatID: $chatID)
+  }
+`;
+
 export const READ_CHAT = gql`
   mutation($chatID: ID!) {
     readChat(chatID: $chatID)

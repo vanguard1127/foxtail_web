@@ -390,11 +390,13 @@ class MessageList extends PureComponent {
             <Waypoint
               onEnter={({ previousPosition }) => {
                 console.log(previousPosition, "previous in messa");
-                handleEndScrollUp({
-                  previousPosition,
-                  fetchMore,
-                  cursor: messages[messages.length - 1].createdAt
-                });
+                if (messages.length > 0) {
+                  handleEndScrollUp({
+                    previousPosition,
+                    fetchMore,
+                    cursor: messages[messages.length - 1].createdAt
+                  });
+                }
               }}
             />
           </div>
