@@ -37,6 +37,7 @@ class ChatPanel extends PureComponent {
   updateComments = cache => {
     const { chatID, currentuser, limit } = this.props;
     const { text } = this.state;
+    console.log(cache, "cache");
 
     let { getComments } = cache.readQuery({
       query: GET_COMMENTS,
@@ -59,6 +60,7 @@ class ChatPanel extends PureComponent {
       ...getComments.messages
     ];
 
+    console.log(getComments.messages, "messages");
     cache.writeQuery({
       query: GET_COMMENTS,
       variables: { chatID, cursor: null, limit },

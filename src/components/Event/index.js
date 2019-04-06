@@ -152,9 +152,6 @@ class EventPage extends PureComponent {
           document.title = event.eventname;
 
           const { description, participants, chatID } = event;
-          const queryParams = JSON.parse(
-            sessionStorage.getItem("searchEventQuery")
-          );
 
           return (
             <section className="event-detail">

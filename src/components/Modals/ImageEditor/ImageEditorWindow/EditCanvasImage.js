@@ -77,7 +77,7 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleExportClick = () => {
-    if (this.mounted) {
+    if (this.mounted && !this.state.uploading) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         const dataURL = this.stageRef
           .getStage()
@@ -359,10 +359,9 @@ class EditCanvasImage extends PureComponent {
         <span
           style={{ marginBottom: 5 }}
           onClick={this.handleExportClick}
-          disabled={uploading}
           className="greenButton"
         >
-          {t("Upload")}
+          {t("Save")}
         </span>
       </div>
     );

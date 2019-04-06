@@ -192,17 +192,6 @@ class SearchEvents extends PureComponent {
         </div>
       );
     }
-    //TODO: Do we still need this
-    sessionStorage.setItem(
-      "searchEventQuery",
-      JSON.stringify({
-        lat,
-        long,
-        all,
-        limit: LIMIT,
-        maxDistance
-      })
-    );
 
     return (
       <>

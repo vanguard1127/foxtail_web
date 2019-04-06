@@ -1,5 +1,5 @@
-import React, { PureComponent, Fragment } from 'react';
-import CreateEvent from '../Modals/CreateEvent/';
+import React, { PureComponent, Fragment } from "react";
+import CreateEvent from "../Modals/CreateEvent/";
 class CreateEventBtn extends PureComponent {
   state = { showPopup: false };
   togglePopup = () => {
@@ -8,11 +8,11 @@ class CreateEventBtn extends PureComponent {
     });
   };
   render() {
-    this.props.ErrorHandler.setBreadcrumb('Open Create Event');
+    this.props.ErrorHandler.setBreadcrumb("Open Create Event");
     return (
       <Fragment>
         <div className="create-event-btn" onClick={() => this.togglePopup()}>
-          <span>{this.props.t('common:createevent')}</span>
+          <span>{this.props.t("common:createevent")}</span>
         </div>
         {this.state.showPopup ? (
           <CreateEvent

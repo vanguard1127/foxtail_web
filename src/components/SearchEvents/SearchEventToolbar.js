@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import SearchEventsFilters from './SearchEventsFilters';
-import CreateEventBtn from './CreateEventBtn';
+import React, { Component } from "react";
+import SearchEventsFilters from "./SearchEventsFilters";
+import CreateEventBtn from "./CreateEventBtn";
 class SearchEventToolbar extends Component {
   shouldComponentUpdate(nextProps) {
     if (
