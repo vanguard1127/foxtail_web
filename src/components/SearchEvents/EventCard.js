@@ -22,14 +22,13 @@ class EventCard extends Component {
       participants,
       distance,
       ownerProfile,
-      image,
-      id
+      image
     } = event;
 
     return (
       <div className={upcomingEvents ? "col-md-12 col-lg-6" : "col-md-12"}>
         <div className="card-item">
-          <div className="thumbnail" onClick={() => this.onEventClick(id)}>
+          <div className="thumbnail" onClick={this.onEventClick}>
             <EventDate time={startTime} dayjs={dayjs} />
             <EventCreator ownerProfile={ownerProfile} />
             <span onClick={this.onEventClick}>
