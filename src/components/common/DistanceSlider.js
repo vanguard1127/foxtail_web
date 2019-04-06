@@ -1,42 +1,48 @@
-import React, { Component } from 'react';
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
+import React, { Component } from "react";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+import milesToKilometers from "../../utils/distanceMetric";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const SliderWithToolTip = createSliderWithTooltip(Slider);
-const milesToKilometers = miles => Math.floor(miles / 0.621371);
 
 class DistanceSlider extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      return true;
-    }
+    const { value } = this.props;
+    if (value !== nextProps.value) return true;
     return false;
   }
 
+  onTipFormatter = value => {
+    return milesToKilometers(value);
+  };
+
+  onAfterChange = e => {
+    const { setValue } = this.props;
+    if (setValue) setValue(e);
+  };
+
   render() {
-    const { value, setValue, t, metric = 'mi' } = this.props;
+    const { value, setValue, t, metric = "mi" } = this.props;
 
     return (
       <div className="item">
-        <div className="range-head">{t('common:distance')}:</div>
+        <div className="range-head">{t("common:distance")}:</div>
         <SliderWithToolTip
-          onAfterChange={e => setValue(e)}
+          onAfterChange={this.onAfterChange}
           min={0}
           max={100}
           defaultValue={value}
-          tipFormatter={value =>
-            `${metric === 'km' ? milesToKilometers(value) : value}`
-          }
+          tipFormatter={this.onTipFormatter}
           className="range-con"
         />
         <div className="limit">
           <span>
-            &lt; {metric === 'km' ? '2 ' : '1 '}
-            {metric === 'km' ? t('common:km') : t('common:mil')}
+            &lt; {metric === "km" ? "2 " : "1 "}
+            {metric === "km" ? t("common:km") : t("common:mil")}
           </span>
           <span>
-            {metric === 'km' ? '160 ' : '100 '}
-            {metric === 'km' ? t('common:km') : t('common:mil')}
+            {metric === "km" ? "160 " : "100 "}
+            {metric === "km" ? t("common:km") : t("common:mil")}
           </span>
         </div>
       </div>
