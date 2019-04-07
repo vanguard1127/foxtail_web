@@ -37,7 +37,7 @@ class ChatPanel extends PureComponent {
   updateComments = cache => {
     const { chatID, currentuser, limit } = this.props;
     const { text } = this.state;
-    console.log(cache);
+    console.log(cache, "cache");
 
     let { getComments } = cache.readQuery({
       query: GET_COMMENTS,
@@ -60,7 +60,7 @@ class ChatPanel extends PureComponent {
       ...getComments.messages
     ];
 
-    console.log(getComments.messages);
+    console.log(getComments.messages, "messages");
     cache.writeQuery({
       query: GET_COMMENTS,
       variables: { chatID, cursor: null, limit },
@@ -88,7 +88,10 @@ class ChatPanel extends PureComponent {
               onChange={e => this.setText(e)}
               placeholder={t("nowyoucan") + "..."}
             />
-            <button onClick={e => this.submitMessage(e, postComment)}>
+            <button
+              onClick={e => this.submitMessage(e, postComment)}
+              disabled={text.trim() === ""}
+            >
               {t("common:sendmsg")}
             </button>
           </div>
