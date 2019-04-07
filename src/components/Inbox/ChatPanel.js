@@ -56,42 +56,27 @@ class ChatPanel extends PureComponent {
     const { chatID, cursor, limit, currentuser } = this.props;
     const { text } = this.state;
 
-    console.log("op", chatID, cursor, limit);
     let { getMessages } = cache.readQuery({
       query: GET_MESSAGES,
       variables: { chatID, cursor, limit }
     });
-    console.log("AFTER");
-    getMessages.messages = [
-      ...getMessages.messages,
-      {
-        createdAt: Date.now(),
-        fromUser: {
-          username: currentuser.username,
-          id: currentuser.userID,
-          profile: { id: currentuser.profileID, __typename: "ProfileType" },
-          __typename: "UserType"
-        },
-        text,
-        type: "msg",
-        __typename: "MessageType"
-      }
-    ];
-    console.log("SAVING THS", [
-      ...getMessages.messages,
-      {
-        createdAt: Date.now(),
-        fromUser: {
-          username: currentuser.username,
-          id: currentuser.userID,
-          profile: { id: currentuser.profileID, __typename: "ProfileType" },
-          __typename: "UserType"
-        },
-        text,
-        type: "msg",
-        __typename: "MessageType"
-      }
-    ]);
+
+    getMessages.messages.unshift({
+      createdAt: Date.now(),
+      fromUser: {
+        username: currentuser.username,
+        id: currentuser.userID,
+        profile: { id: currentuser.profileID, __typename: "ProfileType" },
+        __typename: "UserType"
+      },
+
+      id: Date.now(),
+      profilePic: currentuser.profilePic,
+      text,
+      type: "msg",
+      __typename: "MessageType"
+    });
+
     cache.writeQuery({
       query: GET_MESSAGES,
       variables: { chatID, cursor, limit },
@@ -100,21 +85,21 @@ class ChatPanel extends PureComponent {
       }
     });
 
-    let { getInbox } = cache.readQuery({
-      query: GET_INBOX
-    });
+    // let { getInbox } = cache.readQuery({
+    //   query: GET_INBOX
+    // });
 
-    getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
-    getInbox[
-      getInbox.findIndex(el => el.chatID === chatID)
-    ].createdAt = Date.now();
+    // getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
+    // getInbox[
+    //   getInbox.findIndex(el => el.chatID === chatID)
+    // ].createdAt = Date.now();
 
-    cache.writeQuery({
-      query: GET_INBOX,
-      data: {
-        ...getInbox
-      }
-    });
+    // cache.writeQuery({
+    //   query: GET_INBOX,
+    //   data: {
+    //     ...getInbox
+    //   }
+    // });
   };
 
   render() {
