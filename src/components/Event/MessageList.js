@@ -25,6 +25,10 @@ class MessageList extends Component {
       t
     } = this.props;
 
+    if (messages.length === 0) {
+      return <div>No messages yet</div>;
+    }
+
     const messageElements = messages.map(message => {
       return (
         <Message
@@ -41,21 +45,25 @@ class MessageList extends Component {
         {messageElements}
         <div
           className="item"
-          style={{ padding: "0px", position: "absolute", bottom: "30%" }}
+          style={{ padding: "0px", position: "absolute", bottom: "20%" }}
         >
           <Waypoint
             onEnter={({ previousPosition }) =>
               handleEnd({
                 previousPosition,
                 fetchMore,
-                cursor: messages[messages.length - 1].createdAt
+                cursor: messages && messages[messages.length - 1].createdAt
               })
             }
           />
         </div>
-        {loading && (
+        {loading ? (
           <div className="item">
             <Spinner message={t("common:Loading") + "..."} size="large" />
+          </div>
+        ) : (
+          <div className="item" style={{ textAlign: "center" }}>
+            No more messages.
           </div>
         )}
       </div>

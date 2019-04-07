@@ -32,6 +32,10 @@ class ChatContent extends Component {
         cursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
+        this.setState({
+          msgLoading: false
+        });
+
         if (!fetchMoreResult) {
           return previousResult;
         }
@@ -45,11 +49,10 @@ class ChatContent extends Component {
           ...fetchMoreResult.getComments.messages
         ];
 
-        return previousResult;
+        return previousResult.getComments
+          ? previousResult.getComments
+          : { data: previousResult };
       }
-    });
-    this.setState({
-      msgLoading: false
     });
   };
 
@@ -72,8 +75,12 @@ class ChatContent extends Component {
 
           let messages = [];
 
-          if (data.getComments && data.getComments.messages) {
-            messages = data.getComments.messages;
+          if (
+            data.getComments &&
+            data.getComments !== null &&
+            data.getComments.messages
+          ) {
+            messages = data.getComments.messages || [];
           }
 
           if (!unsubscribe) {
@@ -85,27 +92,29 @@ class ChatContent extends Component {
               updateQuery: (prev, { subscriptionData }) => {
                 const { newMessageSubscribe } = subscriptionData.data;
                 if (!newMessageSubscribe) {
-                  return prev;
-                }
-                if (prev.getComments) {
-                  prev.getComments.messages = [
-                    newMessageSubscribe,
-                    ...prev.getComments.messages
-                  ];
-                } else {
                   prev.getComments = {
-                    messages: [newMessageSubscribe],
+                    messages: [],
                     __typename: "ChatType"
                   };
+                  return prev;
+                } else {
+                  if (prev.getComments) {
+                    prev.getComments.messages = [
+                      newMessageSubscribe,
+                      ...prev.getComments.messages
+                    ];
+                  } else {
+                    prev.getComments = {
+                      messages: [newMessageSubscribe],
+                      __typename: "ChatType"
+                    };
+                  }
                 }
-                return prev;
+                return prev.getComments ? prev.getComments : { data: prev };
               }
             });
           }
 
-          if (messages.length === 0) {
-            return <div>No messages yet</div>;
-          }
           return (
             <MessageList
               loading={msgLoading}
@@ -135,7 +144,7 @@ class ChatContent extends Component {
                         __typename: "ChatType"
                       };
                     }
-                    return prev;
+                    return prev.getComments ? prev.getComments : { data: prev };
                   }
                 })
               }
