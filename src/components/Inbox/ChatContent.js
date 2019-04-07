@@ -54,7 +54,7 @@ class ChatContent extends PureComponent {
         <Query
           query={GET_MESSAGES}
           variables={{ chatID, limit, cursor }}
-          fetchPolicy="cache--and-network"
+          fetchPolicy="cache-first"
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (loading) {
@@ -67,7 +67,7 @@ class ChatContent extends PureComponent {
                 <ErrorHandler.report error={error} calledName={"getSettings"} />
               );
             }
-
+            console.log("QUERY", chatID, cursor, limit);
             if (!unsubscribe) {
               unsubscribe = subscribeToMore({
                 document: NEW_MESSAGE_SUB,

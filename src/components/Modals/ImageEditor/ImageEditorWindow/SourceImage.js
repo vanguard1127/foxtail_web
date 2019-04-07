@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import { Image } from 'react-konva';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from "react";
+import { Image } from "react-konva";
+import PropTypes from "prop-types";
 
 class SourceImage extends PureComponent {
   static propTypes = {
@@ -11,7 +11,7 @@ class SourceImage extends PureComponent {
 
   state = {
     image: null,
-    imageBase64: '',
+    imageBase64: "",
     isDragging: false
   };
 
@@ -46,11 +46,10 @@ class SourceImage extends PureComponent {
       }
       _this.setState({
         image: image,
-        type: 'SET_IMAGE_SIZE',
+        type: "SET_IMAGE_SIZE",
         width: image.width,
         height: image.height
       });
-      console.log(_this.state.width);
     };
   };
 

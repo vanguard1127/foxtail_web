@@ -74,7 +74,7 @@ class NoticesItem extends PureComponent {
       const { getCounts } = cache.readQuery({
         query: GET_COUNTS
       });
-      console.log(getCounts.noticesCount, notificationIDs.length);
+
       getCounts.noticesCount = getCounts.noticesCount - notificationIDs.length;
 
       cache.writeQuery({

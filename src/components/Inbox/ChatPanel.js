@@ -1,11 +1,6 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
-import {
-  SEND_MESSAGE,
-  GET_MESSAGES,
-  GET_INBOX,
-  RESET_CHAT
-} from "../../queries";
+import { SEND_MESSAGE, GET_MESSAGES, GET_INBOX } from "../../queries";
 
 class ChatPanel extends PureComponent {
   state = {
@@ -61,48 +56,49 @@ class ChatPanel extends PureComponent {
     const { chatID, cursor, limit, currentuser } = this.props;
     const { text } = this.state;
 
-    // let { getMessages } = cache.readQuery({
-    //   query: GET_MESSAGES,
-    //   variables: { chatID, cursor, limit }
-    // });
-    // console.log(getMessages, currentuser.profileID);
-    // getMessages.messages = [
-    //   ...getMessages.messages,
-    //   {
-    //     createdAt: Date.now(),
-    //     fromUser: {
-    //       username: currentuser.username,
-    //       id: currentuser.userID,
-    //       profile: { id: currentuser.profileID, __typename: "ProfileType" },
-    //       __typename: "UserType"
-    //     },
-    //     text,
-    //     type: "msg",
-    //     __typename: "MessageType"
-    //   }
-    // ];
-    // console.log("SAVING THS", [
-    //   ...getMessages.messages,
-    //   {
-    //     createdAt: Date.now(),
-    //     fromUser: {
-    //       username: currentuser.username,
-    //       id: currentuser.userID,
-    //       profile: { id: currentuser.profileID, __typename: "ProfileType" },
-    //       __typename: "UserType"
-    //     },
-    //     text,
-    //     type: "msg",
-    //     __typename: "MessageType"
-    //   }
-    // ]);
-    // cache.writeQuery({
-    //   query: GET_MESSAGES,
-    //   variables: { chatID, cursor, limit },
-    //   data: {
-    //     ...getMessages
-    //   }
-    // });
+    console.log("op", chatID, cursor, limit);
+    let { getMessages } = cache.readQuery({
+      query: GET_MESSAGES,
+      variables: { chatID, cursor, limit }
+    });
+    console.log("AFTER");
+    getMessages.messages = [
+      ...getMessages.messages,
+      {
+        createdAt: Date.now(),
+        fromUser: {
+          username: currentuser.username,
+          id: currentuser.userID,
+          profile: { id: currentuser.profileID, __typename: "ProfileType" },
+          __typename: "UserType"
+        },
+        text,
+        type: "msg",
+        __typename: "MessageType"
+      }
+    ];
+    console.log("SAVING THS", [
+      ...getMessages.messages,
+      {
+        createdAt: Date.now(),
+        fromUser: {
+          username: currentuser.username,
+          id: currentuser.userID,
+          profile: { id: currentuser.profileID, __typename: "ProfileType" },
+          __typename: "UserType"
+        },
+        text,
+        type: "msg",
+        __typename: "MessageType"
+      }
+    ]);
+    cache.writeQuery({
+      query: GET_MESSAGES,
+      variables: { chatID, cursor, limit },
+      data: {
+        getMessages
+      }
+    });
 
     let { getInbox } = cache.readQuery({
       query: GET_INBOX
@@ -127,44 +123,32 @@ class ChatPanel extends PureComponent {
 
     return (
       <Mutation
-        mutation={RESET_CHAT}
+        mutation={SEND_MESSAGE}
         variables={{
-          chatID
+          chatID,
+          text
         }}
+        update={this.updateChat}
       >
-        {resetChat => (
-          <Mutation
-            mutation={SEND_MESSAGE}
-            variables={{
-              chatID,
-              text
-            }}
-            update={this.updateChat}
-          >
-            {sendMessage => (
-              <form onSubmit={e => this.submitMessage(e, sendMessage)}>
-                <div className="panel">
-                  <div
-                    className="files"
-                    onClick={() => this.handleReset(resetChat)}
-                  />
-                  <div className="textarea">
-                    <input
-                      placeholder={t("typemsg") + "..."}
-                      value={text}
-                      onChange={e => this.setText(e)}
-                      aria-label="message search"
-                    />
-                  </div>
-                  <div className="send">
-                    <button type="submit" disabled={!text.trim()}>
-                      {t("common:Send")}
-                    </button>
-                  </div>
-                </div>{" "}
-              </form>
-            )}
-          </Mutation>
+        {sendMessage => (
+          <form onSubmit={e => this.submitMessage(e, sendMessage)}>
+            <div className="panel">
+              <div className="files" />
+              <div className="textarea">
+                <input
+                  placeholder={t("typemsg") + "..."}
+                  value={text}
+                  onChange={e => this.setText(e)}
+                  aria-label="message search"
+                />
+              </div>
+              <div className="send">
+                <button type="submit" disabled={!text.trim()}>
+                  {t("common:Send")}
+                </button>
+              </div>
+            </div>{" "}
+          </form>
         )}
       </Mutation>
     );

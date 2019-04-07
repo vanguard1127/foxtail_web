@@ -27,11 +27,6 @@ class DateItem extends PureComponent {
   }
 
   onEnter = ({ previousPosition, currentPosition }) => {
-    console.log(
-      " previousPosition, currentPosition",
-      previousPosition,
-      currentPosition
-    );
     if (currentPosition === Waypoint.inside) {
       if (this.mounted) {
         this.setState({
@@ -68,7 +63,7 @@ class DateItem extends PureComponent {
   }
   render() {
     const { stickZIndex, showDate, children } = this.props;
-    console.log(children);
+
     const stickStyles = {
       position: "absolute",
       top: 0,
@@ -194,6 +189,7 @@ class MessageList extends PureComponent {
     // And on updateQuary, when the fetch it done. We set loading = false
     console.log("Can i fetch?", !this.state.loading && this.state.hasMoreItems);
     // Wait for restoreScroll to take place, then do the call.
+
     // If not,things are going to play over each other.
     if (
       this.state.loading ||
@@ -203,7 +199,7 @@ class MessageList extends PureComponent {
       return;
     const cursor =
       messages.length > 0 ? messages[messages.length - 1].createdAt : null;
-    console.log("c", messages, cursor);
+
     if (this.mounted) {
       this.setState({ loading: true });
     }
@@ -214,14 +210,13 @@ class MessageList extends PureComponent {
         cursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        console.log(previousResult, fetchMoreResult);
         const noMessagesLeft =
           fetchMoreResult.getMessages &&
           fetchMoreResult.getMessages.messages < this.props.limit;
         if (noMessagesLeft) {
           this.setState({ hasMoreItems: false });
         }
-        console.log("more", noMessagesLeft);
+
         if (previousResult.getMessages) {
           previousResult.getMessages.messages = [
             ...previousResult.getMessages.messages,
@@ -230,7 +225,7 @@ class MessageList extends PureComponent {
         } else {
           previousResult.getMessages = fetchMoreResult.getMessages;
         }
-        console.log("Fetch done");
+
         if (this.mounted) {
           this.setState({
             loading: false,
@@ -277,12 +272,7 @@ class MessageList extends PureComponent {
         previousScrollTop: this.scrollWrapperRef.current.scrollTop
       });
     }
-    console.log(
-      "FETCH:::",
-      this.scrollWrapperRef.current.scrollTop < THRESHOLD,
-      this.scrollWrapperRef.current.scrollTop,
-      THRESHOLD
-    );
+
     // If is close to the top, then fetch
     if (this.scrollWrapperRef.current.scrollTop < THRESHOLD) {
       this.fetchMore();

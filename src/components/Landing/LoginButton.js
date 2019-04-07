@@ -48,7 +48,6 @@ class LoginButton extends PureComponent {
       })
       .catch(res => {
         //TODO: Add error setter here
-        console.log(res);
         const errors = res.graphQLErrors.map(error => {
           return error.message;
         });
