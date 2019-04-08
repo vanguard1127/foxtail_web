@@ -6,17 +6,15 @@ import { concatSeries } from "async";
 class EventsList extends Component {
   shouldComponentUpdate(nextProps) {
     //TODO: Compare better see if it breaks waypoint
-    if (
-      this.props.events !== nextProps.events ||
-      this.props.loading !== nextProps.loading
-    ) {
+    const { events, loading } = this.props;
+    if (events !== nextProps.events || loading !== nextProps.loading) {
       return true;
     }
     return false;
   }
 
   render() {
-    const { events, handleEnd, t, dayjs } = this.props;
+    const { events, handleEnd, t, dayjs, distanceMetric } = this.props;
     return (
       <div className="events-card-content">
         <div className="container">
@@ -32,6 +30,7 @@ class EventsList extends Component {
                   event={event}
                   t={t}
                   dayjs={dayjs}
+                  distanceMetric={distanceMetric}
                 />
               ))}
               <div className="col-md-12">

@@ -257,6 +257,7 @@ class SearchEvents extends PureComponent {
                       t={t}
                       dayjs={dayjs}
                       loading={this.state.loading}
+                      distanceMetric={session.currentuser.distanceMetric}
                     />
                   );
                 }}

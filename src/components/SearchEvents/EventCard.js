@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import milesToKilometers from "utils/distanceMetric";
 import EventDate from "../common/Event/EventDate";
 import EventCreator from "./EventCreator";
 
@@ -15,7 +16,7 @@ class EventCard extends Component {
   };
 
   render() {
-    const { event, t, dayjs, upcomingEvents } = this.props;
+    const { event, t, dayjs, upcomingEvents, distanceMetric } = this.props;
     const {
       eventname,
       startTime,
@@ -47,7 +48,8 @@ class EventCard extends Component {
               <span onClick={this.onEventClick}>{eventname}</span>
             </div>
             <span className="distance">
-              {distance} {t("common:" + "miaway")}
+              {milesToKilometers(distance, distanceMetric)}{" "}
+              {t("common:" + (distanceMetric === "mi" ? "miaway" : "kmaway"))}
             </span>
             <div className="goings">
               <ul>
