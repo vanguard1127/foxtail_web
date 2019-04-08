@@ -188,6 +188,7 @@ class EventPage extends PureComponent {
                         openDelete={this.toggleDeleteDialog}
                         dayjs={dayjs}
                         ErrorHandler={ErrorHandler}
+                        distanceMetric={session.currentuser.distanceMetric}
                       />{" "}
                       <EventDiscussion
                         chatID={chatID}
@@ -210,6 +211,7 @@ class EventPage extends PureComponent {
                         openDelete={this.toggleDeleteDialog}
                         refetch={refetch}
                         dayjs={dayjs}
+                        distanceMetric={session.currentuser.distanceMetric}
                       />
                     </div>
                   </div>

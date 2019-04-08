@@ -3,4 +3,11 @@ const milesToKilometers = (distance, distanceMetric) => {
   return distance;
 };
 
+const formatedMilesToKm = (distance, distanceMetric, t) => {
+  return `${milesToKilometers(distance, distanceMetric)} ${t(
+    "common:" + (distanceMetric === "mi" ? "miles" : "kilometers")
+  )}`;
+};
+
 export default milesToKilometers;
+export { formatedMilesToKm };

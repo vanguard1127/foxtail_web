@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { formatedMilesToKm } from "utils/distanceMetric";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 
@@ -21,7 +22,15 @@ class EventInfoMobile extends Component {
     return false;
   }
   render() {
-    const { event, t, ErrorHandler, isOwner, openDelete, dayjs } = this.props;
+    const {
+      event,
+      t,
+      ErrorHandler,
+      isOwner,
+      openDelete,
+      dayjs,
+      distanceMetric
+    } = this.props;
 
     const {
       id,
@@ -76,7 +85,9 @@ class EventInfoMobile extends Component {
           </li>
           <li>
             <span className="head">{t("Away")}:</span>
-            <span className="title">{distance} Miles</span>
+            <span className="title">
+              {formatedMilesToKm(distance, distanceMetric, t)}
+            </span>
           </li>
           <li>
             <span className="head">{t("common:Address")}:</span>
