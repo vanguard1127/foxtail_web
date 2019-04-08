@@ -17,8 +17,10 @@ class ProfilesDiv extends Component {
       history,
       handleEnd,
       t,
-      dayjs
+      dayjs,
+      distanceMetric
     } = this.props;
+
     return (
       <section className="members">
         <div className="container">
@@ -37,6 +39,7 @@ class ProfilesDiv extends Component {
                     t={t}
                     history={history}
                     dayjs={dayjs}
+                    distanceMetric={distanceMetric}
                   />
                 );
               })}

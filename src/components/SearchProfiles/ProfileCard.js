@@ -11,14 +11,21 @@ class ProfileCard extends Component {
     }
     return false;
   }
+
+  onMemberClick = () => {
+    const { profile, history } = this.props;
+    const { id } = profile;
+    history.push("/member/" + id);
+  };
+
   render() {
     const {
       profile,
       showMsgModal,
       likeProfile,
-      history,
       t,
-      dayjs
+      dayjs,
+      distanceMetric
     } = this.props;
 
     const stdCheck = profile.users.every(
@@ -28,23 +35,23 @@ class ProfileCard extends Component {
       user => user.verifications.photo === true
     );
     let badge = "";
-    if (photoCheck) {
-      badge = "verified";
-    }
+    if (photoCheck) badge = "verified";
+
     return (
       <div className="col-md-6 col-lg-4">
         <div className={"card-item " + badge}>
-          <span onClick={() => history.push("/member/" + profile.id)}>
+          <span onClick={this.onMemberClick}>
             <ProfilePic profilePic={profile.profilePic} />
           </span>
           <div className="info">
-            <span onClick={() => history.push("/member/" + profile.id)}>
+            <span onClick={this.onMemberClick}>
               <ProfileInfoBox
                 users={profile.users}
                 online={profile.showOnline && profile.online}
                 distance={profile.distance}
                 t={t}
                 dayjs={dayjs}
+                distanceMetric={distanceMetric}
               />
             </span>
             <DesiresBlock desires={profile.desires} t={t} id={profile.id} />

@@ -12,10 +12,6 @@ class DistanceSlider extends Component {
     return false;
   }
 
-  onTipFormatter = value => {
-    return milesToKilometers(value);
-  };
-
   onAfterChange = e => {
     const { setValue } = this.props;
     if (setValue) setValue(e);
