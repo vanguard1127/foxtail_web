@@ -209,7 +209,12 @@ class SearchEvents extends PureComponent {
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
-              <MyEvents t={t} ErrorHandler={ErrorHandler} dayjs={dayjs} />
+              <MyEvents
+                t={t}
+                ErrorHandler={ErrorHandler}
+                dayjs={dayjs}
+                distanceMetric={session.currentuser.distanceMetric}
+              />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
               {" "}

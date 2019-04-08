@@ -59,7 +59,7 @@ class MyEvents extends PureComponent {
   }
 
   render() {
-    const { t, ErrorHandler, dayjs } = this.props;
+    const { t, ErrorHandler, dayjs, distanceMetric } = this.props;
     return (
       <Query query={GET_MY_EVENTS} fetchPolicy="cache-and-network">
         {({ data, loading, error, fetchMore }) => {
@@ -110,6 +110,7 @@ class MyEvents extends PureComponent {
                     >
                       {myEvents.map(event => (
                         <EventCard
+                          distanceMetric={distanceMetric}
                           key={Math.random()}
                           event={event}
                           t={t}
