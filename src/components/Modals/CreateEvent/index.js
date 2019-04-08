@@ -251,7 +251,7 @@ class CreateEvent extends PureComponent {
                                 value: el.target.value
                               })
                             }
-                            value={eventname}
+                            value={eventname || ""}
                           />
                           <label title={t("evename")} htmlFor="eventname" />
                         </div>
@@ -269,7 +269,7 @@ class CreateEvent extends PureComponent {
                                 value: el.target.value
                               })
                             }
-                            value={tagline}
+                            value={tagline || ""}
                           />
                           <label title={t("tagline")} htmlFor="tagline" />
                         </div>
