@@ -218,6 +218,9 @@ class ProfilePage extends PureComponent {
                               }
                               t={t}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              distanceMetric={
+                                session.currentuser.distanceMetric
+                              }
                             />
                             <ProfileBio
                               about={about}

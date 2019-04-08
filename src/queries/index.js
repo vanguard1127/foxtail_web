@@ -809,6 +809,7 @@ export const GET_CURRENT_USER = gql`
       isProfileOK
       isEmailOK
       tours
+      distanceMetric
       location {
         city
         crds {

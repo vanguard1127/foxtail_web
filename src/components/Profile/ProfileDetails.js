@@ -12,15 +12,19 @@ class ProfileDetails extends Component {
       showShareModal,
       showBlockModal,
       t,
-      ErrorBoundary
+      ErrorBoundary,
+      distanceMetric
     } = this.props;
     let distance;
+    let distanceUnits =
+      distanceMetric === "mi" ? "common:miaway" : "common:kmaway";
+
     if (profile.distance === null) {
       distance = t("na");
     } else if (profile.distance < 1) {
-      distance = "< 1" + t("common:" + "miaway");
+      distance = "< 1" + t(distanceUnits);
     } else {
-      distance = profile.distance + t("common:" + "miaway");
+      distance = profile.distance + t(distanceUnits);
     }
 
     return (

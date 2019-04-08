@@ -361,7 +361,7 @@ class EditCanvasImage extends PureComponent {
           onClick={this.handleExportClick}
           className="greenButton"
         >
-          {t("Save")}
+          {!uploading ? t("Save") : t("Uploading")}
         </span>
       </div>
     );
