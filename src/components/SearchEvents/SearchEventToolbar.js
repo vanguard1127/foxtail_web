@@ -18,7 +18,8 @@ class SearchEventToolbar extends Component {
       handleChangeSelect,
       maxDistance,
       ErrorHandler,
-      t
+      t,
+      distanceMetric
     } = this.props;
     return (
       <div className="header">
@@ -30,6 +31,7 @@ class SearchEventToolbar extends Component {
               handleChangeSelect={handleChangeSelect}
               maxDistance={maxDistance}
               t={t}
+              distanceMetric={distanceMetric}
             />
             <CreateEventBtn t={t} ErrorHandler={ErrorHandler} />
           </div>

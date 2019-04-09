@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { formatedMilesToKm } from "utils/distanceMetric";
 import AddressSearch from "../common/AddressSearch";
 import Select from "../common/Select";
 
@@ -20,6 +21,14 @@ class SearchEventsFilters extends PureComponent {
     );
   };
 
+  getDistanceOptions() {
+    const { distanceMetric, t } = this.props;
+    return [5, 10, 20, 50].map(d => ({
+      label: `${formatedMilesToKm(d, distanceMetric, t)}`,
+      value: d
+    }));
+  }
+
   render() {
     const {
       location,
@@ -34,12 +43,7 @@ class SearchEventsFilters extends PureComponent {
           onChange={handleChangeSelect}
           label={t("disway") + ":"}
           defaultOptionValue={maxDistance.toString()}
-          options={[
-            { label: "5" + " " + t("miles"), value: "5" },
-            { label: "10" + " " + t("miles"), value: "10" },
-            { label: "20" + " " + t("miles"), value: "20" },
-            { label: "50" + " " + t("miles"), value: "50" }
-          ]}
+          options={this.getDistanceOptions()}
           className={"dropdown"}
         />
         <div>
