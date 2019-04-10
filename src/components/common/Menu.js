@@ -18,7 +18,7 @@ class Menu extends PureComponent {
     document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
-  handleClickOutside = event => {
+  handleClickOutside = async event => {
     if (
       this.wrapperRef &&
       !this.wrapperRef.current.contains(event.target) &&

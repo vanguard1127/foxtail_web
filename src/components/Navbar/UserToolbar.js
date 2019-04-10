@@ -21,8 +21,8 @@ class UserToolbar extends Component {
   render() {
     const { currentuser, href, t, setRef } = this.props;
     return (
-      <Query query={GET_COUNTS} fetchPolicy="cache-and-network">
-        {({ data, loading, error, subscribeToMore }) => {
+      <Query query={GET_COUNTS} fetchPolicy="cache-first">
+        {({ data, loading, error, refetch, subscribeToMore }) => {
           if (loading) {
             return (
               <div className="function">
@@ -96,11 +96,14 @@ class UserToolbar extends Component {
                 />
               </ErrorHandler.ErrorBoundary>
               <ErrorHandler.ErrorBoundary>
-                {" "}
-                <NoticesItem count={noticesCount} ErrorHandler={ErrorHandler} />
+                <NoticesItem
+                  count={noticesCount}
+                  countRefetch={refetch}
+                  ErrorHandler={ErrorHandler}
+                  t={t}
+                />
               </ErrorHandler.ErrorBoundary>
               <ErrorHandler.ErrorBoundary>
-                {" "}
                 <div className="user hidden-mobile">
                   <MyAccountItem currentuser={currentuser} setRef={setRef} />
                 </div>

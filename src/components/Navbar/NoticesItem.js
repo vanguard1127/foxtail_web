@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { withRouter, NavLink } from "react-router-dom";
 import NoticesList from "./NoticesList";
 import Menu from "../common/Menu";
@@ -27,10 +27,40 @@ const intialState = {
   userAlert: null
 };
 
-class NoticesItem extends PureComponent {
+class NoticesItem extends Component {
   state = {
     ...intialState
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.read !== nextState.read ||
+      this.state.seen !== nextState.seen ||
+      this.state.notificationIDs.length !== nextState.notificationIDs.length ||
+      this.state.count !== nextState.count ||
+      this.state.skip !== nextState.skip ||
+      this.state.visible !== nextState.visible ||
+      this.state.alertVisible !== nextState.alertVisible ||
+      this.state.userAlert !== nextState.userAlert ||
+      this.props.count !== nextProps.count
+    ) {
+      console.log("vccvvcvcv", this.state, nextState);
+      console.log(
+        "vccvvcvcv",
+        this.state.read === nextState.read,
+        this.state.seen === nextState.seen,
+        this.state.notificationIDs.length === nextState.notificationIDs.length,
+        this.state.count === nextState.count,
+        this.state.skip === nextState.skip,
+        this.state.visible === nextState.visible,
+        this.state.alertVisible === nextState.alertVisible,
+        this.state.userAlert === nextState.userAlert,
+        this.props.count === nextProps.count
+      );
+      return true;
+    }
+    return false;
+  }
 
   componentDidMount() {
     this.mounted = true;
@@ -120,6 +150,7 @@ class NoticesItem extends PureComponent {
       this.setState({ notificationIDs: unseenIDs, seen: true }, () => {
         updateNotifications()
           .then(({ data }) => {
+            this.props.countRefetch();
             this.clearState();
           })
           .catch(res => {
@@ -222,15 +253,20 @@ class NoticesItem extends PureComponent {
                 fetchMore,
                 refetch
               }) => {
-                if (loading) {
-                  return null;
-                } else if (error) {
-                  return <div>{error.message}</div>;
-                } else if (
+                if (
+                  loading ||
                   !data.getNotifications ||
                   !data.getNotifications.notifications
                 ) {
-                  return <div>{t("common:error")}!</div>;
+                  return (
+                    <span>
+                      <div className="notification">
+                        <span className="icon alert" />
+                      </div>{" "}
+                    </span>
+                  );
+                } else if (error) {
+                  return <div>{error.message}</div>;
                 } else if (!data.getNotifications.notifications.length === 0) {
                   return <div>{t("nonots")} :)</div>;
                 }
@@ -255,7 +291,8 @@ class NoticesItem extends PureComponent {
                 }
 
                 const { notifications, alert } = data.getNotifications;
-
+                //TODO: find why this is rerendering so much
+                //console.log("WHY AM I HAPPENING MULTIPLE TIMES");
                 return (
                   <span>
                     <Menu

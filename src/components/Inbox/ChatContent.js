@@ -67,34 +67,34 @@ class ChatContent extends PureComponent {
                 <ErrorHandler.report error={error} calledName={"getSettings"} />
               );
             }
-            console.log("QUERY", chatID, cursor, limit);
-            // if (!unsubscribe) {
-            //   unsubscribe = subscribeToMore({
-            //     document: NEW_MESSAGE_SUB,
-            //     variables: {
-            //       chatID: chatID
-            //     },
-            //     updateQuery: (prev, { subscriptionData }) => {
-            //       const { newMessageSubscribe } = subscriptionData.data;
-            //       if (!newMessageSubscribe) {
-            //         return prev;
-            //       }
-            //       if (prev.getMessages) {
-            //         prev.getMessages.messages = [
-            //           newMessageSubscribe,
-            //           ...prev.getMessages.messages
-            //         ];
-            //       } else {
-            //         prev.getMessages = {
-            //           messages: [newMessageSubscribe],
-            //           __typename: "ChatType"
-            //         };
-            //       }
-            //       return prev;
-            //     }
-            //   });
-            // }
-            console.log("MESSAGES", data.getMessages.messages);
+
+            if (!unsubscribe) {
+              unsubscribe = subscribeToMore({
+                document: NEW_MESSAGE_SUB,
+                variables: {
+                  chatID: chatID
+                },
+                updateQuery: (prev, { subscriptionData }) => {
+                  const { newMessageSubscribe } = subscriptionData.data;
+                  if (!newMessageSubscribe) {
+                    return prev;
+                  }
+                  if (prev.getMessages) {
+                    prev.getMessages.messages = [
+                      newMessageSubscribe,
+                      ...prev.getMessages.messages
+                    ];
+                  } else {
+                    prev.getMessages = {
+                      messages: [newMessageSubscribe],
+                      __typename: "ChatType"
+                    };
+                  }
+                  return prev;
+                }
+              });
+            }
+
             return (
               <MessageList
                 chatID={chatID}

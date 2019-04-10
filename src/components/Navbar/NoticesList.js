@@ -190,19 +190,10 @@ class NoticesList extends Component {
             ))
           ) : (
             <div className="item" key="na">
-              <span className="text">No notifcations</span>
+              <span className="text">No notifications</span>
             </div>
           )}
-          {/* TODO: Use this if fails to waypoint */}
-          {/* <div className="item" key="way">
-            <Waypoint
-              onEnter={({ previousPosition }) => {
-                this.handleEnd({ previousPosition, fetchMore });
-              }}
-              style={{ padding: '5px', backgroundColor: 'blue' }}
-            />
-            <span className="text">No more notifications :)</span>
-          </div> */}
+
           <div
             key="way"
             style={{
