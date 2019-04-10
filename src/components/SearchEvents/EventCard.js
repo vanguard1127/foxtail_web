@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import milesToKilometers from "utils/distanceMetric";
 import EventDate from "../common/Event/EventDate";
 import EventCreator from "./EventCreator";
 
@@ -15,21 +16,20 @@ class EventCard extends Component {
   };
 
   render() {
-    const { event, t, dayjs, upcomingEvents } = this.props;
+    const { event, t, dayjs, upcomingEvents, distanceMetric } = this.props;
     const {
       eventname,
       startTime,
       participants,
       distance,
       ownerProfile,
-      image,
-      id
+      image
     } = event;
 
     return (
       <div className={upcomingEvents ? "col-md-12 col-lg-6" : "col-md-12"}>
         <div className="card-item">
-          <div className="thumbnail" onClick={() => this.onEventClick(id)}>
+          <div className="thumbnail" onClick={this.onEventClick}>
             <EventDate time={startTime} dayjs={dayjs} />
             <EventCreator ownerProfile={ownerProfile} />
             <span onClick={this.onEventClick}>
@@ -48,7 +48,8 @@ class EventCard extends Component {
               <span onClick={this.onEventClick}>{eventname}</span>
             </div>
             <span className="distance">
-              {distance} {t("common:" + "miaway")}
+              {milesToKilometers(distance, distanceMetric)}{" "}
+              {t("common:" + (distanceMetric === "mi" ? "miaway" : "kmaway"))}
             </span>
             <div className="goings">
               <ul>

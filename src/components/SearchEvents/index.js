@@ -181,14 +181,15 @@ class SearchEvents extends PureComponent {
       location,
       skip
     } = this.state;
-    const { t, ErrorHandler, session } = this.props;
+    const { t, ErrorHandler, session, refetch } = this.props;
+    const distanceMetric = session.currentuser.distanceMetric;
     ErrorHandler.setBreadcrumb("Search Events");
 
     if (session.currentuser.tours.indexOf("se") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Search Events");
       return (
         <div>
-          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+          <Tour ErrorHandler={ErrorHandler} refetchUser={refetch} />
         </div>
       );
     }
@@ -206,10 +207,16 @@ class SearchEvents extends PureComponent {
                 maxDistance={maxDistance}
                 t={t}
                 ErrorHandler={ErrorHandler}
+                distanceMetric={distanceMetric}
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
-              <MyEvents t={t} ErrorHandler={ErrorHandler} dayjs={dayjs} />
+              <MyEvents
+                t={t}
+                ErrorHandler={ErrorHandler}
+                dayjs={dayjs}
+                distanceMetric={distanceMetric}
+              />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
               {" "}
@@ -257,6 +264,7 @@ class SearchEvents extends PureComponent {
                       t={t}
                       dayjs={dayjs}
                       loading={this.state.loading}
+                      distanceMetric={distanceMetric}
                     />
                   );
                 }}

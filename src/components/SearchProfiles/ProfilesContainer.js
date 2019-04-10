@@ -134,7 +134,8 @@ class ProfilesContainer extends PureComponent {
       distance,
       ageRange,
       interestedIn,
-      dayjs
+      dayjs,
+      distanceMetric
     } = this.props;
 
     const {
@@ -233,6 +234,7 @@ class ProfilesContainer extends PureComponent {
                         }
                         t={t}
                         dayjs={dayjs}
+                        distanceMetric={distanceMetric}
                       />
                     )}
 

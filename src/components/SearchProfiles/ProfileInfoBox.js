@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
+import milesToKilometers from "utils/distanceMetric";
 
 class ProfileInfoBox extends PureComponent {
   render() {
-    const { users, online, distance, t, dayjs } = this.props;
+    const { users, online, distance, t, dayjs, distanceMetric } = this.props;
 
     return (
       <>
@@ -25,7 +26,8 @@ class ProfileInfoBox extends PureComponent {
               </li>
             )}
             <li>
-              ~ {distance} {t("mi")}
+              ~ {milesToKilometers(distance, distanceMetric)}{" "}
+              {t(distanceMetric)}
             </li>
           </ul>
         </span>

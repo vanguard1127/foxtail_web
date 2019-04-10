@@ -93,6 +93,7 @@ class SearchProfilesPage extends PureComponent {
             lat={lat}
             long={long}
             distance={distance}
+            distanceMetric={session.currentuser.distanceMetric}
             ageRange={ageRange}
             interestedIn={interestedIn}
             ErrorHandler={ErrorHandler}
