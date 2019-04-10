@@ -1005,6 +1005,7 @@
     background-color: #fff;
     color: #D6DDE4;
     box-shadow: 4px 9px 8px 0 rgba(0,0,0,0.03);
+    outline: none;
   }
 
   section.featured-profiles .slider .owl-nav .owl-prev i,
