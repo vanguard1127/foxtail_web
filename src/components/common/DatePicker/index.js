@@ -49,7 +49,7 @@ export default class CustomDatePicker extends Component {
             onChange={this.handleChange}
             dropdownMode="select"
             maxDate={date}
-            locale="fi"
+            locale="en"
           />
         </div>
       );

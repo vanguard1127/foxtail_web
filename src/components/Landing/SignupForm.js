@@ -35,9 +35,10 @@ class SignupForm extends Component {
     errors: {}
   };
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("NEW:", nextState);
-    console.log("OLD:", this.state);
-    console.log("EQUALS:", this.state.errors === nextState.errors);
+    //TODO: Figure out
+    // console.log("NEW:", nextState);
+    // console.log("OLD:", this.state);
+    // console.log("EQUALS:", this.state.errors === nextState.errors);
     return true;
   }
   componentDidMount() {
@@ -55,6 +56,7 @@ class SignupForm extends Component {
     try {
       await schema.validate(this.state);
       this.setState({ isValid: true, errors: {} });
+      this.props.setFormValues(this.state);
       return true;
     } catch (e) {
       console.log(e);
@@ -73,7 +75,7 @@ class SignupForm extends Component {
     ) : null;
 
   render() {
-    const { fbResolve, createUser, handleFBReturn, t } = this.props;
+    const { fbResolve, handleFBReturn, t } = this.props;
     const {
       username,
       email,
@@ -180,7 +182,6 @@ class SignupForm extends Component {
           <SignupButton
             disabled={!isValid}
             fbResolve={fbResolve}
-            createUser={createUser}
             handleFBReturn={handleFBReturn}
             setValue={this.setValue}
             validateForm={this.validateForm}

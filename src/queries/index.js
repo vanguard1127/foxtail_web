@@ -68,31 +68,6 @@ export const NEW_NOTICE_SUB = gql`
 `;
 
 /* Mutations */
-export const CREATE_USER = gql`
-  mutation(
-    $username: String!
-    $email: String!
-    $phone: String!
-    $gender: String!
-    $interestedIn: [String]
-    $dob: String!
-    $lang: String
-  ) {
-    createUser(
-      username: $username
-      email: $email
-      phone: $phone
-      gender: $gender
-      interestedIn: $interestedIn
-      dob: $dob
-      lang: $lang
-    ) {
-      token
-      access
-    }
-  }
-`;
-
 export const CREATE_SUBSCRIPTION = gql`
   mutation($token: String!, $ccLast4: String!) {
     createSubcription(token: $token, ccLast4: $ccLast4)
@@ -390,8 +365,28 @@ export const SEND_PHONE_RESET_EMAIL = gql`
 `;
 
 export const FB_RESOLVE = gql`
-  mutation($csrf: String!, $code: String!) {
-    fbResolve(csrf: $csrf, code: $code) {
+  mutation(
+    $csrf: String!
+    $code: String!
+    $isCreate: Boolean!
+    $email: String
+    $username: String
+    $lang: String
+    $dob: String
+    $gender: String
+    $interestedIn: [String]
+  ) {
+    fbResolve(
+      csrf: $csrf
+      code: $code
+      isCreate: $isCreate
+      email: $email
+      username: $username
+      lang: $lang
+      dob: $dob
+      gender: $gender
+      interestedIn: $interestedIn
+    ) {
       token
       access
     }

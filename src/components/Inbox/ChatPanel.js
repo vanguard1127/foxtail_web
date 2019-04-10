@@ -9,6 +9,7 @@ class ChatPanel extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    this.textInput.focus();
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -85,21 +86,21 @@ class ChatPanel extends PureComponent {
       }
     });
 
-    // let { getInbox } = cache.readQuery({
-    //   query: GET_INBOX
-    // });
+    let { getInbox } = cache.readQuery({
+      query: GET_INBOX
+    });
 
-    // getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
-    // getInbox[
-    //   getInbox.findIndex(el => el.chatID === chatID)
-    // ].createdAt = Date.now();
+    getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
+    getInbox[
+      getInbox.findIndex(el => el.chatID === chatID)
+    ].createdAt = Date.now();
 
-    // cache.writeQuery({
-    //   query: GET_INBOX,
-    //   data: {
-    //     ...getInbox
-    //   }
-    // });
+    cache.writeQuery({
+      query: GET_INBOX,
+      data: {
+        ...getInbox
+      }
+    });
   };
 
   render() {
@@ -121,6 +122,9 @@ class ChatPanel extends PureComponent {
               <div className="files" />
               <div className="textarea">
                 <input
+                  ref={input => {
+                    this.textInput = input;
+                  }}
                   placeholder={t("typemsg") + "..."}
                   value={text}
                   onChange={e => this.setText(e)}

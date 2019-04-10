@@ -59,7 +59,10 @@ class LoginButton extends PureComponent {
     const { t } = this.props;
 
     return (
-      <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
+      <Mutation
+        mutation={FB_RESOLVE}
+        variables={{ csrf, code, isCreate: false }}
+      >
         {fbResolve => {
           return (
             <AccountKit

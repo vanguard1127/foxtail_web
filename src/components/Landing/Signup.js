@@ -1,18 +1,18 @@
-import React, { PureComponent } from 'react';
-import { withRouter } from 'react-router-dom';
-import { Mutation } from 'react-apollo';
-import { CREATE_USER, FB_RESOLVE, LOGIN } from '../../queries';
-import SignupForm from './SignupForm';
+import React, { PureComponent } from "react";
+import { withRouter } from "react-router-dom";
+import { Mutation } from "react-apollo";
+import { FB_RESOLVE, LOGIN } from "../../queries";
+import SignupForm from "./SignupForm";
 const initialState = {
-  username: '',
-  email: '',
-  phone: '',
-  dob: '',
+  username: "",
+  email: "",
+  phone: "",
+  dob: "",
   interestedIn: [],
-  gender: '',
+  gender: "",
   isCouple: false,
-  csrf: '',
-  code: ''
+  csrf: "",
+  code: ""
 };
 
 class Signup extends PureComponent {
@@ -20,11 +20,11 @@ class Signup extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    this.props.ErrorHandler.setBreadcrumb('Signup loaded');
-    if (localStorage.getItem('token') !== null) {
+    this.props.ErrorHandler.setBreadcrumb("Signup loaded");
+    if (localStorage.getItem("token") !== null) {
       //TODO: Check somehow if user active...Possibly use session.
 
-      this.props.history.push('/members');
+      this.props.history.push("/members");
     }
   }
 
@@ -44,7 +44,7 @@ class Signup extends PureComponent {
     }
   };
 
-  handleFBReturn = ({ state, code }, fbResolve, createUser) => {
+  handleFBReturn = ({ state, code }, fbResolve) => {
     if (this.mounted) {
       this.setState(
         {
@@ -56,95 +56,34 @@ class Signup extends PureComponent {
             .then(({ data }) => {
               const { isCouple } = this.state;
               if (data.fbResolve === null) {
-                alert('Phone verification failed.');
-                return;
-              }
-              this.setState({ phone: data.fbResolve });
-              createUser()
-                .then(({ data }) => {
-                  if (data.createUser === null) {
-                    alert('Signup failed.');
-                    return;
-                  }
-                  localStorage.setItem(
-                    'token',
-                    data.createUser.find(token => token.access === 'auth').token
-                  );
-                  localStorage.setItem(
-                    'refreshToken',
-                    data.createUser.find(token => token.access === 'refresh')
-                      .token
-                  );
-
-                  if (isCouple) {
-                    this.props.history.push({
-                      pathname: '/settings',
-                      state: { couple: true, initial: true }
-                    });
-                  } else {
-                    this.props.history.push({
-                      pathname: '/settings',
-                      state: { initial: true }
-                    });
-                  }
-                })
-                .catch(res => {
-                  this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-                });
-            })
-            .catch(res => {
-              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-            });
-        }
-      );
-    }
-  };
-
-  testCreateUser = createUser => {
-    if (this.mounted) {
-      const rand = Math.floor(10000000 + Math.random() * 1000);
-      this.setState(
-        {
-          phone: rand.toString(),
-          username: 'TEST USER2',
-          email: rand.toString() + '@test.com',
-          dob: '12/12/1990',
-          interestedIn: ['M'],
-          gender: 'M',
-          isCouple: true
-        },
-        () =>
-          createUser()
-            .then(({ data }) => {
-              if (data.createUser === null) {
-                alert('Signup failed.');
+                alert("Signup failed.");
                 return;
               }
               localStorage.setItem(
-                'token',
-                data.createUser.find(token => token.access === 'auth').token
+                "token",
+                data.fbResolve.find(token => token.access === "auth").token
               );
               localStorage.setItem(
-                'refreshToken',
-                data.createUser.find(token => token.access === 'refresh').token
+                "refreshToken",
+                data.fbResolve.find(token => token.access === "refresh").token
               );
 
-              const { isCouple } = this.state;
               if (isCouple) {
                 this.props.history.push({
-                  pathname: '/settings',
+                  pathname: "/settings",
                   state: { couple: true, initial: true }
                 });
               } else {
                 this.props.history.push({
-                  pathname: '/settings',
+                  pathname: "/settings",
                   state: { initial: true }
                 });
               }
             })
             .catch(res => {
               this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-            })
+            });
+        }
       );
     }
   };
@@ -160,15 +99,15 @@ class Signup extends PureComponent {
           }
 
           localStorage.setItem(
-            'token',
-            data.login.find(token => token.access === 'auth').token
+            "token",
+            data.login.find(token => token.access === "auth").token
           );
           localStorage.setItem(
-            'refreshToken',
-            data.login.find(token => token.access === 'refresh').token
+            "refreshToken",
+            data.login.find(token => token.access === "refresh").token
           );
           // await this.props.refetch();
-          this.props.history.push('/members');
+          this.props.history.push("/members");
         })
         .catch(res => {
           const errors = res.graphQLErrors.map(error => {
@@ -195,111 +134,93 @@ class Signup extends PureComponent {
     } = this.state;
 
     return (
-      <Mutation mutation={FB_RESOLVE} variables={{ csrf, code }}>
+      <Mutation
+        mutation={FB_RESOLVE}
+        variables={{
+          csrf,
+          code,
+          username,
+          email,
+          dob,
+          interestedIn,
+          gender,
+          isCouple,
+          lang: localStorage.getItem("i18nextLng"),
+          isCreate: true
+        }}
+      >
         {fbResolve => {
           return (
-            <Mutation
-              mutation={CREATE_USER}
-              variables={{
-                phone,
-                username,
-                email,
-                dob,
-                interestedIn,
-                gender,
-                isCouple,
-                lang: localStorage.getItem('i18nextLng')
-              }}
-            >
-              {createUser => {
-                return (
-                  <div className="register-form">
-                    <div className="head">
-                      {t('Become a')} <b>Foxtail</b> {t('Member')}
-                    </div>
-                    <SignupForm
-                      fields={{
-                        username: '',
-                        email: '',
-                        dob: '',
-                        interestedIn: [],
-                        gender: '',
-                        isCouple: false
-                      }}
-                      fbResolve={fbResolve}
-                      createUser={createUser}
-                      handleFBReturn={this.handleFBReturn}
-                      setFormValues={this.setFormValues}
-                      setBreadcrumb={setBreadcrumb}
-                      t={t}
-                      ErrorHandler={ErrorHandler}
-                    />
-                    <div className="form terms">
-                      <span onClick={() => this.testCreateUser(createUser)}>
-                        Test Create
-                      </span>
-                      <br />
-                      <br />
-                      Test Users:
-                      <Mutation mutation={LOGIN} variables={{ phone }}>
-                        {(login, { loading, error }) => {
-                          return (
-                            <>
-                              <span
-                                onClick={() => {
-                                  this.setState({ phone: '1' }, () => {
-                                    this.handleLogin(login);
-                                  });
-                                }}
-                              >
-                                1
-                              </span>{' '}
-                              <span
-                                onClick={() => {
-                                  this.setState({ phone: '2' }, () => {
-                                    this.handleLogin(login);
-                                  });
-                                }}
-                              >
-                                2
-                              </span>{' '}
-                              <span
-                                href={null}
-                                onClick={() => {
-                                  this.setState({ phone: '3' }, () => {
-                                    this.handleLogin(login);
-                                  });
-                                }}
-                              >
-                                3
-                              </span>{' '}
-                              <span
-                                onClick={() => {
-                                  this.setState({ phone: '4' }, () =>
-                                    this.handleLogin(login)
-                                  );
-                                }}
-                              >
-                                4
-                              </span>
-                              <span
-                                onClick={() => {
-                                  this.setState({ phone: '5' }, () => {
-                                    this.handleLogin(login);
-                                  });
-                                }}
-                              >
-                                5
-                              </span>
-                            </>
-                          );
-                        }}
-                      </Mutation>
-                    </div>
-                  </div>
-                );
-              }}
-            </Mutation>
+            <div className="register-form">
+              <div className="head">
+                {t("Become a")} <b>Foxtail</b> {t("Member")}
+              </div>
+              <SignupForm
+                fbResolve={fbResolve}
+                handleFBReturn={this.handleFBReturn}
+                setFormValues={this.setFormValues}
+                setBreadcrumb={setBreadcrumb}
+                t={t}
+                ErrorHandler={ErrorHandler}
+              />
+              <div className="form terms">
+                Test Users:
+                <Mutation mutation={LOGIN} variables={{ phone }}>
+                  {(login, { loading, error }) => {
+                    return (
+                      <>
+                        <span
+                          onClick={() => {
+                            this.setState({ phone: "1" }, () => {
+                              this.handleLogin(login);
+                            });
+                          }}
+                        >
+                          1
+                        </span>{" "}
+                        <span
+                          onClick={() => {
+                            this.setState({ phone: "2" }, () => {
+                              this.handleLogin(login);
+                            });
+                          }}
+                        >
+                          2
+                        </span>{" "}
+                        <span
+                          href={null}
+                          onClick={() => {
+                            this.setState({ phone: "3" }, () => {
+                              this.handleLogin(login);
+                            });
+                          }}
+                        >
+                          3
+                        </span>{" "}
+                        <span
+                          onClick={() => {
+                            this.setState({ phone: "4" }, () =>
+                              this.handleLogin(login)
+                            );
+                          }}
+                        >
+                          4
+                        </span>
+                        <span
+                          onClick={() => {
+                            this.setState({ phone: "5" }, () => {
+                              this.handleLogin(login);
+                            });
+                          }}
+                        >
+                          5
+                        </span>
+                      </>
+                    );
+                  }}
+                </Mutation>
+              </div>
+            </div>
           );
         }}
       </Mutation>
