@@ -1,6 +1,6 @@
 import React from "react";
 // Import React FilePond
-import { FilePond, File, registerPlugin } from "react-filepond";
+import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
@@ -64,12 +64,8 @@ const PhotoUpload = ({ photos, setPhotos, t }) => {
         // Set current file objects to this.state
         setPhotos(fileItems.map(fileItem => fileItem.file));
       }}
-    >
-      {/* Update current files  */}
-      {photos.map(file => (
-        <File key={file} src={file} origin="local" />
-      ))}
-    </FilePond>
+      files={photos}
+    />
   );
 };
 
