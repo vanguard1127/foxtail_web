@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { miOptions, kiOptions } from "docs/options/en";
 import AddressSearch from "../common/AddressSearch";
 import Select from "../common/Select";
 
@@ -29,7 +30,6 @@ class SearchEventsFilters extends PureComponent {
       distanceMetric,
       t
     } = this.props;
-    const metricLabel = t(distanceMetric === "km" ? "kilometers" : "miles");
 
     return (
       <div className="settings-con">
@@ -37,12 +37,7 @@ class SearchEventsFilters extends PureComponent {
           onChange={handleChangeSelect}
           label={t("disway") + ":"}
           defaultOptionValue={maxDistance.toString()}
-          options={[
-            { label: `5 ${metricLabel}`, value: "5" },
-            { label: `10 ${metricLabel}`, value: "10" },
-            { label: `20 ${metricLabel}`, value: "20" },
-            { label: `50 ${metricLabel}`, value: "50" }
-          ]}
+          options={distanceMetric === "km" ? kiOptions : miOptions}
           className={"dropdown"}
         />
         <div>
