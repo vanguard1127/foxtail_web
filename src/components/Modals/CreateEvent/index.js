@@ -56,6 +56,8 @@ class CreateEvent extends PureComponent {
   componentDidMount() {
     this.mounted = true;
     this.props.ErrorHandler.setBreadcrumb("Create Event Modal");
+
+    this.textInput.focus();
   }
 
   componentWillUnmount() {
@@ -252,6 +254,9 @@ class CreateEvent extends PureComponent {
                               })
                             }
                             value={eventname || ""}
+                            ref={input => {
+                              this.textInput = input;
+                            }}
                           />
                           <label title={t("evename")} htmlFor="eventname" />
                         </div>

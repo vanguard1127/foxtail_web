@@ -63,9 +63,10 @@ class AcctSettings extends Component {
             <div className="col-md-12">
               <span className="heading">Account Setting</span>
             </div>
-            <div className="col-md-12">
-              <div className="item">
-                <button
+            <div className="col-md-6">
+              <div className="verification-box">
+                <span
+                  className="clickverify-btn"
                   onClick={() =>
                     this.setDialogContent({
                       title: "Update Email",
@@ -78,20 +79,18 @@ class AcctSettings extends Component {
                   }
                 >
                   Update Email
-                </button>
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="item">
-                <ChangePhoneBtn
-                  t={t}
-                  setValue={value => setValue({ name: "phone", value })}
-                />
+                </span>
               </div>
             </div>
             <div className="col-md-6">
-              <div className="item">
-                <button
+              <div className="verification-box">
+                <ChangePhoneBtn t={t} />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="verification-box">
+                <span
+                  className="clickverify-btn"
                   onClick={() =>
                     this.setDialogContent({
                       title: "Change Username",
@@ -103,12 +102,13 @@ class AcctSettings extends Component {
                   }
                 >
                   Change Username
-                </button>
+                </span>
               </div>
             </div>
             <div className="col-md-6">
-              <div className="item">
-                <button
+              <div className="verification-box">
+                <span
+                  className="clickverify-btn"
                   onClick={() =>
                     this.setDialogContent({
                       title: "Change Gender",
@@ -120,7 +120,7 @@ class AcctSettings extends Component {
                   }
                 >
                   Change Gender
-                </button>
+                </span>
               </div>
             </div>
           </div>
@@ -134,6 +134,7 @@ class AcctSettings extends Component {
               successMsg={successMsg}
               schema={schema}
               setValue={value => setValue({ name: setting, value })}
+              specialType={setting}
             />
           )}
         </div>

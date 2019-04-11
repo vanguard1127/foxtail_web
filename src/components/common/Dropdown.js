@@ -80,7 +80,7 @@ class Dropdown extends Component {
             : null
         }
         options={options}
-        className={"dropdown"}
+        className={"dropdown wide"}
       />
     );
   }

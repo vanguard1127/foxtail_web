@@ -163,6 +163,7 @@ class SettingsPage extends PureComponent {
 
   handleSubmit = (updateSettings, saveImage) => {
     const { ErrorHandler, isCouple, isInitial, refetchUser } = this.props;
+
     this.setErrorHandler("Settings updated");
     if (!saveImage) {
       if (this.mounted) {

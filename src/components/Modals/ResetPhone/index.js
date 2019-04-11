@@ -1,18 +1,26 @@
-import React, { PureComponent } from 'react';
-import { withNamespaces } from 'react-i18next';
-import EmailPhoneResetBtn from './EmailPhoneResetBtn';
-import ResetPhoneButton from './ResetPhoneButton';
-import Select from './Select';
-import { countryCodeOptions } from '../../../docs/options';
+import React, { PureComponent } from "react";
+import { withNamespaces } from "react-i18next";
+import EmailPhoneResetBtn from "./EmailPhoneResetBtn";
+import ResetPhoneButton from "./ResetPhoneButton";
+import Select from "./Select";
+import { countryCodeOptions } from "../../../docs/options";
 
 class ResetPhone extends PureComponent {
-  state = { text: '', code: '+1' };
+  state = { text: "", code: "+1" };
+  componentDidMount() {
+    this.mounted = true;
+    this.textInput.focus();
+  }
   handleTextChange = event => {
-    this.setState({ text: event.target.value.replace(/\D/g, '') });
+    if (this.mounted) {
+      this.setState({ text: event.target.value.replace(/\D/g, "") });
+    }
   };
 
   handleChange = e => {
-    this.setState({ code: e.value });
+    if (this.mounted) {
+      this.setState({ code: e.value });
+    }
   };
 
   render() {
@@ -35,7 +43,7 @@ class ResetPhone extends PureComponent {
                       onChange={this.handleChange}
                       defaultOptionValue={code}
                       options={countryCodeOptions}
-                      className={'dropdown'}
+                      className={"dropdown"}
                     />
 
                     <div className="phoneText input">
@@ -44,6 +52,9 @@ class ResetPhone extends PureComponent {
                         placeholder="Phone Number"
                         onChange={this.handleTextChange}
                         value={text}
+                        ref={input => {
+                          this.textInput = input;
+                        }}
                       />
                     </div>
 
@@ -93,4 +104,4 @@ class ResetPhone extends PureComponent {
     );
   }
 }
-export default withNamespaces('modals')(ResetPhone);
+export default withNamespaces("modals")(ResetPhone);

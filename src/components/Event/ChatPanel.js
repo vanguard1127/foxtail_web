@@ -9,6 +9,7 @@ class ChatPanel extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    this.textInput.focus();
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -37,7 +38,7 @@ class ChatPanel extends PureComponent {
   updateComments = cache => {
     const { chatID, currentuser, limit } = this.props;
     const { text } = this.state;
-    console.log(cache, "cache");
+
     let { getComments } = cache.readQuery({
       query: GET_COMMENTS,
       variables: { chatID, cursor: null, limit }
@@ -59,7 +60,6 @@ class ChatPanel extends PureComponent {
       ...getComments.messages
     ];
 
-    console.log(getComments.messages, "messages");
     cache.writeQuery({
       query: GET_COMMENTS,
       variables: { chatID, cursor: null, limit },
@@ -86,6 +86,9 @@ class ChatPanel extends PureComponent {
               value={text}
               onChange={e => this.setText(e)}
               placeholder={t("nowyoucan") + "..."}
+              ref={input => {
+                this.textInput = input;
+              }}
             />
             <button
               onClick={e => this.submitMessage(e, postComment)}

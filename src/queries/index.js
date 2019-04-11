@@ -394,7 +394,7 @@ export const FB_RESOLVE = gql`
 `;
 
 export const FB_RESET_PHONE = gql`
-  mutation($csrf: String!, $code: String!, $token: String!) {
+  mutation($csrf: String!, $code: String!, $token: String) {
     fbResetPhone(csrf: $csrf, code: $code, token: $token) {
       token
       access
@@ -910,6 +910,8 @@ export const GET_PROFILE = gql`
       distance
       updatedAt
       online
+      likedByMe
+      msgdByMe
     }
   }
 `;

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
-import { FB_RESOLVE } from "../../queries";
+import { FB_RESET_PHONE } from "../../queries";
 import AccountKit from "react-facebook-account-kit";
 
 const initialState = {
@@ -19,9 +19,9 @@ class ChangePhoneBtn extends PureComponent {
     this.mounted = false;
   }
   //TODO: FIX THIS
-  handleFBReturn = ({ state, code }, fbResolve) => {
+  handleFBReturn = ({ state, code }, fbResetPhone) => {
     if (!state || !code) {
-      return toast.error("Error validating phone number");
+      return;
     }
     const { t } = this.props;
     if (this.mounted) {
@@ -30,13 +30,12 @@ class ChangePhoneBtn extends PureComponent {
         code
       });
     }
-    fbResolve()
+    fbResetPhone()
       .then(({ data }) => {
-        if (data.fbResolve === null) {
+        if (data.fbResetPhone === null) {
           alert("Error Please try again later");
           return;
         }
-        this.props.setValue(data.fbResolve);
         toast.success("Phone number has been changed");
       })
       .catch(res => {
@@ -52,17 +51,14 @@ class ChangePhoneBtn extends PureComponent {
     const { csrf, code } = this.state;
     const { t } = this.props;
     return (
-      <Mutation
-        mutation={FB_RESOLVE}
-        variables={{ csrf, code, isCreate: false }}
-      >
-        {fbResolve => {
+      <Mutation mutation={FB_RESET_PHONE} variables={{ csrf, code }}>
+        {fbResetPhone => {
           return (
             <AccountKit
               appId="172075056973555" // Update this!
               version="v1.1" // Version must be in form v{major}.{minor}
               onResponse={resp => {
-                this.handleFBReturn(resp, fbResolve);
+                this.handleFBReturn(resp, fbResetPhone);
               }}
               csrf={"889306f7553962e44db6ed508b4e8266"} // Required for security
               countryCode={"+1"} // eg. +60
@@ -71,9 +67,10 @@ class ChangePhoneBtn extends PureComponent {
               language={localStorage.getItem("i18nextLng")}
             >
               {p => (
-                <button {...p} className="login-btn">
+                <span {...p} className="clickverify-btn">
+                  {" "}
                   Change Phone
-                </button>
+                </span>
               )}
             </AccountKit>
           );

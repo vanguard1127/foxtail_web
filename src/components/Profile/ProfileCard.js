@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import ProfilePic from "./ProfilePic";
 import ProfileActions from "./ProfileActions";
 class ProfileCard extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.liked !== nextProps.liked ||
+      this.props.msgd !== nextProps.msgd
+    ) {
+      return true;
+    }
     return false;
   }
   render() {
@@ -12,9 +18,11 @@ class ProfileCard extends Component {
       likeProfile,
       showMsgModal,
       t,
-      ErrorBoundary
+      ErrorBoundary,
+      liked,
+      msgd
     } = this.props;
-
+    console.log("CH", liked, msgd);
     const { profilePic, id } = profile;
     return (
       <ErrorBoundary>
@@ -27,6 +35,8 @@ class ProfileCard extends Component {
               likeProfile={likeProfile}
               showMsgModal={showMsgModal}
               t={t}
+              liked={liked}
+              msgd={msgd}
             />
           </div>
         </div>

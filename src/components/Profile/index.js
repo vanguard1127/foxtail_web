@@ -93,8 +93,9 @@ class ProfilePage extends PureComponent {
     }
   };
 
-  handleLike = (profile, likeProfile) => {
+  handleLike = (profile, likeProfile, refetch) => {
     this.props.ErrorHandler.setBreadcrumb("Like Profile:" + likeProfile);
+
     likeProfile()
       .then(({ data }) => {
         switch (data.likeProfile) {
@@ -108,10 +109,17 @@ class ProfilePage extends PureComponent {
             this.setMatchDlgVisible(true, profile, data.likeProfile);
             break;
         }
+        refetch();
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
+  };
+  setMessaged = (profileID, refetch) => {
+    this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
+    if (this.mounted) {
+      refetch();
+    }
   };
   render() {
     const { id } = this.props.match.params;
@@ -143,7 +151,7 @@ class ProfilePage extends PureComponent {
         {(likeProfile, { loading }) => {
           return (
             <Query query={GET_PROFILE} variables={{ id }}>
-              {({ data, loading, error }) => {
+              {({ data, loading, error, refetch }) => {
                 if (error) {
                   document.title = "Error Occurred";
                   return (
@@ -177,6 +185,7 @@ class ProfilePage extends PureComponent {
                   .filter(
                     photoObject => photoObject.private && photoObject.url !== ""
                   );
+
                 return (
                   <section className="profile">
                     <div className="container">
@@ -188,9 +197,11 @@ class ProfilePage extends PureComponent {
                               setProfile={this.setProfile}
                               showMsgModal={() => this.setMsgModalVisible(true)}
                               likeProfile={() =>
-                                this.handleLike(profile, likeProfile)
+                                this.handleLike(profile, likeProfile, refetch)
                               }
                               t={t}
+                              liked={profile.likedByMe}
+                              msgd={profile.msgdByMe}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                             />
                             <DesiresSection
@@ -275,6 +286,7 @@ class ProfilePage extends PureComponent {
                         profile={profile}
                         close={() => this.setMsgModalVisible(false)}
                         ErrorHandler={ErrorHandler}
+                        setMsgd={pid => this.setMessaged(pid, refetch)}
                       />
                     )}
                     {profile && chatID && matchDlgVisible && (

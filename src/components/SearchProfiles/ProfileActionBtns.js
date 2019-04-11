@@ -12,7 +12,7 @@ class ProfileActionBtns extends Component {
   }
   render() {
     const { profile, likeProfile, showMsgModal, liked, msgd } = this.props;
-    console.log("SDDSds", msgd);
+
     return (
       <div className="function">
         {!msgd ? (
