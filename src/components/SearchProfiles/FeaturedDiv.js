@@ -12,7 +12,11 @@ const configLightGallery = {
 class FeaturedDiv extends Component {
   shouldComponentUpdate(nextProps) {
     const { featuredProfiles } = this.props;
-    if (featuredProfiles !== nextProps.featuredProfiles) {
+    if (
+      featuredProfiles !== nextProps.featuredProfiles ||
+      this.props.likedProfiles !== nextProps.likedProfiles ||
+      this.props.msgdProfiles !== nextProps.msgdProfiles
+    ) {
       return true;
     }
     return false;
@@ -36,7 +40,9 @@ class FeaturedDiv extends Component {
       likeProfile,
       t,
       history,
-      dayjs
+      dayjs,
+      likedProfiles,
+      msgdProfiles
     } = this.props;
 
     return (
@@ -86,6 +92,8 @@ class FeaturedDiv extends Component {
                       t={t}
                       dayjs={dayjs}
                       history={history}
+                      liked={likedProfiles.includes(profile.id)}
+                      msgd={msgdProfiles.includes(profile.id)}
                     />
                   );
                 })}

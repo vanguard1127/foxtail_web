@@ -1,26 +1,39 @@
 import React, { Component } from "react";
 
 class ProfileActionBtns extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.liked !== nextProps.liked ||
+      this.props.msgd !== nextProps.msgd
+    ) {
+      return true;
+    }
     return false;
   }
   render() {
-    const { profile, likeProfile, showMsgModal } = this.props;
-
+    const { profile, likeProfile, showMsgModal, liked, msgd } = this.props;
+    console.log("SDDSds", msgd);
     return (
       <div className="function">
-        <div
-          className="btn heart"
-          onClick={() => {
-            likeProfile(profile);
-          }}
-        />
-        <div
-          className="btn message"
-          onClick={() => {
-            showMsgModal(profile);
-          }}
-        />
+        {!msgd ? (
+          <>
+            <div
+              className={liked ? "btn unheart" : "btn heart"}
+              onClick={() => {
+                likeProfile(profile);
+              }}
+            />
+
+            <div
+              className="btn message"
+              onClick={() => {
+                showMsgModal(profile);
+              }}
+            />
+          </>
+        ) : (
+          <div className="btn sent">Message Sent!</div>
+        )}
       </div>
     );
   }

@@ -6,7 +6,7 @@ import Modal from "../../common/Modal";
 import { toast } from "react-toastify";
 
 class DirectMsg extends Component {
-  state = { text: "" };
+  state = { text: "", sending: false };
   componentDidMount() {
     this.mounted = true;
   }
@@ -29,22 +29,27 @@ class DirectMsg extends Component {
   handleSubmit = (e, sendMessage) => {
     this.props.ErrorHandler.setBreadcrumb("send direct message");
     e.preventDefault();
-    sendMessage()
-      .then(async ({ data }) => {
-        if (data.sendMessage) {
-          toast.success("Message Sent");
+    this.setState({ sending: true }, () => {
+      sendMessage()
+        .then(async ({ data }) => {
+          if (data.sendMessage) {
+            toast.success("Message Sent");
 
-          if (this.mounted) {
-            this.setState({ text: "" });
+            if (this.mounted) {
+              if (this.props.setMsgd) {
+                this.props.setMsgd(this.props.profile.id);
+              }
+              this.setState({ text: "" });
+            }
+            this.props.close();
+          } else {
+            toast.error("Message not sent.");
           }
-          this.props.close();
-        } else {
-          toast.error("Message not sent.");
-        }
-      })
-      .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-      });
+        })
+        .catch(res => {
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        });
+    });
   };
 
   render() {
@@ -54,7 +59,7 @@ class DirectMsg extends Component {
       t,
       ErrorHandler: { ErrorBoundary }
     } = this.props;
-    const { text } = this.state;
+    const { text, sending } = this.state;
     return (
       <Modal
         header={
@@ -85,6 +90,7 @@ class DirectMsg extends Component {
                     className="color"
                     type="submit"
                     onClick={e => this.handleSubmit(e, sendMessage)}
+                    disabled={sending}
                   >
                     {t("common:Send")}
                   </button>

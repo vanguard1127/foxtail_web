@@ -19,7 +19,9 @@ class ProfilesContainer extends PureComponent {
     msgModalVisible: false,
     profile: null,
     matchDlgVisible: false,
-    chatID: null
+    chatID: null,
+    likedProfiles: [],
+    msgdProfiles: []
   };
 
   componentDidMount() {
@@ -49,9 +51,17 @@ class ProfilesContainer extends PureComponent {
 
   handleLike = (likeProfile, profile) => {
     this.props.ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
+    let { likedProfiles } = this.state;
+    if (likedProfiles.includes(profile.id)) {
+      likedProfiles = likedProfiles.filter(
+        likeID => likeID.toString() !== profile.id
+      );
+    } else {
+      likedProfiles = [...this.state.likedProfiles, profile.id];
+    }
 
     if (this.mounted) {
-      this.setState({ profile }, () => {
+      this.setState({ profile, likedProfiles }, () => {
         likeProfile()
           .then(({ data }) => {
             switch (data.likeProfile) {
@@ -124,6 +134,15 @@ class ProfilesContainer extends PureComponent {
     }
   };
 
+  setMessaged = profileID => {
+    this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
+    if (this.mounted) {
+      this.setState({
+        msgdProfiles: [...this.state.msgdProfiles, profileID]
+      });
+    }
+  };
+
   render() {
     const {
       ErrorHandler,
@@ -141,10 +160,11 @@ class ProfilesContainer extends PureComponent {
     const {
       profile,
       msgModalVisible,
-      skip,
       matchDlgVisible,
       chatID,
-      loading
+      loading,
+      likedProfiles,
+      msgdProfiles
     } = this.state;
     if (this.props.loading && loading) {
       return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
@@ -192,6 +212,7 @@ class ProfilesContainer extends PureComponent {
           }
 
           const result = data.searchProfiles;
+
           return (
             <Mutation
               mutation={LIKE_PROFILE}
@@ -214,6 +235,8 @@ class ProfilesContainer extends PureComponent {
                         history={history}
                         t={t}
                         dayjs={dayjs}
+                        likedProfiles={likedProfiles}
+                        msgdProfiles={msgdProfiles}
                       />
                     )}
                     {result.profiles.length !== 0 && (
@@ -235,6 +258,8 @@ class ProfilesContainer extends PureComponent {
                         t={t}
                         dayjs={dayjs}
                         distanceMetric={distanceMetric}
+                        likedProfiles={likedProfiles}
+                        msgdProfiles={msgdProfiles}
                       />
                     )}
 
@@ -252,6 +277,7 @@ class ProfilesContainer extends PureComponent {
                         profile={profile}
                         close={() => this.setMsgModalVisible(false)}
                         ErrorHandler={ErrorHandler}
+                        setMsgd={this.setMessaged}
                       />
                     )}
                     {profile && chatID && matchDlgVisible && (

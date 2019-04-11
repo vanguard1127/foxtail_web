@@ -16,43 +16,44 @@ class LoginButton extends PureComponent {
     this.mounted = false;
   }
   handleFBReturn = ({ state, code }, fbResolve) => {
-    if (!state || !code) {
-      return null;
-    }
-    const { t } = this.props;
-
+    console.log("Login opened");
     if (this.mounted) {
+      if (!state || !code) {
+        return null;
+      }
+      const { t } = this.props;
+
       this.setState({
         csrf: state,
         code
       });
-    }
 
-    fbResolve()
-      .then(async ({ data }) => {
-        if (data.fbResolve === null) {
-          alert(t("noUserError") + ".");
-          return;
-        } else {
-          localStorage.setItem(
-            "token",
-            data.fbResolve.find(token => token.access === "auth").token
-          );
-          localStorage.setItem(
-            "refreshToken",
-            data.fbResolve.find(token => token.access === "refresh").token
-          );
-          //  await this.props.refetch();
-          this.props.history.push("/members");
-        }
-      })
-      .catch(res => {
-        //TODO: Add error setter here
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
+      fbResolve()
+        .then(async ({ data }) => {
+          if (data.fbResolve === null) {
+            alert(t("noUserError") + ".");
+            return;
+          } else {
+            localStorage.setItem(
+              "token",
+              data.fbResolve.find(token => token.access === "auth").token
+            );
+            localStorage.setItem(
+              "refreshToken",
+              data.fbResolve.find(token => token.access === "refresh").token
+            );
+            //  await this.props.refetch();
+            this.props.history.push("/members");
+          }
+        })
+        .catch(res => {
+          //TODO: Add error setter here
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+          this.setState({ errors });
         });
-        this.setState({ errors });
-      });
+    }
   };
   render() {
     const { csrf, code } = this.state;

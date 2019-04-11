@@ -4,7 +4,11 @@ import { Waypoint } from "react-waypoint";
 
 class ProfilesDiv extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.profiles !== nextProps.profiles) {
+    if (
+      this.props.profiles !== nextProps.profiles ||
+      this.props.likedProfiles !== nextProps.likedProfiles ||
+      this.props.msgdProfiles !== nextProps.msgdProfiles
+    ) {
       return true;
     }
     return false;
@@ -18,7 +22,9 @@ class ProfilesDiv extends Component {
       handleEnd,
       t,
       dayjs,
-      distanceMetric
+      distanceMetric,
+      likedProfiles,
+      msgdProfiles
     } = this.props;
 
     return (
@@ -40,6 +46,8 @@ class ProfilesDiv extends Component {
                     history={history}
                     dayjs={dayjs}
                     distanceMetric={distanceMetric}
+                    liked={likedProfiles.includes(profile.id)}
+                    msgd={msgdProfiles.includes(profile.id)}
                   />
                 );
               })}

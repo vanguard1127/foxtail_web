@@ -307,9 +307,22 @@ class SettingsPage extends PureComponent {
     const { showCouplePopup } = this.state;
     this.setErrorHandler("Toggle Couple popup");
     if (this.mounted) {
-      this.setState({
-        showCouplePopup: !showCouplePopup
-      });
+      if (this.props.showCplModal) {
+        this.setState(
+          {
+            showCouplePopup: false
+          },
+          () => {
+            this.props.history.push({
+              pathname: "/settings"
+            });
+          }
+        );
+      } else {
+        this.setState({
+          showCouplePopup: !showCouplePopup
+        });
+      }
     }
   };
 
@@ -317,9 +330,22 @@ class SettingsPage extends PureComponent {
     const { showBlackPopup } = this.state;
     this.setErrorHandler("Toggle Blk popup");
     if (this.mounted) {
-      this.setState({
-        showBlackPopup: !showBlackPopup
-      });
+      if (this.props.showBlkModal) {
+        this.setState(
+          {
+            showBlackPopup: false
+          },
+          () => {
+            this.props.history.push({
+              pathname: "/settings"
+            });
+          }
+        );
+      } else {
+        this.setState({
+          showBlackPopup: !showBlackPopup
+        });
+      }
     }
   };
 
@@ -424,8 +450,15 @@ class SettingsPage extends PureComponent {
       title,
       okAction
     } = this.state;
-
-    const { userID, t, ErrorHandler, currentuser, refetchUser } = this.props;
+    const {
+      userID,
+      t,
+      ErrorHandler,
+      currentuser,
+      refetchUser,
+      showBlkModal,
+      showCplModal
+    } = this.props;
 
     let aboutErr = "";
     if (about === "") {
@@ -686,7 +719,7 @@ class SettingsPage extends PureComponent {
                   ErrorHandler={ErrorHandler}
                 />
               )}
-              {showCouplePopup && (
+              {(showCouplePopup || showCplModal) && (
                 <CoupleModal
                   close={this.toggleCouplesPopup}
                   setValue={({ name, value }) =>
@@ -698,7 +731,7 @@ class SettingsPage extends PureComponent {
                   ErrorHandler={ErrorHandler}
                 />
               )}
-              {showBlackPopup && (
+              {(showBlackPopup || showBlkModal) && (
                 <BlackModal
                   close={this.toggleBlackPopup}
                   userID={userID}

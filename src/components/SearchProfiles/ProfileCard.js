@@ -6,7 +6,11 @@ import ProfileInfoBox from "./ProfileInfoBox";
 
 class ProfileCard extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.profile !== nextProps.profile) {
+    if (
+      this.props.profile !== nextProps.profile ||
+      this.props.liked !== nextProps.liked ||
+      this.props.msgd !== nextProps.msgd
+    ) {
       return true;
     }
     return false;
@@ -25,7 +29,9 @@ class ProfileCard extends Component {
       likeProfile,
       t,
       dayjs,
-      distanceMetric
+      distanceMetric,
+      liked,
+      msgd
     } = this.props;
 
     const stdCheck = profile.users.every(
@@ -59,6 +65,8 @@ class ProfileCard extends Component {
               profile={profile}
               likeProfile={likeProfile}
               showMsgModal={showMsgModal}
+              liked={liked}
+              msgd={msgd}
             />
           </div>
         </div>

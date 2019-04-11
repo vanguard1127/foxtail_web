@@ -13,6 +13,7 @@ import validateLang from "../../utils/validateLang";
 import SettingsPage from "./SettingsPage";
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends PureComponent {
+  state;
   componentDidMount() {
     const { session } = this.props;
     const lang = validateLang(localStorage.getItem("i18nextLng"));
@@ -35,17 +36,18 @@ class Settings extends PureComponent {
     //TODO: If on Settigns make popup show
     const { session, refetch, t, ErrorHandler, location, history } = this.props;
     const { state } = location;
-
+    console.log("location", state);
     let isCouple = false;
     let isInitial = false;
     let showBlkModal = false;
     let showCplModal = false;
 
     if (state) {
+      console.log("INNNN", state.showCplMdl);
       if (state.couple) isCouple = state.couple;
+      if (state.initial) isInitial = state.initial;
       if (state.showBlkMdl) showBlkModal = state.showBlkMdl;
       if (state.showCplMdl) showCplModal = state.showCplMdl;
-      if (state.initial) isInitial = state.initial;
     }
 
     return (

@@ -8,8 +8,7 @@ class MyAccountMenu extends Component {
   }
 
   onMenuClick = state => {
-    const { history } = this.props;
-    history.push({
+    this.props.history.push({
       state,
       pathname: "/settings"
     });
@@ -24,7 +23,7 @@ class MyAccountMenu extends Component {
   };
 
   render() {
-    const { t, history } = this.props;
+    const { t } = this.props;
     return (
       <div className="toggle">
         <div className="dropdown hidden-mobile open">

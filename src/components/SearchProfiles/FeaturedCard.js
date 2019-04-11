@@ -5,7 +5,11 @@ import ProfileActionBtns from "./ProfileActionBtns";
 
 class FeaturedCard extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.profile !== nextProps.profile) {
+    if (
+      this.props.profile !== nextProps.profile ||
+      this.props.liked !== nextProps.liked ||
+      this.props.msgd !== nextProps.msgd
+    ) {
       return true;
     }
     return false;
@@ -17,7 +21,9 @@ class FeaturedCard extends Component {
       likeProfile,
       history,
       t,
-      dayjs
+      dayjs,
+      liked,
+      msgd
     } = this.props;
 
     const stdCheck = profile.users.every(
@@ -42,6 +48,8 @@ class FeaturedCard extends Component {
           likeProfile={likeProfile}
           showMsgModal={showMsgModal}
           profile={profile}
+          liked={liked}
+          msgd={msgd}
         />
       </div>
     );
