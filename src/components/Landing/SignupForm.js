@@ -35,31 +35,58 @@ class SignupForm extends Component {
     errors: {}
   };
   shouldComponentUpdate(nextProps, nextState) {
-    //TODO: Figure out
-    // console.log("NEW:", nextState);
-    // console.log("OLD:", this.state);
-    // console.log("EQUALS:", this.state.errors === nextState.errors);
-    return true;
+    const {
+      username,
+      email,
+      dob,
+      gender,
+      interestedIn,
+      isCouple,
+      isValid,
+      errors
+    } = this.state;
+
+    if (
+      username !== nextState.username ||
+      email !== nextState.email ||
+      dob !== nextState.dob ||
+      gender !== nextState.gender ||
+      interestedIn.length !== nextState.interestedIn.length ||
+      isCouple !== nextState.isCouple ||
+      isValid !== nextState.isValid ||
+      errors !== nextState.errors
+    ) {
+      return true;
+    }
+    return false;
   }
   componentDidMount() {
+    this.mounted = true;
     this.props.ErrorHandler.setBreadcrumb("Signup Form loaded");
   }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   setValue = ({ name, value }) => {
-    this.setState({ [name]: value }, () => {
-      if (!isEmpty(this.state.errors)) {
-        this.validateForm();
-      }
-    });
+    if (this.mounted) {
+      this.setState({ [name]: value }, () => {
+        if (!isEmpty(this.state.errors)) {
+          this.validateForm();
+        }
+      });
+    }
   };
 
   validateForm = async () => {
     try {
-      await schema.validate(this.state);
-      this.setState({ isValid: true, errors: {} });
-      this.props.setFormValues(this.state);
-      return true;
+      if (this.mounted) {
+        await schema.validate(this.state);
+        this.setState({ isValid: true, errors: {} });
+        this.props.setFormValues(this.state);
+        return true;
+      }
     } catch (e) {
-      console.log(e);
       let errors = { [e.path]: e.message };
 
       this.setState({ isValid: false, errors });

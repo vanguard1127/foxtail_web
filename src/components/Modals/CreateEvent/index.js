@@ -81,7 +81,6 @@ class CreateEvent extends PureComponent {
       }
       return true;
     } catch (e) {
-      //TODO: Erorr handler here
       let errors = {};
       e.inner.forEach(err => (errors[err.path] = err.message));
       this.setState({ errors });
@@ -114,7 +113,6 @@ class CreateEvent extends PureComponent {
     }
   };
 
-  //TODO: SETUP ERRORS ON THIS PAGE
   handleSubmit = async ({ createEvent, signS3 }) => {
     if (await this.validateForm()) {
       if (this.state.images.length > 0) {
@@ -129,12 +127,11 @@ class CreateEvent extends PureComponent {
           this.props.close();
         })
         .catch(res => {
-          console.log("3", res);
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
   };
 
-  //TODO: Are all of these async await needed?
   handleUpload = async ({ signS3 }) => {
     const { images } = this.state;
     if (images.length === 0) {
@@ -144,8 +141,7 @@ class CreateEvent extends PureComponent {
     const file = images[0];
 
     await this.setS3PhotoParams(file.name, file.type);
-    //format name on backend
-    //filename: this.formatFilename(file.name),
+
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
@@ -178,13 +174,11 @@ class CreateEvent extends PureComponent {
         }
       };
       const resp = await axios.put(signedRequest, file, options);
-      if (resp.status === 200) {
-        console.log("upload ok");
-      } else {
-        console.log("Something went wrong");
+      if (resp.status !== 200) {
+        toast.error("Upload error occured");
       }
     } catch (e) {
-      console.log(e);
+      this.props.ErrorHandler.catchErrors(e);
     }
   };
 
@@ -208,7 +202,7 @@ class CreateEvent extends PureComponent {
       });
     }
   };
-  //TODO: Min time for date pickers to prevent time overlap
+
   render() {
     const { close, t, ErrorHandler, eventID } = this.props;
     const {
@@ -223,7 +217,6 @@ class CreateEvent extends PureComponent {
       long,
       startTime,
       endTime,
-      images,
       image,
       showDesiresPopup,
       errors,

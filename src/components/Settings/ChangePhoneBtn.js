@@ -18,7 +18,7 @@ class ChangePhoneBtn extends PureComponent {
   componentWillUnmount() {
     this.mounted = false;
   }
-  //TODO: FIX THIS
+
   handleFBReturn = ({ state, code }, fbResetPhone) => {
     if (!state || !code) {
       return;
@@ -39,11 +39,7 @@ class ChangePhoneBtn extends PureComponent {
         toast.success("Phone number has been changed");
       })
       .catch(res => {
-        //TODO: Add event handler
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-        this.setState({ errors });
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 

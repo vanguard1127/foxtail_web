@@ -5,7 +5,7 @@ import ChatContent from "./ChatContent";
 import ChatPanel from "./ChatPanel";
 
 const LIMIT = 6;
-//TODO: Why is cursor null?
+
 class ChatWindow extends PureComponent {
   state = {
     loading: false,

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Select from "../common/Select";
+import Dropdown from "../common/Dropdown";
 import i18n from "../../i18n";
 
 const setLang = lang => {
   i18n.changeLanguage(lang);
 };
-
-//TODO:Add languages dictionary
 class AppSettings extends Component {
   shouldComponentUpdate(nextProps) {
     if (
@@ -42,7 +41,9 @@ class AppSettings extends Component {
 
             <div className="col-md-12">
               <div className="item">
-                <Select
+                <Dropdown
+                  value={lang}
+                  type={"lang"}
                   onChange={async e => {
                     await setValue({
                       name: "lang",
@@ -50,15 +51,8 @@ class AppSettings extends Component {
                     });
                     setLang(e.value);
                   }}
-                  label="Language"
-                  defaultOptionValue={lang}
-                  options={[
-                    { label: "English", value: "en" },
-                    { label: "Spanish", value: "es" },
-                    { label: "French", value: "fr" },
-                    { label: "German", value: "de" }
-                  ]}
-                  className={"dropdown"}
+                  placeholder={"Language"}
+                  lang={lang}
                 />
               </div>
             </div>

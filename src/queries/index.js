@@ -1,4 +1,3 @@
-//TODO: Remove apollo boost and replace with something smaller or already used
 import gql from "graphql-tag";
 
 /* Subscriptions */
@@ -837,6 +836,7 @@ export const GET_CURRENT_USER = gql`
           lat
         }
       }
+      active
     }
   }
 `;

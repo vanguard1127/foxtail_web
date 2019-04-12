@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import Dialog from "../Modals/Dialog";
 import ChangePhoneBtn from "./ChangePhoneBtn";
 import * as yup from "yup";
-
-//TODO:Add languages dictionary
-
 class AcctSettings extends Component {
   state = {
     showDialog: false,
@@ -84,7 +81,7 @@ class AcctSettings extends Component {
             </div>
             <div className="col-md-6">
               <div className="verification-box">
-                <ChangePhoneBtn t={t} />
+                <ChangePhoneBtn t={t} ErrorHandler={ErrorHandler} />
               </div>
             </div>
             <div className="col-md-6">

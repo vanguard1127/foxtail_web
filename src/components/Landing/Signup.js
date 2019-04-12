@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE, LOGIN } from "../../queries";
 import SignupForm from "./SignupForm";
+import withSession from "../withSession";
 const initialState = {
   username: "",
   email: "",
@@ -21,10 +22,11 @@ class Signup extends PureComponent {
   componentDidMount() {
     this.mounted = true;
     this.props.ErrorHandler.setBreadcrumb("Signup loaded");
-    if (localStorage.getItem("token") !== null) {
-      //TODO: Check somehow if user active...Possibly use session.
 
-      this.props.history.push("/members");
+    if (localStorage.getItem("token") !== null) {
+      if (this.props.session && this.props.session.currentuser.active) {
+        this.props.history.push("/members");
+      }
     }
   }
 
@@ -45,6 +47,9 @@ class Signup extends PureComponent {
   };
 
   handleFBReturn = ({ state, code }, fbResolve) => {
+    if (!state || !code) {
+      return;
+    }
     if (this.mounted) {
       this.setState(
         {
@@ -88,37 +93,38 @@ class Signup extends PureComponent {
     }
   };
 
-  //TODO:DELETE THIS
+  //TODO:DELETE THIS PRE LAUNCH
   handleLogin = login => {
-    if (this.mounted) {
-      login()
-        .then(async ({ data }) => {
-          if (data.login === null) {
-            alert("User doesn't exist.");
-            return;
-          }
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+      if (this.mounted) {
+        login()
+          .then(async ({ data }) => {
+            if (data.login === null) {
+              alert("User doesn't exist.");
+              return;
+            }
 
-          localStorage.setItem(
-            "token",
-            data.login.find(token => token.access === "auth").token
-          );
-          localStorage.setItem(
-            "refreshToken",
-            data.login.find(token => token.access === "refresh").token
-          );
-          // await this.props.refetch();
-          this.props.history.push("/members");
-        })
-        .catch(res => {
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
+            localStorage.setItem(
+              "token",
+              data.login.find(token => token.access === "auth").token
+            );
+            localStorage.setItem(
+              "refreshToken",
+              data.login.find(token => token.access === "refresh").token
+            );
+            // await this.props.refetch();
+            this.props.history.push("/members");
+          })
+          .catch(res => {
+            const errors = res.graphQLErrors.map(error => {
+              return error.message;
+            });
+
+            return errors;
           });
-
-          return errors;
-        });
+      }
     }
   };
-
   render() {
     const { t, setBreadcrumb, ErrorHandler } = this.props;
     let {
@@ -228,4 +234,4 @@ class Signup extends PureComponent {
   }
 }
 
-export default withRouter(Signup);
+export default withRouter(withSession(Signup));

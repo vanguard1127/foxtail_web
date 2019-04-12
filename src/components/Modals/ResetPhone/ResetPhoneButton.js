@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import { FB_RESET_PHONE } from '../../../queries';
-import AccountKit from 'react-facebook-account-kit';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import { FB_RESET_PHONE } from "../../../queries";
+import AccountKit from "react-facebook-account-kit";
 
 const initialState = {
-  csrf: '',
-  code: ''
+  csrf: "",
+  code: ""
 };
 class ResetPhoneButton extends PureComponent {
   state = { ...initialState };
@@ -16,8 +16,10 @@ class ResetPhoneButton extends PureComponent {
     this.mounted = false;
   }
   handleFBReturn = ({ state, code }, fbResetPhone) => {
-    const { t } = this.props;
-
+    const { t, ErrorHandler, history } = this.props;
+    if (!state || !code) {
+      return;
+    }
     if (this.mounted) {
       this.setState({
         csrf: state,
@@ -27,28 +29,23 @@ class ResetPhoneButton extends PureComponent {
     fbResetPhone()
       .then(async ({ data }) => {
         if (data.fbResetPhone === null) {
-          alert(t('noUserError') + '.');
+          alert(t("noUserError") + ".");
           return;
         } else {
-          alert('Phone Login Updated.');
+          alert("Phone Login Updated.");
           localStorage.setItem(
-            'token',
-            data.fbResetPhone.find(token => token.access === 'auth').token
+            "token",
+            data.fbResetPhone.find(token => token.access === "auth").token
           );
           localStorage.setItem(
-            'refreshToken',
-            data.fbResetPhone.find(token => token.access === 'refresh').token
+            "refreshToken",
+            data.fbResetPhone.find(token => token.access === "refresh").token
           );
-          //  await this.props.refetch();
-          this.props.history.push('/members');
+          history.push("/members");
         }
       })
       .catch(res => {
-        //TODO: Add error handler
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-        this.setState({ errors });
+        ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
   render() {
@@ -64,11 +61,11 @@ class ResetPhoneButton extends PureComponent {
               onResponse={resp => {
                 this.handleFBReturn(resp, fbResetPhone);
               }}
-              csrf={'889306f7553962e44db6ed508b4e8266'} // Required for security
-              countryCode={'+1'} // eg. +60
-              phoneNumber={''} // eg. 12345678
-              emailAddress={'noreply@foxtailapp.com'} // eg. me@site.com
-              language={localStorage.getItem('i18nextLng')}
+              csrf={"889306f7553962e44db6ed508b4e8266"} // Required for security
+              countryCode={"+1"} // eg. +60
+              phoneNumber={""} // eg. 12345678
+              emailAddress={"noreply@foxtailapp.com"} // eg. me@site.com
+              language={localStorage.getItem("i18nextLng")}
             >
               {p => (
                 <span className="color" {...p}>

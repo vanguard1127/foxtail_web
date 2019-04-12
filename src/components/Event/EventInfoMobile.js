@@ -3,7 +3,6 @@ import { formatedMilesToKm } from "utils/distanceMetric";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 
-//TODO: Fix this
 class EventInfoMobile extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { event: eventProps } = this.props;

@@ -135,7 +135,13 @@ class EventPage extends PureComponent {
           if (error) {
             document.title = "Error Occured";
             return (
-              <ErrorHandler.report error={error} calledName={"getEvent"} />
+              <ErrorHandler.report
+                error={error}
+                calledName={"getEvent"}
+                id={id}
+                type="event"
+                userID={session.currentuser.userID}
+              />
             );
           }
 

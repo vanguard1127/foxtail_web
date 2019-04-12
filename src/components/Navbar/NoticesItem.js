@@ -291,7 +291,7 @@ class NoticesItem extends Component {
                 }
 
                 const { notifications, alert } = data.getNotifications;
-                //TODO: find why this is rerendering so much
+                //TODO: TICKET: 290 find why this is rerendering so much
                 //console.log("WHY AM I HAPPENING MULTIPLE TIMES");
                 return (
                   <span>

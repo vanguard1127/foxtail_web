@@ -72,7 +72,7 @@ class ProfileTour extends PureComponent {
         content: `If no chat is selected there will be random information or ads here.`
       }
     ];
-    //TODO: fiure out next page tour to complete as above
+
     if (window.innerWidth < 768 && menuOpen) {
       tourConfig = [
         {

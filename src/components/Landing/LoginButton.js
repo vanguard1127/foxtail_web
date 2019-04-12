@@ -16,7 +16,6 @@ class LoginButton extends PureComponent {
     this.mounted = false;
   }
   handleFBReturn = ({ state, code }, fbResolve) => {
-    console.log("Login opened");
     if (this.mounted) {
       if (!state || !code) {
         return null;
@@ -47,11 +46,7 @@ class LoginButton extends PureComponent {
           }
         })
         .catch(res => {
-          //TODO: Add error setter here
-          const errors = res.graphQLErrors.map(error => {
-            return error.message;
-          });
-          this.setState({ errors });
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
   };

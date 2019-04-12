@@ -17,8 +17,7 @@ class ChatHeader extends PureComponent {
       isOwner,
       ErrorHandler,
       leaveDialog,
-      handleRemoveSelf,
-      history
+      handleRemoveSelf
     } = this.props;
 
     const { open } = this.state;

@@ -127,3 +127,24 @@ export const genderOptions = [
   { value: "T", label: "Transgender" },
   { value: "N", label: "NonBinary" }
 ];
+
+export const miOptions = [
+  { label: "5 Miles", value: "5" },
+  { label: "10 Miles", value: "10" },
+  { label: "20 Miles", value: "20" },
+  { label: "50 Miles", value: "50" }
+];
+
+export const kiOptions = [
+  { label: "5 Kilometers", value: "5" },
+  { label: "10 Kilometers", value: "10" },
+  { label: "20 Kilometers", value: "20" },
+  { label: "50 Kilometers", value: "50" }
+];
+
+export const langOptions = [
+  { label: "English", value: "en" },
+  { label: "Spanish", value: "es" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" }
+];

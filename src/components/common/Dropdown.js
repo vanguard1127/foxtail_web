@@ -46,6 +46,8 @@ class Dropdown extends Component {
         let ops;
         if (this.props.type === "gender") {
           ops = els.genderOptions;
+        } else if (this.props.type === "lang") {
+          ops = els.langOptions;
         } else {
           ops = els.sexOptions;
         }
@@ -69,20 +71,33 @@ class Dropdown extends Component {
     if (isLoading || options === null) {
       return <div>Loading...</div>;
     }
-    return (
-      <Select
-        onChange={onChange}
-        multiple={multiple}
-        label={placeholder}
-        defaultOptionValues={
-          multiple && value
-            ? value.map(val => options.find(el => el.value === val))
-            : null
-        }
-        options={options}
-        className={"dropdown wide"}
-      />
-    );
+    if (multiple) {
+      return (
+        <Select
+          onChange={onChange}
+          multiple={multiple}
+          label={placeholder}
+          defaultOptionValues={
+            multiple && value
+              ? value.map(val => options.find(el => el.value === val))
+              : null
+          }
+          options={options}
+          className={"dropdown wide"}
+        />
+      );
+    } else {
+      return (
+        <Select
+          onChange={onChange}
+          multiple={multiple}
+          label={placeholder}
+          defaultOptionValue={value}
+          options={options}
+          className={"dropdown wide"}
+        />
+      );
+    }
   }
 }
 

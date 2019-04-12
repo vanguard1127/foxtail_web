@@ -11,7 +11,6 @@ import withAuth from "../withAuth";
 import validateLang from "../../utils/validateLang";
 
 import SettingsPage from "./SettingsPage";
-//TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
 class Settings extends Component {
   shouldComponentUpdate() {
     return false;
@@ -33,9 +32,7 @@ class Settings extends Component {
     document.title = "My Account";
   }
 
-  //TODO: Set time below
   render() {
-    //TODO: If on Settigns make popup show
     const { session, refetch, t, ErrorHandler, location, history } = this.props;
     const { state } = location;
 
@@ -61,7 +58,11 @@ class Settings extends Component {
           }
           if (error) {
             return (
-              <ErrorHandler.report error={error} calledName="getSettings" />
+              <ErrorHandler.report
+                error={error}
+                calledName="getSettings"
+                userID={session.currentuser.userID}
+              />
             );
           }
 

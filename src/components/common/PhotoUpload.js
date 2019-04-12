@@ -24,7 +24,6 @@ registerPlugin(
 );
 //https://pqina.nl/filepond/docs/patterns/api/filepond-instance/#labels --- LABELS
 // Our app
-//TODO: Change to use files prop
 const PhotoUpload = ({ photos, setPhotos, t }) => {
   return (
     <FilePond

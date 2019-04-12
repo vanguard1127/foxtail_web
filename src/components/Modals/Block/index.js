@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { withNamespaces } from 'react-i18next';
-import { BLOCK_PROFILE, FLAG_ITEM } from '../../../queries';
-import { Mutation } from 'react-apollo';
-import { toast } from 'react-toastify';
-import Modal from '../../common/Modal';
-import { flagOptions } from '../../../docs/options';
+import React, { Component } from "react";
+import { withNamespaces } from "react-i18next";
+import { BLOCK_PROFILE, FLAG_ITEM } from "../../../queries";
+import { Mutation } from "react-apollo";
+import { toast } from "react-toastify";
+import Modal from "../../common/Modal";
+import { flagOptions } from "../../../docs/options";
 
 class BlockModal extends Component {
-  state = { other: false, reason: '', type: this.props.type };
+  state = { other: false, reason: "", type: this.props.type };
   componentDidMount() {
     this.mounted = true;
   }
@@ -26,8 +26,8 @@ class BlockModal extends Component {
 
   handleChange = e => {
     if (this.mounted) {
-      if (e.target.value === 'other') {
-        this.setState({ other: true, reason: '' });
+      if (e.target.value === "other") {
+        this.setState({ other: true, reason: "" });
       } else {
         this.setState({ reason: e.target.value, other: false });
       }
@@ -49,7 +49,7 @@ class BlockModal extends Component {
         if (this.state.type === flagOptions.Profile) {
           blockProfile().then(({ data }) => {
             if (data.blockProfile) {
-              toast.success('Selected profile has been reported. Thanks.');
+              toast.success("Selected profile has been reported. Thanks.");
               this.props.goToMain();
             }
           });
@@ -66,17 +66,17 @@ class BlockModal extends Component {
       return (
         <select
           defaultValue=""
-          style={{ display: 'flex', flex: '1', margin: '10px' }}
+          style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="nopro">{t('nopro')}</option>
-          <option value="stolenPic">{t('stolepic')}</option>
-          <option value="money">{t('money')}</option>
-          <option value="nudity">{t('Nudity')}</option>
-          <option value="rude">{t('Rude')}</option>
-          <option value="Spam">{t('Spam')}</option>
-          <option value="racist">{t('Racist')}</option>
-          <option value="other">{t('Other')}</option>
+          <option value="nopro">{t("nopro")}</option>
+          <option value="stolenPic">{t("stolepic")}</option>
+          <option value="money">{t("money")}</option>
+          <option value="nudity">{t("Nudity")}</option>
+          <option value="rude">{t("Rude")}</option>
+          <option value="Spam">{t("Spam")}</option>
+          <option value="racist">{t("Racist")}</option>
+          <option value="other">{t("Other")}</option>
         </select>
       );
     }
@@ -84,24 +84,24 @@ class BlockModal extends Component {
       return (
         <select
           defaultValue=""
-          style={{ display: 'flex', flex: '1', margin: '10px' }}
+          style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="nopro">{t('nopro')}</option>
+          <option value="nopro">{t("nopro")}</option>
         </select>
       );
     } else {
       return (
         <select
           defaultValue=""
-          style={{ display: 'flex', flex: '1', margin: '10px' }}
+          style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">{t('reason')}:</option>
-          <option value="illegalEvent">{t('illevent')}</option>
-          <option value="racist">{t('Racist')}</option>
-          <option value="Spam">{t('Spam')}</option>
-          <option value="Phishing">{t('Phishing')}</option>
+          <option value="">{t("reason")}:</option>
+          <option value="illegalEvent">{t("illevent")}</option>
+          <option value="racist">{t("Racist")}</option>
+          <option value="Spam">{t("Spam")}</option>
+          <option value="Phishing">{t("Phishing")}</option>
         </select>
       );
     }
@@ -120,17 +120,17 @@ class BlockModal extends Component {
     let title;
     if (type === flagOptions.Profile) {
       title =
-        t('repblock') +
-        ' ' +
+        t("repblock") +
+        " " +
         profile.users.map((user, index) => {
           if (index === 0) return user.username;
-          else return +' & ' + user.username;
+          else return +" & " + user.username;
         });
     }
     if (type === flagOptions.Chat) {
-      title = 'Report Group';
+      title = "Report Group";
     } else {
-      title = t('repblock');
+      title = t("repblock");
     }
     return (
       <Modal
@@ -156,18 +156,17 @@ class BlockModal extends Component {
                 >
                   {(blockProfile, { loading }) => {
                     if (loading) {
-                      //TODO: Make nice popup saving
-                      return <div>{t('Saving')}...</div>;
+                      return <div>{t("Saving")}...</div>;
                     }
                     return (
                       <span
                         onClick={() =>
                           this.handleSubmit(blockProfile, flagItem)
                         }
-                        className={'color'}
-                        disabled={reason === '' || loading}
+                        className={"color"}
+                        disabled={reason === "" || loading}
                       >
-                        {t('repblock')}
+                        {t("repblock")}
                       </span>
                     );
                   }}
@@ -184,14 +183,14 @@ class BlockModal extends Component {
               {blockMenu}
               <div
                 style={{
-                  display: other ? 'block' : 'none'
+                  display: other ? "block" : "none"
                 }}
               >
                 <input
-                  placeholder={t('otherreason')}
+                  placeholder={t("otherreason")}
                   onChange={this.handleTextChange}
                   value={reason}
-                  style={{ width: '100%' }}
+                  style={{ width: "100%" }}
                 />
               </div>
             </div>
@@ -202,4 +201,4 @@ class BlockModal extends Component {
   }
 }
 
-export default withNamespaces('modals')(BlockModal);
+export default withNamespaces("modals")(BlockModal);

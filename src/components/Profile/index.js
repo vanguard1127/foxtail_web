@@ -158,6 +158,9 @@ class ProfilePage extends PureComponent {
                     <ErrorHandler.report
                       error={error}
                       calledName={"getProfile"}
+                      userID={session.currentuser.userID}
+                      targetID={id}
+                      type="profile"
                     />
                   );
                 }

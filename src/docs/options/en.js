@@ -141,3 +141,10 @@ export const kiOptions = [
   { label: "20 Kilometers", value: "20" },
   { label: "50 Kilometers", value: "50" }
 ];
+
+export const langOptions = [
+  { label: "English", value: "en" },
+  { label: "Spanish", value: "es" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" }
+];

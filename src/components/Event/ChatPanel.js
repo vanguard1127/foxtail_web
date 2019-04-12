@@ -15,7 +15,6 @@ class ChatPanel extends PureComponent {
     this.mounted = false;
   }
 
-  //TODO: Optimistic UI new message to prevent empty msg problem
   submitMessage(e, postComment) {
     this.props.ErrorHandler.setBreadcrumb("Send comment (event)");
     e.preventDefault();

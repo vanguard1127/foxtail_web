@@ -24,7 +24,7 @@ class ResetPhone extends PureComponent {
   };
 
   render() {
-    const { close, t, ErrorBoundary, token, history } = this.props;
+    const { close, t, ErrorHandler, token, history } = this.props;
     const { code, text } = this.state;
     if (!token) {
       return (
@@ -59,13 +59,14 @@ class ResetPhone extends PureComponent {
                     </div>
 
                     <div className="submit">
-                      <ErrorBoundary>
+                      <ErrorHandler.ErrorBoundary>
                         <EmailPhoneResetBtn
                           t={t}
                           phone={code + text}
                           close={close}
+                          ErrorHandler={ErrorHandler}
                         />
-                      </ErrorBoundary>
+                      </ErrorHandler.ErrorBoundary>
                       <button className="border" onClick={() => close()}>
                         Cancel
                       </button>
@@ -88,9 +89,14 @@ class ResetPhone extends PureComponent {
               <form>
                 <div className="form-content">
                   <div className="submit">
-                    <ErrorBoundary>
-                      <ResetPhoneButton token={token} t={t} history={history} />
-                    </ErrorBoundary>
+                    <ErrorHandler.ErrorBoundary>
+                      <ResetPhoneButton
+                        token={token}
+                        t={t}
+                        history={history}
+                        ErrorHandler={ErrorHandler}
+                      />
+                    </ErrorHandler.ErrorBoundary>
                     <button className="border" onClick={() => close()}>
                       Cancel
                     </button>

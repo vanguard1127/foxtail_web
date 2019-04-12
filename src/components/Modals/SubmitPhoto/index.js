@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import { SIGNS3, SUBMIT_PHOTO } from 'queries';
-import axios from 'axios';
-import PhotoUpload from '../../common/PhotoUpload';
-import { withNamespaces } from 'react-i18next';
-import Modal from '../../common/Modal';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import { SIGNS3, SUBMIT_PHOTO } from "queries";
+import axios from "axios";
+import PhotoUpload from "../../common/PhotoUpload";
+import { withNamespaces } from "react-i18next";
+import Modal from "../../common/Modal";
 
 class PhotoVerify extends PureComponent {
-  state = { photos: [], filename: '', filetype: '', photoKey: '' };
+  state = { photos: [], filename: "", filetype: "", photoKey: "" };
 
   componentDidMount() {
     this.mounted = true;
@@ -22,7 +22,6 @@ class PhotoVerify extends PureComponent {
     }
   };
 
-  //TODO: Are all of these async await needed?
   handleUpload = async ({ signS3, submitPhoto }) => {
     const { photos } = this.state;
     if (photos.length === 0) {
@@ -32,8 +31,7 @@ class PhotoVerify extends PureComponent {
     const file = photos[0];
 
     await this.setS3PhotoParams(file.name, file.type);
-    //format name on backend
-    //filename: this.formatFilename(file.name),
+
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
@@ -72,14 +70,14 @@ class PhotoVerify extends PureComponent {
       //ORIGINAL
       const options = {
         headers: {
-          'Content-Type': file.type
+          "Content-Type": file.type
         }
       };
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status === 200) {
-        console.log('upload ok');
+        console.log("upload ok");
       } else {
-        console.log('Something went wrong');
+        console.log("Something went wrong");
       }
     } catch (e) {
       console.log(e);
@@ -95,28 +93,28 @@ class PhotoVerify extends PureComponent {
     } = this.props;
     const { photos, filename, filetype, photoKey } = this.state;
     let header, subheader, body, instruction, btnText;
-    header = subheader = body = instruction = btnText = '';
-    if (type === 'verify') {
-      header = t('Submit Photo Verification');
+    header = subheader = body = instruction = btnText = "";
+    if (type === "verify") {
+      header = t("Submit Photo Verification");
       subheader = t(
-        'It is a long established fact that a reader will be distracted by the readable'
+        "It is a long established fact that a reader will be distracted by the readable"
       );
       body = t(
         "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others."
       );
 
-      instruction = t('Please give us 2-3 days to verify your photo…');
-      btnText = t('Submit Verify');
-    } else if (type === 'std') {
-      header = t('Submit STD Verification');
+      instruction = t("Please give us 2-3 days to verify your photo…");
+      btnText = t("Submit Verify");
+    } else if (type === "std") {
+      header = t("Submit STD Verification");
       subheader = t(
-        'It is a long established fact that a reader will be distracted by the readable'
+        "It is a long established fact that a reader will be distracted by the readable"
       );
       body = t(
         "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others."
       );
-      instruction = t('Please give us 2-3 days to verify your photo…');
-      btnText = t('Submit Verify');
+      instruction = t("Please give us 2-3 days to verify your photo…");
+      btnText = t("Submit Verify");
     }
     return (
       <Modal
@@ -127,7 +125,7 @@ class PhotoVerify extends PureComponent {
           photos.length !== 0 ? (
             <Mutation
               mutation={SUBMIT_PHOTO}
-              variables={{ reason: 'std', photo: photoKey }}
+              variables={{ reason: "std", photo: photoKey }}
             >
               {submitPhoto => {
                 return (
@@ -163,9 +161,9 @@ class PhotoVerify extends PureComponent {
               <div
                 className="example-image"
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  margin: '20px'
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "20px"
                 }}
               >
                 <img src="assets/img/elements/example-verify.png" alt="" />
@@ -187,4 +185,4 @@ class PhotoVerify extends PureComponent {
   }
 }
 
-export default withNamespaces('modals')(PhotoVerify);
+export default withNamespaces("modals")(PhotoVerify);

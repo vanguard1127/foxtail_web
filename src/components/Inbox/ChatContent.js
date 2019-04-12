@@ -39,8 +39,6 @@ class ChatContent extends PureComponent {
     });
   };
 
-  //TODO: use global spinner and error instead of chnaging each
-  //TODO: consider cache and network or change backt o cache-first
   render() {
     const { chatID, currentUserID, t, ErrorHandler, dayjs } = this.props;
 
@@ -64,7 +62,13 @@ class ChatContent extends PureComponent {
             }
             if (error) {
               return (
-                <ErrorHandler.report error={error} calledName={"getSettings"} />
+                <ErrorHandler.report
+                  error={error}
+                  calledName={"getSettings"}
+                  userID={currentUserID}
+                  targetID={chatID}
+                  type="chat"
+                />
               );
             }
 

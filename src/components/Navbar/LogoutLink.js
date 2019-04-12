@@ -13,7 +13,7 @@ class Logout extends Component {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     sessionStorage.clear();
-    //TODO: Causes console error but currently best options.
+    //Causes console error but currently best option.
     client.resetStore();
     history.push("/");
   };

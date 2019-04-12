@@ -71,7 +71,11 @@ class Landing extends PureComponent {
                 <div className="offset-md-3 col-md-5">
                   <div className="content">
                     <ErrorHandler.ErrorBoundary>
-                      <LoginButton t={t} history={props.history} />
+                      <LoginButton
+                        t={t}
+                        history={props.history}
+                        ErrorHandler={ErrorHandler}
+                      />
                     </ErrorHandler.ErrorBoundary>
                     <ErrorHandler.ErrorBoundary>
                       {" "}
@@ -283,7 +287,7 @@ class Landing extends PureComponent {
             t={t}
             token={token}
             close={() => this.setState({ resetPhoneVisible: false })}
-            ErrorBoundary={ErrorHandler.ErrorBoundary}
+            ErrorBoundary={ErrorHandler}
             history={this.props.props.history}
           />
         )}

@@ -81,7 +81,6 @@ class Navbar extends Component {
   }
 }
 
-//TODO: check it not id and try to make recursive
 class NavbarAuth extends PureComponent {
   state = {
     mobileMenu: false
@@ -91,12 +90,11 @@ class NavbarAuth extends PureComponent {
     this.setState({ mobileMenu: !this.state.mobileMenu });
   };
   componentDidMount() {
-    //TODO: Dont call if already online
     const { toggleOnline } = this.props;
 
     toggleOnline(true);
 
-    //I don't know why but we need both
+    //I don't know why but we need both for it to work
     window.addEventListener("beforeunload", () => {
       navigator.sendBeacon(
         "http://localhost:4444/offline?token=" + localStorage.getItem("token")

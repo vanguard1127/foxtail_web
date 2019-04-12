@@ -100,7 +100,11 @@ class InboxPanel extends Component {
           }
           if (error) {
             return (
-              <ErrorHandler.report error={error} calledName={"getSettings"} />
+              <ErrorHandler.report
+                error={error}
+                calledName={"getInbox"}
+                userID={currentuser.userID}
+              />
             );
           }
 
@@ -149,7 +153,7 @@ class InboxPanel extends Component {
               }
             });
           }
-          console.log("MESSAGEDS", messages, skip);
+
           return (
             <div className="col-md-4 col-lg-3 col-xl-3">
               <div className={chatOpen ? "left hide" : "left"}>

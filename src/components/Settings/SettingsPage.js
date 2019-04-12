@@ -21,7 +21,6 @@ import Modal from "../common/Modal";
 import { toast } from "react-toastify";
 
 class SettingsPage extends PureComponent {
-  //TODO: Do we need to have these setup?
   state = {
     distance: 100,
     distanceMetric: "mi",

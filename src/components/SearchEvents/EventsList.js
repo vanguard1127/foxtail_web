@@ -5,7 +5,6 @@ import { concatSeries } from "async";
 
 class EventsList extends Component {
   shouldComponentUpdate(nextProps) {
-    //TODO: Compare better see if it breaks waypoint
     const { events, loading } = this.props;
     if (events !== nextProps.events || loading !== nextProps.loading) {
       return true;

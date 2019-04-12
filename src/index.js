@@ -145,10 +145,11 @@ const errorLink = onError(
             });
           }
         } else if (~message.indexOf("authenticated")) {
-          tokenHandler({ operation, forward, HTTPSurl });
+          tokenHandler({ operation, forward, HTTPSurl, ErrorHandler });
         } else {
-          console.log("ERROR::::", message);
-          //TODO: How to get user id here
+          if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+            console.error("ERROR::::", message);
+          }
           Sentry.withScope(scope => {
             scope.setLevel("error");
             scope.setTag("resolver", path);
@@ -209,7 +210,6 @@ const Root = () => (
   </Router>
 );
 
-//TODO:https://reacttraining.com/react-router/web/example/animated-transitions
 const Wrapper = withRouter(props => {
   let location = props.location;
   if (location.pathname) {
@@ -315,8 +315,3 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
-
-//TODO: Figure out how o fix lightbox issue: Current fix is to add this:
-// if (!document.fullscreenElement) {
-//   return;
-//   }

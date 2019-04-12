@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import OwlCarousel from "react-owl-carousel";
@@ -7,7 +7,6 @@ import "lightgallery";
 import { GET_MY_EVENTS } from "../../queries";
 import EventCard from "./EventCard";
 
-//TODO: APPLY SHOULD RERENDER
 const configLightGallery = {
   selector: "a",
   width: "100%"
@@ -15,8 +14,10 @@ const configLightGallery = {
 
 const LIMIT = 3;
 
-//TODO: Test paginate
-class MyEvents extends PureComponent {
+class MyEvents extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   fetchData = fetchMore => {
     this.setState({ loading: true });
     fetchMore({
@@ -55,14 +56,16 @@ class MyEvents extends PureComponent {
   componentWillUnmount() {
     try {
       $(this.lightGallery).lightGallery("destroy");
-    } catch (e) {}
+    } catch (e) {
+      this.props.ErrorHandler.catchErrors(e);
+    }
   }
 
   render() {
     const { t, ErrorHandler, dayjs, distanceMetric } = this.props;
     return (
       <Query query={GET_MY_EVENTS} fetchPolicy="cache-and-network">
-        {({ data, loading, error, fetchMore }) => {
+        {({ data, loading, error }) => {
           if (loading) return null;
           if (error) {
             return (

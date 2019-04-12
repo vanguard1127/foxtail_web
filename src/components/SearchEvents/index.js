@@ -243,6 +243,7 @@ class SearchEvents extends PureComponent {
                       <ErrorHandler.report
                         error={error}
                         calledName={"searchEvents"}
+                        userID={session.currentuser.userID}
                       />
                     );
                   }
@@ -251,7 +252,6 @@ class SearchEvents extends PureComponent {
                     !data.searchEvents ||
                     data.searchEvents.length === 0
                   ) {
-                    //TODO: Add label to empty. for when My events and no events
                     return <EmptyScreen message={t("noeventavailable")} />;
                   }
 

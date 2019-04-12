@@ -19,13 +19,15 @@ const catchErrors = errors => {
   Sentry.captureException(errors);
 };
 
-//TODO: Get session here somehow and quey name
 class report extends PureComponent {
   render() {
-    const { error, calledName } = this.props;
+    const { error, calledName, id, type, userID } = this.props;
     if (calledName) {
       Sentry.configureScope(scope => {
         scope.setTag("calledName", calledName);
+        scope.setTag("targetID", id);
+        scope.setTag("type", type);
+        scope.setTag("userID", userID);
       });
     }
     Sentry.captureException(error);

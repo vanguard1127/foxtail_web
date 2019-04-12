@@ -69,7 +69,12 @@ class ChatContent extends Component {
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (error || !data) {
             return (
-              <ErrorHandler.report error={error} calledName={"getCommets"} />
+              <ErrorHandler.report
+                error={error}
+                calledName={"getCommets"}
+                id={chatID}
+                type="chat"
+              />
             );
           }
 

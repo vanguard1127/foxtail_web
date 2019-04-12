@@ -152,7 +152,6 @@ class InboxPage extends PureComponent {
     }
   };
 
-  //TODO: Find how to set Modal Ok in fuctions---like Settigns page delete photo
   render() {
     const { t } = this.props;
     const { currentuser } = this.props.session;
@@ -225,6 +224,9 @@ class InboxPage extends PureComponent {
                         <ErrorHandler.report
                           error={error}
                           calledName={"getEvent"}
+                          targetID={chatID}
+                          type="chat"
+                          userID={currentuser.userID}
                         />
                       );
                     }
@@ -261,8 +263,8 @@ class InboxPage extends PureComponent {
                           this.setDialogContent({
                             title: "Leave Conversation",
                             msg:
-                              "Please enter an email that you check often. We use this only for communications from Foxtail and our members.",
-                            btnText: "Update"
+                              "Are you sure you would like to leave this conversation? You will not be able to see this chat anylonger.",
+                            btnText: "Leave"
                           })
                         }
                       />
@@ -292,8 +294,8 @@ class InboxPage extends PureComponent {
                             this.setDialogContent({
                               title: "Leave Conversation",
                               msg:
-                                "Please enter an email that you check often. We use this only for communications from Foxtail and our members.",
-                              btnText: "Update"
+                                "Are you sure you would like to leave this conversation? You will not be able to see this chat anylonger.",
+                              btnText: "Leave"
                             })
                           }
                         />

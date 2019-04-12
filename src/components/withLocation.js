@@ -13,7 +13,6 @@ const withLocation = PassedComponent =>
       locModalVisible: false
     };
 
-    //TODO: Change messaging for Black
     showConfirm = (setLocModalVisible, caller) => {
       const { t } = i18next;
       setLocModalVisible(true);

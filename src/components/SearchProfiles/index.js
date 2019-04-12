@@ -6,7 +6,7 @@ import SearchProfilesPage from "./SearchProfilesPage";
 import { withNamespaces } from "react-i18next";
 
 class SearchProfiles extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate() {
     return false;
   }
   render() {

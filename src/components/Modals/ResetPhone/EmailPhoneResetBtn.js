@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
-import { Mutation } from 'react-apollo';
-import { SEND_PHONE_RESET_EMAIL } from '../../../queries';
+import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import { SEND_PHONE_RESET_EMAIL } from "../../../queries";
 
 class EmailPhoneResetBtn extends PureComponent {
   handleClick = sendPhoneResetEmail => {
-    const { t, close } = this.props;
+    const { t, close, ErrorHandler } = this.props;
 
     sendPhoneResetEmail()
       .then(async ({ data }) => {
@@ -14,11 +14,7 @@ class EmailPhoneResetBtn extends PureComponent {
         close();
       })
       .catch(res => {
-        //TODO: Add error handler
-        const errors = res.graphQLErrors.map(error => {
-          return error.message;
-        });
-        this.setState({ errors });
+        ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
   render() {
