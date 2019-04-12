@@ -44,19 +44,19 @@ class NoticesItem extends Component {
       this.state.userAlert !== nextState.userAlert ||
       this.props.count !== nextProps.count
     ) {
-      console.log("vccvvcvcv", this.state, nextState);
-      console.log(
-        "vccvvcvcv",
-        this.state.read === nextState.read,
-        this.state.seen === nextState.seen,
-        this.state.notificationIDs.length === nextState.notificationIDs.length,
-        this.state.count === nextState.count,
-        this.state.skip === nextState.skip,
-        this.state.visible === nextState.visible,
-        this.state.alertVisible === nextState.alertVisible,
-        this.state.userAlert === nextState.userAlert,
-        this.props.count === nextProps.count
-      );
+      // console.log("vccvvcvcv", this.state, nextState);
+      // console.log(
+      //   "vccvvcvcv",
+      //   this.state.read === nextState.read,
+      //   this.state.seen === nextState.seen,
+      //   this.state.notificationIDs.length === nextState.notificationIDs.length,
+      //   this.state.count === nextState.count,
+      //   this.state.skip === nextState.skip,
+      //   this.state.visible === nextState.visible,
+      //   this.state.alertVisible === nextState.alertVisible,
+      //   this.state.userAlert === nextState.userAlert,
+      //   this.props.count === nextProps.count
+      // );
       return true;
     }
     return false;

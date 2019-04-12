@@ -70,7 +70,6 @@ class ChatPanel extends PureComponent {
         profile: { id: currentuser.profileID, __typename: "ProfileType" },
         __typename: "UserType"
       },
-
       id: Date.now(),
       profilePic: currentuser.profilePic,
       text,
@@ -89,7 +88,7 @@ class ChatPanel extends PureComponent {
     let { getInbox } = cache.readQuery({
       query: GET_INBOX
     });
-
+    console.log("GTY", getInbox);
     getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
     getInbox[
       getInbox.findIndex(el => el.chatID === chatID)

@@ -4,9 +4,12 @@ import { GET_INBOX, NEW_INBOX_SUB } from "../../queries";
 import { Query } from "react-apollo";
 import Spinner from "../common/Spinner";
 import InboxList from "./InboxList";
+import { Waypoint } from "react-waypoint";
 let unsubscribe = null;
+const LIMIT = 9;
 class InboxPanel extends Component {
-  state = { searchTerm: "" };
+  state = { searchTerm: "", skip: 0 };
+
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.chatOpen !== nextProps.chatOpen ||
@@ -17,16 +20,74 @@ class InboxPanel extends Component {
     return false;
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   handleSearchTextChange = e => {
-    this.setState({ searchTerm: e.target.value });
+    if (this.mounted) {
+      this.setState({ skip: 0, searchTerm: e.target.value });
+    }
   };
+
+  handleEnd = ({ previousPosition, fetchMore }) => {
+    const { skip } = this.state;
+    console.log("previousPosition", previousPosition);
+    if (previousPosition === Waypoint.below) {
+      if (this.mounted) {
+        this.setState(
+          state => ({ skip: skip + LIMIT, loading: true }),
+          () => this.fetchData(fetchMore)
+        );
+      }
+    }
+  };
+
+  fetchData = fetchMore => {
+    if (this.mounted) {
+      this.setState({ loading: true }, () =>
+        fetchMore({
+          variables: {
+            skip: this.state.skip,
+            limit: LIMIT
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            if (this.mounted) {
+              this.setState({ loading: false });
+            }
+
+            if (
+              !fetchMoreResult ||
+              !fetchMoreResult.getInbox ||
+              !fetchMoreResult.getInbox.length === 0
+            ) {
+              return previousResult;
+            }
+            previousResult.getInbox = [
+              ...previousResult.getInbox,
+              ...fetchMoreResult.getInbox
+            ];
+            return previousResult;
+          }
+        })
+      );
+    }
+  };
+
   render() {
     const { readChat, currentuser, t, ErrorHandler, chatOpen } = this.props;
-    const { searchTerm } = this.state;
+    const { searchTerm, skip } = this.state;
 
     return (
-      <Query query={GET_INBOX} fetchPolicy="cache-and-network">
-        {({ data, loading, error, subscribeToMore }) => {
+      <Query
+        query={GET_INBOX}
+        variables={{ skip, limit: LIMIT }}
+        fetchPolicy="cache-first"
+      >
+        {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
             return (
               <div className="col-md-4 col-lg-3 col-xl-3">
@@ -43,7 +104,13 @@ class InboxPanel extends Component {
             );
           }
 
-          const messages = data.getInbox;
+          let messages = data.getInbox;
+
+          if (searchTerm !== "") {
+            messages = messages.filter(
+              msg => msg.participants[0].profileName.indexOf(searchTerm) > -1
+            );
+          }
 
           if (!messages) {
             return <div>{t("common:error")}.</div>;
@@ -54,6 +121,7 @@ class InboxPanel extends Component {
               document: NEW_INBOX_SUB,
               updateQuery: (prev, { subscriptionData }) => {
                 let { newInboxMsgSubscribe } = subscriptionData.data;
+
                 if (!newInboxMsgSubscribe) {
                   return prev;
                 }
@@ -81,7 +149,7 @@ class InboxPanel extends Component {
               }
             });
           }
-
+          console.log("MESSAGEDS", messages, skip);
           return (
             <div className="col-md-4 col-lg-3 col-xl-3">
               <div className={chatOpen ? "left hide" : "left"}>
@@ -94,6 +162,9 @@ class InboxPanel extends Component {
                   readChat={readChat}
                   currentuser={currentuser}
                   searchTerm={searchTerm}
+                  handleEnd={previousPosition =>
+                    this.handleEnd({ previousPosition, fetchMore })
+                  }
                 />
               </div>
             </div>

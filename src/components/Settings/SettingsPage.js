@@ -161,6 +161,14 @@ class SettingsPage extends PureComponent {
     }
   };
 
+  resetAcctSettingState = () => {
+    this.setState({
+      username: undefined,
+      email: undefined,
+      gender: undefined,
+      phone: undefined
+    });
+  };
   handleSubmit = (updateSettings, saveImage) => {
     const { ErrorHandler, isCouple, isInitial, refetchUser } = this.props;
 
@@ -176,13 +184,18 @@ class SettingsPage extends PureComponent {
             updateSettings()
               .then(({ data }) => {
                 if (data.updateSettings) {
-                  if (isCouple && isInitial) {
+                  if (isCouple && isInitial && !this.state.flashCpl) {
+                    toast("Please click 'Add Couple button when finished'");
                     if (this.mounted) this.setState({ flashCpl: true });
                   }
                 }
               })
-              .then(() => refetchUser())
+              .then(() => {
+                this.resetAcctSettingState();
+                refetchUser();
+              })
               .catch(res => {
+                this.resetAcctSettingState();
                 ErrorHandler.catchErrors(res.graphQLErrors);
               });
           }
@@ -197,8 +210,12 @@ class SettingsPage extends PureComponent {
             }
           }
         })
-        .then(() => refetchUser())
+        .then(() => {
+          this.resetAcctSettingState();
+          refetchUser();
+        })
         .catch(res => {
+          this.resetAcctSettingState();
           ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
@@ -311,7 +328,8 @@ class SettingsPage extends PureComponent {
       if (this.props.showCplModal) {
         this.setState(
           {
-            showCouplePopup: false
+            showCouplePopup: false,
+            flashCpl: false
           },
           () => {
             this.props.history.push({
@@ -321,7 +339,8 @@ class SettingsPage extends PureComponent {
         );
       } else {
         this.setState({
-          showCouplePopup: !showCouplePopup
+          showCouplePopup: !showCouplePopup,
+          flashCpl: false
         });
       }
     }
@@ -383,9 +402,7 @@ class SettingsPage extends PureComponent {
         }
       };
       const resp = await axios.put(signedRequest, file, options);
-      if (resp.status === 200) {
-        toast.success("Upload Successful");
-      } else {
+      if (resp.status !== 200) {
         toast.error("Upload Error");
       }
     } catch (e) {

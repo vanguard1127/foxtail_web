@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { withNamespaces } from "react-i18next";
 import dayjs from "dayjs";
@@ -12,8 +12,10 @@ import validateLang from "../../utils/validateLang";
 
 import SettingsPage from "./SettingsPage";
 //TODO: https://reactjs.org/docs/error-boundaries.html#where-to-place-error-boundaries
-class Settings extends PureComponent {
-  state;
+class Settings extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
   componentDidMount() {
     const { session } = this.props;
     const lang = validateLang(localStorage.getItem("i18nextLng"));
@@ -36,14 +38,13 @@ class Settings extends PureComponent {
     //TODO: If on Settigns make popup show
     const { session, refetch, t, ErrorHandler, location, history } = this.props;
     const { state } = location;
-    console.log("location", state);
+
     let isCouple = false;
     let isInitial = false;
     let showBlkModal = false;
     let showCplModal = false;
 
     if (state) {
-      console.log("INNNN", state.showCplMdl);
       if (state.couple) isCouple = state.couple;
       if (state.initial) isInitial = state.initial;
       if (state.showBlkMdl) showBlkModal = state.showBlkMdl;

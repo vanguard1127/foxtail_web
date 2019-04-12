@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment } from "react";
+import { Waypoint } from "react-waypoint";
 import TimeAgo from "../../utils/TimeAgo";
 const preventContextMenu = e => {
   e.preventDefault();
@@ -62,7 +63,6 @@ class InboxList extends PureComponent {
   };
 
   renderMsgList = ({ messages }) => {
-    const { searchTerm } = this.props;
     return (
       <Fragment>
         {messages.map((message, i) => {
@@ -74,12 +74,6 @@ class InboxList extends PureComponent {
             isCurrentChat = i === 0;
           }
 
-          if (searchTerm !== "") {
-            if (message.participants[0].profileName.indexOf(searchTerm) < 0) {
-              return null;
-            }
-          }
-
           return this.renderItem(message, timeAgo, isCurrentChat);
         })}
       </Fragment>
@@ -88,17 +82,18 @@ class InboxList extends PureComponent {
 
   //Variables by text
   render() {
-    const { messages } = this.props;
+    const { messages, handleEnd, searchTerm } = this.props;
 
     return (
       <div className="conversations">
         {this.renderMsgList({ messages })}
-
-        {/* <Waypoint
-      //           onEnter={({ previousPosition }) =>
-      //             this.handleEnd(previousPosition, fetchMore)
-      //           }
-      //         /> */}
+        {!searchTerm && (
+          <div className="item">
+            <Waypoint
+              onEnter={({ previousPosition }) => handleEnd(previousPosition)}
+            />
+          </div>
+        )}
       </div>
     );
   }

@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 class Menu extends Component {
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.flashCpl !== nextProps.flashCpl) {
+      return true;
+    }
     return false;
   }
   render() {
@@ -14,6 +17,7 @@ class Menu extends Component {
       currentuser,
       ErrorBoundary
     } = this.props;
+    console.log("flash", flashCpl);
     return (
       <ErrorBoundary>
         <div className="menu">

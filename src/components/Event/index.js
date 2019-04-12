@@ -240,12 +240,15 @@ class EventPage extends PureComponent {
                   }}
                 >
                   {deleteEvent => {
-                    const okSpan = <span
-                      className="color"
-                      onClick={() => this.deleteEvent(deleteEvent)}
-                    >
-                      Delete
-                    </span>(
+                    const okSpan = (
+                      <span
+                        className="color"
+                        onClick={() => this.deleteEvent(deleteEvent)}
+                      >
+                        Delete
+                      </span>
+                    );
+                    return (
                       <Modal
                         header={"Delete Event"}
                         close={this.toggleDeleteDialog}

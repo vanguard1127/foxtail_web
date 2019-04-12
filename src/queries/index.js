@@ -68,6 +68,31 @@ export const NEW_NOTICE_SUB = gql`
 `;
 
 /* Mutations */
+// export const CREATE_USER = gql`
+//   mutation(
+//     $username: String!
+//     $email: String!
+//     $phone: String!
+//     $gender: String!
+//     $interestedIn: [String]
+//     $dob: String!
+//     $lang: String
+//   ) {
+//     createUser(
+//       username: $username
+//       email: $email
+//       phone: $phone
+//       gender: $gender
+//       interestedIn: $interestedIn
+//       dob: $dob
+//       lang: $lang
+//     ) {
+//       token
+//       access
+//     }
+//   }
+// `;
+
 export const CREATE_SUBSCRIPTION = gql`
   mutation($token: String!, $ccLast4: String!) {
     createSubcription(token: $token, ccLast4: $ccLast4)
@@ -609,8 +634,8 @@ export const GET_EVENT = gql`
 `;
 
 export const GET_INBOX = gql`
-  query {
-    getInbox {
+  query($limit: Int!, $skip: Int!) {
+    getInbox(limit: $limit, skip: $skip) {
       id
       chatID
       text

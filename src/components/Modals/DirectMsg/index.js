@@ -34,7 +34,7 @@ class DirectMsg extends Component {
       sendMessage()
         .then(async ({ data }) => {
           if (data.sendMessage) {
-            toast.success("Message Sent");
+            //   toast.success("Message Sent");
 
             if (this.mounted) {
               if (this.props.setMsgd) {
