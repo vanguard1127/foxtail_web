@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import dayjs from "dayjs";
 import withLocation from "../withLocation";
 import withAuth from "../withAuth";
@@ -8,8 +8,9 @@ import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
 import Tour from "./Tour";
 import validateLang from "../../utils/validateLang";
-
-class SearchProfilesPage extends PureComponent {
+const lang = validateLang(localStorage.getItem("i18nextLng"));
+require("dayjs/locale/" + lang);
+class SearchProfilesPage extends Component {
   state = {
     lat: this.props.location.lat,
     long: this.props.location.long,
@@ -22,10 +23,26 @@ class SearchProfilesPage extends PureComponent {
     lang: this.props.searchCriteria.lang
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.loading !== nextProps.loading ||
+      this.state.lat !== nextState.lat ||
+      this.state.long !== nextState.long ||
+      this.state.city !== nextState.city ||
+      this.state.country !== nextState.country ||
+      this.state.distance !== nextState.distance ||
+      this.state.distanceMetric !== nextState.distanceMetric ||
+      this.state.ageRange !== nextState.ageRange ||
+      this.state.interestedIn !== nextState.interestedIn ||
+      this.state.lang !== nextState.lang
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   componentDidMount() {
     this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
-    const lang = validateLang(localStorage.getItem("i18nextLng"));
-    require("dayjs/locale/" + lang);
   }
 
   setValue = ({ name, value }) => {
@@ -41,7 +58,15 @@ class SearchProfilesPage extends PureComponent {
   };
 
   render() {
-    const { t, ErrorHandler, session, loading, refetch, client } = this.props;
+    const {
+      t,
+      ErrorHandler,
+      session,
+      loading,
+      refetch,
+      client,
+      history
+    } = this.props;
 
     const {
       lat,
@@ -59,7 +84,7 @@ class SearchProfilesPage extends PureComponent {
       ErrorHandler.setBreadcrumb("Opened Tour: Search Profiles");
       return (
         <div>
-          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+          <Tour ErrorHandler={ErrorHandler} refetchUser={refetch} />
         </div>
       );
     }
@@ -89,7 +114,7 @@ class SearchProfilesPage extends PureComponent {
           <ProfilesContainer
             loading={loading}
             t={t}
-            history={this.props.history}
+            history={history}
             lat={lat}
             long={long}
             distance={distance}

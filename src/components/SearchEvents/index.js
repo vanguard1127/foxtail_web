@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import dayjs from "dayjs";
 import { SEARCH_EVENTS } from "../../queries";
+import { SEARCHEVENT_LIMIT } from "../../docs/consts";
 import EmptyScreen from "../common/EmptyScreen";
 import { Waypoint } from "react-waypoint";
 import ShareModal from "../Modals/Share";
@@ -16,10 +17,10 @@ import Header from "./Header";
 import Tour from "./Tour";
 import EventsList from "./EventsList";
 import Spinner from "../common/Spinner";
-import validateLang from "../../utils/validateLang";
 import getCityCountry from "../../utils/getCityCountry";
-
-import { SEARCHEVENT_LIMIT } from "../../docs/consts";
+import validateLang from "../../utils/validateLang";
+const lang = validateLang(localStorage.getItem("i18nextLng"));
+require("dayjs/locale/" + lang);
 
 class SearchEvents extends PureComponent {
   state = {
@@ -37,8 +38,6 @@ class SearchEvents extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const lang = validateLang(localStorage.getItem("i18nextLng"));
-    require("dayjs/locale/" + lang);
 
     document.title = "Search Events";
   }

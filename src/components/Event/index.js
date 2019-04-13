@@ -18,7 +18,8 @@ import { flagOptions } from "../../docs/options";
 import { toast } from "react-toastify";
 import validateLang from "../../utils/validateLang";
 import ShareModal from "../Modals/Share";
-
+const lang = validateLang(localStorage.getItem("i18nextLng"));
+require("dayjs/locale/" + lang);
 class EventPage extends PureComponent {
   state = {
     visible: false,
@@ -29,8 +30,6 @@ class EventPage extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const lang = validateLang(localStorage.getItem("i18nextLng"));
-    require("dayjs/locale/" + lang);
   }
   componentWillUnmount() {
     this.mounted = false;

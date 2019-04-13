@@ -8,17 +8,18 @@ import { Query } from "react-apollo";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
 import withAuth from "../withAuth";
-import validateLang from "../../utils/validateLang";
-
 import SettingsPage from "./SettingsPage";
+import validateLang from "../../utils/validateLang";
+const lang = validateLang(localStorage.getItem("i18nextLng"));
+require("dayjs/locale/" + lang);
+
 class Settings extends Component {
   shouldComponentUpdate() {
     return false;
   }
   componentDidMount() {
     const { session } = this.props;
-    const lang = validateLang(localStorage.getItem("i18nextLng"));
-    require("dayjs/locale/" + lang);
+
     if (!session.currentuser.isProfileOK) {
       const toastId = "nopro";
       if (!toast.isActive(toastId)) {

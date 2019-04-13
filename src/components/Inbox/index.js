@@ -20,10 +20,11 @@ import { toast } from "react-toastify";
 import ChatWindow from "./ChatWindow";
 import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
-import validateLang from "../../utils/validateLang";
-
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
+import validateLang from "../../utils/validateLang";
+const lang = validateLang(localStorage.getItem("i18nextLng"));
+require("dayjs/locale/" + lang);
 
 class InboxPage extends PureComponent {
   state = {
@@ -40,8 +41,6 @@ class InboxPage extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const lang = validateLang(localStorage.getItem("i18nextLng"));
-    require("dayjs/locale/" + lang);
 
     document.title = "Inbox";
     sessionStorage.setItem("page", "inbox");

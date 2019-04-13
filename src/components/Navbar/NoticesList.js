@@ -7,7 +7,8 @@ import { preventContextMenu } from "../../utils/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import validateLang from "../../utils/validateLang";
-
+const lang = validateLang(localStorage.getItem("i18nextLng"));
+require("dayjs/locale/" + lang);
 dayjs.extend(relativeTime);
 
 const intialState = {
@@ -26,8 +27,6 @@ class NoticesList extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    const lang = validateLang(localStorage.getItem("i18nextLng"));
-    require("dayjs/locale/" + lang);
   }
 
   componentWillUnmount() {

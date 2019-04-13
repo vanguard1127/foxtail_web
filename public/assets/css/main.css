@@ -4196,6 +4196,31 @@ section.event-detail .about-event-content .goings .content span.see-more:hover {
   border-color: #fff;
 }
 
+/* section.event-detail .about-event-content .btn {
+  width: 38px;
+  height: 38px;
+  background-color: inherit;
+  display: inline-block;
+  float: left;
+  text-align: center;
+  line-height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  transition: 0.3s all;
+  position: relative;
+  top: -2px;
+  cursor: pointer;
+}
+
+section.event-detail .about-event-content .btn.report::before {
+  content: "\e808";
+  content: "";
+  font-family: "foxtail-icon";
+  color: #fff;
+  width: 100%;
+  text-align: center;
+} */
+
 section.event-detail .discuss-content {
   width: 100%;
   display: block;
@@ -8347,7 +8372,6 @@ section.settings textarea {
     right: -15px;
   }
   section.event-detail .event-info-content.hid-mobile {
-
     display: inline-block;
     visibility: visible;
   }

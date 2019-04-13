@@ -22,7 +22,6 @@ class ProfileCard extends Component {
       liked,
       msgd
     } = this.props;
-    console.log("CH", liked, msgd);
     const { profilePic, id } = profile;
     return (
       <ErrorBoundary>
