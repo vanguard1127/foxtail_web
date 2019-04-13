@@ -33,7 +33,7 @@ class Menu extends Component {
                 {couplePartner === null ? t("common:addcoup") : couplePartner}
               </span>
             </li>
-            <li style={{ color: "#000" }}>
+            <li className="highlightTxt">
               {currentuser.blackMember.active ? (
                 <span style={{ cursor: "auto" }}>{t("common:thanks")}.</span>
               ) : (

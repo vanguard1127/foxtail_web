@@ -136,7 +136,7 @@ class PhotoVerify extends PureComponent {
                     {signS3 => {
                       return (
                         <div
-                          className="submit"
+                          className="greenButton"
                           onClick={() =>
                             this.handleUpload({
                               signS3,

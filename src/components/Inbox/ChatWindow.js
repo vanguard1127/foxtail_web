@@ -3,15 +3,14 @@ import ChatHeader from "./ChatHeader";
 import AdManager from "../common/AdManager";
 import ChatContent from "./ChatContent";
 import ChatPanel from "./ChatPanel";
-
-const LIMIT = 6;
+import { INBOXMSG_LIMIT } from "../../docs/consts";
 
 class ChatWindow extends PureComponent {
   state = {
     loading: false,
     cursor: null,
     hasMoreItems: true,
-    limit: LIMIT
+    limit: INBOXMSG_LIMIT
   };
 
   setValue = ({ name, value }) => {
@@ -59,7 +58,7 @@ class ChatWindow extends PureComponent {
               loading={false}
               cursor={null}
               hasMoreItems={true}
-              limit={LIMIT}
+              limit={INBOXMSG_LIMIT}
               dayjs={dayjs}
             />
             <ChatPanel
@@ -68,7 +67,7 @@ class ChatWindow extends PureComponent {
               ErrorHandler={ErrorHandler}
               currentuser={currentuser}
               cursor={null}
-              limit={LIMIT}
+              limit={INBOXMSG_LIMIT}
             />
           </div>
         ) : (

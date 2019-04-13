@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter, NavLink } from "react-router-dom";
 import NoticesList from "./NoticesList";
 import Menu from "../common/Menu";
+import { NOTICELIST_LIMIT } from "../../docs/consts";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -15,7 +16,7 @@ import {
 } from "../../queries";
 import { Query, Mutation, withApollo } from "react-apollo";
 let unsubscribe = null;
-const LIMIT = 5;
+
 const intialState = {
   read: null,
   seen: null,
@@ -88,7 +89,7 @@ class NoticesItem extends Component {
       getNotifications: { notifications }
     } = cache.readQuery({
       query: GET_NOTIFICATIONS,
-      variables: { limit: LIMIT, skip }
+      variables: { limit: NOTICELIST_LIMIT, skip }
     });
 
     if (read) {
@@ -117,7 +118,7 @@ class NoticesItem extends Component {
 
     cache.writeQuery({
       query: GET_NOTIFICATIONS,
-      variables: { limit: LIMIT },
+      variables: { limit: NOTICELIST_LIMIT },
       data: {
         getNotifications: { ...getNotifications, notifications }
       }
@@ -242,7 +243,7 @@ class NoticesItem extends Component {
           return (
             <Query
               query={GET_NOTIFICATIONS}
-              variables={{ limit: LIMIT, skip }}
+              variables={{ limit: NOTICELIST_LIMIT, skip }}
               fetchPolicy="network-only"
             >
               {({

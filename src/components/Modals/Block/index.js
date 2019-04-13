@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { withNamespaces } from "react-i18next";
-import { BLOCK_PROFILE, FLAG_ITEM } from "../../../queries";
+import { BLOCK_PROFILE, FLAG_ITEM, SEARCH_PROFILES } from "../../../queries";
 import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
 import Modal from "../../common/Modal";
 import { flagOptions } from "../../../docs/options";
 
 class BlockModal extends Component {
-  state = { other: false, reason: "", type: this.props.type };
+  state = { other: false, reason: "nopro", type: this.props.type };
   componentDidMount() {
     this.mounted = true;
   }
@@ -42,9 +42,6 @@ class BlockModal extends Component {
 
   handleSubmit = (blockProfile, flagItem) => {
     flagItem()
-      .then(({ data }) => {
-        this.props.close();
-      })
       .then(() => {
         if (this.state.type === flagOptions.Profile) {
           blockProfile().then(({ data }) => {
@@ -54,6 +51,9 @@ class BlockModal extends Component {
             }
           });
         }
+      })
+      .then(({ data }) => {
+        this.props.close();
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -65,7 +65,7 @@ class BlockModal extends Component {
     if (this.state.type === flagOptions.Profile) {
       return (
         <select
-          defaultValue=""
+          defaultValue="nopro"
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
@@ -106,6 +106,33 @@ class BlockModal extends Component {
       );
     }
   };
+
+  updateBlocked = cache => {
+    sessionStorage.getItem("searchProsQuery");
+    if (sessionStorage.getItem("searchProsQuery")) {
+      const { id } = this.props;
+      const variables = JSON.parse(sessionStorage.getItem("searchProsQuery"));
+      const { searchProfiles } = cache.readQuery({
+        query: SEARCH_PROFILES,
+        variables
+      });
+      searchProfiles.profiles = searchProfiles.profiles.filter(
+        el => el.id !== id
+      );
+      searchProfiles.featuredProfiles = searchProfiles.featuredProfiles.filter(
+        el => el.id !== id
+      );
+
+      cache.writeQuery({
+        query: SEARCH_PROFILES,
+        variables,
+        data: {
+          searchProfiles
+        }
+      });
+    }
+  };
+
   render() {
     const {
       profile,
@@ -153,6 +180,7 @@ class BlockModal extends Component {
                   variables={{
                     blockedProfileID: id
                   }}
+                  update={this.updateBlocked}
                 >
                   {(blockProfile, { loading }) => {
                     if (loading) {

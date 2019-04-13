@@ -1,15 +1,13 @@
 import React, { PureComponent } from "react";
-import Dropdown from "rc-dropdown";
 import {
   GET_FRIENDS,
   GET_CHAT_PARTICIPANTS,
-  GET_EVENT_PARTICIPANTS,
-  INVITE_PROFILES_EVENT
+  GET_EVENT_PARTICIPANTS
 } from "../../../queries";
-import { Query, Mutation } from "react-apollo";
-import Spinner from "../Spinner";
+import { Query } from "react-apollo";
 import MembersList from "./MembersList";
-const LIMIT = 5;
+
+import { MEMSLIST_LIMIT } from "../../../docs/consts";
 class MembersDropdown extends PureComponent {
   constructor(props) {
     super(props);
@@ -40,7 +38,6 @@ class MembersDropdown extends PureComponent {
       targetType,
       targetID,
       listType,
-      clickComponent,
       t,
       close,
       isOwner,
@@ -52,7 +49,7 @@ class MembersDropdown extends PureComponent {
         <Query
           query={GET_FRIENDS}
           variables={{
-            limit: LIMIT,
+            limit: MEMSLIST_LIMIT,
             chatID: targetID,
             isEvent: targetType === "event"
           }}

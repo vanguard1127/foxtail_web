@@ -35,13 +35,20 @@ class ProfileCard extends Component {
     } = this.props;
 
     const stdCheck = profile.users.every(
-      user => user.verifications.std === true
+      user => user.verifications.stdVer.active === true
     );
     const photoCheck = profile.users.every(
-      user => user.verifications.photo === true
+      user => user.verifications.photoVer.active === true
     );
+
     let badge = "";
-    if (photoCheck) badge = "verified";
+    if (photoCheck && stdCheck) {
+      badge = "verified both";
+    } else if (photoCheck) {
+      badge = "verified photo";
+    } else if (stdCheck) {
+      badge = "verified std";
+    }
 
     return (
       <div className="col-md-6 col-lg-4">

@@ -12,7 +12,8 @@ import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 
-const LIMIT = 5;
+import { MEMSLIST_LIMIT } from "../../../docs/consts";
+
 class MembersList extends PureComponent {
   state = {
     skip: 0,
@@ -32,7 +33,7 @@ class MembersList extends PureComponent {
       const { fetchMore } = this.props;
       if (this.mounted) {
         this.setState(
-          state => ({ skip: skip + LIMIT }),
+          state => ({ skip: skip + MEMSLIST_LIMIT }),
           () => this.fetchData(fetchMore)
         );
       }
@@ -45,7 +46,7 @@ class MembersList extends PureComponent {
     fetchMore({
       variables: {
         skip: this.state.skip,
-        limit: LIMIT
+        limit: MEMSLIST_LIMIT
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult || fetchMoreResult.getMembers.length === 0) {

@@ -93,6 +93,9 @@ class AccountKit extends React.PureComponent {
   };
 
   render() {
+    if (!this.mounted) {
+      return null;
+    }
     return <div onClick={this.signIn}>{this.props.children}</div>;
   }
 }

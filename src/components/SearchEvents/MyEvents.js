@@ -11,9 +11,6 @@ const configLightGallery = {
   selector: "a",
   width: "100%"
 };
-
-const LIMIT = 3;
-
 class MyEvents extends Component {
   shouldComponentUpdate() {
     return false;
@@ -34,18 +31,6 @@ class MyEvents extends Component {
         };
       }
     });
-  };
-
-  handlePaginate = (page, fetchMore) => {
-    const { ErrorHandler } = this.props;
-    ErrorHandler.setBreadcrumb("Page my events");
-    this.setState(
-      state => ({
-        skip: (page - 1) * LIMIT,
-        current: page
-      }),
-      () => this.fetchData(fetchMore)
-    );
   };
 
   onLightGallery = node => {

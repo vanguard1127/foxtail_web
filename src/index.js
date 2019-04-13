@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import * as Sentry from "@sentry/browser";
-
+import { env } from "./docs/consts";
 import Landing from "./components/Landing";
 import About from "./components/Information/About";
 import FAQ from "./components/Information/FAQ";
@@ -42,20 +42,11 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 
 Sentry.init({
-  dsn: "https://e26c22fc85dc4315bddcad2103c61cee@sentry.io/1380381"
+  dsn: process.env.SENTRY_DNS
 });
 
-//FOR LOCAL
-let server = "localhost:4444";
-let httpurl = `http://${server}/graphql`;
-let HTTPSurl = `http://${server}`;
-let wsurl = `ws://${server}/subscriptions`;
-
-//FOR DEV
-// let server = "prod.foxtailapi.com";
-// let httpurl = `https://${server}/graphql`;
-// let HTTPSurl = `https://${server}`;
-// let wsurl = `wss://${server}/subscriptions`;
+//let {  httpurl, HTTPSurl, wsurl } = env.production;
+let { httpurl, HTTPSurl, wsurl } = env.local;
 
 // if (process.env.NODE_ENV !== "production") {
 //   var axe = require("react-axe");

@@ -190,6 +190,7 @@ class NavbarAuth extends PureComponent {
                         });
                         this.toggleMobileMenu();
                       }}
+                      className="highlightTxt"
                     >
                       {t("common:becomeblk")}
                     </span>

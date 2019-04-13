@@ -9,8 +9,7 @@ import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
-
-const LIMIT = 20;
+import { SEARCHPROS_LIMIT } from "../../docs/consts";
 
 class ProfilesContainer extends PureComponent {
   state = {
@@ -97,7 +96,7 @@ class ProfilesContainer extends PureComponent {
             ageRange,
             interestedIn,
             skip: skip,
-            limit: LIMIT
+            limit: SEARCHPROS_LIMIT
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             this.setState({
@@ -127,7 +126,7 @@ class ProfilesContainer extends PureComponent {
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         this.setState(
-          state => ({ skip: this.state.skip + LIMIT }),
+          state => ({ skip: this.state.skip + SEARCHPROS_LIMIT }),
           () => this.fetchData(fetchMore)
         );
       }
@@ -169,7 +168,18 @@ class ProfilesContainer extends PureComponent {
     if (this.props.loading && loading) {
       return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
     }
-
+    sessionStorage.setItem(
+      "searchProsQuery",
+      JSON.stringify({
+        long,
+        lat,
+        distance,
+        ageRange,
+        interestedIn,
+        limit: SEARCHPROS_LIMIT,
+        skip: 0
+      })
+    );
     return (
       <Query
         query={SEARCH_PROFILES}
@@ -179,7 +189,7 @@ class ProfilesContainer extends PureComponent {
           distance,
           ageRange,
           interestedIn,
-          limit: LIMIT,
+          limit: SEARCHPROS_LIMIT,
           skip: 0
         }}
         fetchPolicy="cache-first"

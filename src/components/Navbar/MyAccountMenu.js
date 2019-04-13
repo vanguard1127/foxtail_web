@@ -31,20 +31,29 @@ class MyAccountMenu extends Component {
             <li>
               <NavLink to="/settings">{t("common:myaccount")}</NavLink>
             </li>
-            <li>
-              <span role="heading" aria-level="2" onClick={this.onAddCouple}>
-                {t("common:addcoup")}
-              </span>
-            </li>
-            <li className="border">
-              <span
-                role="heading"
-                aria-level="2"
-                onClick={this.onShowBlackMember}
-              >
-                {t("common:becomeblk")}
-              </span>
-            </li>
+            {this.props.location.pathname !== "/settings" && (
+              <>
+                <li>
+                  <span
+                    role="heading"
+                    aria-level="2"
+                    onClick={this.onAddCouple}
+                  >
+                    {t("common:addcoup")}
+                  </span>
+                </li>
+
+                <li className="border">
+                  <span
+                    role="heading"
+                    aria-level="2"
+                    onClick={this.onShowBlackMember}
+                  >
+                    {t("common:becomeblk")}
+                  </span>
+                </li>
+              </>
+            )}
             <li>
               <Logout t={t} />
             </li>

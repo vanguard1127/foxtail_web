@@ -1411,8 +1411,19 @@ section.members .card-item.verified .image::before {
   top: -4px;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/elements/verified-badge.png");
   z-index: 500;
+}
+
+section.members .card-item.verified.photo .image::before {
+  background-image: url("../img/elements/photo-verified-badge.png");
+}
+
+section.members .card-item.verified.std .image::before {
+  background-image: url("../img/elements/std-verified-badge.png");
+}
+
+section.members .card-item.verified.both .image::before {
+  background-image: url("../img/elements/both-verified-badge.png");
 }
 
 section.members .card-item .image {
@@ -4004,8 +4015,7 @@ section.event-detail .event-info-content.hid-mobile {
 
 section.event-detail .event-info-content .event-image {
   width: 100%;
-  height: 165px;
-  display: inline-block;
+  height: 100%;
   float: left;
   overflow: hidden;
 }
@@ -4013,7 +4023,6 @@ section.event-detail .event-info-content .event-image {
 section.event-detail .event-info-content .event-image img {
   width: 100%;
   height: 100%;
-  display: inline-block;
   float: left;
   background-size: 100%;
   background-repeat: no-repeat;
@@ -8212,14 +8221,14 @@ section.settings textarea {
     height: 336px;
   }
 
-  section.event-detail .event-info-content.hid-desktop {
+  /* section.event-detail .event-info-content.hid-desktop {
     display: none;
     visibility: hidden;
   }
   section.event-detail .event-info-content.hid-mobile {
     display: inline-block;
     visibility: visible;
-  }
+  } */
 
   header.landing {
     top: 35px;
@@ -8337,7 +8346,16 @@ section.settings textarea {
   header .toggle {
     right: -15px;
   }
+  section.event-detail .event-info-content.hid-mobile {
 
+    display: inline-block;
+    visibility: visible;
+  }
+
+  section.event-detail .event-info-content.hid-desktop {
+    display: none;
+    visibility: hidden;
+  }
   section.go-events
     .events-card-content
     .card-item
@@ -8648,4 +8666,13 @@ img {
 .fade-enter.fade-enter-active {
   opacity: 1;
   transition: opacity 250ms ease-in;
+}
+
+section.settings .sidebar .menu ul li.highlightTxt {
+  color: #f50043 !important;
+}
+
+section.settings .sidebar .menu ul li.highlightTxt:hover {
+  color: #fff !important;
+  background-color: #f50043 !important;
 }

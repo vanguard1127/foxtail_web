@@ -19,7 +19,7 @@ import Spinner from "../common/Spinner";
 import validateLang from "../../utils/validateLang";
 import getCityCountry from "../../utils/getCityCountry";
 
-const LIMIT = 6;
+import { SEARCHEVENT_LIMIT } from "../../docs/consts";
 
 class SearchEvents extends PureComponent {
   state = {
@@ -133,7 +133,7 @@ class SearchEvents extends PureComponent {
       this.setState({ loading: true }, () =>
         fetchMore({
           variables: {
-            limit: LIMIT,
+            limit: SEARCHEVENT_LIMIT,
             skip: this.state.skip
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -163,7 +163,7 @@ class SearchEvents extends PureComponent {
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         this.setState(
-          state => ({ skip: this.state.skip + LIMIT }),
+          state => ({ skip: this.state.skip + SEARCHEVENT_LIMIT }),
           () => this.fetchData(fetchMore)
         );
       }
@@ -227,7 +227,7 @@ class SearchEvents extends PureComponent {
                   long,
                   maxDistance,
                   all,
-                  limit: LIMIT,
+                  limit: SEARCHEVENT_LIMIT,
                   skip: 0
                 }}
                 fetchPolicy="cache-first"

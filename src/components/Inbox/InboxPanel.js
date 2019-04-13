@@ -5,8 +5,8 @@ import { Query } from "react-apollo";
 import Spinner from "../common/Spinner";
 import InboxList from "./InboxList";
 import { Waypoint } from "react-waypoint";
+import { INBOXLIST_LIMIT } from "../../docs/consts";
 let unsubscribe = null;
-const LIMIT = 9;
 class InboxPanel extends Component {
   state = { searchTerm: "", skip: 0 };
 
@@ -35,11 +35,11 @@ class InboxPanel extends Component {
 
   handleEnd = ({ previousPosition, fetchMore }) => {
     const { skip } = this.state;
-    console.log("previousPosition", previousPosition);
+
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         this.setState(
-          state => ({ skip: skip + LIMIT, loading: true }),
+          state => ({ skip: skip + INBOXLIST_LIMIT, loading: true }),
           () => this.fetchData(fetchMore)
         );
       }
@@ -52,7 +52,7 @@ class InboxPanel extends Component {
         fetchMore({
           variables: {
             skip: this.state.skip,
-            limit: LIMIT
+            limit: INBOXLIST_LIMIT
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (this.mounted) {
@@ -84,7 +84,7 @@ class InboxPanel extends Component {
     return (
       <Query
         query={GET_INBOX}
-        variables={{ skip, limit: LIMIT }}
+        variables={{ skip, limit: INBOXLIST_LIMIT }}
         fetchPolicy="cache-first"
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {

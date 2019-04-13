@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
+import { NOTICELIST_LIMIT } from "../../docs/consts";
 import { Waypoint } from "react-waypoint";
 import { preventContextMenu } from "../../utils/image";
 import dayjs from "dayjs";
@@ -9,7 +10,6 @@ import validateLang from "../../utils/validateLang";
 
 dayjs.extend(relativeTime);
 
-const LIMIT = 5;
 const intialState = {
   read: null,
   seen: null,
@@ -58,7 +58,7 @@ class NoticesList extends Component {
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         this.setState(
-          state => ({ skip: skip + LIMIT, loading: true }),
+          state => ({ skip: skip + NOTICELIST_LIMIT, loading: true }),
           () => this.fetchData(fetchMore)
         );
       }
@@ -71,7 +71,7 @@ class NoticesList extends Component {
         fetchMore({
           variables: {
             skip: this.state.skip,
-            limit: LIMIT
+            limit: NOTICELIST_LIMIT
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (this.mounted) {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ChatPanel from "./ChatPanel";
 import ChatContent from "./ChatContent";
-const LIMIT = 4;
+import { EVENTDISC_LIMIT } from "../../docs/consts";
 class EventDiscussion extends Component {
   shouldComponentUpdate() {
     return false;
@@ -17,7 +17,7 @@ class EventDiscussion extends Component {
             t={t}
             ErrorHandler={ErrorHandler}
             currentuser={currentuser}
-            limit={LIMIT}
+            limit={EVENTDISC_LIMIT}
           />
           <ChatContent
             chatID={chatID}
@@ -25,7 +25,7 @@ class EventDiscussion extends Component {
             t={t}
             ErrorHandler={ErrorHandler}
             dayjs={dayjs}
-            limit={LIMIT}
+            limit={EVENTDISC_LIMIT}
           />
         </div>
       </ErrorHandler.ErrorBoundary>
