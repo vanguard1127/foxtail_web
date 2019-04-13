@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import dayjs from "dayjs";
 
 import withAuth from "../withAuth";
@@ -26,9 +26,8 @@ import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
 require("dayjs/locale/" + lang);
 
-class InboxPage extends PureComponent {
+class InboxPage extends Component {
   state = {
-    chatID: this.props.match.params.chatID,
     chat: null,
     unSeenCount: 0,
     blockModalVisible: false,
@@ -38,12 +37,33 @@ class InboxPage extends PureComponent {
     title: "",
     chatOpen: false
   };
-
+  shouldComponentUpdate(nextProps, nextState) {
+    let chatIDChange = false;
+    if (
+      this.props.location.state !== undefined &&
+      nextProps.location.state !== undefined
+    ) {
+      chatIDChange =
+        this.props.location.state.chatID !== nextProps.location.state.chatID;
+    }
+    if (
+      this.state.chat !== nextState.chat ||
+      this.state.unSeenCount !== nextState.unSeenCount ||
+      this.state.blockModalVisible !== nextState.blockModalVisible ||
+      this.state.chatOpen !== nextState.chatOpen ||
+      this.state.showModal !== nextState.showModal ||
+      chatIDChange
+    ) {
+      return true;
+    }
+    return false;
+  }
   componentDidMount() {
     this.mounted = true;
 
     document.title = "Inbox";
     sessionStorage.setItem("page", "inbox");
+    this.props.history.replace({ state: {} });
   }
 
   componentWillUnmount() {
@@ -53,10 +73,10 @@ class InboxPage extends PureComponent {
   }
 
   setBlockModalVisible = () => {
-    const { chatID, blockModalVisible } = this.state;
+    const { blockModalVisible } = this.state;
     ErrorHandler.setBreadcrumb("Block modal visible:" + !blockModalVisible);
     if (this.mounted) {
-      this.setState({ chatID, blockModalVisible: !blockModalVisible });
+      this.setState({ blockModalVisible: !blockModalVisible });
     }
   };
 
@@ -71,25 +91,24 @@ class InboxPage extends PureComponent {
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
-    this.setState({ chatID, unSeenCount, chatOpen: true }, () => {
-      readChat()
-        .then(({ data }) => {
-          if (this.mounted) {
-            this.setState({ chatID: data.readChat });
-          }
-        })
-        .catch(res => {
+    if (this.mounted) {
+      this.props.history.replace({ state: { chatID } });
+      this.setState({ unSeenCount, chatOpen: true }, () => {
+        readChat().catch(res => {
           ErrorHandler.catchErrors(res.graphQLErrors);
         });
-    });
+      });
+    }
   };
 
   closeChat = () => {
-    this.setState({ chatID: null, chatOpen: false });
+    this.props.history.replace({ state: {} });
+    this.setState({ chatOpen: false });
   };
 
   handleRemoveSelf = removeSelf => {
-    ErrorHandler.setBreadcrumb("Remove Self from Chat:" + this.state.chatID);
+    const { chatID } = this.props.location.state;
+    ErrorHandler.setBreadcrumb("Remove Self from Chat:" + chatID);
     removeSelf()
       .then(({ data }) => {
         if (this.mounted) {
@@ -105,7 +124,7 @@ class InboxPage extends PureComponent {
   };
 
   updateMail = cache => {
-    const { chatID } = this.state;
+    const { chatID } = this.props.location.state;
 
     const { getInbox } = cache.readQuery({
       query: GET_INBOX
@@ -120,8 +139,8 @@ class InboxPage extends PureComponent {
   };
 
   updateCount = cache => {
-    const { unSeenCount, chatID } = this.state;
-
+    const { unSeenCount } = this.state;
+    const { chatID } = this.props.location.state;
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS
     });
@@ -155,7 +174,6 @@ class InboxPage extends PureComponent {
     const { t } = this.props;
     const { currentuser } = this.props.session;
     let {
-      chatID,
       chat,
       blockModalVisible,
       showModal,
@@ -164,6 +182,7 @@ class InboxPage extends PureComponent {
       title,
       chatOpen
     } = this.state;
+
     if (currentuser.tours.indexOf("i") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
       return (
@@ -172,6 +191,8 @@ class InboxPage extends PureComponent {
         </div>
       );
     }
+
+    let chatID = this.props.location.state && this.props.location.state.chatID;
 
     const inboxPanel = (
       <Mutation
