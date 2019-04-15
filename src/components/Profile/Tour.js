@@ -52,19 +52,19 @@ class ProfileTour extends PureComponent {
     const tourConfig = [
       {
         selector: '[data-tut="page"]',
-        content: `The profile page has all the information this user has allowed the public to see. Private images can only be seen after matching or chatting with this user.`
+        content: `Here you will find member info and images. Private images can only be seen after matching or chatting.`
       },
       {
         selector: showDesire,
-        content: `Here's a list of this users desires. Desires are simply user intrests and are NOT to be expected of them.`
+        content: `Desires are simply this member's intrests and are NOT to be expected of them.`
       },
       {
         selector: '[data-tut="btns"]',
-        content: `Use the Heart button to like the member. Or click Send Message to send a message now (only BLACK members).`
+        content: `Use the Heart button to like the member. Or click Send a Message instantly (only BLACK members).`
       },
       {
         selector: '[data-tut="report"]',
-        content: `If you feel something is not right about this user's profile, please click the flag to report and block this user.`
+        content: `If you feel something is not right about this member's profile or you never want to see them again, please click the flag to report or block this member.`
       },
       {
         selector: '[data-tut="na"]',
@@ -126,21 +126,11 @@ class ProfileTour extends PureComponent {
                       <li>
                         <span className="head">Last Login:</span>
                         <span className="data"> Online</span>
-                        <div className="share btn">
-                          <button>Share</button>
-                        </div>
-                        <div className="report btn">
-                          <button>Report</button>
-                        </div>
                       </li>
                     </ul>
                     <div className="functions">
-                      <div className="share btn">
-                        <button>Share</button>
-                      </div>
-                      <div className="report btn" data-tut="report">
-                        <button>Report</button>
-                      </div>
+                      <div className="share btn" />
+                      <div className="report btn" />
                     </div>
                   </div>
                   <div className="user-bio">

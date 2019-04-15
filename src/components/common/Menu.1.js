@@ -1,14 +1,19 @@
-import React, { PureComponent, cloneElement } from "react";
+import React, { Component, cloneElement } from "react";
 import { withNamespaces } from "react-i18next";
-class Menu extends PureComponent {
+class Menu extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
   }
-
   state = {
     menuOpen: false
   };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.menuOpen !== nextState.menuOpen) {
+      return true;
+    }
+    return false;
+  }
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
@@ -18,22 +23,17 @@ class Menu extends PureComponent {
     document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
-  //TODO: ticket 294: menu count wont update if clicked to rigth of notifcstions
   // componentDidUpdate() {
   //   if (this.props.closeAction && this.state.menuOpen === false) {
   //     this.props.closeAction();
   //   }
   // }
-
   handleClickOutside = async event => {
     if (
       this.wrapperRef &&
       !this.wrapperRef.current.contains(event.target) &&
       this.state.menuOpen
     ) {
-      if (this.props.closeAction) {
-        this.props.closeAction();
-      }
       this.setState({ menuOpen: false });
     }
   };

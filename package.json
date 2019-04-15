@@ -74,7 +74,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "server": "cd C:/Users/cecil/Documents/FoxtailRepo/FT_Graph_Draft && npm start",
-    "deploytest": "cd build && surge",
+    "deploy": "aws s3 sync build/ s3://foxtail-app",
     "precommit": "lint-staged",
     "flow": "flow"
   },

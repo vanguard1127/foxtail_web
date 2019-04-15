@@ -80,7 +80,11 @@ class ChatContent extends PureComponent {
                 },
                 updateQuery: (prev, { subscriptionData }) => {
                   const { newMessageSubscribe } = subscriptionData.data;
-                  if (!newMessageSubscribe) {
+
+                  if (
+                    !newMessageSubscribe ||
+                    newMessageSubscribe.fromUser.id === currentUserID
+                  ) {
                     return prev;
                   }
                   if (prev.getMessages) {

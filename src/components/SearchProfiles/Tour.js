@@ -63,7 +63,7 @@ class Tour extends PureComponent {
       },
       {
         selector: '[data-tut="single"]',
-        content: `When you find someone you're interested in, click their name to go to their profile.`
+        content: `When you find someone you're interested in, click their name to go to their profile. **Hint: Click this user's profile**`
       }
     ];
 
@@ -90,15 +90,7 @@ class Tour extends PureComponent {
                                 value="  My Location"
                                 readOnly
                               />
-                              <span
-                                style={{
-                                  flex: "1",
-                                  backgroundColor: "transparent",
-                                  marginLeft: "-7%"
-                                }}
-                              >
-                                {t("Reset")}
-                              </span>
+                              <span className="reset-icon" />
                             </div>
                           </div>
                         </div>

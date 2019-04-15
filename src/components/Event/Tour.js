@@ -49,7 +49,7 @@ class ProfileTour extends PureComponent {
 
     const tourConfig = [
       {
-        selector: '[data-tut=""]',
+        selector: '[data-tut="ok"]',
         content: `This event looks fun!`
       },
       {
@@ -72,7 +72,7 @@ class ProfileTour extends PureComponent {
 
     return (
       <Fragment>
-        <section className="event-detail">
+        <section className="event-detail" data-tut="ok">
           <div className="container">
             <div className="col-md-12">
               <div className="row">
@@ -96,7 +96,7 @@ class ProfileTour extends PureComponent {
                         <span className="avatar">
                           <a href="#">
                             <img
-                              src="assets/img/usr/avatar/1003@2x.png"
+                              src="../assets/img/usr/medium-avatar/1003.png"
                               alt=""
                             />
                           </a>
@@ -113,14 +113,11 @@ class ProfileTour extends PureComponent {
                       <div className="share-event">
                         <span className="title">Share Event:</span>
                         <ul>
-                          <li className="facebook">
-                            <a href="#" />
+                          <li className="share">
+                            <span />
                           </li>
-                          <li className="twitter">
-                            <a href="#" />
-                          </li>
-                          <li className="mail">
-                            <a href="#" />
+                          <li className="add">
+                            <span />
                           </li>
                         </ul>
                       </div>
@@ -157,85 +154,85 @@ class ProfileTour extends PureComponent {
                         <ul>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1001@2x.png"
+                              src="../assets/img/usr/medium-avatar/1001.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1002@2x.png"
+                              src="../assets/img/usr/medium-avatar/1002.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1003@2x.png"
+                              src="../assets/img/usr/medium-avatar/1003.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1004@2x.png"
+                              src="../assets/img/usr/medium-avatar/1004.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1005@2x.png"
+                              src="../assets/img/usr/medium-avatar/1005.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1006@2x.png"
+                              src="../assets/img/usr/medium-avatar/1006.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1003@2x.png"
+                              src="../assets/img/usr/medium-avatar/1003.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1004@2x.png"
+                              src="../assets/img/usr/medium-avatar/1004.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1005@2x.png"
+                              src="../assets/img/usr/medium-avatar/1005.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1006@2x.png"
+                              src="../assets/img/usr/medium-avatar/1006.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1003@2x.png"
+                              src="../assets/img/usr/medium-avatar/1003.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1004@2x.png"
+                              src="../assets/img/usr/medium-avatar/1004.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1005@2x.png"
+                              src="../assets/img/usr/medium-avatar/1005.png"
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="assets/img/usr/avatar/1006@2x.png"
+                              src="../assets/img/usr/medium-avatar/1006.png"
                               alt=""
                             />
                           </li>
@@ -253,7 +250,7 @@ class ProfileTour extends PureComponent {
                   >
                     <div className="event-image">
                       <span>
-                        <img src="assets/img/events/1001@2x.png" alt="" />
+                        <img src="../assets/img/events/1001.png" alt="" />
                       </span>
                     </div>
                     <ul>
@@ -296,17 +293,17 @@ class ProfileTour extends PureComponent {
                     </div>
                   </div>
                   <div className="discuss-content" data-tut="discuss">
-                    <span className="head">Discuss about the event</span>
+                    <span className="head">Discuss this event</span>
                     <div className="send-message">
                       <textarea placeholder="Now you can join the discussion by writing a message…" />
-                      <button>Send Message</button>
+                      <button>Post Comment</button>
                     </div>
                     <div className="messages">
                       <div className="item">
                         <span className="avatar">
                           <a href="#">
                             <img
-                              src="assets/img/usr/avatar/1001@2x.png"
+                              src="../assets/img/usr/medium-avatar/1001.png"
                               alt=""
                             />
                           </a>
@@ -328,7 +325,7 @@ class ProfileTour extends PureComponent {
                         <span className="avatar">
                           <a href="#">
                             <img
-                              src="assets/img/usr/avatar/1002@2x.png"
+                              src="../assets/img/usr/medium-avatar/1002.png"
                               alt=""
                             />
                           </a>
@@ -351,7 +348,7 @@ class ProfileTour extends PureComponent {
                         <span className="avatar">
                           <a href="#">
                             <img
-                              src="assets/img/usr/avatar/1003@2x.png"
+                              src="../assets/img/usr/medium-avatar/1003.png"
                               alt=""
                             />
                           </a>
@@ -380,7 +377,7 @@ class ProfileTour extends PureComponent {
                   >
                     <div className="event-image">
                       <span>
-                        <img src="assets/img/events/1001@2x.png" alt="" />
+                        <img src="../assets/img/events/1001.png" alt="" />
                       </span>
                     </div>
                     <ul>
@@ -419,7 +416,7 @@ class ProfileTour extends PureComponent {
                       </li>
                     </ul>
                     <div className="join-event">
-                      <a href="#">I'm Going</a>
+                      <span>{t("Going")}</span>
                     </div>
                   </div>
                 </div>

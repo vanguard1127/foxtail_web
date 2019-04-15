@@ -2307,6 +2307,7 @@ section.inbox .chat .navbar .more-dropdown {
 section.inbox .chat .navbar .more-dropdown.open {
   display: inline-block;
   visibility: visible;
+  min-height: 210px;
 }
 
 section.inbox .chat .navbar .more-dropdown ul {
@@ -4555,7 +4556,7 @@ section.settings .page.mtop {
 
 input.location-search-input {
   width: 100% !important;
-  height: 45px !important;
+  height: 50px !important;
   outline: none !important;
   border: 1px solid #e3e3e3 !important;
   border-radius: 2px !important;

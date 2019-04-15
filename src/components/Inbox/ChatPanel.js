@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { SEND_MESSAGE, GET_MESSAGES, GET_INBOX } from "../../queries";
+import { INBOXLIST_LIMIT } from "../../docs/consts";
 
 class ChatPanel extends PureComponent {
   state = {
@@ -86,9 +87,10 @@ class ChatPanel extends PureComponent {
     });
 
     let { getInbox } = cache.readQuery({
-      query: GET_INBOX
+      query: GET_INBOX,
+      variables: { skip: 0, limit: INBOXLIST_LIMIT }
     });
-    console.log("GTY", getInbox);
+
     getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
     getInbox[
       getInbox.findIndex(el => el.chatID === chatID)
@@ -96,6 +98,7 @@ class ChatPanel extends PureComponent {
 
     cache.writeQuery({
       query: GET_INBOX,
+      variables: { skip: 0, limit: INBOXLIST_LIMIT },
       data: {
         ...getInbox
       }

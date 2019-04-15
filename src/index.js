@@ -45,7 +45,7 @@ Sentry.init({
   dsn: process.env.SENTRY_DNS
 });
 
-//let {  httpurl, HTTPSurl, wsurl } = env.production;
+//let { httpurl, HTTPSurl, wsurl } = env.production;
 let { httpurl, HTTPSurl, wsurl } = env.local;
 
 // if (process.env.NODE_ENV !== "production") {

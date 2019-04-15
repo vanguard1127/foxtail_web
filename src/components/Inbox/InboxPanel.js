@@ -27,8 +27,9 @@ class InboxPanel extends Component {
     this.mounted = false;
   }
 
-  handleSearchTextChange = e => {
+  handleSearchTextChange = (refetch, e) => {
     if (this.mounted) {
+      if (e.target.value === "") refetch();
       this.setState({ skip: 0, searchTerm: e.target.value });
     }
   };
@@ -87,7 +88,7 @@ class InboxPanel extends Component {
         variables={{ skip, limit: INBOXLIST_LIMIT }}
         fetchPolicy="cache-first"
       >
-        {({ data, loading, error, subscribeToMore, fetchMore }) => {
+        {({ data, loading, error, subscribeToMore, fetchMore, refetch }) => {
           if (loading) {
             return (
               <div className="col-md-4 col-lg-3 col-xl-3">
@@ -111,8 +112,10 @@ class InboxPanel extends Component {
           let messages = data.getInbox;
 
           if (searchTerm !== "") {
-            messages = messages.filter(
-              msg => msg.participants[0].profileName.indexOf(searchTerm) > -1
+            messages = messages.filter(msg =>
+              msg.participants[0].profileName
+                .toLocaleLowerCase()
+                .startsWith(searchTerm.toLocaleLowerCase())
             );
           }
 
@@ -159,7 +162,9 @@ class InboxPanel extends Component {
               <div className={chatOpen ? "left hide" : "left"}>
                 <InboxSearchTextBox
                   t={t}
-                  handleSearchTextChange={this.handleSearchTextChange}
+                  handleSearchTextChange={e =>
+                    this.handleSearchTextChange(refetch, e)
+                  }
                 />
                 <InboxList
                   messages={messages}

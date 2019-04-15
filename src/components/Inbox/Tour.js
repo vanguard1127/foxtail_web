@@ -56,7 +56,7 @@ class ProfileTour extends PureComponent {
       },
       {
         selector: '[data-tut="list"]',
-        content: `These are all of your chats.  Click on these to see messages.`
+        content: `These are your chats.`
       },
       {
         selector: '[data-tut="item"]',
@@ -73,7 +73,7 @@ class ProfileTour extends PureComponent {
       }
     ];
 
-    if (window.innerWidth < 768 && menuOpen) {
+    if (window.innerWidth < 1200 && menuOpen) {
       tourConfig = [
         {
           selector: '[data-tut=""]',
@@ -81,14 +81,14 @@ class ProfileTour extends PureComponent {
         },
         {
           selector: '[data-tut="list"]',
-          content: `These are all of your chats. Click one to see messages.`
+          content: `These are all of your chats. **Hint: Click one to see messages**`
         }
       ];
-    } else if (window.innerWidth < 768) {
+    } else if (window.innerWidth < 1200) {
       tourConfig = [
         {
           selector: '[data-tut="menubtn"]',
-          content: `Members message will show as their name but couples profiles have both names in the chat title. Clicking the menu to the right open chat actions including leaving and reporting bad behavior.`
+          content: `Clicking the menu to the right will open chat actions.`
         },
         {
           selector: '[data-tut="na"]',
@@ -96,7 +96,7 @@ class ProfileTour extends PureComponent {
         }
       ];
     }
-
+    const toggleOn = window.innerWidth < 1200 ? this.toggleMenu() : null;
     return (
       <Fragment>
         <section className="breadcrumb">
@@ -127,14 +127,13 @@ class ProfileTour extends PureComponent {
                 </div>
 
                 <div className="conversations">
-                  <div className="item unread">
-                    <a
-                      href="#"
-                      data-tut="item"
-                      onClick={() => this.toggleMenu()}
-                    >
+                  <div className="item unread" data-tut="item">
+                    <span onClick={toggleOn} className="inbox-item">
                       <span className="img">
-                        <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+                        <img
+                          src="../assets/img/usr/medium-avatar/1001.png"
+                          alt=""
+                        />
                       </span>
                       <div className="data">
                         <span className="name">Barbara Blair</span>
@@ -142,12 +141,15 @@ class ProfileTour extends PureComponent {
                         <span className="msg">Do you remember the name?</span>
                         <span className="notif">1</span>
                       </div>
-                    </a>
+                    </span>
                   </div>
                   <div className="item unread">
-                    <a href="#">
+                    <span onClick={toggleOn} className="inbox-item">
                       <span className="img">
-                        <img src="assets/img/usr/avatar/1002@2x.png" alt="" />
+                        <img
+                          src="../assets/img/usr/medium-avatar/1002.png"
+                          alt=""
+                        />
                       </span>
                       <div className="data">
                         <span className="name">Maria Anna</span>
@@ -155,12 +157,15 @@ class ProfileTour extends PureComponent {
                         <span className="msg">My animals are pretty!</span>
                         <span className="notif">1</span>
                       </div>
-                    </a>
+                    </span>
                   </div>
                   <div className="item">
-                    <a href="#">
+                    <span onClick={toggleOn} className="inbox-item">
                       <span className="img">
-                        <img src="assets/img/usr/avatar/1003@2x.png" alt="" />
+                        <img
+                          src="../assets/img/usr/medium-avatar/1003.png"
+                          alt=""
+                        />
                       </span>
                       <div className="data">
                         <span className="name">Maya Didas</span>
@@ -170,12 +175,15 @@ class ProfileTour extends PureComponent {
                         </span>
                         <span className="notif">1</span>
                       </div>
-                    </a>
+                    </span>
                   </div>
                   <div className="item">
-                    <a href="#">
+                    <span onClick={toggleOn} className="inbox-item">
                       <span className="img">
-                        <img src="assets/img/usr/avatar/1004@2x.png" alt="" />
+                        <img
+                          src="../assets/img/usr/medium-avatar/1004.png"
+                          alt=""
+                        />
                       </span>
                       <div className="data">
                         <span className="name">Amanda Turner</span>
@@ -185,18 +193,21 @@ class ProfileTour extends PureComponent {
                         </span>
                         <span className="notif">1</span>
                       </div>
-                    </a>
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="col-md-8 col-lg-9 col-xl-7">
               <div className={menuOpen ? "chat" : "chat show"}>
-                <div className="navbar" data-tut="menubtn">
+                <div className="navbar">
                   <div className="user">
                     <div className="avatar">
                       <a href="#">
-                        <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+                        <img
+                          src="../assets/img/usr/medium-avatar/1001.png"
+                          alt=""
+                        />
                       </a>
                     </div>
                     <span className="name couple">
@@ -205,16 +216,19 @@ class ProfileTour extends PureComponent {
                     <span className="last-seen online">Active Now</span>
                   </div>
                   <div className="more" />
-                  <div className="more-dropdown open">
+                  <div className="more-dropdown open" data-tut="menubtn">
                     <ul>
                       <li>
-                        <a href="#">Search for Conversation</a>
+                        <a href="#">Participants</a>
                       </li>
                       <li>
-                        <a href="#">Delete the Conversation</a>
+                        <a href="#">Remove Members</a>
                       </li>
                       <li>
-                        <a href="#">Report the Conversation</a>
+                        <a href="#">Leave Conversation</a>
+                      </li>
+                      <li>
+                        <a href="#">Report Conversation</a>
                       </li>
                     </ul>
                   </div>
@@ -222,7 +236,10 @@ class ProfileTour extends PureComponent {
                 <div className="content">
                   <div className="msg-item">
                     <div className="avatar">
-                      <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+                      <img
+                        src="../assets/img/usr/medium-avatar/1001.png"
+                        alt=""
+                      />
                     </div>
                     <div className="bubble">
                       Morning! Beautiful start of the day how is things going
@@ -232,21 +249,30 @@ class ProfileTour extends PureComponent {
                   </div>
                   <div className="msg-item">
                     <div className="avatar">
-                      <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+                      <img
+                        src="../assets/img/usr/medium-avatar/1001.png"
+                        alt=""
+                      />
                     </div>
                     <div className="bubble">Are u here darling?</div>
                     <span className="time">10:02 AM</span>
                   </div>
                   <div className="msg-item response">
                     <div className="avatar">
-                      <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+                      <img
+                        src="../assets/img/usr/medium-avatar/1001.png"
+                        alt=""
+                      />
                     </div>
                     <div className="bubble">Dr Peersy? Yup, nice here too!</div>
                     <span className="time">10:02 AM</span>
                   </div>
                   <div className="msg-item">
                     <div className="avatar">
-                      <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+                      <img
+                        src="../assets/img/usr/medium-avatar/1001.png"
+                        alt=""
+                      />
                     </div>
                     <div className="bubble">
                       Last night I'll arrive from here.
@@ -255,7 +281,10 @@ class ProfileTour extends PureComponent {
                   </div>
                   <div className="msg-item response">
                     <div className="avatar">
-                      <img src="assets/img/usr/avatar/1001@2x.png" alt="" />
+                      <img
+                        src="../assets/img/usr/medium-avatar/1001.png"
+                        alt=""
+                      />
                     </div>
                     <div className="bubble">When did you get back?</div>
                     <span className="time">10:02 AM</span>
@@ -276,19 +305,19 @@ class ProfileTour extends PureComponent {
               <div className="right" data-tut="actions">
                 <div className="head" />
                 <div className="content">
-                  <div className="visit-profile">
-                    <a href="#">Visit Profile</a>
-                  </div>
                   <div className="functions">
                     <ul>
-                      <li className="search">
-                        <a href="#">Search for Conversation</a>
+                      <li className="members">
+                        <span>Participants</span>
                       </li>
-                      <li className="delete">
-                        <a href="#">Delete the Conversation</a>
+                      <li className="invite">
+                        <span>Invite Members</span>
                       </li>
+                      <li className="leave">
+                        <span>Leave Conversation</span>
+                      </li>{" "}
                       <li className="report">
-                        <a href="#">Report the Conversation</a>
+                        <span>Report Conversation</span>
                       </li>
                     </ul>
                   </div>

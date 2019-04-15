@@ -22,6 +22,7 @@ import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
+import { INBOXLIST_LIMIT } from "../../docs/consts";
 import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
 require("dayjs/locale/" + lang);
@@ -127,11 +128,13 @@ class InboxPage extends Component {
     const { chatID } = this.props.location.state;
 
     const { getInbox } = cache.readQuery({
-      query: GET_INBOX
+      query: GET_INBOX,
+      variables: { skip: 0, limit: INBOXLIST_LIMIT }
     });
     const updatedInbox = getInbox.filter(x => x.chatID !== chatID);
     cache.writeQuery({
       query: GET_INBOX,
+      variables: { skip: 0, limit: INBOXLIST_LIMIT },
       data: {
         getInbox: updatedInbox
       }
@@ -154,7 +157,8 @@ class InboxPage extends Component {
     });
 
     const { getInbox } = cache.readQuery({
-      query: GET_INBOX
+      query: GET_INBOX,
+      variables: { skip: 0, limit: INBOXLIST_LIMIT }
     });
 
     const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
@@ -163,6 +167,7 @@ class InboxPage extends Component {
 
       cache.writeQuery({
         query: GET_INBOX,
+        variables: { skip: 0, limit: INBOXLIST_LIMIT },
         data: {
           getInbox
         }

@@ -82,18 +82,16 @@ class InboxList extends PureComponent {
 
   //Variables by text
   render() {
-    const { messages, handleEnd, searchTerm } = this.props;
+    const { messages, handleEnd } = this.props;
 
     return (
       <div className="conversations">
         {this.renderMsgList({ messages })}
-        {!searchTerm && (
-          <div className="item">
-            <Waypoint
-              onEnter={({ previousPosition }) => handleEnd(previousPosition)}
-            />
-          </div>
-        )}
+        <div className="item">
+          <Waypoint
+            onEnter={({ previousPosition }) => handleEnd(previousPosition)}
+          />
+        </div>
       </div>
     );
   }

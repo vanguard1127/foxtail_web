@@ -436,12 +436,6 @@ export const SIGNS3 = gql`
   }
 `;
 
-export const SEARCH_DESIRES = gql`
-  query($searchTerm: String!) {
-    searchDesires(searchTerm: $searchTerm)
-  }
-`;
-
 export const REMOVE_SELF = gql`
   mutation($chatID: ID!) {
     removeSelf(chatID: $chatID)

@@ -47,7 +47,7 @@ class Tour extends PureComponent {
     const tourConfig = [
       {
         selector: '[data-tut=""]',
-        content: `Ok, let's find an event near by to attend.`
+        content: `Let's find an event nearby to attend.`
       },
 
       {
@@ -60,15 +60,15 @@ class Tour extends PureComponent {
       },
       {
         selector: '[data-tut="myevents"]',
-        content: `These are the events you have already said you are looking to attend`
+        content: `These are the events you've planned to attend`
       },
       {
         selector: '[data-tut="events"]',
-        content: `Events meeting your criteria are here sorted by date.`
+        content: `Events meeting your criteria, are here sorted by date.`
       },
       {
         selector: '[data-tut="item"]',
-        content: `Let's look at this event. Click the Event Name.`
+        content: `Let's look at this event. **Hint: Click the Event Name**`
       }
     ];
 
