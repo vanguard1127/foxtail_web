@@ -5,7 +5,6 @@ class DesiresBlock extends Component {
     return false;
   }
   render() {
-    console.log("Desires");
     const { desires, t, id } = this.props;
     return (
       <span className="interest">

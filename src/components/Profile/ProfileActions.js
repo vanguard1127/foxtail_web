@@ -10,35 +10,18 @@ class ProfileActions extends Component {
     return false;
   }
   render() {
-    const {
-      profile,
-      setProfile,
-      likeProfile,
-      showMsgModal,
-      t,
-      liked,
-      msgd
-    } = this.props;
+    const { likeProfile, showMsgModal, t, liked, msgd } = this.props;
 
     return (
       <div className="functions">
         {!msgd ? (
           <>
-            <div
-              className="btn send-msg"
-              onClick={async () => {
-                await setProfile(profile);
-                await showMsgModal();
-              }}
-            >
+            <div className="btn send-msg" onClick={showMsgModal}>
               {t("common:sendmsg")}
             </div>
             <div
               className={liked ? "btn heart unheart" : "btn heart"}
-              onClick={async () => {
-                await setProfile(profile);
-                await likeProfile();
-              }}
+              onClick={likeProfile}
             />
           </>
         ) : (

@@ -3,8 +3,10 @@ import { withNamespaces } from "react-i18next";
 import PlacesAutocomplete, {
   geocodeByAddress
 } from "react-places-autocomplete";
+import getCityCountry from "../../utils/getCityCountry";
 
 class AddressSearch extends Component {
+  state = { address: this.props.address };
   componentDidMount() {
     this.mounted = true;
   }
@@ -13,40 +15,85 @@ class AddressSearch extends Component {
   }
   handleChange = address => {
     if (address === "My Location") {
-      this.props.handleRemoveLocLock();
+      this.handleRemoveLocLock();
       return;
     }
-    this.props.setLocationValues({
+    this.setState({
       address
     });
   };
 
+  handleRemoveLocLock = async () => {
+    await navigator.geolocation.getCurrentPosition(
+      async pos => {
+        const { latitude, longitude } = pos.coords;
+        const citycntry = await getCityCountry({
+          long: longitude,
+          lat: latitude
+        });
+        this.setState({ address: citycntry.city }, () =>
+          this.props.setLocationValues({
+            lat: latitude,
+            long: longitude,
+            address: citycntry.city
+          })
+        );
+      },
+      err => {
+        alert(
+          this.props.t(
+            "Please enable location services to remove your set location."
+          )
+        );
+        return;
+      }
+    );
+  };
+
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.address !== this.props.address) {
+    if (
+      nextState.address !== this.state.address ||
+      nextProps.address !== this.props.address
+    ) {
       return true;
     }
     return false;
   }
 
+  componentDidUpdate(prev) {
+    if (prev.address !== this.props.address) {
+      this.setState({ address: this.props.address });
+    }
+  }
+
   handleSelect = address => {
     geocodeByAddress(address)
-      .then(results => {
+      .then(async results => {
         if (this.mounted) {
-          this.props.setLocationValues({
-            lat: results[0].geometry.location.lat(),
+          const citycntry = await getCityCountry({
             long: results[0].geometry.location.lng(),
-            address: results[0].formatted_address
+            lat: results[0].geometry.location.lat()
           });
+          this.setState({ address: citycntry.city }, () =>
+            this.props.setLocationValues({
+              lat: results[0].geometry.location.lat(),
+              long: results[0].geometry.location.lng(),
+              address: citycntry.city
+            })
+          );
         }
       })
-      .then(results => console.log("Success", results))
-      .catch(error => console.error("Error", error));
+      .catch(
+        error =>
+          this.props.ErrorHandler && this.props.ErrorHandler.catchErrors(error)
+      );
   };
 
   render() {
-    const { type, address, t, placeholder, hideReset } = this.props;
+    const { type, t, placeholder, hideReset } = this.props;
+    const { address } = this.state;
     const onError = (status, clearSuggestions) => {
-      console.log("Google Maps API returned error with status: ", status);
+      this.props.ErrorHandler && this.props.ErrorHandler.catchErrors(status);
       clearSuggestions();
     };
 
@@ -89,7 +136,14 @@ class AddressSearch extends Component {
                 )}
               </div>
               <div className="autocomplete-dropdown-container">
-                {loading && <div>{t("common:Loading") + "..."}</div>}
+                {loading && (
+                  <div
+                    className="suggestion-item"
+                    style={{ backgroundColor: "#ffffff" }}
+                  >
+                    {t("common:Loading") + "..."}
+                  </div>
+                )}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
                     ? "suggestion-item--active"

@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 import { withNamespaces } from "react-i18next";
 import { withRouter } from "react-router-dom";
@@ -17,12 +17,11 @@ import Header from "./Header";
 import Tour from "./Tour";
 import EventsList from "./EventsList";
 import Spinner from "../common/Spinner";
-import getCityCountry from "../../utils/getCityCountry";
 import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
 require("dayjs/locale/" + lang);
 
-class SearchEvents extends PureComponent {
+class SearchEvents extends Component {
   state = {
     skip: 0,
     visible: false,
@@ -33,12 +32,18 @@ class SearchEvents extends PureComponent {
     long: this.props.location.long,
     maxDistance: 50,
     location: this.props.location.city,
-    all: true
+    all: true,
+    hasMore: true
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
+  }
   componentDidMount() {
     this.mounted = true;
-
     document.title = "Search Events";
   }
   componentWillUnmount() {
@@ -86,24 +91,15 @@ class SearchEvents extends PureComponent {
   handleChangeSelect = e => {
     this.props.ErrorHandler.setBreadcrumb("Change max distance");
     if (this.mounted) {
-      this.setState({ maxDistance: parseInt(e.value) });
+      this.setState({ maxDistance: parseInt(e.value), hasMore: true });
     }
   };
 
   setLocationValues = async ({ lat, long, address }) => {
     this.props.ErrorHandler.setBreadcrumb("Set location");
-    if (lat && long) {
-      const citycntry = await getCityCountry({
-        long,
-        lat
-      });
-      if (this.mounted) {
-        this.setState({ lat, long, location: citycntry.city });
-      }
-    } else {
-      if (this.mounted) {
-        this.setState({ location: address });
-      }
+
+    if (this.mounted) {
+      this.setState({ lat, long, address, hasMore: true });
     }
   };
 
@@ -128,43 +124,39 @@ class SearchEvents extends PureComponent {
 
   fetchData = fetchMore => {
     this.props.ErrorHandler.setBreadcrumb("Fetch more events");
+
     if (this.mounted) {
-      this.setState({ loading: true }, () =>
-        fetchMore({
-          variables: {
-            limit: SEARCHEVENT_LIMIT,
-            skip: this.state.skip
-          },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (this.mounted) {
-              this.setState({
-                loading: false
-              });
-            }
-
-            if (!fetchMoreResult || fetchMoreResult.searchEvents.length === 0) {
-              return previousResult;
-            }
-
-            return {
-              searchEvents: [
-                ...previousResult.searchEvents,
-                ...fetchMoreResult.searchEvents
-              ]
-            };
+      fetchMore({
+        variables: {
+          limit: SEARCHEVENT_LIMIT,
+          skip: this.state.skip
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult || fetchMoreResult.searchEvents.length === 0) {
+            this.setState({ hasMore: false });
+            return previousResult;
           }
-        })
-      );
+
+          return {
+            searchEvents: [
+              ...previousResult.searchEvents,
+              ...fetchMoreResult.searchEvents
+            ]
+          };
+        }
+      });
     }
   };
 
   handleEnd = (previousPosition, fetchMore) => {
-    if (previousPosition === Waypoint.below) {
-      if (this.mounted) {
-        this.setState(
-          state => ({ skip: this.state.skip + SEARCHEVENT_LIMIT }),
-          () => this.fetchData(fetchMore)
-        );
+    if (this.state.hasMore) {
+      if (previousPosition === Waypoint.below) {
+        if (this.mounted) {
+          this.setState(
+            state => ({ skip: this.state.skip + SEARCHEVENT_LIMIT }),
+            () => this.fetchData(fetchMore)
+          );
+        }
       }
     }
   };
@@ -178,7 +170,7 @@ class SearchEvents extends PureComponent {
       long,
       maxDistance,
       location,
-      skip
+      hasMore
     } = this.state;
     const { t, ErrorHandler, session, refetch } = this.props;
     const distanceMetric = session.currentuser.distanceMetric;
@@ -262,7 +254,7 @@ class SearchEvents extends PureComponent {
                       }
                       t={t}
                       dayjs={dayjs}
-                      loading={this.state.loading}
+                      loading={hasMore}
                       distanceMetric={distanceMetric}
                     />
                   );

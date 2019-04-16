@@ -14,7 +14,6 @@ class ProfileCard extends Component {
   render() {
     const {
       profile,
-      setProfile,
       likeProfile,
       showMsgModal,
       t,
@@ -30,7 +29,6 @@ class ProfileCard extends Component {
             <ProfilePic profilePic={profilePic} />
             <ProfileActions
               profileID={id}
-              setProfile={setProfile}
               likeProfile={likeProfile}
               showMsgModal={showMsgModal}
               t={t}

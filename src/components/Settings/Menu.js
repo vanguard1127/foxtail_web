@@ -17,7 +17,7 @@ class Menu extends Component {
       currentuser,
       ErrorBoundary
     } = this.props;
-    console.log("flash", flashCpl);
+
     return (
       <ErrorBoundary>
         <div className="menu">

@@ -137,7 +137,8 @@ class ProfilesContainer extends PureComponent {
     this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
     if (this.mounted) {
       this.setState({
-        msgdProfiles: [...this.state.msgdProfiles, profileID]
+        msgdProfiles: [...this.state.msgdProfiles, profileID],
+        msgModalVisible: false
       });
     }
   };

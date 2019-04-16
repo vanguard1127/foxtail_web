@@ -5,6 +5,7 @@ import axios from "axios";
 import PhotoUpload from "../../common/PhotoUpload";
 import { withNamespaces } from "react-i18next";
 import Modal from "../../common/Modal";
+import { toast } from "react-toastify";
 
 class PhotoVerify extends PureComponent {
   state = { photos: [], filename: "", filetype: "", photoKey: "" };
@@ -74,13 +75,11 @@ class PhotoVerify extends PureComponent {
         }
       };
       const resp = await axios.put(signedRequest, file, options);
-      if (resp.status === 200) {
-        console.log("upload ok");
-      } else {
-        console.log("Something went wrong");
+      if (resp.status !== 200) {
+        toast.error("Something went wrong with image upload");
       }
     } catch (e) {
-      console.log(e);
+      this.props.ErrorHandler.catchErrors(e);
     }
   };
 

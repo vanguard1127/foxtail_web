@@ -1364,6 +1364,9 @@ section.featured-profiles .slider .item .function .btn.heart::before {
   content: "\e806";
 }
 
+section.featured-profiles .slider .item .function .btn.heart::before {
+  content: "\e812";
+}
 /*---- MEMBERS CARD ----*/
 section.members {
   width: 100%;
@@ -3251,7 +3254,11 @@ section.go-events .header .settings-con .dropdown label {
 
 section.go-events .header .settings-con .dropdown span {
   position: relative;
-  top: 13px;
+  top: 10px;
+}
+
+section.go-events .header .select-list {
+  top: 53px !important;
 }
 
 section.go-events .header .settings-con > div + div > a,
@@ -4587,7 +4594,7 @@ section.settings .page.mtop {
 
 input.location-search-input {
   width: 100% !important;
-  height: 50px !important;
+  height: 57px !important;
   outline: none !important;
   border: 1px solid #e3e3e3 !important;
   border-radius: 2px !important;
@@ -4596,7 +4603,7 @@ input.location-search-input {
 }
 .autocomplete-dropdown-container {
   position: absolute !important;
-  top: 43px !important;
+  top: 60px !important;
   border-radius: 0 0 3px 3px !important;
   overflow: hidden !important;
   width: 100% !important;
@@ -7555,7 +7562,7 @@ section.settings .rc-slider-handle {
 
 .select-list {
   width: 100% !important;
-  top: 48px !important;
+  top: 60px !important;
   left: 0 !important;
 }
 
@@ -7579,7 +7586,6 @@ section.settings .rc-slider-handle {
 
 .multiple-options {
   position: relative;
-  top: -3px;
   width: 85%;
   white-space: nowrap;
   overflow: hidden;
@@ -7594,7 +7600,7 @@ section.settings .rc-slider-handle {
 
 .select-container .option-counter {
   position: absolute;
-  right: 40px;
+  right: 43px;
   top: 23px;
 }
 
@@ -8247,7 +8253,11 @@ section.settings textarea {
   }
 
   section.go-events .header {
-    height: 65px;
+    height: 70px;
+  }
+
+  section.go-events .header input.location-search-input {
+    height: 50px !important;
   }
 
   section.go-events .header .settings-con .search {
@@ -8650,8 +8660,8 @@ img {
   font-family: "foxtail-icon";
   color: #7b7a7a;
   position: absolute;
-  right: 5px;
-  top: 12px;
+  right: 12px;
+  top: 16px;
   font-size: 16px;
   z-index: 99999;
 }

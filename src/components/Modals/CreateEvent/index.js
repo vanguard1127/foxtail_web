@@ -351,6 +351,7 @@ class CreateEvent extends PureComponent {
                           type={"address"}
                           placeholder={t("common:Address")}
                           hideReset={true}
+                          ErrorHandler={ErrorHandler}
                         />
                       </div>
                       {this.InputFeedback(errors.address)}

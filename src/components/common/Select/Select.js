@@ -130,31 +130,28 @@ class Select extends PureComponent {
     return (
       <React.Fragment>
         <div
+          className={"select-container " + className || ""}
+          onClick={() => this.setState({ menuOpen: menuStatus })}
           ref={selectContainerRef =>
             (this.selectContainerRef = selectContainerRef)
           }
         >
-          <div
-            className={"select-container " + className || ""}
-            onClick={() => this.setState({ menuOpen: menuStatus })}
-          >
-            <label>{label}</label>
-            {multiple && (
-              <div className="multiple-options">
-                {selectedOptions.map((d, idx, arr) => {
-                  if (idx === arr.length - 1) {
-                    return <span key={Math.random()}>{t(d.label)}</span>;
-                  }
-                  return <span key={Math.random()}>{t(d.label) + ","}</span>;
-                })}
-              </div>
-            )}
-            {!multiple && <span>{t(selectedOption.label)}</span>}
-            {multiple && optionCounter > 0 && (
-              <span className="option-counter">{`(${optionCounter})`}</span>
-            )}
-            {menuOpen && <SelectList />}
-          </div>
+          <label>{label}</label>
+          {multiple && (
+            <div className="multiple-options">
+              {selectedOptions.map((d, idx, arr) => {
+                if (idx === arr.length - 1) {
+                  return <span key={Math.random()}>{t(d.label)}</span>;
+                }
+                return <span key={Math.random()}>{t(d.label) + ","}</span>;
+              })}
+            </div>
+          )}
+          {!multiple && <span>{t(selectedOption.label)}</span>}
+          {multiple && optionCounter > 0 && (
+            <span className="option-counter">{`(${optionCounter})`}</span>
+          )}
+          {menuOpen && <SelectList />}
         </div>
       </React.Fragment>
     );

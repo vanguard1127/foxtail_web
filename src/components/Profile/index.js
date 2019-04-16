@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { withNamespaces } from "react-i18next";
 import { Query, Mutation } from "react-apollo";
@@ -24,7 +24,7 @@ import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
 require("dayjs/locale/" + lang);
 
-class ProfilePage extends PureComponent {
+class ProfilePage extends Component {
   state = {
     shareModalVisible: false,
     blockModalVisible: false,
@@ -33,6 +33,20 @@ class ProfilePage extends PureComponent {
     matchDlgVisible: false,
     chatID: null
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.blockModalVisible !== nextState.blockModalVisible ||
+      this.state.chatID !== nextState.chatID ||
+      this.state.matchDlgVisible !== nextState.matchDlgVisible ||
+      this.state.msgModalVisible !== nextState.msgModalVisible ||
+      this.state.profile !== nextState.profile ||
+      this.state.shareModalVisible !== nextState.shareModalVisible
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   componentDidMount() {
     this.mounted = true;
@@ -68,8 +82,11 @@ class ProfilePage extends PureComponent {
       "Message Modal Opened:" + msgModalVisible
     );
     if (this.mounted) {
-      if (profile) this.setState({ profile, msgModalVisible });
-      else this.setState({ msgModalVisible });
+      if (profile) {
+        this.setState({ profile, msgModalVisible });
+      } else {
+        this.setState({ msgModalVisible });
+      }
     }
   };
 
@@ -118,6 +135,7 @@ class ProfilePage extends PureComponent {
   setMessaged = (profileID, refetch) => {
     this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
     if (this.mounted) {
+      this.setState({ msgModalVisible: false });
       refetch();
     }
   };
@@ -197,8 +215,9 @@ class ProfilePage extends PureComponent {
                           <div className="col-md-3">
                             <ProfileCard
                               profile={profile}
-                              setProfile={this.setProfile}
-                              showMsgModal={() => this.setMsgModalVisible(true)}
+                              showMsgModal={() =>
+                                this.setMsgModalVisible(true, profile)
+                              }
                               likeProfile={() =>
                                 this.handleLike(profile, likeProfile, refetch)
                               }
@@ -252,7 +271,7 @@ class ProfilePage extends PureComponent {
                                 isPublic={true}
                                 photos={publicPics}
                                 t={t}
-                                ErrorBoundary={ErrorHandler.ErrorBoundary}
+                                ErrorHandler={ErrorHandler}
                               />
                             )}
                             {privatePics.length > 0 && (
@@ -260,7 +279,7 @@ class ProfilePage extends PureComponent {
                                 isPublic={false}
                                 photos={privatePics}
                                 t={t}
-                                ErrorBoundary={ErrorHandler.ErrorBoundary}
+                                ErrorHandler={ErrorHandler}
                               />
                             )}
                           </div>

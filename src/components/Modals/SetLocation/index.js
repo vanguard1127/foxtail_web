@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { UPDATE_LOCATION } from "../../../queries";
 import { Mutation } from "react-apollo";
 import AddressSearch from "../../common/AddressSearch";
-import { ErrorBoundary, catchErrors } from "../../common/ErrorHandler";
+import {
+  ErrorBoundary,
+  catchErrors,
+  ErrorHandler
+} from "../../common/ErrorHandler";
 import { withNamespaces } from "react-i18next";
 import Modal from "../../common/Modal";
 import { toast } from "react-toastify";

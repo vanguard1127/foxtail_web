@@ -46,13 +46,15 @@ class PhotoSlider extends Component {
     try {
       document.removeEventListener("contextmenu", this.handleContextMenu);
       $(this.lightGallery).lightGallery("destroy");
-    } catch (e) {}
+    } catch (e) {
+      this.props.ErrorHandler.catchErrors(e);
+    }
   }
 
   render() {
-    const { isPublic, photos, t, ErrorBoundary } = this.props;
+    const { isPublic, photos, t, ErrorHandler } = this.props;
     return (
-      <ErrorBoundary>
+      <ErrorHandler.ErrorBoundary>
         <div
           className={
             isPublic ? "photos-slider public" : "photos-slider private"
@@ -116,7 +118,7 @@ class PhotoSlider extends Component {
             </OwlCarousel>
           </div>
         </div>
-      </ErrorBoundary>
+      </ErrorHandler.ErrorBoundary>
     );
   }
 }

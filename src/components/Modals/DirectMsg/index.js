@@ -34,15 +34,13 @@ class DirectMsg extends Component {
       sendMessage()
         .then(async ({ data }) => {
           if (data.sendMessage) {
-            //   toast.success("Message Sent");
+            this.setState({ text: "" });
 
-            if (this.mounted) {
-              if (this.props.setMsgd) {
-                this.props.setMsgd(this.props.profile.id);
-              }
-              this.setState({ text: "" });
+            if (this.props.setMsgd) {
+              this.props.setMsgd(this.props.profile.id);
+            } else {
+              this.props.close();
             }
-            this.props.close();
           } else {
             toast.error("Message not sent.");
           }

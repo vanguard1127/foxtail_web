@@ -71,8 +71,8 @@ class ProfileDetails extends Component {
             </li>
           </ul>
           <div className="functions">
-            <div className="share btn" onClick={() => showShareModal()} />
-            <div className="report btn" onClick={() => showBlockModal()} />
+            <div className="share btn" onClick={showShareModal} />
+            <div className="report btn" onClick={showBlockModal} />
           </div>
         </div>
       </ErrorBoundary>
