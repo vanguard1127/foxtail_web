@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { miOptions, kiOptions } from "docs/options/en";
+import { miOptions, kiOptions } from "../../docs/options/en";
 import AddressSearch from "../common/AddressSearch";
 import Select from "../common/Select";
 

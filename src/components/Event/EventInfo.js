@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { formatedMilesToKm } from "utils/distanceMetric";
+import { formatedMilesToKm } from "../../utils/distanceMetric";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 class EventInfo extends Component {

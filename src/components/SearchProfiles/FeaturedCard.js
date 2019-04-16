@@ -15,6 +15,8 @@ class FeaturedCard extends Component {
     return false;
   }
   render() {
+    console.log("FC");
+
     const {
       profile,
       showMsgModal,

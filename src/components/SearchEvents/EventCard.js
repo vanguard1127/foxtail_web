@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import milesToKilometers from "utils/distanceMetric";
+import milesToKilometers from "../../utils/distanceMetric";
 import EventDate from "../common/Event/EventDate";
 import EventCreator from "./EventCreator";
 

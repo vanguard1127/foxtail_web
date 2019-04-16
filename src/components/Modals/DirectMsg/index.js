@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { withNamespaces } from "react-i18next";
-import { SEND_MESSAGE } from "queries";
+import { SEND_MESSAGE } from "../../../queries";
 import Modal from "../../common/Modal";
 import { toast } from "react-toastify";
 
