@@ -172,6 +172,9 @@ class EventPage extends PureComponent {
                         showShareModal={() =>
                           this.setShareModalVisible(true, event)
                         }
+                        showBlockModal={() =>
+                          this.setBlockModalVisible(true, event)
+                        }
                         ErrorBoundary={ErrorHandler.ErrorBoundary}
                       />
                     </div>

@@ -3896,6 +3896,37 @@ section.event-detail .header .info .share-event span.title {
   line-height: 35px;
 }
 
+section.event-detail .header .info span.report {
+  width: 35px;
+  height: 35px;
+  float: right;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  line-height: 35px;
+  border-radius: 1px;
+  transition: 0.3s all;
+  color: #fff;
+  position: absolute;
+  right: 16px;
+  top: 34px;
+  cursor: pointer;
+  z-index: 999;
+}
+
+section.event-detail .header .info span.report::before {
+  content: "";
+  content: "\e808";
+  font-size: 15px;
+  font-family: "foxtail-icon";
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+}
+section.event-detail .header .info span.report:hover {
+  background-color: #fff;
+}
+
 section.event-detail .header .info .share-event ul {
   list-style-type: none;
   padding: 0;

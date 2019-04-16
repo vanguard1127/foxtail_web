@@ -42,7 +42,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 
 Sentry.init({
-  dsn: process.env.SENTRY_DNS
+  dsn: process.env.REACT_APP_SENTRY_DNS
 });
 
 //let { httpurl, HTTPSurl, wsurl } = env.production;

@@ -50,10 +50,13 @@ class BlockModal extends Component {
               this.props.goToMain();
             }
           });
+        } else if (this.state.type === flagOptions.Chat) {
+          toast.success("Chat has been reported. Thanks.");
+          this.props.close();
+        } else if (this.state.type === flagOptions.Event) {
+          toast.success("Event has been reported. Thanks.");
+          this.props.close();
         }
-      })
-      .then(({ data }) => {
-        this.props.close();
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -87,7 +90,12 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="nopro">{t("nopro")}</option>
+          <option value="money">{t("money")}</option>
+          <option value="nudity">{t("Nudity")}</option>
+          <option value="rude">{t("Rude")}</option>
+          <option value="Spam">{t("Spam")}</option>
+          <option value="racist">{t("Racist")}</option>
+          <option value="other">{t("Other")}</option>
         </select>
       );
     } else {
@@ -97,7 +105,6 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">{t("reason")}:</option>
           <option value="illegalEvent">{t("illevent")}</option>
           <option value="racist">{t("Racist")}</option>
           <option value="Spam">{t("Spam")}</option>
@@ -108,28 +115,30 @@ class BlockModal extends Component {
   };
 
   updateBlocked = cache => {
-    sessionStorage.getItem("searchProsQuery");
-    if (sessionStorage.getItem("searchProsQuery")) {
-      const { id } = this.props;
-      const variables = JSON.parse(sessionStorage.getItem("searchProsQuery"));
-      const { searchProfiles } = cache.readQuery({
-        query: SEARCH_PROFILES,
-        variables
-      });
-      searchProfiles.profiles = searchProfiles.profiles.filter(
-        el => el.id !== id
-      );
-      searchProfiles.featuredProfiles = searchProfiles.featuredProfiles.filter(
-        el => el.id !== id
-      );
+    if (this.state.type === flagOptions.Profile) {
+      sessionStorage.getItem("searchProsQuery");
+      if (sessionStorage.getItem("searchProsQuery")) {
+        const { id } = this.props;
+        const variables = JSON.parse(sessionStorage.getItem("searchProsQuery"));
+        const { searchProfiles } = cache.readQuery({
+          query: SEARCH_PROFILES,
+          variables
+        });
+        searchProfiles.profiles = searchProfiles.profiles.filter(
+          el => el.id !== id
+        );
+        searchProfiles.featuredProfiles = searchProfiles.featuredProfiles.filter(
+          el => el.id !== id
+        );
 
-      cache.writeQuery({
-        query: SEARCH_PROFILES,
-        variables,
-        data: {
-          searchProfiles
-        }
-      });
+        cache.writeQuery({
+          query: SEARCH_PROFILES,
+          variables,
+          data: {
+            searchProfiles
+          }
+        });
+      }
     }
   };
 
