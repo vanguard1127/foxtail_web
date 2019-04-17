@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import dayjs from "dayjs";
-import withLocation from "../withLocation";
-import withAuth from "../withAuth";
+import withLocation from "../HOCs/withLocation";
+import withAuth from "../HOCs/withAuth";
 import { withRouter } from "react-router-dom";
 import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";

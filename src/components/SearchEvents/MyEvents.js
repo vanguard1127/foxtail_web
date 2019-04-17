@@ -5,7 +5,7 @@ import OwlCarousel from "react-owl-carousel";
 import $ from "jquery";
 import "lightgallery";
 import { GET_MY_EVENTS } from "../../queries";
-import EventCard from "./EventCard";
+import EventCard from "./EventCard/";
 
 const configLightGallery = {
   selector: "a",

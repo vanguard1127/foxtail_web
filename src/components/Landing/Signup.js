@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE, LOGIN } from "../../queries";
 import SignupForm from "./SignupForm";
-import withSession from "../withSession";
+import withSession from "../HOCs/withSession";
 const initialState = {
   username: "",
   email: "",

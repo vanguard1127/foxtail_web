@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import dayjs from "dayjs";
@@ -6,27 +6,34 @@ import { GET_EVENT, DELETE_EVENT } from "../../queries";
 import { withNamespaces } from "react-i18next";
 import BlockModal from "../Modals/Block";
 import Spinner from "../common/Spinner";
-import withAuth from "../withAuth";
+import withAuth from "../HOCs/withAuth";
 import Modal from "../common/Modal";
-import EventHeader from "./EventHeader";
+import Header from "./Header/";
 import Tour from "./Tour";
-import EventAbout from "./EventAbout";
-import EventInfoMobile from "./EventInfoMobile";
-import EventDiscussion from "./EventDiscussion";
-import EventInfo from "./EventInfo";
+import About from "./About/";
+import EventInfoMobile from "./Info/EventInfoMobile";
+import Discussion from "./Discussion/";
+import EventInfo from "./Info/EventInfo";
 import { flagOptions } from "../../docs/options";
 import { toast } from "react-toastify";
 import validateLang from "../../utils/validateLang";
 import ShareModal from "../Modals/Share";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
 require("dayjs/locale/" + lang);
-class EventPage extends PureComponent {
+class EventPage extends Component {
   state = {
     visible: false,
     shareModalVisible: false,
     blockModalVisible: false,
     showDelete: false
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
+  }
 
   componentDidMount() {
     this.mounted = true;
@@ -80,13 +87,9 @@ class EventPage extends PureComponent {
     this.props.ErrorHandler.setBreadcrumb("Delete Event");
     const confirmDelete = window.confirm(this.props.t("surewarn"));
     if (confirmDelete) {
-      deleteEvent()
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-        });
+      deleteEvent().catch(res => {
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+      });
     }
   };
 
@@ -164,7 +167,7 @@ class EventPage extends PureComponent {
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
-                      <EventHeader
+                      <Header
                         event={event}
                         history={history}
                         t={t}
@@ -179,7 +182,7 @@ class EventPage extends PureComponent {
                       />
                     </div>
                     <div className="col-lg-9 col-md-12">
-                      <EventAbout
+                      <About
                         id={id}
                         participants={participants}
                         description={description}
@@ -198,7 +201,7 @@ class EventPage extends PureComponent {
                         ErrorHandler={ErrorHandler}
                         distanceMetric={session.currentuser.distanceMetric}
                       />{" "}
-                      <EventDiscussion
+                      <Discussion
                         chatID={chatID}
                         history={history}
                         t={t}

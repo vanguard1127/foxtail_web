@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import ChatActions from "./ChatActions";
+import ChatActions from "./ChatWindow/ChatActions";
 class ChatInfo extends PureComponent {
   render() {
     const {

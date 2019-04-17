@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import dayjs from "dayjs";
 
-import withAuth from "../withAuth";
+import withAuth from "../HOCs/withAuth";
 import { withNamespaces } from "react-i18next";
-import InboxPanel from "./InboxPanel";
+import InboxPanel from "./InboxPanel/";
 import Header from "./Header";
 import ChatInfo from "./ChatInfo";
 import BlockModal from "../Modals/Block";
@@ -17,7 +17,7 @@ import {
 } from "../../queries";
 import { Mutation, Query } from "react-apollo";
 import { toast } from "react-toastify";
-import ChatWindow from "./ChatWindow";
+import ChatWindow from "./ChatWindow/";
 import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";

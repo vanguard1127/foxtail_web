@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import EventCard from "./EventCard";
+import EventCard from "./EventCard/";
 import { Waypoint } from "react-waypoint";
-import { concatSeries } from "async";
 
 class EventsList extends Component {
   shouldComponentUpdate(nextProps) {

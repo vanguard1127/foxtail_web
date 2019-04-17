@@ -29,5 +29,5 @@ export const NOTICELIST_LIMIT = 5;
 export const SEARCHPROS_LIMIT = 20;
 export const EVENTDISC_LIMIT = 4;
 export const MEMSLIST_LIMIT = 5;
-export const INBOXMSG_LIMIT = 6;
+export const INBOXMSG_LIMIT = 12;
 export const INBOXLIST_LIMIT = 11;

@@ -26,7 +26,7 @@ import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import * as ErrorHandler from "./components/common/ErrorHandler";
-import withSession from "./components/withSession";
+import withSession from "./components/HOCs/withSession";
 import "./i18n";
 import Footer from "./components/Footer/";
 import tokenHandler from "./utils/tokenHandler";

@@ -3,7 +3,7 @@ import { withNamespaces } from "react-i18next";
 import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
-import withAuth from "../withAuth";
+import withAuth from "../HOCs/withAuth";
 import { withRouter } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";

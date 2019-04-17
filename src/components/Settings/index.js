@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Query } from "react-apollo";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
-import withAuth from "../withAuth";
+import withAuth from "../HOCs/withAuth";
 import SettingsPage from "./SettingsPage";
 import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
@@ -34,6 +34,7 @@ class Settings extends Component {
   }
 
   render() {
+    console.log("index");
     const { session, refetch, t, ErrorHandler, location, history } = this.props;
     const { state } = location;
 

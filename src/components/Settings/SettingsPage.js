@@ -1,17 +1,17 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import axios from "axios";
 import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
 import ImageEditor from "../Modals/ImageEditor";
 import ProfilePic from "./ProfilePic";
-import Photos from "./Photos";
-import Menu from "./Menu";
-import Preferences from "./Preferences";
+import Photos from "./Photos/";
+import Menu from "./Menu/";
+import Preferences from "./Preferences/";
 import AppSettings from "./AppSettings";
-import AcctSettings from "./AcctSettings";
+import AcctSettings from "./AcctSettings/";
 import Verifications from "./Verifications";
-import ManageBlackSub from "./ManageBlackSub";
-import MyProfile from "./MyProfile";
+import ManageBlkMembership from "./ManageBlkMembership/";
+import MyProfile from "./MyProfile/";
 import DesiresModal from "../Modals/Desires/Modal";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
 import CoupleModal from "../Modals/Couples";
@@ -20,7 +20,7 @@ import getCityCountry from "../../utils/getCityCountry";
 import Modal from "../common/Modal";
 import { toast } from "react-toastify";
 
-class SettingsPage extends PureComponent {
+class SettingsPage extends Component {
   state = {
     distance: 100,
     distanceMetric: "mi",
@@ -72,6 +72,62 @@ class SettingsPage extends PureComponent {
     title: "",
     okAction: null
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.currentuser !== nextProps.currentuser ||
+      this.state.about !== nextState.about ||
+      this.state.ageRange !== nextState.ageRange ||
+      this.state.btnText !== nextState.btnText ||
+      this.state.city !== nextState.city ||
+      this.state.country !== nextState.country ||
+      this.state.couplePartner !== nextState.couplePartner ||
+      this.state.desires !== nextState.desires ||
+      this.state.distance !== nextState.distance ||
+      this.state.distanceMetric !== nextState.distanceMetric ||
+      this.state.email !== nextState.email ||
+      this.state.emailNotify !== nextState.emailNotify ||
+      this.state.fileRecieved !== nextState.fileRecieved ||
+      this.state.filename !== nextState.filename ||
+      this.state.filetype !== nextState.filetype ||
+      this.state.flashCpl !== nextState.flashCpl ||
+      this.state.gender !== nextState.gender ||
+      this.state.includeMsgs !== nextState.includeMsgs ||
+      this.state.interestedIn !== nextState.interestedIn ||
+      this.state.isPrivate !== nextState.isPrivate ||
+      this.state.lang !== nextState.lang ||
+      this.state.lastActive !== nextState.lastActive ||
+      this.state.likedOnly !== nextState.likedOnly ||
+      this.state.msg !== nextState.msg ||
+      this.state.newMsgNotify !== nextState.newMsgNotify ||
+      this.state.okAction !== nextState.okAction ||
+      this.state.phone !== nextState.phone ||
+      this.state.photoSubmitType !== nextState.photoSubmitType ||
+      this.state.photos !== nextState.photos ||
+      this.state.privatePhotoList !== nextState.privatePhotoList ||
+      this.state.privatePics !== nextState.privatePics ||
+      this.state.profilePic !== nextState.profilePic ||
+      this.state.profilePicUrl !== nextState.profilePicUrl ||
+      this.state.publicPhotoList !== nextState.publicPhotoList ||
+      this.state.publicPics !== nextState.publicPics ||
+      this.state.showBlackPopup !== nextState.showBlackPopup ||
+      this.state.showCouplePopup !== nextState.showCouplePopup ||
+      this.state.showDesiresPopup !== nextState.showDesiresPopup ||
+      this.state.showImgEditorPopup !== nextState.showImgEditorPopup ||
+      this.state.showModal !== nextState.showModal ||
+      this.state.showOnline !== nextState.showOnline ||
+      this.state.showPhotoVerPopup !== nextState.showPhotoVerPopup ||
+      this.state.title !== nextState.title ||
+      this.state.username !== nextState.username ||
+      this.state.users !== nextState.users ||
+      this.state.vibrateNotify !== nextState.vibrateNotify ||
+      this.state.visible !== nextState.visible
+    ) {
+      return true;
+    }
+
+    return false;
+  }
 
   componentDidMount() {
     const { history } = this.props;
@@ -296,56 +352,49 @@ class SettingsPage extends PureComponent {
   toggleImgEditorPopup = (file, isPrivate) => {
     this.setErrorHandler("Toggle image editor");
     if (this.mounted) {
-      this.setState(
-        {
-          fileRecieved: file,
-          isPrivate
-        },
-        () => {
-          this.setState({
-            showImgEditorPopup: !this.state.showImgEditorPopup
-          });
-        }
-      );
+      console.log("painy");
+      this.setState({
+        fileRecieved: file,
+        isPrivate,
+        showImgEditorPopup: !this.state.showImgEditorPopup
+      });
     }
   };
 
   togglePhotoVerPopup = () => {
-    const { showPhotoVerPopup } = this.state;
     this.setErrorHandler("Toggle Photo Ver Popup");
     if (this.mounted) {
       this.setState({
-        showPhotoVerPopup: !showPhotoVerPopup
+        showPhotoVerPopup: !this.state.showPhotoVerPopup
       });
     }
   };
 
   toggleCouplesPopup = () => {
-    const { showCouplePopup } = this.state;
     this.setErrorHandler("Toggle Couple popup");
     if (this.mounted) {
       this.setState({
-        showCouplePopup: !showCouplePopup,
+        showCouplePopup: !this.state.showCouplePopup,
         flashCpl: false
       });
     }
   };
 
   toggleBlackPopup = () => {
-    const { showBlackPopup } = this.state;
     this.setErrorHandler("Toggle Blk popup");
     if (this.mounted) {
       this.setState({
-        showBlackPopup: !showBlackPopup
+        showBlackPopup: !this.state.showBlackPopup
       });
     }
   };
 
   openPhotoVerPopup = type => {
     if (this.mounted) {
-      this.setState({ photoSubmitType: type }, () =>
-        this.togglePhotoVerPopup()
-      );
+      this.setState({
+        photoSubmitType: type,
+        showPhotoVerPopup: !this.state.showPhotoVerPopup
+      });
     }
   };
 
@@ -389,10 +438,17 @@ class SettingsPage extends PureComponent {
   };
 
   setDialogContent = ({ title, msg, btnText, okAction }) => {
-    this.setState({ title, msg, btnText, okAction }, () => this.toggleDialog());
+    this.setState({
+      title,
+      msg,
+      btnText,
+      okAction,
+      showModal: !this.state.showModal
+    });
   };
 
   render() {
+    console.log("SP-inds");
     const {
       lat,
       long,
@@ -638,7 +694,7 @@ class SettingsPage extends PureComponent {
                             />
                           )}
                           {currentuser.blackMember.active && (
-                            <ManageBlackSub
+                            <ManageBlkMembership
                               ErrorHandler={ErrorHandler}
                               currentuser={currentuser}
                               refetchUser={refetchUser}

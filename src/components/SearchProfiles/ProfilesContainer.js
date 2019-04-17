@@ -2,9 +2,9 @@ import React, { PureComponent } from "react";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import EmptyScreen from "../common/EmptyScreen";
 import { Query, Mutation } from "react-apollo";
-import ProfilesDiv from "./ProfilesDiv";
+import MemberProfiles from "./MemberProfiles/";
 import { Waypoint } from "react-waypoint";
-import FeaturedDiv from "./FeaturedDiv";
+import FeaturedProfiles from "./FeaturedProfiles/";
 import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
@@ -235,7 +235,7 @@ class ProfilesContainer extends PureComponent {
                 return (
                   <>
                     {result.featuredProfiles.length !== 0 && (
-                      <FeaturedDiv
+                      <FeaturedProfiles
                         featuredProfiles={result.featuredProfiles}
                         showMsgModal={profile =>
                           this.setMsgModalVisible(true, profile)
@@ -251,7 +251,7 @@ class ProfilesContainer extends PureComponent {
                       />
                     )}
                     {result.profiles.length !== 0 && (
-                      <ProfilesDiv
+                      <MemberProfiles
                         profiles={result.profiles}
                         showMsgModal={profile =>
                           this.setMsgModalVisible(true, profile)

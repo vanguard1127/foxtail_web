@@ -10,9 +10,9 @@ import EmptyScreen from "../common/EmptyScreen";
 import { Waypoint } from "react-waypoint";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
-import withLocation from "../withLocation";
-import withAuth from "../withAuth";
-import SearchEventToolbar from "./SearchEventToolbar";
+import withLocation from "../HOCs/withLocation";
+import withAuth from "../HOCs/withAuth";
+import SearchEventToolbar from "./SearchEventToolbar/";
 import Header from "./Header";
 import Tour from "./Tour";
 import EventsList from "./EventsList";
@@ -132,9 +132,11 @@ class SearchEvents extends Component {
           skip: this.state.skip
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult || fetchMoreResult.searchEvents.length === 0) {
+          if (
+            !fetchMoreResult ||
+            fetchMoreResult.searchEvents.length < SEARCHEVENT_LIMIT
+          ) {
             this.setState({ hasMore: false });
-            return previousResult;
           }
 
           return {
