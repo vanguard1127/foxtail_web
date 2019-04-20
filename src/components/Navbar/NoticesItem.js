@@ -172,7 +172,6 @@ class NoticesItem extends Component {
         () => {
           updateNotifications()
             .then(({ data }) => {
-              console.log("DATA", data);
               refetch();
             })
             .catch(res => {

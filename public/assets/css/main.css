@@ -262,7 +262,7 @@ header .function .notification.active span.icon span.count {
 
 header .function .user {
   float: right;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 header .function .user span.avatar {
@@ -5795,6 +5795,7 @@ section.desires-popup .modal-popup .m-body .desires-list-con ul li label {
   width: 100%;
   display: block;
   float: left;
+  cursor: pointer;
 }
 
 section.desires-popup .modal-popup .m-body .desires-list-con ul li label b {
@@ -7813,10 +7814,12 @@ section.settings textarea {
   header .function .user span.username {
     display: none;
     visibility: hidden;
+    cursor: pointer;
   }
 
   header .function .user span.avatar {
     margin-right: 0;
+    cursor: pointer;
   }
 
   header .mobile-toggle,

@@ -23,7 +23,7 @@ class MyAccountMenu extends Component {
   };
 
   render() {
-    const { t, isCouple } = this.props;
+    const { t, isCouple, isBlack } = this.props;
     return (
       <div className="toggle">
         <div className="dropdown hidden-mobile open">
@@ -37,25 +37,29 @@ class MyAccountMenu extends Component {
             </li>
             {this.props.location.pathname !== "/settings" && (
               <>
-                <li>
-                  <span
-                    role="heading"
-                    aria-level="2"
-                    onClick={this.onAddCouple}
-                  >
-                    {t("common:addcoup")}
-                  </span>
-                </li>
+                {!isCouple && (
+                  <li>
+                    <span
+                      role="heading"
+                      aria-level="2"
+                      onClick={this.onAddCouple}
+                    >
+                      {t("common:addcoup")}
+                    </span>
+                  </li>
+                )}
 
-                <li className="border">
-                  <span
-                    role="heading"
-                    aria-level="2"
-                    onClick={this.onShowBlackMember}
-                  >
-                    {t("common:becomeblk")}
-                  </span>
-                </li>
+                {!isBlack && (
+                  <li className="border">
+                    <span
+                      role="heading"
+                      aria-level="2"
+                      onClick={this.onShowBlackMember}
+                    >
+                      {t("common:becomeblk")}
+                    </span>
+                  </li>
+                )}
               </>
             )}
             <li>

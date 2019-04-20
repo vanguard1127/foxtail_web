@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import ProfileCard from "./ProfileCard";
 import { Waypoint } from "react-waypoint";
+import isArrayStringsEqual from "../../../utils/compareArrays";
 
 class ProfilesDiv extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.profiles !== nextProps.profiles ||
-      this.props.likedProfiles !== nextProps.likedProfiles ||
+      !isArrayStringsEqual(this.props.likedProfiles, nextProps.likedProfiles) ||
       this.props.msgdProfiles !== nextProps.msgdProfiles
     ) {
       return true;

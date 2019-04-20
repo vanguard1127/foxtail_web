@@ -4,7 +4,7 @@ import { Mutation } from "react-apollo";
 import StripeCheckout from "react-stripe-checkout";
 
 class CreateSubBtn extends PureComponent {
-  state = { token: "", ccLast4: "" };
+  state = { token: "", ccLast4: "", processing: false };
   componentDidMount() {
     this.mounted = true;
   }
@@ -13,7 +13,7 @@ class CreateSubBtn extends PureComponent {
   }
   handleSubmit = ({ token, ccLast4, createSubscription }) => {
     if (this.mounted) {
-      this.setState({ token, ccLast4 });
+      this.setState({ token, ccLast4, processing: true });
     }
     createSubscription()
       .then(({ data }) => {
@@ -28,7 +28,7 @@ class CreateSubBtn extends PureComponent {
   };
 
   render() {
-    const { token, ccLast4 } = this.state;
+    const { token, ccLast4, processing } = this.state;
     return (
       <Mutation
         mutation={CREATE_SUBSCRIPTION}
@@ -52,7 +52,9 @@ class CreateSubBtn extends PureComponent {
               stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY}
               amount={1000}
             >
-              <span className="color">Upgrade to Black Membership</span>
+              <span className="color">
+                {processing ? "Processing..." : "Upgrade to Black Membership"}
+              </span>
             </StripeCheckout>
           );
         }}

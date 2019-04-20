@@ -95,35 +95,35 @@ class Signup extends PureComponent {
 
   //TODO:DELETE THIS PRE LAUNCH
   handleLogin = login => {
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-      if (this.mounted) {
-        login()
-          .then(async ({ data }) => {
-            if (data.login === null) {
-              alert("User doesn't exist.");
-              return;
-            }
+    //if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+    if (this.mounted) {
+      login()
+        .then(async ({ data }) => {
+          if (data.login === null) {
+            alert("User doesn't exist.");
+            return;
+          }
 
-            localStorage.setItem(
-              "token",
-              data.login.find(token => token.access === "auth").token
-            );
-            localStorage.setItem(
-              "refreshToken",
-              data.login.find(token => token.access === "refresh").token
-            );
-            // await this.props.refetch();
-            this.props.history.push("/members");
-          })
-          .catch(res => {
-            const errors = res.graphQLErrors.map(error => {
-              return error.message;
-            });
-
-            return errors;
+          localStorage.setItem(
+            "token",
+            data.login.find(token => token.access === "auth").token
+          );
+          localStorage.setItem(
+            "refreshToken",
+            data.login.find(token => token.access === "refresh").token
+          );
+          // await this.props.refetch();
+          this.props.history.push("/members");
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
           });
-      }
+
+          return errors;
+        });
     }
+    // }
   };
   render() {
     const { t, setBreadcrumb, ErrorHandler } = this.props;

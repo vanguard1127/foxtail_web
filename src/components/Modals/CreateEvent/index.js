@@ -307,8 +307,8 @@ class CreateEvent extends PureComponent {
                           defaultOptionValue={type}
                           options={[
                             { label: "Public", value: "public" },
-                            { label: "Private", value: "private" },
-                            { label: "Request", value: "request" }
+                            { label: "Private", value: "private" }
+                            // { label: "Request", value: "request" }
                           ]}
                         />
                       </div>

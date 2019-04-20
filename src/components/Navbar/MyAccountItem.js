@@ -13,6 +13,7 @@ class MyAccountItem extends Component {
     if (currentuser === undefined) {
       return null;
     }
+
     return (
       <Menu
         menuOpener={
@@ -29,7 +30,8 @@ class MyAccountItem extends Component {
         }
       >
         <MyAccountMenu
-          isCouple={currentuser.coupleProfileName ? true : false}
+          isCouple={currentuser.coupleProfileName !== null ? true : false}
+          isBlack={currentuser.blackMember.active ? true : false}
         />
       </Menu>
     );

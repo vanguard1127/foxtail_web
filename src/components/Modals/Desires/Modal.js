@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { withNamespaces } from 'react-i18next';
-import { desireOptions } from '../../../docs/options';
-import SearchBox from './SearchBox';
+import React, { Component } from "react";
+import { withNamespaces } from "react-i18next";
+import { desireOptions } from "../../../docs/options";
+import SearchBox from "./SearchBox";
 class Desires extends Component {
-  state = { searchText: '' };
+  state = { searchText: "" };
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
   }
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   handleClickOutside = event => {
@@ -43,8 +43,8 @@ class Desires extends Component {
         <div className="modal-popup desires-select">
           <ErrorBoundary>
             <div className="m-head">
-              <span className="heading">{t('desireselect')}</span>
-              <span className="title">{t('setdesires')}</span>
+              <span className="heading">{t("desireselect")}</span>
+              <span className="title">{t("setdesires")}</span>
               <span className="close" onClick={close} />
             </div>
             <div className="m-body desires">
@@ -82,7 +82,7 @@ class Desires extends Component {
               </div>
             </div>
 
-            <div style={{ textAlign: 'center', margin: '5px' }}>
+            <div style={{ textAlign: "center", margin: "5px" }}>
               Scroll down for more
             </div>
           </ErrorBoundary>
@@ -91,4 +91,4 @@ class Desires extends Component {
     );
   }
 }
-export default withNamespaces('modals')(Desires);
+export default withNamespaces("modals")(Desires);
