@@ -32,7 +32,6 @@ class Preferences extends Component {
     );
   };
   render() {
-    console.log("Preferences");
     const {
       distance,
       distanceMetric,

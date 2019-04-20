@@ -5,7 +5,6 @@ import { preventContextMenu } from "../../utils/image";
 
 class ProfilePic extends PureComponent {
   render() {
-    console.log("ProPic");
     const { profilePic, ErrorBoundary } = this.props;
     return (
       <ErrorBoundary>

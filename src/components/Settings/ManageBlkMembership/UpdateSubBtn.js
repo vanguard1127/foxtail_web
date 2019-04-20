@@ -17,8 +17,8 @@ class UpdateSubBtn extends PureComponent {
       this.setState({ token, ccLast4 });
       updateSubscription()
         .then(({ data }) => {
-          this.props.refetchUser();
-          alert(t("common:cardupdated") + ".");
+          this.props.notifyClient("Credit Card Updated Successfully");
+          window.location.reload();
         })
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -27,7 +27,6 @@ class UpdateSubBtn extends PureComponent {
   };
 
   render() {
-    console.log("USB");
     const { token, ccLast4 } = this.state;
     const { t } = this.props;
     return (
@@ -45,10 +44,12 @@ class UpdateSubBtn extends PureComponent {
                 this.handleSubmit({
                   token: id,
                   ccLast4: card.last4,
-                  updateSubscription
+                  updateSubscription,
+                  t
                 })
               }
-              stripeKey="pk_test_IdtGRrsuvxCLBd9AbDQBXCS3"
+              stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY}
+              panelLabel="Update"
             >
               <span className="clickverify-btn photo">
                 {" "}

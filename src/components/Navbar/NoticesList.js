@@ -8,7 +8,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
-require("dayjs/locale/" + lang);
+const locale = lang !== null ? lang : "en";
+require("dayjs/locale/" + locale);
 dayjs.extend(relativeTime);
 
 const intialState = {
@@ -118,7 +119,8 @@ class NoticesList extends Component {
         close();
       }
     } catch (e) {
-      console.error(e.message);
+      const ErrorHandler = require("../common/ErrorHandler");
+      ErrorHandler.catchErrors(e); /* Error handling */
     }
   };
 

@@ -20,7 +20,6 @@ class AppSettings extends Component {
     return false;
   }
   render() {
-    console.log("AppS");
     const {
       setValue,
       visible,

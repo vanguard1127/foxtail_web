@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import { LINK_PROFILE } from '../../../queries';
-import { Mutation } from 'react-apollo';
+import React, { PureComponent } from "react";
+import { LINK_PROFILE } from "../../../queries";
+import { Mutation } from "react-apollo";
 class IncludeMsgSlide extends PureComponent {
   render() {
     const {
@@ -15,22 +15,24 @@ class IncludeMsgSlide extends PureComponent {
 
     return (
       <>
-        <div> {t('includeold')}?</div>
-        <div style={{ padding: '20px' }}>
-          {' '}
+        <div> {t("includeold")}?</div>
+        <br />
+        <div>*Only chats you've responded to</div>
+        <div style={{ padding: "20px" }}>
+          {" "}
           <input
             type="checkbox"
             id="cbox"
             checked={includeMsgs ? true : false}
             onChange={e => {
               setValue({
-                name: 'includeMsgs',
+                name: "includeMsgs",
                 value: !includeMsgs ? true : false
               });
             }}
           />
           <label htmlFor="cbox">
-            <span style={{ paddingLeft: '5px' }}>{t('includemsg')}</span>
+            <span style={{ paddingLeft: "5px" }}>{t("includemsg")}</span>
           </label>
         </div>
         <div className="submit">
@@ -42,20 +44,20 @@ class IncludeMsgSlide extends PureComponent {
           >
             {(linkProfile, { loading }) => (
               <span
-                disabled={code !== '' ? false : true}
+                disabled={code !== "" ? false : true}
                 onClick={() => handleLink(linkProfile, close)}
                 className="color"
               >
-                {t('Link')}
+                {t("Link")}
               </span>
             )}
           </Mutation>
           <span
             className="border"
-            disabled={code !== '' ? false : true}
+            disabled={code !== "" ? false : true}
             onClick={() => prev()}
           >
-            {t('Back')}
+            {t("Back")}
           </span>
         </div>
       </>

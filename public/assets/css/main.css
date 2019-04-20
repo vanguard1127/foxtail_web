@@ -1364,7 +1364,7 @@ section.featured-profiles .slider .item .function .btn.heart::before {
   content: "\e806";
 }
 
-section.featured-profiles .slider .item .function .btn.heart::before {
+section.featured-profiles .slider .item .function .btn.unheart::before {
   content: "\e812";
 }
 /*---- MEMBERS CARD ----*/

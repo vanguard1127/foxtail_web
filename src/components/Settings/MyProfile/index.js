@@ -16,7 +16,6 @@ class MyProfile extends Component {
     return false;
   }
   render() {
-    console.log("MyPro");
     const {
       desires,
       about,

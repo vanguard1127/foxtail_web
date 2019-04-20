@@ -11,8 +11,8 @@ import withAuth from "../HOCs/withAuth";
 import SettingsPage from "./SettingsPage";
 import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
-require("dayjs/locale/" + lang);
-
+const locale = lang !== null ? lang : "en";
+require("dayjs/locale/" + locale);
 class Settings extends Component {
   shouldComponentUpdate() {
     return false;
@@ -34,7 +34,6 @@ class Settings extends Component {
   }
 
   render() {
-    console.log("index");
     const { session, refetch, t, ErrorHandler, location, history } = this.props;
     const { state } = location;
 
@@ -43,6 +42,7 @@ class Settings extends Component {
     let showBlkModal = false;
     let showCplModal = false;
 
+    //For page open responses
     if (state) {
       if (state.couple) isCouple = state.couple;
       if (state.initial) isInitial = state.initial;
@@ -99,6 +99,7 @@ class Settings extends Component {
                 ErrorHandler={ErrorHandler}
                 history={history}
                 currentuser={session.currentuser}
+                dayjs={dayjs}
               />
             </Fragment>
           );

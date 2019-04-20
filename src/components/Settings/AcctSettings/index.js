@@ -34,7 +34,6 @@ class AcctSettings extends Component {
   };
 
   render() {
-    console.log("AcctS");
     const { ErrorHandler, t, setValue } = this.props;
     const { showDialog, title, msg, btnText, setting, successMsg } = this.state;
     let schema;

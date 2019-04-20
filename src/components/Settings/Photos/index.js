@@ -9,7 +9,6 @@ class Photos extends Component {
     return false;
   }
   render() {
-    console.log("Phoos");
     const {
       isPrivate,
       showEditor,

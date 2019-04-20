@@ -56,7 +56,8 @@ class Dropdown extends Component {
         }
       })
       .catch(error => {
-        console.log("Lang file error", error); /* Error handling */
+        const ErrorHandler = require("../common/ErrorHandler");
+        ErrorHandler.catchErrors(error); /* Error handling */
       });
   };
 

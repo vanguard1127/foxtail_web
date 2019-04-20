@@ -24,7 +24,7 @@ export const env = {
 };
 
 // 2. SEARCH EVENT TIMIT
-export const SEARCHEVENT_LIMIT = 6;
+export const SEARCHEVENT_LIMIT = 9;
 export const NOTICELIST_LIMIT = 5;
 export const SEARCHPROS_LIMIT = 20;
 export const EVENTDISC_LIMIT = 4;

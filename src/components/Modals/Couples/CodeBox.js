@@ -45,6 +45,8 @@ class CodeBox extends PureComponent {
                     <label htmlFor="cbox">
                       <span />
                       <b>{t("includemsg")}?</b>
+                      <br />
+                      <div>*Only chats you've responded to</div>
                     </label>
                   </div>
                 </div>

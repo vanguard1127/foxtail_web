@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { withNamespaces } from 'react-i18next';
-import { UNLINK_PROFILE } from '../../../queries';
-import { Mutation } from 'react-apollo';
-import Spinner from '../../common/Spinner';
-import LinkBox from './LinkBox';
-import Modal from '../../common/Modal';
-import IncludeMsgSlide from './IncludeMsgSlide';
-import CodeBox from './CodeBox';
+import React, { Component } from "react";
+import { withNamespaces } from "react-i18next";
+import { UNLINK_PROFILE } from "../../../queries";
+import { Mutation } from "react-apollo";
+import Spinner from "../../common/Spinner";
+import LinkBox from "./LinkBox";
+import Modal from "../../common/Modal";
+import IncludeMsgSlide from "./IncludeMsgSlide";
+import CodeBox from "./CodeBox";
 class Couples extends Component {
   state = {
-    code: '',
+    code: "",
     currSlide: 1
   };
   componentDidMount() {
@@ -36,11 +36,10 @@ class Couples extends Component {
   };
 
   handleLink = (linkProfile, close) => {
-    if (this.state.code !== '') {
+    if (this.state.code !== "") {
       linkProfile()
         .then(({ data }) => {
           close();
-          this.props.setPartnerID(data.linkProfile.partnerName);
         })
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -65,7 +64,7 @@ class Couples extends Component {
       .then(({ data }) => {
         //switch to new screen for do u want to edit?
         close();
-        this.props.setPartnerID('addpartner');
+        this.props.setPartnerName("addpartner");
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -79,7 +78,7 @@ class Couples extends Component {
       ErrorHandler: { ErrorBoundary }
     } = this.props;
     return (
-      <Modal header={t('joinme')} close={close}>
+      <Modal header={t("joinme")} close={close}>
         <section className="couple-popup-content">
           <div className="container">
             <div className="col-md-12">
@@ -95,19 +94,19 @@ class Couples extends Component {
                             next={this.next}
                             t={t}
                           />
-                        </ErrorBoundary>{' '}
+                        </ErrorBoundary>{" "}
                         <ErrorBoundary>
                           <CodeBox
                             includeMsgs={includeMsgs}
                             setValue={setValue}
                             t={t}
-                          />{' '}
+                          />{" "}
                         </ErrorBoundary>
                       </div>
                     )}
                     {currSlide === 2 && (
                       <ErrorBoundary>
-                        {' '}
+                        {" "}
                         <IncludeMsgSlide
                           prev={this.prev}
                           close={close}
@@ -116,7 +115,7 @@ class Couples extends Component {
                           setValue={setValue}
                           handleLink={this.handleLink}
                           t={t}
-                        />{' '}
+                        />{" "}
                       </ErrorBoundary>
                     )}
                   </div>
@@ -129,6 +128,11 @@ class Couples extends Component {
     );
   }
 
+  toggleDialog = () => {
+    this.props.ErrorHandler.setBreadcrumb("Dialog Modal Toggled:");
+    this.setState({ showModal: !this.state.showModal });
+  };
+
   showDeleteConfirm(close, username, unlinkProfile, setValue) {
     const { t } = this.props;
     return (
@@ -136,21 +140,22 @@ class Couples extends Component {
         {(unlinkProfile, { loading }) => {
           if (loading) {
             //TODO: nice unlinking message
-            return <Spinner message={t('Unlinking') + '...'} size="large" />;
+            return <Spinner message={t("Unlinking") + "..."} size="large" />;
           }
           return (
-            // <Modal
-            //   title={"Want to remove your link to " + username + "?"}
-            //   centered
-            //   visible={visible}
-            //   okType="danger"
-            //   okText="Yes"
-            //   onOk={() => this.handleUnLink(unlinkProfile, close)}
-            //   onCancel={close}
-            //   cancelText="No"
-            // >
-            <div>{t('coupdeact')}</div>
-            // </Modal>
+            <Modal
+              header={"Want to remove your link to " + username + "?"}
+              close={close}
+              description={t("coupdeact")}
+              okSpan={
+                <span
+                  className="color"
+                  onClick={() => this.handleUnLink(unlinkProfile, close)}
+                >
+                  Yes
+                </span>
+              }
+            />
           );
         }}
       </Mutation>
@@ -167,4 +172,4 @@ class Couples extends Component {
   }
 }
 
-export default withNamespaces('modals')(Couples);
+export default withNamespaces("modals")(Couples);

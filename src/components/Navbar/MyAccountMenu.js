@@ -23,13 +23,17 @@ class MyAccountMenu extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, isCouple } = this.props;
     return (
       <div className="toggle">
         <div className="dropdown hidden-mobile open">
           <ul>
             <li>
-              <NavLink to="/settings">{t("common:myaccount")}</NavLink>
+              {isCouple ? (
+                <NavLink to="/settings">Our Account</NavLink>
+              ) : (
+                <NavLink to="/settings">{t("common:myaccount")}</NavLink>
+              )}
             </li>
             {this.props.location.pathname !== "/settings" && (
               <>

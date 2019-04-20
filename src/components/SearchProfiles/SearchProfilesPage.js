@@ -9,7 +9,9 @@ import ProfilesContainer from "./ProfilesContainer";
 import Tour from "./Tour";
 import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
-require("dayjs/locale/" + lang);
+const locale = lang !== null ? lang : "en";
+require("dayjs/locale/" + locale);
+
 class SearchProfilesPage extends Component {
   state = {
     lat: this.props.location.lat,

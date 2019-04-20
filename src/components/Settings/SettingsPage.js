@@ -216,6 +216,7 @@ class SettingsPage extends Component {
     }
   };
 
+  //Must reset these to prevent override on save
   resetAcctSettingState = () => {
     this.setState({
       username: undefined,
@@ -352,7 +353,6 @@ class SettingsPage extends Component {
   toggleImgEditorPopup = (file, isPrivate) => {
     this.setErrorHandler("Toggle image editor");
     if (this.mounted) {
-      console.log("painy");
       this.setState({
         fileRecieved: file,
         isPrivate,
@@ -373,10 +373,17 @@ class SettingsPage extends Component {
   toggleCouplesPopup = () => {
     this.setErrorHandler("Toggle Couple popup");
     if (this.mounted) {
-      this.setState({
-        showCouplePopup: !this.state.showCouplePopup,
-        flashCpl: false
-      });
+      this.setState(
+        {
+          showCouplePopup: !this.state.showCouplePopup,
+          flashCpl: false
+        },
+        () => {
+          if (!this.state.showCouplePopup) {
+            window.location.reload();
+          }
+        }
+      );
     }
   };
 
@@ -388,7 +395,9 @@ class SettingsPage extends Component {
       });
     }
   };
-
+  notifyClient = text => {
+    toast.success(text);
+  };
   openPhotoVerPopup = type => {
     if (this.mounted) {
       this.setState({
@@ -398,10 +407,10 @@ class SettingsPage extends Component {
     }
   };
 
-  setPartnerID = id => {
+  setPartnerID = N => {
     const { form } = this.props;
-    this.setErrorHandler("Set Partner ID");
-    form.setFieldsValue({ couplePartner: id });
+    this.setErrorHandler("Set Partner N");
+    form.setFieldsValue({ couplePartner: N });
   };
 
   setS3PhotoParams = (name, type) => {
@@ -448,7 +457,6 @@ class SettingsPage extends Component {
   };
 
   render() {
-    console.log("SP-inds");
     const {
       lat,
       long,
@@ -496,7 +504,15 @@ class SettingsPage extends Component {
       title,
       okAction
     } = this.state;
-    const { userID, t, ErrorHandler, currentuser, refetchUser } = this.props;
+
+    const {
+      userID,
+      t,
+      ErrorHandler,
+      currentuser,
+      refetchUser,
+      dayjs
+    } = this.props;
 
     let aboutErr = "";
     if (about === "") {
@@ -612,7 +628,7 @@ class SettingsPage extends Component {
                               this.setDialogContent({
                                 title: "Delete Photo",
                                 msg:
-                                  "This remove your photo from our server and can not be undone.",
+                                  "This removes your photo from our server and can not be undone.",
                                 btnText: "Delete",
                                 okAction: () =>
                                   this.handlePhotoListChange({
@@ -637,12 +653,19 @@ class SettingsPage extends Component {
                             showEditor={this.toggleImgEditorPopup}
                             photos={privatePics}
                             deleteImg={({ file, key }) =>
-                              this.handlePhotoListChange({
-                                file,
-                                key,
-                                isPrivate: true,
-                                isDeleted: true,
-                                updateSettings
+                              this.setDialogContent({
+                                title: "Delete Photo",
+                                msg:
+                                  "This removes your photo from our server and can not be undone.",
+                                btnText: "Delete",
+                                okAction: () =>
+                                  this.handlePhotoListChange({
+                                    file,
+                                    key,
+                                    isPrivate: true,
+                                    isDeleted: true,
+                                    updateSettings
+                                  })
                               })
                             }
                             t={t}
@@ -699,6 +722,9 @@ class SettingsPage extends Component {
                               currentuser={currentuser}
                               refetchUser={refetchUser}
                               t={t}
+                              dayjs={dayjs}
+                              notifyClient={this.notifyClient}
+                              setDialogContent={this.setDialogContent}
                             />
                           )}
                           <AcctSettings
@@ -773,8 +799,9 @@ class SettingsPage extends Component {
                 <BlackModal
                   close={this.toggleBlackPopup}
                   userID={userID}
-                  refetchUser={this.props.refetch}
-                  ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  ErrorHandler={ErrorHandler}
+                  t={t}
+                  notifyClient={this.notifyClient}
                 />
               )}
             </section>

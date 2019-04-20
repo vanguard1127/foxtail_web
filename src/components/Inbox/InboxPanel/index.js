@@ -104,36 +104,14 @@ class InboxPanel extends Component {
               </div>
             );
           }
-          if (error) {
-            return (
-              <ErrorHandler.report
-                error={error}
-                calledName={"getInbox"}
-                userID={currentuser.userID}
-              />
-            );
-          }
-
-          let messages = data.getInbox;
-
-          if (searchTerm !== "") {
-            messages = messages.filter(msg =>
-              msg.participants[0].profileName
-                .toLocaleLowerCase()
-                .startsWith(searchTerm.toLocaleLowerCase())
-            );
-          }
-
-          if (!messages) {
-            return <div>{t("common:error")}.</div>;
-          }
 
           if (!unsubscribe) {
             unsubscribe = subscribeToMore({
               document: NEW_INBOX_SUB,
               updateQuery: (prev, { subscriptionData }) => {
+                console.log("in sub");
                 let { newInboxMsgSubscribe } = subscriptionData.data;
-
+                console.log(prev, subscriptionData.data);
                 if (!newInboxMsgSubscribe) {
                   return prev;
                 }
@@ -160,6 +138,24 @@ class InboxPanel extends Component {
                 return prev;
               }
             });
+          }
+          let messages = data.getInbox;
+          if (error || !messages) {
+            return (
+              <ErrorHandler.report
+                error={error}
+                calledName={"getInbox"}
+                userID={currentuser.userID}
+              />
+            );
+          }
+
+          if (searchTerm !== "") {
+            messages = messages.filter(msg =>
+              msg.participants[0].profileName
+                .toLocaleLowerCase()
+                .startsWith(searchTerm.toLocaleLowerCase())
+            );
           }
 
           return (

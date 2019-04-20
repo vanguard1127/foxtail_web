@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
-import { CREATE_SUBSCRIPTION } from '../../../queries';
-import { Mutation } from 'react-apollo';
-import StripeCheckout from 'react-stripe-checkout';
+import React, { PureComponent } from "react";
+import { CREATE_SUBSCRIPTION } from "../../../queries";
+import { Mutation } from "react-apollo";
+import StripeCheckout from "react-stripe-checkout";
 
 class CreateSubBtn extends PureComponent {
-  state = { token: '', ccLast4: '' };
+  state = { token: "", ccLast4: "" };
   componentDidMount() {
     this.mounted = true;
   }
@@ -17,9 +17,10 @@ class CreateSubBtn extends PureComponent {
     }
     createSubscription()
       .then(({ data }) => {
-        this.props.refetchUser();
+        this.props.notifyClient("Black Membership Canceled Successfully");
+
         this.props.close();
-        alert(this.props.t('welblk'));
+        window.location.reload();
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -39,6 +40,8 @@ class CreateSubBtn extends PureComponent {
         {createSubscription => {
           return (
             <StripeCheckout
+              name="Three Comma Co." // the pop-in header title
+              description="Big Data Stuff" // the pop-in header subtitle
               token={({ id, card }) =>
                 this.handleSubmit({
                   token: id,
@@ -46,9 +49,11 @@ class CreateSubBtn extends PureComponent {
                   createSubscription
                 })
               }
-              stripeKey="pk_test_IdtGRrsuvxCLBd9AbDQBXCS3"
+              stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY}
               amount={1000}
-            />
+            >
+              <span className="color">Upgrade to Black Membership</span>
+            </StripeCheckout>
           );
         }}
       </Mutation>

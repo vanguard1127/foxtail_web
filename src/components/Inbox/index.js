@@ -25,7 +25,8 @@ import Modal from "../common/Modal";
 import { INBOXLIST_LIMIT } from "../../docs/consts";
 import validateLang from "../../utils/validateLang";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
-require("dayjs/locale/" + lang);
+const locale = lang !== null ? lang : "en";
+require("dayjs/locale/" + locale);
 
 class InboxPage extends Component {
   state = {

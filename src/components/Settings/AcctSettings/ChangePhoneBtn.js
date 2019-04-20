@@ -44,7 +44,6 @@ class ChangePhoneBtn extends PureComponent {
   };
 
   render() {
-    console.log("CPB");
     const { csrf, code } = this.state;
     const { t } = this.props;
     return (

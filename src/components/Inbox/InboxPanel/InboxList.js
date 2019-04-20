@@ -22,6 +22,7 @@ class InboxList extends Component {
 
   renderItem = (item, timeAgo) => {
     const { currentuser, readChat } = this.props;
+
     let title;
     if (item.fromUser) {
       if (

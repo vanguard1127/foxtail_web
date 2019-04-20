@@ -102,7 +102,6 @@ class UploadComponent extends PureComponent {
   };
 
   render() {
-    console.log("UIC");
     const { classes, photos, t, setProfilePic } = this.props;
     const { selectedImg, previewVisible } = this.state;
     return (

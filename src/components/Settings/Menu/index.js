@@ -8,7 +8,6 @@ class Menu extends Component {
     return false;
   }
   render() {
-    console.log("MEnu");
     const {
       coupleModalToggle,
       couplePartner,
@@ -31,7 +30,9 @@ class Menu extends Component {
                 onClick={() => coupleModalToggle()}
                 className={flashCpl ? "flashCpl" : null}
               >
-                {couplePartner === null ? t("common:addcoup") : couplePartner}
+                {couplePartner === null
+                  ? t("common:addcoup")
+                  : "Partner: " + couplePartner}
               </span>
             </li>
             <li className="highlightTxt">

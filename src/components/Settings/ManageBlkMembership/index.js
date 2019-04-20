@@ -6,8 +6,15 @@ class ManageBlackSub extends Component {
     return false;
   }
   render() {
-    console.log("MBS");
-    const { refetchUser, ErrorHandler, t, currentuser, dayjs } = this.props;
+    const {
+      refetchUser,
+      ErrorHandler,
+      t,
+      currentuser,
+      dayjs,
+      notifyClient,
+      setDialogContent
+    } = this.props;
     return (
       <ErrorHandler.ErrorBoundary>
         <div className="content mtop">
@@ -40,6 +47,7 @@ class ManageBlackSub extends Component {
                   refetchUser={refetchUser}
                   t={t}
                   ErrorHandler={ErrorHandler}
+                  notifyClient={notifyClient}
                 />
               </div>
             </div>
@@ -49,6 +57,8 @@ class ManageBlackSub extends Component {
                   refetchUser={refetchUser}
                   t={t}
                   ErrorHandler={ErrorHandler}
+                  notifyClient={notifyClient}
+                  setDialogContent={setDialogContent}
                 />
               </div>
             </div>

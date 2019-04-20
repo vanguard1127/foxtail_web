@@ -119,7 +119,7 @@ export const CANCEL_SUBSCRIPTION = gql`
 export const LINK_PROFILE = gql`
   mutation($code: String!) {
     linkProfile(code: $code) {
-      id
+      profileID
       partnerName
     }
   }
@@ -823,6 +823,7 @@ export const GET_CURRENT_USER = gql`
       isEmailOK
       tours
       distanceMetric
+      coupleProfileName
       location {
         city
         crds {

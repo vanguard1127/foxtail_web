@@ -19,7 +19,8 @@ import { toast } from "react-toastify";
 import validateLang from "../../utils/validateLang";
 import ShareModal from "../Modals/Share";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
-require("dayjs/locale/" + lang);
+const locale = lang !== null ? lang : "en";
+require("dayjs/locale/" + locale);
 class EventPage extends Component {
   state = {
     visible: false,

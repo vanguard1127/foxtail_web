@@ -3,6 +3,11 @@ import { ProfileActionBtns, ProfilePic, ProfileInfoDiv } from "../ProfileCard/";
 
 class FeaturedCard extends Component {
   shouldComponentUpdate(nextProps) {
+    console.log(
+      this.props.liked !== nextProps.liked,
+      this.props.liked,
+      nextProps.liked
+    );
     if (
       this.props.profile !== nextProps.profile ||
       this.props.liked !== nextProps.liked ||
@@ -34,6 +39,7 @@ class FeaturedCard extends Component {
     if (photoCheck) {
       badge = "verified";
     }
+    console.log("liked", liked);
     return (
       <div className={"item " + badge}>
         <div className="info">

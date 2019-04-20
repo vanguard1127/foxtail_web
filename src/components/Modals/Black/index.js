@@ -1,46 +1,48 @@
-import React, { PureComponent } from 'react';
-import CreateSubBtn from './CreateSubBtn';
-import Modal from '../../common/Modal';
-import { withNamespaces } from 'react-i18next';
+import React, { PureComponent } from "react";
+import CreateSubBtn from "./CreateSubBtn";
+import Modal from "../../common/Modal";
+import { withNamespaces } from "react-i18next";
 
 class Black extends PureComponent {
-  state = { token: '', ccLast4: '' };
+  state = { token: "", ccLast4: "" };
 
   render() {
-    const { close, t, ErrorBoundary } = this.props;
+    const { close, t, ErrorHandler, notifyClient } = this.props;
     return (
       <Modal
-        header={t('black')}
+        header={t("black")}
         close={close}
         description="Get more of what you love ❤️️"
         okSpan={
           <CreateSubBtn
-            // refetchUser={this.props.refetchUser}
             close={close}
+            t={t}
+            ErrorHandler={ErrorHandler}
+            notifyClient={notifyClient}
           />
         }
       >
-        {' '}
-        <ErrorBoundary>
+        {" "}
+        <ErrorHandler.ErrorBoundary>
           <img
             alt="upload"
-            style={{ width: '100%' }}
-            src={require('../../../images/girl2.jpg')}
+            style={{ width: "100%" }}
+            src={require("../../../images/girl2.jpg")}
           />
           <>
-            <h3>{t('blkinclude')}:</h3>
+            <h3>{t("blkinclude")}:</h3>
             <ul>
-              <li>{t('direct')}</li>
-              <li>{t('changeloc')}</li>
-              <li>{t('onlyliked')}</li>
-              <li>{t('hidestat')}</li>
-              <li>{t('higher') + '!'}</li>
-              <li>{t('phoneblock')}</li>
+              <li>{t("direct")}</li>
+              <li>{t("changeloc")}</li>
+              <li>{t("onlyliked")}</li>
+              <li>{t("hidestat")}</li>
+              <li>{t("higher") + "!"}</li>
+              <li>{t("phoneblock")}</li>
             </ul>
           </>
-        </ErrorBoundary>
+        </ErrorHandler.ErrorBoundary>
       </Modal>
     );
   }
 }
-export default withNamespaces('modals')(Black);
+export default withNamespaces("modals")(Black);

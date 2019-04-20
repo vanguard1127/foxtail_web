@@ -45,9 +45,8 @@ class NoticesItem extends Component {
       this.state.userAlert !== nextState.userAlert ||
       this.props.count !== nextProps.count
     ) {
-      // console.log("vccvvcvcv", this.state, nextState);
       // console.log(
-      //   "vccvvcvcv",
+      //   "Diffs:",
       //   this.state.read === nextState.read,
       //   this.state.seen === nextState.seen,
       //   this.state.notificationIDs.length === nextState.notificationIDs.length,
@@ -173,6 +172,7 @@ class NoticesItem extends Component {
         () => {
           updateNotifications()
             .then(({ data }) => {
+              console.log("DATA", data);
               refetch();
             })
             .catch(res => {

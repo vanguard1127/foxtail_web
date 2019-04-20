@@ -20,11 +20,17 @@ class MyAccountItem extends Component {
             <span className="avatar">
               <img src={currentuser.profilePic} alt="" />
             </span>
-            <span className="username">{currentuser.username}</span>
+            {currentuser.coupleProfileName ? (
+              <span className="username">{currentuser.coupleProfileName}</span>
+            ) : (
+              <span className="username">{currentuser.username}</span>
+            )}
           </span>
         }
       >
-        <MyAccountMenu />
+        <MyAccountMenu
+          isCouple={currentuser.coupleProfileName ? true : false}
+        />
       </Menu>
     );
   }

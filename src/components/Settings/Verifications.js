@@ -5,7 +5,6 @@ class Verifications extends Component {
     return false;
   }
   render() {
-    console.log("Verfic");
     const { openPhotoVerPopup, t, ErrorBoundary } = this.props;
     return (
       <ErrorBoundary>

@@ -86,23 +86,23 @@ class ChatPanel extends PureComponent {
       }
     });
 
-    let { getInbox } = cache.readQuery({
-      query: GET_INBOX,
-      variables: { skip: 0, limit: INBOXLIST_LIMIT }
-    });
+    // let { getInbox } = cache.readQuery({
+    //   query: GET_INBOX,
+    //   variables: { skip: 0, limit: INBOXLIST_LIMIT }
+    // });
 
-    getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
-    getInbox[
-      getInbox.findIndex(el => el.chatID === chatID)
-    ].createdAt = Date.now();
+    // getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
+    // getInbox[
+    //   getInbox.findIndex(el => el.chatID === chatID)
+    // ].createdAt = Date.now();
 
-    cache.writeQuery({
-      query: GET_INBOX,
-      variables: { skip: 0, limit: INBOXLIST_LIMIT },
-      data: {
-        ...getInbox
-      }
-    });
+    // cache.writeQuery({
+    //   query: GET_INBOX,
+    //   variables: { skip: 0, limit: INBOXLIST_LIMIT },
+    //   data: {
+    //     ...getInbox
+    //   }
+    // });
   };
 
   render() {
