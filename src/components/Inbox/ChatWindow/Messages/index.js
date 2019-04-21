@@ -117,6 +117,7 @@ class MessageList extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
+      this.props.messages !== nextProps.messages ||
       this.state.restoreScroll !== nextState.restoreScroll ||
       this.state.hasMoreItems !== nextState.hasMoreItems ||
       this.state.previousClientHeight !== nextState.previousClientHeight ||

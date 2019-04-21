@@ -565,16 +565,6 @@ export const READ_CHAT_QUERY = gql`
       ownerProfile {
         id
       }
-      messages {
-        id
-        text
-        fromUser {
-          username
-          id
-        }
-        profilePic
-        createdAt
-      }
       participants {
         id
         profilePic

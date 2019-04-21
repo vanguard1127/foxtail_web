@@ -15,6 +15,7 @@ class InboxList extends Component {
       this.state.chatID !== nextState.chatID ||
       this.props.messages !== nextProps.messages
     ) {
+      console.log("render");
       return true;
     }
     return false;

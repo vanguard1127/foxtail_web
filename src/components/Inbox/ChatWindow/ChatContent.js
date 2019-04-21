@@ -46,6 +46,7 @@ class ChatContent extends PureComponent {
     const { chatID, currentUserID, t, ErrorHandler, dayjs } = this.props;
 
     const { cursor, limit } = this.props;
+
     return (
       <div
         className="content"
@@ -105,7 +106,6 @@ class ChatContent extends PureComponent {
                 }
               });
             }
-
             return (
               <Messages
                 chatID={chatID}
