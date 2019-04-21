@@ -599,6 +599,7 @@ class SettingsPage extends Component {
                             ageRange={ageRange}
                             interestedIn={interestedIn}
                             city={city}
+                            isBlackMember={currentuser.blackMember.active}
                             setValue={({ name, value }) =>
                               this.setValue({ name, value, updateSettings })
                             }
@@ -698,6 +699,7 @@ class SettingsPage extends Component {
                             likedOnly={likedOnly}
                             t={t}
                             ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            isBlackMember={currentuser.blackMember.active}
                           />
                           <Verifications
                             openPhotoVerPopup={this.openPhotoVerPopup}

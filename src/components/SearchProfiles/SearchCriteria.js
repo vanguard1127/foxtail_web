@@ -118,7 +118,17 @@ class SearchCriteria extends PureComponent {
 
   render() {
     const { locModalVisible } = this.state;
-    const { t, loading } = this.props;
+    const {
+      t,
+      loading,
+      isBlackMember,
+      lang,
+      distance,
+      distanceMetric,
+      ageRange,
+      interestedIn,
+      city
+    } = this.props;
     if (loading) {
       return (
         <section className="meet-filter">
@@ -133,6 +143,7 @@ class SearchCriteria extends PureComponent {
                       address={""}
                       type={"(cities)"}
                       placeholder={t("common:setloc") + "..."}
+                      isBlackMember={isBlackMember}
                     />
                   </div>
                 </div>
@@ -158,14 +169,6 @@ class SearchCriteria extends PureComponent {
         </section>
       );
     }
-    const {
-      lang,
-      distance,
-      distanceMetric,
-      ageRange,
-      interestedIn,
-      city
-    } = this.props;
 
     return (
       <>
@@ -213,6 +216,7 @@ class SearchCriteria extends PureComponent {
                                   handleRemoveLocLock={() =>
                                     this.handleRemoveLocLock(updateSettings)
                                   }
+                                  isBlackMember={isBlackMember}
                                 />
                               </div>
                             </div>
@@ -275,7 +279,7 @@ class SearchCriteria extends PureComponent {
           <SetLocationModal
             close={() => this.setLocModalVisible(false)}
             setLocation={this.setLocation}
-            isBlackMember={this.props.session.currentuser.blackMember.active}
+            isBlackMember={isBlackMember}
           />
         )}
       </>

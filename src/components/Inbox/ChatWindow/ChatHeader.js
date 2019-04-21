@@ -46,9 +46,13 @@ class ChatHeader extends PureComponent {
           ` + ${currentChat.participants.length - 2}` + t("participants");
       }
 
-      chatLastSeen = currentChat.participants[0].online
-        ? t("common:Online")
-        : TimeAgo(currentChat.participants[0].updatedAt);
+      if (currentChat.participants[0].showOnline) {
+        chatLastSeen = currentChat.participants[0].online
+          ? t("common:Online")
+          : TimeAgo(currentChat.participants[0].updatedAt);
+      } else {
+        chatLastSeen = "N/A";
+      }
     }
     return (
       <div className="navbar">
@@ -65,7 +69,9 @@ class ChatHeader extends PureComponent {
                 {chatTitleExtra}
               </span>
             </span>
-            <span className="last-seen online">{chatLastSeen}</span>
+            {chatLastSeen !== "N/A" && (
+              <span className="last-seen online">{chatLastSeen}</span>
+            )}
           </NavLink>
         </div>
         <div className="more" onClick={this.toggleMenu} />

@@ -3,7 +3,7 @@ import { withNamespaces } from "react-i18next";
 import * as yup from "yup";
 import axios from "axios";
 import { Mutation } from "react-apollo";
-import { SIGNS3, CREATE_EVENT, SEARCH_EVENTS } from "../../../queries";
+import { SIGNS3, CREATE_EVENT } from "../../../queries";
 import PhotoUpload from "../../common/PhotoUpload";
 import DesiresModal from "../../Modals/Desires/Modal";
 import DesiresSelector from "../../Modals/Desires/Selector";

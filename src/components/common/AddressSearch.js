@@ -4,6 +4,7 @@ import PlacesAutocomplete, {
   geocodeByAddress
 } from "react-places-autocomplete";
 import getCityCountry from "../../utils/getCityCountry";
+import { toast } from "react-toastify";
 
 class AddressSearch extends Component {
   state = { address: this.props.address };
@@ -17,6 +18,13 @@ class AddressSearch extends Component {
     if (address === "My Location") {
       this.handleRemoveLocLock();
       return;
+    }
+
+    if (this.props.isBlackMember !== undefined) {
+      if (!this.props.isBlackMember && this.props.address) {
+        toast("Only Black Members can change location");
+        return;
+      }
     }
     this.setState({
       address

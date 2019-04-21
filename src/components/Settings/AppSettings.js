@@ -13,6 +13,7 @@ class AppSettings extends Component {
       this.props.lang !== nextProps.lang ||
       this.props.emailNotify !== nextProps.emailNotify ||
       this.props.showOnline !== nextProps.showOnline ||
+      this.props.isBlackMember !== nextProps.isBlackMember ||
       this.props.likedOnly !== nextProps.likedOnly
     ) {
       return true;
@@ -28,7 +29,8 @@ class AppSettings extends Component {
       showOnline,
       likedOnly,
       t,
-      ErrorBoundary
+      ErrorBoundary,
+      isBlackMember
     } = this.props;
 
     return (
@@ -118,6 +120,7 @@ class AppSettings extends Component {
                             value: !showOnline ? true : false
                           });
                         }}
+                        disabled={!isBlackMember}
                       />
                       <label htmlFor="hide_online_status" />
                     </div>
@@ -141,6 +144,7 @@ class AppSettings extends Component {
                             value: !likedOnly ? true : false
                           });
                         }}
+                        disabled={!isBlackMember}
                       />
                       <label htmlFor="ilikeds" />
                     </div>

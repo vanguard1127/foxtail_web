@@ -28,34 +28,31 @@ class MyAccountMenu extends Component {
       <div className="toggle">
         <div className="dropdown hidden-mobile open">
           <ul>
-            <li>
-              {isCouple ? (
-                <NavLink to="/settings">Our Account</NavLink>
-              ) : (
-                <NavLink to="/settings">{t("common:myaccount")}</NavLink>
-              )}
-            </li>
+            {isCouple ? (
+              <NavLink to="/settings">
+                {" "}
+                <li>Our Account </li>
+              </NavLink>
+            ) : (
+              <NavLink to="/settings">
+                {" "}
+                <li>{t("common:myaccount")} </li>
+              </NavLink>
+            )}
+
             {this.props.location.pathname !== "/settings" && (
               <>
                 {!isCouple && (
-                  <li>
-                    <span
-                      role="heading"
-                      aria-level="2"
-                      onClick={this.onAddCouple}
-                    >
+                  <li onClick={this.onAddCouple}>
+                    <span role="heading" aria-level="2">
                       {t("common:addcoup")}
                     </span>
                   </li>
                 )}
 
                 {!isBlack && (
-                  <li className="border">
-                    <span
-                      role="heading"
-                      aria-level="2"
-                      onClick={this.onShowBlackMember}
-                    >
+                  <li className="border" onClick={this.onShowBlackMember}>
+                    <span role="heading" aria-level="2">
                       {t("common:becomeblk")}
                     </span>
                   </li>

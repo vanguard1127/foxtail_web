@@ -32,6 +32,7 @@ class ProfilesContainer extends PureComponent {
 
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
     this.props.ErrorHandler.setBreadcrumb("Match Dialog Toggled:");
+
     if (this.mounted) {
       if (profile) this.setState({ profile, matchDlgVisible, chatID });
       else this.setState({ matchDlgVisible });
@@ -42,6 +43,10 @@ class ProfilesContainer extends PureComponent {
     this.props.ErrorHandler.setBreadcrumb(
       "Message Modal visible:" + msgModalVisible
     );
+    if (!this.props.isBlackMember) {
+      toast("Direct Send is only available to Black Members");
+      return;
+    }
     if (this.mounted) {
       if (profile) this.setState({ profile, msgModalVisible });
       else this.setState({ msgModalVisible });

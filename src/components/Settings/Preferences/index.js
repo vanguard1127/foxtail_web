@@ -41,7 +41,8 @@ class Preferences extends Component {
       setValue,
       setLocationValues,
       t,
-      ErrorBoundary
+      ErrorBoundary,
+      isBlackMember
     } = this.props;
 
     const lang = localStorage.getItem("i18nextLng");
@@ -117,6 +118,7 @@ class Preferences extends Component {
                   type={"(cities)"}
                   placeholder={t("common:setloc") + "..."}
                   handleRemoveLocLock={this.handleRemoveLocLock}
+                  isBlackMember={isBlackMember}
                 />
               </div>
             </div>

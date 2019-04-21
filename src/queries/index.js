@@ -571,6 +571,7 @@ export const READ_CHAT_QUERY = gql`
         profileName
         updatedAt
         online
+        showOnline
         users {
           username
           id
@@ -916,6 +917,7 @@ export const GET_PROFILE = gql`
           }
         }
       }
+      showOnline
       publicCode
       distance
       updatedAt

@@ -37,7 +37,7 @@ class Black extends PureComponent {
               <li>{t("onlyliked")}</li>
               <li>{t("hidestat")}</li>
               <li>{t("higher") + "!"}</li>
-              <li>{t("phoneblock")}</li>
+              {/* <li>{t("phoneblock")}</li> */}
             </ul>
           </>
         </ErrorHandler.ErrorBoundary>

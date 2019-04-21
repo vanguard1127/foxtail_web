@@ -64,9 +64,11 @@ class ProfileDetails extends Component {
               <span className="head">{t("lstlogin")}:</span>
               <span className="data">
                 {" "}
-                {profile.online
-                  ? t("common:Online")
-                  : TimeAgo(profile.updatedAt)}
+                {!profile.showOnline
+                  ? profile.online
+                    ? t("common:Online")
+                    : TimeAgo(profile.updatedAt)
+                  : "N/A"}
               </span>
             </li>
           </ul>

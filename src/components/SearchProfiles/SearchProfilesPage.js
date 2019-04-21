@@ -110,6 +110,7 @@ class SearchProfilesPage extends Component {
             country={country}
             refetch={refetch}
             ErrorHandler={ErrorHandler}
+            isBlackMember={session.currentuser.blackMember.active}
           />
         </ErrorHandler.ErrorBoundary>
         <ErrorHandler.ErrorBoundary>
@@ -126,6 +127,7 @@ class SearchProfilesPage extends Component {
             ErrorHandler={ErrorHandler}
             dayjs={dayjs}
             client={client}
+            isBlackMember={session.currentuser.blackMember.active}
           />
         </ErrorHandler.ErrorBoundary>
       </Fragment>

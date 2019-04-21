@@ -655,6 +655,9 @@ header .toggle .dropdown ul li {
   color: #464648;
   padding: 5px 15px;
   transition: 0.3s all;
+  display: "flex";
+  flex: 1;
+  cursor: pointer;
 }
 
 header .toggle .dropdown ul li.border {

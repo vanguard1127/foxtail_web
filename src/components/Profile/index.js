@@ -236,7 +236,7 @@ class ProfilePage extends Component {
                           <div className="col-md-9">
                             <ProfileInfo
                               users={users}
-                              online={profile.online}
+                              online={profile.online && profile.showOnline}
                               t={t}
                               dayjs={dayjs}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
