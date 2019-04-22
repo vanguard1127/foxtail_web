@@ -78,17 +78,25 @@ class AddressSearch extends Component {
     geocodeByAddress(address)
       .then(async results => {
         if (this.mounted) {
-          const citycntry = await getCityCountry({
-            long: results[0].geometry.location.lng(),
-            lat: results[0].geometry.location.lat()
-          });
-          this.setState({ address: citycntry.city }, () =>
+          if (this.props.type === "address") {
             this.props.setLocationValues({
               lat: results[0].geometry.location.lat(),
               long: results[0].geometry.location.lng(),
-              address: citycntry.city
-            })
-          );
+              address
+            });
+          } else {
+            const citycntry = await getCityCountry({
+              long: results[0].geometry.location.lng(),
+              lat: results[0].geometry.location.lat()
+            });
+            this.setState({ address: citycntry.city }, () =>
+              this.props.setLocationValues({
+                lat: results[0].geometry.location.lat(),
+                long: results[0].geometry.location.lng(),
+                address: citycntry.city
+              })
+            );
+          }
         }
       })
       .catch(

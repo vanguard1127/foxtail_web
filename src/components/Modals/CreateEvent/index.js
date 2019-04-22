@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { withNamespaces } from "react-i18next";
 import * as yup from "yup";
 import axios from "axios";
@@ -31,7 +31,34 @@ const schema = yup.object().shape({
     .max(240, "Description must be less than 240 characters")
     .required("Address is required!")
 });
-class CreateEvent extends PureComponent {
+class CreateEvent extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.eventname !== nextState.eventname ||
+      this.state.tagline !== nextState.tagline ||
+      this.state.description !== nextState.description ||
+      this.state.desires !== nextState.desires ||
+      this.state.desires.length !== nextState.desires.length ||
+      this.state.address !== nextState.address ||
+      this.state.image.name !== nextState.image.name ||
+      this.state.startTime !== nextState.startTime ||
+      this.state.endTime !== nextState.endTime ||
+      this.state.interestedIn.length !== nextState.interestedIn.length ||
+      this.state.showInfo !== nextState.showInfo ||
+      this.state.showDesiresPopup !== nextState.showDesiresPopup ||
+      this.state.type !== nextState.type ||
+      this.state.errors !== nextState.errors
+    ) {
+      console.log(
+        "NAMENEME",
+        this.state.image.name !== nextState.image.name,
+        this.state.image.name,
+        nextState.image.name
+      );
+      return true;
+    }
+    return false;
+  }
   state = {
     eventname: "",
     tagline: "",
@@ -42,7 +69,6 @@ class CreateEvent extends PureComponent {
     lat: null,
     long: null,
     address: "",
-    images: [],
     image: "",
     type: "",
     startTime: "",
@@ -70,6 +96,12 @@ class CreateEvent extends PureComponent {
           this.validateForm();
         }
       });
+    }
+  };
+
+  setPhoto = value => {
+    if (this.mounted) {
+      this.setState({ image: value });
     }
   };
 
@@ -115,7 +147,7 @@ class CreateEvent extends PureComponent {
 
   handleSubmit = async ({ createEvent, signS3 }) => {
     if (await this.validateForm()) {
-      if (this.state.images.length > 0) {
+      if (this.state.image !== "") {
         await this.handleUpload({ signS3 });
       }
       createEvent()
@@ -133,12 +165,12 @@ class CreateEvent extends PureComponent {
   };
 
   handleUpload = async ({ signS3 }) => {
-    const { images } = this.state;
-    if (images.length === 0) {
+    const { image } = this.state;
+    if (image === "") {
       return;
     }
 
-    const file = images[0];
+    const file = image;
 
     await this.setS3PhotoParams(file.name, file.type);
 
@@ -146,7 +178,7 @@ class CreateEvent extends PureComponent {
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
         await this.uploadToS3(file, signedRequest);
-
+        console.log("S3", key, file.name, data);
         if (this.mounted) {
           this.setState({ image: key });
         }
@@ -316,12 +348,9 @@ class CreateEvent extends PureComponent {
                       <div className="item nobottom">
                         <PhotoUpload
                           photos={image && [image]}
-                          setPhotos={el =>
-                            this.setValue({
-                              name: "images",
-                              value: el
-                            })
-                          }
+                          setPhotos={el => {
+                            this.setPhoto(el);
+                          }}
                         />
                       </div>
                       <div className="item">

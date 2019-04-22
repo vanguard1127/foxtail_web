@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 // Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
 
@@ -24,48 +24,65 @@ registerPlugin(
 );
 //https://pqina.nl/filepond/docs/patterns/api/filepond-instance/#labels --- LABELS
 // Our app
-const PhotoUpload = ({ photos, setPhotos, t }) => {
-  return (
-    <FilePond
-      server={{
-        process: (fieldName, file, metadata, load, error, progress, abort) => {
-          // fieldName is the name of the input field
-          // file is the actual file object to send
-          load(file);
-          // Should expose an abort method so the request can be cancelled
-          return {
-            abort: () => {
-              // This function is entered if the user has tapped the cancel button
+class PhotoUpload extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.photos.name !== nextProps.photos.name) {
+      return true;
+    }
+    return false;
+  }
+  render() {
+    const { photos, setPhotos, t } = this.props;
 
-              // Let FilePond know the request has been cancelled
-              abort();
-            }
-          };
+    return (
+      <FilePond
+        server={{
+          process: (
+            fieldName,
+            file,
+            metadata,
+            load,
+            error,
+            progress,
+            abort
+          ) => {
+            // fieldName is the name of the input field
+            // file is the actual file object to send
+            load(file);
+            // Should expose an abort method so the request can be cancelled
+            return {
+              abort: () => {
+                // This function is entered if the user has tapped the cancel button
+
+                // Let FilePond know the request has been cancelled
+                abort();
+              }
+            };
+          }
+        }}
+        labelFileTypeNotAllowed={t("onlyformat")}
+        maxFileSize="5MB"
+        labelIdle={
+          t("drag") +
+          " " +
+          `<span class="filepond--label-action">` +
+          t("browse") +
+          `</span>.`
         }
-      }}
-      labelFileTypeNotAllowed={t("onlyformat")}
-      maxFileSize="5MB"
-      labelIdle={
-        t("drag") +
-        " " +
-        `<span class="filepond--label-action">` +
-        t("browse") +
-        `</span>.`
-      }
-      fileRenameFunction={file => `New File`}
-      labelFileProcessing={t("upload")}
-      labelFileProcessingComplete={t("uploadcomp")}
-      labelFileProcessingAborted={t("uploadcan")}
-      labelFileProcessingError={t("uploaderror")}
-      labelTapToCancel={t("cancel")}
-      labelMaxFileSizeExceeded={t("toolarge")}
-      onupdatefiles={fileItems => {
-        // Set current file objects to this.state
-        setPhotos(fileItems.map(fileItem => fileItem.file));
-      }}
-      files={photos}
-    />
-  );
-};
+        labelFileProcessing={t("upload")}
+        labelFileProcessingComplete={t("uploadcomp")}
+        labelFileProcessingAborted={t("uploadcan")}
+        labelFileProcessingError={t("uploaderror")}
+        labelTapToCancel={t("cancel")}
+        labelMaxFileSizeExceeded={t("toolarge")}
+        onupdatefiles={fileItems => {
+          // Set current file objects to this.state
+          setPhotos(fileItems.map(fileItem => fileItem.file));
+        }}
+        files={photos}
+      />
+    );
+  }
+}
 
 export default withNamespaces("common")(PhotoUpload);

@@ -306,12 +306,6 @@ export const REMOVE_PROFILES_CHAT = gql`
   }
 `;
 
-export const TOGGLE_ONLINE = gql`
-  mutation($online: Boolean!) {
-    toggleOnline(online: $online)
-  }
-`;
-
 export const CREATE_EVENT = gql`
   mutation(
     $eventname: String!

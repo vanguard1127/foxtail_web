@@ -22,6 +22,6 @@
   "appsetting": "App Settings",
   "showprofile": "Show My Profile",
   "recivemails": "Receive E-mails",
-  "hideonline": "Hide Online Status (Black only)",
+  "hideonline": "Show Online Status (Black only)",
   "onlyshow": "Visible to Liked Only (Black only)"
 }

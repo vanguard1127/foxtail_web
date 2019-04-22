@@ -36,22 +36,28 @@ class ChatHeader extends PureComponent {
         chatTitle = notME[0].profileName;
         chatProfilePic = notME[0].profilePic;
         chatProfileID = notME[0].id;
+        if (notME[0].showOnline) {
+          chatLastSeen = notME[0].online
+            ? t("common:Online")
+            : TimeAgo(notME[0].updatedAt);
+        } else {
+          chatLastSeen = "N/A";
+        }
       } else {
         chatTitle = currentuser.username;
         chatProfilePic = currentChat.participants[0].profilePic;
+        if (currentChat.participants[0].showOnline) {
+          chatLastSeen = currentChat.participants[0].online
+            ? t("common:Online")
+            : TimeAgo(currentChat.participants[0].updatedAt);
+        } else {
+          chatLastSeen = "N/A";
+        }
       }
 
       if (currentChat.participants.length > 2) {
         chatTitleExtra =
           ` + ${currentChat.participants.length - 2}` + t("participants");
-      }
-
-      if (currentChat.participants[0].showOnline) {
-        chatLastSeen = currentChat.participants[0].online
-          ? t("common:Online")
-          : TimeAgo(currentChat.participants[0].updatedAt);
-      } else {
-        chatLastSeen = "N/A";
       }
     }
     return (

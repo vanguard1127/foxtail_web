@@ -34,45 +34,12 @@ class Navbar extends Component {
     return false;
   }
 
-  handleToggle = (toggleOnline, online) => {
-    const { refetch, ErrorHandler } = this.props;
-    if (this.mounted) {
-      this.setState({ online }, () => {
-        toggleOnline()
-          .then(async ({ data }) => {
-            if (data.toggleOnline !== null) {
-              await refetch();
-            }
-          })
-          .catch(res => {
-            ErrorHandler.catchErrors(res.graphQLErrors);
-          });
-      });
-    }
-  };
-
   render() {
     const { session, history, t } = this.props;
-    const { online } = this.state;
-
     return (
       <Fragment>
         {session && session.currentuser ? (
-          <Mutation
-            mutation={TOGGLE_ONLINE}
-            variables={{
-              online
-            }}
-          >
-            {(toggleOnline, { data, loading, error }) => (
-              <NavbarAuth
-                session={session}
-                toggleOnline={online => this.handleToggle(toggleOnline, online)}
-                t={t}
-                history={history}
-              />
-            )}
-          </Mutation>
+          <NavbarAuth session={session} t={t} history={history} />
         ) : (
           history.push("/")
         )}
@@ -90,10 +57,6 @@ class NavbarAuth extends PureComponent {
     this.setState({ mobileMenu: !this.state.mobileMenu });
   };
   componentDidMount() {
-    const { toggleOnline } = this.props;
-
-    toggleOnline(true);
-
     //I don't know why but we need both for it to work
     window.addEventListener("beforeunload", () => {
       navigator.sendBeacon(
