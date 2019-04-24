@@ -262,7 +262,7 @@ header .function .notification.active span.icon span.count {
 
 header .function .user {
   float: right;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 
 header .function .user span.avatar {

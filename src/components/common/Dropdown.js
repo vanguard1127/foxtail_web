@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Select from "./Select";
+import { availableLangs } from "../../docs/consts";
 
-const availableLangs = ["en", "tu", "de"];
 class Dropdown extends Component {
   state = {
     options: null,

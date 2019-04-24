@@ -633,6 +633,7 @@ export const GET_INBOX = gql`
         id
       }
       unSeenCount
+      type
     }
   }
 `;

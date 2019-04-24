@@ -17,7 +17,7 @@ class MyAccountItem extends Component {
     return (
       <Menu
         menuOpener={
-          <span data-name="myaccount" ref={setRef}>
+          <div data-name="myaccount" ref={setRef} style={{ display: "flex" }}>
             <span className="avatar">
               <img src={currentuser.profilePic} alt="" />
             </span>
@@ -26,7 +26,7 @@ class MyAccountItem extends Component {
             ) : (
               <span className="username">{currentuser.username}</span>
             )}
-          </span>
+          </div>
         }
       >
         <MyAccountMenu

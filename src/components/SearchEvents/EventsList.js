@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ScrollUpButton from "react-scroll-up-button";
 import EventCard from "./EventCard/";
 import { Waypoint } from "react-waypoint";
 
@@ -31,6 +32,7 @@ class EventsList extends Component {
                   distanceMetric={distanceMetric}
                 />
               ))}
+              <ScrollUpButton />
               <div className="col-md-12">
                 <div className="more-content-btn">
                   {this.props.loading ? (

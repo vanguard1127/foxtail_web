@@ -31,3 +31,5 @@ export const EVENTDISC_LIMIT = 4;
 export const MEMSLIST_LIMIT = 5;
 export const INBOXMSG_LIMIT = 12;
 export const INBOXLIST_LIMIT = 11;
+
+export const availableLangs = ["en", "tu", "de"];

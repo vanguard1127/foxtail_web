@@ -25,23 +25,28 @@ class InboxList extends Component {
     const { currentuser, readChat } = this.props;
 
     let title;
-    if (item.fromUser) {
-      if (
-        item.fromUser.id === currentuser.userID &&
-        item.participants.length > 0
-      ) {
-        title = item.participants[0].profileName;
-      } else {
-        title = item.fromUser.username;
-      }
-      let notME = item.participants.filter(
-        el => el.id.toString() !== currentuser.profileID
-      );
-      if (item.fromUser.id === currentuser.userID && notME.length > 0) {
-        item.profilePic = notME[0].profilePic;
-      }
+    console.log("OTLTL", item);
+    if (item.type === "alert" || item.type === "left") {
+      title = "Foxtail";
     } else {
-      title = item.fromProfile.profileName;
+      if (item.fromUser) {
+        if (
+          item.fromUser.id === currentuser.userID &&
+          item.participants.length > 0
+        ) {
+          title = item.participants[0].profileName;
+        } else {
+          title = item.fromUser.username;
+        }
+        let notME = item.participants.filter(
+          el => el.id.toString() !== currentuser.profileID
+        );
+        if (item.fromUser.id === currentuser.userID && notME.length > 0) {
+          item.profilePic = notME[0].profilePic;
+        }
+      } else {
+        title = item.fromProfile.profileName;
+      }
     }
 
     return (

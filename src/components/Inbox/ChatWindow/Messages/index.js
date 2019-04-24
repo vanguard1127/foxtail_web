@@ -341,6 +341,21 @@ class MessageList extends Component {
                 // Attach a ref to the last element for later measurement
                 props.ref = this.lastMessageRef;
               }
+              if (message.type === "alert" || message.type === "left") {
+                return (
+                  <div
+                    style={{
+                      margin: "0 -20px 0 -20px",
+                      background: "#ffffff70",
+                      padding: "20px 0",
+                      textAlign: "center"
+                    }}
+                    key={message.id}
+                  >
+                    {message.text}
+                  </div>
+                );
+              }
               return <Message key={message.id} {...props} dayjs={dayjs} />;
             })
             .reverse();

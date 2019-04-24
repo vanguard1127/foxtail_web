@@ -27,7 +27,7 @@ class MessageList extends Component {
     if (messages.length === 0) {
       return <div>No messages yet</div>;
     }
-
+    console.log("LOADING", loading);
     const messageElements = messages.map(message => {
       return (
         <Message
@@ -44,12 +44,13 @@ class MessageList extends Component {
         {messageElements}
         <div
           className="item"
-          style={{ padding: "0px", position: "absolute", bottom: "20%" }}
+          style={{ padding: "0px", position: "absolute", bottom: "0%" }}
         >
           <Waypoint
-            onEnter={({ previousPosition }) =>
+            onEnter={({ previousPosition, currentPosition }) =>
               handleEnd({
                 previousPosition,
+                currentPosition,
                 fetchMore,
                 cursor: messages && messages[messages.length - 1].createdAt
               })

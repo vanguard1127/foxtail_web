@@ -77,7 +77,9 @@ class PhotoUpload extends Component {
         labelMaxFileSizeExceeded={t("toolarge")}
         onupdatefiles={fileItems => {
           // Set current file objects to this.state
-          setPhotos(fileItems.map(fileItem => fileItem.file));
+          fileItems[0] &&
+            fileItems[0].file.name &&
+            setPhotos(fileItems.map(fileItem => fileItem.file));
         }}
         files={photos}
       />

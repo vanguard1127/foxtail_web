@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import ScrollUpButton from "react-scroll-up-button";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import EmptyScreen from "../common/EmptyScreen";
 import { Query, Mutation } from "react-apollo";
@@ -279,6 +280,7 @@ class ProfilesContainer extends PureComponent {
                       />
                     )}
 
+                    <ScrollUpButton />
                     <div className="col-md-12">
                       <div className="more-content-btn">
                         {this.state.loading ? (

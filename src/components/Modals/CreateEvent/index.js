@@ -49,12 +49,6 @@ class CreateEvent extends Component {
       this.state.type !== nextState.type ||
       this.state.errors !== nextState.errors
     ) {
-      console.log(
-        "NAMENEME",
-        this.state.image.name !== nextState.image.name,
-        this.state.image.name,
-        nextState.image.name
-      );
       return true;
     }
     return false;
@@ -101,7 +95,7 @@ class CreateEvent extends Component {
 
   setPhoto = value => {
     if (this.mounted) {
-      this.setState({ image: value });
+      this.setState({ image: value[0] });
     }
   };
 
@@ -178,7 +172,6 @@ class CreateEvent extends Component {
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
         await this.uploadToS3(file, signedRequest);
-        console.log("S3", key, file.name, data);
         if (this.mounted) {
           this.setState({ image: key });
         }

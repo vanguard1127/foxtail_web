@@ -11,10 +11,19 @@ class ChatContent extends Component {
     hasMoreItems: true
   };
 
-  handleEnd = ({ previousPosition, fetchMore, cursor }) => {
+  handleEnd = ({ previousPosition, currentPosition, fetchMore, cursor }) => {
     if (this.state.hasMoreItems) {
       if (previousPosition === Waypoint.below) {
+        console.log("LOAD");
         this.fetchData(fetchMore, cursor);
+      }
+      if (
+        previousPosition === undefined &&
+        currentPosition === Waypoint.inside
+      ) {
+        console.log("NONe");
+
+        this.setState({ hasMoreItems: false });
       }
     }
   };
