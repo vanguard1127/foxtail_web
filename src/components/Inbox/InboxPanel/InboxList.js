@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 import { Waypoint } from "react-waypoint";
 import TimeAgo from "../../../utils/TimeAgo";
 const preventContextMenu = e => {
@@ -7,19 +7,8 @@ const preventContextMenu = e => {
     "Right-click disabled: Saving images on Foxtail will result in your account being banned."
   );
 };
-class InboxList extends Component {
+class InboxList extends PureComponent {
   state = { chatID: null };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.state.chatID !== nextState.chatID ||
-      this.props.messages !== nextProps.messages
-    ) {
-      console.log("render");
-      return true;
-    }
-    return false;
-  }
 
   renderItem = (item, timeAgo) => {
     const { currentuser, readChat } = this.props;

@@ -109,9 +109,8 @@ class InboxPanel extends Component {
             unsubscribe = subscribeToMore({
               document: NEW_INBOX_SUB,
               updateQuery: (prev, { subscriptionData }) => {
-                console.log("in sub");
                 let { newInboxMsgSubscribe } = subscriptionData.data;
-                console.log(prev, subscriptionData.data);
+
                 if (!newInboxMsgSubscribe) {
                   return prev;
                 }
@@ -135,7 +134,7 @@ class InboxPanel extends Component {
                     prev.getInbox = [newInboxMsgSubscribe, ...prev.getInbox];
                   }
                 }
-                return prev;
+                return prev.getInbox;
               }
             });
           }
