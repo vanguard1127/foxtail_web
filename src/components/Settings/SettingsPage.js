@@ -123,6 +123,11 @@ class SettingsPage extends Component {
       this.state.vibrateNotify !== nextState.vibrateNotify ||
       this.state.visible !== nextState.visible
     ) {
+      console.log(
+        this.state.couplePartner !== nextState.couplePartner,
+        this.state.couplePartner,
+        nextState.couplePartner
+      );
       return true;
     }
 
@@ -373,17 +378,10 @@ class SettingsPage extends Component {
   toggleCouplesPopup = () => {
     this.setErrorHandler("Toggle Couple popup");
     if (this.mounted) {
-      this.setState(
-        {
-          showCouplePopup: !this.state.showCouplePopup,
-          flashCpl: false
-        },
-        () => {
-          if (!this.state.showCouplePopup) {
-            window.location.reload();
-          }
-        }
-      );
+      this.setState({
+        showCouplePopup: !this.state.showCouplePopup,
+        flashCpl: false
+      });
     }
   };
 
@@ -407,10 +405,10 @@ class SettingsPage extends Component {
     }
   };
 
-  setPartnerID = N => {
-    const { form } = this.props;
-    this.setErrorHandler("Set Partner N");
-    form.setFieldsValue({ couplePartner: N });
+  setPartnerName = N => {
+    console.log("TEST");
+    this.setErrorHandler("Set Partner");
+    this.setState({ couplePartner: N });
   };
 
   setS3PhotoParams = (name, type) => {
@@ -793,7 +791,7 @@ class SettingsPage extends Component {
                   }
                   username={couplePartner}
                   includeMsgs={includeMsgs}
-                  setPartnerID={this.setPartnerID}
+                  setPartnerName={this.setPartnerName}
                   ErrorHandler={ErrorHandler}
                 />
               )}

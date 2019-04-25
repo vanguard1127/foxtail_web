@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { withNamespaces } from "react-i18next";
 import { withRouter } from "react-router-dom";
-import { Query } from "react-apollo";
+import { Query, withApollo } from "react-apollo";
 import dayjs from "dayjs";
 import { SEARCH_EVENTS } from "../../queries";
 import { SEARCHEVENT_LIMIT } from "../../docs/consts";
@@ -18,6 +18,7 @@ import Tour from "./Tour";
 import EventsList from "./EventsList";
 import Spinner from "../common/Spinner";
 import validateLang from "../../utils/validateLang";
+import deleteFromCache from "../../utils/deleteFromCache";
 const lang = validateLang(localStorage.getItem("i18nextLng"));
 const locale = lang !== null ? lang : "en";
 require("dayjs/locale/" + locale);
@@ -48,6 +49,7 @@ class SearchEvents extends Component {
     document.title = "Search Events";
   }
   componentWillUnmount() {
+    this.clearSearchResults();
     this.mounted = false;
   }
 
@@ -133,11 +135,21 @@ class SearchEvents extends Component {
           skip: this.state.skip
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
+          console.log(
+            "LES",
+            previousResult,
+            "MORE",
+            fetchMoreResult,
+            "Skip",
+            this.state.skip
+          );
           if (
             !fetchMoreResult ||
             fetchMoreResult.searchEvents.length < SEARCHEVENT_LIMIT
           ) {
-            this.setState({ hasMore: false });
+            this.setState({
+              hasMore: false
+            });
           }
 
           return {
@@ -155,13 +167,17 @@ class SearchEvents extends Component {
     if (this.state.hasMore) {
       if (previousPosition === Waypoint.below) {
         if (this.mounted) {
-          this.setState(
-            state => ({ skip: this.state.skip + SEARCHEVENT_LIMIT }),
-            () => this.fetchData(fetchMore)
+          this.setState({ skip: this.state.skip + SEARCHEVENT_LIMIT }, () =>
+            this.fetchData(fetchMore)
           );
         }
       }
     }
+  };
+
+  clearSearchResults = () => {
+    const { cache } = this.props.client;
+    deleteFromCache({ cache, entry: "EventType" });
   };
 
   render() {
@@ -280,8 +296,10 @@ class SearchEvents extends Component {
   }
 }
 
-export default withRouter(
-  withAuth(session => session && session.currentuser)(
-    withLocation(withNamespaces("searchevents")(SearchEvents))
+export default withApollo(
+  withRouter(
+    withAuth(session => session && session.currentuser)(
+      withLocation(withNamespaces("searchevents")(SearchEvents))
+    )
   )
 );

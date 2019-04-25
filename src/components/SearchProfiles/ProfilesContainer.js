@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import ScrollUpButton from "react-scroll-up-button";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import EmptyScreen from "../common/EmptyScreen";
-import { Query, Mutation } from "react-apollo";
+import { Query, Mutation, withApollo } from "react-apollo";
 import MemberProfiles from "./MemberProfiles/";
 import { Waypoint } from "react-waypoint";
 import FeaturedProfiles from "./FeaturedProfiles/";
@@ -11,6 +11,7 @@ import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 import { SEARCHPROS_LIMIT } from "../../docs/consts";
+import deleteFromCache from "../../utils/deleteFromCache";
 
 class ProfilesContainer extends PureComponent {
   state = {
@@ -28,8 +29,14 @@ class ProfilesContainer extends PureComponent {
     this.mounted = true;
   }
   componentWillUnmount() {
+    this.clearSearchResults();
     this.mounted = false;
   }
+
+  clearSearchResults = () => {
+    const { cache } = this.props.client;
+    deleteFromCache({ cache, entry: "ProfileType" });
+  };
 
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
     this.props.ErrorHandler.setBreadcrumb("Match Dialog Toggled:");
@@ -342,4 +349,4 @@ class ProfilesContainer extends PureComponent {
   }
 }
 
-export default ProfilesContainer;
+export default withApollo(ProfilesContainer);

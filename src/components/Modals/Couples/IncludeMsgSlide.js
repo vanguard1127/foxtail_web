@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { LINK_PROFILE } from "../../../queries";
+import { LINK_PROFILE, GET_SETTINGS } from "../../../queries";
 import { Mutation } from "react-apollo";
 class IncludeMsgSlide extends PureComponent {
   render() {
@@ -38,6 +38,7 @@ class IncludeMsgSlide extends PureComponent {
         <div className="submit">
           <Mutation
             mutation={LINK_PROFILE}
+            refetchQueries={[{ query: GET_SETTINGS }]}
             variables={{
               code
             }}

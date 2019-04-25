@@ -39,6 +39,7 @@ class Couples extends Component {
     if (this.state.code !== "") {
       linkProfile()
         .then(({ data }) => {
+          this.props.setPartnerName(data.linkProfile.partnerName);
           close();
         })
         .catch(res => {
@@ -64,7 +65,7 @@ class Couples extends Component {
       .then(({ data }) => {
         //switch to new screen for do u want to edit?
         close();
-        this.props.setPartnerName("addpartner");
+        this.props.setPartnerName(null);
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);

@@ -3,7 +3,7 @@ import OwlCarousel from "react-owl-carousel";
 import $ from "jquery";
 import "lightgallery";
 import FeaturedCard from "./FeaturedCard";
-import compareArrays from "../../../utils/compareArrays";
+import arraysEqual from "../../../utils/arraysEqual";
 
 const configLightGallery = {
   selector: "a",
@@ -14,7 +14,7 @@ class FeaturedDiv extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.featuredProfiles !== nextProps.featuredProfiles ||
-      compareArrays(this.props.likedProfiles, nextProps.likedProfiles) ||
+      !arraysEqual(this.props.likedProfiles, nextProps.likedProfiles) ||
       this.props.msgdProfiles !== nextProps.msgdProfiles
     ) {
       return true;
@@ -83,12 +83,6 @@ class FeaturedDiv extends Component {
                 }}
               >
                 {featuredProfiles.map(profile => {
-                  console.log(
-                    "LIKED INR END",
-                    likedProfiles.includes(profile.id),
-                    likedProfiles,
-                    profile.id
-                  );
                   return (
                     <FeaturedCard
                       key={Math.random()}

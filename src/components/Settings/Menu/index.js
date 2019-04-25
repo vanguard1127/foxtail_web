@@ -2,7 +2,10 @@ import React, { Component } from "react";
 
 class Menu extends Component {
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.flashCpl !== nextProps.flashCpl) {
+    if (
+      this.props.flashCpl !== nextProps.flashCpl ||
+      this.props.couplePartner !== nextProps.couplePartner
+    ) {
       return true;
     }
     return false;

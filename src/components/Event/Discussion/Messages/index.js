@@ -25,9 +25,13 @@ class MessageList extends Component {
     } = this.props;
 
     if (messages.length === 0) {
-      return <div>No messages yet</div>;
+      return (
+        <div className="item" style={{ textAlign: "center" }}>
+          No comments yet.
+        </div>
+      );
     }
-    console.log("LOADING", loading);
+
     const messageElements = messages.map(message => {
       return (
         <Message

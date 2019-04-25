@@ -11,18 +11,20 @@ class ChatContent extends Component {
     hasMoreItems: true
   };
 
+  componentWillUnmount() {
+    console.log("unsub");
+    unsubscribe();
+  }
+
   handleEnd = ({ previousPosition, currentPosition, fetchMore, cursor }) => {
     if (this.state.hasMoreItems) {
       if (previousPosition === Waypoint.below) {
-        console.log("LOAD");
         this.fetchData(fetchMore, cursor);
       }
       if (
         previousPosition === undefined &&
         currentPosition === Waypoint.inside
       ) {
-        console.log("NONe");
-
         this.setState({ hasMoreItems: false });
       }
     }
@@ -129,32 +131,6 @@ class ChatContent extends Component {
               ref={this.Messages}
               history={history}
               messages={messages}
-              subscribe={() =>
-                subscribeToMore({
-                  document: NEW_MESSAGE_SUB,
-                  variables: {
-                    chatID: chatID
-                  },
-                  updateQuery: (prev, { subscriptionData }) => {
-                    const { newMessageSubscribe } = subscriptionData.data;
-                    if (!newMessageSubscribe) {
-                      return prev;
-                    }
-                    if (prev.getComments) {
-                      prev.getComments.messages = [
-                        newMessageSubscribe,
-                        ...prev.getComments.messages
-                      ];
-                    } else {
-                      prev.getComments = {
-                        messages: [newMessageSubscribe],
-                        __typename: "ChatType"
-                      };
-                    }
-                    return prev.getComments ? prev.getComments : { data: prev };
-                  }
-                })
-              }
               handleEnd={this.handleEnd}
               fetchMore={fetchMore}
               limit={limit}
