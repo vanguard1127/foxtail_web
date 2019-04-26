@@ -15,7 +15,6 @@ import {
   GET_COUNTS
 } from "../../queries";
 import { Query, Mutation, withApollo } from "react-apollo";
-let unsubscribe = null;
 
 const intialState = {
   read: null,
@@ -29,6 +28,7 @@ const intialState = {
 };
 
 class NoticesItem extends Component {
+  unsubscribe = null;
   state = {
     ...intialState
   };
@@ -271,8 +271,8 @@ class NoticesItem extends Component {
                   return <div>{t("nonots")} :)</div>;
                 }
 
-                if (!unsubscribe) {
-                  unsubscribe = subscribeToMore({
+                if (!this.unsubscribe) {
+                  this.unsubscribe = subscribeToMore({
                     document: NEW_NOTICE_SUB,
                     updateQuery: (prev, { subscriptionData }) => {
                       const { newNoticeSubscribe } = subscriptionData.data;

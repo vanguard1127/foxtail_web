@@ -7,8 +7,8 @@ import MyAccountItem from "./MyAccountItem";
 import * as ErrorHandler from "../common/ErrorHandler";
 var slapAudio = new Audio(require("../../docs/slap.wav"));
 
-let unsubscribe = null;
 class UserToolbar extends Component {
+  unsubscribe = null;
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.currentuser !== nextProps.currentuser ||
@@ -37,8 +37,8 @@ class UserToolbar extends Component {
             console.error(error.message);
           }
           let { msgsCount, noticesCount } = data.getCounts;
-          if (!unsubscribe) {
-            unsubscribe = [
+          if (!this.unsubscribe) {
+            this.unsubscribe = [
               subscribeToMore({
                 document: NEW_NOTICE_SUB,
                 updateQuery: (prev, { subscriptionData }) => {

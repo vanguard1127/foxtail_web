@@ -5,8 +5,9 @@ import { GET_MESSAGES, NEW_MESSAGE_SUB } from "../../../queries";
 import { Waypoint } from "react-waypoint";
 import Spinner from "../../common/Spinner";
 import Messages from "./Messages/";
-let unsubscribe = null;
+
 class ChatContent extends PureComponent {
+  unsubscribe = null;
   state = { hasMore: true };
   handleEndScrollUp = ({ previousPosition, fetchMore, cursor }) => {
     if (this.state.hasMore) {
@@ -76,8 +77,8 @@ class ChatContent extends PureComponent {
               );
             }
 
-            if (!unsubscribe) {
-              unsubscribe = subscribeToMore({
+            if (!this.unsubscribe) {
+              this.unsubscribe = subscribeToMore({
                 document: NEW_MESSAGE_SUB,
                 variables: {
                   chatID: chatID

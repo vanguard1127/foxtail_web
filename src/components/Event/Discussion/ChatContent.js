@@ -1,19 +1,18 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
 import { GET_COMMENTS, NEW_MESSAGE_SUB } from "../../../queries";
 import { Waypoint } from "react-waypoint";
 import Messages from "./Messages/";
-let unsubscribe = null;
 
-class ChatContent extends Component {
+class ChatContent extends PureComponent {
+  unsubscribe = null;
   state = {
     cursor: null,
     hasMoreItems: true
   };
 
   componentWillUnmount() {
-    console.log("unsub");
-    unsubscribe();
+    this.unsubscribe();
   }
 
   handleEnd = ({ previousPosition, currentPosition, fetchMore, cursor }) => {
@@ -92,8 +91,8 @@ class ChatContent extends Component {
             messages = data.getComments.messages || [];
           }
 
-          if (!unsubscribe) {
-            unsubscribe = subscribeToMore({
+          if (!this.unsubscribe) {
+            this.unsubscribe = subscribeToMore({
               document: NEW_MESSAGE_SUB,
               variables: {
                 chatID: chatID

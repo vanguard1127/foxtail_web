@@ -135,14 +135,6 @@ class SearchEvents extends Component {
           skip: this.state.skip
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
-          console.log(
-            "LES",
-            previousResult,
-            "MORE",
-            fetchMoreResult,
-            "Skip",
-            this.state.skip
-          );
           if (
             !fetchMoreResult ||
             fetchMoreResult.searchEvents.length < SEARCHEVENT_LIMIT

@@ -6,8 +6,9 @@ import Spinner from "../../common/Spinner";
 import InboxList from "./InboxList";
 import { Waypoint } from "react-waypoint";
 import { INBOXLIST_LIMIT } from "../../../docs/consts";
-let unsubscribe = null;
+
 class InboxPanel extends Component {
+  unsubscribe = null;
   state = { searchTerm: "", skip: 0 };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -105,8 +106,8 @@ class InboxPanel extends Component {
             );
           }
 
-          if (!unsubscribe) {
-            unsubscribe = subscribeToMore({
+          if (!this.unsubscribe) {
+            this.unsubscribe = subscribeToMore({
               document: NEW_INBOX_SUB,
               updateQuery: (prev, { subscriptionData }) => {
                 let { newInboxMsgSubscribe } = subscriptionData.data;
