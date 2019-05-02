@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import DesiresSelector from "../../Modals/Desires/Selector";
+import Dropdown from "../../common/Dropdown";
 import BioTextBox from "./BioTextBox";
 
 class MyProfile extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.desires !== nextProps.desires ||
+      this.props.sexuality !== nextProps.sexuality ||
+      this.props.lang !== nextProps.lang ||
       this.props.about !== nextProps.about ||
       this.props.togglePopup !== nextProps.togglePopup ||
       this.props.errors.about !== nextProps.errors.about ||
@@ -21,6 +24,8 @@ class MyProfile extends Component {
       about,
       setValue,
       togglePopup,
+      lang,
+      sexuality,
       t,
       errors,
       ErrorBoundary
@@ -55,6 +60,22 @@ class MyProfile extends Component {
               {errors.about && (
                 <label className="errorLbl">{errors.about}</label>
               )}
+            </div>
+          </div>
+          <div className="col-md-12">
+            <div className="item">
+              <Dropdown
+                value={sexuality}
+                type={"sexuality"}
+                onChange={async e => {
+                  await setValue({
+                    name: "sexuality",
+                    value: e.value
+                  });
+                }}
+                placeholder={"Sexuality:"}
+                lang={lang}
+              />
             </div>
           </div>
         </div>

@@ -158,14 +158,14 @@ class NoticesList extends Component {
         >
           <span className="avatar">
             <img
-              src={notif.fromProfile.profilePic}
+              src={notif.fromProfile ? notif.fromProfile.profilePic : ""}
               alt=""
               onContextMenu={preventContextMenu}
             />
           </span>
           <div>
             <span className="text">
-              <b> {notif.fromProfile.profileName} </b>
+              <b> {notif.fromProfile ? notif.fromProfile.profileName : ""} </b>
               {t(notif.text)}
             </span>
             <span className="when">

@@ -1,4 +1,5 @@
 export default [
+  { img: "", tinyImg: "", message: "", btnText: "", link: "" },
   {
     img: "/assets/img/infoBGs/black.jpg",
     tinyImg: "/assets/img/infoBGs/black-min.jpg",

@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
-import { UPDATE_SETTINGS, REMOVE_LOCLOCK } from "../../queries";
+import { UPDATE_SETTINGS } from "../../queries";
 import Dropdown from "../common/Dropdown";
 import AddressSearch from "../common/AddressSearch";
 import SetLocationModal from "../Modals/SetLocation";
@@ -172,105 +172,95 @@ class SearchCriteria extends PureComponent {
 
     return (
       <>
-        <Mutation mutation={REMOVE_LOCLOCK}>
-          {removeLocation => {
+        <Mutation
+          mutation={UPDATE_SETTINGS}
+          variables={{
+            distance: this.state.distance,
+            distanceMetric: this.state.distanceMetric,
+            ageRange: this.state.ageRange,
+            interestedIn: this.state.interestedIn,
+            city: this.state.city,
+            country: this.state.country,
+            lat: this.state.lat,
+            long: this.state.long
+          }}
+        >
+          {updateSettings => {
             return (
-              <Mutation
-                mutation={UPDATE_SETTINGS}
-                variables={{
-                  distance: this.state.distance,
-                  distanceMetric: this.state.distanceMetric,
-                  ageRange: this.state.ageRange,
-                  interestedIn: this.state.interestedIn,
-                  city: this.state.city,
-                  country: this.state.country,
-                  lat: this.state.lat,
-                  long: this.state.long
-                }}
-              >
-                {updateSettings => {
-                  return (
-                    <section className="meet-filter">
-                      <div className="container">
-                        <div className="col-md-12">
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className="item">
-                                <AddressSearch
-                                  style={{ width: 150 }}
-                                  setLocationValues={({
-                                    lat,
-                                    long,
-                                    address
-                                  }) => {
-                                    this.setLocationValues({
-                                      lat,
-                                      long,
-                                      city: address,
-                                      updateSettings
-                                    });
-                                  }}
-                                  address={city}
-                                  type={"(cities)"}
-                                  placeholder={t("common:setloc") + "..."}
-                                  handleRemoveLocLock={() =>
-                                    this.handleRemoveLocLock(updateSettings)
-                                  }
-                                  isBlackMember={isBlackMember}
-                                />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="item">
-                                <Dropdown
-                                  type={"interestedIn"}
-                                  onChange={el =>
-                                    this.setValue({
-                                      name: "interestedIn",
-                                      value: el.map(e => e.value),
-                                      updateSettings
-                                    })
-                                  }
-                                  value={interestedIn}
-                                  placeholder={t("common:Interested") + ":"}
-                                  lang={lang}
-                                />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <DistanceSlider
-                                value={distance}
-                                setValue={el =>
-                                  this.setValue({
-                                    name: "distance",
-                                    value: el,
-                                    updateSettings
-                                  })
-                                }
-                                t={t}
-                                metric={distanceMetric}
-                              />
-                            </div>
-                            <div className="col-md-6">
-                              <AgeRange
-                                value={ageRange}
-                                setValue={el =>
-                                  this.setValue({
-                                    name: "ageRange",
-                                    value: el,
-                                    updateSettings
-                                  })
-                                }
-                                t={t}
-                              />
-                            </div>
-                          </div>
+              <section className="meet-filter">
+                <div className="container">
+                  <div className="col-md-12">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <div className="item">
+                          <AddressSearch
+                            style={{ width: 150 }}
+                            setLocationValues={({ lat, long, address }) => {
+                              this.setLocationValues({
+                                lat,
+                                long,
+                                city: address,
+                                updateSettings
+                              });
+                            }}
+                            address={city}
+                            type={"(cities)"}
+                            placeholder={t("common:setloc") + "..."}
+                            handleRemoveLocLock={() =>
+                              this.handleRemoveLocLock(updateSettings)
+                            }
+                            isBlackMember={isBlackMember}
+                          />
                         </div>
                       </div>
-                    </section>
-                  );
-                }}
-              </Mutation>
+                      <div className="col-md-6">
+                        <div className="item">
+                          <Dropdown
+                            type={"interestedIn"}
+                            onChange={el =>
+                              this.setValue({
+                                name: "interestedIn",
+                                value: el.map(e => e.value),
+                                updateSettings
+                              })
+                            }
+                            value={interestedIn}
+                            placeholder={t("common:Interested") + ":"}
+                            lang={lang}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <DistanceSlider
+                          value={distance}
+                          setValue={el =>
+                            this.setValue({
+                              name: "distance",
+                              value: el,
+                              updateSettings
+                            })
+                          }
+                          t={t}
+                          metric={distanceMetric}
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <AgeRange
+                          value={ageRange}
+                          setValue={el =>
+                            this.setValue({
+                              name: "ageRange",
+                              value: el,
+                              updateSettings
+                            })
+                          }
+                          t={t}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
             );
           }}
         </Mutation>

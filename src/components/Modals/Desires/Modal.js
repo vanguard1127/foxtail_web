@@ -82,9 +82,7 @@ class Desires extends Component {
               </div>
             </div>
 
-            <div style={{ textAlign: "center", margin: "5px" }}>
-              Scroll down for more
-            </div>
+            <div className="scroll-more-down">Scroll down for more</div>
           </ErrorBoundary>
         </div>
       </section>

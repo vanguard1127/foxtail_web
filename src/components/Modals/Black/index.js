@@ -10,7 +10,6 @@ class Black extends PureComponent {
     const { close, t, ErrorHandler, notifyClient } = this.props;
     return (
       <Modal
-        header={t("black")}
         close={close}
         description="Get more of what you love ❤️️"
         okSpan={
@@ -24,20 +23,15 @@ class Black extends PureComponent {
       >
         {" "}
         <ErrorHandler.ErrorBoundary>
-          <img
-            alt="upload"
-            style={{ width: "100%" }}
-            src={require("../../../images/girl2.jpg")}
-          />
           <>
-            <h3>{t("blkinclude")}:</h3>
-            <ul>
-              <li>{t("direct")}</li>
-              <li>{t("changeloc")}</li>
-              <li>{t("onlyliked")}</li>
-              <li>{t("hidestat")}</li>
-              <li>{t("higher") + "!"}</li>
-              {/* <li>{t("phoneblock")}</li> */}
+            <div className="blackmember-cover" />
+            <h3 className="black-head">BLACK Member privledges include:</h3>
+            <ul className="black-member">
+              <li>Direct Chat to Users (no match needed)</li>
+              <li>Change Location of your profile</li>
+              <li>Only Be Seen By Members You Like</li>
+              <li>Hide your online status</li>
+              <li>Show higher in results!</li>
             </ul>
           </>
         </ErrorHandler.ErrorBoundary>

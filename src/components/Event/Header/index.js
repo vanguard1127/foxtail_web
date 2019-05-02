@@ -36,11 +36,7 @@ class EventHeader extends Component {
         <div className="header">
           <EventDate time={startTime} dayjs={dayjs} />
           <div className="info">
-            <EventTitles
-              eventname={eventname}
-              tagline={tagline}
-              showBlockModal={showBlockModal}
-            />
+            <EventTitles eventname={eventname} tagline={tagline} />
             <EventCreator
               ownerProfile={ownerProfile}
               createdAt={createdAt}
@@ -48,7 +44,12 @@ class EventHeader extends Component {
               t={t}
               dayjs={dayjs}
             />
-            <EventShare id={id} t={t} showShareModal={showShareModal} />
+            <EventShare
+              id={id}
+              t={t}
+              showShareModal={showShareModal}
+              showBlockModal={showBlockModal}
+            />
           </div>
         </div>
       </ErrorBoundary>

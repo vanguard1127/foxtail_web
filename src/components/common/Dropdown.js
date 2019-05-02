@@ -41,6 +41,7 @@ class Dropdown extends Component {
     if (availableLangs.indexOf(lang) < 0) {
       lang = "en";
     }
+
     import("../../docs/options/" + lang)
       .then(els => {
         let ops;
@@ -48,6 +49,8 @@ class Dropdown extends Component {
           ops = els.genderOptions;
         } else if (this.props.type === "lang") {
           ops = els.langOptions;
+        } else if (this.props.type === "sexuality") {
+          ops = els.sexualityOptions;
         } else {
           ops = els.sexOptions;
         }

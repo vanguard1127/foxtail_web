@@ -47,6 +47,7 @@ class SettingsPage extends Component {
     desires: [],
     username: undefined,
     email: undefined,
+    sexuality: "",
     gender: undefined,
     phone: undefined,
     showDesiresPopup: false,
@@ -91,6 +92,7 @@ class SettingsPage extends Component {
       this.state.filename !== nextState.filename ||
       this.state.filetype !== nextState.filetype ||
       this.state.flashCpl !== nextState.flashCpl ||
+      this.state.sexuality !== nextState.sexuality ||
       this.state.gender !== nextState.gender ||
       this.state.includeMsgs !== nextState.includeMsgs ||
       this.state.interestedIn !== nextState.interestedIn ||
@@ -123,11 +125,6 @@ class SettingsPage extends Component {
       this.state.vibrateNotify !== nextState.vibrateNotify ||
       this.state.visible !== nextState.visible
     ) {
-      console.log(
-        this.state.couplePartner !== nextState.couplePartner,
-        this.state.couplePartner,
-        nextState.couplePartner
-      );
       return true;
     }
 
@@ -405,12 +402,6 @@ class SettingsPage extends Component {
     }
   };
 
-  setPartnerName = N => {
-    console.log("TEST");
-    this.setErrorHandler("Set Partner");
-    this.setState({ couplePartner: N });
-  };
-
   setS3PhotoParams = (name, type) => {
     if (this.mounted) {
       this.setState({
@@ -500,7 +491,8 @@ class SettingsPage extends Component {
       msg,
       btnText,
       title,
-      okAction
+      okAction,
+      sexuality
     } = this.state;
 
     const {
@@ -561,7 +553,8 @@ class SettingsPage extends Component {
           username,
           gender,
           phone,
-          profilePic
+          profilePic,
+          sexuality
         }}
       >
         {(updateSettings, { loading }) => {
@@ -685,6 +678,8 @@ class SettingsPage extends Component {
                             t={t}
                             errors={errors}
                             ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            lang={lang}
+                            sexuality={sexuality}
                           />
                           <AppSettings
                             setValue={({ name, value }) =>
@@ -791,7 +786,6 @@ class SettingsPage extends Component {
                   }
                   username={couplePartner}
                   includeMsgs={includeMsgs}
-                  setPartnerName={this.setPartnerName}
                   ErrorHandler={ErrorHandler}
                 />
               )}

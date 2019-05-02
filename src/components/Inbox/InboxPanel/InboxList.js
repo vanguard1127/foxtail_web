@@ -14,7 +14,6 @@ class InboxList extends PureComponent {
     const { currentuser, readChat } = this.props;
 
     let title;
-    console.log("OTLTL", item);
     if (item.type === "alert" || item.type === "left") {
       title = "Foxtail";
     } else {
@@ -69,6 +68,9 @@ class InboxList extends PureComponent {
   };
 
   renderMsgList = ({ messages }) => {
+    if (messages.length === 0) {
+      return <span className="no-message">No messages found.</span>;
+    }
     return (
       <Fragment>
         {messages.map((message, i) => {

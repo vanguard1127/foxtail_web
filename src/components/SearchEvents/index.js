@@ -6,7 +6,6 @@ import { Query, withApollo } from "react-apollo";
 import dayjs from "dayjs";
 import { SEARCH_EVENTS } from "../../queries";
 import { SEARCHEVENT_LIMIT } from "../../docs/consts";
-import EmptyScreen from "../common/EmptyScreen";
 import { Waypoint } from "react-waypoint";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
@@ -254,7 +253,23 @@ class SearchEvents extends Component {
                     !data.searchEvents ||
                     data.searchEvents.length === 0
                   ) {
-                    return <EmptyScreen message={t("noeventavailable")} />;
+                    return (
+                      <section className="not-found">
+                        <div className="container">
+                          <div className="col-md-12">
+                            <div className="icon">
+                              <i className="nico event" />
+                            </div>
+                            <span className="head">No Events Available</span>
+                            <span className="description">
+                              It is a long established fact that a reader will
+                              be distracted by the readable content of a page
+                              when looking at its layout.
+                            </span>
+                          </div>
+                        </div>
+                      </section>
+                    );
                   }
 
                   return (

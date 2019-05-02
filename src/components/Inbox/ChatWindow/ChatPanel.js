@@ -12,9 +12,11 @@ class ChatPanel extends PureComponent {
     this.mounted = true;
     this.textInput.focus();
   }
+
   componentWillUnmount() {
     this.mounted = false;
   }
+
   submitMessage(e, sendMessage) {
     this.props.ErrorHandler.setBreadcrumb("Send message (chat)");
     e.preventDefault();
@@ -85,24 +87,6 @@ class ChatPanel extends PureComponent {
         getMessages
       }
     });
-
-    // let { getInbox } = cache.readQuery({
-    //   query: GET_INBOX,
-    //   variables: { skip: 0, limit: INBOXLIST_LIMIT }
-    // });
-
-    // getInbox[getInbox.findIndex(el => el.chatID === chatID)].text = text;
-    // getInbox[
-    //   getInbox.findIndex(el => el.chatID === chatID)
-    // ].createdAt = Date.now();
-
-    // cache.writeQuery({
-    //   query: GET_INBOX,
-    //   variables: { skip: 0, limit: INBOXLIST_LIMIT },
-    //   data: {
-    //     ...getInbox
-    //   }
-    // });
   };
 
   render() {

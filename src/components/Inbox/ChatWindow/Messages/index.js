@@ -216,9 +216,6 @@ class MessageList extends Component {
   }
   fetchMore = () => {
     const { chatID, limit, messages, fetchMore } = this.props;
-    // Doesn't repeat because frist we are setting loading =  true
-    // And on updateQuary, when the fetch it done. We set loading = false
-    console.log("Can i fetch?", this.state.hasMoreItems);
     // Wait for restoreScroll to take place, then do the call.
 
     // If not,things are going to play over each other.
@@ -303,7 +300,6 @@ class MessageList extends Component {
     }
   }
   render() {
-    console.log("List Message");
     const {
       messages,
       hasMoreItems,
@@ -403,7 +399,6 @@ class MessageList extends Component {
           >
             <Waypoint
               onEnter={({ previousPosition }) => {
-                console.log(previousPosition, "previous in messa");
                 if (messages.length > 0) {
                   handleEndScrollUp({
                     previousPosition,

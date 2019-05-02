@@ -148,3 +148,12 @@ export const langOptions = [
   { label: "French", value: "fr" },
   { label: "German", value: "de" }
 ];
+
+export const sexualityOptions = [
+  { label: "Heterosexual", value: "he" },
+  { label: "Homosexual", value: "ho" },
+  { label: "Bisexual", value: "bi" },
+  { label: "Pansexual ", value: "pa" },
+  { label: "Queer", value: "qu" },
+  { label: "Asexual", value: "as" }
+];

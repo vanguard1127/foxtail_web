@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import ScrollUpButton from "react-scroll-up-button";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
-import EmptyScreen from "../common/EmptyScreen";
 import { Query, Mutation, withApollo } from "react-apollo";
 import MemberProfiles from "./MemberProfiles/";
 import { Waypoint } from "react-waypoint";
@@ -211,7 +210,25 @@ class ProfilesContainer extends PureComponent {
         {({ data, loading, fetchMore, error }) => {
           if (error) {
             if (error.message.indexOf("invisible") > -1) {
-              return <div>{t("novis")}</div>;
+              return (
+                <section className="not-found">
+                  <div className="container">
+                    <div className="col-md-12">
+                      <div className="icon">
+                        <i className="nico blackmember" />
+                      </div>
+                      <span className="head">
+                        You cannot see user profiles while invisible unless
+                        you're a Black Member
+                      </span>
+                      <span className="description">
+                        Please set your profile to visible under settings to see
+                        members.
+                      </span>
+                    </div>
+                  </div>
+                </section>
+              );
             } else {
               return (
                 <ErrorHandler.report
@@ -224,15 +241,33 @@ class ProfilesContainer extends PureComponent {
 
           if (loading) {
             return <Spinner page="searchProfiles" title={t("allmems")} />;
-          } else if (data === undefined || data.searchProfiles === null) {
-            return <EmptyScreen message={t("nomems")} />;
           } else if (
+            data === undefined ||
+            data.searchProfiles === null ||
             (data &&
               data.searchProfiles.profiles.length === 0 &&
               data.searchProfiles.featuredProfiles.length === 0) ||
             !data
           ) {
-            return <EmptyScreen message={t("nomems")} />;
+            return (
+              <section className="not-found">
+                <div className="container">
+                  <div className="col-md-12">
+                    <div className="icon">
+                      <i className="nico magnifier" />
+                    </div>
+                    <span className="head">
+                      No members near you. Try again later.
+                    </span>
+                    <span className="description">
+                      It is a long established fact that a reader will be
+                      distracted by the readable content of a page when looking
+                      at its layout.
+                    </span>
+                  </div>
+                </div>
+              </section>
+            );
           }
 
           const result = data.searchProfiles;

@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import ChatHeader from "./ChatHeader";
-import AdManager from "../../common/AdManager";
+import AdManager from "../../common/Ad";
 import ChatContent from "./ChatContent";
 import ChatPanel from "./ChatPanel";
 import { INBOXMSG_LIMIT } from "../../../docs/consts";

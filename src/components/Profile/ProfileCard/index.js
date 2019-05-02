@@ -21,11 +21,26 @@ class ProfileCard extends Component {
       liked,
       msgd
     } = this.props;
-    const { profilePic, id } = profile;
+    const { profilePic, id, users } = profile;
+
+    let badge = "";
+    if (
+      users.every(
+        user =>
+          user.verifications.photo === true && user.verifications.std === true
+      )
+    ) {
+      badge = "full-verified";
+    } else if (users.every(user => user.verifications.photo)) {
+      badge = "std-verified";
+    } else if (users.every(user => user.verifications.std === true)) {
+      badge = "profile-verified";
+    }
+
     return (
       <ErrorBoundary>
         <div className="avatar-content">
-          <div className="avatar-card">
+          <div className={"avatar-card " + badge}>
             <ProfilePic profilePic={profilePic} />
             <ProfileActions
               profileID={id}

@@ -24,7 +24,11 @@ class Signup extends PureComponent {
     this.props.ErrorHandler.setBreadcrumb("Signup loaded");
 
     if (localStorage.getItem("token") !== null) {
-      if (this.props.session && this.props.session.currentuser.active) {
+      if (
+        this.props.session &&
+        this.props.session.currentuser &&
+        this.props.session.currentuser.active
+      ) {
         this.props.history.push("/members");
       }
     }

@@ -170,12 +170,6 @@ export const POST_COMMENT = gql`
   }
 `;
 
-export const REMOVE_LOCLOCK = gql`
-  mutation {
-    removeLocation
-  }
-`;
-
 export const DELETE_USER = gql`
   mutation {
     deleteUser
@@ -212,6 +206,7 @@ export const UPDATE_SETTINGS = gql`
     $vibrateNotify: Boolean
     $desires: [String]
     $about: String
+    $sexuality: String
     $publicPhotoList: [String]
     $privatePhotoList: [String]
     $includeMsgs: Boolean
@@ -231,6 +226,7 @@ export const UPDATE_SETTINGS = gql`
       phone: $phone
       username: $username
       gender: $gender
+      sexuality: $sexuality
       visible: $visible
       newMsgNotify: $newMsgNotify
       emailNotify: $emailNotify
@@ -874,6 +870,7 @@ export const GET_SETTINGS = gql`
       }
       about
       desires
+      sexuality
     }
   }
 `;
@@ -903,6 +900,7 @@ export const GET_PROFILE = gql`
         username
         dob
         gender
+        sexuality
         verifications {
           stdVer {
             active

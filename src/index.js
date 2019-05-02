@@ -48,10 +48,6 @@ Sentry.init({
 //let { httpurl, HTTPSurl, wsurl } = env.production;
 let { httpurl, HTTPSurl, wsurl } = env.local;
 
-// if (process.env.NODE_ENV !== "production") {
-//   var axe = require("react-axe");
-//   axe(React, ReactDOM, 1000);
-// }
 const wsLink = new WebSocketLink({
   uri: wsurl,
   options: {
@@ -118,7 +114,12 @@ const splitlink = split(
   httpLinkWithMiddleware
 );
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  dataIdFromObject: o => {
+    if (o._id) return { [o.__typename]: o._id };
+    else return null;
+  }
+});
 
 const stateLink = withClientState({
   cache

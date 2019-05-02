@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Select from "../common/Select";
 import Dropdown from "../common/Dropdown";
 import i18n from "../../i18n";
 
@@ -53,7 +52,7 @@ class AppSettings extends Component {
                     });
                     setLang(e.value);
                   }}
-                  placeholder={"Language"}
+                  placeholder={"Language:"}
                   lang={lang}
                 />
               </div>

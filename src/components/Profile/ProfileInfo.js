@@ -10,27 +10,25 @@ class ProfileInfo extends Component {
       <ErrorBoundary>
         <div className={online ? "user-info online" : "user-info"}>
           <div>
-            <span> {users[0].username + ", "} </span>
+            <span> {users[0].username},&nbsp; </span>
             <span>
               {" "}
               {dayjs()
                 .locale(localStorage.getItem("i18nextLng"))
                 .diff(users[0].dob, "years")}
-              ,
             </span>
-            <span>{t("Bisexual")}</span>
+            {users[0].sexuality && <span>,&nbsp;{users[0].sexuality}</span>}
           </div>
           {users[1] && (
             <div>
-              <span>{users[1].username},</span>
+              <span>{users[1].username},&nbsp;</span>
               <span>
                 {" "}
                 {dayjs()
                   .locale(localStorage.getItem("i18nextLng"))
                   .diff(users[1].dob, "years")}
-                ,
               </span>
-              <span>{t("Bisexual")}</span>
+              {users[1].sexuality && <span>,&nbsp;{users[1].sexuality}</span>}
             </div>
           )}
         </div>

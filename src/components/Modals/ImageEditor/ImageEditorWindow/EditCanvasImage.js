@@ -11,8 +11,8 @@ import DeleteIcon from "@material-ui/icons/DeleteForever";
 class EditCanvasImage extends PureComponent {
   constructor(props) {
     super(props);
-    let width = 400;
-    let height = 400;
+    let width = window.screen.width > 375 ? 400 : 200;
+    let height = window.screen.height > 668 ? 400 : 200;
     const initialCrop = {
       x: [0, width],
       y: [0, height]
@@ -312,33 +312,12 @@ class EditCanvasImage extends PureComponent {
             <ImageIcon style={{ fontSize: "30px", color: "grey" }} />
           </div>
 
-          <span
-            style={{ marginBottom: 5, display: "flex" }}
-            onClick={this.rotate}
-          >
+          <span className="avatar-style-rotate" onClick={this.rotate}>
             <RotateIcon style={{ fontSize: "30px", color: "grey" }} />
           </span>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "10px"
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              height: 70,
-              width: width,
-              border: "1px solid silver",
-              marginTop: 5,
-              overflowY: "auto",
-              flex: "4"
-            }}
-          >
+        <div className="avatar-style-vectors">
+          <div className="content">
             <Sticker id="1" name="stc1" src="test_mask_1.png" />
             <Sticker id="2" name="stc2" src="test_mask_2.png" />
           </div>

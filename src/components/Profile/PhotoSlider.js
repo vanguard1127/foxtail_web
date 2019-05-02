@@ -108,7 +108,7 @@ class PhotoSlider extends Component {
                       src={
                         photo.url !== "private"
                           ? photo.url
-                          : "../assets/img/events/1001@2x.png"
+                          : "../assets/img/no-picture.png"
                       }
                       alt=""
                     />
