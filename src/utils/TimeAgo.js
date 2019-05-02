@@ -1,17 +1,17 @@
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 function TimeAgo(updatedAt) {
-  if (dayjs(updatedAt).isAfter(dayjs().subtract(1, 'week'))) {
+  if (dayjs(updatedAt).isAfter(dayjs().subtract(1, "week"))) {
     return dayjs(updatedAt)
-      .locale(localStorage.getItem('i18nextLng'))
+      .locale(localStorage.getItem("i18nextLng"))
       .fromNow()
       .toString();
   } else {
     return dayjs(updatedAt)
-      .locale(localStorage.getItem('i18nextLng'))
-      .format('MMM Do')
+      .locale(localStorage.getItem("i18nextLng"))
+      .format("MMM Do")
       .toString();
   }
 }

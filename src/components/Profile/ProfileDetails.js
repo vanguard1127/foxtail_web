@@ -32,11 +32,12 @@ class ProfileDetails extends Component {
         <div className="data-info">
           <ul>
             <li>
-              <span className="head">{t("common:Gender")}:</span>
+              <span className="head">
+                {users[1] ? "Genders" : t("common:Gender")}:
+              </span>
               <span className="data">
-                {genderOptions.find(el => el.value === users[0].gender).label}
-                {users[1] &&
-                  genderOptions.find(el => el.value === users[1].gender).label}
+                <span className={"sex " + users[0].gender} />
+                {users[1] && <span className={"sex " + users[1].gender} />}
               </span>
             </li>
             <li>
@@ -64,7 +65,7 @@ class ProfileDetails extends Component {
               <span className="head">{t("lstlogin")}:</span>
               <span className="data">
                 {" "}
-                {!profile.showOnline
+                {profile.showOnline
                   ? profile.online
                     ? t("common:Online")
                     : TimeAgo(profile.updatedAt)

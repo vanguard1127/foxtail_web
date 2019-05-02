@@ -30,7 +30,12 @@ class Settings extends Component {
       }
     }
 
+    this.mounted = true;
     document.title = "My Account";
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {
@@ -58,6 +63,7 @@ class Settings extends Component {
               <Spinner message={t("common:Loading") + "..."} size="large" />
             );
           }
+
           if (error) {
             return (
               <ErrorHandler.report
@@ -88,19 +94,21 @@ class Settings extends Component {
                   </div>
                 </div>
               </section>{" "}
-              <SettingsPage
-                t={t}
-                settings={settings}
-                refetchUser={refetch}
-                isCouple={isCouple}
-                isInitial={isInitial}
-                showBlkModal={showBlkModal}
-                showCplModal={showCplModal}
-                ErrorHandler={ErrorHandler}
-                history={history}
-                currentuser={session.currentuser}
-                dayjs={dayjs}
-              />
+              {this.mounted && (
+                <SettingsPage
+                  t={t}
+                  settings={settings}
+                  refetchUser={refetch}
+                  isCouple={isCouple}
+                  isInitial={isInitial}
+                  showBlkModal={showBlkModal}
+                  showCplModal={showCplModal}
+                  ErrorHandler={ErrorHandler}
+                  history={history}
+                  currentuser={session.currentuser}
+                  dayjs={dayjs}
+                />
+              )}
             </Fragment>
           );
         }}
