@@ -42,7 +42,7 @@ class DirectMsg extends Component {
               this.props.close();
             }
           } else {
-            toast.error("Message not sent.");
+            toast.error(this.props.t("msgnotsent"));
           }
         })
         .catch(res => {
@@ -73,7 +73,7 @@ class DirectMsg extends Component {
             : t("common:sendamsg")
         }
         close={close}
-        description="Say something more than 'Hi'!"
+        description={t("common:sayhi")}
         okSpan={
           text !== "" ? (
             <Mutation

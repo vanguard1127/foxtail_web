@@ -1,7 +1,7 @@
 import React from "react";
 import ProgressiveImage from "react-progressive-image";
 
-const Ad = ({ ad: { message, img, tinyImg, btnText } }) => {
+const Ad = ({ ad: { message, img, tinyImg, btnText, title } }) => {
   if (message === "") {
     return (
       <section className="not-found">
@@ -26,7 +26,7 @@ const Ad = ({ ad: { message, img, tinyImg, btnText } }) => {
             </ProgressiveImage>{" "}
           </div>
           <div className="detail-con">
-            <span className="head">Ads Head</span>
+            <span className="head">{title}</span>
             <span className="description">{message}</span>
             <a href="#" className="button">
               {btnText}

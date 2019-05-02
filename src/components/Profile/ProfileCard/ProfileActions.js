@@ -25,7 +25,7 @@ class ProfileActions extends Component {
             />
           </>
         ) : (
-          <div className="btn send-msg">Message Sent!</div>
+          <div className="btn send-msg"> {t("common:msgsent")}</div>
         )}
       </div>
     );

@@ -31,7 +31,7 @@ class MyAccountMenu extends Component {
             {isCouple ? (
               <NavLink to="/settings">
                 {" "}
-                <li>Our Account </li>
+                <li>{t("ouracct")}</li>
               </NavLink>
             ) : (
               <NavLink to="/settings">

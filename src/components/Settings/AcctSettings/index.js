@@ -41,16 +41,16 @@ class AcctSettings extends Component {
       schema = yup.object().shape({
         text: yup
           .string()
-          .email("Invalid email address")
-          .required("Email is required!")
+          .email(t("invemail"))
+          .required(t("emailreq"))
       });
     } else if (setting === "username") {
       schema = yup.object().shape({
-        text: yup.string().required("Username is required!")
+        text: yup.string().required(t("unreq"))
       });
     } else if (setting === "gender") {
       schema = yup.object().shape({
-        text: yup.string().required("Gender is required!")
+        text: yup.string().required(t("genreq"))
       });
     }
     return (
@@ -58,22 +58,27 @@ class AcctSettings extends Component {
         <div className="content mtop">
           <div className="row">
             <div className="col-md-12">
-              <span className="heading">Account Setting</span>
+              <span className="heading">{t("acctsetting")}</span>
             </div>
             <div className="col-md-6">
               <div className="verification-box">
                 <span
                   className="clickverify-btn"
-                  onClick={() =>
+                  onClick={() => {
+                    const title = t("updemail");
+                    const msg = t("updemaildes");
+                    const btnText = t("common:Update");
+                    const setting = "email";
+                    const successMsg = t("emailupdsuccess");
+
                     this.setDialogContent({
-                      title: "Update Email",
-                      msg:
-                        "Please enter an email that you check often. We use this only for communications from Foxtail and our members.",
-                      btnText: "Update",
-                      setting: "email",
-                      successMsg: "Please check your email for confirmation"
-                    })
-                  }
+                      title,
+                      msg,
+                      btnText,
+                      setting,
+                      successMsg
+                    });
+                  }}
                 >
                   Update Email
                 </span>
@@ -88,17 +93,22 @@ class AcctSettings extends Component {
               <div className="verification-box">
                 <span
                   className="clickverify-btn"
-                  onClick={() =>
+                  onClick={() => {
+                    const title = t("usrupd");
+                    const msg = t("usrupddes");
+                    const btnText = t("common:Update");
+                    const setting = "username";
+                    const successMsg = t("userupdsuccess");
                     this.setDialogContent({
-                      title: "Change Username",
-                      msg: "You may change your username every 30 days.",
-                      btnText: "Update",
-                      setting: "username",
-                      successMsg: "Username has been updated Successfully"
-                    })
-                  }
+                      title,
+                      msg,
+                      btnText,
+                      setting,
+                      successMsg
+                    });
+                  }}
                 >
-                  Change Username
+                  {t("usrupd")}
                 </span>
               </div>
             </div>
@@ -106,15 +116,20 @@ class AcctSettings extends Component {
               <div className="verification-box">
                 <span
                   className="clickverify-btn"
-                  onClick={() =>
+                  onClick={() => {
+                    const title = t("updgen");
+                    const msg = t("updgendes");
+                    const btnText = t("common:Update");
+                    const setting = "gender";
+                    const successMsg = t("updgensuccess");
                     this.setDialogContent({
-                      title: "Change Gender",
-                      msg: "You may only change your gender once!",
-                      btnText: "Update",
-                      setting: "gender",
-                      successMsg: "Gender has been updated Successfully"
-                    })
-                  }
+                      title,
+                      msg,
+                      btnText,
+                      setting,
+                      successMsg
+                    });
+                  }}
                 >
                   Change Gender
                 </span>

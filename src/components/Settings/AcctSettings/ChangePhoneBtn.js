@@ -33,10 +33,10 @@ class ChangePhoneBtn extends PureComponent {
     fbResetPhone()
       .then(({ data }) => {
         if (data.fbResetPhone === null) {
-          alert("Error Please try again later");
+          alert(t("common:tryagain"));
           return;
         }
-        toast.success("Phone number has been changed");
+        toast.success(t("changenum"));
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -64,8 +64,7 @@ class ChangePhoneBtn extends PureComponent {
             >
               {p => (
                 <span {...p} className="clickverify-btn">
-                  {" "}
-                  Change Phone
+                  {t("changephone")}
                 </span>
               )}
             </AccountKit>

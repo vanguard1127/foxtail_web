@@ -76,7 +76,7 @@ class PhotoVerify extends PureComponent {
       };
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status !== 200) {
-        toast.error("Something went wrong with image upload");
+        toast.error(this.props.t("uploadissue"));
       }
     } catch (e) {
       this.props.ErrorHandler.catchErrors(e);
@@ -91,35 +91,27 @@ class PhotoVerify extends PureComponent {
       ErrorHandler: { ErrorBoundary }
     } = this.props;
     const { photos, filename, filetype, photoKey } = this.state;
-    let header, subheader, body, instruction, btnText;
-    header = subheader = body = instruction = btnText = "";
+    let header, body, instruction, btnText;
+    header = body = instruction = btnText = "";
     if (type === "verify") {
-      header = t("Submit Photo Verification");
-      subheader = t(
-        "It is a long established fact that a reader will be distracted by the readable"
-      );
-      body = t(
-        "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others."
-      );
+      header = t("subphotover");
 
-      instruction = t("Please give us 2-3 days to verify your photo…");
-      btnText = t("Submit Verify");
+      body = t("photoverbody");
+
+      instruction = t("verinstr");
+      btnText = t("verbtn");
     } else if (type === "std") {
-      header = t("Submit STD Verification");
-      subheader = t(
-        "It is a long established fact that a reader will be distracted by the readable"
-      );
-      body = t(
-        "Photo verification shows members you are who you say you are. Send us a picture making the same 'hand symbol' as the picture above. This picture will be used for verification purposes only and will not be seen by others."
-      );
-      instruction = t("Please give us 2-3 days to verify your photo…");
-      btnText = t("Submit Verify");
+      header = t("substdver");
+
+      body = t("substdverbody");
+      instruction = t("verinstr");
+      btnText = t("verbtn");
     }
     return (
       <Modal
         header={header}
         close={close}
-        description="Information sent for verification is not shared with anyone"
+        description={t("verpolicy")}
         okSpan={
           photos.length !== 0 ? (
             <Mutation
@@ -157,14 +149,7 @@ class PhotoVerify extends PureComponent {
         <ErrorBoundary>
           <div className="m-body">
             <div className="verify-account">
-              <div
-                className="example-image"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "20px"
-                }}
-              >
+              <div className="example-image">
                 <img src="assets/img/elements/example-verify.png" alt="" />
               </div>
               <span className="instructions">

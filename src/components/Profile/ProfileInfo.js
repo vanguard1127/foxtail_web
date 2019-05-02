@@ -19,7 +19,7 @@ class ProfileInfo extends Component {
         <div className={userInfoStyle}>
           <div>
             <span>
-              {users[0] && (
+              {users[1] && (
                 <span
                   className={"sex " + users[0].gender + " userInfoHeader"}
                 />

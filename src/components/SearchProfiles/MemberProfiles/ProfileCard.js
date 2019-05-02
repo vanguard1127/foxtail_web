@@ -72,6 +72,7 @@ class ProfileCard extends Component {
               showMsgModal={showMsgModal}
               liked={liked}
               msgd={msgd}
+              t={t}
             />
           </div>
         </div>

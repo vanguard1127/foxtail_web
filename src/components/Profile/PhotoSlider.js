@@ -7,6 +7,7 @@ import "lg-fullscreen";
 import "lg-zoom";
 import "lg-autoplay";
 import { preventContextMenu } from "../../utils/image";
+import { toast } from "react-toastify";
 
 const configLightGallery = {
   thumbnail: true,
@@ -49,6 +50,10 @@ class PhotoSlider extends Component {
     } catch (e) {
       this.props.ErrorHandler.catchErrors(e);
     }
+  }
+
+  warnPrivate() {
+    toast(this.props.t("privwarning"));
   }
 
   render() {
@@ -103,16 +108,15 @@ class PhotoSlider extends Component {
                   key={Math.random()}
                   onContextMenu={preventContextMenu}
                 >
-                  <a href={photo.url}>
-                    <img
-                      src={
-                        photo.url !== "private"
-                          ? photo.url
-                          : "../assets/img/no-picture.png"
-                      }
-                      alt=""
-                    />
-                  </a>
+                  {photo.url !== "private" ? (
+                    <a href={photo.url}>
+                      <img src={photo.url} alt="" />
+                    </a>
+                  ) : (
+                    <span onClick={this.warnPrivate}>
+                      <img src={"../assets/img/no-picture.png"} alt="" />
+                    </span>
+                  )}
                 </div>
               ))}
             </OwlCarousel>

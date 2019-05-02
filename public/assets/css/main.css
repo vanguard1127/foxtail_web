@@ -9113,7 +9113,7 @@ img {
   right: 12px;
   top: 16px;
   font-size: 16px;
-  z-index: 99999;
+  z-index: 1;
 }
 
 .tooltip {
@@ -9204,6 +9204,10 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   display: flex;
 }
 
+.profileCardSymbol::before {
+  font-size: 13px;
+  color: #8f969c;
+}
 .sex.M::before {
   content: "\e801";
 }

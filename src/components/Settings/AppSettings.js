@@ -52,7 +52,7 @@ class AppSettings extends Component {
                     });
                     setLang(e.value);
                   }}
-                  placeholder={"Language:"}
+                  placeholder={t("langlbl")}
                   lang={lang}
                 />
               </div>

@@ -8,17 +8,25 @@ class ProfileInfoBox extends PureComponent {
       <>
         <span className={online ? "name online" : "name"}>
           {users[0].username}
-          {users[1] && "&" + users[1].username}
+          {users[1] && " & " + users[1].username}
         </span>
         <span className="detail">
           <ul>
             <li className={"gender " + users[0].gender}>
+              <span
+                className={"sex " + users[0].gender + " profileCardSymbol"}
+              />
+              &nbsp;
               {dayjs()
                 .locale(localStorage.getItem("i18nextLng"))
                 .diff(users[0].dob, "years")}
             </li>
             {users[1] && (
               <li className={"gender " + users[1].gender}>
+                <span
+                  className={"sex " + users[1].gender + " profileCardSymbol"}
+                />
+                &nbsp;
                 {dayjs()
                   .locale(localStorage.getItem("i18nextLng"))
                   .diff(users[1].dob, "years")}

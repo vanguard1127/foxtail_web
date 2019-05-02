@@ -18,12 +18,12 @@ class Settings extends Component {
     return false;
   }
   componentDidMount() {
-    const { session } = this.props;
+    const { session, t } = this.props;
 
     if (!session.currentuser.isProfileOK) {
       const toastId = "nopro";
       if (!toast.isActive(toastId)) {
-        toast.info("Please complete your profile.", {
+        toast.info(t("plscomplete"), {
           position: toast.POSITION.TOP_CENTER,
           toastId: toastId
         });
@@ -31,7 +31,7 @@ class Settings extends Component {
     }
 
     this.mounted = true;
-    document.title = "My Account";
+    document.title = t("myacct");
   }
 
   componentWillUnmount() {

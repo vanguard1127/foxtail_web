@@ -73,7 +73,7 @@ class PhotoUpload extends Component {
         labelFileProcessingComplete={t("uploadcomp")}
         labelFileProcessingAborted={t("uploadcan")}
         labelFileProcessingError={t("uploaderror")}
-        labelTapToCancel={t("cancel")}
+        labelTapToCancel={t("tapcancel")}
         labelMaxFileSizeExceeded={t("toolarge")}
         onupdatefiles={fileItems => {
           // Set current file objects to this.state

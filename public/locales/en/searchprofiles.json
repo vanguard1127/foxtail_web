@@ -1,11 +1,14 @@
 {
   "loadmems": "Loading Members",
-  "nomems": "No members near you. Try again later.",
-  "novis": "You cannot see user profiles while invisible unless you're a Black Member. Please set your profile to visible under settings to see members.",
   "nopros": "No More Profiles",
   "allmems": "All Members",
   "mi": "mi",
   "km": "km",
   "Genders": "Genders",
-  "featmems": "Featured Members"
+  "featmems": "Featured Members",
+  "directerr": "Direct Send is only available to Black Members",
+  "cantsee": "You cannot see user profiles while invisible unless you're a Black Member",
+  "cantseeinstr": "Please set your profile to visible under settings to see members.",
+  "nomems": "No members near you.",
+  "nomemsdes": "Change your search criteria or try again later."
 }

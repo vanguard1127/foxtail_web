@@ -36,7 +36,7 @@ class EventsList extends Component {
               <div className="col-md-12">
                 <div className="more-content-btn">
                   {this.props.loading ? (
-                    <span>Loading...</span>
+                    <span>{t("Loading")}</span>
                   ) : (
                     <span>{t("noevent")}</span>
                   )}

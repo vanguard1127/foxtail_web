@@ -14,24 +14,24 @@ import Modal from "../../common/Modal";
 import isEmpty from "../../../utils/isEmpty";
 import { toast } from "react-toastify";
 
-const schema = yup.object().shape({
-  eventname: yup
-    .string()
-    .min(3, "Event Name must be at least 3 characters")
-    .max(120, "Event Name must be less than 120 characters")
-    .required("Event Name is required!"),
-  description: yup
-    .string()
-    .min(10, "Description must be at least 10 characters")
-    .max(500, "Description must be less than 500 characters")
-    .required("Description is required!"),
-  type: yup.string().required("Event Type is required!"),
-  address: yup
-    .string()
-    .max(240, "Description must be less than 240 characters")
-    .required("Address is required!")
-});
 class CreateEvent extends Component {
+  schema = yup.object().shape({
+    eventname: yup
+      .string()
+      .min(3, this.props.t("eve3char"))
+      .max(120, this.props.t("eve120"))
+      .required(this.props.t("evereq")),
+    description: yup
+      .string()
+      .min(10, this.props.t("dec10char"))
+      .max(500, this.props.t("dec500"))
+      .required(this.props.t("decreq")),
+    type: yup.string().required(this.props.t("evetypereq")),
+    address: yup
+      .string()
+      .max(240, this.props.t("dec240"))
+      .required(this.props.t("addreq"))
+  });
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.eventname !== nextState.eventname ||
@@ -102,7 +102,7 @@ class CreateEvent extends Component {
   validateForm = async () => {
     try {
       if (this.mounted) {
-        await schema.validate(this.state, { abortEarly: false });
+        await this.schema.validate(this.state, { abortEarly: false });
         this.setState({ errors: {} });
       }
       return true;
@@ -140,20 +140,21 @@ class CreateEvent extends Component {
   };
 
   handleSubmit = async ({ createEvent, signS3 }) => {
+    const { t, ErrorHandler, refetch, close } = this.props;
     if (await this.validateForm()) {
       if (this.state.image !== "") {
         await this.handleUpload({ signS3 });
       }
       createEvent()
         .then(async ({ data }) => {
-          toast.success("Event Saved!");
-          if (this.props.refetch) {
-            this.props.refetch();
+          toast.success(t("evevtsaved"));
+          if (refetch) {
+            refetch();
           }
-          this.props.close();
+          close();
         })
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          ErrorHandler.catchErrors(res.graphQLErrors);
         });
     }
   };
@@ -200,7 +201,7 @@ class CreateEvent extends Component {
       };
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status !== 200) {
-        toast.error("Upload error occured");
+        toast.error(this.props.t("uploaderror"));
       }
     } catch (e) {
       this.props.ErrorHandler.catchErrors(e);
@@ -417,9 +418,7 @@ class CreateEvent extends Component {
                           }}
                         >
                           {" "}
-                          {this.InputFeedback(
-                            "Please fix the required fields on both pages"
-                          )}
+                          {this.InputFeedback(t("fixreq"))}
                         </div>
                       )}
                       <div className="item">
@@ -474,7 +473,7 @@ class CreateEvent extends Component {
                             className="border"
                             onClick={() => this.togglePage()}
                           >
-                            Back
+                            {t("Back")}
                           </span>
                         </div>
                       </div>

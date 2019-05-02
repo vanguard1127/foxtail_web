@@ -11,7 +11,7 @@ class ProfileActionBtns extends Component {
     return false;
   }
   render() {
-    const { profile, likeProfile, showMsgModal, liked, msgd } = this.props;
+    const { profile, likeProfile, showMsgModal, liked, msgd, t } = this.props;
 
     return (
       <div className="function">
@@ -32,7 +32,7 @@ class ProfileActionBtns extends Component {
             />
           </>
         ) : (
-          <div className="btn sent">Message Sent!</div>
+          <div className="btn sent">{t("common:msgsent")}</div>
         )}
       </div>
     );

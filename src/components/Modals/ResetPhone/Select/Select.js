@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
-import './Select.css';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import { withNamespaces } from "react-i18next";
+import "./Select.css";
 
 class Select extends PureComponent {
   static propTypes = {
@@ -19,12 +19,12 @@ class Select extends PureComponent {
 
   state = {
     menuOpen: false,
-    selectedOption: '',
+    selectedOption: "",
     selectedOptions: []
   };
 
   componentWillMount() {
-    document.addEventListener('mousedown', this.handleClickOutside, false);
+    document.addEventListener("mousedown", this.handleClickOutside, false);
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class Select extends PureComponent {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside, false);
+    document.removeEventListener("mousedown", this.handleClickOutside, false);
   }
 
   handleClickOutside = event => {
@@ -52,9 +52,7 @@ class Select extends PureComponent {
     if (multiple && defaultOptionValues) {
       const defaultOptions = defaultOptionValues.map(d => {
         const found = options.find(x => x.value == d.value);
-        if (found == undefined)
-          throw 'The default value you passed as props can not found in select options array';
-        return found;
+        if (found == undefined) return found;
       });
       this.setState({ selectedOptions: defaultOptions });
     } else if (defaultOptionValue) {
@@ -104,14 +102,14 @@ class Select extends PureComponent {
     const SelectList = () => (
       <div
         className="select-list-country"
-        width={{ width: '333px !important' }}
+        width={{ width: "333px !important" }}
       >
         <ul>
           {options.map((d, i) => {
             return (
               <li key={i} onClick={e => this.onSelect(e, d)}>
                 {d.label}
-                <span style={{ float: 'right' }}>{d.value}</span>
+                <span style={{ float: "right" }}>{d.value}</span>
               </li>
             );
           })}
@@ -127,7 +125,7 @@ class Select extends PureComponent {
           }
         >
           <div
-            className={'select-container ' + className || ''}
+            className={"select-container " + className || ""}
             onClick={() => this.setState({ menuOpen: menuStatus })}
           >
             <span>{t(selectedOption.value)}</span>
@@ -139,4 +137,4 @@ class Select extends PureComponent {
   }
 }
 
-export default withNamespaces('common')(Select);
+export default withNamespaces("common")(Select);

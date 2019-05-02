@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Tour from "reactour";
 
-const accentColor = "#36d055";
+const accentColor = "#CF003C";
 class CustomTour extends Component {
   shouldComponentUpdate(nextProps) {
     if (

@@ -112,16 +112,17 @@ class ProfilePage extends Component {
   };
 
   handleLike = (profile, likeProfile, refetch) => {
-    this.props.ErrorHandler.setBreadcrumb("Like Profile:" + likeProfile);
+    const { ErrorHandler, t } = this.props;
+    ErrorHandler.setBreadcrumb("Like Profile:" + likeProfile);
 
     likeProfile()
       .then(({ data }) => {
         switch (data.likeProfile) {
           case "like":
-            toast.success("Liked " + profile.profileName + "!");
+            toast.success(t("common:Liked") + profile.profileName + "!");
             break;
           case "unlike":
-            toast.success("UnLiked " + profile.profileName + "!");
+            toast.success(t("common:UnLiked") + profile.profileName + "!");
             break;
           default:
             this.setMatchDlgVisible(true, profile, data.likeProfile);
@@ -130,7 +131,7 @@ class ProfilePage extends Component {
         refetch();
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
   setMessaged = (profileID, refetch) => {
@@ -184,13 +185,8 @@ class ProfilePage extends Component {
                   );
                 }
                 if (loading) {
-                  document.title = "Loading...";
-                  return (
-                    <Spinner
-                      message={t("common:Loading") + "..."}
-                      size="large"
-                    />
-                  );
+                  document.title = t("common:Loading");
+                  return <Spinner message={t("common:Loading")} size="large" />;
                 } else if (!data || !data.profile) {
                   return <div>{t("notexist")}</div>;
                 }
@@ -314,7 +310,7 @@ class ProfilePage extends Component {
                     )}
                     {profile && chatID && matchDlgVisible && (
                       <Modal
-                        header={"It's a Match!"}
+                        header={t("common:match")}
                         close={() => this.setMatchDlgVisible(false)}
                         okSpan={
                           <span
@@ -323,7 +319,7 @@ class ProfilePage extends Component {
                               this.props.history.push("/inbox/" + chatID)
                             }
                           >
-                            Chat Now
+                            {t("common:chatnow")}
                           </span>
                         }
                         cancelSpan={
@@ -331,7 +327,7 @@ class ProfilePage extends Component {
                             className="border"
                             onClick={async () => this.setMatchDlgVisible(false)}
                           >
-                            Chat Later
+                            {t("common:chatltr")}
                           </span>
                         }
                       >
@@ -339,9 +335,11 @@ class ProfilePage extends Component {
                           className="description"
                           style={{ fontSize: "20px", paddingBottom: "35px" }}
                         >
-                          {"You and " +
+                          {t("common:youand") +
+                            " " +
                             profile.profileName +
-                            " like each other!"}
+                            " " +
+                            t("common:likeach")}
                         </span>
                       </Modal>
                     )}

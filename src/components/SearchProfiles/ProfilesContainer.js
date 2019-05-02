@@ -51,7 +51,7 @@ class ProfilesContainer extends PureComponent {
       "Message Modal visible:" + msgModalVisible
     );
     if (!this.props.isBlackMember) {
-      toast("Direct Send is only available to Black Members");
+      toast(this.props.t("directerr"));
       return;
     }
     if (this.mounted) {
@@ -72,15 +72,20 @@ class ProfilesContainer extends PureComponent {
     }
 
     if (this.mounted) {
+      const { ErrorHandler, t } = this.props;
       this.setState({ profile, likedProfiles }, () => {
         likeProfile()
           .then(({ data }) => {
             switch (data.likeProfile) {
               case "like":
-                toast.success("Liked " + profile.profileName + "!");
+                toast.success(
+                  t("common:Liked") + " " + profile.profileName + "!"
+                );
                 break;
               case "unlike":
-                toast.success("UnLiked " + profile.profileName + "!");
+                toast.success(
+                  t("common:UnLiked") + " " + profile.profileName + "!"
+                );
                 break;
               default:
                 this.setMatchDlgVisible(true, profile, data.likeProfile);
@@ -88,7 +93,7 @@ class ProfilesContainer extends PureComponent {
             }
           })
           .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+            ErrorHandler.catchErrors(res.graphQLErrors);
           });
       });
     }
@@ -217,14 +222,8 @@ class ProfilesContainer extends PureComponent {
                       <div className="icon">
                         <i className="nico blackmember" />
                       </div>
-                      <span className="head">
-                        You cannot see user profiles while invisible unless
-                        you're a Black Member
-                      </span>
-                      <span className="description">
-                        Please set your profile to visible under settings to see
-                        members.
-                      </span>
+                      <span className="head">{t("cantsee")}</span>
+                      <span className="description">{t("cantseeinstr")}</span>
                     </div>
                   </div>
                 </section>
@@ -256,14 +255,8 @@ class ProfilesContainer extends PureComponent {
                     <div className="icon">
                       <i className="nico magnifier" />
                     </div>
-                    <span className="head">
-                      No members near you. Try again later.
-                    </span>
-                    <span className="description">
-                      It is a long established fact that a reader will be
-                      distracted by the readable content of a page when looking
-                      at its layout.
-                    </span>
+                    <span className="head">{t("nomems")}</span>
+                    <span className="description">{t("nomemsdes")}</span>
                   </div>
                 </div>
               </section>
@@ -326,7 +319,7 @@ class ProfilesContainer extends PureComponent {
                     <div className="col-md-12">
                       <div className="more-content-btn">
                         {this.state.loading ? (
-                          <span>Loading...</span>
+                          <span>{t("common:Loading")}</span>
                         ) : (
                           <span>{t("nopros")}</span>
                         )}
@@ -342,7 +335,7 @@ class ProfilesContainer extends PureComponent {
                     )}
                     {profile && chatID && matchDlgVisible && (
                       <Modal
-                        header={"It's a Match!"}
+                        header={t("common:match")}
                         close={() => this.setMatchDlgVisible(false)}
                         okSpan={
                           <span
@@ -351,7 +344,7 @@ class ProfilesContainer extends PureComponent {
                               this.props.history.push("/inbox/" + chatID)
                             }
                           >
-                            Chat Now
+                            {t("common:chatnow")}
                           </span>
                         }
                         cancelSpan={
@@ -359,7 +352,7 @@ class ProfilesContainer extends PureComponent {
                             className="border"
                             onClick={async () => this.setMatchDlgVisible(false)}
                           >
-                            Chat Later
+                            {t("common:chatltr")}
                           </span>
                         }
                       >
@@ -367,9 +360,11 @@ class ProfilesContainer extends PureComponent {
                           className="description"
                           style={{ fontSize: "20px", paddingBottom: "35px" }}
                         >
-                          {"You and " +
+                          {t("common:youand") +
+                            " " +
                             profile.profileName +
-                            " like each other!"}
+                            " " +
+                            t("common:likeach")}
                         </span>
                       </Modal>
                     )}

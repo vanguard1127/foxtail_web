@@ -41,25 +41,26 @@ class BlockModal extends Component {
   };
 
   handleSubmit = (blockProfile, flagItem) => {
+    const { t, close, goToMain, ErrorHandler } = this.props;
     flagItem()
       .then(() => {
         if (this.state.type === flagOptions.Profile) {
           blockProfile().then(({ data }) => {
             if (data.blockProfile) {
-              toast.success("Selected profile has been reported. Thanks.");
-              this.props.goToMain();
+              toast.success(t("selproreported"));
+              goToMain();
             }
           });
         } else if (this.state.type === flagOptions.Chat) {
-          toast.success("Chat has been reported. Thanks.");
-          this.props.close();
+          toast.success(t("chatreported"));
+          close();
         } else if (this.state.type === flagOptions.Event) {
-          toast.success("Event has been reported. Thanks.");
-          this.props.close();
+          toast.success(t("evereported"));
+          close();
         }
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
@@ -164,7 +165,7 @@ class BlockModal extends Component {
         });
     }
     if (type === flagOptions.Chat) {
-      title = "Report Group";
+      title = t("reportchat");
     } else {
       title = t("repblock");
     }
@@ -172,7 +173,7 @@ class BlockModal extends Component {
       <Modal
         header={title}
         close={close}
-        description="Please select the reason you are reporting. We will handle it prompty. Thank You."
+        description={t("selreason")}
         okSpan={
           <Mutation
             mutation={FLAG_ITEM}
@@ -193,7 +194,7 @@ class BlockModal extends Component {
                 >
                   {(blockProfile, { loading }) => {
                     if (loading) {
-                      return <div>{t("Saving")}...</div>;
+                      return <div>{t("Saving")}</div>;
                     }
                     return (
                       <span
@@ -216,7 +217,7 @@ class BlockModal extends Component {
         <ErrorBoundary>
           <>
             <div className="select-container">
-              <label>Reason:</label>
+              <label>{t("reasonlbl")}</label>
               {blockMenu}
               <div
                 style={{

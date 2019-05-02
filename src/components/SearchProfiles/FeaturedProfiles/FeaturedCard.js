@@ -49,6 +49,7 @@ class FeaturedCard extends Component {
           profile={profile}
           liked={liked}
           msgd={msgd}
+          t={t}
         />
       </div>
     );

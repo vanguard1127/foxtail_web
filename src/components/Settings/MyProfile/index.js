@@ -73,7 +73,7 @@ class MyProfile extends Component {
                     value: e.value
                   });
                 }}
-                placeholder={"Sexuality:"}
+                placeholder={t("sexlbl")}
                 lang={lang}
               />
             </div>

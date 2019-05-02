@@ -17,7 +17,7 @@ class UpdateSubBtn extends PureComponent {
       this.setState({ token, ccLast4 });
       updateSubscription()
         .then(({ data }) => {
-          this.props.notifyClient("Credit Card Updated Successfully");
+          this.props.notifyClient(t("ccupdate"));
           window.location.reload();
         })
         .catch(res => {
@@ -51,10 +51,7 @@ class UpdateSubBtn extends PureComponent {
               stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY}
               panelLabel="Update"
             >
-              <span className="clickverify-btn photo">
-                {" "}
-                {t("common:cardchange")}
-              </span>
+              <span className="clickverify-btn photo"> {t("cardchange")}</span>
             </StripeCheckout>
           );
         }}

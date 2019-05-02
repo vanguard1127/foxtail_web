@@ -48,11 +48,7 @@ class AddressSearch extends Component {
         );
       },
       err => {
-        alert(
-          this.props.t(
-            "Please enable location services to remove your set location."
-          )
-        );
+        alert(this.props.t("common:enablerem"));
         return;
       }
     );

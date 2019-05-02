@@ -45,18 +45,6 @@ class NoticesItem extends Component {
       this.state.userAlert !== nextState.userAlert ||
       this.props.count !== nextProps.count
     ) {
-      // console.log(
-      //   "Diffs:",
-      //   this.state.read === nextState.read,
-      //   this.state.seen === nextState.seen,
-      //   this.state.notificationIDs.length === nextState.notificationIDs.length,
-      //   this.state.count === nextState.count,
-      //   this.state.skip === nextState.skip,
-      //   this.state.visible === nextState.visible,
-      //   this.state.alertVisible === nextState.alertVisible,
-      //   this.state.userAlert === nextState.userAlert,
-      //   this.props.count === nextProps.count
-      // );
       return true;
     }
     return false;
@@ -211,7 +199,7 @@ class NoticesItem extends Component {
         {alert.link && (
           <DialogActions>
             <NavLink to={alert.link} color="primary" autoFocus>
-              Go
+              {this.props.t("Go")}
             </NavLink>
           </DialogActions>
         )}

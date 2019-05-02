@@ -45,7 +45,7 @@ class SearchEvents extends Component {
   }
   componentDidMount() {
     this.mounted = true;
-    document.title = "Search Events";
+    document.title = this.props.t("searchevents");
   }
   componentWillUnmount() {
     this.clearSearchResults();
@@ -260,11 +260,11 @@ class SearchEvents extends Component {
                             <div className="icon">
                               <i className="nico event" />
                             </div>
-                            <span className="head">No Events Available</span>
+                            <span className="head">
+                              {t("noeventavailable")}
+                            </span>
                             <span className="description">
-                              It is a long established fact that a reader will
-                              be distracted by the readable content of a page
-                              when looking at its layout.
+                              {t("noeventavailabledes")}
                             </span>
                           </div>
                         </div>

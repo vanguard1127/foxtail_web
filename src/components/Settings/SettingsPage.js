@@ -149,6 +149,7 @@ class SettingsPage extends Component {
     isDeleted,
     updateSettings
   }) => {
+    const { t } = this.props;
     this.setErrorHandler("Photo list updated");
     if (isPrivate) {
       let { privatePics } = this.state;
@@ -157,7 +158,7 @@ class SettingsPage extends Component {
         privatePics = privatePics.filter(x => x.id !== file.id);
 
         this.setState({ showModal: false });
-        toast.success("Photo deleted successfully");
+        toast.success(t("photodel"));
       } else {
         privatePics = [
           ...privatePics,
@@ -189,7 +190,7 @@ class SettingsPage extends Component {
         }
         publicPics = publicPics.filter(x => x.id !== file.id);
         this.setState({ showModal: false });
-        toast.success("Photo deleted successfully");
+        toast.success(t("photodel"));
       } else {
         publicPics = [
           ...publicPics,
@@ -228,7 +229,7 @@ class SettingsPage extends Component {
     });
   };
   handleSubmit = (updateSettings, saveImage) => {
-    const { ErrorHandler, isCouple, isInitial, refetchUser } = this.props;
+    const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
 
     this.setErrorHandler("Settings updated");
     if (!saveImage) {
@@ -243,7 +244,7 @@ class SettingsPage extends Component {
               .then(({ data }) => {
                 if (data.updateSettings) {
                   if (isCouple && isInitial && !this.state.flashCpl) {
-                    toast("Please click 'Add Couple button when finished'");
+                    toast(t("clickcpl"));
                     if (this.mounted) this.setState({ flashCpl: true });
                   }
                 }
@@ -422,7 +423,7 @@ class SettingsPage extends Component {
       };
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status !== 200) {
-        toast.error("Upload Error");
+        toast.error(this.props.t("uplerr"));
       }
     } catch (e) {
       this.props.ErrorHandler.catchErrors(e);
@@ -506,22 +507,22 @@ class SettingsPage extends Component {
 
     let aboutErr = "";
     if (about === "") {
-      aboutErr = "Please fill in your bio";
+      aboutErr = t("fillbio");
     } else if (about.length < 20) {
-      aboutErr = "Bio must be more than 20 characters";
+      aboutErr = t("biolen");
     }
 
     let profilePicErr = "";
     if (publicPics.length === 0) {
-      profilePicErr = "Please upload at least 1 photo";
+      profilePicErr = t("onepho");
     } else if (profilePic === "") {
-      profilePicErr = "Please select a Profile Picture";
+      profilePicErr = t("selpho");
     }
 
     const errors = {
       profilePic: profilePicErr !== "" ? profilePicErr : null,
       about: aboutErr !== "" ? aboutErr : null,
-      desires: desires.length === 0 ? "Please select at least 1 desire" : null
+      desires: desires.length === 0 ? t("onedes") : null
     };
 
     return (
@@ -618,10 +619,9 @@ class SettingsPage extends Component {
                             }
                             deleteImg={({ file, key }) =>
                               this.setDialogContent({
-                                title: "Delete Photo",
-                                msg:
-                                  "This removes your photo from our server and can not be undone.",
-                                btnText: "Delete",
+                                title: t("delpho"),
+                                msg: t("remoundone"),
+                                btnText: t("del"),
                                 okAction: () =>
                                   this.handlePhotoListChange({
                                     file,
@@ -646,10 +646,9 @@ class SettingsPage extends Component {
                             photos={privatePics}
                             deleteImg={({ file, key }) =>
                               this.setDialogContent({
-                                title: "Delete Photo",
-                                msg:
-                                  "This removes your photo from our server and can not be undone.",
-                                btnText: "Delete",
+                                title: t("delpho"),
+                                msg: t("remoundone"),
+                                btnText: t("del"),
                                 okAction: () =>
                                   this.handlePhotoListChange({
                                     file,

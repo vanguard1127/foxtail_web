@@ -8,9 +8,7 @@ class EmailPhoneResetBtn extends PureComponent {
 
     sendPhoneResetEmail()
       .then(async ({ data }) => {
-        alert(
-          "If there is an account for that phone number, an email was sent with instructions to reset the phone number. If you used a bad email for the account, you'll have to contact us at support@foxtailapp.com for help."
-        );
+        alert(t("alreadyphonemsg"));
         close();
       })
       .catch(res => {
@@ -27,7 +25,7 @@ class EmailPhoneResetBtn extends PureComponent {
               className="color"
               onClick={() => this.handleClick(sendPhoneResetEmail)}
             >
-              Send Phone Reset
+              {t("sendphoneres")}
             </span>
           );
         }}

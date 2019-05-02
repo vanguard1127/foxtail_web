@@ -17,7 +17,7 @@ class IncludeMsgSlide extends PureComponent {
       <>
         <div> {t("includeold")}?</div>
         <br />
-        <div>*Only chats you've responded to</div>
+        <div>{t("onlychatres")}</div>
         <div style={{ padding: "20px" }}>
           {" "}
           <input

@@ -32,7 +32,7 @@ class ResetPhoneButton extends PureComponent {
           alert(t("noUserError") + ".");
           return;
         } else {
-          alert("Phone Login Updated.");
+          alert(t("phoneupd"));
           localStorage.setItem(
             "token",
             data.fbResetPhone.find(token => token.access === "auth").token
@@ -69,7 +69,7 @@ class ResetPhoneButton extends PureComponent {
             >
               {p => (
                 <span className="color" {...p}>
-                  Update Phone Number
+                  {t("updatedphone")}
                 </span>
               )}
             </AccountKit>

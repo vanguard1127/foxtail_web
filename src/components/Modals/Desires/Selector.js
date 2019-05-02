@@ -3,7 +3,7 @@ import { desireOptions } from "../../../docs/options";
 import { withNamespaces } from "react-i18next";
 
 class Selector extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (this.props.desires !== nextProps.desires) {
       return true;
     }

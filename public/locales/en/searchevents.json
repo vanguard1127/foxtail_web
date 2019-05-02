@@ -9,8 +9,10 @@
   "eventcreated": "Event created successfully! Share to get attendees",
   "loadingevents": "Loading Events",
   "noeventavailable": "No Events Available",
+  "noeventavailabledes": "Change your search criteria or try again later.",
   "noevent": "No More Events",
   "upcomingevent": "Upcoming Events",
   "eventdetail": "Event Detail",
-  "loadmyeve": "Loading My Events"
+  "loadmyeve": "Loading My Events",
+  "searchevents": "Search Events"
 }

@@ -82,7 +82,7 @@ class Desires extends Component {
               </div>
             </div>
 
-            <div className="scroll-more-down">Scroll down for more</div>
+            <div className="scroll-more-down">{t("scroll")}</div>
           </ErrorBoundary>
         </div>
       </section>

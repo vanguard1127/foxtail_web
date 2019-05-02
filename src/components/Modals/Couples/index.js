@@ -134,18 +134,17 @@ class Couples extends Component {
     this.setState({ showModal: !this.state.showModal });
   };
 
-  showDeleteConfirm(close, username, unlinkProfile, setValue) {
+  showDeleteConfirm(close, username) {
     const { t } = this.props;
     return (
       <Mutation mutation={UNLINK_PROFILE}>
         {(unlinkProfile, { loading }) => {
           if (loading) {
-            //TODO: nice unlinking message
-            return <Spinner message={t("Unlinking") + "..."} size="large" />;
+            return <Spinner message={t("Unlinking")} size="large" />;
           }
           return (
             <Modal
-              header={"Want to remove your link to " + username + "?"}
+              header={t("removelinkto") + " " + username + "?"}
               close={close}
               description={t("coupdeact")}
               okSpan={

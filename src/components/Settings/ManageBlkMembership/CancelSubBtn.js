@@ -5,7 +5,7 @@ class CancelSubBtn extends PureComponent {
   handleSubmit = ({ cancelSubscription }) => {
     cancelSubscription()
       .then(({ data }) => {
-        this.props.notifyClient("Black Membership Canceled Successfully");
+        this.props.notifyClient(this.props.t("cancelblk"));
         window.location.reload();
       })
       .catch(res => {
@@ -19,21 +19,23 @@ class CancelSubBtn extends PureComponent {
         {cancelSubscription => {
           return (
             <span
-              onClick={() =>
+              onClick={() => {
+                const title = t("cancelblktitle");
+                const msg = t("canblkdes");
+                const btnText = t("common:Cancel");
                 setDialogContent({
-                  title: "Cancel Black Membership",
-                  msg:
-                    "This will cancel your Black Membership. You will have access to all Black features until your billing cycle ends.",
-                  btnText: "Cancel",
+                  title,
+                  msg,
+                  btnText,
                   okAction: () =>
                     this.handleSubmit({
                       cancelSubscription
                     })
-                })
-              }
+                });
+              }}
               className="clickverify-btn photo"
             >
-              {t("common:subcancel")}
+              {t("subcancel")}
             </span>
           );
         }}

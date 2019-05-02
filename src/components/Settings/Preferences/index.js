@@ -22,11 +22,7 @@ class Preferences extends Component {
         this.props.setLocationValues({ lat: latitude, long: longitude });
       },
       err => {
-        alert(
-          this.props.t(
-            "Please enable location services to remove your set location."
-          )
-        );
+        alert(this.props.t("common:enablerem"));
         return;
       }
     );

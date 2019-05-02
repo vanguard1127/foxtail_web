@@ -12,23 +12,25 @@ class CreateSubBtn extends PureComponent {
     this.mounted = false;
   }
   handleSubmit = ({ token, ccLast4, createSubscription }) => {
+    const { t, notifyClient, close, ErrorHandler } = this.props;
     if (this.mounted) {
       this.setState({ token, ccLast4, processing: true });
     }
     createSubscription()
       .then(({ data }) => {
-        this.props.notifyClient("Black Membership Canceled Successfully");
+        notifyClient(t("blkcancel"));
 
-        this.props.close();
+        close();
         window.location.reload();
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
   render() {
     const { token, ccLast4, processing } = this.state;
+    const { t } = this.props;
     return (
       <Mutation
         mutation={CREATE_SUBSCRIPTION}
@@ -40,8 +42,8 @@ class CreateSubBtn extends PureComponent {
         {createSubscription => {
           return (
             <StripeCheckout
-              name="Three Comma Co." // the pop-in header title
-              description="Big Data Stuff" // the pop-in header subtitle
+              name={t("blkmemheader")} // the pop-in header title
+              description={t("blkmemsubheader")} // the pop-in header subtitle
               token={({ id, card }) =>
                 this.handleSubmit({
                   token: id,
@@ -53,7 +55,7 @@ class CreateSubBtn extends PureComponent {
               amount={1000}
             >
               <span className="color">
-                {processing ? "Processing..." : "Upgrade to Black Membership"}
+                {processing ? t("processing") : t("upgradeblk")}
               </span>
             </StripeCheckout>
           );

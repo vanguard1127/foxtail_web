@@ -69,7 +69,7 @@ class ProfileDetails extends Component {
                   ? profile.online
                     ? t("common:Online")
                     : TimeAgo(profile.updatedAt)
-                  : "N/A"}
+                  : t("common:NA")}
               </span>
             </li>
           </ul>

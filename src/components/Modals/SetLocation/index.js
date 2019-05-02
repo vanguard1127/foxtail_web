@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { UPDATE_LOCATION } from "../../../queries";
 import { Mutation } from "react-apollo";
 import AddressSearch from "../../common/AddressSearch";
-import {
-  ErrorBoundary,
-  catchErrors,
-  ErrorHandler
-} from "../../common/ErrorHandler";
+import { ErrorBoundary, catchErrors } from "../../common/ErrorHandler";
 import { withNamespaces } from "react-i18next";
 import Modal from "../../common/Modal";
 import { toast } from "react-toastify";
@@ -66,11 +62,7 @@ class SetLocationModal extends Component {
     await navigator.geolocation.getCurrentPosition(
       pos => this.setLocation(pos, updateLocation),
       err => {
-        alert(
-          this.props.t(
-            "Please enable location services to remove your set location."
-          )
-        );
+        alert(this.props.t("common:enablerem"));
         return;
       }
     );

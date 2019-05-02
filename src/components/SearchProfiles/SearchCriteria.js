@@ -79,11 +79,7 @@ class SearchCriteria extends PureComponent {
     await navigator.geolocation.getCurrentPosition(
       pos => this.setLocation(pos, updateSettings),
       err => {
-        alert(
-          this.props.t(
-            "Please enable location services to remove your set location."
-          )
-        );
+        alert(this.props.t("common:enablerem"));
         return;
       }
     );

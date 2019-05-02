@@ -32,13 +32,11 @@ class ResetPhone extends PureComponent {
           <div className="container">
             <div className="offset-md-3 col-md-6">
               <div className="popup">
-                <span className="head">Reset Phone Login</span>
+                <span className="head">{t("resetphone")}</span>
                 <a className="close" onClick={() => close()} />
                 <form>
                   <div className="form-content">
-                    <span className="description">
-                      Enter the last phone number you used to login.
-                    </span>
+                    <span className="description">{t("enterlast")}</span>
                     <Select
                       onChange={this.handleChange}
                       defaultOptionValue={code}
@@ -49,7 +47,7 @@ class ResetPhone extends PureComponent {
                     <div className="phoneText input">
                       <input
                         type="tel"
-                        placeholder="Phone Number"
+                        placeholder={t("phonenum")}
                         onChange={this.handleTextChange}
                         value={text}
                         ref={input => {
@@ -84,7 +82,7 @@ class ResetPhone extends PureComponent {
         <div className="container">
           <div className="offset-md-3 col-md-6">
             <div className="popup">
-              <span className="head">Update Phone Login</span>
+              <span className="head">{t("updphone")}</span>
               <a className="close" onClick={() => close()} />
               <form>
                 <div className="form-content">
@@ -98,7 +96,7 @@ class ResetPhone extends PureComponent {
                       />
                     </ErrorHandler.ErrorBoundary>
                     <button className="border" onClick={() => close()}>
-                      Cancel
+                      {t("common:Cancel")}
                     </button>
                   </div>
                 </div>

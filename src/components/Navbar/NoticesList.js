@@ -130,7 +130,7 @@ class NoticesList extends Component {
         <span onClick={() => this.props.showAlert(notif)}>
           <span className="avatar">
             <img
-              src={"../../../images/girl2.jpg"}
+              src={"../assets/img/no-picture.png"}
               alt=""
               onContextMenu={preventContextMenu}
             />
@@ -195,7 +195,7 @@ class NoticesList extends Component {
             ))
           ) : (
             <div className="item" key="na">
-              <span className="text">No notifications</span>
+              <span className="text">{t("nonotif")}</span>
             </div>
           )}
 
@@ -216,9 +216,9 @@ class NoticesList extends Component {
           {notifications.length > 0 ? (
             <div className="item" style={{ textAlign: "center" }} key="na">
               {this.state.loading ? (
-                <span className="text">Loading...</span>
+                <span className="text">{t("Loading")}</span>
               ) : (
-                <span className="text">There is no more notification.</span>
+                <span className="text">{t("nonotif")}</span>
               )}
             </div>
           ) : (
