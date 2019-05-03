@@ -28,7 +28,7 @@ class ChatActions extends Component {
       <ul>
         <li className="members">
           <span onClick={() => this.setState({ remDropOpen: !remDropOpen })}>
-            {t("Participants")}
+            {t("common:Participants")}
           </span>
         </li>{" "}
         {remDropOpen && (

@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { PacmanLoader } from "react-spinners";
 import { EventLoader, ProfileLoader, InboxLoader } from "../common/Skeletons";
 
 class Spinner extends PureComponent {
@@ -89,7 +88,10 @@ class Spinner extends PureComponent {
                     <div />
                   </div>
                 </div>
-                <div className="lo-text">Loading</div>
+                <div className="lo-text">
+                  {" "}
+                  <ProfileLoader />
+                </div>
               </div>
             </div>
           </div>

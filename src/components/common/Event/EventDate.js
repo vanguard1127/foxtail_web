@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 
 class EventDate extends PureComponent {
   render() {
@@ -6,21 +6,21 @@ class EventDate extends PureComponent {
     return (
       <div className="date">
         <span>
-          {' '}
+          {" "}
           {dayjs(time)
-            .locale(localStorage.getItem('i18nextLng'))
-            .format('D')}{' '}
+            .locale(localStorage.getItem("i18nextLng"))
+            .format("D")}{" "}
         </span>
         <span>
           {dayjs(time)
-            .locale(localStorage.getItem('i18nextLng'))
-            .format('MMM')}{' '}
+            .locale(localStorage.getItem("i18nextLng"))
+            .format("MMM")}{" "}
         </span>
         <span>
-          {' '}
+          {" "}
           {dayjs(time)
-            .locale(localStorage.getItem('i18nextLng'))
-            .format('HH:mm')}{' '}
+            .locale(localStorage.getItem("i18nextLng"))
+            .format("HH:mm")}{" "}
         </span>
       </div>
     );

@@ -52,9 +52,7 @@ class Select extends PureComponent {
     if (multiple && defaultOptionValues) {
       const defaultOptions = defaultOptionValues.map(d => {
         const found = options.find(x => x.value == d.value);
-        if (found == undefined)
-          throw "The default value you passed as props can not found in select options array";
-        return found;
+        if (found == undefined) return found;
       });
       this.setState({ selectedOptions: defaultOptions });
     } else if (defaultOptionValue) {

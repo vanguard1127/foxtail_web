@@ -19,10 +19,10 @@ class AddressSearch extends Component {
       this.handleRemoveLocLock();
       return;
     }
-
-    if (this.props.isBlackMember !== undefined) {
-      if (!this.props.isBlackMember && this.props.address) {
-        toast("Only Black Members can change location");
+    const { isBlackMember, t } = this.props;
+    if (isBlackMember !== undefined) {
+      if (!isBlackMember && this.props.address) {
+        toast(t("onlyblkmem"));
         return;
       }
     }

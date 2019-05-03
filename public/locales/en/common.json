@@ -84,5 +84,8 @@
   "nonotif": "No notifications",
   "Go": "Go",
   "ouracct": "Our Account",
-  "Delete": "Delete"
+  "Delete": "Delete",
+  "onlyblkmem": "Only Black Members can change location",
+  "nomem": "No Members Available",
+  "Participants": "Participants"
 }

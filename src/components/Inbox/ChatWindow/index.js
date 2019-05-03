@@ -71,7 +71,7 @@ class ChatWindow extends PureComponent {
             />
           </div>
         ) : (
-          <AdManager />
+          <AdManager t={t} />
         )}
       </div>
     );

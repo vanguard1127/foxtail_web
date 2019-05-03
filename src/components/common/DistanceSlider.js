@@ -18,7 +18,7 @@ class DistanceSlider extends Component {
   };
 
   render() {
-    const { value, setValue, t, metric = "mi" } = this.props;
+    const { value, t, metric = "mi" } = this.props;
 
     return (
       <div className="item">

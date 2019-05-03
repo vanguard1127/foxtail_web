@@ -75,7 +75,7 @@ class MembersDropdown extends PureComponent {
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t("common:invitemems")}</div>
-                    {members.length === 0 && <div>No Members Available</div>}
+                    {members.length === 0 && <div>{t("nomem")}</div>}
                     <MembersList
                       members={members}
                       fetchMore={fetchMore}
@@ -121,7 +121,7 @@ class MembersDropdown extends PureComponent {
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t("common:removemems")}</div>
-                    {members.length === 0 && <div>No Members Available</div>}
+                    {members.length === 0 && <div>{t("nomem")}</div>}
                     <MembersList
                       members={members}
                       fetchMore={fetchMore}
@@ -167,8 +167,8 @@ class MembersDropdown extends PureComponent {
               >
                 <div className="invite-member">
                   <div className="content">
-                    <div className="head">Participants</div>
-                    {members.length === 0 && <div>No Members Available</div>}
+                    <div className="head">{t("common:Participants")}</div>
+                    {members.length === 0 && <div>{t("nomem")}</div>}
                     <MembersList
                       members={members}
                       fetchMore={fetchMore}
@@ -215,7 +215,7 @@ class MembersDropdown extends PureComponent {
                 <div className="invite-member">
                   <div className="content">
                     <div className="head">{t("common:removemems")}</div>
-                    {members.length === 0 && <div>No Members Available</div>}
+                    {members.length === 0 && <div>{t("nomem")}</div>}
                     <MembersList
                       members={members}
                       fetchMore={fetchMore}
@@ -261,8 +261,8 @@ class MembersDropdown extends PureComponent {
               >
                 <div className="invite-member">
                   <div className="content">
-                    <div className="head">Participants</div>
-                    {members.length === 0 && <div>No Members Available</div>}
+                    <div className="head">{t("common:Participants")}</div>
+                    {members.length === 0 && <div>{t("nomem")}</div>}
                     <MembersList
                       members={members}
                       fetchMore={fetchMore}

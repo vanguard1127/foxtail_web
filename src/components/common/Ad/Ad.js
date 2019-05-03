@@ -1,7 +1,7 @@
 import React from "react";
 import ProgressiveImage from "react-progressive-image";
 
-const Ad = ({ ad: { message, img, tinyImg, btnText, title } }) => {
+const Ad = (t, { ad: { message, img, tinyImg, btnText, title } }) => {
   if (message === "") {
     return (
       <section className="not-found">
@@ -10,7 +10,7 @@ const Ad = ({ ad: { message, img, tinyImg, btnText, title } }) => {
             <div className="icon">
               <i className="nico message" />
             </div>
-            <span className="head nopad">No message found</span>
+            <span className="head nopad">{t("nomsgs")}</span>
           </div>
         </div>
       </section>

@@ -20,5 +20,7 @@
   "deleve": "Delete Event",
   "cantbeun": "This can't be undone",
   "canevent": "Cancel Event",
-  "reportlbl": "Report:"
+  "reportlbl": "Report:",
+  "nocomm": "No comments yet.",
+  "nomocomm": "No comments yet."
 }
