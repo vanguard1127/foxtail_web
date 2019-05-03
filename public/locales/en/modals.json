@@ -115,5 +115,10 @@
   "reportchat": "Report Chat",
   "selproreported": "Selected profile has been reported. Thanks.",
   "chatreported": "Chat has been reported. Thanks.",
-  "evereported": "Event has been reported. Thanks."
+  "evereported": "Event has been reported. Thanks.",
+  "blkcancel": "Black Membership Canceled Successfully",
+  "processing": "Processing",
+  "upgradeblk": "Upgrade to Black Membership",
+  "blkmemsubheader": "Monthly membership. Cancel anytime.",
+  "blkmemheader": "Monthly membership. Cancel anytime."
 }

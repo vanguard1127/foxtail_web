@@ -621,7 +621,7 @@ class SettingsPage extends Component {
                               this.setDialogContent({
                                 title: t("delpho"),
                                 msg: t("remoundone"),
-                                btnText: t("del"),
+                                btnText: t("common:Delete"),
                                 okAction: () =>
                                   this.handlePhotoListChange({
                                     file,
@@ -648,7 +648,7 @@ class SettingsPage extends Component {
                               this.setDialogContent({
                                 title: t("delpho"),
                                 msg: t("remoundone"),
-                                btnText: t("del"),
+                                btnText: t("common:Delete"),
                                 okAction: () =>
                                   this.handlePhotoListChange({
                                     file,

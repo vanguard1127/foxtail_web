@@ -104,7 +104,7 @@ class Signup extends PureComponent {
       login()
         .then(async ({ data }) => {
           if (data.login === null) {
-            alert("User doesn't exist.");
+            alert(this.props.t("phoneexist"));
             return;
           }
 

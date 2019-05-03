@@ -8,5 +8,11 @@
   "reportconv": "Report Conversation",
   "participants": "participants",
   "nothere": "Chat No Longer Available",
-  "leftchat": "has left the chat"
+  "leftchat": "has left the chat",
+  "succleft": "Successfully left Chat",
+  "nomsgs": "No Messages found for this chat",
+  "leavewarn": "Are you sure you would like to leave this conversation? You will not be able to see this chat anylonger.",
+  "Leave": "Leave",
+  "Participants": "Participants",
+  "invitemem": "Invite Members"
 }

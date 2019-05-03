@@ -31,7 +31,7 @@ class EventShare extends PureComponent {
           )}
         </div>
         <div className="report-con">
-          <span className="rep-text">Report:</span>
+          <span className="rep-text">{t("reportlbl")}</span>
           <span className="report" onClick={showBlockModal} />
         </div>
       </>

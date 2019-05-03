@@ -24,7 +24,7 @@ class Landing extends PureComponent {
     if (props.location.state) {
       if (props.location.state.emailVer === true) {
         if (!toast.isActive("emailVer")) {
-          toast.success("Email has been confirmed.", {
+          toast.success(t("emailconfirmed"), {
             position: toast.POSITION.TOP_CENTER,
             toastId: "emailVer"
           });
@@ -33,7 +33,7 @@ class Landing extends PureComponent {
         }
       } else if (props.location.state.emailVer === false) {
         if (!toast.isActive("errVer")) {
-          toast.error("Email confirmation failed, please try again.", {
+          toast.error(t("emailconffail"), {
             position: toast.POSITION.TOP_CENTER,
             toastId: "errVer"
           });
@@ -48,7 +48,7 @@ class Landing extends PureComponent {
         props.history.replace({ state: {} });
       } else if (props.location.state.phoneReset === false) {
         if (!toast.isActive("errVer")) {
-          toast.error("Phone reset failed, please try again.", {
+          toast.error(t("phonefail"), {
             position: toast.POSITION.TOP_CENTER,
             toastId: "errVer"
           });
@@ -175,7 +175,7 @@ class Landing extends PureComponent {
                             });
                           }}
                         >
-                          Reset Phone Number
+                          {t("resetphone")}
                         </span>
                       </li>
                       <li className="tooltip">
@@ -208,7 +208,7 @@ class Landing extends PureComponent {
                                   this.props.props.history.push("/tos")
                                 }
                               >
-                                Anti Spam
+                                {t("antispam")}
                               </span>
                             </div>
                             <div>
@@ -228,7 +228,7 @@ class Landing extends PureComponent {
                                   this.props.props.history.push("/tos")
                                 }
                               >
-                                Law Enforcement
+                                {t("lawenf")}
                               </span>
                             </div>
                             <div>
@@ -238,7 +238,7 @@ class Landing extends PureComponent {
                                   this.props.props.history.push("/tos")
                                 }
                               >
-                                Subpoena Compliance
+                                {t("subcomp")}
                               </span>
                             </div>
                           </span>

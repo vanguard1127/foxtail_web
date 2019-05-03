@@ -69,6 +69,7 @@ class Footer extends Component {
                       }}
                     >
                       {seenTour => {
+                        //TODO:REmove
                         return (
                           <span onClick={() => seenTour()}>Reset Tour</span>
                         );

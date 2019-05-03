@@ -140,9 +140,8 @@ class InboxPanel extends Component {
             });
           }
           let messages = data.getInbox;
-          console.log("MESSAGES", data);
+
           if (error || !messages) {
-            console.error(error);
             return (
               <ErrorHandler.report
                 error={error}

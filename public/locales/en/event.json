@@ -15,5 +15,10 @@
   "createdon": "Created on",
   "nowyoucan": "Now you can join the discussion by writing a message",
   "notgoing": "Not Going",
-  "Going": "Going"
+  "Going": "Going",
+  "Event": "Event",
+  "deleve": "Delete Event",
+  "cantbeun": "This can't be undone",
+  "canevent": "Cancel Event",
+  "reportlbl": "Report:"
 }

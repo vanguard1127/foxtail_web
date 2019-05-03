@@ -28,7 +28,7 @@ class ChatActions extends Component {
       <ul>
         <li className="members">
           <span onClick={() => this.setState({ remDropOpen: !remDropOpen })}>
-            Participants
+            {t("Participants")}
           </span>
         </li>{" "}
         {remDropOpen && (
@@ -44,7 +44,7 @@ class ChatActions extends Component {
         )}
         <li className="invite">
           <span onClick={() => this.setState({ invDropOpen: !invDropOpen })}>
-            Invite Members
+            {t("invitemem")}
           </span>
         </li>{" "}
         {invDropOpen && (

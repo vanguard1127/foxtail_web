@@ -59,11 +59,12 @@ class Settings extends Component {
       <Query query={GET_SETTINGS} fetchPolicy="network-only">
         {({ data, loading, error }) => {
           if (loading || !data.getSettings) {
+            document.title = t("common:Loading");
             return (
               <Spinner message={t("common:Loading") + "..."} size="large" />
             );
           }
-
+          document.title = t("myacct");
           if (error) {
             return (
               <ErrorHandler.report

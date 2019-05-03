@@ -21,5 +21,20 @@
   "Created by": "Created by",
   "FAQ": "FAQ",
   "About": "About",
-  "Support": "Support"
+  "Support": "Support",
+  "emailconfirmed": "Email has been confirmed.",
+  "emailconffail": "Email confirmation failed, please try again.",
+  "phonefail": "Phone reset failed, please try again.",
+  "resetphone": "Reset Phone Number",
+  "antispam": "Anti Spam",
+  "lawenf": "Law Enforcement",
+  "subcomp": "Subpoena Compliance",
+  "phoneexist": "Phone doesn't exist in our system.",
+  "intrstreq": "Interest is required!",
+  "genreq": "Gender is required!",
+  "18old": "You must be at least 18 years old!",
+  "birthreq": "Birthdate is required!",
+  "invemail": "Invalid email address",
+  "emailreq": "Email is required!",
+  "userreq": "Username is required!"
 }

@@ -63,7 +63,7 @@ class InboxPage extends Component {
   componentDidMount() {
     this.mounted = true;
 
-    document.title = "Inbox";
+    document.title = this.props.t("Inbox");
     sessionStorage.setItem("page", "inbox");
     this.props.history.replace({ state: {} });
   }
@@ -109,15 +109,16 @@ class InboxPage extends Component {
   };
 
   handleRemoveSelf = removeSelf => {
-    const { chatID } = this.props.location.state;
+    const { refetch, location, history, t } = this.props;
+    const { chatID } = location.state;
     ErrorHandler.setBreadcrumb("Remove Self from Chat:" + chatID);
     removeSelf()
       .then(({ data }) => {
         if (this.mounted) {
-          toast.success("Successfully left Chat");
+          toast.success(t("succleft"));
           this.setState({ chat: null });
-          this.props.refetch();
-          this.props.history.push("/inbox");
+          refetch();
+          history.push("/inbox");
         }
       })
       .catch(res => {
@@ -259,17 +260,10 @@ class InboxPage extends Component {
 
                     if (loading) {
                       return (
-                        <Spinner
-                          message={t("common:Loading" + "...")}
-                          size="large"
-                        />
+                        <Spinner message={t("common:Loading")} size="large" />
                       );
                     } else if (!data || !data.readChatQuery) {
-                      return (
-                        <div className="col-md-7">
-                          No Messages found for this chat
-                        </div>
-                      );
+                      return <div className="col-md-7">{t("nomsgs")}</div>;
                     }
 
                     const { readChatQuery } = data;
@@ -285,14 +279,16 @@ class InboxPage extends Component {
                         isOwner={
                           chat && chat.ownerProfile.id === currentuser.profileID
                         }
-                        leaveDialog={() =>
+                        leaveDialog={() => {
+                          const title = t("leaveconv");
+                          const msg = t("leavewarn");
+                          const btnText = t("Leave");
                           this.setDialogContent({
-                            title: "Leave Conversation",
-                            msg:
-                              "Are you sure you would like to leave this conversation? You will not be able to see this chat anylonger.",
-                            btnText: "Leave"
-                          })
-                        }
+                            title,
+                            msg,
+                            btnText
+                          });
+                        }}
                       />
                     );
                   }}
@@ -316,14 +312,16 @@ class InboxPage extends Component {
                             chat &&
                             chat.ownerProfile.id === currentuser.profileID
                           }
-                          leaveDialog={() =>
+                          leaveDialog={() => {
+                            const title = t("leaveconv");
+                            const msg = t("leavewarn");
+                            const btnText = t("Leave");
                             this.setDialogContent({
-                              title: "Leave Conversation",
-                              msg:
-                                "Are you sure you would like to leave this conversation? You will not be able to see this chat anylonger.",
-                              btnText: "Leave"
-                            })
-                          }
+                              title,
+                              msg,
+                              btnText
+                            });
+                          }}
                         />
                         {showModal && (
                           <Modal

@@ -136,7 +136,7 @@ class EventPage extends Component {
       <Query query={GET_EVENT} variables={{ id }}>
         {({ data, loading, error, refetch }) => {
           if (error) {
-            document.title = "Error Occured";
+            document.title = t("Event");
             return (
               <ErrorHandler.report
                 error={error}
@@ -149,10 +149,8 @@ class EventPage extends Component {
           }
 
           if (loading) {
-            document.title = "Loading...";
-            return (
-              <Spinner message={t("common:Loading" + "...")} size="large" />
-            );
+            document.title = t("common:Loading");
+            return <Spinner message={t("common:Loading")} size="large" />;
           } else if (!data || !data.event) {
             return <div>{t("noevent")}.</div>;
           }
@@ -257,14 +255,14 @@ class EventPage extends Component {
                         className="color"
                         onClick={() => this.deleteEvent(deleteEvent)}
                       >
-                        Delete
+                        {t("common:Delete")}
                       </span>
                     );
                     return (
                       <Modal
-                        header={"Delete Event"}
+                        header={t("deleve")}
                         close={this.toggleDeleteDialog}
-                        description="This can't be undone"
+                        description={t("cantbeun")}
                         okSpan={okSpan}
                       />
                     );

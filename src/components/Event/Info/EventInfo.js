@@ -115,7 +115,7 @@ class EventInfo extends Component {
                 refetch={refetch}
               />
               <div className="join-event">
-                <span onClick={() => openDelete()}>Cancel Event</span>
+                <span onClick={() => openDelete()}>{t("canevent")}</span>
               </div>
             </>
           )}

@@ -7,23 +7,23 @@ import isEmpty from "../../utils/isEmpty.js";
 
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
-const schema = yup.object().shape({
-  interestedIn: yup.array().required("Interest is required!"),
-  gender: yup.string().required("Gender is required!"),
-  dob: yup
-    .date()
-    .nullable()
-    .default(null)
-    .max(date, "You must be at least 18 years old!")
-    .required("Birthdate is required!"),
-  email: yup
-    .string()
-    .email("Invalid email address")
-    .required("Email is required!"),
-  username: yup.string().required("Username is required!")
-});
 
 class SignupForm extends Component {
+  schema = yup.object().shape({
+    interestedIn: yup.array().required(this.props.t("intrstreq")),
+    gender: yup.string().required(this.props.t("genreq")),
+    dob: yup
+      .date()
+      .nullable()
+      .default(null)
+      .max(date, this.props.t("18old"))
+      .required(this.props.t("birthreq")),
+    email: yup
+      .string()
+      .email(this.props.t("invemail"))
+      .required(this.props.t("emailreq")),
+    username: yup.string().required(this.props.t("userreq"))
+  });
   state = {
     username: "",
     email: "",
@@ -81,7 +81,7 @@ class SignupForm extends Component {
   validateForm = async () => {
     try {
       if (this.mounted) {
-        await schema.validate(this.state);
+        await this.schema.validate(this.state);
         this.setState({ isValid: true, errors: {} });
         this.props.setFormValues(this.state);
         return true;

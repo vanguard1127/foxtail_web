@@ -27,7 +27,7 @@ class MessageList extends Component {
     if (messages.length === 0) {
       return (
         <div className="item" style={{ textAlign: "center" }}>
-          No comments yet.
+          {t("nocomm")}
         </div>
       );
     }
@@ -63,11 +63,11 @@ class MessageList extends Component {
         </div>
         {loading ? (
           <div className="item">
-            <span>Loading...</span>
+            <span> {t("common:Loading")}</span>
           </div>
         ) : (
           <div className="item" style={{ textAlign: "center" }}>
-            No more messages.
+            {t("nomocomm")}
           </div>
         )}
       </div>
