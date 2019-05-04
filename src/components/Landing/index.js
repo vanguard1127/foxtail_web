@@ -10,6 +10,9 @@ import { ToastContainer, toast } from "react-toastify";
 // minified version is also included
 import "react-toastify/dist/ReactToastify.min.css";
 import { withNamespaces } from "react-i18next";
+import getLang from "../../utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
 
 class Landing extends PureComponent {
   state = { resetPhoneVisible: false, token: null, tooltip: false };
@@ -75,11 +78,12 @@ class Landing extends PureComponent {
                         t={t}
                         history={props.history}
                         ErrorHandler={ErrorHandler}
+                        lang={lang}
                       />
                     </ErrorHandler.ErrorBoundary>
                     <ErrorHandler.ErrorBoundary>
                       {" "}
-                      <LanguageControl />
+                      <LanguageControl lang={lang} />
                     </ErrorHandler.ErrorBoundary>
                   </div>
                 </div>
@@ -146,7 +150,7 @@ class Landing extends PureComponent {
                   <div className="col-lg-5 col-md-12">
                     <ErrorHandler.ErrorBoundary>
                       {" "}
-                      <Signup t={t} ErrorHandler={ErrorHandler} />
+                      <Signup t={t} ErrorHandler={ErrorHandler} lang={lang} />
                     </ErrorHandler.ErrorBoundary>
                   </div>
                 </div>
@@ -205,7 +209,7 @@ class Landing extends PureComponent {
                               {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push("/tos")
+                                  this.props.props.history.push("/antispam")
                                 }
                               >
                                 {t("antispam")}
@@ -215,30 +219,12 @@ class Landing extends PureComponent {
                               {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push("/tos")
-                                }
-                              >
-                                DCMA
-                              </span>
-                            </div>
-                            <div>
-                              {" "}
-                              <span
-                                onClick={() =>
-                                  this.props.props.history.push("/tos")
+                                  this.props.props.history.push(
+                                    "/lawenforcement"
+                                  )
                                 }
                               >
                                 {t("lawenf")}
-                              </span>
-                            </div>
-                            <div>
-                              {" "}
-                              <span
-                                onClick={() =>
-                                  this.props.props.history.push("/tos")
-                                }
-                              >
-                                {t("subcomp")}
                               </span>
                             </div>
                           </span>
@@ -267,13 +253,7 @@ class Landing extends PureComponent {
                         </span>
                       </li>
                       <li>
-                        <span
-                          onClick={() =>
-                            this.props.props.history.push("/support")
-                          }
-                        >
-                          {t("Support")}
-                        </span>
+                        <a href="mailto:support@foxtail.com">{t("Support")}</a>
                       </li>
                     </ul>
                   </div>
@@ -287,8 +267,9 @@ class Landing extends PureComponent {
             t={t}
             token={token}
             close={() => this.setState({ resetPhoneVisible: false })}
-            ErrorBoundary={ErrorHandler}
+            ErrorHandler={ErrorHandler}
             history={this.props.props.history}
+            lang={lang}
           />
         )}
         <ToastContainer />

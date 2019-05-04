@@ -605,6 +605,7 @@ class SettingsPage extends Component {
                             }
                             t={t}
                             ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            lang={lang}
                           />
                           <Photos
                             isPrivate={false}
@@ -719,6 +720,7 @@ class SettingsPage extends Component {
                               dayjs={dayjs}
                               notifyClient={this.notifyClient}
                               setDialogContent={this.setDialogContent}
+                              lang={lang}
                             />
                           )}
                           <AcctSettings
@@ -727,6 +729,7 @@ class SettingsPage extends Component {
                             }
                             t={t}
                             ErrorHandler={ErrorHandler}
+                            lang={lang}
                           />
                         </div>
                       </div>

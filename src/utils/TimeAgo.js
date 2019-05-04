@@ -5,12 +5,10 @@ dayjs.extend(relativeTime);
 function TimeAgo(updatedAt) {
   if (dayjs(updatedAt).isAfter(dayjs().subtract(1, "week"))) {
     return dayjs(updatedAt)
-      .locale(localStorage.getItem("i18nextLng"))
       .fromNow()
       .toString();
   } else {
     return dayjs(updatedAt)
-      .locale(localStorage.getItem("i18nextLng"))
       .format("MMM Do")
       .toString();
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import ProgressiveImage from "react-progressive-image";
 
-const Ad = (t, { ad: { message, img, tinyImg, btnText, title } }) => {
+const Ad = ({ t, ad: { message, img, tinyImg, btnText, title } }) => {
   if (message === "") {
     return (
       <section className="not-found">

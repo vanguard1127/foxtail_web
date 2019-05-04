@@ -21,7 +21,8 @@ class MessageList extends Component {
       handleEnd,
       fetchMore,
       loading,
-      t
+      t,
+      lang
     } = this.props;
 
     if (messages.length === 0) {
@@ -39,6 +40,7 @@ class MessageList extends Component {
           message={message}
           history={history}
           dayjs={dayjs}
+          lang={lang}
         />
       );
     });

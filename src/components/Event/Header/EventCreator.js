@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { preventContextMenu } from "../../../utils/image";
 class EventCreator extends PureComponent {
   render() {
-    const { ownerProfile, createdAt, history, t, dayjs } = this.props;
+    const { ownerProfile, createdAt, history, t, dayjs, lang } = this.props;
 
     return (
       <div
@@ -26,7 +26,7 @@ class EventCreator extends PureComponent {
             <span className="created-date">
               {t("createdon")}{" "}
               {dayjs(createdAt)
-                .locale(localStorage.getItem("i18nextLng"))
+                .locale(lang)
                 .format("MMMM D YYYY")}
             </span>
           </div>

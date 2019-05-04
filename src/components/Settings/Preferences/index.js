@@ -38,10 +38,9 @@ class Preferences extends Component {
       setLocationValues,
       t,
       ErrorBoundary,
-      isBlackMember
+      isBlackMember,
+      lang
     } = this.props;
-
-    const lang = localStorage.getItem("i18nextLng");
 
     return (
       <ErrorBoundary>

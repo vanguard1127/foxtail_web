@@ -13,7 +13,8 @@ class ManageBlackSub extends Component {
       currentuser,
       dayjs,
       notifyClient,
-      setDialogContent
+      setDialogContent,
+      lang
     } = this.props;
     return (
       <ErrorHandler.ErrorBoundary>
@@ -29,7 +30,7 @@ class ManageBlackSub extends Component {
                 {t("common:creditend")} {currentuser.ccLast4}{" "}
                 {t("common:renewdate")}:{" "}
                 {dayjs(currentuser.blackMember.renewalDate)
-                  .locale(localStorage.getItem("i18nextLng"))
+                  .locale(lang)
                   .format("MMMM DD YYYY")}
               </div>
             )}
@@ -37,7 +38,7 @@ class ManageBlackSub extends Component {
               <div className="col-md-12">
                 {t("common:blkend")}:{" "}
                 {dayjs(currentuser.blackMember.renewalDate)
-                  .locale(localStorage.getItem("i18nextLng"))
+                  .locale(lang)
                   .format("MMMM DD YYYY")}
               </div>
             )}

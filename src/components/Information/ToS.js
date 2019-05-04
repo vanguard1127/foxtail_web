@@ -1,1234 +1,1180 @@
-import React from 'react';
+import React from "react";
+
 const ToS = () => (
-  <div style={{ padding: '20px' }}>
-    <h1>Term and Conditions</h1>
+  <div className="fullscreen">
+    <div style={{ margin: "0 20vh 20vh 20vh" }}>
+      <h1>Term and Conditions</h1>
 
-    <p>
-      Terms and Conditions
+      <p>
+        Foxtail - LOV Corporation
+        <br />
+        WWW.FOXTAILAPP.COM
+      </p>
       <br />
-      LOV Corporation
-      <br />
-      WWW.FOXTAILAPP.COM
-    </p>
-    <br />
 
-    <p>
-      <br />
-      Last Modified: March 10, 2019
-    </p>
-    <br />
-
-    <p>
-      1. Preliminary Provisions:
-      <br />
-      1. Introduction - Welcome to our website's Terms and Conditions
-      (hereinafter &quot;T&amp;C's&quot; of &quot;Agreement&quot;). The
-      provisions of this Agreement will govern your use of our website, and you
-      should therefore take some time to read it carefully. Our website is
-      different from many other sites on the Internet as it contains
-      advertisements, communications and links posted by independent third
-      parties, over which we exert no control. We do not get involved in any
-      disputes that may develop between our advertisers and others, and we do
-      not facilitate communication between third parties. Therefore, you are
-      urged to use your own good judgment and common sense when responding to
-      such advertisements, as we are not responsible for any interactions
-      occurring between our Users and our advertisers. Federal law protects
-      sites like ours from civil claims, so we encourage you to independently
-      research any information found in our Advertisements, before making any
-      decisions. We hope that you thoroughly enjoy our services, and anticipate
-      that you will find our site useful and informative. Should you have any
-      questions or comments regarding our website, or its policies, please feel
-      free to contact us at: support@foxtailapp.com.
-    </p>
-    <br />
-
-    <p>
-      2. Additionally, through the use of these Terms and Conditions, we are
-      placing legal conditions on your use of this website (www.foxtailapp.com,
-      hereinafter the &quot;Website&quot;), and making certain promises to you.
-    </p>
-    <br />
-
-    <p>3. Party Definitions</p>
-    <br />
-
-    <p>
-      1. &quot;Us,&quot; the service provider - LOV Corporation is the service
-      provider for www.foxtailapp.com and various other websites (collectively
-      referred to as our &quot;Network&quot;). It should be obvious, but for the
-      sake of legal clarity, when this Agreement uses first-person pronouns such
-      as &quot;Us,&quot; &quot;We,&quot; &quot;Our,&quot; &quot;Ours,&quot;
-      etc., those first-person pronouns are referring to LOV Corporation as the
-      service provider for www.foxtailapp.com.
-    </p>
-    <br />
-
-    <p>
-      2. &quot;You,&quot; the User - As a User of this Website, this Agreement
-      will refer to the User as &quot;You&quot; or through any second-person
-      pronouns, such as &quot;Yours,&quot; etc. Hereinafter, the User of the
-      Website shall be referred to in applicable second- person pronouns.
-    </p>
-    <br />
-
-    <p>
-      3. When the term &quot;Website&quot; is used in this set of T&amp;C's, it
-      means www.foxtailapp.com unless the Agreement specifically says otherwise.
-    </p>
-    <br />
-
-    <p>
-      4. Consideration - Consideration for Your acquiescence to all of the
-      provisions in this Agreement has been provided to You in the form of
-      allowing You to use Our Website and Our Services. You agree that such
-      Consideration is both adequate, and that it is received upon Your viewing
-      or downloading any portion of Our Website.
-    </p>
-    <br />
-
-    <p>
-      5. Our first condition is that you must agree to all of the conditions in
-      this set of Terms and Conditions of use. You do not need to use our
-      Website, therefore if you do not wish to be bound by each and every
-      provision in this Agreement, then you are not welcome to use this Website
-      and should leave and use another service.
-    </p>
-    <br />
-
-    <p>
-      6. You may not unilaterally disregard any portion of this Agreement.
-      However, if there is a particular portion of this Agreement that You wish
-      to avoid, You may contact Us to negotiate a separate agreement BEFORE You
-      use the Website. We do not guarantee that such negotiations will be
-      successful. Nevertheless, if You wish to discuss Your own personalized
-      Agreement, please contact Us or have Your attorney do so.
-    </p>
-    <br />
-
-    <p>
-      7. If You do not understand all of the terms in this Website, then You
-      should consult with a lawyer before using the Website.
-    </p>
-    <br />
-
-    <p>
-      8. This Website is for adults only. If You are under the age of eighteen
-      (18), sorry, You are not to use this Website at all unless and until we
-      receive written confirmation from Your parents that they will a) allow You
-      to use this Website, and b) that they will supervise Your use of the
-      Website.
-    </p>
-    <br />
-
-    <p>9. Revisions to this Agreement</p>
-    <br />
-
-    <p>
-      1. From time to time, We may revise this Agreement. We reserve the right
-      to do so, and You specifically agree that We have this unilateral right.
-      You agree that all modifications or changes to this Agreement are in force
-      immediately upon posting. The updated or edited version supersedes any
-      prior versions immediately upon posting, and the prior version is of no
-      continuing legal effect.
-    </p>
-    <br />
-
-    <p>
-      2. If We change anything in this Agreement, We will change the &quot;last
-      modified date&quot; at the top of this Agreement. You agree to re-visit
-      this web page on a weekly basis, and to use the &quot;refresh&quot; button
-      on Your browser when doing so. Upon each visit, You agree to note the date
-      of the last revision to this Agreement. If the &quot;last modified&quot;
-      date remains unchanged from the last time You reviewed this Agreement,
-      then You may presume that nothing in the Agreement has been changed since
-      the last time You read it. If the &quot;last modified&quot; date has
-      changed, then You can be certain that something in the Agreement has been
-      changed, and You agree that You will re-review the Agreement in its
-      entirety and that You will agree to its terms or immediately cease use of
-      any Websites in Our Network.
-    </p>
-    <br />
-
-    <p>
-      3. Waiver - if You fail to re-review this Agreement as required to
-      determine if any of the terms have changed, You assume all responsibility
-      for such omissions and You agree that such failure amounts to Your
-      affirmative waiver of Your right to review the amended terms. We are not
-      responsible for Your neglect of Your legal rights.
-    </p>
-    <br />
-
-    <p>
-      2. Acceptance and Affirmation
-      <br />
-      1. You must agree to all of the terms in this Agreement before using the
-      Website or Our services.
-      <br />
-      2. How You can and will demonstrate Your affirmative acceptance of all of
-      the terms in this Agreement:
-      <br />
-      1. If You click any link, button, or other device, provided to You in any
-      part of Our Website's interface, then You have legally agreed to all of
-      these T&amp;C's; or
-      <br />
-      2. By using any of Our services in any manner, You understand and agree
-      that We will consider any use of Our Website as Your affirmation of Your
-      complete and unconditional acceptance of all of the terms in this
-      Agreement.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      2. Services provided and not provided
-      <br />
-      1. The Website provides a forum through which adults may seek and
-      establish personal contact with one another through the use of the
-      Website's capabilities for displaying photographs and written materials
-      provided by its members. The Website contains images and content,
-      including but not limited to text, images, messages, and other
-      information. All Materials displayed on the Website are protected by the
-      First Amendment rights to Free Speech, Free Expression, Freedom of
-      Association and Freedom of the Press, and parallel provisions of state
-      constitutions. The Website is dedicated to assisting like-minded
-      individuals locate, and communicate with, each other. We are not
-      responsible for the content of communications, statements, opinions,
-      posting or other information placed on the Website by third parties, via
-      any discussion board, forum, or public area of the Website. Such
-      information is intended to be protected by the immunity provided by
-      Section 230 of the Communications Decency Act (&quot;CDA&quot;) which
-      immunizes this Website, and its agents and employees, from any claims
-      relating to the content of information posted by third parties. We do not
-      act as a censor of such material. You acknowledge that the Website may
-      offer online content that could be deemed &quot;adult,&quot;
-      &quot;offensive,&quot; or &quot;erotic&quot; in nature. While We may
-      choose to remove content that is identified as illegal, is stolen, or
-      which violates Our policies, We do not edit, review, or change posts made
-      by third parties prior to the information appearing online.
-      <br />
-      2. We do not provide advice, screening, background checks, warranties,
-      guarantees, or information about members. All information about members is
-      provided by the members themselves.
-      <br />
-      3. We do not accept responsibility for any information provided by Our
-      members. You understand that member-provided information may be
-      inaccurate, false, or incomplete. By using the Website, You understand and
-      accept that information presented in other members' profiles may be false,
-      misleading, inaccurate, or incomplete, and that the Website has no
-      responsibility or control over verifying member-provided information.
-      <br />
-      4. The Website does not pre-approve any of its members or users, prior to
-      their use of the Website. It is Your responsibility to properly
-      investigate the background, personality, criminal history, financial
-      condition, or any other relevant factor affecting Your potential
-      compatibility with any other member or user, prior to communicating with,
-      or meeting such person. Most importantly, USE COMMON SENSE! Do not provide
-      any personal information to individuals who may misuse that information to
-      Your detriment. While the Website provides a venue for the exchange of
-      information, ideas and emotion, it does not act as a guarantor of the
-      accuracy of such information, and all users/members are encouraged to
-      approach the veracity of any communications occurring on the Website with
-      a healthy skepticism.
-      <br />
-      5. In light of the above, You hereby discharge, acquit, and otherwise
-      release the Website, its parent corporation, its agents, employees,
-      officers, directors, shareholders, attorneys, and affiliates, from any and
-      all allegations, counts, charges, debts, causes of action, and claims
-      relating in any way to the use of, or activities relating to the use of,
-      the Website including, but not limited to claims relating to the
-      following:
-      <br />
-      1. Sexual Harassment, Copyright Infringement, Negligence, Gross
-      Negligence, Reckless Conduct, Alienation of Affections (to the extent
-      recognized in any jurisdiction), Intentional Infliction of Emotional
-      Distress, Intentional Interference with Contract or Advantageous Business
-      Relationship, Defamation, Statutory Rape, Invasion of Privacy, and
-      Misrepresentation or any claim based on Vicarious Liability for Torts
-      committed by individuals met on or through the Website, including but not
-      limited to fraud, assault, battery, stalking, rape, theft, cheating,
-      perjury, manslaughter, or murder.
-      <br />
-      2. The above list is intended to be illustrative only, and not exhaustive
-      of the types or categories of claims released by You. This release is
-      intended by the parties to be interpreted broadly in favor of the Website,
-      and thus any ambiguity shall be interpreted in a manner providing release
-      of the broadest claims. This release is intended to be a full release of
-      claims, and the parties acknowledge the legally binding nature of this
-      provision, and the nature of the rights given up in connection therewith.
-      <br />
-      6. You acknowledge that You are aware of the nature of the Materials and
-      content on Our Website, that You are not offended by such Materials and
-      that You access the Website freely, voluntarily and willingly. You also
-      acknowledge that this Website is intended to contain only images protected
-      by the First Amendment to the United States Constitution. If You are
-      seeking information regarding illegal activities, please leave this
-      Website immediately. You are further aware of the community standards of
-      Your community, and You will only access the content on the Website if You
-      believe, upon diligent investigation, that the content on the Website does
-      not offend the community standards prevalent in Your community. You
-      further agree not to use or access the Website if doing so would violate
-      the laws of Your state, province or country.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      2. Membership Terms, Limitations &amp; Conditions:
-      <br />
-      1. Age of Majority: You represent and warrant You are at least 18 years of
-      age, and that You have the legal capacity to enter into this Agreement. If
-      you are not at least 18 years of age, You must exit the Website
-      immediately and may not use or access the Website or print or download any
-      Materials from Our Website. You may be asked to verify Your birth date on
-      the Birth Date Verifier™ form as a condition of entry onto the Website,
-      pursuant to 28 U.S.C. §1746. You agree not to bypass any security and/or
-      access feature on this Website. Additionally, the Website does not assume
-      any responsibility or liability for any misrepresentations regarding a
-      user's age.
-      <br />
-      2. Membership: Membership may not be assigned, transferred, or sold to a
-      third party. The Website and its affiliates disclaim any and all liability
-      arising from fraudulent entry and use of the Website. If a user
-      fraudulently obtains access, the Website may terminate membership
-      immediately and take all necessary and appropriate actions under
-      applicable federal, state, and international laws.
-      <br />
-      3. No Illegal Conduct Allowed: You will not use the Website in any manner
-      inconsistent with any applicable laws or regulations. You may not include
-      any personally-identifying information such as phone numbers, street
-      addresses, Web site addresses, email addresses, Instant Messenger screen
-      names, or any other information that if provided may be used to circumvent
-      the Website's communication capabilities. You may not use the Website to
-      advertise products or services, nor may You use the Website in order to
-      solicit products or services.
-      <br />
-      4. Email: A key component of the services provided by the Website is email
-      communication sent from Us or through Us to You. By initiating membership,
-      You specifically and explicitly agree to accept, and You consent to
-      receiving commercial and personal email messages sent from Us or sent by
-      other members through Our services. These messages may include emails from
-      other members seeking contact, emails from the Website, emails from the
-      Website regarding potential matches, and emails from the Website regarding
-      promotions, events, and other commercial enterprises that may be part of
-      the services provided by the Website or that constitute advertisements of
-      other services provided by the Website or its parent corporation,
-      subsidiaries, or partners.
-      <br />
-      5. You specifically agree to accept all bulk commercial email that may be
-      sent by the Website, its principals, Affiliates, assigns, successors,
-      parent company, or other persons or corporations acting in conjunction
-      with Us. If You commence membership (either as paid member or in any free
-      trial offers as may be available from time to time) You are hereby deemed
-      to be engaging in a business relationship with Us. Such business
-      relationships shall permit Us to send You unsolicited email for the
-      purpose of promoting services provided by Our Website or other services as
-      may be offered from time to time by the Website, its parent corporation,
-      subsidiaries, or partners. Cancellation of Your account or other business
-      relationships with Us shall not be deemed to terminate Our relationship
-      with You with respect to the provision of unsolicited commercial email.
-      This business relationship is specifically deemed to continue indefinitely
-      until explicitly terminated by You, by sending a message to the following
-      email address: support@foxtailapp.com.
-      <br />
-      6. You may become a member of the Website by completing an online
-      registration form, which must be accepted by Website. Upon submission of
-      the online registration form, Website or its authorized agent will process
-      the application. In connection with completing the online registration
-      form, You agree to:
-      <br />
-      1. Provide true, accurate, current and complete information about Yourself
-      as prompted by the registration form (such information being the
-      &quot;Registration Data&quot;); and
-      <br />
-      2. Maintain and promptly update the Registration Data to keep it true,
-      accurate, current and complete at all times while You are a member. You
-      must promptly inform Website of all changes, including, but not limited
-      to, changes in Your email address.
-      <br />
-      7. If You provide any information that is untrue, inaccurate, not current
-      or incomplete, or Website or any of its authorized agents have reasonable
-      grounds to suspect that such information is untrue, inaccurate, not
-      current or incomplete, Website has the right to suspend or terminate Your
-      account and refuse any and all current or future use of the Website, as
-      well as subjecting You to criminal and civil liability.
-      <br />
-      8. In connection with completing the online registration form, You agree
-      NOT to register a person other than Yourself, without that person's
-      written permission. If You register a third party without their written
-      consent, You stipulate to liquidated damages of $50,000.00 per such
-      violation, and You agree to pay any and all fees incurred in the recovery
-      of this amount, including attorneys' fees and all associated costs. We
-      expressly reserve the right, and You stipulate, that We may assign the
-      rights to sue for these liquidated damages to any third party claiming
-      injury by such violation.
-      <br />
-      1. If, during registration, You provide any information that is untrue,
-      inaccurate, not current or incomplete, or Website or any of its authorized
-      agents have reasonable grounds to suspect that such information is untrue,
-      inaccurate, not current or incomplete, Website has the right to suspend or
-      terminate Your account and refuse any and all current or future use of the
-      Website, as well as subjecting You to criminal and civil liability.
-      <br />
-      2. In connection with completing the online registration form, You agree
-      NOT to register a person other than yourself, without that person's
-      written permission. If You register a third party without their written
-      consent, You stipulate to liquidated damages of $50,000.00 per such
-      violation, and You agree to pay any and all fees incurred in the recovery
-      of this amount, including attorneys' fees and all associated costs. We
-      expressly reserve the right, and You stipulate, that we may assign the
-      rights to sue for these liquidated damages to any third party claiming
-      injury by such violation.
-      <br />
-      9. Member Account, Password, and Security: As part of the registration
-      process, You will be issued a unique user name and password which You must
-      provide in order to gain access to the non-public portion of the Website.
-      You certify that when asked to choose a username You will not choose a
-      name which may falsely represent You as somebody else or a name which may
-      otherwise be in violation of the rights of a third party.
-      <br />
-      1. We reserve the right to disallow the use of usernames that We, at Our
-      sole discretion, deem inappropriate. We reserve the right to cancel, at
-      any time, the membership of any member who uses their selected username in
-      violation of these Terms and Conditions or in any other way We, in Our
-      sole discretion, deem inappropriate.
-      <br />
-      2. Your membership, user ID, and password are nontransferable and non-
-      assignable.
-      <br />
-      3. You represent and warrant that You will not disclose Your unique user
-      name and password to any other person and that You will not provide access
-      to the Website to anyone who is below the age of majority in Your state,
-      province, or country, or who otherwise is not eligible to view the content
-      on the Website.
-      <br />
-      4. You are solely responsible for maintaining the confidentiality of Your
-      user name and password and are fully responsible for all activities that
-      occur under Your user name and password. Our Website will not release Your
-      password for security reasons.
-      <br />
-      5. Regarding additional password and account security, You agree to:
-      <br />
-      1. Immediately notify the Website of any unauthorized use of Your user
-      name and password or any other breach of security, and
-      <br />
-      2. Ensure that You exit from Your account at the end of each session. You
-      are liable and responsible for any unauthorized use of the Website until
-      You notify the Website by email regarding that unauthorized use.
-      Unauthorized access to the Website is illegal and a breach of this
-      Agreement. You indemnify the Website against all activities conducted
-      through Your account.
-      <br />
-      6. Subscription fees are non-refundable, and You are responsible for any
-      credit card charge backs, dishonored checks and any related fees that We
-      incur with respect to Your account.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      2. Special Considerations Regarding Minors
-      <br />
-      1. Age of Majority. In order to use the Website or any services provided
-      by Us, You must have attained the age of majority in your jurisdiction.
-      You represent and warrant that You are at least eighteen (18) or
-      twenty-one (21) years of age, depending on the age of majority in Your
-      jurisdiction, and that You have the legal capacity to enter into this
-      Agreement.
-      <br />
-      1. You were asked to verify Your birth date on the Birth Date Verifier™
-      form as a condition of entry onto certain areas of the Website containing
-      adult content, pursuant to 28 U.S.C. § 1746. Accordingly, if You provided
-      incorrect information on the Birth Date Verifier™ page, You committed an
-      act of perjury, this perjury was recorded, and this perjury may (and will)
-      be used against You in any court proceeding or other tribunal of any kind.
-      <br />
-      2. We specifically disclaim any responsibility or liability for any
-      misrepresentations regarding a User's age.
-      <br />
-      3. You represent and warrant that You will not allow any minor access to
-      this Website. Users should implement parental control protections, such as
-      computer hardware, software, or filtering services, which may help users
-      to limit minors' access to harmful material. You acknowledge that if Your
-      computer can be accessed by a minor, that You will take all precautions to
-      keep Our Materials from being viewed by minors. You additionally
-      acknowledge that if You are a parent, it is Your responsibility, and not
-      Ours, to keep Our erotic content from being displayed to Your children or
-      wards.
-      <br />
-      2. WE HAVE A ZERO TOLERANCE POLICY FOR CHILD PORNOGRAPHY AND A ZERO
-      TOLERANCE POLICY REGARDING PEDOPHILES, PEDERASTS OR ANY PEDOPHILIC,
-      PEDERASTIC, OR SIMILAR RELATED ACTIVITY.
-      <br />
-      1. All depictions of all persons on Our Website are of persons over the
-      age of eighteen (18) as of the date of the production of the depiction. We
-      take great measures to ensure that no underage models appear in any of Our
-      materials.
-      <br />
-      2. If You seek any form of child pornography (including so-called
-      &quot;virtual&quot; child pornography), You must exit this Website
-      immediately. We do not provide this kind of material and We do not
-      tolerate those who provide this kind of material nor do we tolerate
-      consumers of this kind of material.
-      <br />
-      3. In order to further Our zero-tolerance policy You agree to report any
-      images that appear to depict minors on Our Website. If You see any images
-      or other depictions that are questionable, You agree to report these
-      images by emailing us at support@foxtailapp.com.
-      <br />
-      4. Include with Your report any appropriate evidence, including the date
-      and time of identification. All reports will immediately be investigated
-      and the appropriate action will be taken.
-      <br />
-      5. We enthusiastically cooperate with any law-enforcement agency
-      investigating child pornography. If You suspect other outside websites are
-      participating in unlawful activities involving minors, please report them
-      to http://www.asacp.org.
-    </p>
-    <br />
-
-    <p>
-      6. Images and Content
-      <br />
-      1. Our Website contains images and content, including but not limited to
-      text, software, images, graphics, data, messages, and other information
-      (collectively, &quot;Materials&quot;).
-      <br />
-      2. You acknowledge and stipulate that all of the Materials are expressive
-      content that is fully protected by the First Amendment to the United
-      States Constitution.
-      <br />
-      3. You acknowledge and understand that some of the Materials contain
-      graphic visual depictions of sexual activity and nudity, graphic audio
-      portions of the same kind of content, and descriptions of sexually
-      oriented and sexually explicit activities. You acknowledge that You are
-      aware of the nature of the Materials provided by Our Website and that You
-      are not offended by such Materials, and to the contrary, that You are
-      accessing this Website specifically because You enjoy such expressive
-      content and You wish to view such Materials. You stipulate that You access
-      this Website freely, voluntarily, and willingly, and for Your own personal
-      enjoyment.
-      <br />
-      4. You agree not to use or access the Website if doing so would violate
-      the laws of Your state, province, or country.
-      <br />
-      5. In the event that any court finds that any third party communication or
-      third party content on Our Website falls outside of the realm of Section
-      230 of the CDA, this shall not be deemed to be a waiver of any legal
-      protections provided by CDA§ 230 for any and all other content posted on
-      Our Website.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      6. Restrictions on Use of Website
-      <br />
-      1. You agree that You will only use the Website for purposes expressly
-      permitted and contemplated by this Agreement. You may not use the Website
-      for any other purposes without Our express prior written consent.
-      <br />
-      2. Without Our express prior written authorization, You may not:
-      <br />
-      1. Duplicate any part of the Webite or the Materials contained therein
-      (except as expressly provided elsewhere in this Agreement);
-      <br />
-      2. Redistribute or create any derivative works based on the Website or any
-      of the materials contained therein. You agree that any such use is NOT
-      &quot;fair use&quot;;
-      <br />
-      3. Use the Website or any of the materials contained therein for any
-      public display, public performance, sale or rental, and You hereby agree
-      and stipulate that any and all such uses are NOT &quot;fair use&quot;;
-      <br />
-      4. Remove any copyright or other proprietary notices from the Website or
-      any of the Materials contained therein;
-      <br />
-      5. Circumvent any encryption or other security tools used anywhere on the
-      Website (including the theft of user names and passwords or using another
-      person's user name and password in order to gain access to a restricted
-      area of the Website);
-      <br />
-      3. Acceptable Use Policy: You agree and understand that Our Website
-      permits You to use Our services in order to post content and to
-      communicate with other Users. We are entitled to investigate and terminate
-      Your membership if You have misused the Website, or behaved in a way which
-      could be regarded as inappropriate, unlawful, or illegal. The following is
-      a partial, but not exhaustive, list of the types of actions that are
-      illegal or prohibited under this Agreement.
-      <br />
-      1. Unlawful, harmful, threatening, abusive, harassing, defamatory,
-      invasive of another's privacy or right to publicity, or harmful to minors
-      in any way, shape, or form;
-      <br />
-      2. Posting content or information that might be considered to be
-      impersonating another person or legal entity;
-      <br />
-      3. Any posts with personally identifying information about another person
-      without that person's prior explicit consent;
-      <br />
-      4. Posting content or information that constitutes SPAM or bulk posting of
-      commercial advertisements for commercial interests;
-      <br />
-      5. Posting content or information that infringes upon any trademark,
-      copyright, or other intellectual property rights of any party;
-      <br />
-      6. You also agree to immediately cease and desist from any contact with
-      any person who so requests such cessation;
-      <br />
-      7. You will not &quot;stalk&quot; or otherwise harass any person, and if
-      any member or other person requests that You cease communications with
-      them, at any time, for any reason, You will immediately comply with said
-      request. Further, You stipulate to liquidated damages of $50,000.00 per
-      such violation, and You agree to pay any and all fees incurred in the
-      recovery of this amount, including attorneys' fees and all associated
-      costs. We expressly reserve the right, and You stipulate, that We may
-      assign the rights to sue for these liquidated damages to any third party,
-      including the party stalked or otherwise harassed by such violation.
-      <br />
-      8. You will not post on this Website any private information such as
-      address, phone number or any other private identifying information, about
-      anyone other than Yourself, without first obtaining that person's written
-      consent. Further, You stipulate to liquidated damages of $50,000.00 per
-      such violation, and You agree to pay any and all fees incurred in the
-      recovery of this amount, including attorneys' fees and all associated
-      costs. We expressly reserve the right, and You stipulate, that We may
-      assign the rights to sue for these liquidated damages to any third party,
-      including the party claiming injury by such violation.
-      <br />
-      9. You agree that You will not use Our services in order to collect any
-      personal data about other users;
-      <br />
-      10. You agree that You will not use Our services in order to conduct any
-      illegal activities at all;
-      <br />
-      11. You agree that You will not use Our services in order to view,
-      transmit, traffic in, or in any other way interact with, provide to any
-      other person, or receive child pornography in any way;
-      <br />
-      12. You will not use Your profile or any other portion of the Website of
-      Our services to promote any other business enterprise, nor will you
-      attempt to use any of Our services to promote an escort service,
-      prostitution, web-cams, or any other form of related enterprise;
-      <br />
-      13. You agree that You will not use Our services in order to view,
-      transmit, traffic in, or in any other way interact with, provide to any
-      other person, or receive obscene materials in any way;
-      <br />
-      14. You agree that You will not use Our services in order to view,
-      transmit, traffic in, or in any other way interact with, provide to any
-      other person, or receive drugs or other illegal substances in any way;
-      <br />
-      15. You will not impersonate any person or entity, and will accurately
-      represent Your gender in Your profile communications;
-      <br />
-      4. SPAM Prohibition: You agree not to use any facilities or capabilities
-      of the Website to solicit the performance of any activity that is
-      prohibited by the CAN-SPAM Act dealing with illegal distribution of
-      unsolicited commercial bulk e-mail (&quot;UCBE&quot;), commonly known as
-      &quot;spam,&quot; nor shall members forge or use without authorization any
-      mail header information from any source. Members agree to the Website's
-      Spam Policy [INSERT LINK] which is hereby incorporated by reference. Any
-      breach of the Website's Spam Policy will result in immediate termination
-      of Your account, and the immediate provision of Your identity and contact
-      information to the Federal Trade Commission and any other applicable law
-      enforcement agencies.
-      <br />
-      5. Photographs or Pictures:
-      <br />
-      1. For use on Your profile, You may upload photographs of yourself. The
-      photographs You upload may be chosen at your discretion, as long as they
-      do not violate any of the other terms of this Agreement. You agree that NO
-      photograph of any person under the age of 18 years will be uploaded, upon
-      threat of prosecution under state and federal laws prohibiting such
-      photographic content.
-      <br />
-      2. By uploading any photographs, You hereby swear that You own or control
-      all intellectual property rights with respect to the uploaded photographs;
-      and,
-      <br />
-      3. With respect to any photographs at any time uploaded to a location on
-      Our Website other than Your &quot;Private Album,&quot; You hereby
-      irrevocably grant a non- exclusive right and license the Website to:
-      <br />
-      1. Reproduce, transmit, communicate, display, or distribute the
-      photographs, on or as part of the Website, on other Internet sites, or
-      elsewhere, for promotional or commercial purposes, by means of any
-      technology, whether now known or hereafter to become known;
-      <br />
-      2. Reproduce Your photographs in digital form of display on the Internet
-      (alone or in combination with other works, including, but not limited to,
-      text, data, images, photographs, illustrations, animation, graphics,
-      video, or audio segments, and hypertext links);
-      <br />
-      3. Adapt, modify, or alter Your photographs or otherwise create derivative
-      works based upon Your photographs; and for all other reasonable
-      promotional or commercial uses either as part of the operation of the
-      Website, or as a promotion or operation of any derivative or related
-      businesses.
-    </p>
-    <br />
-
-    <p>
-      7. Disclaimer and Indemnification
-      <br />
-      1. If We determine that You or any User has used Our services in violation
-      of any law, Your ability to use the Website may be terminated immediately
-      and We have every right to voluntarily cooperate with law enforcement or
-      private aggrieved parties that We may be legally compelled to do so. We
-      hereby disclaim any liability for damages that may arise from any User
-      providing any services for any purpose that violates any law. You do
-      hereby agree to defend, indemnify and hold Us harmless from any liability
-      that may arise for Us should You violate any law.
-      <br />
-      2. You also agree to defend and indemnify Us should any third party be
-      harmed by Your actions or should We be obligated to defend any claims
-      including, without limitation, any criminal or civil action brought by any
-      party.
-      <br />
-      3. Our Website contains material that may be offensive to third parties.
-      You agree to indemnify and hold Us harmless from any liability that may
-      arise from someone viewing such material and You agree to cease review of
-      the Website should You find it offensive.
-      <br />
-      4. You agree to defend, indemnify, and hold harmless LOV Corporation, its
-      officers, directors, shareholders, employees, independent contractors,
-      telecommunication providers, and agents, from and against any and all
-      claims, actions, loss, liabilities, expenses, costs, or demands, including
-      without limitation legal and accounting fees, for all damages directly,
-      indirectly, and/or consequentially resulting or allegedly resulting from
-      Your (or You under another person's authority - including without
-      limitation to governmental agencies) use, misuse, or inability to use the
-      Website or any of the Materials contained therein, or Your breach of any
-      part of this Agreement. We shall promptly notify You by electronic mail of
-      any such claim or suit, and cooperate fully (at Your expense) in the
-      defense of such claim or suit. We reserve the right to participate in the
-      defense of such claim or defense at Our own expense, and choose Our own
-      legal counsel; however, We are not obligated to do so.
-      <br />
-      5. Pursuant to CDA, 47 U.S.C. § 230(c)(1), and court decisions
-      interpreting the scope of the CDA, You acknowledge and understand that We
-      operate, through the Website, as an interactive computer service provider.
-      Thus, We are immune from, and cannot be held responsible for, claims
-      arising from the publication of third-party content (including third-party
-      User content), appearing on the Website. We do not create such content,
-      and We are not responsible for the publication or remarks of third-parties
-      that may arguably rise to the level of being actionable under federal or
-      state laws including, but not limited to, the publication of material that
-      might be considered defamatory, or violative of privacy or publicity
-      rights. Note that federal law allows Us to remove any content found to be
-      offensive, defamatory, obscene or otherwise violative of Our policies,
-      without impacting Our status as a computer service provider. Nothing
-      contained in this paragraph is intended to limit or alter the immunity
-      from claims provided by Section 230 of the Communications Decency Act.{' '}
-    </p>
-    <br />
-
-    <p>
-      8. Intellectual Property Information
-      <br />
-      1. LOV Corporation and the aforementioned name of the Website are Our
-      service mark(s) and/or trademark(s).
-      <br />
-      2. Other companies' product and service names referenced herein may be
-      trademarks and service marks of their respective companies and are the
-      exclusive property of such respective owners, and may not be used publicly
-      without the express written consent of the owners and/or holders of such
-      trademarks and service marks.
-      <br />
-      3. Copyright - This Website belongs to Us, and we either own or have
-      rights to display all of the materials thereupon. You may not use any of
-      Our materials without Our express written consent.
-      <br />
-      4. Photographs - In order to promote Your profile, You may upload
-      photographs of Yourself. The content of these pictures may be at Your
-      discretion, as long as they do not violate any of the other terms of this
-      Agreement.
-      <br />
-      1. By uploading any photographs of Yourself, You hereby swear that You own
-      or control all intellectual property rights with respect to the uploaded
-      photographs; and,
-      <br />
-      2. You hereby irrevocably grant a non-exclusive right and license to the
-      Website to:
-      <br />
-      1. Reproduce, transmit, communicate, display, or distribute the
-      photographs, on or as part of the Website, on other Internet sites, or
-      elsewhere, for promotional or commercial purposes, by means of any
-      technology, whether now known or hereafter to become known;
-      <br />
-      2. Reproduce Your pictures in digital form of display on the Internet
-      (alone or in combination with other works, including, but not limited to,
-      text, data, images, photographs, illustrations, animation, graphics,
-      video, or audio segments, and hypertext links);
-      <br />
-      3. Adapt, modify, or alter Your photographs or otherwise create derivative
-      works based upon Your photographs; and for all other reasonable
-      promotional or commercial uses either as part of the operation of the
-      Website, or as a promotion or operation of any derivative or related
-      businesses.
-      <br />
-      5. We respect the intellectual property rights of all parties, and have
-      adopted a policy regarding termination of repeat copyright infringers
-      under the Digital Millennium Copyright Act. Copies of Our Repeat Infringer
-      Policy are available on request to our customers or subscribers.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      9. Limitation of Liability
-      <br />
-      1. In no event shall We (or Our licensors, agents, suppliers, resellers,
-      service providers, or any other subscribers or suppliers) be liable to
-      You, or any other third party for any direct, special, indirect,
-      incidental, consequential, exemplary, or punitive damages, including
-      without limitation, damages for loss of profits, loss of information,
-      business interruption, revenue, or goodwill, which may arise from any
-      person's use, misuse, or inability to use the Website or any of the
-      Materials contained therein, even if We have been advised of the
-      probability of such damages. This is for any matter arising out of or
-      relating to this Agreement, whether such liability is asserted on the
-      basis of contract, tort or otherwise, even if We have been advised of the
-      possibility of such damages.
-      <br />
-      2. In no event shall Our maximum total aggregate liability hereunder for
-      direct damages exceed the total fees actually paid by You for use of a
-      Website for a period of no more than one (1) month from the accrual of the
-      applicable cause or causes of action. Because some jurisdictions prohibit
-      the exclusion or limitation of liability for consequential or incidental
-      damages, the above limitation may not apply to You.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      10. Defamation Or Invasive Material Policy:
-      <br />
-      1. We provide an interactive computer service, and thus we have no
-      liability for user-posted content due to Section 230 of the CDA.
-      Nevertheless, We recognize that despite this protection, there may
-      occasionally be content posted by Our Users that is unappreciated by the
-      subject of the User-posted content. It is not Our intention to cause
-      anguish to any person nor harm to any entity, nor to allow through
-      inaction such harm to occur. Accordingly, it is Our policy to respond
-      respectfully to any complaints about User posted content, or about content
-      that We might have provided.
-    </p>
-    <br />
-
-    <p>
-      2. If You feel damaged by any User-posted content, or content provided by
-      Us, We agree to take reasonable measures to comply with any reasonable
-      requests. Even if You are a public official, public figure, or libel-proof
-      person, We do care about Your feelings and reputation. Therefore, We have
-      instituted this Policy.
-    </p>
-    <br />
-
-    <p>
-      3. You agree that if You have any complaint about any content on Our
-      Website, including (but not limited to) a complaint or claim of defamation
-      (libel or slander), invasion of privacy, false light, trademark
-      infringement, right of publicity claims, or any related or similar tort,
-      that You will provide notice to Us by mail or fax to:
-      <br />
-      LOV Corporation
-      <br />
-      1579 Monroe Dr. NE
-      <br />
-      F181
-      <br />
-      Atlanta, GA 30324
-    </p>
-    <br />
-
-    <p>
-      You agree that We shall have ten (10) business days after RECEIPT of said
-      notice to evaluate Your concerns.
-      <br />
-      1. After evaluating Your concerns, We will either inform You that We do
-      not believe Your concern is valid, or We will request Your preference
-      regarding an opportunity to cure Your concerns. This cure may include one
-      of the following:
-      <br />
-      1. We may offer to delete the offending material.
-      <br />
-      2. We may offer to modify the offending material.
-      <br />
-      3. We may offer You the opportunity to publish a rebuttal to the offending
-      material.
-      <br />
-      4. We will engage You and seek any other alternative resolution that will
-      mitigate Your damaged legal interests - whether or not We are legally
-      required to do so.
-      <br />
-      5. We may provide You with some or all identifying information We may have
-      about the actual culprit (if the content was User-posted), but We are
-      under no obligation to do so, and expressly reserve the right not to.
-      <br />
-      2. You acknowledge and agree that upon transmission of Your complaint to
-      Us, You will be considered to have engaged in settlement discussions with
-      Us, and neither party will initiate formal legal action while
-      non-adversarial resolution is in progress. You agree that You will not
-      file suit unless and until We issue a statement to You that We have taken
-      Our final action, and that no further action will be taken without
-      adversarial proceedings. At that point, You may proceed with arbitration
-      as provided for under this Agreement.
-      <br />
-      3. You acknowledge that once You accept any of Our offers of non
-      adversarial resolution, that You irrevocably waive any and all possible
-      claims for any allegedly offending material on Our Website and that if You
-      do bring any action against Us that You hereby stipulate that You will
-      bear Your own costs and fees incurred in the action, regardless of the
-      outcome of that action, and that You stipulate that Your damages will be
-      limited to $1, and no more, and that You hereby acknowledge that such
-      amount of $1 is sufficient and adequate.
-      <br />
-      4. You understand that no part of this Agreement obligates Us to go beyond
-      that required by law, and this Agreement is in place for Your convenience.
-      If We believe that Your requests are unreasonable, We reserve every right
-      to terminate discussions with or file suit against You to recover any
-      legal fees incurred due to harassing or unreasonable requests.
-      <br />
-      12. Acceptable Practices Policy For Promotions:
-      <br />
-      1. If you seek to promote the Website in order to draw attention to your
-      profile, whether for personal or financial reasons, then You shall
-      immediately be strictly bound by the following Acceptable Use terms.
-      <br />
-      2. You agree to be bound by the following general policies in connection
-      with all content with which Our Website's Materials are associated:
-      <br />
-      1. Illegal content is strictly forbidden from any web page where the
-      Website is promoted. Illegal content includes, but is not limited to:
-      child pornography, illegal firearms, incest, warez content, scatological
-      pornography, coffins and necrophilia fetishism, defecation, urination,
-      genital mutilation, sacrilegious content, teen modeling, actual or
-      simulated rape, sexual violence, menstruation, obscenity, bestiality,
-      threats of physical harm to persons or property, programs containing
-      viruses, pirated software, wire fraud, drug trafficking, and/or violations
-      of international export control laws. We reserve the right to review
-      and/or reject any content created and/or posted by You.
-      <br />
-      2. Any fraudulent, deceptive or unfair transactions or trade practices are
-      strictly forbidden. You agree to fully comply with the United States
-      Federal Trade Commission (&quot;FTC&quot;) statutes and regulations, and
-      any related rules, policies, and advisory opinions issued by the FTC. No
-      commissions or bonuses will be paid on transactions that violate any of
-      the above, and all funds otherwise due may be withheld if such conduct is
-      suspected. In addition, Your account may be, and most likely will be,
-      terminated in such circumstances.
-      <br />
-      3. Our Website may not be promoted on any Site that encourages password
-      trading, distribution, or hacking. Our Website may not be prosecuted
-      through the direct or indirect use of warez content, spamming, bulk
-      listing on newsgroups, search engines, bulk emailing, or hidden frames.
-      <br />
-      4. You shall not engage in any activities that may be harmful to the
-      image, goodwill, or reputation of Us or Our Website.
-      <br />
-      5. If You promote Our Website on a website, that website may not also
-      directly or indirectly advertising links, banners, or promotional
-      materials for sites or services that would violate any terms of the Terms
-      &amp; Conditions, including the Acceptable Practices Policy.
-      <br />
-      6. You may not attempt to cheat, defraud or mislead Us in any way.
-      <br />
-      7. Violation of the restricted nonexclusive license provided in this
-      Agreement is prohibited and may, and most likely will, result in
-      termination of Your account.
-      <br />
-      8. You may not use Website's material or images to promote other sites,
-      businesses, or services of any kind.
-      <br />
-      9. You may not circumvent, or attempt to circumvent, any access or
-      security screens requiring users to enter their birth date and/or
-      requiring agreement to Website's Terms and Conditions.
-      <br />
-      10. We enforce a strict, zero tolerance policy with respect to child
-      pornography. If you promote Our Website on a website, that site may not
-      use any models under the age of eighteen (18) or suggest that its models
-      are under the age of eighteen (18), either through text or other
-      implication. If You are suspected of violating this zero tolerance
-      provision, you shall be terminated from the Program immediately and
-      without recourse.
-      <br />
-      11. Any websites upon which Our Website is promoted must contain all
-      information required by 18 U.S.C. §2257, supported by all required
-      documents.
-      <br />
-      12. You may not &quot;hotlink&quot; to any of Website's images, banners
-      and/or graphics.
-      <br />
-      13. You must provide within twenty-four (24) hours, upon request by Us,
-      access to any password protected area where Website is being or has been
-      promoted.
-      <br />
-      14. You may not solicit or permit any minor to become a customer of Our
-      Website.
-      <br />
-      15. You agree to indemnify and hold Us harmless from any and all
-      liabilities, claims, damages (including attorney's fees), threatened or
-      incurred as a result of Your activities or omissions.
-      <br />
-      16. We shall retain the discretion to interpret, modify, terminate and/or
-      enforce any of the general policies for You and all other Members.
-      <br />
-      3. Suspected violation of any of the Acceptable Practices Policies may
-      result in termination from the Program and forfeiture of any past or
-      future commissions or payments, whether earned or unearned. Termination
-      and Forfeiture will only be reversed or foregone if there is absolute
-      incontrovertible evidence that You have not, in fact, engaged in any
-      violations of the Acceptable Practices Policies or any other portion of
-      the Terms &amp; Conditions.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      12. Termination:
-      <br />
-      1. Voluntary: You may cancel Your membership at any time by sending an
-      e-mail from Your registered email address to the customer service
-      department of the Website and providing notice of Your intent to cancel
-      the membership along with Your user name.
-      <br />
-      2. Involuntary: Without limiting other remedies, the Website may
-      immediately issue a warning, temporarily suspend, indefinitely suspend, or
-      terminate Your access and use of the Website and refuse to provide Our
-      services to You at any time, with or without advance notice, if:
-      <br />
-      1. We believe that You have breached any material term of these Terms and
-      Conditions or the documents it incorporates by reference;
-      <br />
-      2. We are unable to verify or authenticate any information You provide to
-      Us;
-      <br />
-      3. We believe that Your actions may cause legal liability for You, Our
-      users or Us; or
-      <br />
-      4. We decide to cease operations or to otherwise discontinue any services
-      or options provided by the Website or parts thereof.
-      <br />
-      3. Further, You agree that neither the Website nor any third party acting
-      on Our behalf shall be liable to Your for any termination of Your
-      membership or access to the Website.
-      <br />
-      4. You agree that if Your account is terminated by Us, You will not
-      attempt to re-register as a member of the Website without prior written
-      consent from Us.
-      <br />
-      5. Cancellation of Your account or other business relationships with Us
-      shall not be deemed to terminate Our relationship with You with respect to
-      the provision of unsolicited commercial e-mail. This business relationship
-      is specifically deemed to continue indefinitely until explicitly
-      terminated by You, by sending a message to the following e-mail address:
-      support@foxtailapp.com.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      13. General Provisions
-      <br />
-      1. Governing Law. This Agreement and all matters arising out of, or
-      otherwise relating to, this Agreement shall be governed by the laws of the
-      state of Florida, excluding its conflict of law provisions. The sum of
-      this paragraph is that any and all disputes must be, without exception,
-      brought to court and litigated in Orange County, Florida.
-      <br />
-      1. All parties to this Agreement agree that all actions or proceedings
-      arising in connection with this Agreement or any services or business
-      interactions between the parties that may be subject to this Agreement
-      shall be tried and/or litigated exclusively in the state and federal
-      courts located in Orange County, Florida.
-      <br />
-      2. The parties agree to exclusive jurisdiction in, and only in, Orange
-      County, Florida.
-      <br />
-      3. The parties agree to exclusive venue in, and only in, Orange County,
-      Florida.
-      <br />
-      4. The parties additionally agree that this choice of venue and forum is
-      mandatory and not permissive in nature, thereby precluding any possibility
-      of litigation between the parties with respect to, or arising out of, this
-      Agreement in a jurisdiction other than that specified in this paragraph.
-      <br />
-      5. All parties hereby waive any right to assert the doctrine of forum non-
-      conveniens or similar doctrines, or to object to venue with respect to any
-      proceeding brought in accordance with this paragraph or with respect to
-      any dispute under this Agreement whatsoever.
-      <br />
-      6. All parties stipulate that the state and federal courts located in
-      Orange County, Florida shall have personal jurisdiction over them for the
-      purpose of litigating any dispute, controversy, or proceeding arising out
-      of (or related to) this Agreement and/or the relationship between the
-      parties contemplated thereby.
-      <br />
-      7. Each party hereby authorizes and accepts service of process sufficient
-      for personal jurisdiction in any action against it, as contemplated by
-      this paragraph by registered or certified mail, Federal Express, proof of
-      delivery or return receipt requested, to the parties address for the
-      giving of notices as set forth in this Agreement.
-      <br />
-      8. Any final judgment rendered against a party in any action or proceeding
-      shall be conclusive as to the subject of such final judgment and may be
-      enforced in other jurisdictions in any manner provided by law if such
-      enforcement becomes necessary.
-      <br />
-      2. Binding Arbitration. If there is a dispute between the parties arising
-      out of or otherwise relating to this Agreement, the parties shall meet and
-      negotiate in good faith to attempt to resolve the dispute. If the parties
-      are unable to resolve the dispute through direct negotiations, then,
-      except as otherwise provided herein, either party may submit the issue to
-      binding arbitration in accordance with the then-existing Commercial
-      Arbitration Rules of the American Arbitration Association. Arbitral Claims
-      shall include, but are not limited to, contract and tort claims of all
-      kinds, and all claims based on any federal, state or local law, statute,
-      or regulation, excepting only claims under applicable worker's
-      compensation law, unemployment insurance claims, actions for injunctions,
-      attachment, garnishment, and other equitable relief. The arbitration shall
-      be conducted in Orange County, Florida, and conducted by a single
-      arbitrator, knowledgeable in Internet and e-Commerce disputes. The
-      arbitrator shall have no authority to award any punitive or exemplary
-      damages; certify a class action; add any parties; vary or ignore the
-      provisions of this Agreement; and shall be bound by governing and
-      applicable law. The arbitrator shall render a written opinion setting
-      forth all material facts and the basis of his or her decision within
-      thirty (30) days of the conclusion of the arbitration proceeding. THE
-      PARTIES HEREBY WAIVE ANY RIGHTS THEY MAY HAVE TO TRIAL BY JURY IN REGARD
-      TO ARBITRAL CLAIMS.
-      <br />
-      3. The Arbitrator shall have no authority to award any punitive or
-      exemplary damages; certify a class action; add any parties; vary or ignore
-      the provisions of this Agreement; and shall be bound by governing and
-      applicable law. The arbitrator shall render a written opinion setting
-      forth all material facts and the basis of his or her decision within
-      thirty (30) days of the conclusion of the arbitration proceeding. THE
-      PARTIES HEREBY WAIVE ANY RIGHTS THEY MAY HAVE TO TRIAL BY JURY IN REGARD
-      TO ARBITRAL CLAIMS.
-      <br />
-      4. No Waiver of Right to Arbitration. There shall be no waiver of the
-      right to arbitration unless such waiver is provided affirmatively and in
-      writing by the waiving party to the other party. There shall be no implied
-      waiver of this right to arbitration. No acts, including the filing of
-      litigation, shall be construed as a waiver or a repudiation of the right
-      to arbitrate.
-      <br />
-      5. The First Amendment Applies to Arbitration Proceedings. Any arbitration
-      tribunal shall consider the First Amendment to the United States
-      Constitution to be in force and effect between the parties. Both parties
-      stipulate to the applicability of the First Amendment's protection of free
-      speech, expression, and association, and both parties stipulate that case
-      law interpreting the First Amendment shall be admissible and considered to
-      be binding authority upon the Arbitrator.
-      <br />
-      6. Severability. If for any reason a court of competent jurisdiction or an
-      arbitrator finds any provision of this Agreement, or any portion thereof,
-      to be unenforceable, that provision will be enforced to the maximum extent
-      permissible and the remainder of this Agreement will continue in full
-      force and effect.
-      <br />
-      7. Attorneys' Fees. In the event any Party shall commence any claims,
-      actions, formal legal action, or arbitration to interpret and/or enforce
-      any of the terms and conditions of this Agreement, or relating in any way
-      to this Agreement, including without limitation asserted breaches of
-      representations and warranties, the prevailing party in any such action or
-      proceeding shall be entitled to recover, in addition to all other
-      available relief, its reasonable attorneys' fees and costs incurred in
-      connection therewith, including attorneys' fees incurred on appeal.
-      <br />
-      8. Complaints - California Residents: The Complaint Assistance Unit of the
-      Division of Consumer Services of the Department of Consumer Affairs may be
-      contacted in writing at 1020 N. Street, #501, Sacramento, CA 95814, or by
-      telephone at 1-916-445-1254.
-      <br />
-      9. No Waiver. No waiver or action made by Us shall be deemed a waiver of
-      any subsequent default of the same provision of this Agreement. If any
-      term, clause or provision hereof is held invalid or unenforceable by a
-      court of competent jurisdiction, such invalidity shall not affect the
-      validity or operation of any other term, clause or provision and such
-      invalid term, clause or provision shall be deemed to be severed from this
-      Agreement.
-      <br />
-      10. Headings. All headings are solely for the convenience of reference and
-      shall not affect the meaning, construction or effect of this Agreement.
-      <br />
-      11. Complete Agreement. This Agreement constitutes the entire Agreement
-      between the parties with respect to Your access and use of the Website and
-      the Materials contained therein, and Your Membership with the Website, and
-      supersedes and replaces all prior understandings or agreements, written or
-      oral, regarding such subject matter.
-      <br />
-      12. Other Jurisdictions. We make no representation that the Website or any
-      of the Materials contained therein are appropriate or available for use in
-      other locations, and access to them from territories where their content
-      may be illegal or is otherwise prohibited. Those who choose to access the
-      Website from such locations do so on their own initiative and are solely
-      responsible for determining compliance with all applicable local laws.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      14. Stipulated liquidated damages
-      <br />
-      1. In various provisions in this Agreement, We have outlined liquidated
-      damages amounts to be applied as penalties against You if You violate
-      these specific provisions. You specifically agree to pay these amounts. In
-      agreeing to pay liquidated damages, You acknowledge that this amount is
-      not a penalty, that the actual damages are uncertain and difficult to
-      ascertain, but that this amount represents the parties' good faith attempt
-      to calculate an appropriate compensation based on anticipated actual
-      damages.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      2. For any breach of a portion of this Agreement that does not
-      specifically state a liquidated damages amount, You hereby agree that any
-      breach of this Agreement shall result in liquidated damages of $5,000.00
-      per occurrence. You specifically agree to pay this $5,000.00 in liquidated
-      damages.
-      <br />
-      3. For any breach of this Agreement resulting in liquidated damages owed
-      by You, You specifically agree and We expressly reserve the right to
-      assign Our rights to these liquidated damages to a third party.
-      <br />
-      4. If We are required to enlist the assistance of an Attorney or other
-      person to collect any liquidated damages or any other amount of money from
-      You, or if We are required to seek the assistance of an Attorney to pursue
-      injunctive relief against You, then You additionally agree that You will
-      reimburse Us for all fees incurred in order to collect these liquidated
-      damages or in order to seek injunctive relief from You. You understand
-      that even a nominal amount of damages may require the expenditure of
-      extensive legal fees, travel expenses, costs, and other amounts that may
-      dwarf the liquidated damages themselves. You agree that You will pay all
-      of these fees and costs.
-    </p>
-    <br />
-
-    <p>
-      <br />
-      15. Spam Prohibition:
-      <br />
-      1. While members may use reasonable promotional tools to promote their
-      profile, there are specific prohibitions on promotion including the
-      following:
-      <br />
-      2. SPAM: You agree not to use any facilities or capabilities of the
-      Website to solicit the performance of any activity that is prohibited by
-      the CAN-SPAM Act dealing with illegal distribution of unsolicited
-      commercial bulk email (&quot;UCBE&quot;), commonly known as
-      &quot;spam,&quot; nor shall members forge or use without authorization any
-      mail header information from any source. Members agree to the Website's
-      Spam Policy which is hereby incorporated by reference. Any breach of the
-      Website's Spam Policy will result in immediate termination of your
-      account, forfeiture of any payments due, and the immediate provision of
-      your identity and contact information to the Federal Trade Commission and
-      any other applicable law enforcement agencies.
-    </p>
+      <p>Last Modified: May 5, 2019</p>
+      <br />
+      <p>
+        {" "}
+        Welcome to FoxtailApp.com (“Foxtail”), owned, produced and operated by
+        LOV Inc. (“LOV”). Foxtail is a dating/social network for people curious
+        about exploring their sexuality. Unless explicitly stated otherwise, any
+        current, updated and new products and services (“Products and
+        Services”), including the addition of new properties, shall be subject
+        to these General Terms and Conditions of Use (“Terms and Conditions”).{" "}
+      </p>
+      <p>
+        In addition, there are a variety of special products and services
+        offered through Foxtail that have separate registration procedures and
+        separate terms and conditions, terms of service, user agreements, or
+        similar legal agreement. When you are using any service or product of on
+        Foxtail that does not have a separate legal agreement, the Terms and
+        Conditions set forth here will apply. LOV also may supplement the Terms
+        and Conditions with posted guidelines or rules applicable to specific
+        areas of Foxtail. In addition, LOV and/or Foxtail also may offer other
+        services from time to time that are governed by the terms of service of
+        the respective service partners. LOV reserves the right to amend these
+        Terms and Conditions at any time.{" "}
+      </p>
+      <p>
+        By using Foxtail you agree to be bound by these Terms and Conditions.
+        Because the Terms and Conditions contain legal obligations, please read
+        them carefully.{" "}
+      </p>
+      <p>
+        The Terms and Conditions contain a variety of provisions that are
+        generally applicable to the Products and Services and some provisions
+        that apply to particular Products and Services. You should understand
+        that you will be bound by the entire Terms and Conditions.{" "}
+      </p>
+      <ul>
+        <li> Acceptance</li>
+        <li> Conditions and Restrictions on Use</li>
+        <li> Registration & Privacy</li>
+        <li> User Conduct</li>
+        <li> License to User Content</li>
+        <li> Third Party Merchandise Sales</li>
+        <li> Profiles</li>
+        <li> Disclaimer of Warranties</li>
+        <li> Limitation of Liability</li>
+        <li> Disclaimer Regarding Third Party Content</li>
+        <li> Storage</li>
+        <li> Advertisers and Content Linked to the Foxtail Network</li>
+        <li> No License; Intellectual Property of Foxtail and Others</li>
+        <li> Linking to Foxtail; Use of Logo</li>
+        <li> Indemnity and Release</li>
+        <li> Limitation of Actions</li>
+        <li> Copyright, Trademark and Patent Notices</li>
+        <li> Intellectual Property Infringement Claims</li>
+        <li> Arbitration, Governing Law and Forum for Disputes</li>
+        <li>
+          {" "}
+          Changes in Terms and Conditions and Changes in Products and Services
+        </li>
+        <li> Merger</li>
+        <li> Non-Waiver and Separability</li>
+        <li> Relationship of Parties</li>
+        <li> No Resale, Assignment or Sub-Licensing</li>
+        <li> Successors and Assigns</li>
+        <li> Termination; Survival</li>
+        <li> Communications with Users</li>
+        <li> Submission of Ideas</li>
+        <li> Export Controls</li>
+        <li> Violations and Terms and Conditions</li>
+      </ul>
+      <p>1. ACCEPTANCE</p>
+      <p>
+        By using the Products and Services, you are agreeing, without limitation
+        or qualification, to be bound by, and to comply with, these Terms and
+        Conditions and any other posted guidelines or rules applicable to
+        Foxtail or any Product or Service. All such guidelines and rules are
+        hereby incorporated by reference into the Terms and Conditions. By
+        accessing our Website or registering as a Member of the Site, you are
+        acknowledging that you have read and understood these Terms and agree to
+        be legally bound by them. In addition, if you become a Member, during
+        the registration process you will be prompted to click an "Get Started"
+        button, which further confirms your agreement to be legally bound by
+        these Terms.
+      </p>
+      <p>2. CONDITIONS AND RESTRICTIONS ON USE</p>
+      <p>
+        Use of the Products and Services is subject to compliance with these
+        Terms and Conditions. You shall be authorized to use the Products and
+        Services for personal, non-commercial use only. You acknowledge and
+        agree that LOV may terminate your access to the Foxtail or to any of the
+        Products and Services should you fail to comply with the Terms and
+        Conditions or any other guidelines and rules published by LOV. Any such
+        termination shall be at LOV’s sole discretion and may occur without
+        prior notice, or any notice. LOV further reserves the right to terminate
+        any user’s access to Foxtail or to any of the Products and Services for
+        any conduct that LOV, at its sole discretion, believes is or may be
+        directly or indirectly harmful to other users, to LOV or its
+        subsidiaries, affiliates, or business contractors, or to other third
+        parties, or for any conduct that violates any local, provincial, federal
+        or foreign laws or regulations. LOV further reserves the right to
+        terminate any user’s access to Foxtail or to any of the Products and
+        Services for any reason or for no reason at all, in LOV’s sole
+        discretion, without prior notice, or any notice.
+      </p>
+      <p>
+        In order to use the Products and Services, users must have access to the
+        World Wide Web and must navigate the Internet to{" "}
+        <a href="https://Foxtailapp.com/">https://Foxtailapp.com/</a>.
+        Individuals who are less than 18 years of age or are not permitted to
+        access mature or adult content under the laws of any applicable
+        jurisdiction may not access Foxtail. If LOV learns that anyone under the
+        age of 18 has accessed the Products and Services, LOV will terminate
+        their access to Foxtail.
+      </p>
+      <p>
+        Registered sex offenders convicted of sexual violence and/or
+        non-consensual sexual offenses are not permitted to have accounts on
+        Foxtail. LOV does not discriminate on the basis of age, gender, race,
+        ethnicity, nationality, religion, sexual orientation or any other
+        protected status.
+      </p>
+      <p>3. REGISTRATION AND PRIVACY</p>
+      <p>
+        Certain of the Products and Services will require the user to register
+        and provide certain data. In consideration of use of such Products and
+        Services, in registering and providing such data, you represent and
+        warrant that: (a) the information about yourself is true, accurate,
+        current and complete (apart from optional items) as required by various
+        LOV registration forms (“Registration Data”) and (b) you will maintain
+        and promptly update the Registration Data to keep it true, accurate,
+        current and complete. If you provide any information that is untrue,
+        inaccurate, not current or incomplete, or LOV has reasonable grounds to
+        suspect that such information is untrue, inaccurate, not current or
+        incomplete, LOV has the right to suspend or terminate your account and
+        refuse any and all current or future use of the Products and Services.
+      </p>
+      <p>
+        All LOV registrations become the exclusive property of LOV. LOV reserves
+        the right to use and reuse all registration and other personally
+        identifiable user information subject to LOV’s{" "}
+        <a href="https://Foxtailapp.com/privacy">Privacy Policy</a>. Users may
+        edit, update, alter or obscure their personally identifiable information
+        at any time by following the instructions located in LOV’s{" "}
+        <a href="https://Foxtailapp.com/privacy">Privacy Policy</a> and on
+        Foxtail.
+      </p>
+      <p>
+        You acknowledge receipt of LOV’s{" "}
+        <a href="https://Foxtailapp.com/privacy">Privacy Policy</a>.
+      </p>
+      <p>4. USER CONDUCT</p>
+      <p>
+        You acknowledge and agree that all information, code, data, text,
+        software, photographs, pictures, graphics, video, chat, messages, files,
+        or other materials (“Content”), whether publicly posted or privately
+        transmitted, are the sole responsibility of the person from which such
+        Content originated. This means that you, and not LOV Inc, are entirely
+        responsible for all Content that you upload, post, email or otherwise
+        transmit via the Services. LOV Inc does not control the user or third
+        party Content posted via the Products and Services, and, as such, does
+        not guarantee the accuracy, integrity or quality of such user or third
+        party Content. You acknowledge and agree that by using the Products and
+        Services, you may be exposed to Content that may be deemed offensive,
+        indecent or objectionable. Nevertheless, you agree to use Foxtail at
+        your sole risk. Under no circumstances will LOV Inc be liable in any way
+        for any user or third party Content, including, but not limited to, for
+        any errors or omissions in any such Content, or for any loss or damage
+        of any kind incurred as a result of the use of any such Content posted,
+        emailed or otherwise transmitted via the Products and Services. As a
+        general matter, LOV Inc does not screen user or third party Content
+        posted on Foxtail, although LOV Inc reserves the right to do so. LOV Inc
+        does not guarantee that any screening will be done to your satisfaction
+        or that any screening will be done at all. LOV Inc reserves the right to
+        monitor some, all, or no areas of the Products and Services for
+        adherence to these Terms and Conditions or any other rules or guidelines
+        posted by LOV
+      </p>
+      <p>
+        The Products and Services may only be used for the intended purpose for
+        which such Products and Services are being made available.
+      </p>
+      <p>Prohibited Conduct</p>
+      <p>
+        You agree that, while using LOV’s Products and Services, you will not:
+      </p>
+      <ul>
+        <li>
+          {" "}
+          Personally attack, make fun of, troll, flame, bully, stalk or
+          otherwise harass another member.
+        </li>
+        <li>
+          {" "}
+          Make criminal accusations against another member in a public forum.
+        </li>
+        <li>
+          {" "}
+          Make or promote any type of racism or hate towards anyone in specific
+          or a group of people, unless in the context of role-playing between
+          consenting parties.
+        </li>
+        <li>
+          {" "}
+          Upload pictures or videos of that contain any children under 18 years
+          of age.
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, otherwise transmit, or post links to any Content
+          that promotes having any type of sexual relationship with a minor.
+        </li>
+        <li>
+          {" "}
+          Create a user profile for a business, organization, website, or event
+          that is not related to kink/fetish/BDSM/Leather. Profiles for
+          kink-related businesses will be reviewed and accepted on a case by
+          case basis.
+        </li>
+        <li>
+          {" "}
+          Take anything any other person has uploaded, posted, or emailed to
+          you, on Foxtail and re-post such content anywhere outside of Foxtail
+          without the expressed written permission of the person who uploaded,
+          posted or emailed you.
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, otherwise transmit, private conversations between
+          two people in any public forum on Foxtail without the expressed
+          written consent of the people who are involved in said private
+          conversation.
+        </li>
+        <li>
+          {" "}
+          Post, directly or indirectly, any personally identifying information
+          about another member without their consent. Personally identifying
+          information can include, but is not limited to, a person's full name,
+          first name, last name, email address, profession, phone number,
+          address and place of work.
+        </li>
+        <li>
+          {" "}
+          Use Foxtail to do any academic or corporate research without the
+          expressed written consent of LOV
+        </li>
+        <li>
+          {" "}
+          Cross-post the same message, be it by one person or multiple people,
+          more than 3 times in a day.
+        </li>
+        <li>
+          {" "}
+          Sexualize or publicly fantasize about the following topics: murder,
+          animal abuse, and any activities involving minors. You may have
+          strictly intellectual discussions regarding these topics.
+        </li>
+        <li>
+          {" "}
+          Discuss or post content dealing with actual snuff, necrophilia,
+          cannibalism, and zoophilia/bestiality. You may have strictly
+          intellectual discussions regarding these topics, and may also have
+          discussions and content concerning fantasies in these areas.
+        </li>
+        <li>
+          {" "}
+          Create any event to promote a session with a phone sex operator,
+          professional Dominant or professional submissive.
+        </li>
+        <li>
+          {" "}
+          Publicly post the schedule, price list or phone number of a phone sex
+          operator, professional Dominant or professional submissive on Foxtail
+          except in a group led by that person or in a group explicitly created
+          for the purpose of posting such information.
+        </li>
+        <li>
+          {" "}
+          Publicly solicit for clients on behalf, directly or indirectly, of
+          phone sex operators, professional Dominants and professional
+          submissives in any group except in a group led by that person or in a
+          group explicitly created for the purpose of posting such
+          solicitations.
+        </li>
+        <li> Solicit or sell any kind of sex for hire.</li>
+        <li> Use Foxtail for any fraudulent purposes.</li>
+        <li>
+          {" "}
+          Collect or store personally identifying information about any other
+          user(s) for commercial purposes without the expressed consent of the
+          user(s) or for any unlawful purposes.
+        </li>
+        <li>
+          {" "}
+          Impersonate any person or entity, including, but not limited to, an
+          LOV Inc or Foxtail Company official, employee, consultant, or
+          otherwise, or falsely state or otherwise misrepresent your affiliation
+          with a person or entity.
+        </li>
+        <li>
+          {" "}
+          Employ misleading email addresses or falsify information in the
+          header, footer, return path, or any part of any communication,
+          including emails, transmitted through the Products and Services.
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, otherwise transmit, or post links to any Content
+          that you do not have a right to transmit under any law or regulation
+          or under contractual or fiduciary relationships (such as “inside
+          information”, or proprietary and confidential information learned or
+          disclosed as part of employment relationships or subject to a
+          nondisclosure agreement).
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, or otherwise transmit, or post links to any
+          Content that facilitates computer hacking.
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, otherwise transmit, or post links to any Content
+          that infringes any patent, trademark, service mark, trade secret,
+          copyright or other proprietary rights (“Rights”) of any party, or
+          contributing to inducing or facilitating such infringement. This
+          prohibition shall include, without limitation, the following forms of
+          software piracy:
+          <ul>
+            <li>
+              {" "}
+              Making available copyrighted software or other Content that has
+              had the copyright protection removed.
+            </li>
+            <li>
+              {" "}
+              Making available serial numbers for software that can be used to
+              illegally validate or register software.
+            </li>
+            <li>
+              {" "}
+              Making available tools that can be used for no purpose other than
+              for “cracking” software or other copyrighted Content.
+            </li>
+            <li>
+              {" "}
+              Making available any software files for which the user does not
+              own the copyright or have the legal right to make available.
+            </li>
+          </ul>
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, otherwise transmit, or post links to any
+          unsolicited or unauthorized advertising, including but not limited to
+          promotional materials, “junk mail,” “spam,” “chain letters,” “pyramid
+          schemes,” or any other form of solicitation, except in those areas
+          that are designated for such purpose.
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, otherwise transmit, or post links to any material
+          that contains software viruses, worms, trojan horses, time bombs, trap
+          doors or any other computer code, files or programs or repetitive
+          requests for information designed to interrupt, destroy or limit the
+          functionality of any computer software or hardware or
+          telecommunications equipment or to diminish the quality of, interfere
+          with the performance of, or impair the functionality of the Products
+          and Services or Foxtail.
+        </li>
+        <li>
+          {" "}
+          Use automated means, including additional computers, software and
+          scripts, to enhance play in LOV promotions.
+        </li>
+        <li>
+          {" "}
+          Use automated means, including spiders, robots, crawlers, or the like
+          to download data from any LOV network database.
+        </li>
+        <li>
+          {" "}
+          Use automated means, including bots, to create accounts on Foxtail.
+        </li>
+        <li>
+          {" "}
+          Modify, publish, transmit, transfer or sell, reproduce, create
+          derivative works from, distribute, link, display or in any way exploit
+          any Content from any LOV database, including, without limitation, by
+          incorporating data from any LOV database into any e-mail or “white
+          pages” products or services, whether browser-based, based on
+          proprietary client-site applications, web-based, or otherwise.
+        </li>
+        <li>
+          {" "}
+          Sell, distribute, or make any commercial or unlawful use of data
+          obtained from any LOV database or make any other use of data from any
+          LOV database in a manner which could be expected to offend the person
+          for whom the data is relevant.
+        </li>
+        <li>
+          {" "}
+          Create and maintain a Foxtail profile that stores or hosts content for
+          remote loading by other web pages. (For example, you cannot create a
+          Foxtail profile, post pictures to the Foxtail profile, and have other
+          web pages call the Foxtail profile to retrieve those pictures.)
+        </li>
+        <li>
+          {" "}
+          Interfere with or disrupt the Products and Services or servers or
+          networks connected to the Products and Services, or disobey any
+          requirements, procedures, policies or regulations of networks
+          connected to the Products and Services.
+        </li>
+        <li>
+          {" "}
+          Intentionally or unintentionally violate any applicable local, state,
+          national or international law, including, but not limited to,
+          regulations promulgated by the Canadian or U.S. Securities and
+          Exchange Commission, any rules of any national or other securities
+          exchange, including, without limitation, the New York Stock Exchange,
+          the American Stock Exchange or the NASDAQ, and any regulations having
+          the force of law.
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, otherwise transmit, or post links to any material
+          that is false, misleading, or designed to manipulate any equity,
+          security, or other market.
+        </li>
+        <li>
+          {" "}
+          Disobey any LOV Inc employee or representative or interfere with any
+          action by any LOV employee or representative to redress any violation
+          of these Terms and Conditions.
+        </li>
+        <li>
+          {" "}
+          Create a new account in order to access the Products and Services
+          after your account or access has been terminated by LOV
+        </li>
+        <li>
+          {" "}
+          Purchase any goods or services that you are prohibited from purchasing
+          or possessing by any law applicable to you in your jurisdiction. The
+          responsibility for ensuring compliance with all such laws shall be the
+          user’s alone. By submitting an order to purchase goods or services,
+          you represent and warrant that you have the legal right to purchase
+          such goods or services.
+        </li>
+        <li>
+          {" "}
+          Use any software deployed in connection with the Products and Services
+          to process data as a service to other entities without the express
+          written consent of LOV or the party from whom such software may be
+          licensed.
+        </li>
+        <li>
+          {" "}
+          Decompile, disassemble, modify, translate, adapt, reverse engineer,
+          create derivative works from, or sub-license any software deployed in
+          connection with the Products and Services.
+        </li>
+        <li>
+          {" "}
+          Upload, post, email, otherwise transmit, or post links to any
+          material, or act in any manner that is offensive to Foxtail community
+          or the spirit of these Terms and Conditions.
+        </li>
+        <li>
+          {" "}
+          Advertise, offer for sale, or sell any of the following items:
+          <ul>
+            <li> Any firearms, explosives, or weapons.</li>
+            <li>
+              {" "}
+              Any items that are hateful or racially, ethnically or otherwise
+              objectionable, that contain child pornography, or are harmful to
+              minors.
+            </li>
+            <li> Any controlled substances or pharmaceuticals.</li>
+            <li> Any counterfeit or stolen items.</li>
+            <li> Any goods or services that do not, in fact, exist.</li>
+            <li> Any registered or unregistered securities.</li>
+            <li>
+              {" "}
+              Any items that violate or infringe the rights of other parties.
+            </li>
+            <li> Any items that you do not have the legal right to sell.</li>
+            <li>
+              {" "}
+              Any items where paying LOV any of the required transactional or
+              listing fees would cause LOV to violate any law.
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p>
+        You acknowledge and agree that LOV and its designees shall have the
+        right (but not the obligation), in their sole discretion, to refuse to
+        publish, remove, or block access to any Content that is available via
+        the Products and Services at any time, for any reason, or for no reason
+        at all, with or without notice. Without limitation, LOV and its
+        designees shall have the right (but not the obligation), at their sole
+        discretion, to refuse to publish, remove, or block access to any Content
+        that violates the Terms and Conditions or is otherwise objectionable as
+        determined by LOV LOV may also terminate access to, or membership in,
+        Foxtail, or any portion thereof, for violating these Terms and
+        Conditions. You acknowledge and agree that you must evaluate, and bear
+        all risks associated with, the use of any Content, including any
+        reliance on the accuracy, completeness, or usefulness of such Content.
+        In this regard, you acknowledge that you may not rely on any Content
+        created by or obtained through the use of Foxtail, including without
+        limitation, information posted on message boards.
+      </p>
+      <p>
+        You expressly acknowledge and agree that LOV may preserve Content and
+        may also disclose Content if required to do so by law or in the good
+        faith belief that such preservation or disclosure is reasonably
+        necessary to: (a) comply with legal process; (b) enforce the Terms and
+        Conditions; (c) respond to claims that any Content violates the rights
+        of third-parties; or (d) protect the rights, property, or personal
+        safety of LOV, its users and the public. You acknowledge and agree that
+        the technical processing and transmission of the Products and Services,
+        including your Content, may involve (a) transmissions over various
+        networks; and (b) changes to conform and adapt to technical requirements
+        of connecting networks or devices. You further acknowledge and agree
+        that other data collected and maintained by LOV Inc with regard to its
+        users may be disclosed in accordance with LOV’s{" "}
+        <a href="https://Foxtailapp.com/privacy">Privacy Policy</a>.
+      </p>
+      <p>5. MEMBER OF THE MEDIA</p>
+      <p>
+        I certify that I am not a member of the media, or that if I am, I am
+        participating on Foxtail solely for my personal enjoyment and not as
+        part of any investigation or gathering of information and that I will
+        not use any such information in any manner without the express written
+        permission of Foxtail. I agree that everything that I observe here will
+        be kept in strict confidence, and that I will do nothing to jeopardize
+        the privacy and identities of any other participant without the
+        expressed written permission of Foxtail.
+      </p>
+      <p>6. LIMITED LICENSE TO CONTENT POSTED ON FOXTAIL</p>
+      <p>
+        LOV claims no ownership interest in any of the Content (including,
+        without limitation, pictures, videos and writing) posted by you on
+        Foxtail, and the copyright to all such Content shall remain with its
+        original owner. By posting Content on Foxtail, you warrant and represent
+        that you own the Content posted by you or otherwise have the right to
+        grant the license set forth in this section, and that such Content does
+        not violate the rights of any third party. You agree to pay all
+        royalties and fees owing to any person by reason of any Content you post
+        on Foxtail.
+      </p>
+      <p>
+        In order to make it possible for LOV to provide the Products and
+        Services, you hereby grant LOV Inc a limited, non-exclusive, worldwide,
+        royalty-free license to use, reproduce, modify (for example, re-sizing
+        of photos and/or encoding of audio or video files), transmit, publicly
+        display and distribute any Content posted by you on or through Foxtail,
+        and to sublicense such rights solely as necessary to provide the
+        Products and Services. The license shall terminate 30 days after you
+        remove your Profile from Foxtail.
+      </p>
+      <p>7. PAYMENT & REFUNDS</p>
+      <p>
+        To request a refund you have to email{" "}
+        <a href="mailto=support@Foxtailapp.com">support@Foxtailapp.com</a>{" "}
+        within 7 days of the transaction and request a refund. Refunds will be
+        for the full price of the transaction. LOV does not refund any interest
+        or transaction fees that might of been charged to you by your financial
+        institution.
+      </p>
+      <p>8. THIRD PARTY MERCHANDISE SALES</p>
+      <p>
+        Foxtail may contain links to third party websites where Users can
+        purchase goods or services from third party merchants (“Merchants”). By
+        submitting an order to purchase any goods or services from Merchants,
+        Users are obligated to complete such transactions, subject to the
+        individual Merchant’s terms and conditions governing such transactions.
+        Users are prohibited from submitting orders to purchase goods or
+        services where they do not intend to complete such transactions.
+      </p>
+      <p>
+        By submitting an order to purchase goods or services from an individual
+        Merchant, you acknowledge that you are entering into a transaction with
+        that Merchant, and that Foxtail, LOV are not parties to the transaction.
+      </p>
+      <p>
+        Users are obligated to submit information that is true, accurate,
+        current, and complete. By accepting these Terms and Conditions, you
+        represent and warrant that all such information submitted by you is
+        true, accurate, current, and complete. Users are also required to
+        maintain and update all such information in order to ensure that it
+        remains true, accurate, current, and complete. Each time you update such
+        information, you represent and warrant that such information is true,
+        accurate, current, and complete.
+      </p>
+      <p>
+        Users may not purchase goods or services that they are prohibited from
+        purchasing or possessing by any law applicable to them in their
+        jurisdictions. The responsibility for ensuring compliance with all
+        applicable laws shall be the User’s alone. By submitting an order to
+        purchase goods or services, you represent and warrant that you have the
+        legal right to purchase and possess such goods or services.
+      </p>
+      <p>
+        LOV has no partnership, joint venture, employer-employee, or
+        franchisor-franchisee relationship with any Merchant accessible through
+        Foxtail. LOV cannot confirm that any particular Merchant is who that
+        Merchant claims to be. Nor can LOV Inc confirm the truth or accuracy of
+        any statements made by Merchants or control whether Merchants who post
+        statements on Foxtail will act in accordance with those statements. LOV
+        will not get involved in any dispute between Users of the Service and
+        Merchants who post links on Foxtail. The ability to include links is
+        provided only as a convenience, and the inclusion of any link by an
+        Artist or User does not imply affiliation, endorsement, or adoption by
+        LOV of the linked site or any information contained therein.
+      </p>
+      <p>9. PROFILES</p>
+      <p>
+        Users are invited to post content to their profile (“Profile”) subject
+        to the following limitations: (a) LOV may limit the amount of bandwidth
+        dedicated to any account; and (b) LOV reserves the right to display
+        advertising on Profile pages. Please consult the Foxtail{" "}
+        <a href="https://Foxtailapp.com/privacy">Privacy Policy</a> for special
+        terms as they relate to Profiles. Profiles are governed by the entire
+        Terms and Conditions, including, without limitation, Section 5 (User
+        Conduct), and you are encouraged to review these terms carefully. Under
+        no circumstances may Profiles be used to infringe the copyright or any
+        other right of any person or entity. LOV Inc reserves the right to
+        modify or discontinue the Profiles service at any time, and you are
+        encouraged to maintain back-up copies of the content you post on your
+        Profile. The Profile service may only be used by people who are at least
+        18 years old.
+      </p>
+      <p>
+        By registering on Foxtail, you represent and warrant that all
+        registration information you submit is truthful and accurate and that
+        you will maintain the accuracy of such information. You further
+        represent and warrant that you are 18 years of age or older and that
+        your use of the Foxtail will not violate any applicable law. Your
+        membership is for your sole, personal use, and you will not authorize
+        others to use your account, including your Profile. You are solely
+        responsible for all Content published or displayed through your account,
+        and for your interactions with other Users.
+      </p>
+      <p>
+        Please choose carefully the information you post on your Profile and
+        that you provide to other members. Your Profile may not include the
+        following items: telephone numbers and street addresses. Please read
+        Section 4 above, User Conduct, for additional terms and conditions
+        regarding your use of Foxtail.
+      </p>
+      <p>
+        The information provided by other users in their Profiles may contain
+        inaccurate, inappropriate or offensive material, products or services
+        for which LOV Inc assumes no responsibility or liability.
+      </p>
+      <p>
+        LOV reserves the right, at its sole discretion, to reject, refuse to
+        post or remove any Content posted by you, and to restrict, suspend, or
+        terminate your access to all or any part of the LOV Inc Network,
+        including Foxtail, at any time, for any or no reason, with or without
+        prior notice, and without liability.
+      </p>
+      <p>10. DISCLAIMER OF WARRANTIES</p>
+      <p>
+        THE PRODUCTS AND SERVICES ARE PROVIDED “AS IS,” WITH NO WARRANTIES
+        WHATSOEVER. ALL EXPRESS, IMPLIED, AND STATUTORY WARRANTIES, INCLUDING,
+        WITHOUT LIMITATION, THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+        PARTICULAR PURPOSE, AND NON-INFRINGEMENT OF PROPRIETARY RIGHTS, ARE
+        EXPRESSLY DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. TO THE
+        FULLEST EXTENT PERMITTED BY LAW, LOV DISCLAIMS ANY WARRANTIES FOR THE
+        SECURITY, RELIABILITY, TIMELINESS, AND PERFORMANCE OF THE PRODUCTS AND
+        SERVICES. TO THE FULLEST EXTENT PERMITTED BY LAW, LOV Inc DISCLAIMS ANY
+        WARRANTIES FOR OTHER SERVICES OR GOODS RECEIVED THROUGH OR ADVERTISED ON
+        THE PRODUCTS AND SERVICES OR RECEIVED THROUGH ANY LINKS PROVIDED IN THE
+        PRODUCTS AND SERVICES, AS WELL AS FOR ANY INFORMATION OR ADVICE RECEIVED
+        THROUGH THE PRODUCTS AND SERVICES OR THROUGH ANY LINKS PROVIDED IN THE
+        PRODUCTS AND SERVICES. LOV SIMILARLY DISCLAIMS, TO THE FULLEST EXTENT
+        PERMITTED BY LAW, ANY WARRANTIES FOR ANY INFORMATION OR ADVICE OBTAINED
+        THROUGH THE PRODUCTS AND SERVICES.
+      </p>
+      <p>
+        YOU EXPRESSLY UNDERSTAND AND AGREE THAT LOV DISCLAIMS ANY AND ALL
+        RESPONSIBILITY OR LIABILITY FOR THE ACCURACY, CONTENT, COMPLETENESS,
+        LEGALITY, RELIABILITY, OR OPERABILITY OR AVAILABILITY OF INFORMATION OR
+        MATERIAL IN THE PRODUCTS AND SERVICES. LOV DISCLAIMS ANY RESPONSIBILITY
+        FOR THE DELETION, FAILURE TO STORE, MISDELIVERY, OR UNTIMELY DELIVERY OF
+        ANY INFORMATION OR MATERIAL. LOV DISCLAIMS ANY RESPONSIBILITY OR
+        LIABILITY FOR ANY HARM RESULTING FROM DOWNLOADING OR ACCESSING ANY
+        INFORMATION OR MATERIAL THROUGH THE PRODUCTS AND SERVICES, INCLUDING,
+        WITHOUT LIMITATION, FOR HARM CAUSED BY VIRUSES OR SIMILAR CONTAMINATION
+        OR DESTRUCTIVE FEATURES. LOV MAKES NO WARRANTY REGARDING THE RELIABILITY
+        OR ACCESSIBILITY OF MEMBER WEB PAGES OR ANY STORAGE FACILITIES OFFERED
+        BY LOV
+      </p>
+      <p>
+        YOU UNDERSTAND AND AGREE THAT ANY MATERIAL DOWNLOADED OR OTHERWISE
+        OBTAINED THROUGH THE USE OF THE PRODUCTS AND SERVICES IS DONE AT YOUR
+        OWN DISCRETION AND RISK AND THAT YOU WILL BE SOLELY RESPONSIBLE FOR ANY
+        DAMAGES TO YOUR COMPUTER SYSTEM OR LOSS OF DATA THAT RESULTS IN THE
+        DOWNLOAD OF SUCH MATERIAL.
+      </p>
+      <p>
+        Some jurisdictions do not allow the disclaimer of implied warranties. In
+        such jurisdictions, the foregoing disclaimers may not apply to you
+        insofar as they relate to implied warranties.
+      </p>
+      <p>11. LIMITATION OF LIABILITY</p>
+      <p>
+        YOU EXPRESSLY UNDERSTAND AND AGREE THAT UNDER NO CIRCUMSTANCES SHALL LOV
+        OR ITS LICENSORS BE LIABLE TO ANY USER ON ACCOUNT OF THAT USER’S USE OR
+        MISUSE OF AND RELIANCE ON THE PRODUCTS AND SERVICES. SUCH LIMITATION OF
+        LIABILITY SHALL APPLY TO PREVENT RECOVERY OF DIRECT, INDIRECT,
+        INCIDENTAL, CONSEQUENTIAL, SPECIAL, EXEMPLARY, AND PUNITIVE DAMAGES
+        (EVEN IF LOV OR ITS LICENSORS HAVE BEEN ADVISED OF THE POSSIBILITY OF
+        SUCH DAMAGES). SUCH LIMITATION OF LIABILITY SHALL APPLY WHETHER THE
+        DAMAGES ARISE FROM USE OR MISUSE OF AND RELIANCE ON THE PRODUCTS AND
+        SERVICES, FROM INABILITY TO USE THE PRODUCTS AND SERVICES, OR FROM THE
+        INTERRUPTION, SUSPENSION, OR TERMINATION OF THE PRODUCTS AND SERVICES
+        (INCLUDING SUCH DAMAGES INCURRED BY THIRD PARTIES).
+      </p>
+      <p>
+        SUCH LIMITATION SHALL ALSO APPLY WITH RESPECT TO DAMAGES INCURRED BY
+        REASON OF OTHER SERVICES OR GOODS RECEIVED THROUGH OR ADVERTISED ON THE
+        PRODUCTS AND SERVICES OR RECEIVED THROUGH ANY LINKS PROVIDED IN THE
+        PRODUCTS AND SERVICES, AS WELL AS BY REASON OF ANY INFORMATION OR ADVICE
+        RECEIVED THROUGH OR ADVERTISED ON THE PRODUCTS AND SERVICES OR RECEIVED
+        THROUGH ANY LINKS PROVIDED IN THE PRODUCTS AND SERVICES. SUCH LIMITATION
+        SHALL APPLY, WITHOUT LIMITATION, TO THE COSTS OF PROCUREMENT OF
+        SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, OR LOST DATA. SUCH
+        LIMITATION SHALL APPLY WITH RESPECT TO THE PERFORMANCE OR
+        NON-PERFORMANCE OF THE PRODUCTS AND SERVICES OR ANY INFORMATION OR
+        MERCHANDISE THAT APPEARS ON, OR IS LINKED OR RELATED IN ANY WAY TO,
+        Foxtail. SUCH LIMITATION SHALL APPLY NOTWITHSTANDING ANY FAILURE OF
+        ESSENTIAL PURPOSE OF ANY LIMITED REMEDY. SUCH LIMITATION SHALL APPLY TO
+        THE FULLEST EXTENT PERMITTED BY LAW.
+      </p>
+      <p>
+        SUCH LIMITATION OF LIABILITY SHALL ALSO APPLY TO ANY DAMAGE CAUSED BY
+        LOSS OF ACCESS TO, DELETION OF, FAILURE TO STORE, FAILURE TO BACK UP, OR
+        ALTERATION OF PROFILES, ARIST PAGES OR OTHER CONTENT STORED THROUGHOUT
+        Foxtail.
+      </p>
+      <p>
+        UNDER NO CIRCUMSTANCES SHALL LOV OR ITS LICENSORS BE HELD LIABLE FOR ANY
+        DELAY OR FAILURE IN PERFORMANCE RESULTING DIRECTLY OR INDIRECTLY FROM
+        ACTS OF NATURE, FORCES, OR CAUSES BEYOND ITS REASONABLE CONTROL,
+        INCLUDING, WITHOUT LIMITATION, INTERNET FAILURES, COMPUTER EQUIPMENT
+        FAILURES, TELECOMMUNICATION EQUIPMENT FAILURES, OTHER EQUIPMENT
+        FAILURES, ELECTRICAL POWER FAILURES, STRIKES, LABOR DISPUTES, RIOTS,
+        INSURRECTIONS, CIVIL DISTURBANCES, SHORTAGES OF LABOR OR MATERIALS,
+        FIRES, FLOODS, STORMS, EXPLOSIONS, ACTS OF GOD, WAR, GOVERNMENTAL
+        ACTIONS, ORDERS OF DOMESTIC OR FOREIGN COURTS OR TRIBUNALS,
+        NON-PERFORMANCE OF THIRD PARTIES, OR LOSS OF OR FLUCTUATIONS IN HEAT,
+        LIGHT, OR AIR CONDITIONING.
+      </p>
+      <p>
+        In some jurisdictions, limitations of liability are not permitted. In
+        such jurisdictions, the foregoing limitation may not apply to you.
+      </p>
+      <p>12. DISCLAIMER REGARDING THIRD PARTY CONTENT</p>
+      <p>
+        Foxtail offers access to numerous third party web pages and content
+        available over the Internet. In overwhelming majority instances,
+        including, but not limited to, sites contained within a directory of
+        links, LOV has no control whatsoever over the content of such sites. In
+        other instances, including, but not limited to, web pages hosted on
+        Foxtail or provided to Foxtail by third parties, LOV may set guidelines
+        for what may appear on such web pages and may engage in certain
+        screening, but generally exercises no control over the content of such
+        web pages and is unable to police all such content. Third party content
+        accessible through Foxtail from such sources is developed by people over
+        whom Foxtail exercises no control. Similarly, content hosted by Foxtail
+        which is posted by third parties, and, with the exception of certain
+        random screening functions, LOV cannot and does not screen such web
+        pages before they are made accessible to other users of Foxtail.
+        Accordingly, neither LOV nor its licensors assume any responsibility for
+        the content of any site linked to the Foxtail web site or in any web
+        page hosted for a third party within Foxtail web site. In instances
+        where Foxtail does review the sites that are displayed in directories,
+        indices, and/or references, or where Foxtail makes available
+        directories, indices, and/or references of sites compiled by third
+        parties, the content located at such sites was developed third parties,
+        and review of such sites by LOV, if any, is narrowly limited to that
+        which is necessary for compiling the particular set of links.
+      </p>
+      <p>13. STORAGE</p>
+      <p>
+        Many features of Foxtail store information on behalf of users. Examples
+        include, but are not limited to chat, Profiles and postings. LOV Inc
+        reserves the right, in its sole discretion, to limit the amount of
+        storage space available per user or to delete materials stored for an
+        excessive period while the user’s account has been inactive.
+      </p>
+      <p>14. ADVERTISERS AND CONTENT LINKED TO THE FOXTAIL NETWORK</p>
+      <p>
+        LOV and the Foxtail Companies may provide, or third parties may provide,
+        links to other sites or resources located on the World Wide Web by
+        allowing a user to leave Foxtail to access third-party material or by
+        bringing the third party material into this site via "inverse"
+        hyperlinks and framing technology. LOV have no control over such sites
+        and resources. You acknowledge and agree that LOV are not responsible
+        for the availability of such external sites or resources, and do not
+        endorse and are not responsible or liable for any content, advertising,
+        products, or other materials on or available from such sites or
+        resources. You further acknowledge and agree that LOV shall not be
+        responsible or liable, directly or indirectly, for any damage or loss
+        caused or alleged to be caused by or in connection with use of or
+        reliance on any such content, goods or services available on or through
+        any such site or resource.
+      </p>
+      <p>
+        Your correspondence or business dealings with, or participation in
+        promotions of, advertisers found on or through the Foxtail Products and
+        Services, including payment and delivery of related goods or services,
+        and any other terms, conditions, warranties or representations
+        associated with such dealings, are solely between you and such
+        advertiser. You agree that LOV shall not be responsible or liable for
+        any loss or damage of any sort incurred as the result of any such
+        dealings or as the result of the presence of such advertisers on the
+        Product and Services.
+      </p>
+      <p>15. NO LICENSE; INTELLECTUAL PROPERTY OF FOXTAIL AND OTHERS</p>
+      <p>
+        Except as expressly provided, nothing within any of the Products and
+        Services shall be construed as conferring any license under any of LOV's
+        or any third party's intellectual property rights, whether by estoppel,
+        implication, waiver, or otherwise. Without limiting the generality of
+        the foregoing, you acknowledge and agree that certain Content available
+        through and used to operate Foxtail and the Products and Services is
+        protected by copyright, trademark, patent, or other proprietary rights
+        of LOV and its affiliates, licensors (including, without limitation,
+        Artists), and service providers. Except as expressly provided to the
+        contrary, you agree not to modify, alter, or deface any of the
+        trademarks, service marks, or other intellectual property made available
+        by LOV in connection with the Products and Services. You agree not to
+        hold yourself out as in any way sponsored by, affiliated with, or
+        endorsed by LOV, any of LOV’s affiliates, or any of LOV’s service
+        providers. You agree not to use any of the trademarks or service marks
+        or other Content accessible through Foxtail for any purpose other than
+        the purpose for which such Content is made available to users by LOV You
+        agree not to defame or disparage LOV, the trademarks or service marks of
+        LOV, or any aspect of the Products and Services. You agree not to adapt,
+        translate, modify, decompile, disassemble, or reverse engineer the
+        Products and Services or any software or programs used in connection
+        with the Products and Services or Foxtail.
+      </p>
+      <p>
+        In order to maintain the privacy and security of your user profile, you
+        hereby grant LOV a limited, non-exclusive, worldwide, royalty-free
+        license to any and all copyrightable content posted by you on or through
+        Foxtail. You also grant and assign LOV or its affiliates the right and
+        authority to enforce your DMCA and any and all intellectual property
+        rights against alleged infringers at your request. This provision does
+        not constitute in any way a partnership, joint venture or any other
+        fiduciary relationship between you and LOV. Further, LOV does not
+        warrant or guarantee that it can or will enforce your intellectual
+        property rights against alleged infringers. LOV reserves the right
+        through this limited license to enforce your rights at your request,
+        however, it remains the sole and primary responsibility of each member,
+        the Content creator and owner, to police and enforce your rights against
+        alleged infringers.
+      </p>
+      <p>16. LINKING TO FOXTAIL; USE OF LOGO</p>
+      <p>
+        Foxtail offers a non-assignable, non-transferable, and non-exclusive
+        license to link to Foxtail web sites, using Foxtail logos, subject to
+        the following provisions. Foxtail logos may be placed on a Web site for
+        the sole purpose of creating a link to Foxtail and allowing users of
+        your site to access the Products and Services on Foxtail. Foxtail logos
+        may not be used for any other purpose, including, among other purposes,
+        to suggest sponsorship by, or affiliation with, or endorsement by
+        Foxtail. Foxtail logos may only be used in accordance with the LOV
+        Trademark Usage Guidelines, and may only be used in the exact size,
+        shape, colors, design, and configuration as found on such web page.
+        Foxtail logos may not be altered in any manner. Foxtail logos must
+        appear by themselves, with reasonable spacing (at least the height of
+        the logo) between each side of the applicable logo and other graphic or
+        textual elements. Foxtail logos may not be used to disparage Foxtail,
+        its products or services, or in a manner which, in LOV’s reasonable
+        judgment, may diminish or otherwise damage LOV’s good will in Foxtail
+        logos. By using any such LOV Network logo, you acknowledge that Foxtail
+        has exclusive rights to the logo, and that all good will generated
+        through your use of the logo will inure to the benefit of Foxtail. If
+        you use Foxtail logos, you must include appropriate attribution, for
+        example: “Foxtail® is a registered trademark of LOV” LOV reserves the
+        right to revoke this license or to alter its terms from time to time,
+        for any or no reason, with or without notice. LOV reserves the right to
+        take action against any use that does not conform to these provisions.
+      </p>
+      <p>17. INDEMNITY AND RELEASE</p>
+      <p>
+        By using the Foxtail web site you agree to indemnify LOV, and their
+        officers, employees, volunteers and licensors, and hold them harmless
+        from any and all claims and expenses, including attorney's fees, arising
+        from your use of the Foxtail web site, your use of the Products and
+        Services, or your submission of ideas and/or related materials to LOV or
+        from any person's use of any account or password you maintain with
+        Foxtail, regardless of whether such use is authorized by you. By using
+        Foxtail, using the Products and Services, or submitting any ideas and/or
+        related materials to LOV Inc, you are hereby agreeing to release LOV and
+        its parents, subsidiaries, affiliates, officers, employees, volunteers,
+        and licensors from any and all claims, demands, debts, obligations,
+        damages (actual or consequential), costs, and expenses of any kind or
+        nature whatsoever, whether known or unknown, suspected or unsuspected,
+        disclosed or undisclosed, that you may have against them arising out of
+        or in any way related to such disputes and/or to the Products and
+        Services or to any disputes regarding use of ideas and/or related
+        materials submitted to LOV YOU HEREBY AGREE TO WAIVE ALL LAWS THAT MAY
+        LIMIT THE EFFICACY OF SUCH RELEASES.
+      </p>
+      <p>18. LIMITATION OF ACTIONS</p>
+      <p>
+        You acknowledge and agree that, regardless of any statute or law to the
+        contrary, any claim or cause of action you may have arising out of, or
+        relating to, your use of Foxtail or the Products and Services must be
+        filed within one (1) year after such claim or cause of action arises, or
+        forever be barred.
+      </p>
+      <p>19. COPYRIGHT, TRADEMARK, AND PATENT NOTICES</p>
+      <p>
+        All other marks that appear throughout the Products and Services belong
+        to LOV or the respective owners of such marks, and are protected by
+        Canadian, U.S. and international copyright and trademark laws. Any use
+        of any of the marks appearing throughout the Products and Services
+        without the express written consent of LOV or the owner of the mark, as
+        appropriate, is strictly prohibited. LOV may provide, or third parties
+        may provide, links to other sites or resources located on the World Wide
+        Web by allowing a user to leave Foxtail to access third-party material
+        or by bringing the third party material into this site via "inverse"
+        hyperlinks and framing technology. LOV have no control over such sites
+        and resources. You acknowledge and agree that LOV are not responsible
+        for the availability of such external sites or resources, and do not
+        endorse and are not responsible or liable for any content, advertising,
+        products, or other materials on or available from such sites or
+        resources. You further acknowledge and agree that LOV shall not be
+        responsible or liable, directly or indirectly, for any damage or loss
+        caused or alleged to be caused by or in connection with use of or
+        reliance on any such content, goods or services available on or through
+        any such site or resource.
+      </p>
+      <p>
+        Your correspondence or business dealings with, or participation in
+        promotions of, advertisers found on or through the Foxtail Products and
+        Services, including payment and delivery of related goods or services,
+        and any other terms, conditions, warranties or representations
+        associated with such dealings, are solely between you and such
+        advertiser. You agree that LOV shall not be responsible or liable for
+        any loss or damage of any sort incurred as the result of any such
+        dealings or as the result of the presence of such advertisers on the
+        Product and Services.
+      </p>
+      <p>20. INTELLECTUAL PROPERTY INFRINGEMENT CLAIMS</p>
+      <p>
+        LOV respects the intellectual property of others. It is LOV's policy to
+        respond expeditiously to claims of copyright and other intellectual
+        property infringement. LOV will promptly process and investigate notices
+        of alleged infringement and will take appropriate actions under the
+        Digital Millennium Copyright Act ("DMCA") and other applicable
+        intellectual property laws. Upon receipt of notices complying or
+        substantially complying with the DMCA, LOV may act expeditiously to
+        remove or disable access to any material claimed to be infringing or
+        claimed to be the subject of infringing activity and may act
+        expeditiously to remove or disable access to any reference or link to
+        material or activity that is claimed to be infringing. LOV will
+        terminate access for users who are repeat infringers.
+      </p>
+      <p>
+        Notifying LOV of Copyright Infringement: To provide LOV notice of an
+        infringement, you must provide a written communication to the attention
+        of "DMCA Infringement Notification Dept." care of{" "}
+        <a href="mailto=report@Foxtailapp.com">report@Foxtailapp.com</a> that
+        sets forth the information specified by the DMCA
+        (http://www.copyright.gov/title17/92chap5.html#512). Please note that
+        you may be liable for damages (including costs and attorneys' fees) if
+        you materially misrepresent that an activity is infringing your
+        copyright.
+      </p>
+      <p>
+        Providing LOV with Counter-Notification: If you feel that your material
+        does not constitute infringement, you may provide LOV with a counter
+        notification by written communication to the attention of "DMCA Counter
+        Notification Dept." at{" "}
+        <a href="mailto=report@Foxtailapp.com">report@Foxtailapp.com</a> that
+        sets forth all of the necessary information required by the DMCA
+        (http://www.copyright.gov/title17/92chap5.html#512). Please note that
+        you may be liable for damages (including costs and attorneys' fees) if
+        you materially misrepresent that an activity is not infringing the
+        copyrights of others. If you are uncertain whether an activity
+        constitutes infringement, we recommended seeking advice of legal
+        counsel.
+      </p>
+      <p>21. ARBITRATION, GOVERNING LAW AND FORUM FOR DISPUTES</p>
+      <p>
+        Unless expressly stated to the contrary elsewhere within the Products
+        and Services, all legal issues arising from or related to the use of the
+        Products and Services shall be construed in accordance with, and all
+        questions with respect thereto shall be determined by, the laws of
+        California, United States of America applicable to contracts entered
+        into and wholly to be performed within said province. Any controversy or
+        claim arising out of or relating to these Terms and Conditions or any
+        user's use of the Products and Services shall be settled by binding
+        arbitration in accordance with the commercial arbitration rules of the
+        then-existing Commercial Arbitration Rules of the American Arbitration
+        Association. Any such controversy or claim shall be arbitrated on an
+        individual basis, and shall not be consolidated in any arbitration with
+        any claim or controversy of any other party. The arbitration shall be
+        conducted in San Diego, California, United States of America, and
+        judgment on the arbitration award may be entered into in any provincial
+        or federal court in the United States of America having jurisdiction
+        thereof. Any party seeking temporary or preliminary injunctive relief
+        may do so in any provincial or federal court in San Diego, California
+        having jurisdiction thereof. Except as set forth above, the provincial
+        and federal courts of California shall be the exclusive forum and venue
+        to resolve disputes arising out of or relating to these Terms and
+        Conditions or any user's use of the Products and Services. By using the
+        Products and Services and thereby agreeing to these Terms and
+        Conditions, users consent to personal jurisdiction and venue in the
+        provincial and federal courts in California with respect to all such
+        disputes.
+      </p>
+      <p>
+        22. CHANGES IN TERMS AND CONDITIONS AND CHANGES IN PRODUCTS AND SERVICES
+      </p>
+      <p>
+        LOV reserves the right to modify the Products and Services from time to
+        time, for any reason, and without notice, including the right to
+        terminate the Products and Services. LOV reserves the right to modify
+        these Terms and Conditions from time to time, without notice. Please
+        review these Terms and Conditions from time to time so you will be
+        apprised of any changes.
+      </p>
+      <p>23. MERGER</p>
+      <p>
+        These Terms and Conditions constitute the entire agreement between the
+        parties with respect to the subject matter contained herein and
+        supersede any other agreements, proposals and communications, written or
+        oral, between LOV’s representations and you with respect to the subject
+        matter hereof; except that any other terms and conditions located on any
+        individual LOV web site or in connection with the Products and Services
+        are incorporated herein by reference to the extent they do not conflict
+        with these Terms and Conditions. To the extent that any other terms and
+        conditions or terms of service conflict with these Terms and Conditions,
+        those other provisions shall control with respect to the use of the
+        particular web site and any Products or Services available on or through
+        the web site or the respective Product or Service at which those other
+        provisions may be found.
+      </p>
+      <p>24. NON-WAIVER AND SEPARABILITY</p>
+      <p>
+        LOV’s failure to exercise any right or provision of these Terms and
+        Conditions shall not constitute a waiver of such right or provision. If
+        a court of competent jurisdiction holds any provision of these Terms and
+        Conditions to be invalid, the parties nevertheless agree that the court
+        should endeavor to give effect to the parties' intentions as reflected
+        in the provision, and agree that the other provisions of these Terms and
+        Conditions remain in full force and effect.
+      </p>
+      <p>25. RELATIONSHIP OF PARTIES</p>
+      <p>
+        You acknowledge and agree that you and LOV are independent contractors
+        under these Terms and Conditions, and nothing herein shall be construed
+        to create a partnership, joint venture, agency, or employment
+        relationship. Neither party pursuant to these Terms and Conditions has
+        authority to enter into agreements of any kind on behalf of the other
+        and neither party shall be considered the agent of the other.
+      </p>
+      <p>26. NO RESALE, ASSIGNMENT, OR SUBLICENSING</p>
+      <p>
+        You agree not to resell, assign, sublicense, otherwise transfer, or
+        delegate your rights or obligations under these Terms and Conditions
+        without prior express written authorization of LOV
+      </p>
+      <p>27. SUCCESSORS AND ASSIGNS</p>
+      <p>
+        Without in any way limiting the prohibition on your resale, assignment,
+        sublicensing, or other transfer of rights or obligations, these Terms
+        and Conditions shall be binding upon and inure to the benefit of the
+        parties hereto and their respective heirs, successors, and assigns.
+      </p>
+      <p>28. TERMINATION; SURVIVAL</p>
+      <p>
+        These Terms and Conditions shall continue in effect for as long as you
+        use the Products and Services, unless specifically terminated earlier by
+        LOV All provisions of these Terms and Conditions which impose
+        obligations continuing in their nature shall survive termination of
+        these Terms and Conditions.
+      </p>
+      <p>29. COMMUNICATIONS WITH USERS</p>
+      <p>
+        You consent to receive communications from LOV concerning your use of
+        the Products and Services ("Communications"). The Communications may be
+        those that LOV is required to send to you by law concerning the Products
+        and Services ("Required Communications"). The Communications may also be
+        those that LOV sends to you for other reasons. You consent to receive
+        Communications electronically. LOV may provide these Communications to
+        you by sending an email to the email address you provided in connection
+        with your account or by posting the Communication on Foxtail. You may
+        change the email address to which LOV sends Communications by visiting
+        your account information page.
+      </p>
+      <p>
+        In order to receive Required Communications, you must provide LOV, upon
+        registration with Foxtail, a valid email address to which LOV may send
+        electronic mail.
+      </p>
+      <p>30. SUBMISSIONS OF IDEAS</p>
+      <p>
+        Foxtail is always improving its Products and Services and developing new
+        features. If you have ideas regarding improvements or additions to
+        Foxtail, we would like to hear them -- but any submission will be
+        subject to these Terms and Conditions. UNDER NO CIRCUMSTANCES SHALL ANY
+        DISCLOSURE OF ANY IDEA OR RELATED MATERIALS TO Foxtail BE SUBJECT TO ANY
+        OBLIGATION OF CONFIDENTIALITY OR EXPECTATION OF COMPENSATION. BY
+        SUBMITTING THE IDEA AND/OR ANY RELATED MATERIAL TO LOV, YOU ARE WAIVING
+        ANY AND ALL RIGHTS THAT YOU MAY HAVE IN THE IDEA OR ANY RELATED
+        MATERIALS AND ARE REPRESENTING AND WARRANTING TO LOV THAT THE IDEA
+        AND/OR RELATED MATERIALS ARE WHOLLY ORIGINAL WITH YOU, THAT NO ONE ELSE
+        HAS ANY RIGHTS IN THE IDEA AND/OR MATERIALS AND THAT PROTOSE INC IS FREE
+        TO IMPLEMENT THE IDEA AND TO USE THE MATERIALS IF IT SO DESIRES, AS
+        PROVIDED OR AS MODIFIED BY LOV, WITHOUT OBTAINING PERMISSION OR LICENSE
+        FROM ANY THIRD PARTY.
+      </p>
+      <p>31. EXPORT CONTROLS</p>
+      <p>
+        Certain software, and related documentation or technical information,
+        available through Foxtail is subject to applicable laws and regulations
+        of the United States pertaining to export controls. By using such
+        software or related documentation or technical information, you
+        represent and warrant that you are not located in, or under the control
+        of, or a national or resident of any embargoed country or any country on
+        the U.S. Department of Commerce's Table of Denial Orders. You agree not
+        to export or re-export such software or related documentation or
+        technical information directly or indirectly to any countries that are
+        subject to United States export restrictions.
+      </p>
+      <p>32. CONTACT INFORMATION</p>
+      <p>
+        Our basic contact information is: LOV Inc., 1579 Monroe Dr. NE F181,
+        Atlanta, GA, 30324
+      </p>
+      <p>
+        For the quickest response, email us at{" "}
+        <a href="mailto=support@Foxtailapp.com">support@Foxtailapp.com</a>.
+      </p>
+      <p>33. VIOLATIONS OF TERMS AND CONDITIONS</p>
+      <p>
+        Should you violate these Terms and Conditions or any other rights of
+        LOV, LOV reserve the right to pursue any and all legal and equitable
+        remedies against you, including, without limitation, terminating any and
+        all user accounts on any and all LOV properties.
+      </p>
+      <p>
+        If you are aware of any violations of these Terms and Conditions, please
+        report them to:{" "}
+        <a href="mailto=report@Foxtailapp.com">report@Foxtailapp.com</a>.
+      </p>
+      <p>
+        Please read the entire Terms and Conditions, as all LOV properties,
+        Products and Services are offered subject to these Terms and Conditions.
+      </p>
+    </div>
   </div>
 );
 

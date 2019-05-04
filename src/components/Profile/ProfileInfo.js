@@ -27,12 +27,7 @@ class ProfileInfo extends Component {
               &nbsp;
               {users[0].username},&nbsp;{" "}
             </span>
-            <span>
-              {" "}
-              {dayjs()
-                .locale(localStorage.getItem("i18nextLng"))
-                .diff(users[0].dob, "years")}
-            </span>
+            <span> {dayjs().diff(users[0].dob, "years")}</span>
             {users[0].sexuality && (
               <span>
                 ,&nbsp;
@@ -54,12 +49,7 @@ class ProfileInfo extends Component {
                 )}
                 &nbsp; {users[1].username},&nbsp;{" "}
               </span>
-              <span>
-                {" "}
-                {dayjs()
-                  .locale(localStorage.getItem("i18nextLng"))
-                  .diff(users[1].dob, "years")}
-              </span>
+              <span> {dayjs().diff(users[1].dob, "years")}</span>
               {users[1].sexuality && (
                 <span>
                   ,&nbsp;

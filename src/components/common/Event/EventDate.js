@@ -2,24 +2,24 @@ import React, { PureComponent } from "react";
 
 class EventDate extends PureComponent {
   render() {
-    const { time, dayjs } = this.props;
+    const { time, dayjs, lang } = this.props;
     return (
       <div className="date">
         <span>
           {" "}
           {dayjs(time)
-            .locale(localStorage.getItem("i18nextLng"))
+            .locale(lang)
             .format("D")}{" "}
         </span>
         <span>
           {dayjs(time)
-            .locale(localStorage.getItem("i18nextLng"))
+            .locale(lang)
             .format("MMM")}{" "}
         </span>
         <span>
           {" "}
           {dayjs(time)
-            .locale(localStorage.getItem("i18nextLng"))
+            .locale(lang)
             .format("HH:mm")}{" "}
         </span>
       </div>

@@ -16,11 +16,10 @@ import Header from "./Header";
 import Tour from "./Tour";
 import EventsList from "./EventsList";
 import Spinner from "../common/Spinner";
-import validateLang from "../../utils/validateLang";
 import deleteFromCache from "../../utils/deleteFromCache";
-const lang = validateLang(localStorage.getItem("i18nextLng"));
-const locale = lang !== null ? lang : "en";
-require("dayjs/locale/" + locale);
+import getLang from "../../utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
 
 class SearchEvents extends Component {
   state = {
@@ -217,6 +216,7 @@ class SearchEvents extends Component {
                 ErrorHandler={ErrorHandler}
                 dayjs={dayjs}
                 distanceMetric={distanceMetric}
+                lang={lang}
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
@@ -282,6 +282,7 @@ class SearchEvents extends Component {
                       dayjs={dayjs}
                       loading={hasMore}
                       distanceMetric={distanceMetric}
+                      lang={lang}
                     />
                   );
                 }}

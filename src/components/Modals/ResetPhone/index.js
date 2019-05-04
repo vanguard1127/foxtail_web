@@ -24,7 +24,7 @@ class ResetPhone extends PureComponent {
   };
 
   render() {
-    const { close, t, ErrorHandler, token, history } = this.props;
+    const { close, t, ErrorHandler, token, history, lang } = this.props;
     const { code, text } = this.state;
     if (!token) {
       return (
@@ -93,6 +93,7 @@ class ResetPhone extends PureComponent {
                         t={t}
                         history={history}
                         ErrorHandler={ErrorHandler}
+                        lang={lang}
                       />
                     </ErrorHandler.ErrorBoundary>
                     <button className="border" onClick={() => close()}>

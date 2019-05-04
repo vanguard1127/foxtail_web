@@ -75,6 +75,7 @@ class Dropdown extends Component {
     if (isLoading || options === null) {
       return <div>Loading...</div>;
     }
+
     if (multiple) {
       return (
         <Select
@@ -82,7 +83,7 @@ class Dropdown extends Component {
           multiple={multiple}
           label={placeholder}
           defaultOptionValues={
-            multiple && value
+            value
               ? value.map(val => options.find(el => el.value === val))
               : null
           }

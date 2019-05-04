@@ -9,10 +9,9 @@ import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
 import withAuth from "../HOCs/withAuth";
 import SettingsPage from "./SettingsPage";
-import validateLang from "../../utils/validateLang";
-const lang = validateLang(localStorage.getItem("i18nextLng"));
-const locale = lang !== null ? lang : "en";
-require("dayjs/locale/" + locale);
+import getLang from "../../utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
 class Settings extends Component {
   shouldComponentUpdate() {
     return false;
@@ -89,7 +88,7 @@ class Settings extends Component {
                     <span className="title">
                       {t("loggedin")}:{" "}
                       {dayjs(settings.lastActive)
-                        .locale(localStorage.getItem("i18nextLng"))
+                        .locale(lang)
                         .format("MMMM DD, YYYY @ HH:mm")}
                     </span>
                   </div>
@@ -108,6 +107,7 @@ class Settings extends Component {
                   history={history}
                   currentuser={session.currentuser}
                   dayjs={dayjs}
+                  lang={lang}
                 />
               )}
             </Fragment>

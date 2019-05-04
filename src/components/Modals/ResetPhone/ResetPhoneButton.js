@@ -49,7 +49,7 @@ class ResetPhoneButton extends PureComponent {
       });
   };
   render() {
-    const { csrf, code } = this.state;
+    const { csrf, code, lang } = this.state;
     const { t, token } = this.props;
     return (
       <Mutation mutation={FB_RESET_PHONE} variables={{ csrf, code, token }}>
@@ -65,7 +65,7 @@ class ResetPhoneButton extends PureComponent {
               countryCode={"+1"} // eg. +60
               phoneNumber={""} // eg. 12345678
               emailAddress={"noreply@foxtailapp.com"} // eg. me@site.com
-              language={localStorage.getItem("i18nextLng")}
+              language={lang}
             >
               {p => (
                 <span className="color" {...p}>

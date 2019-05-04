@@ -6,10 +6,9 @@ import { Waypoint } from "react-waypoint";
 import { preventContextMenu } from "../../utils/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import validateLang from "../../utils/validateLang";
-const lang = validateLang(localStorage.getItem("i18nextLng"));
-const locale = lang !== null ? lang : "en";
-require("dayjs/locale/" + locale);
+import getLang from "../../utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
 dayjs.extend(relativeTime);
 
 const intialState = {
@@ -139,7 +138,7 @@ class NoticesList extends Component {
             <span className="text">{t(notif.text)}</span>
             <span className="when">
               {dayjs(notif.date)
-                .locale(localStorage.getItem("i18nextLng"))
+                .locale(lang)
                 .fromNow()}
             </span>
           </div>
@@ -170,7 +169,7 @@ class NoticesList extends Component {
             </span>
             <span className="when">
               {dayjs(notif.date)
-                .locale(localStorage.getItem("i18nextLng"))
+                .locale(lang)
                 .fromNow()}
             </span>
           </div>

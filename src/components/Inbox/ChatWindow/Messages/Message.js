@@ -2,7 +2,7 @@ import React from "react";
 import { preventContextMenu } from "../../../../utils/image";
 
 const Message = React.forwardRef(
-  ({ message, currentUserID, t, dayjs }, ref) => {
+  ({ message, currentUserID, t, dayjs, lang }, ref) => {
     const messageText =
       message.type === "msg"
         ? message.text
@@ -33,7 +33,7 @@ const Message = React.forwardRef(
           {" "}
           {message.fromUser.username},{" "}
           {dayjs(message.createdAt)
-            .locale(localStorage.getItem("i18nextLng"))
+            .locale(lang)
             .format("HH:mm")
             .toString()}
         </span>

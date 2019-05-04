@@ -110,38 +110,33 @@ const withLocation = PassedComponent =>
 
     render() {
       const { lat, long, city, country, locModalVisible } = this.state;
-
-      let display;
-      if (lat !== null) {
-        display = (
-          <PassedComponent
-            {...this.props}
-            location={{ lat, long, city, country }}
-          />
-        );
-      } else {
-        display = (
-          <section className="not-found">
-            <div className="container">
-              <div className="col-md-12">
-                <div className="icon">
-                  <i className="nico location" />
-                </div>
-                <span className="head">
-                  No location near you. Try again later.
-                </span>
-                <span className="description">
-                  It is a long established fact that a reader will be distracted
-                  by the readable content of a page when looking at its layout.
-                </span>
-              </div>
-            </div>
-          </section>
-        );
+      if (!lat) {
+        return null;
       }
       return (
         <Fragment>
-          {display}
+          <PassedComponent
+            {...this.props}
+            location={{ lat, long, city, country }}
+            locationErr={
+              !lat ? (
+                <section className="not-found">
+                  <div className="container">
+                    <div className="col-md-12">
+                      <div className="icon">
+                        <i className="nico location" />
+                      </div>
+                      <span className="head">Location not available.</span>
+                      <span className="description">
+                        Please enable location services on your device to see
+                        this page.
+                      </span>
+                    </div>
+                  </div>
+                </section>
+              ) : null
+            }
+          />
           {locModalVisible && (
             <SetLocationModal
               close={() => this.setLocModalVisible(false)}

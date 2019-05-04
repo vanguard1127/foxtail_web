@@ -308,14 +308,15 @@ class MessageList extends Component {
       handleEndScrollUp,
       fetchMore,
       t,
-      dayjs
+      dayjs,
+      lang
     } = this.props;
 
     const messageElements = _.flatten(
       _.chain(messages)
         .groupBy(datum =>
           dayjs(datum.createdAt)
-            .locale(localStorage.getItem("i18nextLng"))
+            .locale(lang)
             .format("dddd, MMMM D, YYYY")
             .toLocaleUpperCase()
         )
@@ -352,7 +353,14 @@ class MessageList extends Component {
                   </div>
                 );
               }
-              return <Message key={message.id} {...props} dayjs={dayjs} />;
+              return (
+                <Message
+                  key={message.id}
+                  {...props}
+                  dayjs={dayjs}
+                  lang={lang}
+                />
+              );
             })
             .reverse();
           // At the start of every date group insert a date element.

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 import { render } from "react-dom";
 import {
   BrowserRouter as Router,
@@ -14,8 +15,9 @@ import Landing from "./components/Landing";
 import About from "./components/Information/About";
 import FAQ from "./components/Information/FAQ";
 import Privacy from "./components/Information/Privacy";
-import Support from "./components/Information/Support";
+import AntiSpam from "./components/Information/AntiSpam";
 import ToS from "./components/Information/ToS";
+import LawEnforce from "./components/Information/LawEnforce";
 import EmailConfirm from "./components/Landing/EmailConfirm";
 import PhoneConfirm from "./components/Landing/PhoneConfirm";
 import Navbar from "./components/Navbar/";
@@ -44,6 +46,9 @@ import { withClientState } from "apollo-link-state";
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
 });
+
+ReactGA.initialize("UA-106316956-1");
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 //let { httpurl, HTTPSurl, wsurl } = env.production;
 let { httpurl, HTTPSurl, wsurl } = env.local;
@@ -139,7 +144,7 @@ const errorLink = onError(
         } else if (~message.indexOf("authenticated")) {
           tokenHandler({ operation, forward, HTTPSurl, ErrorHandler });
         } else {
-          if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+          if (process.env.NODE_ENV === "development") {
             console.error("ERROR::::", message);
           }
           Sentry.withScope(scope => {
@@ -209,16 +214,17 @@ const Wrapper = withRouter(props => {
       return <Landing props={props} />;
     } else if (location.pathname === "/tos") {
       return <ToS />;
-    } else if (location.pathname === "/abount") {
+    } else if (location.pathname === "/about") {
       return <About />;
     } else if (location.pathname === "/faq") {
       return <FAQ />;
     } else if (location.pathname === "/privacy") {
       return <Privacy />;
-    } else if (location.pathname === "/support") {
-      return <Support />;
+    } else if (location.pathname === "/antispam") {
+      return <AntiSpam />;
+    } else if (location.pathname === "/lawenforcement") {
+      return <LawEnforce />;
     }
-
     let showFooter =
       location.pathname && location.pathname.match(/^\/inbox/) === null;
 

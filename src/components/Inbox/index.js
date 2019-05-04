@@ -23,10 +23,9 @@ import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
 import { INBOXLIST_LIMIT } from "../../docs/consts";
-import validateLang from "../../utils/validateLang";
-const lang = validateLang(localStorage.getItem("i18nextLng"));
-const locale = lang !== null ? lang : "en";
-require("dayjs/locale/" + locale);
+import getLang from "../../utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
 
 class InboxPage extends Component {
   state = {
@@ -241,6 +240,7 @@ class InboxPage extends Component {
                   ErrorHandler={ErrorHandler}
                   dayjs={dayjs}
                   chatOpen={chatOpen}
+                  lang={lang}
                 />
               )}
               {chatID && (
@@ -276,6 +276,7 @@ class InboxPage extends Component {
                         dayjs={dayjs}
                         chatOpen={chatOpen}
                         setBlockModalVisible={this.setBlockModalVisible}
+                        lang={lang}
                         isOwner={
                           chat && chat.ownerProfile.id === currentuser.profileID
                         }

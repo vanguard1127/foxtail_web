@@ -47,7 +47,7 @@ class MyEvents extends Component {
   }
 
   render() {
-    const { t, ErrorHandler, dayjs, distanceMetric } = this.props;
+    const { t, ErrorHandler, dayjs, distanceMetric, lang } = this.props;
     return (
       <Query query={GET_MY_EVENTS} fetchPolicy="cache-and-network">
         {({ data, loading, error }) => {
@@ -102,6 +102,7 @@ class MyEvents extends Component {
                           event={event}
                           t={t}
                           dayjs={dayjs}
+                          lang={lang}
                         />
                       ))}
                     </OwlCarousel>

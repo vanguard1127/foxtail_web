@@ -19,8 +19,8 @@ class Select extends PureComponent {
 
   state = {
     menuOpen: false,
-    selectedOption: "",
-    selectedOptions: []
+    selectedOption: this.props.defaultOptionValue,
+    selectedOptions: this.props.defaultOptionValues
   };
 
   componentWillMount() {
@@ -28,37 +28,25 @@ class Select extends PureComponent {
   }
 
   componentDidMount() {
-    this.getDefaultOption();
+    this.mounted = true;
+    if (this.props.defaultOptionValue) {
+      this.setState({
+        selectedOption: this.props.options.find(
+          x => x.value == this.props.defaultOptionValue
+        )
+      });
+    }
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     document.removeEventListener("mousedown", this.handleClickOutside, false);
   }
 
   handleClickOutside = event => {
     if (!this.selectContainerRef.contains(event.target)) {
-      this.setState({ menuOpen: false });
-    }
-  };
-
-  getDefaultOption = () => {
-    const {
-      defaultOptionValues,
-      multiple,
-      defaultOptionValue,
-      options
-    } = this.props;
-
-    if (multiple && defaultOptionValues) {
-      const defaultOptions = defaultOptionValues.map(d => {
-        const found = options.find(x => x.value == d.value);
-        if (found == undefined) return found;
-      });
-      this.setState({ selectedOptions: defaultOptions });
-    } else if (defaultOptionValue) {
-      const foundOption = options.find(x => x.value == defaultOptionValue);
-      if (foundOption) {
-        this.setState({ selectedOption: foundOption });
+      if (this.mounted) {
+        this.setState({ menuOpen: false });
       }
     }
   };
@@ -66,9 +54,11 @@ class Select extends PureComponent {
   onSelect = (event, optionProps) => {
     const { multiple, onChange } = this.props;
     if (!multiple) {
-      this.setState({ selectedOption: optionProps, menuOpen: false }, () => {
-        if (onChange) onChange(optionProps, event);
-      });
+      if (this.mounted) {
+        this.setState({ selectedOption: optionProps, menuOpen: false }, () => {
+          if (onChange) onChange(optionProps, event);
+        });
+      }
     } else {
       let selectedOptionsCopy = [...this.state.selectedOptions];
 
@@ -83,13 +73,14 @@ class Select extends PureComponent {
       } else {
         selectedOptionsCopy = [...selectedOptionsCopy, optionProps];
       }
-
-      this.setState(
-        { selectedOptions: selectedOptionsCopy, menuOpen: true },
-        () => {
-          if (onChange) onChange(this.state.selectedOptions, event);
-        }
-      );
+      if (this.mounted) {
+        this.setState(
+          { selectedOptions: selectedOptionsCopy, menuOpen: true },
+          () => {
+            if (onChange) onChange(this.state.selectedOptions, event);
+          }
+        );
+      }
     }
     this.setState({ menuOpen: false });
   };
@@ -98,7 +89,7 @@ class Select extends PureComponent {
     const { selectedOptions, selectedOption, menuOpen } = this.state;
     const { className, label, multiple, options, t } = this.props;
     const menuStatus = multiple ? true : !menuOpen;
-    const optionCounter = selectedOptions.length;
+    const optionCounter = selectedOptions ? selectedOptions.length : 0;
 
     const SelectList = () => (
       <div className="select-list">
@@ -109,7 +100,7 @@ class Select extends PureComponent {
               checked =
                 selectedOptions.find(x => x.value == d.value) != undefined;
             } else {
-              checked = selectedOption.value == d.value;
+              checked = selectedOption && selectedOption.value == d.value;
             }
             return (
               <li
@@ -145,10 +136,11 @@ class Select extends PureComponent {
               })}
             </div>
           )}
-          {!multiple && <span>{t(selectedOption.label)}</span>}
           {multiple && optionCounter > 0 && (
             <span className="option-counter">{`(${optionCounter})`}</span>
           )}
+          {!multiple && selectedOption && <span>{selectedOption.label}</span>}
+
           {menuOpen && <SelectList />}
         </div>
       </React.Fragment>

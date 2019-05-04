@@ -20,11 +20,9 @@ import ShareModal from "../Modals/Share";
 import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
 import { flagOptions } from "../../docs/options";
-import validateLang from "../../utils/validateLang";
-const lang = validateLang(localStorage.getItem("i18nextLng"));
-const locale = lang !== null ? lang : "en";
-require("dayjs/locale/" + locale);
-
+import getLang from "../../utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
 class ProfilePage extends Component {
   state = {
     shareModalVisible: false,

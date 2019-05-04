@@ -7,7 +7,15 @@ class EventDiscussion extends Component {
     return false;
   }
   render() {
-    const { chatID, history, t, ErrorHandler, dayjs, currentuser } = this.props;
+    const {
+      chatID,
+      history,
+      t,
+      ErrorHandler,
+      dayjs,
+      currentuser,
+      lang
+    } = this.props;
     return (
       <ErrorHandler.ErrorBoundary>
         <div className="discuss-content">
@@ -26,6 +34,7 @@ class EventDiscussion extends Component {
             ErrorHandler={ErrorHandler}
             dayjs={dayjs}
             limit={EVENTDISC_LIMIT}
+            lang={lang}
           />
         </div>
       </ErrorHandler.ErrorBoundary>

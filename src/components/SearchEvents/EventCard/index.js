@@ -16,7 +16,14 @@ class EventCard extends Component {
   };
 
   render() {
-    const { event, t, dayjs, upcomingEvents, distanceMetric } = this.props;
+    const {
+      event,
+      t,
+      dayjs,
+      upcomingEvents,
+      distanceMetric,
+      lang
+    } = this.props;
     const {
       eventname,
       startTime,
@@ -30,7 +37,7 @@ class EventCard extends Component {
       <div className={upcomingEvents ? "col-md-12 col-lg-6" : "col-md-12"}>
         <div className="card-item">
           <div className="thumbnail" onClick={this.onEventClick}>
-            <EventDate time={startTime} dayjs={dayjs} />
+            <EventDate time={startTime} dayjs={dayjs} lang={lang} />
             <EventCreator ownerProfile={ownerProfile} />
             <span onClick={this.onEventClick}>
               <img

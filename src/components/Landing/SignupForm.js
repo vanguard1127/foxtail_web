@@ -102,7 +102,8 @@ class SignupForm extends Component {
     ) : null;
 
   render() {
-    const { fbResolve, handleFBReturn, t } = this.props;
+    const { fbResolve, handleFBReturn, t, history, lang } = this.props;
+
     const {
       username,
       email,
@@ -113,7 +114,6 @@ class SignupForm extends Component {
       isValid,
       errors
     } = this.state;
-    const lang = localStorage.getItem("i18nextLng");
 
     return (
       <form>
@@ -213,10 +213,12 @@ class SignupForm extends Component {
             setValue={this.setValue}
             validateForm={this.validateForm}
             t={t}
+            lang={lang}
           />
           <div className="terms">
             {t("signupMsg")}
-            <span>{t("tnp")}</span>
+            <span onClick={() => history.push("/tos")}>{t("terms")}</span> &
+            <span onClick={() => history.push("/privacy")}>{t("privacy")}</span>
           </div>
         </div>
       </form>

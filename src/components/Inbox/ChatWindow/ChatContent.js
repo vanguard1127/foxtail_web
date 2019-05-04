@@ -45,7 +45,7 @@ class ChatContent extends PureComponent {
   };
 
   render() {
-    const { chatID, currentUserID, t, ErrorHandler, dayjs } = this.props;
+    const { chatID, currentUserID, t, ErrorHandler, dayjs, lang } = this.props;
 
     const { cursor, limit } = this.props;
 
@@ -120,6 +120,7 @@ class ChatContent extends PureComponent {
                 handleEndScrollUp={this.handleEndScrollUp}
                 limit={limit}
                 dayjs={dayjs}
+                lang={lang}
               />
             );
           }}

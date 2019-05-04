@@ -130,7 +130,7 @@ class Signup extends PureComponent {
     // }
   };
   render() {
-    const { t, setBreadcrumb, ErrorHandler } = this.props;
+    const { t, setBreadcrumb, ErrorHandler, lang } = this.props;
     let {
       csrf,
       code,
@@ -155,7 +155,7 @@ class Signup extends PureComponent {
           interestedIn,
           gender,
           isCouple,
-          lang: localStorage.getItem("i18nextLng"),
+          lang,
           isCreate: true
         }}
       >
@@ -172,6 +172,8 @@ class Signup extends PureComponent {
                 setBreadcrumb={setBreadcrumb}
                 t={t}
                 ErrorHandler={ErrorHandler}
+                history={this.props.history}
+                lang={lang}
               />
               <div className="form terms">
                 Test Users:

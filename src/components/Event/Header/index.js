@@ -28,13 +28,14 @@ class EventHeader extends Component {
       dayjs,
       showShareModal,
       showBlockModal,
-      ErrorBoundary
+      ErrorBoundary,
+      lang
     } = this.props;
 
     return (
       <ErrorBoundary>
         <div className="header">
-          <EventDate time={startTime} dayjs={dayjs} />
+          <EventDate time={startTime} dayjs={dayjs} lang={lang} />
           <div className="info">
             <EventTitles eventname={eventname} tagline={tagline} />
             <EventCreator
@@ -43,6 +44,7 @@ class EventHeader extends Component {
               history={history}
               t={t}
               dayjs={dayjs}
+              lang={lang}
             />
             <EventShare
               id={id}

@@ -13,7 +13,7 @@ class EventsList extends Component {
   }
 
   render() {
-    const { events, handleEnd, t, dayjs, distanceMetric } = this.props;
+    const { events, handleEnd, t, dayjs, distanceMetric, lang } = this.props;
     return (
       <div className="events-card-content">
         <div className="container">
@@ -30,6 +30,7 @@ class EventsList extends Component {
                   t={t}
                   dayjs={dayjs}
                   distanceMetric={distanceMetric}
+                  lang={lang}
                 />
               ))}
               <ScrollUpButton />

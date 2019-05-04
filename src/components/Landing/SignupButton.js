@@ -7,7 +7,8 @@ const SignupButton = ({
   disabled,
   handleFBReturn,
   validateForm,
-  t
+  t,
+  lang
 }) => {
   return (
     <AccountKit
@@ -21,7 +22,7 @@ const SignupButton = ({
       countryCode={"+1"} // eg. +60
       phoneNumber={""} // eg. 12345678
       emailAddress={""} // eg. me@site.com
-      language={localStorage.getItem("i18nextLng")}
+      language={lang}
       validateForm={validateForm}
     >
       <div className="submit">

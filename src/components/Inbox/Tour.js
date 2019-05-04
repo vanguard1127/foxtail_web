@@ -45,7 +45,6 @@ class ProfileTour extends PureComponent {
   };
 
   render() {
-    const lang = localStorage.getItem("i18nextLng");
     const { t } = this.props;
     const { isTourOpen, menuOpen, goToStep } = this.state;
 

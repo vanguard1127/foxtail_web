@@ -28,7 +28,8 @@ class EventInfo extends Component {
       openDelete,
       refetch,
       dayjs,
-      distanceMetric
+      distanceMetric,
+      lang
     } = this.props;
 
     const {
@@ -56,7 +57,7 @@ class EventInfo extends Component {
               <span className="head">{t("evedate")}:</span>
               <span className="title">
                 {dayjs(startTime)
-                  .locale(localStorage.getItem("i18nextLng"))
+                  .locale(lang)
                   .format("DD MMMM YYYY, dddd")
                   .toString()}
               </span>
@@ -67,12 +68,12 @@ class EventInfo extends Component {
               </span>
               <span className="title">
                 {dayjs(startTime)
-                  .locale(localStorage.getItem("i18nextLng"))
+                  .locale(lang)
                   .format("HH:mm")
                   .toString()}{" "}
                 -{" "}
                 {dayjs(endTime)
-                  .locale(localStorage.getItem("i18nextLng"))
+                  .locale(lang)
                   .format("HH:mm")
                   .toString()}
               </span>

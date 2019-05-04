@@ -9,7 +9,7 @@ class LanguageControl extends PureComponent {
 
   state = {
     menuOpen: false,
-    selectedLang: localStorage.getItem("i18nextLng") || "en",
+    selectedLang: this.props.lang,
     languages: ["en", "de", "tu"]
   };
 

@@ -34,7 +34,7 @@ class AcctSettings extends Component {
   };
 
   render() {
-    const { ErrorHandler, t, setValue } = this.props;
+    const { ErrorHandler, t, setValue, lang } = this.props;
     const { showDialog, title, msg, btnText, setting, successMsg } = this.state;
     let schema;
     if (setting === "email") {
@@ -86,7 +86,7 @@ class AcctSettings extends Component {
             </div>
             <div className="col-md-6">
               <div className="verification-box">
-                <ChangePhoneBtn t={t} ErrorHandler={ErrorHandler} />
+                <ChangePhoneBtn t={t} ErrorHandler={ErrorHandler} lang={lang} />
               </div>
             </div>
             <div className="col-md-6">

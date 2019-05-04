@@ -6853,7 +6853,7 @@ section.landing .register-form form .form-content .dropdown::after {
   right: 20px;
   top: 17px;
   font-size: 14px;
-  z-index: 99999;
+  z-index: 1;
 }
 
 section.landing .register-form form .form-content .dropdown label {
@@ -6869,7 +6869,7 @@ section.landing .register-form form .form-content .dropdown label {
   -webkit-font-smoothing: antialiased;
   padding: 0;
   margin: 0;
-  z-index: 9999;
+  z-index: 1;
 }
 
 section.landing
@@ -7174,6 +7174,7 @@ footer.landing .links ul li:last-child span {
   padding-right: 0;
 }
 
+footer.landing .links ul li a,
 footer.landing .links ul li span {
   width: 100%;
   height: 100%;
@@ -7505,10 +7506,10 @@ section.login-modal .popup form .form-content span.description {
   letter-spacing: -0.3px;
   line-height: 20px;
   padding-bottom: 15px;
-  padding-top: 15px;
   text-align: center;
+  /* padding-top: 15px;
   border-top: 1px solid #e9ebec;
-  margin-top: 12px;
+  margin-top: 12px; */
 }
 
 section.login-modal .popup form .form-content .submit {
@@ -9221,4 +9222,45 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 
 .sex.N::before {
   content: "\f22a";
+}
+
+.fullscreen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.centerscreenY {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  align-content: center;
+}
+
+.centerscreenX {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: xx-large;
+}
+
+.foxailGradient {
+  background: -webkit-linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.aboutlogo {
+  width: 21%;
+  height: 10%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url(../img/logo/logo-color@2x.png);
+}
+
+.fullscreen a {
+  color: blue !important;
+  text-decoration: underline;
+  cursor: pointer;
 }

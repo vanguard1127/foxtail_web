@@ -52,7 +52,7 @@ class LoginButton extends PureComponent {
   };
   render() {
     const { csrf, code } = this.state;
-    const { t } = this.props;
+    const { t, lang } = this.props;
 
     return (
       <Mutation
@@ -71,7 +71,7 @@ class LoginButton extends PureComponent {
               countryCode={"+1"} // eg. +60
               phoneNumber={""} // eg. 12345678
               emailAddress={"noreply@foxtailapp.com"} // eg. me@site.com
-              language={localStorage.getItem("i18nextLng")}
+              language={lang}
             >
               {p => (
                 <a {...p} className="login-btn">

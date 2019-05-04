@@ -28,7 +28,8 @@ class ChatWindow extends PureComponent {
       setBlockModalVisible,
       handleRemoveSelf,
       isOwner,
-      leaveDialog
+      leaveDialog,
+      lang
     } = this.props;
     if (currentChat !== null) {
       sessionStorage.setItem("pid", currentChat.id);
@@ -60,6 +61,7 @@ class ChatWindow extends PureComponent {
               hasMoreItems={true}
               limit={INBOXMSG_LIMIT}
               dayjs={dayjs}
+              lang={lang}
             />
             <ChatPanel
               chatID={currentChat.id}

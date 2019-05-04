@@ -7,10 +7,9 @@ import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
 import Tour from "./Tour";
-import validateLang from "../../utils/validateLang";
-const lang = validateLang(localStorage.getItem("i18nextLng"));
-const locale = lang !== null ? lang : "en";
-require("dayjs/locale/" + locale);
+import getLang from "../../utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
 
 class SearchProfilesPage extends Component {
   state = {
@@ -28,6 +27,8 @@ class SearchProfilesPage extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.loading !== nextProps.loading ||
+      this.props.location.long !== nextProps.location.long ||
+      this.props.location.lat !== nextProps.location.lat ||
       this.state.lat !== nextState.lat ||
       this.state.long !== nextState.long ||
       this.state.city !== nextState.city ||
@@ -67,7 +68,8 @@ class SearchProfilesPage extends Component {
       loading,
       refetch,
       client,
-      history
+      history,
+      locationErr
     } = this.props;
 
     const {
@@ -114,21 +116,25 @@ class SearchProfilesPage extends Component {
           />
         </ErrorHandler.ErrorBoundary>
         <ErrorHandler.ErrorBoundary>
-          <ProfilesContainer
-            loading={loading}
-            t={t}
-            history={history}
-            lat={lat}
-            long={long}
-            distance={distance}
-            distanceMetric={session.currentuser.distanceMetric}
-            ageRange={ageRange}
-            interestedIn={interestedIn}
-            ErrorHandler={ErrorHandler}
-            dayjs={dayjs}
-            client={client}
-            isBlackMember={session.currentuser.blackMember.active}
-          />
+          {!lat ? (
+            locationErr
+          ) : (
+            <ProfilesContainer
+              loading={loading}
+              t={t}
+              history={history}
+              lat={lat}
+              long={long}
+              distance={distance}
+              distanceMetric={session.currentuser.distanceMetric}
+              ageRange={ageRange}
+              interestedIn={interestedIn}
+              ErrorHandler={ErrorHandler}
+              dayjs={dayjs}
+              client={client}
+              isBlackMember={session.currentuser.blackMember.active}
+            />
+          )}
         </ErrorHandler.ErrorBoundary>
       </Fragment>
     );

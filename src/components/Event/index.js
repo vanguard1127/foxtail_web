@@ -16,11 +16,10 @@ import Discussion from "./Discussion/";
 import EventInfo from "./Info/EventInfo";
 import { flagOptions } from "../../docs/options";
 import { toast } from "react-toastify";
-import validateLang from "../../utils/validateLang";
 import ShareModal from "../Modals/Share";
-const lang = validateLang(localStorage.getItem("i18nextLng"));
-const locale = lang !== null ? lang : "en";
-require("dayjs/locale/" + locale);
+import getLang from "../../utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
 class EventPage extends Component {
   state = {
     visible: false,
@@ -178,6 +177,7 @@ class EventPage extends Component {
                           this.setBlockModalVisible(true, event)
                         }
                         ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        lang={lang}
                       />
                     </div>
                     <div className="col-lg-9 col-md-12">
@@ -199,6 +199,7 @@ class EventPage extends Component {
                         dayjs={dayjs}
                         ErrorHandler={ErrorHandler}
                         distanceMetric={session.currentuser.distanceMetric}
+                        lang={lang}
                       />{" "}
                       <Discussion
                         chatID={chatID}
@@ -207,6 +208,7 @@ class EventPage extends Component {
                         ErrorHandler={ErrorHandler}
                         dayjs={dayjs}
                         currentuser={session.currentuser}
+                        lang={lang}
                       />
                     </div>
                     <div className="col-lg-3 col-md-12">
@@ -222,6 +224,7 @@ class EventPage extends Component {
                         refetch={refetch}
                         dayjs={dayjs}
                         distanceMetric={session.currentuser.distanceMetric}
+                        lang={lang}
                       />
                     </div>
                   </div>

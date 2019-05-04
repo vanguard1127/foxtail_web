@@ -28,7 +28,8 @@ class EventInfoMobile extends Component {
       isOwner,
       openDelete,
       dayjs,
-      distanceMetric
+      distanceMetric,
+      lang
     } = this.props;
 
     const {
@@ -53,7 +54,7 @@ class EventInfoMobile extends Component {
             <span className="head">{t("evedate")}:</span>
             <span className="title">
               {dayjs(startTime)
-                .locale(localStorage.getItem("i18nextLng"))
+                .locale(lang)
                 .format("DD MMMM YYYY, dddd")
                 .toString()}
             </span>
@@ -64,12 +65,12 @@ class EventInfoMobile extends Component {
             </span>
             <span className="title">
               {dayjs(startTime)
-                .locale(localStorage.getItem("i18nextLng"))
+                .locale(lang)
                 .format("HH:mm")
                 .toString()}{" "}
               -{" "}
               {dayjs(endTime)
-                .locale(localStorage.getItem("i18nextLng"))
+                .locale(lang)
                 .format("HH:mm")
                 .toString()}
             </span>
