@@ -4,6 +4,7 @@ import Message from "./Message.js";
 import _ from "lodash";
 
 class DateItem extends Component {
+  isUserInside = true;
   state = {
     position: "inside"
   };
@@ -103,8 +104,7 @@ class DateItem extends Component {
 class MessageList extends Component {
   constructor(props) {
     super(props);
-    this.scrollWrapperRef = React.createRef();
-    this.lastMessageRef = React.createRef();
+    this.messagesEnd = React.createRef();
   }
   state = {
     restoreScroll: false,
@@ -133,87 +133,24 @@ class MessageList extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    this.checkScrollTopToFetch(10);
-    //  this.scrollToBot();
+    this.scrollToBottom();
   }
+
   componentWillUnmount() {
     this.mounted = false;
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.messages !== this.props.messages) {
-      let isUserOnBottom = null;
-      if (this.lastMessageRef.current) {
-        // If the user is on the bottom waiting for new messages, scroll him whenever one gets received
-        isUserOnBottom =
-          this.scrollWrapperRef.current.clientHeight +
-            this.scrollWrapperRef.current.scrollTop >
-          this.scrollWrapperRef.current.scrollHeight -
-            this.lastMessageRef.current.clientHeight -
-            20;
-      }
-      if (!this.state.hasScrolledBottomInitial || isUserOnBottom) {
-        // ComponentDidMount does not scrolls to bottom on initial mount. Since on
-        // initial mount there are only 6 items, not enough to scroll. And since waypoint
-        // is on view, because everything is on view, more messages get fetched,
-        // which do need scroll.
-        // So, for the scroll to start at the bottom when user firsts sees it,
-        // either this or fetching more items initial mount
-        if (!this.state.hasScrolledBottomInitial) {
-          console.log("Initial Scroll Bottom");
-        }
-        this.scrollToBot();
-      } else if (this.state.restoreScroll) {
-        // When loading items, we dont want to have the scroll not move up or down.
-        // We want the user to view the same items, without the scroll moving all over the place
-        // So we restore it
-        this.restoreScroll();
+      if (this.isUserInside) {
+        this.scrollToBottom();
       }
     }
   }
-  restoreScroll() {
-    console.log("restoring");
-    this.scrollWrapperRef.current.scrollTop =
-      this.state.previousScrollTop +
-      (this.scrollWrapperRef.current.scrollHeight -
-        this.state.previousScrollHeight);
-    if (this.mounted) {
-      this.setState({
-        previousScrollHeight: this.scrollWrapperRef.current.scrollHeight,
-        previousScrollTop: this.scrollWrapperRef.current.scrollTop,
-        restoreScroll: false
-      });
-    }
-  }
-  scrollToBot() {
-    const { hasScrolledBottomInitial } = this.props;
-    console.log("Scrolling to Bottom");
 
-    this.scrollWrapperRef.current.scrollTop = this.scrollWrapperRef.current.scrollHeight;
-    if (this.mounted) {
-      this.setState({
-        previousClientHeight: this.scrollWrapperRef.current.clientHeight,
-        previousScrollHeight: this.scrollWrapperRef.current.scrollHeight,
-        previousScrollTop: this.scrollWrapperRef.current.scrollTop
-      });
-    }
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  };
 
-    // So view always should start at the bottom.
-    // The idea is to scroll to bottom when the component is rendered with the messages
-    // But, in componentDidMount all initial messages are not loaded yet.
-    // So we fetch until all intial messages are loaded. Stoping when messages cover all the scrollview
-    // or when there are not more messages. Then on componentDidUpdate, this gets
-    // executed to scroll to bottom
-    if (
-      !hasScrolledBottomInitial &&
-      this.scrollWrapperRef.current.scrollTop !== 0
-    ) {
-      if (this.mounted) {
-        this.setState({
-          hasScrolledBottomInitial: true
-        });
-      }
-    }
-  }
   fetchMore = () => {
     const { chatID, limit, messages, fetchMore } = this.props;
     // Wait for restoreScroll to take place, then do the call.
@@ -246,19 +183,6 @@ class MessageList extends Component {
           previousResult.getMessages = fetchMoreResult.getMessages;
         }
 
-        // if (this.mounted) {
-        //   this.setState({
-        //     loading: false,
-        //     // When no more messages don't restore. It is not needed and it caused
-        //     // the chat to restore on the next componentDidUpdate
-        //     restoreScroll:
-        //       !noMessagesLeft &&
-        //       this.scrollWrapperRef.current.scrollHeight >
-        //         this.scrollWrapperRef.current.clientHeight,
-        //     dateWaypoints: []
-        //   });
-        // }
-
         return previousResult;
       }
     });
@@ -277,28 +201,7 @@ class MessageList extends Component {
       });
     }
   };
-  onScroll = ev => {
-    // Create scroll event handler here instead of on render for better performance.
-    this.checkScrollTopToFetch(100);
-  };
-  checkScrollTopToFetch(THRESHOLD) {
-    // Dont allow the user to scroll if loading more messages
-    if (!this.state.hasMoreItems) {
-      this.scrollWrapperRef.current.scrollTop = this.state.previousScrollTop;
-    }
-    // Keep around the scrollTop around to use later on restoreScroll & scrolltoBottom
-    if (this.mounted) {
-      this.setState({
-        previousScrollTop: this.scrollWrapperRef.current.scrollTop
-      });
-    }
-    if (this.state.hasMoreItems) {
-      // If is close to the top, then fetch
-      if (this.scrollWrapperRef.current.scrollTop < THRESHOLD) {
-        this.fetchMore();
-      }
-    }
-  }
+
   render() {
     const {
       messages,
@@ -331,13 +234,7 @@ class MessageList extends Component {
                 currentUserID,
                 t
               };
-              if (
-                j === messageList.length - 1 &&
-                index === groupList.length - 1
-              ) {
-                // Attach a ref to the last element for later measurement
-                props.ref = this.lastMessageRef;
-              }
+
               if (message.type === "alert" || message.type === "left") {
                 return (
                   <div
@@ -387,7 +284,7 @@ class MessageList extends Component {
     );
 
     return (
-      <div ref={this.scrollWrapperRef} onScroll={this.onScroll}>
+      <div>
         {/** Parent for abs position elements because scroll does weird things for abs items */}
         <div
           style={{
@@ -417,8 +314,31 @@ class MessageList extends Component {
               }}
             />
           </div>
-          {messageElements}
-
+          {messageElements}{" "}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "20%"
+            }}
+          >
+            <Waypoint
+              onPositionChange={({ currentPosition }) => {
+                if (messages.length > 0) {
+                  if (currentPosition === Waypoint.inside) {
+                    this.isUserInside = true;
+                  } else {
+                    this.isUserInside = false;
+                  }
+                }
+              }}
+            />
+          </div>
+          <div
+            style={{ float: "left", clear: "both" }}
+            ref={el => {
+              this.messagesEnd = el;
+            }}
+          />
           {children}
         </div>
       </div>

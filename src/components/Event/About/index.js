@@ -19,10 +19,10 @@ class EventAbout extends Component {
       description,
       isOwner,
       t,
-      ErrorBoundary
+      ErrorHandler
     } = this.props;
     return (
-      <ErrorBoundary>
+      <ErrorHandler.ErrorBoundary>
         <div className="about-event-content">
           <p>{description}</p>
           <GoingBar
@@ -30,9 +30,10 @@ class EventAbout extends Component {
             participants={participants}
             t={t}
             isOwner={isOwner}
+            ErrorHandler={ErrorHandler}
           />
         </div>
-      </ErrorBoundary>
+      </ErrorHandler.ErrorBoundary>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 const LawEnforce = () => (
   <div className="fullscreen">
-    <p style={{ margin: "0 20vh 20vh 20vh" }}>
+    <div style={{ margin: "0 20vh 20vh 20vh" }}>
       <strong>
         <u>LAW ENFORCEMENT REQUEST &amp; SUBPOENA COMPLIANCE POLICY</u>
       </strong>
@@ -157,7 +157,7 @@ const LawEnforce = () => (
         involving our system, illegal use of our system, and/or active child
         exploitation / human trafficking investigations.
       </p>
-    </p>
+    </div>
   </div>
 );
 

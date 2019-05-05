@@ -4,7 +4,7 @@ class GoingBar extends PureComponent {
   state = { remDropOpen: false };
   closeRemDropdown = () => this.setState({ remDropOpen: false });
   render() {
-    const { id, participants, t, isOwner } = this.props;
+    const { id, participants, t, isOwner, ErrorHandler } = this.props;
     const { remDropOpen } = this.state;
     return (
       <div className="goings">
@@ -35,6 +35,7 @@ class GoingBar extends PureComponent {
               isOwner={isOwner}
               t={t}
               close={this.closeRemDropdown}
+              ErrorHandler={ErrorHandler}
             />
           )}
         </span>

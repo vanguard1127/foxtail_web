@@ -2,6 +2,7 @@ import React from "react";
 
 const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
   const messageText = message.text;
+
   return (
     <div className="item" ref={ref}>
       <span className="avatar">

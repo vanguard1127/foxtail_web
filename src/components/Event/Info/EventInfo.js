@@ -85,7 +85,12 @@ class EventInfo extends Component {
             <li>
               <span className="head">{t("toexpect")}:</span>
               <span className="title">
-                {desires.map(desire => desire + ",")}
+                {desires.map((desire, idx) => {
+                  if (idx !== desires.length - 1) {
+                    return desire + ", ";
+                  }
+                  return desire;
+                })}
               </span>
             </li>
             <li>
@@ -114,6 +119,7 @@ class EventInfo extends Component {
                 ErrorHandler={ErrorHandler}
                 updateEventProps={event}
                 refetch={refetch}
+                lang={lang}
               />
               <div className="join-event">
                 <span onClick={() => openDelete()}>{t("canevent")}</span>

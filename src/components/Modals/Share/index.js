@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import {
   FacebookShareButton,
-  GooglePlusShareButton,
   TwitterShareButton,
   RedditShareButton,
   EmailShareButton,
   TumblrShareButton,
   FacebookIcon,
   TwitterIcon,
-  GooglePlusIcon,
   RedditIcon,
   TumblrIcon,
   EmailIcon
@@ -27,7 +25,10 @@ class Share extends Component {
     let title = "";
     const body = (profile, event, t) => {
       if (profile) {
-        shareUrl = "http://localhost:3000/member/" + profile.id;
+        shareUrl =
+          process.env.NODE_ENV === "production"
+            ? "https://foxtailapp.com/member/" + profile.id
+            : "http://localhost:3000/member/" + profile.id;
         title = t("intrstmsg") + ":";
         return (
           <div>
@@ -40,7 +41,10 @@ class Share extends Component {
           </div>
         );
       } else if (event) {
-        shareUrl = "http://localhost:3000/event/" + event.id;
+        shareUrl =
+          process.env.NODE_ENV === "production"
+            ? "https://foxtailapp.com/event/" + event.id
+            : "http://localhost:3000/event/" + event.id;
         title = t("invitation") + " " + event.eventname;
         return <div>{t("shareevent")}?</div>;
       } else {
@@ -73,9 +77,6 @@ class Share extends Component {
               <TwitterShareButton url={shareUrl} title={title}>
                 <TwitterIcon size={32} round />
               </TwitterShareButton>
-              <GooglePlusShareButton url={shareUrl}>
-                <GooglePlusIcon size={32} round />
-              </GooglePlusShareButton>
               <RedditShareButton
                 url={shareUrl}
                 title={title}

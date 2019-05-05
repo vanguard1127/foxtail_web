@@ -9,6 +9,9 @@ export const NEW_MESSAGE_SUB = gql`
       fromUser {
         username
         id
+        profile {
+          id
+        }
       }
       profilePic
       type

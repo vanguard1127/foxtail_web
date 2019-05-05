@@ -58,14 +58,21 @@ class NavbarAuth extends PureComponent {
     //I don't know why but we need both for it to work
     window.addEventListener("beforeunload", () => {
       navigator.sendBeacon(
-        "http://localhost:4444/offline?token=" + localStorage.getItem("token")
+        process.env.NODE_ENV === "production"
+          ? "https://prod.foxtailapi.com/offline?token=" +
+              localStorage.getItem("token")
+          : "http://localhost:4444/offline?token=" +
+              localStorage.getItem("token")
       );
     });
     window.addEventListener("unload", this.logData, false);
   }
   logData = () => {
     axios.get(
-      "http://localhost:4444/offline?token=" + localStorage.getItem("token")
+      process.env.NODE_ENV === "production"
+        ? "https://prod.foxtailapi.com/offline?token=" +
+            localStorage.getItem("token")
+        : "http://localhost:4444/offline?token=" + localStorage.getItem("token")
     );
   };
   render() {

@@ -125,7 +125,7 @@ class SearchCriteria extends PureComponent {
       interestedIn,
       city
     } = this.props;
-    if (loading) {
+    if (loading || !city) {
       return (
         <section className="meet-filter">
           <div className="container">

@@ -37,7 +37,10 @@ class SearchEvents extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state !== nextState) {
+    if (
+      this.state !== nextState ||
+      this.props.location.lat !== nextProps.location.lat
+    ) {
       return true;
     }
     return false;
@@ -49,6 +52,19 @@ class SearchEvents extends Component {
   componentWillUnmount() {
     this.clearSearchResults();
     this.mounted = false;
+  }
+
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.location.lat === undefined &&
+      nextProps.location.lat !== undefined
+    ) {
+      this.setState({
+        lat: nextProps.location.lat,
+        long: nextProps.location.long,
+        location: nextProps.location.city
+      });
+    }
   }
 
   showModal = () => {
@@ -153,7 +169,7 @@ class SearchEvents extends Component {
     }
   };
 
-  handleEnd = (previousPosition, fetchMore) => {
+  handleEnd = ({ previousPosition, currentPosition, fetchMore }) => {
     if (this.state.hasMore) {
       if (previousPosition === Waypoint.below) {
         if (this.mounted) {
@@ -161,6 +177,12 @@ class SearchEvents extends Component {
             this.fetchData(fetchMore)
           );
         }
+      }
+      if (
+        previousPosition === undefined &&
+        currentPosition === Waypoint.inside
+      ) {
+        this.setState({ hasMore: false });
       }
     }
   };
@@ -181,7 +203,8 @@ class SearchEvents extends Component {
       location,
       hasMore
     } = this.state;
-    const { t, ErrorHandler, session, refetch } = this.props;
+    const { t, ErrorHandler, session, refetch, locationErr } = this.props;
+
     const distanceMetric = session.currentuser.distanceMetric;
     ErrorHandler.setBreadcrumb("Search Events");
 
@@ -208,6 +231,7 @@ class SearchEvents extends Component {
                 t={t}
                 ErrorHandler={ErrorHandler}
                 distanceMetric={distanceMetric}
+                lang={lang}
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
@@ -221,72 +245,83 @@ class SearchEvents extends Component {
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
               {" "}
-              <Query
-                query={SEARCH_EVENTS}
-                variables={{
-                  lat,
-                  long,
-                  maxDistance,
-                  all,
-                  limit: SEARCHEVENT_LIMIT,
-                  skip: 0
-                }}
-                fetchPolicy="cache-first"
-              >
-                {({ data, loading, error, fetchMore }) => {
-                  if (loading) {
+              {lat ? (
+                <Query
+                  query={SEARCH_EVENTS}
+                  variables={{
+                    lat,
+                    long,
+                    maxDistance,
+                    all,
+                    limit: SEARCHEVENT_LIMIT,
+                    skip: 0
+                  }}
+                  fetchPolicy="cache-first"
+                >
+                  {({ data, loading, error, fetchMore }) => {
+                    if (loading) {
+                      return (
+                        <Spinner
+                          page="searchEvents"
+                          title={t("upcomingevent")}
+                        />
+                      );
+                    }
+                    if (error) {
+                      return (
+                        <ErrorHandler.report
+                          error={error}
+                          calledName={"searchEvents"}
+                          userID={session.currentuser.userID}
+                        />
+                      );
+                    }
+                    if (
+                      !data ||
+                      !data.searchEvents ||
+                      data.searchEvents.length === 0
+                    ) {
+                      return (
+                        <section className="not-found">
+                          <div className="container">
+                            <div className="col-md-12">
+                              <div className="icon">
+                                <i className="nico event" />
+                              </div>
+                              <span className="head">
+                                {t("noeventavailable")}
+                              </span>
+                              <span className="description">
+                                {t("noeventavailabledes")}
+                              </span>
+                            </div>
+                          </div>
+                        </section>
+                      );
+                    }
+
                     return (
-                      <Spinner page="searchEvents" title={t("upcomingevent")} />
-                    );
-                  }
-                  if (error) {
-                    return (
-                      <ErrorHandler.report
-                        error={error}
-                        calledName={"searchEvents"}
-                        userID={session.currentuser.userID}
+                      <EventsList
+                        events={data.searchEvents}
+                        handleEnd={({ previousPosition, currentPosition }) =>
+                          this.handleEnd({
+                            previousPosition,
+                            currentPosition,
+                            fetchMore
+                          })
+                        }
+                        t={t}
+                        dayjs={dayjs}
+                        loading={hasMore}
+                        distanceMetric={distanceMetric}
+                        lang={lang}
                       />
                     );
-                  }
-                  if (
-                    !data ||
-                    !data.searchEvents ||
-                    data.searchEvents.length === 0
-                  ) {
-                    return (
-                      <section className="not-found">
-                        <div className="container">
-                          <div className="col-md-12">
-                            <div className="icon">
-                              <i className="nico event" />
-                            </div>
-                            <span className="head">
-                              {t("noeventavailable")}
-                            </span>
-                            <span className="description">
-                              {t("noeventavailabledes")}
-                            </span>
-                          </div>
-                        </div>
-                      </section>
-                    );
-                  }
-
-                  return (
-                    <EventsList
-                      events={data.searchEvents}
-                      handleEnd={previous =>
-                        this.handleEnd(previous, fetchMore)
-                      }
-                      t={t}
-                      dayjs={dayjs}
-                      loading={hasMore}
-                      distanceMetric={distanceMetric}
-                      lang={lang}
-                    />
-                  );
-                }}
-              </Query>
+                  }}
+                </Query>
+              ) : (
+                locationErr
+              )}
             </ErrorHandler.ErrorBoundary>
           </section>
         </>

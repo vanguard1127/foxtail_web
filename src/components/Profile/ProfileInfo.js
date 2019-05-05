@@ -6,7 +6,7 @@ class ProfileInfo extends Component {
     return false;
   }
   render() {
-    const { users, online, t, dayjs, ErrorBoundary } = this.props;
+    const { users, online, dayjs, ErrorBoundary } = this.props;
     let userInfoStyle = "user-info";
     if (online) {
       userInfoStyle += " online";

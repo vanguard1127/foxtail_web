@@ -216,6 +216,7 @@ class NoticesItem extends Component {
       userAlert
     } = this.state;
     const { t, count, history, ErrorHandler } = this.props;
+
     return (
       <Mutation
         mutation={UPDATE_NOTIFICATIONS}
@@ -279,6 +280,7 @@ class NoticesItem extends Component {
                 }
 
                 const { notifications, alert } = data.getNotifications;
+
                 //TODO: TICKET: 290 find why this is rerendering so much
                 //console.log("WHY AM I HAPPENING MULTIPLE TIMES");
                 return (

@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
-import { POST_COMMENT, GET_COMMENTS } from "../../../queries";
+import { POST_COMMENT } from "../../../queries";
 
 class ChatPanel extends PureComponent {
   state = {
@@ -34,38 +34,6 @@ class ChatPanel extends PureComponent {
     this.setState({ text: e.target.value });
   };
 
-  updateComments = cache => {
-    const { chatID, currentuser, limit } = this.props;
-    const { text } = this.state;
-
-    let { getComments } = cache.readQuery({
-      query: GET_COMMENTS,
-      variables: { chatID, cursor: null, limit }
-    });
-    getComments.messages = [
-      {
-        createdAt: Date.now(),
-        fromUser: {
-          username: currentuser.username,
-          id: currentuser.userID,
-          __typename: "UserType"
-        },
-        id: Date.now(),
-        profilePic: currentuser.profilePic,
-        text,
-        type: "comment",
-        __typename: "MessageType"
-      },
-      ...getComments.messages
-    ];
-
-    cache.writeQuery({
-      query: GET_COMMENTS,
-      variables: { chatID, cursor: null, limit },
-      data: { getComments }
-    });
-  };
-
   render() {
     const { chatID, t } = this.props;
     const { text } = this.state;
@@ -77,7 +45,6 @@ class ChatPanel extends PureComponent {
           chatID,
           text
         }}
-        //  update={this.updateComments}
       >
         {(postComment, { data, loading, error }) => (
           <div className="send-message">
@@ -93,7 +60,7 @@ class ChatPanel extends PureComponent {
               onClick={e => this.submitMessage(e, postComment)}
               disabled={text.trim() === ""}
             >
-              {t("common:sendmsg")}
+              {t("common:postcomm")}
             </button>
           </div>
         )}

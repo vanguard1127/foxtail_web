@@ -2,7 +2,7 @@ import React from "react";
 const FAQ = () => (
   <div className="fullscreen">
     <div className="centerscreenY">
-      <p style={{ margin: "0 20vh 20vh 20vh" }}>
+      <div style={{ margin: "0 20vh 20vh 20vh" }}>
         <h1>FAQs</h1>
         <ul>
           <li>
@@ -132,7 +132,7 @@ const FAQ = () => (
             </p>
           </li>
         </ul>
-      </p>
+      </div>
     </div>
   </div>
 );

@@ -8,7 +8,11 @@ import { toast } from "react-toastify";
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
   if (localStorage.getItem("token") === null) {
-    props.history.push("/");
+    window.location.replace(
+      process.env.NODE_ENV === "production"
+        ? "https://foxtailapp.com/"
+        : "http://localhost:3000/"
+    );
     return null;
   } else {
     return (

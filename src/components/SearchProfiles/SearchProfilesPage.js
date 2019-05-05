@@ -44,6 +44,20 @@ class SearchProfilesPage extends Component {
     return false;
   }
 
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.location.lat === undefined &&
+      nextProps.location.lat !== undefined
+    ) {
+      this.setState({
+        lat: nextProps.location.lat,
+        long: nextProps.location.long,
+        city: nextProps.location.city,
+        country: nextProps.location.country
+      });
+    }
+  }
+
   componentDidMount() {
     this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
   }

@@ -51,6 +51,8 @@ class Dropdown extends Component {
           ops = els.langOptions;
         } else if (this.props.type === "sexuality") {
           ops = els.sexualityOptions;
+        } else if (this.props.type === "eventType") {
+          ops = els.eventTypeOptions;
         } else {
           ops = els.sexOptions;
         }
@@ -65,7 +67,7 @@ class Dropdown extends Component {
   };
 
   render() {
-    const { onChange, value, placeholder, type } = this.props;
+    const { onChange, value, placeholder, type, noClass } = this.props;
     const { options, isLoading } = this.state;
     let multiple = false;
     if (type === "interestedIn") {
@@ -88,7 +90,7 @@ class Dropdown extends Component {
               : null
           }
           options={options}
-          className={"dropdown wide"}
+          className={noClass ? "" : "dropdown wide"}
         />
       );
     } else {
@@ -99,7 +101,7 @@ class Dropdown extends Component {
           label={placeholder}
           defaultOptionValue={value}
           options={options}
-          className={"dropdown wide"}
+          className={noClass ? "" : "dropdown wide"}
         />
       );
     }

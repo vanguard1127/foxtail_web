@@ -6,10 +6,10 @@ import getCityCountry from "../../utils/getCityCountry";
 const withLocation = PassedComponent =>
   class withLocation extends PureComponent {
     state = {
-      lat: null,
-      long: null,
-      city: null,
-      country: null,
+      lat: undefined,
+      long: undefined,
+      city: "",
+      country: "",
       locModalVisible: false
     };
 
@@ -110,9 +110,7 @@ const withLocation = PassedComponent =>
 
     render() {
       const { lat, long, city, country, locModalVisible } = this.state;
-      if (!lat) {
-        return null;
-      }
+
       return (
         <Fragment>
           <PassedComponent

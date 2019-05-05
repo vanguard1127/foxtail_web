@@ -231,7 +231,6 @@ class ProfilePage extends Component {
                             <ProfileInfo
                               users={users}
                               online={profile.online && profile.showOnline}
-                              t={t}
                               dayjs={dayjs}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                             />

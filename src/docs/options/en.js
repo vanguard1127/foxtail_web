@@ -157,3 +157,8 @@ export const sexualityOptions = [
   { label: "Queer", value: "qu" },
   { label: "Asexual", value: "as" }
 ];
+
+export const eventTypeOptions = [
+  { label: "Public", value: "public" },
+  { label: "Private", value: "private" }
+];

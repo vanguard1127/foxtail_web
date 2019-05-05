@@ -99,6 +99,7 @@ class ChatContent extends PureComponent {
               },
               updateQuery: (prev, { subscriptionData }) => {
                 const { newMessageSubscribe } = subscriptionData.data;
+                console.log("NEW0", newMessageSubscribe);
                 if (!newMessageSubscribe) {
                   prev.getComments = {
                     messages: [],

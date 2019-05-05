@@ -1410,7 +1410,7 @@ section.members .card-item {
 
 section.members .card-item.verified .image::before {
   content: "";
-  width: 32px;
+  width: 26px;
   height: 44px;
   position: absolute;
   right: -4px;
@@ -1421,15 +1421,16 @@ section.members .card-item.verified .image::before {
 }
 
 section.members .card-item.verified.photo .image::before {
-  background-image: url("../img/elements/photo-verified-badge.png");
+  background-image: url("../img/elements/profile-badge-verified.png");
 }
 
 section.members .card-item.verified.std .image::before {
-  background-image: url("../img/elements/std-verified-badge.png");
+  background-image: url("../img/elements/std-badge-verified.png");
 }
 
 section.members .card-item.verified.both .image::before {
-  background-image: url("../img/elements/both-verified-badge.png");
+  background-image: url("../img/elements/full-verified-badge.png");
+  width: 50px !important;
 }
 
 section.members .card-item .image {
@@ -3132,7 +3133,7 @@ section.profile .photos-slider .slider-content .item img {
   background-repeat: no-repeat;
 }
 
-section.profile .photos-slider.private .slider-content .item img {
+section.profile .photos-slider.private .slider-content .item img.blur {
   filter: blur(11px);
   -webkit-filter: blur(11px);
 }
@@ -4152,6 +4153,7 @@ section.event-detail .event-info-content ul li span.title {
   width: 100%;
   display: block;
   float: left;
+  overflow-wrap: break-word;
 }
 
 section.event-detail .event-info-content ul li span.title p {

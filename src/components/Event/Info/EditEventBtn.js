@@ -8,22 +8,24 @@ class EditEventBtn extends PureComponent {
     });
   };
   render() {
+    const { ErrorHandler, id, updateEventProps, refetch, lang, t } = this.props;
     this.props.ErrorHandler.setBreadcrumb("Open Edit Event");
     return (
       <Fragment>
         <div className="join-event">
           <span onClick={() => this.togglePopup()}>
-            {this.props.t("common:updateevent")}
+            {t("common:updateevent")}
           </span>
         </div>
 
         {this.state.showPopup ? (
           <CreateEvent
             close={this.togglePopup}
-            ErrorHandler={this.props.ErrorHandler}
-            eventID={this.props.id}
-            updateEventProps={this.props.updateEventProps}
-            refetch={this.props.refetch}
+            ErrorHandler={ErrorHandler}
+            eventID={id}
+            updateEventProps={updateEventProps}
+            refetch={refetch}
+            lang={lang}
           />
         ) : null}
       </Fragment>

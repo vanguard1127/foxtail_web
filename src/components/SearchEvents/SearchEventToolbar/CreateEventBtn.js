@@ -8,16 +8,18 @@ class CreateEventBtn extends PureComponent {
     });
   };
   render() {
-    this.props.ErrorHandler.setBreadcrumb("Open Create Event");
+    const { lang, t, ErrorHandler } = this.props;
+    ErrorHandler.setBreadcrumb("Open Create Event");
     return (
       <Fragment>
         <div className="create-event-btn" onClick={() => this.togglePopup()}>
-          <span>{this.props.t("common:createevent")}</span>
+          <span>{t("common:createevent")}</span>
         </div>
         {this.state.showPopup ? (
           <CreateEvent
             close={this.togglePopup}
-            ErrorHandler={this.props.ErrorHandler}
+            ErrorHandler={ErrorHandler}
+            lang={lang}
           />
         ) : null}
       </Fragment>

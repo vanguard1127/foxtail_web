@@ -13,6 +13,7 @@ import DatePicker from "../../common/DatePicker";
 import Modal from "../../common/Modal";
 import isEmpty from "../../../utils/isEmpty";
 import { toast } from "react-toastify";
+import Dropdown from "../../common/Dropdown";
 
 class CreateEvent extends Component {
   schema = yup.object().shape({
@@ -230,7 +231,7 @@ class CreateEvent extends Component {
   };
 
   render() {
-    const { close, t, ErrorHandler, eventID } = this.props;
+    const { close, t, ErrorHandler, eventID, lang } = this.props;
     const {
       eventname,
       tagline,
@@ -321,7 +322,20 @@ class CreateEvent extends Component {
                         />
                       </div>
                       <div className="item">
-                        <Select
+                        <Dropdown
+                          value={type}
+                          type={"eventType"}
+                          onChange={async e => {
+                            await this.setValue({
+                              name: "type",
+                              value: e.value
+                            });
+                          }}
+                          placeholder={t("evetype") + ":"}
+                          lang={lang}
+                          noClass={true}
+                        />
+                        {/* <Select
                           label={t("evetype") + ":"}
                           onChange={el =>
                             this.setValue({
@@ -336,7 +350,7 @@ class CreateEvent extends Component {
                             { label: "Private", value: "private" }
                             // { label: "Request", value: "request" }
                           ]}
-                        />
+                        /> */}
                       </div>
                       {this.InputFeedback(errors.type)}
                       <div className="item nobottom">

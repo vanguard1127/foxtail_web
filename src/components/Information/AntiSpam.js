@@ -1,7 +1,7 @@
 import React from "react";
 const AntiSpam = () => (
   <div className="fullscreen">
-    <p style={{ margin: "0 20vh 20vh 20vh" }}>
+    <div style={{ margin: "0 20vh 20vh 20vh" }}>
       <h1>ANTI-SPAM POLICY</h1>
       <p>for LOV Corporation</p>
       <p>NETWORK of WEBSITES</p>
@@ -209,7 +209,7 @@ const AntiSpam = () => (
         directed to:
       </p>
       <p>support@Foxtailapp.com</p>
-    </p>
+    </div>
   </div>
 );
 

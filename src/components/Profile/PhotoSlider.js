@@ -74,7 +74,7 @@ class PhotoSlider extends Component {
               nav
               autoplay
               lazyLoad
-              loop={true}
+              loop={false}
               margin={30}
               dots={false}
               navText={[
@@ -114,7 +114,11 @@ class PhotoSlider extends Component {
                     </a>
                   ) : (
                     <span onClick={this.warnPrivate}>
-                      <img src={"../assets/img/no-picture.png"} alt="" />
+                      <img
+                        className="blur"
+                        src={"../assets/img/no-picture.png"}
+                        alt=""
+                      />
                     </span>
                   )}
                 </div>

@@ -29,7 +29,8 @@ class EventInfoMobile extends Component {
       openDelete,
       dayjs,
       distanceMetric,
-      lang
+      lang,
+      refetch
     } = this.props;
 
     const {
@@ -108,6 +109,8 @@ class EventInfoMobile extends Component {
               t={t}
               ErrorHandler={ErrorHandler}
               updateEventProps={event}
+              refetch={refetch}
+              lang={lang}
             />
             <div className="join-event">
               <span onClick={() => openDelete()}>{t("canevent")}</span>

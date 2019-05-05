@@ -176,7 +176,7 @@ class EventPage extends Component {
                         showBlockModal={() =>
                           this.setBlockModalVisible(true, event)
                         }
-                        ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        ErrorHandler={ErrorHandler}
                         lang={lang}
                       />
                     </div>
@@ -190,7 +190,7 @@ class EventPage extends Component {
                           session.currentuser.profileID
                         }
                         t={t}
-                        ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        ErrorHandler={ErrorHandler}
                       />{" "}
                       <EventInfoMobile
                         event={event}
@@ -200,6 +200,7 @@ class EventPage extends Component {
                         ErrorHandler={ErrorHandler}
                         distanceMetric={session.currentuser.distanceMetric}
                         lang={lang}
+                        refetch={refetch}
                       />{" "}
                       <Discussion
                         chatID={chatID}

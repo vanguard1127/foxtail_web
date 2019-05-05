@@ -8,7 +8,10 @@ class Logout extends Component {
   }
   handleLogout = (client, history) => {
     axios.get(
-      "http://localhost:4444/offline?token=" + localStorage.getItem("token")
+      process.env.NODE_ENV === "production"
+        ? "https://prod.foxtailapi.com/offline?token=" +
+            localStorage.getItem("token")
+        : "http://localhost:4444/offline?token=" + localStorage.getItem("token")
     );
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");

@@ -12,7 +12,7 @@ export const env = {
   local: {
     server: localserver,
     httpurl: `http://${localserver}/graphql`,
-    HTTPSurl: `http://${localserver}`,
+    HTTPSurl: `https://${localserver}`,
     wsurl: `ws://${localserver}/subscriptions`
   },
   production: {
