@@ -12,6 +12,7 @@ class InboxList extends PureComponent {
     let title;
     if (item.type === "alert" || item.type === "left") {
       title = "Foxtail";
+      item.profilePic = "../assets/img/no-picture.png";
     } else {
       if (item.fromUser) {
         if (

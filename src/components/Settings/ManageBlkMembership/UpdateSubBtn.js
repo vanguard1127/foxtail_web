@@ -28,7 +28,7 @@ class UpdateSubBtn extends PureComponent {
 
   render() {
     const { token, ccLast4 } = this.state;
-    const { t } = this.props;
+    const { t, lang } = this.props;
     return (
       <Mutation
         mutation={UPDATE_SUBSCRIPTION}
@@ -50,6 +50,7 @@ class UpdateSubBtn extends PureComponent {
               }
               stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY}
               panelLabel="Update"
+              locale={lang}
             >
               <span className="clickverify-btn photo"> {t("cardchange")}</span>
             </StripeCheckout>

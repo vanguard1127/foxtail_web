@@ -83,19 +83,22 @@ class FeaturedDiv extends Component {
                 }}
               >
                 {featuredProfiles.map(profile => {
-                  return (
-                    <FeaturedCard
-                      key={Math.random()}
-                      profile={profile}
-                      showMsgModal={showMsgModal}
-                      likeProfile={likeProfile}
-                      t={t}
-                      dayjs={dayjs}
-                      history={history}
-                      liked={likedProfiles.includes(profile.id)}
-                      msgd={msgdProfiles.includes(profile.id)}
-                    />
-                  );
+                  {
+                    const liked = likedProfiles.includes(profile.id);
+                    return (
+                      <FeaturedCard
+                        key={Math.random()}
+                        profile={profile}
+                        showMsgModal={showMsgModal}
+                        likeProfile={likeProfile}
+                        t={t}
+                        dayjs={dayjs}
+                        history={history}
+                        liked={liked}
+                        msgd={msgdProfiles.includes(profile.id)}
+                      />
+                    );
+                  }
                 })}
               </OwlCarousel>
             </div>

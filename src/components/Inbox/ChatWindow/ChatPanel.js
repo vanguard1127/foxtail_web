@@ -4,6 +4,7 @@ import { SEND_MESSAGE, GET_MESSAGES, GET_INBOX } from "../../../queries";
 import { INBOXLIST_LIMIT } from "../../../docs/consts";
 
 class ChatPanel extends PureComponent {
+  sending = false;
   state = {
     text: ""
   };
@@ -18,18 +19,23 @@ class ChatPanel extends PureComponent {
   }
 
   submitMessage(e, sendMessage) {
-    this.props.ErrorHandler.setBreadcrumb("Send message (chat)");
-    e.preventDefault();
+    if (!this.sending) {
+      this.sending = true;
+      this.props.ErrorHandler.setBreadcrumb("Send message (chat)");
+      e.preventDefault();
 
-    sendMessage()
-      .then(({ data }) => {
-        if (this.mounted) {
-          this.setState({ text: "" });
-        }
-      })
-      .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-      });
+      sendMessage()
+        .then(({ data }) => {
+          if (this.mounted) {
+            this.setState({ text: "" });
+            this.sending = false;
+          }
+        })
+        .catch(res => {
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          this.sending = false;
+        });
+    }
   }
 
   setText = e => {
@@ -91,7 +97,7 @@ class ChatPanel extends PureComponent {
 
   render() {
     const { chatID, t } = this.props;
-    const { text } = this.state;
+    const { text, sending } = this.state;
 
     return (
       <Mutation
@@ -105,7 +111,7 @@ class ChatPanel extends PureComponent {
         {sendMessage => (
           <form onSubmit={e => this.submitMessage(e, sendMessage)}>
             <div className="panel">
-              <div className="files" />
+              {/* <div className="files" /> */}
               <div className="textarea">
                 <input
                   ref={input => {
@@ -118,7 +124,7 @@ class ChatPanel extends PureComponent {
                 />
               </div>
               <div className="send">
-                <button type="submit" disabled={!text.trim()}>
+                <button type="submit" disabled={!text.trim() || this.sending}>
                   {t("common:Send")}
                 </button>
               </div>

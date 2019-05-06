@@ -253,7 +253,9 @@ class Landing extends PureComponent {
                         </span>
                       </li>
                       <li>
-                        <a href="mailto:support@foxtail.com">{t("Support")}</a>
+                        <a href="mailto:support@foxtailapp.com">
+                          {t("Support")}
+                        </a>
                       </li>
                     </ul>
                   </div>

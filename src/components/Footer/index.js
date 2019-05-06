@@ -61,29 +61,35 @@ class Footer extends Component {
               </span>
               <div className="menu">
                 <ul>
+                  {process.env.NODE_ENV === "development" && (
+                    <li>
+                      <Mutation
+                        mutation={SEEN_TOUR}
+                        variables={{
+                          tour: "reset"
+                        }}
+                      >
+                        {seenTour => {
+                          //TODO:REmove
+                          return (
+                            <span onClick={() => seenTour()}>Reset Tour</span>
+                          );
+                        }}
+                      </Mutation>
+                    </li>
+                  )}
                   <li>
-                    <Mutation
-                      mutation={SEEN_TOUR}
-                      variables={{
-                        tour: "reset"
-                      }}
-                    >
-                      {seenTour => {
-                        //TODO:REmove
-                        return (
-                          <span onClick={() => seenTour()}>Reset Tour</span>
-                        );
-                      }}
-                    </Mutation>
+                    <span onClick={() => window.location.replace("/tos")}>
+                      {t("termscon")}
+                    </span>
                   </li>
                   <li>
-                    <span>{t("termscon")}</span>
+                    <span onClick={() => window.location.replace("/privacy")}>
+                      {t("privacy")}
+                    </span>
                   </li>
                   <li>
-                    <span>{t("privacy")}</span>
-                  </li>
-                  <li>
-                    <span>{t("contact")}</span>
+                    <a href="mailto:support@foxtailapp.com">{t("contact")}</a>
                   </li>
                 </ul>
               </div>

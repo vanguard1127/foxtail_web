@@ -88,10 +88,6 @@ class Spinner extends PureComponent {
                     <div />
                   </div>
                 </div>
-                <div className="lo-text">
-                  {" "}
-                  <ProfileLoader />
-                </div>
               </div>
             </div>
           </div>

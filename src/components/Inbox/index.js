@@ -38,6 +38,7 @@ class InboxPage extends Component {
     title: "",
     chatOpen: false
   };
+  opening = false;
   shouldComponentUpdate(nextProps, nextState) {
     let chatIDChange = false;
     if (
@@ -91,14 +92,20 @@ class InboxPage extends Component {
   };
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
-    ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
-    if (this.mounted) {
-      this.props.history.replace({ state: { chatID } });
-      this.setState({ unSeenCount, chatOpen: true }, () => {
-        readChat().catch(res => {
-          ErrorHandler.catchErrors(res.graphQLErrors);
+    if (!this.opening) {
+      this.opening = true;
+      ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
+      if (this.mounted) {
+        this.props.history.replace({ state: { chatID } });
+        this.setState({ unSeenCount, chatOpen: true }, () => {
+          readChat()
+            .then(() => (this.opening = false))
+            .catch(res => {
+              ErrorHandler.catchErrors(res.graphQLErrors);
+              this.opening = false;
+            });
         });
-      });
+      }
     }
   };
 

@@ -49,6 +49,7 @@ class ManageBlackSub extends Component {
                   t={t}
                   ErrorHandler={ErrorHandler}
                   notifyClient={notifyClient}
+                  lang={lang}
                 />
               </div>
             </div>

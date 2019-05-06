@@ -502,7 +502,8 @@ class SettingsPage extends Component {
       ErrorHandler,
       currentuser,
       refetchUser,
-      dayjs
+      dayjs,
+      history
     } = this.props;
 
     let aboutErr = "";
@@ -569,6 +570,8 @@ class SettingsPage extends Component {
                         <ProfilePic
                           profilePic={profilePicUrl}
                           ErrorBoundary={ErrorHandler.ErrorBoundary}
+                          history={history}
+                          id={currentuser.profileID}
                         />
                         <Menu
                           coupleModalToggle={this.toggleCouplesPopup}
@@ -798,6 +801,7 @@ class SettingsPage extends Component {
                   ErrorHandler={ErrorHandler}
                   t={t}
                   notifyClient={this.notifyClient}
+                  lang={lang}
                 />
               )}
             </section>

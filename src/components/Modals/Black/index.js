@@ -7,7 +7,7 @@ class Black extends PureComponent {
   state = { token: "", ccLast4: "" };
 
   render() {
-    const { close, t, ErrorHandler, notifyClient } = this.props;
+    const { close, t, ErrorHandler, notifyClient, lang } = this.props;
 
     return (
       <Modal
@@ -19,6 +19,7 @@ class Black extends PureComponent {
             t={t}
             ErrorHandler={ErrorHandler}
             notifyClient={notifyClient}
+            lang={lang}
           />
         }
       >

@@ -3,11 +3,10 @@ import { withNamespaces } from "react-i18next";
 import * as yup from "yup";
 import axios from "axios";
 import { Mutation } from "react-apollo";
-import { SIGNS3, CREATE_EVENT } from "../../../queries";
+import { SIGNS3, CREATE_EVENT, GET_MY_EVENTS } from "../../../queries";
 import PhotoUpload from "../../common/PhotoUpload";
 import DesiresModal from "../../Modals/Desires/Modal";
 import DesiresSelector from "../../Modals/Desires/Selector";
-import Select from "../../common/Select";
 import AddressSearch from "../../common/AddressSearch";
 import DatePicker from "../../common/DatePicker";
 import Modal from "../../common/Modal";
@@ -141,7 +140,7 @@ class CreateEvent extends Component {
   };
 
   handleSubmit = async ({ createEvent, signS3 }) => {
-    const { t, ErrorHandler, refetch, close } = this.props;
+    const { t, ErrorHandler, refetch, close, history } = this.props;
     if (await this.validateForm()) {
       if (this.state.image !== "") {
         await this.handleUpload({ signS3 });
@@ -149,8 +148,11 @@ class CreateEvent extends Component {
       createEvent()
         .then(async ({ data }) => {
           toast.success(t("evevtsaved"));
+
           if (refetch) {
             refetch();
+          } else {
+            history.push("/event/" + data.createEvent.id);
           }
           close();
         })
@@ -335,22 +337,6 @@ class CreateEvent extends Component {
                           lang={lang}
                           noClass={true}
                         />
-                        {/* <Select
-                          label={t("evetype") + ":"}
-                          onChange={el =>
-                            this.setValue({
-                              name: "type",
-                              value: el.value
-                            })
-                          }
-                          value={type}
-                          defaultOptionValue={type}
-                          options={[
-                            { label: "Public", value: "public" },
-                            { label: "Private", value: "private" }
-                            // { label: "Request", value: "request" }
-                          ]}
-                        /> */}
                       </div>
                       {this.InputFeedback(errors.type)}
                       <div className="item nobottom">

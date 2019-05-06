@@ -120,25 +120,6 @@ class SearchEvents extends Component {
     }
   };
 
-  handleSubmit = (e, createEvent, t) => {
-    this.props.ErrorHandler.setBreadcrumb("Create event");
-    e.preventDefault();
-    this.formRef.props.form.validateFields((err, fieldsValue) => {
-      if (err) {
-        return;
-      }
-
-      createEvent()
-        .then(({ data }) => {
-          alert(t("eventcreated"));
-          this.props.history.push("/event/" + data.createEvent.id);
-        })
-        .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-        });
-    });
-  };
-
   fetchData = fetchMore => {
     this.props.ErrorHandler.setBreadcrumb("Fetch more events");
 
@@ -203,7 +184,14 @@ class SearchEvents extends Component {
       location,
       hasMore
     } = this.state;
-    const { t, ErrorHandler, session, refetch, locationErr } = this.props;
+    const {
+      t,
+      ErrorHandler,
+      session,
+      refetch,
+      locationErr,
+      history
+    } = this.props;
 
     const distanceMetric = session.currentuser.distanceMetric;
     ErrorHandler.setBreadcrumb("Search Events");
@@ -232,6 +220,7 @@ class SearchEvents extends Component {
                 ErrorHandler={ErrorHandler}
                 distanceMetric={distanceMetric}
                 lang={lang}
+                history={history}
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>

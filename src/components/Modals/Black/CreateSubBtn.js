@@ -27,10 +27,13 @@ class CreateSubBtn extends PureComponent {
         ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
+  changeLabel = () => {
+    this.setState({ processing: true });
+  };
 
   render() {
     const { token, ccLast4, processing } = this.state;
-    const { t } = this.props;
+    const { t, lang } = this.props;
     return (
       <Mutation
         mutation={CREATE_SUBSCRIPTION}
@@ -53,8 +56,9 @@ class CreateSubBtn extends PureComponent {
               }
               stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY}
               amount={1000}
+              locale={lang}
             >
-              <span className="color">
+              <span className="color" onClick={this.changeLabel}>
                 {processing ? t("processing") : t("upgradeblk")}
               </span>
             </StripeCheckout>
