@@ -55,7 +55,11 @@ class UploadComponent extends PureComponent {
       extFile == "bmp" ||
       extFile == "gif"
     ) {
-      this.props.showEditor(file, this.props.isPrivate);
+      if (file.size > 4000000) {
+        alert("Only files less than 4 MB please.");
+      } else {
+        this.props.showEditor(file, this.props.isPrivate);
+      }
     } else {
       alert(this.props.t("onlyimg"));
     }
