@@ -33,7 +33,8 @@ class EditCanvasImage extends PureComponent {
       unduCrop: false,
       rotation: 0,
       uploading: false,
-      scale: 1
+      scale: 1,
+      uploadedImageWidth: false
     };
   }
   static propTypes = {
@@ -81,7 +82,7 @@ class EditCanvasImage extends PureComponent {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         const dataURL = this.stageRef.getStage().toDataURL({
           mimeType: "image/jpeg",
-          pixelRatio: window.screen.width / 400
+          pixelRatio: this.state.uploadedImageWidth / 400
         });
         var blobData = this.dataURItoBlob(dataURL);
         var file = {
@@ -235,6 +236,14 @@ class EditCanvasImage extends PureComponent {
         />
       </div>
     );
+
+    var _URL = window.URL || window.webkitURL;
+    var img = new Image();
+    var react = this;
+    img.onload = function() {
+      react.setState({ uploadedImageWidth: this.width });
+    };
+    img.src = _URL.createObjectURL(this.props.imageObject);
 
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
