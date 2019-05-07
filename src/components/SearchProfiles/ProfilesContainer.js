@@ -188,16 +188,10 @@ class ProfilesContainer extends Component {
   setMessaged = profileID => {
     this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
     if (this.mounted) {
-      this.setState(
-        {
-          msgdProfiles: [...this.state.msgdProfiles, profileID],
-          msgModalVisible: false,
-          likedProfiles: [...this.state.likedProfiles, profileID]
-        },
-        () => {
-          console.log("Dff");
-        }
-      );
+      this.setState({
+        msgdProfiles: [...this.state.msgdProfiles, profileID],
+        msgModalVisible: false
+      });
     }
   };
 
