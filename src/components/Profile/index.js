@@ -312,8 +312,11 @@ class ProfilePage extends Component {
                         okSpan={
                           <span
                             className="color"
-                            onClick={async () =>
-                              this.props.history.push("/inbox/" + chatID)
+                            onClick={() =>
+                              this.props.history.push({
+                                pathname: "/inbox",
+                                state: { chatID }
+                              })
                             }
                           >
                             {t("common:chatnow")}

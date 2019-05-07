@@ -11,31 +11,41 @@ class ProfileActionBtns extends Component {
     return false;
   }
   render() {
-    const { profile, likeProfile, showMsgModal, liked, msgd, t } = this.props;
+    const {
+      profile,
+      likeProfile,
+      showMsgModal,
+      liked,
+      msgd,
+      t,
+      likeToChat
+    } = this.props;
 
-    return (
-      <div className="function">
-        {!msgd ? (
-          <>
-            <div
-              className={liked ? "btn unheart" : "btn heart"}
-              onClick={() => {
-                likeProfile(profile);
-              }}
-            />
+    let actions;
+    if ((liked && likeToChat) || (msgd && likeToChat)) {
+      actions = <div className="btn sent">Matched!</div>;
+    } else if (!msgd) {
+      actions = (
+        <>
+          <div
+            className={liked ? "btn unheart" : "btn heart"}
+            onClick={() => {
+              likeProfile(profile);
+            }}
+          />
 
-            <div
-              className="btn message"
-              onClick={() => {
-                showMsgModal(profile);
-              }}
-            />
-          </>
-        ) : (
-          <div className="btn sent">{t("common:msgsent")}</div>
-        )}
-      </div>
-    );
+          <div
+            className="btn message"
+            onClick={() => {
+              showMsgModal(profile);
+            }}
+          />
+        </>
+      );
+    } else {
+      actions = <div className="btn sent">{t("common:msgsent")}</div>;
+    }
+    return <div className="function">{actions}</div>;
   }
 }
 

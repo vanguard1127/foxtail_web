@@ -22,18 +22,18 @@ class ProfileDetails extends Component {
     if (profile.distance === null) {
       distance = t("na");
     } else if (profile.distance < 1) {
-      distance = "< 1" + t(distanceUnits);
+      distance = "< 1" + " " + t(distanceUnits);
     } else {
-      distance = profile.distance + t(distanceUnits);
+      distance = profile.distance + " " + t(distanceUnits);
     }
-
+    console.log("SDD", users[0]);
     return (
       <ErrorBoundary>
         <div className="data-info">
           <ul>
             <li>
               <span className="head">
-                {users[1] ? "Genders" : t("common:Gender")}:
+                {users[1] ? t("common:Genders") : t("common:Gender")}:
               </span>
               <span className="data">
                 <span className={"sex " + users[0].gender} />

@@ -11,7 +11,7 @@ class ProfilePic extends PureComponent {
         <div className="profile-picture-content">
           <div
             className="picture"
-            onClick={() => history.push("/profile/" + id)}
+            onClick={() => history.push("/member/" + id)}
           >
             <Avatar
               size="90"

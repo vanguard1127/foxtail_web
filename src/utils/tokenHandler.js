@@ -34,7 +34,7 @@ const refreshToken = ({ operation, forward, HTTPSurl, ErrorHandler }) => {
       return forward(operation);
     })
     .catch(function(error) {
-      this.props.ErrorHandler.catchErrors(error);
+      ErrorHandler.catchErrors(error);
     });
 };
 export default refreshToken;

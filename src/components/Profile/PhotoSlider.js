@@ -53,7 +53,12 @@ class PhotoSlider extends Component {
   }
 
   warnPrivate() {
-    toast(this.props.t("privwarning"));
+    if (!toast.isActive("privwarning")) {
+      toast.info(this.props.t("privwarning"), {
+        position: toast.POSITION.TOP_CENTER,
+        toastId: "privwarning"
+      });
+    }
   }
 
   render() {

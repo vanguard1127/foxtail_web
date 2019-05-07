@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import ScrollUpButton from "react-scroll-up-button";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import { Query, Mutation, withApollo } from "react-apollo";
@@ -11,8 +11,9 @@ import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 import { SEARCHPROS_LIMIT } from "../../docs/consts";
 import deleteFromCache from "../../utils/deleteFromCache";
+import arraysEqual from "../../utils/arraysEqual";
 
-class ProfilesContainer extends PureComponent {
+class ProfilesContainer extends Component {
   state = {
     skip: 0,
     loading: false,
@@ -23,6 +24,29 @@ class ProfilesContainer extends PureComponent {
     likedProfiles: [],
     msgdProfiles: []
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.long !== nextProps.long ||
+      this.props.lat !== nextProps.lat ||
+      this.props.distance !== nextProps.distance ||
+      this.props.ageRange !== nextProps.ageRange ||
+      this.props.interestedIn !== nextProps.interestedIn ||
+      this.props.distanceMetric !== nextProps.distanceMetric ||
+      this.props.isBlackMember !== nextProps.isBlackMember ||
+      this.state.skip !== nextState.skip ||
+      this.state.loading !== nextState.loading ||
+      this.state.msgModalVisible !== nextState.msgModalVisible ||
+      this.state.profile !== nextState.profile ||
+      this.state.matchDlgVisible !== nextState.matchDlgVisible ||
+      this.state.chatID !== nextState.chatID ||
+      !arraysEqual(this.state.likedProfiles, nextState.likedProfiles) ||
+      !arraysEqual(this.state.msgdProfiles, nextState.msgdProfiles)
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   componentDidMount() {
     this.mounted = true;
@@ -41,7 +65,13 @@ class ProfilesContainer extends PureComponent {
     this.props.ErrorHandler.setBreadcrumb("Match Dialog Toggled:");
 
     if (this.mounted) {
-      if (profile) this.setState({ profile, matchDlgVisible, chatID });
+      if (profile)
+        this.setState({
+          profile,
+          matchDlgVisible,
+          chatID,
+          likedProfiles: [...this.state.likedProfiles, profile.id]
+        });
       else this.setState({ matchDlgVisible });
     }
   };
@@ -51,7 +81,12 @@ class ProfilesContainer extends PureComponent {
       "Message Modal visible:" + msgModalVisible
     );
     if (!this.props.isBlackMember) {
-      toast(this.props.t("directerr"));
+      if (!toast.isActive("directerr")) {
+        toast.info(this.props.t("directerr"), {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: "directerr"
+        });
+      }
       return;
     }
     if (this.mounted) {
@@ -153,10 +188,16 @@ class ProfilesContainer extends PureComponent {
   setMessaged = profileID => {
     this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
     if (this.mounted) {
-      this.setState({
-        msgdProfiles: [...this.state.msgdProfiles, profileID],
-        msgModalVisible: false
-      });
+      this.setState(
+        {
+          msgdProfiles: [...this.state.msgdProfiles, profileID],
+          msgModalVisible: false,
+          likedProfiles: [...this.state.likedProfiles, profileID]
+        },
+        () => {
+          console.log("Dff");
+        }
+      );
     }
   };
 
@@ -336,12 +377,15 @@ class ProfilesContainer extends PureComponent {
                     {profile && chatID && matchDlgVisible && (
                       <Modal
                         header={t("common:match")}
-                        close={() => this.setMatchDlgVisible(false)}
+                        close={() => this.setMatchDlgVisible(false, profile)}
                         okSpan={
                           <span
                             className="color"
                             onClick={async () =>
-                              this.props.history.push("/inbox/" + chatID)
+                              this.props.history.push({
+                                pathname: "/inbox",
+                                state: { chatID }
+                              })
                             }
                           >
                             {t("common:chatnow")}
@@ -350,7 +394,9 @@ class ProfilesContainer extends PureComponent {
                         cancelSpan={
                           <span
                             className="border"
-                            onClick={async () => this.setMatchDlgVisible(false)}
+                            onClick={async () =>
+                              this.setMatchDlgVisible(false, profile)
+                            }
                           >
                             {t("common:chatltr")}
                           </span>

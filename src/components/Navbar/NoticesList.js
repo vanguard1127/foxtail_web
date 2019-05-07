@@ -107,7 +107,7 @@ class NoticesList extends Component {
               pathname: "/inbox",
               state: { chatID: targetID }
             });
-            // this.props.history.push("/inbox/" + targetID);
+
             break;
           case "event":
             this.props.history.push("/event/" + targetID);

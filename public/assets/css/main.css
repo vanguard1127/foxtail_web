@@ -9206,6 +9206,12 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   color: #fff;
 }
 
+@media only screen and (max-width: 768px) {
+  .sex::before {
+    color: #464648;
+  }
+}
+
 .userInfoHeader::before {
   font-size: 19px;
   display: flex;

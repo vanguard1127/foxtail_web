@@ -15,7 +15,7 @@ class FeaturedDiv extends Component {
     if (
       this.props.featuredProfiles !== nextProps.featuredProfiles ||
       !arraysEqual(this.props.likedProfiles, nextProps.likedProfiles) ||
-      this.props.msgdProfiles !== nextProps.msgdProfiles
+      !arraysEqual(this.props.msgdProfiles, nextProps.msgdProfiles)
     ) {
       return true;
     }
@@ -44,7 +44,6 @@ class FeaturedDiv extends Component {
       likedProfiles,
       msgdProfiles
     } = this.props;
-
     return (
       <section className="featured-profiles">
         <div className="container">
@@ -84,7 +83,6 @@ class FeaturedDiv extends Component {
               >
                 {featuredProfiles.map(profile => {
                   {
-                    const liked = likedProfiles.includes(profile.id);
                     return (
                       <FeaturedCard
                         key={Math.random()}
@@ -94,7 +92,7 @@ class FeaturedDiv extends Component {
                         t={t}
                         dayjs={dayjs}
                         history={history}
-                        liked={liked}
+                        liked={likedProfiles.includes(profile.id)}
                         msgd={msgdProfiles.includes(profile.id)}
                       />
                     );

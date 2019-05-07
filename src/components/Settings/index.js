@@ -20,11 +20,10 @@ class Settings extends Component {
     const { session, t } = this.props;
 
     if (!session.currentuser.isProfileOK) {
-      const toastId = "nopro";
-      if (!toast.isActive(toastId)) {
+      if (!toast.isActive("nopro")) {
         toast.info(t("plscomplete"), {
           position: toast.POSITION.TOP_CENTER,
-          toastId: toastId
+          toastId: "nopro"
         });
       }
     }
