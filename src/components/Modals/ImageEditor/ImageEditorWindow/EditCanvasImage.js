@@ -79,9 +79,10 @@ class EditCanvasImage extends PureComponent {
   handleExportClick = () => {
     if (this.mounted && !this.state.uploading) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
-        const dataURL = this.stageRef
-          .getStage()
-          .toDataURL({ mimeType: "image/jpeg" });
+        const dataURL = this.stageRef.getStage().toDataURL({
+          mimeType: "image/jpeg",
+          pixelRatio: window.screen.width / 400
+        });
         var blobData = this.dataURItoBlob(dataURL);
         var file = {
           filename: this.props.imageObject.name,
