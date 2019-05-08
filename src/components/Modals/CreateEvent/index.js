@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withNamespaces } from "react-i18next";
 import * as yup from "yup";
 import axios from "axios";
@@ -47,7 +47,8 @@ class CreateEvent extends Component {
       this.state.showInfo !== nextState.showInfo ||
       this.state.showDesiresPopup !== nextState.showDesiresPopup ||
       this.state.type !== nextState.type ||
-      this.state.errors !== nextState.errors
+      this.state.errors !== nextState.errors ||
+      this.state.removeCurrentImage !== nextState.removeCurrentImage
     ) {
       return true;
     }
@@ -71,6 +72,7 @@ class CreateEvent extends Component {
     errors: {},
     showInfo: true,
     showDesiresPopup: false,
+    removeCurrentImage: true,
     ...this.props.updateEventProps
   };
   componentDidMount() {
@@ -232,6 +234,20 @@ class CreateEvent extends Component {
     }
   };
 
+  handleClickOnRemoveCurrentImage = () => {
+    this.setState({
+      image: "",
+      removeCurrentImage: false
+    });
+  };
+
+  handleClickOnResetImage = () => {
+    this.setState({
+      image: this.props.updateEventProps.image,
+      removeCurrentImage: true
+    });
+  };
+
   render() {
     const { close, t, ErrorHandler, eventID, lang } = this.props;
     const {
@@ -251,8 +267,11 @@ class CreateEvent extends Component {
       errors,
       showInfo,
       filename,
-      filetype
+      filetype,
+      removeCurrentImage
     } = this.state;
+
+    console.log(this.props.updateEventProps, "this.props.updateEventProps");
 
     return (
       <section>
@@ -340,12 +359,37 @@ class CreateEvent extends Component {
                       </div>
                       {this.InputFeedback(errors.type)}
                       <div className="item nobottom">
-                        <PhotoUpload
-                          photos={image && [image]}
-                          setPhotos={el => {
-                            this.setPhoto(el);
-                          }}
-                        />
+                        {eventID && removeCurrentImage ? (
+                          <div
+                            style={{
+                              height: "78px",
+                              marginBottom: "14px",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              background: "#f1f0ef",
+                              borderRadius: "9px"
+                            }}
+                            onClick={this.handleClickOnRemoveCurrentImage}
+                          >
+                            Remove Current Image
+                          </div>
+                        ) : (
+                          <Fragment>
+                            <PhotoUpload
+                              photos={image && [image]}
+                              setPhotos={el => {
+                                this.setPhoto(el);
+                              }}
+                            />
+                            <div
+                              style={{ padding: "4px", textAlign: "right" }}
+                              onClick={this.handleClickOnResetImage}
+                            >
+                              Set older Image
+                            </div>
+                          </Fragment>
+                        )}
                       </div>
                       <div className="item">
                         <div className="button mtop">
