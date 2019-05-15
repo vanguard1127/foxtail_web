@@ -13,6 +13,7 @@ function initializeAccountKit(props, callback) {
     tag.onload = cb;
     document.head.appendChild(tag);
   })(() => {
+    console.log("open popup");
     window.AccountKit_OnInteractive = function() {
       const { appId, csrf, version, debug, display, redirect } = props;
       window.AccountKit.init({
@@ -35,8 +36,29 @@ class AccountKit extends React.PureComponent {
   };
 
   componentDidMount() {
+    console.log(this.props, "SignInaccountKit -component did mount ");
+    console.log(window.AccountKit, "window.AccountKit");
     this.mounted = true;
     if (!this.state.initialized) {
+      initializeAccountKit(
+        {
+          appId: this.props.appId,
+          csrf: this.props.csrf,
+          version: this.props.version,
+          debug: this.props.debug,
+          display: this.props.display,
+          redirect: this.props.redirect,
+          language: this.props.language
+        },
+        this.onLoad
+      );
+      console.log(window.AccountKit, "window.AccountKit");
+    }
+  }
+
+  componentDidUpdate() {
+    if (!this.state.initialized) {
+      delete window.AccountKit;
       initializeAccountKit(
         {
           appId: this.props.appId,
@@ -65,6 +87,7 @@ class AccountKit extends React.PureComponent {
   };
 
   signIn = async e => {
+    console.log(e, this.props, "SignInaccountKit");
     e.preventDefault();
     if (this.props.disabled && !(await this.props.validateForm())) {
       return false;
@@ -93,10 +116,23 @@ class AccountKit extends React.PureComponent {
   };
 
   render() {
+    console.log(
+      this.mounted,
+      this.state.initialized,
+      "as;dlfkajsdf;lkasdfj;lkj"
+    );
     if (!this.mounted) {
       return null;
     }
-    return <div onClick={this.signIn}>{this.props.children}</div>;
+    return (
+      <div
+        onClick={() => {
+          console.log("clicked on signin");
+        }}
+      >
+        {this.props.children}
+      </div>
+    );
   }
 }
 

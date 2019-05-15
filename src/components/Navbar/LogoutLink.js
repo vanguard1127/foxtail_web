@@ -16,6 +16,8 @@ class Logout extends Component {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     sessionStorage.clear();
+    // delete window.AccountKit;
+
     //Causes console error but currently best option.
     client.resetStore();
     history.push("/");
