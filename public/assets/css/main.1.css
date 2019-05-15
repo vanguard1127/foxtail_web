@@ -296,6 +296,7 @@ header .function .user span.username {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-right: 6px;
 }
 
 header .function .user span.username::after {
@@ -307,6 +308,7 @@ header .function .user span.username::after {
   right: 0;
   float: left;
   padding-top: 1px;
+  padding: 0 4px;
 }
 
 /* TOGGLE */
