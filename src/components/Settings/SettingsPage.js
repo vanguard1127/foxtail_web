@@ -137,7 +137,25 @@ class SettingsPage extends Component {
     this.mounted = true;
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
+    const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
+
+    await this.updateSettings()
+      .then(({ data }) => {
+        if (data.updateSettings) {
+          if (isCouple && isInitial && !this.state.flashCpl) {
+            toast(t("clickcpl"));
+          }
+        }
+      })
+      .then(() => {
+        refetchUser();
+        console.log("updateSettings saved.");
+      })
+      .catch(res => {
+        ErrorHandler.catchErrors(res.graphQLErrors);
+      });
+
     this.mounted = false;
   }
 
@@ -170,14 +188,11 @@ class SettingsPage extends Component {
         ];
       }
       if (this.mounted) {
-        this.setState(
-          {
-            privatePics,
-            publicPhotoList: undefined,
-            privatePhotoList: privatePics.map(file => JSON.stringify(file))
-          },
-          () => this.handleSubmit(updateSettings, true)
-        );
+        this.setState({
+          privatePics,
+          publicPhotoList: undefined,
+          privatePhotoList: privatePics.map(file => JSON.stringify(file))
+        });
       }
     } else {
       let { publicPics, profilePic } = this.state;
@@ -207,31 +222,31 @@ class SettingsPage extends Component {
         }
       }
       if (this.mounted) {
-        this.setState(
-          {
-            publicPics,
-            privatePhotoList: undefined,
-            publicPhotoList: publicPics.map(file => JSON.stringify(file))
-          },
-          () => this.handleSubmit(updateSettings, true)
-        );
+        this.setState({
+          publicPics,
+          privatePhotoList: undefined,
+          publicPhotoList: publicPics.map(file => JSON.stringify(file))
+        });
       }
     }
   };
 
   //Must reset these to prevent override on save
   resetAcctSettingState = () => {
-    this.setState({
-      username: undefined,
-      email: undefined,
-      gender: undefined,
-      phone: undefined
-    });
+    if (this.mounted) {
+      this.setState({
+        username: undefined,
+        email: undefined,
+        gender: undefined,
+        phone: undefined
+      });
+    }
   };
   handleSubmit = (updateSettings, saveImage) => {
+    console.log("handleSubmit");
     const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
 
-    this.setErrorHandler("Settings updated");
+    this.setErrorHandler("Settings updated...");
     if (!saveImage) {
       if (this.mounted) {
         this.setState(
@@ -288,15 +303,12 @@ class SettingsPage extends Component {
       });
 
       if (this.mounted) {
-        this.setState(
-          {
-            long,
-            lat,
-            city: citycntry.city,
-            country: citycntry.country
-          },
-          () => this.handleSubmit(updateSettings)
-        );
+        this.setState({
+          long,
+          lat,
+          city: citycntry.city,
+          country: citycntry.country
+        });
       }
     } else {
       if (this.mounted) this.setState({ city });
@@ -307,14 +319,9 @@ class SettingsPage extends Component {
     const { desires } = this.state;
     if (this.mounted) {
       if (checked) {
-        this.setState({ desires: [...desires, value] }, () =>
-          this.handleSubmit(updateSettings)
-        );
+        this.setState({ desires: [...desires, value] });
       } else {
-        this.setState(
-          { desires: desires.filter(desire => desire !== value) },
-          () => this.handleSubmit(updateSettings)
-        );
+        this.setState({ desires: desires.filter(desire => desire !== value) });
       }
     }
   };
@@ -338,9 +345,7 @@ class SettingsPage extends Component {
 
   setProfilePic = ({ key, url, updateSettings }) => {
     if (this.mounted) {
-      this.setState({ profilePic: key, profilePicUrl: url }, () => {
-        this.handleSubmit(updateSettings);
-      });
+      this.setState({ profilePic: key, profilePicUrl: url });
     }
   };
 
@@ -560,6 +565,7 @@ class SettingsPage extends Component {
         }}
       >
         {(updateSettings, { loading }) => {
+          this.updateSettings = updateSettings;
           return (
             <section className="settings">
               <div className="container">
@@ -596,7 +602,12 @@ class SettingsPage extends Component {
                             city={city}
                             isBlackMember={currentuser.blackMember.active}
                             setValue={({ name, value }) =>
-                              this.setValue({ name, value, updateSettings })
+                              this.setValue({
+                                name,
+                                value,
+                                updateSettings,
+                                noSave: true
+                              })
                             }
                             setLocationValues={({ lat, long, city }) =>
                               this.setLocationValues({
@@ -675,7 +686,7 @@ class SettingsPage extends Component {
                                 name,
                                 value,
                                 updateSettings,
-                                noSave
+                                noSave: true
                               })
                             }
                             t={t}
@@ -686,7 +697,12 @@ class SettingsPage extends Component {
                           />
                           <AppSettings
                             setValue={({ name, value }) =>
-                              this.setValue({ name, value, updateSettings })
+                              this.setValue({
+                                name,
+                                value,
+                                updateSettings,
+                                noSave: true
+                              })
                             }
                             visible={visible}
                             lang={lang}
@@ -728,7 +744,11 @@ class SettingsPage extends Component {
                           )}
                           <AcctSettings
                             setValue={({ name, value }) =>
-                              this.setValue({ name, value, updateSettings })
+                              this.setValue({
+                                name,
+                                value,
+                                updateSettings
+                              })
                             }
                             t={t}
                             ErrorHandler={ErrorHandler}
@@ -787,7 +807,7 @@ class SettingsPage extends Component {
                 <CoupleModal
                   close={this.toggleCouplesPopup}
                   setValue={({ name, value }) =>
-                    this.setValue({ name, value, updateSettings })
+                    this.setValue({ name, value, updateSettings, noSave: true })
                   }
                   username={couplePartner}
                   includeMsgs={includeMsgs}
