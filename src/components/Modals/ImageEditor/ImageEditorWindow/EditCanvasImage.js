@@ -11,7 +11,7 @@ import DeleteIcon from "@material-ui/icons/DeleteForever";
 class EditCanvasImage extends PureComponent {
   constructor(props) {
     super(props);
-    let width = window.screen.width > 375 ? 400 : 200;
+    let width = window.screen.width > 375 ? 1080 : 200;
     let height = window.screen.height > 668 ? 400 : 200;
     const initialCrop = {
       x: [0, width],
@@ -20,10 +20,10 @@ class EditCanvasImage extends PureComponent {
     this.state = {
       width: width,
       height: height,
-      scaleWidth: width,
-      scaleHeight: height,
-      x_pos: 0,
-      y_pos: 0,
+      scaleWidth: 600,
+      scaleHeight: 600,
+      x_pos: width / 4,
+      y_pos: height / 4,
       selectedShapeName: "",
       hideTransformer: false,
       konvaImageList: [],
@@ -252,8 +252,8 @@ class EditCanvasImage extends PureComponent {
             <Layer>
               {this.props.imageObject && (
                 <SourceImage
-                  width={width}
-                  height={height}
+                  // width={600}
+                  // height={600}
                   scaleWidth={scaleWidth}
                   scaleHeight={scaleHeight}
                   scale={scale}

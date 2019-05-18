@@ -37,11 +37,12 @@ class SourceImage extends PureComponent {
     //if (this.props.height) image.height = this.props.height;
     image.onload = function() {
       const ratio = image.width / image.height;
+      console.log(this.width, this.height, "a;sdlkfjasdfl;kjasdf;lkj");
       if (image.width <= image.height) {
-        image.width = _this.props.width;
+        image.width = this.width;
         image.height = image.width / ratio;
       } else {
-        image.height = _this.props.height;
+        image.height = this.height;
         image.width = image.height * ratio;
       }
       _this.setState({
@@ -72,10 +73,10 @@ class SourceImage extends PureComponent {
         duration: 0,
         x: 0
       });
-    } else if (left_pos + scaleWidth < this.props.width) {
+    } else if (left_pos + scaleWidth < this.state.width) {
       e.target.to({
         duration: 0,
-        x: this.props.width - scaleWidth
+        x: this.state.width - scaleWidth
       });
     }
     if (e.target.y() > 0) {
@@ -83,20 +84,25 @@ class SourceImage extends PureComponent {
         duration: 0,
         y: 0
       });
-    } else if (right_pos + scaleHeight < this.props.height) {
+    } else if (right_pos + scaleHeight < this.state.height) {
       e.target.to({
         duration: 0,
-        y: this.props.height - scaleHeight
+        y: this.state.height - scaleHeight
       });
     }
   };
 
   render() {
+    console.log(
+      this.state.width * this.props.scale,
+      "as;dfklasdfasd",
+      this.state.height * this.props.scale
+    );
     return (
       <Image
         image={this.state.image}
-        width={this.state.width * this.props.scale}
-        height={this.state.height * this.props.scale}
+        width={this.state.width * (this.props.scale / 2)}
+        height={this.state.height * (this.props.scale / 2)}
         x={this.props.x_pos}
         y={this.props.y_pos}
         draggable
