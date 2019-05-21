@@ -3,11 +3,11 @@ import { Image } from "react-konva";
 import PropTypes from "prop-types";
 
 class SourceImage extends PureComponent {
-  static propTypes = {
-    sourceImageObject: PropTypes.object,
-    width: PropTypes.number,
-    height: PropTypes.number
-  };
+  //   static propTypes = {
+  //     sourceImageObject: PropTypes.object,
+  //     width: PropTypes.number,
+  //     height: PropTypes.number
+  //   };
 
   state = {
     image: null,
@@ -16,42 +16,19 @@ class SourceImage extends PureComponent {
   };
 
   componentDidMount() {
-    this.readFile();
+    this.image = new window.Image();
+    this.image.src = URL.createObjectURL(this.props.sourceImageObject);
+    this.image.addEventListener("load", this.imageLoad);
   }
 
-  readFile = () => {
-    const file = this.props.sourceImageObject;
-    //const file = this.props.sourceImageObject.originFileObj;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = e => {
-      this.setState({ imageBase64: e.target.result }, this.setImage);
-    };
-  };
+  componentWillUnmount() {
+    this.image.removeEventListener("load", this.imageLoad);
+  }
 
-  setImage = () => {
-    const image = new window.Image();
-    image.src = this.state.imageBase64;
-    const _this = this;
-    //if (this.props.width) image.width = this.props.width;
-    //if (this.props.height) image.height = this.props.height;
-    image.onload = function() {
-      const ratio = image.width / image.height;
-      console.log(this.width, this.height, "a;sdlkfjasdfl;kjasdf;lkj");
-      if (image.width <= image.height) {
-        image.width = this.width;
-        image.height = image.width / ratio;
-      } else {
-        image.height = this.height;
-        image.width = image.height * ratio;
-      }
-      _this.setState({
-        image: image,
-        type: "SET_IMAGE_SIZE",
-        width: image.width,
-        height: image.height
-      });
-    };
+  imageLoad = () => {
+    this.setState({
+      image: this.image
+    });
   };
 
   handleDragStart = e => {
@@ -93,16 +70,11 @@ class SourceImage extends PureComponent {
   };
 
   render() {
-    console.log(
-      this.state.width * this.props.scale,
-      "as;dfklasdfasd",
-      this.state.height * this.props.scale
-    );
     return (
       <Image
         image={this.state.image}
-        width={this.state.width * (this.props.scale / 2)}
-        height={this.state.height * (this.props.scale / 2)}
+        width={this.props.width}
+        height={this.props.height}
         x={this.props.x_pos}
         y={this.props.y_pos}
         draggable

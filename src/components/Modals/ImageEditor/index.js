@@ -6,6 +6,7 @@ class ImageEditor extends Component {
   shouldComponentUpdate() {
     return false;
   }
+
   render() {
     const {
       close,
@@ -19,7 +20,12 @@ class ImageEditor extends Component {
     } = this.props;
 
     return (
-      <Modal fullWidth={true} header={t("editphoto")} close={close}>
+      <Modal
+        fullWidth={true}
+        header={t("editphoto")}
+        close={close}
+        ref={el => (this.container = el)}
+      >
         <ErrorHandler.ErrorBoundary>
           <EditCanvasImage
             imageObject={file}

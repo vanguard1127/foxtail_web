@@ -33,30 +33,52 @@ class EditCanvasImage extends PureComponent {
       unduCrop: false,
       rotation: 0,
       uploading: false,
-      scale: 1
+      scale: 1,
+      imageWidth: 0,
+      imageHeight: 0
     };
   }
-  static propTypes = {
-    imageObject: PropTypes.object
-  };
+  //   static propTypes = {
+  //     imageObject: PropTypes.object
+  //   };
 
-  componentDidMount() {
-    this.mounted = true;
-    // let's go Image image relative to it's center!
-    // we need to set offset to define new "center" of image
-    const image = this.stageRef;
-    image.offsetX(image.width() / 2);
-    image.offsetY(image.height() / 2);
-    // when we are setting {x,y} properties we are setting position of top left corner of image.
-    // but after applying offset when we are setting {x,y}
-    // properties we are setting position of central point of image.
-    // so we also need to move the image to see previous result
-    image.x(image.x() + image.width() / 2);
-    image.y(image.y() + image.height() / 2);
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
+  componentWillMount() {
+    const reader = new FileReader();
+    reader.readAsDataURL(this.props.imageObject);
+    reader.onload = e => {
+      const imageBase64 = e.target.result;
+      const image = new window.Image();
+      image.src = imageBase64;
+      image.onload = function() {
+        var initImageWidth = image.width;
+        var initImageHeight = image.height;
+        var { width, height } = this.props;
+        if (width === 0 || width === undefined) {
+          width = window.screen.width > 375 ? 1080 : 200;
+        }
+        if (height === 0 || height === undefined) {
+          height = window.screen.height > 668 ? 400 : 200;
+        }
+        while (initImageHeight > height || initImageWidth > width) {
+          initImageHeight = initImageHeight / 2;
+          initImageWidth = initImageWidth / 2;
+        }
+        console.log("width:" + width);
+        console.log("height:" + height);
+        console.log("initImageWidth:" + initImageWidth);
+        console.log("initImageHeight:" + initImageHeight);
+        const x_pos = (width - initImageWidth) / 2;
+        const y_pos = (height - initImageHeight) / 2;
+        this.setState({
+          width: width,
+          height: height,
+          imageWidth: initImageWidth,
+          imageHeight: initImageHeight,
+          x_pos: x_pos,
+          y_pos: y_pos
+        });
+      }.bind(this);
+    };
   }
 
   handleStageClick = e => {
@@ -179,10 +201,10 @@ class EditCanvasImage extends PureComponent {
 
   handleScale = e => {
     const scale = parseFloat(e.target.value);
+    console.log(this.mounted);
     if (this.mounted) {
+      console.log(scale);
       this.setState({
-        scaleWidth: this.state.width * scale,
-        scaleHeight: this.state.height * scale,
         scale: scale
       });
     }
@@ -206,7 +228,73 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
+  componentDidMount() {
+    this.mounted = true;
+    this.checkSize();
+    // here we should add listener for "container" resize
+    // take a look here https://developers.google.com/web/updates/2016/10/resizeobserver
+    // for simplicity I will just listen window resize
+    window.addEventListener("resize", this.checkSize);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    window.removeEventListener("resize", this.checkSize);
+  }
+
+  checkSize = () => {
+    const width = this.container.offsetWidth;
+    const height = this.container.offsetHeight;
+
+    var x_pos = this.state.x_pos;
+    if (this.state.imageWidth * this.state.scale < width) {
+      if (this.state.x_pos + this.state.imageWidth * this.state.scale > width) {
+        x_pos = width - this.state.imageWidth * this.state.scale;
+      } else {
+      }
+    } else {
+      x_pos = 0;
+      this.state.imageWidth = width / this.state.scale;
+    }
+    var x_pos = this.state.x_pos;
+    var imageWidth = this.state.imageWidth;
+    if (this.state.imageWidth * this.state.scale < width) {
+      if (this.state.x_pos + this.state.imageWidth * this.state.scale > width) {
+        x_pos = width - this.state.imageWidth * this.state.scale;
+      } else {
+      }
+    } else {
+      x_pos = 0;
+      imageWidth = width / this.state.scale;
+    }
+    var y_pos = this.state.y_pos;
+    var imageHeight = this.state.imageHeight;
+    if (this.state.imageHeight * this.state.scale < height) {
+      if (
+        this.state.y_pos + this.state.imageHeight * this.state.scale >
+        height
+      ) {
+        y_pos = height - this.state.imageHeight * this.state.scale;
+      } else {
+      }
+    } else {
+      x_pos = 0;
+      imageWidth = width / this.state.scale;
+    }
+    this.setState({
+      width: width,
+      height: height,
+      x_pos: x_pos,
+      y_pos: y_pos,
+      imageHeight: imageHeight,
+      imageWidth: imageWidth
+    });
+  };
+
   render() {
+    console.log("rendering");
+    console.log(this.state.imageWidth * this.state.scale);
+    console.log(this.state.imageHeight * this.state.scale);
     const {
       konvaImageList,
       width,
@@ -235,10 +323,14 @@ class EditCanvasImage extends PureComponent {
         />
       </div>
     );
-
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          style={{ display: "flex", justifyContent: "center" }}
+          ref={node => {
+            this.container = node;
+          }}
+        >
           <Stage
             style={{ backgroundColor: "gray" }}
             width={width}
@@ -252,11 +344,8 @@ class EditCanvasImage extends PureComponent {
             <Layer>
               {this.props.imageObject && (
                 <SourceImage
-                  // width={600}
-                  // height={600}
-                  scaleWidth={scaleWidth}
-                  scaleHeight={scaleHeight}
-                  scale={scale}
+                  width={this.state.imageWidth * this.state.scale}
+                  height={this.state.imageHeight * this.state.scale}
                   x_pos={x_pos}
                   y_pos={y_pos}
                   sourceImageObject={this.props.imageObject}
