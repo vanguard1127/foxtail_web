@@ -201,11 +201,19 @@ class EditCanvasImage extends PureComponent {
 
   handleScale = e => {
     const scale = parseFloat(e.target.value);
-    console.log(this.mounted);
     if (this.mounted) {
-      console.log(scale);
+      const width = this.state.imageWidth * scale;
+      const height = this.state.imageHeight * scale;
+      const prev_width = this.state.imageWidth * this.state.scale;
+      const prev_height = this.state.imageHeight * this.state.scale;
+      var x_pos = this.state.x_pos;
+      var y_pos = this.state.y_pos;
+      x_pos = x_pos - (width - prev_width) / 2;
+      y_pos = y_pos - (height - prev_height) / 2;
       this.setState({
-        scale: scale
+        scale: scale,
+        x_pos: x_pos,
+        y_pos: y_pos
       });
     }
   };
@@ -302,9 +310,6 @@ class EditCanvasImage extends PureComponent {
   };
 
   render() {
-    console.log("rendering");
-    console.log(this.state.imageWidth * this.state.scale);
-    console.log(this.state.imageHeight * this.state.scale);
     const {
       konvaImageList,
       width,
@@ -318,6 +323,7 @@ class EditCanvasImage extends PureComponent {
       selectedShapeName,
       uploading
     } = this.state;
+    console.log("rendering", x_pos, y_pos);
     const { t } = this.props;
 
     const Sticker = props => (
@@ -356,9 +362,15 @@ class EditCanvasImage extends PureComponent {
                 <SourceImage
                   width={this.state.imageWidth * this.state.scale}
                   height={this.state.imageHeight * this.state.scale}
+                  canvasWidth={this.state.width}
+                  canvasHeight={this.state.height}
                   x_pos={x_pos}
                   y_pos={y_pos}
                   sourceImageObject={this.props.imageObject}
+                  drapComplete={(x_pos, y_pos) => {
+                    console.log(x_pos, y_pos);
+                    this.setState({ x_pos: x_pos, y_pos: y_pos });
+                  }}
                 />
               )}
               {konvaImageList.length > 0 &&

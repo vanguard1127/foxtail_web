@@ -11,7 +11,6 @@ class SourceImage extends PureComponent {
 
   state = {
     image: null,
-    imageBase64: "",
     isDragging: false
   };
 
@@ -41,32 +40,55 @@ class SourceImage extends PureComponent {
     this.setState({
       isDragging: false
     });
-    const left_pos = e.target.x();
-    const right_pos = e.target.y();
-    const scaleWidth = this.state.width * this.props.scale;
-    const scaleHeight = this.state.height * this.props.scale;
-    if (left_pos > 0) {
-      e.target.to({
-        duration: 0,
-        x: 0
-      });
-    } else if (left_pos + scaleWidth < this.state.width) {
-      e.target.to({
-        duration: 0,
-        x: this.state.width - scaleWidth
-      });
+    var x_pos = e.target.x();
+    var y_pos = e.target.y();
+    const width = this.props.width;
+    const height = this.props.height;
+    const canvasWidth = this.props.canvasWidth;
+    const canvasHeight = this.props.canvasHeight;
+    if (x_pos < 0) {
+      x_pos = 0;
+    } else {
+      if (x_pos + width > canvasWidth) {
+        x_pos = canvasWidth - width;
+      }
     }
-    if (e.target.y() > 0) {
-      e.target.to({
-        duration: 0,
-        y: 0
-      });
-    } else if (right_pos + scaleHeight < this.state.height) {
-      e.target.to({
-        duration: 0,
-        y: this.state.height - scaleHeight
-      });
+    if (y_pos < 0) {
+      y_pos = 0;
+    } else {
+      if (y_pos + height > canvasHeight) {
+        y_pos = canvasHeight - height;
+      }
     }
+    e.target.to({
+      duration: 0,
+      x: x_pos,
+      y: y_pos
+    });
+    this.props.drapComplete(x_pos, y_pos);
+
+    // if (left_pos > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: 0
+    //   });
+    // } else if (left_pos + width < this.state.width) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: this.state.width - scaleWidth
+    //   });
+    // }
+    // if (e.target.y() > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: 0
+    //   });
+    // } else if (right_pos + scaleHeight < this.state.height) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: this.state.height - scaleHeight
+    //   });
+    // }
   };
 
   render() {
