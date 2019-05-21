@@ -235,6 +235,16 @@ class EditCanvasImage extends PureComponent {
     // take a look here https://developers.google.com/web/updates/2016/10/resizeobserver
     // for simplicity I will just listen window resize
     window.addEventListener("resize", this.checkSize);
+    const image = this.stageRef;
+    image.offsetX(image.width() / 2);
+    image.offsetY(image.height() / 2);
+
+    // when we are setting {x,y} properties we are setting position of top left corner of image.
+    // but after applying offset when we are setting {x,y}
+    // properties we are setting position of central point of image.
+    // so we also need to move the image to see previous result
+    image.x(image.x() + image.width() / 2);
+    image.y(image.y() + image.height() / 2);
   }
 
   componentWillUnmount() {
