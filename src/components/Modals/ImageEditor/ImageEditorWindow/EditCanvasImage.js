@@ -53,13 +53,13 @@ class EditCanvasImage extends PureComponent {
       image.onload = function() {
         var initImageWidth = image.width;
         var initImageHeight = image.height;
-        var { width, height } = this.props;
-        if (width === 0 || width === undefined) {
-          width = window.screen.width > 375 ? 1080 : 200;
-        }
-        if (height === 0 || height === undefined) {
-          height = window.screen.height > 668 ? 400 : 200;
-        }
+        var { width, height } = this.state;
+        // if (width === 0 || width === undefined) {
+        //   width = window.screen.width > 375 ? 1080 : 200;
+        // }
+        // if (height === 0 || height === undefined) {
+        //   height = window.screen.height > 668 ? 400 : 200;
+        // }
         while (
           initImageHeight > height ||
           initImageHeight > width ||
