@@ -7,6 +7,7 @@ import KonvaImage from "./KonvaImage";
 import RotateIcon from "@material-ui/icons/RotateRight";
 import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
+import Konva from "konva";
 
 class EditCanvasImage extends PureComponent {
   constructor(props) {
@@ -59,14 +60,15 @@ class EditCanvasImage extends PureComponent {
         if (height === 0 || height === undefined) {
           height = window.screen.height > 668 ? 400 : 200;
         }
-        while (initImageHeight > height || initImageWidth > width) {
+        while (
+          initImageHeight > height ||
+          initImageHeight > width ||
+          initImageWidth > width ||
+          initImageWidth > height
+        ) {
           initImageHeight = initImageHeight / 2;
           initImageWidth = initImageWidth / 2;
         }
-        console.log("width:" + width);
-        console.log("height:" + height);
-        console.log("initImageWidth:" + initImageWidth);
-        console.log("initImageHeight:" + initImageHeight);
         const x_pos = (width - initImageWidth) / 2;
         const y_pos = (height - initImageHeight) / 2;
         this.setState({
@@ -103,10 +105,14 @@ class EditCanvasImage extends PureComponent {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         const dataURL = this.stageRef.getStage().toDataURL({
           mimeType: "image/jpeg",
-          pixelRatio: window.screen.width / 400
+          x: this.state.x_pos,
+          y: this.state.y_pos,
+          width: this.state.imageWidth * this.state.scale,
+          height: this.state.imageHeight * this.state.scale,
+          quality: 1
         });
-        var blobData = this.dataURItoBlob(dataURL);
-        var file = {
+        const blobData = this.dataURItoBlob(dataURL);
+        const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",
           filebody: blobData
@@ -218,24 +224,6 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
-  handleXPosition = e => {
-    const x = parseFloat(e.target.value);
-    if (this.mounted) {
-      this.setState({
-        x_pos: x
-      });
-    }
-  };
-
-  handleYPosition = e => {
-    const y = parseFloat(e.target.value);
-    if (this.mounted) {
-      this.setState({
-        y_pos: y
-      });
-    }
-  };
-
   componentDidMount() {
     this.mounted = true;
     this.checkSize();
@@ -244,6 +232,10 @@ class EditCanvasImage extends PureComponent {
     // for simplicity I will just listen window resize
     window.addEventListener("resize", this.checkSize);
     const image = this.stageRef;
+    // console.log('image offsetX:', image.offsetX())
+    // console.log('image offsetY:', image.offsetY())
+    // console.log('image X:', image.x())
+    // console.log('image Y:', image.y())
     image.offsetX(image.width() / 2);
     image.offsetY(image.height() / 2);
 
@@ -253,6 +245,10 @@ class EditCanvasImage extends PureComponent {
     // so we also need to move the image to see previous result
     image.x(image.x() + image.width() / 2);
     image.y(image.y() + image.height() / 2);
+    // console.log('image offsetX:', image.offsetX())
+    // console.log('image offsetY:', image.offsetY())
+    // console.log('image X:', image.x())
+    // console.log('image Y:', image.y())
   }
 
   componentWillUnmount() {
@@ -323,7 +319,6 @@ class EditCanvasImage extends PureComponent {
       selectedShapeName,
       uploading
     } = this.state;
-    console.log("rendering", x_pos, y_pos);
     const { t } = this.props;
 
     const Sticker = props => (
@@ -368,7 +363,16 @@ class EditCanvasImage extends PureComponent {
                   y_pos={y_pos}
                   sourceImageObject={this.props.imageObject}
                   drapComplete={(x_pos, y_pos) => {
-                    console.log(x_pos, y_pos);
+                    const oldX_pos = this.state.x_pos;
+                    const oldY_pos = this.state.y_pos;
+                    this.stageRef.x(this.stageRef.x() - oldX_pos + x_pos);
+                    this.stageRef.y(this.stageRef.y() - oldY_pos + y_pos);
+                    this.stageRef.offsetX(
+                      this.stageRef.offsetX() - oldX_pos + x_pos
+                    );
+                    this.stageRef.offsetY(
+                      this.stageRef.offsetY() - oldY_pos + y_pos
+                    );
                     this.setState({ x_pos: x_pos, y_pos: y_pos });
                   }}
                 />
