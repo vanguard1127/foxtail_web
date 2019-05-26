@@ -13,7 +13,7 @@ class SourceImage extends PureComponent {
     image: null,
     isDragging: false
   };
-
+  stageRef = null;
   componentDidMount() {
     this.image = new window.Image();
     this.image.src = URL.createObjectURL(this.props.sourceImageObject);
@@ -42,22 +42,27 @@ class SourceImage extends PureComponent {
     });
     var x_pos = e.target.x();
     var y_pos = e.target.y();
-    const width = this.props.width;
-    const height = this.props.height;
     const canvasWidth = this.props.canvasWidth;
     const canvasHeight = this.props.canvasHeight;
-    if (x_pos < 0) {
-      x_pos = 0;
+    const rotation = this.props.rotation % 360;
+    const width =
+      rotation == 0 || rotation == 180 ? this.props.width : this.props.height;
+    const height =
+      rotation == 0 || rotation == 180 ? this.props.height : this.props.width;
+    const offsetX = width / 2;
+    const offsetY = height / 2;
+    if (x_pos - offsetX < 0) {
+      x_pos = offsetX;
     } else {
-      if (x_pos + width > canvasWidth) {
-        x_pos = canvasWidth - width;
+      if (x_pos - offsetX + width > canvasWidth) {
+        x_pos = canvasWidth - width + offsetX;
       }
     }
-    if (y_pos < 0) {
-      y_pos = 0;
+    if (y_pos - offsetY < 0) {
+      y_pos = offsetY;
     } else {
-      if (y_pos + height > canvasHeight) {
-        y_pos = canvasHeight - height;
+      if (y_pos - offsetY + height > canvasHeight) {
+        y_pos = canvasHeight - height + offsetY;
       }
     }
     e.target.to({
@@ -102,6 +107,9 @@ class SourceImage extends PureComponent {
         draggable
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
+        rotation={this.props.rotation}
+        offsetX={this.props.width / 2}
+        offsetY={this.props.height / 2}
       />
     );
   }

@@ -12,26 +12,14 @@ import Konva from "konva";
 class EditCanvasImage extends PureComponent {
   constructor(props) {
     super(props);
-    let width = window.screen.width > 375 ? 1080 : 200;
-    let height = window.screen.height > 668 ? 400 : 200;
-    const initialCrop = {
-      x: [0, width],
-      y: [0, height]
-    };
     this.state = {
-      width: width,
-      height: height,
-      scaleWidth: 600,
-      scaleHeight: 600,
-      x_pos: width / 4,
-      y_pos: height / 4,
+      width: 0,
+      height: 0,
+      x_pos: 0,
+      y_pos: 0,
       selectedShapeName: "",
       hideTransformer: false,
       konvaImageList: [],
-      crop: initialCrop,
-      lastCrop: initialCrop,
-      isCropping: false,
-      unduCrop: false,
       rotation: 0,
       uploading: false,
       scale: 1,
@@ -39,49 +27,96 @@ class EditCanvasImage extends PureComponent {
       imageHeight: 0
     };
   }
-  //   static propTypes = {
-  //     imageObject: PropTypes.object
-  //   };
 
-  componentWillMount() {
-    const reader = new FileReader();
-    reader.readAsDataURL(this.props.imageObject);
-    reader.onload = e => {
-      const imageBase64 = e.target.result;
-      const image = new window.Image();
-      image.src = imageBase64;
-      image.onload = function() {
-        var initImageWidth = image.width;
-        var initImageHeight = image.height;
-        var { width, height } = this.state;
-        // if (width === 0 || width === undefined) {
-        //   width = window.screen.width > 375 ? 1080 : 200;
-        // }
-        // if (height === 0 || height === undefined) {
-        //   height = window.screen.height > 668 ? 400 : 200;
-        // }
-        while (
-          initImageHeight > height ||
-          initImageHeight > width ||
-          initImageWidth > width ||
-          initImageWidth > height
-        ) {
-          initImageHeight = initImageHeight / 2;
-          initImageWidth = initImageWidth / 2;
-        }
-        const x_pos = (width - initImageWidth) / 2;
-        const y_pos = (height - initImageHeight) / 2;
-        this.setState({
-          width: width,
-          height: height,
-          imageWidth: initImageWidth,
-          imageHeight: initImageHeight,
-          x_pos: x_pos,
-          y_pos: y_pos
-        });
-      }.bind(this);
-    };
+  componentDidMount() {
+    this.mounted = true;
+    this.checkSize();
+    window.addEventListener("resize", this.checkSize);
   }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    window.removeEventListener("resize", this.checkSize);
+  }
+
+  checkSize = () => {
+    const width = this.container.offsetWidth;
+    const height = width / 3;
+    this.setState({ width, height });
+    if (this.state.imageWidth == 0 || this.state.imageHeight == 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(this.props.imageObject);
+      reader.onload = e => {
+        const imageBase64 = e.target.result;
+        const image = new window.Image();
+        image.src = imageBase64;
+        image.onload = function() {
+          var initImageWidth = image.width;
+          var initImageHeight = image.height;
+          while (
+            initImageHeight > height ||
+            initImageHeight > width ||
+            initImageWidth > width ||
+            initImageWidth > height
+          ) {
+            initImageHeight = initImageHeight / 1.1;
+            initImageWidth = initImageWidth / 1.1;
+          }
+          const x_pos = (width - initImageWidth) / 2;
+          const y_pos = (height - initImageHeight) / 2;
+          this.setState({
+            imageWidth: initImageWidth,
+            imageHeight: initImageHeight,
+            x_pos: x_pos + initImageWidth / 2,
+            y_pos: y_pos + initImageHeight / 2
+          });
+        }.bind(this);
+      };
+    }
+    if (this.state.x_pos == 0 || this.state.y_pos == 0) {
+      return;
+    }
+
+    var x_pos = this.state.x_pos;
+    var imageWidth = this.state.imageWidth;
+    if (imageWidth * this.state.scale < width) {
+      if (
+        this.state.x_pos - imageWidth / 2 + imageWidth * this.state.scale >
+        width
+      ) {
+        x_pos = width - imageWidth * this.state.scale + imageWidth / 2;
+      } else {
+      }
+    } else {
+      x_pos = width / 2;
+      imageWidth = width / this.state.scale;
+    }
+    var y_pos = this.state.y_pos;
+    var imageHeight = this.state.imageHeight;
+    if (this.state.imageHeight * this.state.scale < height) {
+      if (
+        this.state.y_pos -
+          imageHeight / 2 +
+          this.state.imageHeight * this.state.scale >
+        height
+      ) {
+        y_pos =
+          height - this.state.imageHeight * this.state.scale + imageHeight / 2;
+      } else {
+      }
+    } else {
+      y_pos = height / 2;
+      imageHeight = height / this.state.scale;
+    }
+    this.setState({
+      width: width,
+      height: height,
+      x_pos: x_pos,
+      y_pos: y_pos,
+      imageWidth: imageWidth,
+      imageHeight: imageHeight
+    });
+  };
 
   handleStageClick = e => {
     if (this.mounted) {
@@ -105,8 +140,8 @@ class EditCanvasImage extends PureComponent {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         const dataURL = this.stageRef.getStage().toDataURL({
           mimeType: "image/jpeg",
-          x: this.state.x_pos,
-          y: this.state.y_pos,
+          x: this.state.x_pos - this.state.imageWidth / 2,
+          y: this.state.y_pos - this.state.imageHeight / 2,
           width: this.state.imageWidth * this.state.scale,
           height: this.state.imageHeight * this.state.scale,
           quality: 1
@@ -132,8 +167,8 @@ class EditCanvasImage extends PureComponent {
       close
     } = this.props;
     await setS3PhotoParams(file.filename, file.filetype);
-    //format name on backend
-    //filename: this.formatFilename(file.name),
+    // format name on backend
+    // filename: this.formatFilename(file.name),
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key, url } = data.signS3;
@@ -163,8 +198,8 @@ class EditCanvasImage extends PureComponent {
     let width = this.state.width;
     let height = this.state.height;
 
-    let nwidth = this.state.lastCrop.x[1] - this.state.lastCrop.x[0];
-    let nheight = this.state.lastCrop.y[1] - this.state.lastCrop.y[0];
+    let nwidth = this.state.width;
+    let nheight = this.state.height;
 
     if (nwidth === width && nheight === height) {
       x = (x + width) / 2 - 50;
@@ -176,9 +211,9 @@ class EditCanvasImage extends PureComponent {
         this.setState({ konvaImageList: imgList });
       }
     } else {
-      //calculations
-      x = (x + nwidth) / 2 - 50 + this.state.lastCrop.x[0];
-      y = (y + nheight) / 2 - 50 + this.state.lastCrop.y[0];
+      // calculations
+      x = (x + nwidth) / 2 - 50;
+      y = (y + nheight) / 2 - 50;
 
       let imgList = [...this.state.konvaImageList];
       imgList = [...imgList, { id, name, src, x, y }];
@@ -208,101 +243,10 @@ class EditCanvasImage extends PureComponent {
   handleScale = e => {
     const scale = parseFloat(e.target.value);
     if (this.mounted) {
-      const width = this.state.imageWidth * scale;
-      const height = this.state.imageHeight * scale;
-      const prev_width = this.state.imageWidth * this.state.scale;
-      const prev_height = this.state.imageHeight * this.state.scale;
-      var x_pos = this.state.x_pos;
-      var y_pos = this.state.y_pos;
-      x_pos = x_pos - (width - prev_width) / 2;
-      y_pos = y_pos - (height - prev_height) / 2;
       this.setState({
-        scale: scale,
-        x_pos: x_pos,
-        y_pos: y_pos
+        scale: scale
       });
     }
-  };
-
-  componentDidMount() {
-    this.mounted = true;
-    this.checkSize();
-    // here we should add listener for "container" resize
-    // take a look here https://developers.google.com/web/updates/2016/10/resizeobserver
-    // for simplicity I will just listen window resize
-    window.addEventListener("resize", this.checkSize);
-    const image = this.stageRef;
-    // console.log('image offsetX:', image.offsetX())
-    // console.log('image offsetY:', image.offsetY())
-    // console.log('image X:', image.x())
-    // console.log('image Y:', image.y())
-    image.offsetX(image.width() / 2);
-    image.offsetY(image.height() / 2);
-
-    // when we are setting {x,y} properties we are setting position of top left corner of image.
-    // but after applying offset when we are setting {x,y}
-    // properties we are setting position of central point of image.
-    // so we also need to move the image to see previous result
-    image.x(image.x() + image.width() / 2);
-    image.y(image.y() + image.height() / 2);
-    // console.log('image offsetX:', image.offsetX())
-    // console.log('image offsetY:', image.offsetY())
-    // console.log('image X:', image.x())
-    // console.log('image Y:', image.y())
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-    window.removeEventListener("resize", this.checkSize);
-  }
-
-  checkSize = () => {
-    const width = this.container.offsetWidth;
-    const height = this.container.offsetHeight;
-
-    var x_pos = this.state.x_pos;
-    if (this.state.imageWidth * this.state.scale < width) {
-      if (this.state.x_pos + this.state.imageWidth * this.state.scale > width) {
-        x_pos = width - this.state.imageWidth * this.state.scale;
-      } else {
-      }
-    } else {
-      x_pos = 0;
-      this.state.imageWidth = width / this.state.scale;
-    }
-    var x_pos = this.state.x_pos;
-    var imageWidth = this.state.imageWidth;
-    if (this.state.imageWidth * this.state.scale < width) {
-      if (this.state.x_pos + this.state.imageWidth * this.state.scale > width) {
-        x_pos = width - this.state.imageWidth * this.state.scale;
-      } else {
-      }
-    } else {
-      x_pos = 0;
-      imageWidth = width / this.state.scale;
-    }
-    var y_pos = this.state.y_pos;
-    var imageHeight = this.state.imageHeight;
-    if (this.state.imageHeight * this.state.scale < height) {
-      if (
-        this.state.y_pos + this.state.imageHeight * this.state.scale >
-        height
-      ) {
-        y_pos = height - this.state.imageHeight * this.state.scale;
-      } else {
-      }
-    } else {
-      x_pos = 0;
-      imageWidth = width / this.state.scale;
-    }
-    this.setState({
-      width: width,
-      height: height,
-      x_pos: x_pos,
-      y_pos: y_pos,
-      imageHeight: imageHeight,
-      imageWidth: imageWidth
-    });
   };
 
   render() {
@@ -310,9 +254,6 @@ class EditCanvasImage extends PureComponent {
       konvaImageList,
       width,
       height,
-      scaleWidth,
-      scaleHeight,
-      scale,
       x_pos,
       y_pos,
       hideTransformer,
@@ -320,7 +261,6 @@ class EditCanvasImage extends PureComponent {
       uploading
     } = this.state;
     const { t } = this.props;
-
     const Sticker = props => (
       <div
         {...props}
@@ -350,7 +290,6 @@ class EditCanvasImage extends PureComponent {
             ref={node => {
               this.stageRef = node;
             }}
-            rotation={this.state.rotation}
           >
             <Layer>
               {this.props.imageObject && (
@@ -362,17 +301,8 @@ class EditCanvasImage extends PureComponent {
                   x_pos={x_pos}
                   y_pos={y_pos}
                   sourceImageObject={this.props.imageObject}
+                  rotation={this.state.rotation}
                   drapComplete={(x_pos, y_pos) => {
-                    const oldX_pos = this.state.x_pos;
-                    const oldY_pos = this.state.y_pos;
-                    this.stageRef.x(this.stageRef.x() - oldX_pos + x_pos);
-                    this.stageRef.y(this.stageRef.y() - oldY_pos + y_pos);
-                    this.stageRef.offsetX(
-                      this.stageRef.offsetX() - oldX_pos + x_pos
-                    );
-                    this.stageRef.offsetY(
-                      this.stageRef.offsetY() - oldY_pos + y_pos
-                    );
                     this.setState({ x_pos: x_pos, y_pos: y_pos });
                   }}
                 />
