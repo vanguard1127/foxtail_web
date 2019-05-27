@@ -138,12 +138,23 @@ class EditCanvasImage extends PureComponent {
   handleExportClick = () => {
     if (this.mounted && !this.state.uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
+        const rotation = this.state.rotation % 360;
+        const width =
+          rotation == 0 || rotation == 180
+            ? this.state.imageWidth * this.state.scale
+            : this.state.imageHeight * this.state.scale;
+        const height =
+          rotation == 0 || rotation == 180
+            ? this.state.imageHeight * this.state.scale
+            : this.state.imageWidth * this.state.scale;
+        const x = this.state.x_pos - width / 2;
+        const y = this.state.y_pos - height / 2;
         const dataURL = this.stageRef.getStage().toDataURL({
           mimeType: "image/jpeg",
-          x: this.state.x_pos - (this.state.imageWidth * this.state.scale) / 2,
-          y: this.state.y_pos - (this.state.imageHeight * this.state.scale) / 2,
-          width: this.state.imageWidth * this.state.scale,
-          height: this.state.imageHeight * this.state.scale,
+          x,
+          y,
+          width,
+          height,
           quality: 1
         });
         const blobData = this.dataURItoBlob(dataURL);
