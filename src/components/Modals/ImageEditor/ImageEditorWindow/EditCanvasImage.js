@@ -136,12 +136,12 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleExportClick = () => {
-    if (this.mounted && !this.state.uploading) {
+    if (this.mounted && !this.state.uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         const dataURL = this.stageRef.getStage().toDataURL({
           mimeType: "image/jpeg",
-          x: this.state.x_pos - this.state.imageWidth / 2,
-          y: this.state.y_pos - this.state.imageHeight / 2,
+          x: this.state.x_pos - (this.state.imageWidth * this.state.scale) / 2,
+          y: this.state.y_pos - (this.state.imageHeight * this.state.scale) / 2,
           width: this.state.imageWidth * this.state.scale,
           height: this.state.imageHeight * this.state.scale,
           quality: 1
@@ -294,6 +294,9 @@ class EditCanvasImage extends PureComponent {
             <Layer>
               {this.props.imageObject && (
                 <SourceImage
+                  ref={node => {
+                    this.SourceImageRef = node;
+                  }}
                   width={this.state.imageWidth * this.state.scale}
                   height={this.state.imageHeight * this.state.scale}
                   canvasWidth={this.state.width}
