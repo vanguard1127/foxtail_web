@@ -44,6 +44,7 @@ class FeaturedDiv extends Component {
       likedProfiles,
       msgdProfiles
     } = this.props;
+
     return (
       <section className="featured-profiles">
         <div className="container">
@@ -51,6 +52,9 @@ class FeaturedDiv extends Component {
             <div className="row" ref={this.onLightGallery}>
               <span className="head">{t("featmems")}</span>
               <OwlCarousel
+                key={`carousel_${featuredProfiles.length +
+                  likedProfiles.length +
+                  msgdProfiles.length}`}
                 className="slider"
                 autoplay
                 nav
@@ -82,21 +86,19 @@ class FeaturedDiv extends Component {
                 }}
               >
                 {featuredProfiles.map(profile => {
-                  {
-                    return (
-                      <FeaturedCard
-                        key={Math.random()}
-                        profile={profile}
-                        showMsgModal={showMsgModal}
-                        likeProfile={likeProfile}
-                        t={t}
-                        dayjs={dayjs}
-                        history={history}
-                        liked={likedProfiles.includes(profile.id)}
-                        msgd={msgdProfiles.includes(profile.id)}
-                      />
-                    );
-                  }
+                  return (
+                    <FeaturedCard
+                      key={profile.id}
+                      profile={profile}
+                      showMsgModal={showMsgModal}
+                      likeProfile={likeProfile}
+                      t={t}
+                      dayjs={dayjs}
+                      history={history}
+                      liked={likedProfiles.includes(profile.id)}
+                      msgd={msgdProfiles.includes(profile.id)}
+                    />
+                  );
                 })}
               </OwlCarousel>
             </div>

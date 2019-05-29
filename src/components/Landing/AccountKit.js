@@ -13,6 +13,7 @@ function initializeAccountKit(props, callback) {
     tag.onload = cb;
     document.head.appendChild(tag);
   })(() => {
+    console.log("open popup");
     window.AccountKit_OnInteractive = function() {
       const { appId, csrf, version, debug, display, redirect } = props;
       window.AccountKit.init({
@@ -35,25 +36,57 @@ class AccountKit extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.mounted = true;
-    if (!this.state.initialized) {
-      initializeAccountKit(
-        {
-          appId: this.props.appId,
-          csrf: this.props.csrf,
-          version: this.props.version,
-          debug: this.props.debug,
-          display: this.props.display,
-          redirect: this.props.redirect,
-          language: this.props.language
-        },
-        this.onLoad
-      );
+    if (!document.getElementById("account-kit")) {
+      this.mounted = true;
+      console.log("component did mount");
+      if (!this.state.initialized) {
+        delete window.AccountKit;
+        delete window.AccountKit_OnInteractive;
+        initializeAccountKit(
+          {
+            appId: this.props.appId,
+            csrf: this.props.csrf,
+            version: this.props.version,
+            debug: this.props.debug,
+            display: this.props.display,
+            redirect: this.props.redirect,
+            language: this.props.language
+          },
+          this.onLoad
+        );
+      }
+    }
+  }
+
+  componentDidUpdate() {
+    if (!document.getElementById("account-kit")) {
+      if (!this.state.initialized) {
+        delete window.AccountKit;
+        delete window.AccountKit_OnInteractive;
+        initializeAccountKit(
+          {
+            appId: this.props.appId,
+            csrf: this.props.csrf,
+            version: this.props.version,
+            debug: this.props.debug,
+            display: this.props.display,
+            redirect: this.props.redirect,
+            language: this.props.language
+          },
+          this.onLoad
+        );
+      }
     }
   }
 
   componentWillUnmount() {
-    this.mounted = false;
+    if (document.getElementById("account-kit")) {
+      console.log("componentWillUnmount");
+      this.mounted = false;
+      delete window.AccountKit_OnInteractive;
+      delete window.AccountKit;
+      document.head.removeChild(document.getElementById("account-kit"));
+    }
   }
 
   onLoad = () => {
@@ -65,6 +98,7 @@ class AccountKit extends React.PureComponent {
   };
 
   signIn = async e => {
+    console.log(e, this.props, "SignInaccountKit");
     e.preventDefault();
     if (this.props.disabled && !(await this.props.validateForm())) {
       return false;
@@ -93,10 +127,25 @@ class AccountKit extends React.PureComponent {
   };
 
   render() {
+    console.log(
+      this.mounted,
+      "mounted",
+      this.state.initialized,
+      "initialized",
+      "render"
+    );
     if (!this.mounted) {
       return null;
     }
-    return <div onClick={this.signIn}>{this.props.children}</div>;
+    return (
+      <div
+        onClick={() => {
+          console.log("clicked on signin");
+        }}
+      >
+        {this.props.children}
+      </div>
+    );
   }
 }
 
