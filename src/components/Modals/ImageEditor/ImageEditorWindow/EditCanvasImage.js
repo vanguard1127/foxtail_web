@@ -294,7 +294,7 @@ class EditCanvasImage extends PureComponent {
           }}
         >
           <Stage
-            style={{ backgroundColor: "gray" }}
+            style={{ backgroundColor: "#0e0d0dc7" }}
             width={width}
             height={height}
             onClick={this.handleStageClick}

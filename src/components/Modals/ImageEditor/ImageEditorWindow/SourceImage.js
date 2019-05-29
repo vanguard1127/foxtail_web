@@ -1,14 +1,7 @@
 import React, { PureComponent } from "react";
 import { Image } from "react-konva";
-import PropTypes from "prop-types";
 
 class SourceImage extends PureComponent {
-  //   static propTypes = {
-  //     sourceImageObject: PropTypes.object,
-  //     width: PropTypes.number,
-  //     height: PropTypes.number
-  //   };
-
   state = {
     image: null,
     isDragging: false
