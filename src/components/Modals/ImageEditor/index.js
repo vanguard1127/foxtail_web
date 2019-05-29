@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import EditCanvasImage from './ImageEditorWindow/EditCanvasImage';
-import { withNamespaces } from 'react-i18next';
-import Modal from '../../common/Modal';
+import React, { Component } from "react";
+import EditCanvasImage from "./ImageEditorWindow/EditCanvasImage";
+import { withNamespaces } from "react-i18next";
+import Modal from "../../common/Modal";
 class ImageEditor extends Component {
   shouldComponentUpdate() {
     return false;
   }
+
   render() {
     const {
       close,
@@ -19,7 +20,12 @@ class ImageEditor extends Component {
     } = this.props;
 
     return (
-      <Modal header={t('editphoto')} close={close}>
+      <Modal
+        fullWidth={true}
+        header={t("editphoto")}
+        close={close}
+        ref={el => (this.container = el)}
+      >
         <ErrorHandler.ErrorBoundary>
           <EditCanvasImage
             imageObject={file}
@@ -36,4 +42,4 @@ class ImageEditor extends Component {
     );
   }
 }
-export default withNamespaces('modals')(ImageEditor);
+export default withNamespaces("modals")(ImageEditor);

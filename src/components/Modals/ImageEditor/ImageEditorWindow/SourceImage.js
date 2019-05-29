@@ -3,54 +3,31 @@ import { Image } from "react-konva";
 import PropTypes from "prop-types";
 
 class SourceImage extends PureComponent {
-  static propTypes = {
-    sourceImageObject: PropTypes.object,
-    width: PropTypes.number,
-    height: PropTypes.number
-  };
+  //   static propTypes = {
+  //     sourceImageObject: PropTypes.object,
+  //     width: PropTypes.number,
+  //     height: PropTypes.number
+  //   };
 
   state = {
     image: null,
-    imageBase64: "",
     isDragging: false
   };
-
+  stageRef = null;
   componentDidMount() {
-    this.readFile();
+    this.image = new window.Image();
+    this.image.src = URL.createObjectURL(this.props.sourceImageObject);
+    this.image.addEventListener("load", this.imageLoad);
   }
 
-  readFile = () => {
-    const file = this.props.sourceImageObject;
-    //const file = this.props.sourceImageObject.originFileObj;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = e => {
-      this.setState({ imageBase64: e.target.result }, this.setImage);
-    };
-  };
+  componentWillUnmount() {
+    this.image.removeEventListener("load", this.imageLoad);
+  }
 
-  setImage = () => {
-    const image = new window.Image();
-    image.src = this.state.imageBase64;
-    const _this = this;
-    //if (this.props.width) image.width = this.props.width;
-    //if (this.props.height) image.height = this.props.height;
-    image.onload = function() {
-      const ratio = image.width / image.height;
-      if (image.width <= image.height) {
-        image.width = _this.props.width;
-        image.height = image.width / ratio;
-      } else {
-        image.height = _this.props.height;
-        image.width = image.height * ratio;
-      }
-      _this.setState({
-        image: image,
-        type: "SET_IMAGE_SIZE",
-        width: image.width,
-        height: image.height
-      });
-    };
+  imageLoad = () => {
+    this.setState({
+      image: this.image
+    });
   };
 
   handleDragStart = e => {
@@ -63,45 +40,76 @@ class SourceImage extends PureComponent {
     this.setState({
       isDragging: false
     });
-    const left_pos = e.target.x();
-    const right_pos = e.target.y();
-    const scaleWidth = this.state.width * this.props.scale;
-    const scaleHeight = this.state.height * this.props.scale;
-    if (left_pos > 0) {
-      e.target.to({
-        duration: 0,
-        x: 0
-      });
-    } else if (left_pos + scaleWidth < this.props.width) {
-      e.target.to({
-        duration: 0,
-        x: this.props.width - scaleWidth
-      });
+    var x_pos = e.target.x();
+    var y_pos = e.target.y();
+    const canvasWidth = this.props.canvasWidth;
+    const canvasHeight = this.props.canvasHeight;
+    const rotation = this.props.rotation % 360;
+    const width =
+      rotation == 0 || rotation == 180 ? this.props.width : this.props.height;
+    const height =
+      rotation == 0 || rotation == 180 ? this.props.height : this.props.width;
+    const offsetX = width / 2;
+    const offsetY = height / 2;
+    if (x_pos - offsetX < 0) {
+      x_pos = offsetX;
+    } else {
+      if (x_pos - offsetX + width > canvasWidth) {
+        x_pos = canvasWidth - width + offsetX;
+      }
     }
-    if (e.target.y() > 0) {
-      e.target.to({
-        duration: 0,
-        y: 0
-      });
-    } else if (right_pos + scaleHeight < this.props.height) {
-      e.target.to({
-        duration: 0,
-        y: this.props.height - scaleHeight
-      });
+    if (y_pos - offsetY < 0) {
+      y_pos = offsetY;
+    } else {
+      if (y_pos - offsetY + height > canvasHeight) {
+        y_pos = canvasHeight - height + offsetY;
+      }
     }
+    e.target.to({
+      duration: 0,
+      x: x_pos,
+      y: y_pos
+    });
+    this.props.drapComplete(x_pos, y_pos);
+
+    // if (left_pos > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: 0
+    //   });
+    // } else if (left_pos + width < this.state.width) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: this.state.width - scaleWidth
+    //   });
+    // }
+    // if (e.target.y() > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: 0
+    //   });
+    // } else if (right_pos + scaleHeight < this.state.height) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: this.state.height - scaleHeight
+    //   });
+    // }
   };
 
   render() {
     return (
       <Image
         image={this.state.image}
-        width={this.state.width * this.props.scale}
-        height={this.state.height * this.props.scale}
+        width={this.props.width}
+        height={this.props.height}
         x={this.props.x_pos}
         y={this.props.y_pos}
         draggable
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
+        rotation={this.props.rotation}
+        offsetX={this.props.width / 2}
+        offsetY={this.props.height / 2}
       />
     );
   }

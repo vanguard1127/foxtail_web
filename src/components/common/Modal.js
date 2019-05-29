@@ -32,28 +32,48 @@ class Modal extends Component {
       children,
       description,
       okSpan,
-      cancelSpan
+      cancelSpan,
+      fullWidth
     } = this.props;
 
     return (
       <section className="login-modal show" ref={this.wrapperRef}>
         <div className="container">
-          <div className="offset-md-3 col-md-6">
-            <div className="popup">
-              <span className="head">{header}</span>
-              <a className="close" onClick={() => close()} />
-              <form>
-                <div className="form-content">
-                  {children}
-                  {description && (
-                    <span className="description">{description}</span>
-                  )}
-                  {okSpan && <div className="submit">{okSpan}</div>}
-                  {cancelSpan && <div className="submit">{cancelSpan}</div>}
-                </div>
-              </form>
+          {fullWidth ? (
+            <div>
+              <div className="popup">
+                {/* <span className="head">{header}</span> */}
+                <a className="close" onClick={() => close()} />
+                <form>
+                  <div className="form-content">
+                    {children}
+                    {description && (
+                      <span className="description">{description}</span>
+                    )}
+                    {okSpan && <div className="submit">{okSpan}</div>}
+                    {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="offset-md-3 col-md-6">
+              <div className="popup">
+                <span className="head">{header}</span>
+                <a className="close" onClick={() => close()} />
+                <form>
+                  <div className="form-content">
+                    {children}
+                    {description && (
+                      <span className="description">{description}</span>
+                    )}
+                    {okSpan && <div className="submit">{okSpan}</div>}
+                    {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     );

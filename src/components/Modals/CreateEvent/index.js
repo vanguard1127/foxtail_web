@@ -382,12 +382,14 @@ class CreateEvent extends Component {
                                 this.setPhoto(el);
                               }}
                             />
-                            <div
-                              style={{ padding: "4px", textAlign: "right" }}
-                              onClick={this.handleClickOnResetImage}
-                            >
-                              Set older Image
-                            </div>
+                            {eventID && (
+                              <div
+                                style={{ padding: "4px", textAlign: "right" }}
+                                onClick={this.handleClickOnResetImage}
+                              >
+                                Set older Image
+                              </div>
+                            )}
                           </Fragment>
                         )}
                       </div>

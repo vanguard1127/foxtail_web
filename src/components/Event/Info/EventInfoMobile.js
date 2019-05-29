@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { formatedMilesToKm } from "../../../utils/distanceMetric";
+import { desireOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 
@@ -41,13 +42,14 @@ class EventInfoMobile extends Component {
       desires,
       distance,
       address,
-      participants
+      participants,
+      image
     } = event;
     return (
       <div className="event-info-content hid-desktop">
         <div className="event-image">
           <span>
-            <img src="/assets/img/events/1001@2x.png" alt="" />
+            <img src={image || "/assets/img/events/1001@2x.png"} alt="" />
           </span>
         </div>
         <ul>
@@ -82,7 +84,18 @@ class EventInfoMobile extends Component {
           </li>
           <li>
             <span className="head">{t("toexpect")}:</span>
-            <span className="title">{desires.map(desire => desire + ",")}</span>
+            <span className="title">
+              {" "}
+              {desires.reduce(function(result, desire, idx) {
+                const desireObj = desireOptions.find(el => el.value === desire);
+                if (idx !== desires.length - 1) {
+                  result.push(t(desireObj.label) + ", ");
+                } else {
+                  result.push(t(desireObj.label));
+                }
+                return result;
+              }, [])}
+            </span>
           </li>
           <li>
             <span className="head">{t("Away")}:</span>

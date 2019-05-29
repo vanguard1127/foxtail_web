@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { formatedMilesToKm } from "../../../utils/distanceMetric";
+import { desireOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 class EventInfo extends Component {
@@ -85,12 +86,17 @@ class EventInfo extends Component {
             <li>
               <span className="head">{t("toexpect")}:</span>
               <span className="title">
-                {desires.map((desire, idx) => {
+                {desires.reduce(function(result, desire, idx) {
+                  const desireObj = desireOptions.find(
+                    el => el.value === desire
+                  );
                   if (idx !== desires.length - 1) {
-                    return desire + ", ";
+                    result.push(t(desireObj.label) + ", ");
+                  } else {
+                    result.push(t(desireObj.label));
                   }
-                  return desire;
-                })}
+                  return result;
+                }, [])}
               </span>
             </li>
             <li>
