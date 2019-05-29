@@ -59,7 +59,15 @@ class Settings extends Component {
           if (loading || !data.getSettings) {
             document.title = t("common:Loading");
             return (
-              <Spinner message={t("common:Loading") + "..."} size="large" />
+              <div
+                style={{
+                  minHeight: "74vh",
+                  display: "flex",
+                  alignItems: "center"
+                }}
+              >
+                <Spinner message={t("common:Loading") + "..."} size="large" />
+              </div>
             );
           }
           document.title = t("myacct");
