@@ -72,7 +72,9 @@ class CreateEvent extends Component {
     errors: {},
     showInfo: true,
     showDesiresPopup: false,
-    removeCurrentImage: true,
+    removeCurrentImage: this.props.updateEventProps
+      ? !!this.props.updateEventProps.image
+      : false,
     ...this.props.updateEventProps
   };
   componentDidMount() {
@@ -270,8 +272,6 @@ class CreateEvent extends Component {
       filetype,
       removeCurrentImage
     } = this.state;
-
-    console.log(this.props.updateEventProps, "this.props.updateEventProps");
 
     return (
       <section>
