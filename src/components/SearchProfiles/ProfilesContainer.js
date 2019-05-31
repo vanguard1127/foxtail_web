@@ -8,6 +8,7 @@ import FeaturedProfiles from "./FeaturedProfiles/";
 import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
+import ShareModal from "../Modals/Share";
 import { toast } from "react-toastify";
 import { SEARCHPROS_LIMIT } from "../../docs/consts";
 import deleteFromCache from "../../utils/deleteFromCache";
@@ -20,6 +21,7 @@ class ProfilesContainer extends Component {
     msgModalVisible: false,
     profile: null,
     matchDlgVisible: false,
+    shareModalVisible: false,
     chatID: null,
     likedProfiles: [],
     msgdProfiles: []
@@ -36,6 +38,7 @@ class ProfilesContainer extends Component {
       this.props.isBlackMember !== nextProps.isBlackMember ||
       this.state.skip !== nextState.skip ||
       this.state.loading !== nextState.loading ||
+      this.state.shareModalVisible !== nextState.shareModalVisible ||
       this.state.msgModalVisible !== nextState.msgModalVisible ||
       this.state.profile !== nextState.profile ||
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
@@ -93,6 +96,12 @@ class ProfilesContainer extends Component {
       if (profile) this.setState({ profile, msgModalVisible });
       else this.setState({ msgModalVisible });
     }
+  };
+
+  toggleShareModal = () => {
+    console.log("DEW");
+    this.props.ErrorHandler.setBreadcrumb("Share Modal Toggled:");
+    this.setState({ shareModalVisible: !this.state.shareModalVisible });
   };
 
   handleLike = (likeProfile, profile) => {
@@ -216,7 +225,8 @@ class ProfilesContainer extends Component {
       chatID,
       loading,
       likedProfiles,
-      msgdProfiles
+      msgdProfiles,
+      shareModalVisible
     } = this.state;
     if (this.props.loading && loading) {
       return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
@@ -292,8 +302,27 @@ class ProfilesContainer extends Component {
                     </div>
                     <span className="head">{t("nomems")}</span>
                     <span className="description">{t("nomemsdes")}</span>
+                    <span className="description">- and -</span>
+                    <span
+                      className="greenButton"
+                      style={{
+                        width: "200px",
+                        margin: "auto",
+                        display: "table"
+                      }}
+                      onClick={() => this.toggleShareModal()}
+                    >
+                      Invite Your Friends
+                    </span>
                   </div>
                 </div>
+                {shareModalVisible && (
+                  <ShareModal
+                    visible={shareModalVisible}
+                    close={this.toggleShareModal}
+                    ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  />
+                )}
               </section>
             );
           }

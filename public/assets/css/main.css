@@ -7935,13 +7935,13 @@ section.not-found span.head {
 
 section.not-found span.description {
   width: 100%;
-  float: left;
   text-align: center;
   display: inline-block;
   font-size: 15px;
   color: #585858;
   letter-spacing: 0.4px;
   line-height: 25px;
+  padding-bottom: 15px;
 }
 
 .inbox-ads {
@@ -9277,4 +9277,9 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   color: blue !important;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.copyIcon {
+  content: "\e809";
+  font-size: 15px;
 }

@@ -139,7 +139,6 @@ class SettingsPage extends Component {
 
   async componentWillUnmount() {
     const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
-
     await this.updateSettings()
       .then(({ data }) => {
         if (data.updateSettings) {

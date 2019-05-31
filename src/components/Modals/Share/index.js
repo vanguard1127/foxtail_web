@@ -11,6 +11,7 @@ import {
   TumblrIcon,
   EmailIcon
 } from "react-share";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
 import { withNamespaces } from "react-i18next";
 
@@ -48,7 +49,17 @@ class Share extends Component {
         title = t("invitation") + " " + event.eventname;
         return <div>{t("shareevent")}?</div>;
       } else {
-        return null;
+        shareUrl =
+          process.env.NODE_ENV === "production"
+            ? "https://foxtailapp.com/"
+            : "http://localhost:3000/";
+        title =
+          "Check out Foxtail. It's Sexy, Safe, Fun Dating. And it's FREE:";
+        return (
+          <div>
+            Share Foxtail <small>- "thank you"</small>
+          </div>
+        );
       }
     };
     const modalBody = body(profile, event, t);
@@ -93,6 +104,16 @@ class Share extends Component {
               >
                 <TumblrIcon size={32} round />
               </TumblrShareButton>
+              <CopyToClipboard text={shareUrl}>
+                <span
+                  style={{ width: "32px", height: "32px" }}
+                  className="copyIcon"
+                >
+                  <svg viewBox="0 0 64 64" width="32" height="32">
+                    <circle cx="32" cy="32" r="31" fill="#FF8749" />
+                  </svg>
+                </span>
+              </CopyToClipboard>
               <EmailShareButton
                 url={shareUrl}
                 subject={title}
