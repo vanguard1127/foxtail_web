@@ -13,6 +13,7 @@ import Verifications from "./Verifications";
 import ManageBlkMembership from "./ManageBlkMembership/";
 import MyProfile from "./MyProfile/";
 import DesiresModal from "../Modals/Desires/Modal";
+import ShareModal from "../Modals/Share";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
 import CoupleModal from "../Modals/Couples";
 import BlackModal from "../Modals/Black";
@@ -54,6 +55,7 @@ class SettingsPage extends Component {
     showPhotoVerPopup: false,
     showBlackPopup: this.props.showBlkModal || false,
     showImgEditorPopup: false,
+    showSharePopup: false,
     showCouplePopup: this.props.showCplModal || false,
     photoSubmitType: "",
     includeMsgs: false,
@@ -113,6 +115,7 @@ class SettingsPage extends Component {
       this.state.publicPhotoList !== nextState.publicPhotoList ||
       this.state.publicPics !== nextState.publicPics ||
       this.state.showBlackPopup !== nextState.showBlackPopup ||
+      this.state.showSharePopup !== nextState.showSharePopup ||
       this.state.showCouplePopup !== nextState.showCouplePopup ||
       this.state.showDesiresPopup !== nextState.showDesiresPopup ||
       this.state.showImgEditorPopup !== nextState.showImgEditorPopup ||
@@ -406,6 +409,16 @@ class SettingsPage extends Component {
       });
     }
   };
+
+  toggleSharePopup = () => {
+    this.setErrorHandler("Toggle Share popup");
+    if (this.mounted) {
+      this.setState({
+        showSharePopup: !this.state.showSharePopup
+      });
+    }
+  };
+
   notifyClient = text => {
     toast.success(text);
   };
@@ -491,6 +504,7 @@ class SettingsPage extends Component {
       photoSubmitType,
       showImgEditorPopup,
       showCouplePopup,
+      showSharePopup,
       showBlackPopup,
       couplePartner,
       includeMsgs,
@@ -593,6 +607,7 @@ class SettingsPage extends Component {
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}
                           blackModalToggle={this.toggleBlackPopup}
+                          shareModalToggle={this.toggleSharePopup}
                           t={t}
                           flashCpl={flashCpl}
                           currentuser={currentuser}
@@ -832,6 +847,13 @@ class SettingsPage extends Component {
                   t={t}
                   notifyClient={this.notifyClient}
                   lang={lang}
+                />
+              )}
+              {showSharePopup && (
+                <ShareModal
+                  visible={showSharePopup}
+                  close={this.toggleSharePopup}
+                  ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
             </section>

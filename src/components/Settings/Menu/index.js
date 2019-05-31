@@ -18,16 +18,17 @@ class Menu extends Component {
       t,
       flashCpl,
       currentuser,
-      ErrorBoundary
+      ErrorBoundary,
+      shareModalToggle
     } = this.props;
 
     return (
       <ErrorBoundary>
         <div className="menu">
           <ul>
-            <li className="active">
+            {/* <li>
               <span>{t("common:myaccount")}</span>
-            </li>
+            </li> */}
             <li>
               <span
                 onClick={() => coupleModalToggle()}
@@ -44,6 +45,9 @@ class Menu extends Component {
               ) : (
                 <span onClick={blackModalToggle}>{t("common:becomeblk")}</span>
               )}
+            </li>
+            <li className="active">
+              <span onClick={shareModalToggle}>Share Foxtail!</span>
             </li>
           </ul>
         </div>
