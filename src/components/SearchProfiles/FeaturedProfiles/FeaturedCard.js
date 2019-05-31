@@ -30,9 +30,14 @@ class FeaturedCard extends Component {
     const photoCheck = profile.users.every(
       user => user.verifications.photo === true
     );
+
     let badge = "";
-    if (photoCheck) {
-      badge = "verified";
+    if (photoCheck && stdCheck) {
+      badge = "verified both";
+    } else if (photoCheck) {
+      badge = "verified photo";
+    } else if (stdCheck) {
+      badge = "verified std";
     }
 
     return (
