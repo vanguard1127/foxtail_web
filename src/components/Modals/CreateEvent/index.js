@@ -72,9 +72,13 @@ class CreateEvent extends Component {
     errors: {},
     showInfo: true,
     showDesiresPopup: false,
-    removeCurrentImage: true,
+    removeCurrentImage: this.props.updateEventProps
+      ? !!this.props.updateEventProps.image
+      : false,
+    setOlderImage: false,
     ...this.props.updateEventProps
   };
+
   componentDidMount() {
     this.mounted = true;
     this.props.ErrorHandler.setBreadcrumb("Create Event Modal");
@@ -237,14 +241,16 @@ class CreateEvent extends Component {
   handleClickOnRemoveCurrentImage = () => {
     this.setState({
       image: "",
-      removeCurrentImage: false
+      removeCurrentImage: false,
+      setOlderImage: true
     });
   };
 
   handleClickOnResetImage = () => {
     this.setState({
       image: this.props.updateEventProps.image,
-      removeCurrentImage: true
+      removeCurrentImage: true,
+      setOlderImage: false
     });
   };
 
@@ -268,10 +274,9 @@ class CreateEvent extends Component {
       showInfo,
       filename,
       filetype,
-      removeCurrentImage
+      removeCurrentImage,
+      setOlderImage
     } = this.state;
-
-    console.log(this.props.updateEventProps, "this.props.updateEventProps");
 
     return (
       <section>
@@ -382,7 +387,7 @@ class CreateEvent extends Component {
                                 this.setPhoto(el);
                               }}
                             />
-                            {eventID && (
+                            {eventID && setOlderImage && (
                               <div
                                 style={{ padding: "4px", textAlign: "right" }}
                                 onClick={this.handleClickOnResetImage}
