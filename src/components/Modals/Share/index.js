@@ -110,7 +110,9 @@ class Share extends Component {
                   className="copyIcon"
                 >
                   <svg viewBox="0 0 64 64" width="32" height="32">
-                    <circle cx="32" cy="32" r="31" fill="#FF8749" />
+                    <g>
+                      <circle cx="32" cy="32" r="31" fill="#FF8749" />
+                    </g>
                   </svg>
                 </span>
               </CopyToClipboard>

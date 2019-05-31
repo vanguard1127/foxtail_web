@@ -44,7 +44,7 @@ class EventCard extends Component {
                 src={
                   image !== "" && image !== undefined && image !== null
                     ? image
-                    : "assets/img/events/1001@2x.png"
+                    : "/assets/img/events/no-image.png"
                 }
                 alt=""
               />

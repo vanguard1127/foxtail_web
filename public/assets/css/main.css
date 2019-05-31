@@ -3355,6 +3355,7 @@ section.go-events .events-card-content {
   float: left;
 }
 
+section.not-found span.lblHeader,
 section.go-events .events-card-content span.head {
   width: 100%;
   display: block;
@@ -9280,6 +9281,19 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 }
 
 .copyIcon {
-  content: "\e809";
-  font-size: 15px;
+  content: "\f004";
+  font-family: "foxtail-icon";
+  color: #f50043;
+}
+
+.foxToast {
+  background: "black";
+  height: 225px;
+  color: "black";
+}
+
+.ittest {
+  content: "\f004";
+  font-family: "foxtail-icon";
+  color: #f50043;
 }

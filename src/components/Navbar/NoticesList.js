@@ -129,7 +129,7 @@ class NoticesList extends Component {
         <span onClick={() => this.props.showAlert(notif)}>
           <span className="avatar">
             <img
-              src={"../assets/img/no-picture.png"}
+              src={"../assets/img/no-profile.png"}
               alt=""
               onContextMenu={preventContextMenu}
             />

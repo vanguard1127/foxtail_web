@@ -127,7 +127,7 @@ class Tour extends PureComponent {
                           </div>
                           <div className="limit">
                             <span>&lt; 1 mil</span>
-                            <span>100 mil</span>
+                            <span>100+ mil</span>
                           </div>
                         </div>
                       </div>

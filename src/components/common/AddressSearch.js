@@ -22,7 +22,11 @@ class AddressSearch extends Component {
     const { isBlackMember, t } = this.props;
     if (isBlackMember !== undefined) {
       if (!isBlackMember && this.props.address) {
-        toast(t("onlyblkmem"));
+        if (!toast.isActive("onlyblkmem")) {
+          toast(t("onlyblkmem"), {
+            toastId: "onlyblkmem"
+          });
+        }
         return;
       }
     }

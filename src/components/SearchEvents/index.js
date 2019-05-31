@@ -273,6 +273,11 @@ class SearchEvents extends Component {
                       return (
                         <section className="not-found">
                           <div className="container">
+                            {/* <div className="col-md-12">
+                              <span className="lblHeader">
+                                {t("upcomingevent")}
+                              </span>
+                            </div> */}
                             <div className="col-md-12">
                               <div className="icon">
                                 <i className="nico event" />

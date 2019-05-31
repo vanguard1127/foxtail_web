@@ -143,7 +143,11 @@ class SettingsPage extends Component {
       .then(({ data }) => {
         if (data.updateSettings) {
           if (isCouple && isInitial && !this.state.flashCpl) {
-            toast(t("clickcpl"));
+            if (!toast.isActive("clickcpl")) {
+              toast(t("clickcpl"), {
+                toastId: "clickcpl"
+              });
+            }
           }
         }
       })
@@ -258,7 +262,11 @@ class SettingsPage extends Component {
               .then(({ data }) => {
                 if (data.updateSettings) {
                   if (isCouple && isInitial && !this.state.flashCpl) {
-                    toast(t("clickcpl"));
+                    if (!toast.isActive("clickcpl")) {
+                      toast(t("clickcpl"), {
+                        toastId: "clickcpl"
+                      });
+                    }
                     if (this.mounted) this.setState({ flashCpl: true });
                   }
                 }
@@ -302,12 +310,15 @@ class SettingsPage extends Component {
       });
 
       if (this.mounted) {
-        this.setState({
-          long,
-          lat,
-          city: citycntry.city,
-          country: citycntry.country
-        });
+        this.setState(
+          {
+            long,
+            lat,
+            city: citycntry.city,
+            country: citycntry.country
+          },
+          () => this.handleSubmit(updateSettings)
+        );
       }
     } else {
       if (this.mounted) this.setState({ city });
@@ -605,7 +616,7 @@ class SettingsPage extends Component {
                                 name,
                                 value,
                                 updateSettings,
-                                noSave: true
+                                noSave: false
                               })
                             }
                             setLocationValues={({ lat, long, city }) =>

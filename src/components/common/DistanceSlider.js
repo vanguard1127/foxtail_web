@@ -37,7 +37,7 @@ class DistanceSlider extends Component {
             {metric === "km" ? t("common:km") : t("common:mil")}
           </span>
           <span>
-            {metric === "km" ? "160 " : "100 "}
+            {metric === "km" ? "160+ " : "100+ "}
             {metric === "km" ? t("common:km") : t("common:mil")}
           </span>
         </div>

@@ -310,7 +310,7 @@ class ProfilesContainer extends Component {
                         margin: "auto",
                         display: "table"
                       }}
-                      onClick={() => this.toggleShareModal()}
+                      onClick={this.toggleShareModal}
                     >
                       Invite Your Friends
                     </span>
