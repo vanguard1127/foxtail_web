@@ -211,7 +211,7 @@ const Wrapper = withRouter(props => {
   let location = props.location;
   if (location.pathname) {
     if (location.pathname === "/") {
-      return <Landing props={props} />;
+      return <Landing parentProps={props} />;
     } else if (location.pathname === "/tos") {
       return <ToS />;
     } else if (location.pathname === "/about") {

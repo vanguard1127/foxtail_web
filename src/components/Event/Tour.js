@@ -21,7 +21,7 @@ class ProfileTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        this.props.history.push("/events");
+        window.location.replace("/events");
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -430,11 +430,10 @@ class ProfileTour extends PureComponent {
           }}
         >
           {seenTour => {
-            const closeTour = () => this.closeTour(seenTour);
             return (
               <div>
                 <CustomTour
-                  onTourClose={closeTour}
+                  onTourClose={() => this.closeTour(seenTour)}
                   tourConfig={tourConfig}
                   isTourOpen={isTourOpen}
                 />

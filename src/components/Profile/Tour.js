@@ -23,7 +23,7 @@ class ProfileTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        this.props.history.push("/members");
+        window.location.replace("/members");
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);

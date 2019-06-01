@@ -123,6 +123,7 @@ class EventPage extends Component {
     const { id } = this.props.match.params;
     const { blockModalVisible, showDelete, shareModalVisible } = this.state;
     const { session, history, t, ErrorHandler } = this.props;
+    console.log("Seen tours:", session.currentuser.tours);
     if (id === "tour" && session.currentuser.tours.indexOf("e") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Event");
       return (

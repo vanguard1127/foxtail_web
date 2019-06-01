@@ -22,41 +22,44 @@ class Landing extends PureComponent {
   }
 
   render() {
-    const { t, props } = this.props;
+    const { t, parentProps } = this.props;
+    const params = new URLSearchParams(parentProps.location.search);
+    const referral = params.get("referral");
+    const suggest = params.get("suggest");
     const { resetPhoneVisible, token, tooltip } = this.state;
-    if (props.location.state) {
-      if (props.location.state.emailVer === true) {
+    if (parentProps.location.state) {
+      if (parentProps.location.state.emailVer === true) {
         if (!toast.isActive("emailVer")) {
           toast.success(t("emailconfirmed"), {
             position: toast.POSITION.TOP_CENTER,
             toastId: "emailVer"
           });
 
-          props.history.replace({ state: {} });
+          parentProps.history.replace({ state: {} });
         }
-      } else if (props.location.state.emailVer === false) {
+      } else if (parentProps.location.state.emailVer === false) {
         if (!toast.isActive("errVer")) {
           toast.error(t("emailconffail"), {
             position: toast.POSITION.TOP_CENTER,
             toastId: "errVer"
           });
 
-          props.history.replace({ state: {} });
+          parentProps.history.replace({ state: {} });
         }
-      } else if (props.location.state.phoneReset === true) {
+      } else if (parentProps.location.state.phoneReset === true) {
         this.setState({
           resetPhoneVisible: true,
-          token: props.location.state.token
+          token: parentProps.location.state.token
         });
-        props.history.replace({ state: {} });
-      } else if (props.location.state.phoneReset === false) {
+        parentProps.history.replace({ state: {} });
+      } else if (parentProps.location.state.phoneReset === false) {
         if (!toast.isActive("errVer")) {
           toast.error(t("phonefail"), {
             position: toast.POSITION.TOP_CENTER,
             toastId: "errVer"
           });
 
-          props.history.replace({ state: {} });
+          parentProps.history.replace({ state: {} });
         }
       }
     }
@@ -76,9 +79,10 @@ class Landing extends PureComponent {
                     <ErrorHandler.ErrorBoundary>
                       <LoginButton
                         t={t}
-                        history={props.history}
+                        history={parentProps.history}
                         ErrorHandler={ErrorHandler}
                         lang={lang}
+                        suggest={suggest}
                       />
                     </ErrorHandler.ErrorBoundary>
                     <ErrorHandler.ErrorBoundary>
@@ -150,7 +154,13 @@ class Landing extends PureComponent {
                   <div className="col-lg-5 col-md-12">
                     <ErrorHandler.ErrorBoundary>
                       {" "}
-                      <Signup t={t} ErrorHandler={ErrorHandler} lang={lang} />
+                      <Signup
+                        t={t}
+                        ErrorHandler={ErrorHandler}
+                        lang={lang}
+                        referral={referral}
+                        suggest={suggest}
+                      />
                     </ErrorHandler.ErrorBoundary>
                   </div>
                 </div>
@@ -188,9 +198,7 @@ class Landing extends PureComponent {
                             <div>
                               {" "}
                               <span
-                                onClick={() =>
-                                  this.props.props.history.push("/tos")
-                                }
+                                onClick={() => parentProps.history.push("/tos")}
                               >
                                 {t("common:Terms")}
                               </span>
@@ -199,7 +207,7 @@ class Landing extends PureComponent {
                               {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push("/privacy")
+                                  parentProps.history.push("/privacy")
                                 }
                               >
                                 {t("common:Privacy")}
@@ -209,7 +217,7 @@ class Landing extends PureComponent {
                               {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push("/antispam")
+                                  parentProps.history.push("/antispam")
                                 }
                               >
                                 {t("antispam")}
@@ -219,9 +227,7 @@ class Landing extends PureComponent {
                               {" "}
                               <span
                                 onClick={() =>
-                                  this.props.props.history.push(
-                                    "/lawenforcement"
-                                  )
+                                  parentProps.history.push("/lawenforcement")
                                 }
                               >
                                 {t("lawenf")}
@@ -237,17 +243,13 @@ class Landing extends PureComponent {
                         </span>
                       </li>
                       <li>
-                        <span
-                          onClick={() => this.props.props.history.push("/faq")}
-                        >
+                        <span onClick={() => parentProps.history.push("/faq")}>
                           {t("FAQ")}
                         </span>
                       </li>
                       <li>
                         <span
-                          onClick={() =>
-                            this.props.props.history.push("/about")
-                          }
+                          onClick={() => parentProps.history.push("/about")}
                         >
                           {t("About")}
                         </span>
@@ -270,7 +272,7 @@ class Landing extends PureComponent {
             token={token}
             close={() => this.setState({ resetPhoneVisible: false })}
             ErrorHandler={ErrorHandler}
-            history={this.props.props.history}
+            history={parentProps.history}
             lang={lang}
           />
         )}

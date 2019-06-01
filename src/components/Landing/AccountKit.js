@@ -127,13 +127,6 @@ class AccountKit extends React.PureComponent {
   };
 
   render() {
-    console.log(
-      this.mounted,
-      "mounted",
-      this.state.initialized,
-      "initialized",
-      "render"
-    );
     if (!this.mounted) {
       return null;
     }

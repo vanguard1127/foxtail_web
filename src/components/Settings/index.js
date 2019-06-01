@@ -44,7 +44,7 @@ class Settings extends Component {
     let isInitial = false;
     let showBlkModal = false;
     let showCplModal = false;
-
+    console.log("CHECK FOR REFEL", state);
     //For page open responses
     if (state) {
       if (state.couple) isCouple = state.couple;

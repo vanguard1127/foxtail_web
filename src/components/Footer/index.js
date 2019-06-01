@@ -5,16 +5,26 @@ import {
   TwitterShareButton,
   EmailShareButton
 } from "react-share";
+import Modal from "../common/Modal";
 import { SEEN_TOUR } from "../../queries";
 
 import { withNamespaces } from "react-i18next";
 
 class Footer extends Component {
+  state = { showModal: false };
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.showModal !== nextState.showModal) {
+      return true;
+    }
     return false;
   }
+  toggleDialog = () => {
+    this.setState({ showModal: !this.state.showModal });
+  };
+
   render() {
     const { t } = this.props;
+    const { showModal } = this.state;
     const shareUrl = "www.fotxtailapp.com";
     const title = "Foxtail";
     return (
@@ -61,6 +71,9 @@ class Footer extends Component {
               </span>
               <div className="menu">
                 <ul>
+                  <li>
+                    <span onClick={this.toggleDialog}>Rules</span>
+                  </li>
                   {process.env.NODE_ENV === "development" && (
                     <li>
                       <Mutation
@@ -96,6 +109,14 @@ class Footer extends Component {
             </div>
           </div>
         </div>
+        {showModal && (
+          <Modal
+            header={"Quick Rules Review"}
+            close={() => this.toggleDialog()}
+            description={"lok"}
+            okSpan={<span className="color">I understand</span>}
+          />
+        )}
       </footer>
     );
   }

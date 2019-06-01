@@ -51,6 +51,7 @@ class Signup extends PureComponent {
   };
 
   handleFBReturn = ({ state, code }, fbResolve) => {
+    const { referral, suggest } = this.props;
     if (!state || !code) {
       return;
     }
@@ -80,12 +81,12 @@ class Signup extends PureComponent {
               if (isCouple) {
                 this.props.history.push({
                   pathname: "/settings",
-                  state: { couple: true, initial: true }
+                  state: { couple: true, initial: true, referral, suggest }
                 });
               } else {
                 this.props.history.push({
                   pathname: "/settings",
-                  state: { initial: true }
+                  state: { initial: true, referral, suggest }
                 });
               }
             })
