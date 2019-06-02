@@ -26,6 +26,7 @@ class EditCanvasImage extends PureComponent {
       imageWidth: 0,
       imageHeight: 0
     };
+    this.pixelRatio = 1;
   }
 
   componentDidMount() {
@@ -59,6 +60,7 @@ class EditCanvasImage extends PureComponent {
             initImageWidth > width ||
             initImageWidth > height
           ) {
+            this.pixelRatio = this.pixelRatio * 1.1;
             initImageHeight = initImageHeight / 1.1;
             initImageWidth = initImageWidth / 1.1;
           }
@@ -149,13 +151,15 @@ class EditCanvasImage extends PureComponent {
             : this.state.imageWidth * this.state.scale;
         const x = this.state.x_pos - width / 2;
         const y = this.state.y_pos - height / 2;
+        console.log(width, height);
         const dataURL = this.stageRef.getStage().toDataURL({
           mimeType: "image/jpeg",
           x,
           y,
           width,
           height,
-          quality: 1
+          quality: 1,
+          pixelRatio: this.pixelRatio
         });
         const blobData = this.dataURItoBlob(dataURL);
         const file = {
