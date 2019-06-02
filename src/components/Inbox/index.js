@@ -183,7 +183,6 @@ class InboxPage extends Component {
   };
 
   render() {
-    console.log("INBOX");
     const { t } = this.props;
     const { currentuser } = this.props.session;
     let {
@@ -206,7 +205,7 @@ class InboxPage extends Component {
     }
 
     let chatID = this.props.location.state && this.props.location.state.chatID;
-    console.log("CHATIS", chatID, this.props.location.state);
+
     const inboxPanel = (
       <Mutation
         mutation={READ_CHAT}

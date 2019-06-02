@@ -170,7 +170,7 @@ class SearchEvents extends Component {
 
   clearSearchResults = () => {
     const { cache } = this.props.client;
-    deleteFromCache({ cache, entry: "EventType" });
+    deleteFromCache({ cache, query: "searchEvents" });
   };
 
   render() {

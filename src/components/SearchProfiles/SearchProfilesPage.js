@@ -149,6 +149,7 @@ class SearchProfilesPage extends Component {
           client={client}
           isBlackMember={session.currentuser.blackMember.active}
           locationErr={locationErr}
+          refetchUser={refetch}
         />
       );
     }

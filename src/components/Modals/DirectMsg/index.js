@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Mutation } from "react-apollo";
+import { Mutation, withApollo } from "react-apollo";
 import { withNamespaces } from "react-i18next";
-import { SEND_MESSAGE } from "../../../queries";
+import { SEND_MESSAGE, GET_COUNTS } from "../../../queries";
 import Modal from "../../common/Modal";
+import deleteFromCache from "../../../utils/deleteFromCache";
 import { toast } from "react-toastify";
 
 class DirectMsg extends Component {
@@ -14,6 +15,11 @@ class DirectMsg extends Component {
   componentWillUnmount() {
     this.mounted = false;
   }
+  clearInboxResults = () => {
+    console.log("Props", this.props);
+    const { cache } = this.props.client;
+    deleteFromCache({ cache, query: "getInbox" });
+  };
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.text !== nextState.text) {
       return true;
@@ -35,7 +41,7 @@ class DirectMsg extends Component {
         .then(async ({ data }) => {
           if (data.sendMessage) {
             this.setState({ text: "" });
-
+            this.clearInboxResults();
             if (this.props.setMsgd) {
               this.props.setMsgd(this.props.profile.id);
             } else {
@@ -48,6 +54,20 @@ class DirectMsg extends Component {
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
+    });
+  };
+
+  updateCount = cache => {
+    const { getCounts } = cache.readQuery({
+      query: GET_COUNTS
+    });
+    getCounts.msgsCount = getCounts.msgsCount + 1;
+
+    cache.writeQuery({
+      query: GET_COUNTS,
+      data: {
+        getCounts
+      }
     });
   };
 
@@ -73,15 +93,17 @@ class DirectMsg extends Component {
             : t("common:sendamsg")
         }
         close={close}
-        description={t("common:sayhi")}
+        description={t("sayhi")}
         okSpan={
           text !== "" ? (
             <Mutation
               mutation={SEND_MESSAGE}
               variables={{
                 text,
-                invitedProfile: profile.id
+                invitedProfile: profile.id,
+                instant: true
               }}
+              update={this.updateCount}
             >
               {(sendMessage, { loading, error }) => {
                 return (
@@ -116,4 +138,4 @@ class DirectMsg extends Component {
     );
   }
 }
-export default withNamespaces("modals")(DirectMsg);
+export default withApollo(withNamespaces("modals")(DirectMsg));

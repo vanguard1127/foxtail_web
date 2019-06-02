@@ -55,7 +55,7 @@ class FeaturedCard extends Component {
           liked={liked}
           msgd={msgd}
           t={t}
-          // likeToChat={true}
+          featured={true}
         />
       </div>
     );

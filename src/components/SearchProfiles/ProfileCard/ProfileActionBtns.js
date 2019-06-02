@@ -18,11 +18,11 @@ class ProfileActionBtns extends Component {
       liked,
       msgd,
       t,
-      likeToChat
+      featured
     } = this.props;
 
     let actions;
-    if ((liked && likeToChat) || (msgd && likeToChat)) {
+    if (liked && featured) {
       actions = <div className="btn sent">Matched!</div>;
     } else if (!msgd) {
       actions = (

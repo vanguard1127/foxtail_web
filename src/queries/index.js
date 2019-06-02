@@ -162,8 +162,18 @@ export const DELETE_PHOTO = gql`
 `;
 
 export const SEND_MESSAGE = gql`
-  mutation($chatID: ID, $text: String!, $invitedProfile: ID) {
-    sendMessage(chatID: $chatID, text: $text, invitedProfile: $invitedProfile)
+  mutation(
+    $chatID: ID
+    $text: String!
+    $invitedProfile: ID
+    $instant: Boolean
+  ) {
+    sendMessage(
+      chatID: $chatID
+      text: $text
+      invitedProfile: $invitedProfile
+      instant: $instant
+    )
   }
 `;
 

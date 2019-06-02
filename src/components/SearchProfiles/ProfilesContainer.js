@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ScrollUpButton from "react-scroll-up-button";
-import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
+import { SEARCH_PROFILES, LIKE_PROFILE, GET_COUNTS } from "../../queries";
 import { Query, Mutation, withApollo } from "react-apollo";
 import MemberProfiles from "./MemberProfiles/";
 import { Waypoint } from "react-waypoint";
@@ -61,7 +61,8 @@ class ProfilesContainer extends Component {
 
   clearSearchResults = () => {
     const { cache } = this.props.client;
-    deleteFromCache({ cache, entry: "ProfileType" });
+    deleteFromCache({ cache, query: "searchProfiles" });
+    deleteFromCache({ cache, query: "getInbox" });
   };
 
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
@@ -99,12 +100,11 @@ class ProfilesContainer extends Component {
   };
 
   toggleShareModal = () => {
-    console.log("DEW");
     this.props.ErrorHandler.setBreadcrumb("Share Modal Toggled:");
     this.setState({ shareModalVisible: !this.state.shareModalVisible });
   };
 
-  handleLike = (likeProfile, profile) => {
+  handleLike = (likeProfile, profile, featured) => {
     this.props.ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
     let { likedProfiles } = this.state;
     if (likedProfiles.includes(profile.id)) {
@@ -113,6 +113,12 @@ class ProfilesContainer extends Component {
       );
     } else {
       likedProfiles = [...this.state.likedProfiles, profile.id];
+    }
+
+    if (featured) {
+      this.featuredSelected = true;
+    } else {
+      this.featuredSelected = false;
     }
 
     if (this.mounted) {
@@ -139,6 +145,22 @@ class ProfilesContainer extends Component {
           .catch(res => {
             ErrorHandler.catchErrors(res.graphQLErrors);
           });
+      });
+    }
+  };
+
+  updateCount = cache => {
+    if (this.featuredSelected) {
+      const { getCounts } = cache.readQuery({
+        query: GET_COUNTS
+      });
+      getCounts.msgsCount = getCounts.msgsCount + 1;
+
+      cache.writeQuery({
+        query: GET_COUNTS,
+        data: {
+          getCounts
+        }
       });
     }
   };
@@ -335,6 +357,7 @@ class ProfilesContainer extends Component {
               variables={{
                 toProfileID: profile && profile.id
               }}
+              update={this.updateCount}
             >
               {likeProfile => {
                 return (
@@ -346,7 +369,7 @@ class ProfilesContainer extends Component {
                           this.setMsgModalVisible(true, profile)
                         }
                         likeProfile={profile =>
-                          this.handleLike(likeProfile, profile)
+                          this.handleLike(likeProfile, profile, true)
                         }
                         history={history}
                         t={t}
@@ -417,7 +440,7 @@ class ProfilesContainer extends Component {
                         cancelSpan={
                           <span
                             className="border"
-                            onClick={async () =>
+                            onClick={() =>
                               this.setMatchDlgVisible(false, profile)
                             }
                           >
