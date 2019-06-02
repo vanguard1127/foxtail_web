@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import dayjs from "dayjs";
 import withLocation from "../HOCs/withLocation";
 import withAuth from "../HOCs/withAuth";
+import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";
@@ -21,7 +22,8 @@ class SearchProfilesPage extends Component {
     distanceMetric: this.props.searchCriteria.distanceMetric,
     ageRange: this.props.searchCriteria.ageRange,
     interestedIn: this.props.searchCriteria.interestedIn,
-    lang: this.props.searchCriteria.lang
+    lang: this.props.searchCriteria.lang,
+    elapse: false
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -30,6 +32,7 @@ class SearchProfilesPage extends Component {
       this.props.location.long !== nextProps.location.long ||
       this.props.location.lat !== nextProps.location.lat ||
       this.state.lat !== nextState.lat ||
+      this.state.elapse !== nextState.elapse ||
       this.state.long !== nextState.long ||
       this.state.city !== nextState.city ||
       this.state.country !== nextState.country ||
@@ -60,6 +63,22 @@ class SearchProfilesPage extends Component {
 
   componentDidMount() {
     this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
+    this.start = Date.now();
+    if (!this.props.location.lat) {
+      this.timer = setInterval(() => this.tick(), 3000);
+    }
+  }
+
+  tick() {
+    if (!this.state.elapse) {
+      this.setState({
+        elapse: true
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   setValue = ({ name, value }) => {
@@ -95,7 +114,8 @@ class SearchProfilesPage extends Component {
       distanceMetric,
       ageRange,
       lang,
-      interestedIn
+      interestedIn,
+      elapse
     } = this.state;
 
     if (session.currentuser.tours.indexOf("sp") < 0) {
@@ -107,6 +127,31 @@ class SearchProfilesPage extends Component {
       );
     }
 
+    let body = null;
+    if (!lat && !elapse) {
+      body = <Spinner message={t("common:Loading")} size="large" />;
+    } else if (!lat) {
+      body = locationErr;
+    } else {
+      body = (
+        <ProfilesContainer
+          loading={loading}
+          t={t}
+          history={history}
+          lat={lat}
+          long={long}
+          distance={distance}
+          distanceMetric={session.currentuser.distanceMetric}
+          ageRange={ageRange}
+          interestedIn={interestedIn}
+          ErrorHandler={ErrorHandler}
+          dayjs={dayjs}
+          client={client}
+          isBlackMember={session.currentuser.blackMember.active}
+          locationErr={locationErr}
+        />
+      );
+    }
     return (
       <Fragment>
         <ErrorHandler.ErrorBoundary>
@@ -129,27 +174,7 @@ class SearchProfilesPage extends Component {
             isBlackMember={session.currentuser.blackMember.active}
           />
         </ErrorHandler.ErrorBoundary>
-        <ErrorHandler.ErrorBoundary>
-          {!lat ? (
-            locationErr
-          ) : (
-            <ProfilesContainer
-              loading={loading}
-              t={t}
-              history={history}
-              lat={lat}
-              long={long}
-              distance={distance}
-              distanceMetric={session.currentuser.distanceMetric}
-              ageRange={ageRange}
-              interestedIn={interestedIn}
-              ErrorHandler={ErrorHandler}
-              dayjs={dayjs}
-              client={client}
-              isBlackMember={session.currentuser.blackMember.active}
-            />
-          )}
-        </ErrorHandler.ErrorBoundary>
+        <ErrorHandler.ErrorBoundary>{body}</ErrorHandler.ErrorBoundary>
       </Fragment>
     );
   }

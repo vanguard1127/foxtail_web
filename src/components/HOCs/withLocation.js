@@ -56,7 +56,9 @@ const withLocation = PassedComponent =>
     };
 
     setLocModalVisible = visible => {
-      this.setState({ locModalVisible: visible });
+      if (this.mounted) {
+        this.setState({ locModalVisible: visible });
+      }
     };
     setLocation = async pos => {
       var crd = pos.coords;
@@ -72,12 +74,14 @@ const withLocation = PassedComponent =>
           const { toast } = require("react-toastify");
           toast.error("Location error, please set your location in settings");
         } else {
-          this.setState({
-            long: crd.longitude,
-            lat: crd.latitude,
-            city: citycntry.city,
-            country: citycntry.country
-          });
+          if (this.mounted) {
+            this.setState({
+              long: crd.longitude,
+              lat: crd.latitude,
+              city: citycntry.city,
+              country: citycntry.country
+            });
+          }
         }
       }
       await this.props.refetch();
@@ -85,6 +89,10 @@ const withLocation = PassedComponent =>
 
     componentDidMount() {
       this.checkLocation();
+      this.mounted = true;
+    }
+    componentWillUnmount() {
+      this.mounted = false;
     }
 
     checkLocation() {
