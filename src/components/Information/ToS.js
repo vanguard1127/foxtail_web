@@ -295,7 +295,11 @@ const ToS = () => (
           group explicitly created for the purpose of posting such
           solicitations.
         </li>
-        <li> Solicit or sell any kind of sex for hire.</li>
+        <li>
+          {" "}
+          Solicit or sell any kind of sex for hire, including companionship for
+          hire.
+        </li>
         <li> Use Foxtail for any fraudulent purposes.</li>
         <li>
           {" "}

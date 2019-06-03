@@ -7296,6 +7296,7 @@ section.login-modal .popup form .form-content .input {
   display: block;
   float: left;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .phoneText {
@@ -7310,6 +7311,21 @@ section.login-modal .popup form .form-content .input input {
   border: 1px solid #e9ebec;
   border-radius: 2px;
   height: 50px;
+  padding: 2px 20px 0 20px;
+  font-family: "Roboto";
+  color: #414141;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+}
+
+section.login-modal .popup form .form-content .input textarea {
+  width: 100%;
+  display: block;
+  float: left;
+  outline: none;
+  border: 1px solid #e9ebec;
+  border-radius: 2px;
   padding: 2px 20px 0 20px;
   font-family: "Roboto";
   color: #414141;
@@ -7529,6 +7545,7 @@ section.login-modal .popup form .form-content span.description {
   line-height: 20px;
   padding-bottom: 15px;
   text-align: center;
+  padding-top: 5px;
   /* padding-top: 15px;
   border-top: 1px solid #e9ebec;
   margin-top: 12px; */

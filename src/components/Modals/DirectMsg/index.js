@@ -16,7 +16,6 @@ class DirectMsg extends Component {
     this.mounted = false;
   }
   clearInboxResults = () => {
-    console.log("Props", this.props);
     const { cache } = this.props.client;
     deleteFromCache({ cache, query: "getInbox" });
   };

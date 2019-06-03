@@ -5,6 +5,7 @@ import LanguageControl from "../common/LanguageControl/LanguageControl";
 import * as ErrorHandler from "../common/ErrorHandler";
 import CountUp from "react-countup";
 import ResetPhoneModal from "../Modals/ResetPhone";
+import ContactUsModal from "../Modals/ContactUs";
 import { ToastContainer, toast } from "react-toastify";
 //import 'react-toastify/dist/ReactToastify.css';
 // minified version is also included
@@ -15,18 +16,27 @@ const lang = getLang();
 require("dayjs/locale/" + lang);
 
 class Landing extends PureComponent {
-  state = { resetPhoneVisible: false, token: null, tooltip: false };
+  state = {
+    resetPhoneVisible: false,
+    token: null,
+    tooltip: false,
+    showContactModal: false
+  };
 
   componentDidMount() {
     document.title = "Foxtail";
   }
+
+  toggleContactModal = () => {
+    this.setState({ showContactModal: !this.state.showContactModal });
+  };
 
   render() {
     const { t, parentProps } = this.props;
     const params = new URLSearchParams(parentProps.location.search);
     const referral = params.get("referral");
     const suggest = params.get("suggest");
-    const { resetPhoneVisible, token, tooltip } = this.state;
+    const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
     if (parentProps.location.state) {
       if (parentProps.location.state.emailVer === true) {
         if (!toast.isActive("emailVer")) {
@@ -255,9 +265,9 @@ class Landing extends PureComponent {
                         </span>
                       </li>
                       <li>
-                        <a href="mailto:support@foxtailapp.com">
-                          {t("Support")}
-                        </a>
+                        <span onClick={this.toggleContactModal}>
+                          {t("contact")}
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -274,6 +284,12 @@ class Landing extends PureComponent {
             ErrorHandler={ErrorHandler}
             history={parentProps.history}
             lang={lang}
+          />
+        )}
+        {showContactModal && (
+          <ContactUsModal
+            close={() => this.toggleContactModal()}
+            guest={true}
           />
         )}
         <ToastContainer />

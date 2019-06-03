@@ -177,6 +177,12 @@ export const SEND_MESSAGE = gql`
   }
 `;
 
+export const MESSAGE_ADMIN = gql`
+  mutation($name: String, $email: String, $text: String!) {
+    messageAdmin(name: $name, email: $email, text: $text)
+  }
+`;
+
 export const POST_COMMENT = gql`
   mutation($chatID: ID!, $text: String!) {
     postComment(chatID: $chatID, text: $text)
