@@ -32,29 +32,29 @@ function initializeAccountKit(props, callback) {
 
 class AccountKit extends React.PureComponent {
   state = {
-    initialized: !!window.AccountKit
+    initialized: !!window.AccountKit,
+    mounted: false
   };
 
   componentDidMount() {
-    if (!document.getElementById("account-kit")) {
-      this.mounted = true;
-      console.log("component did mount");
-      if (!this.state.initialized) {
-        delete window.AccountKit;
-        delete window.AccountKit_OnInteractive;
-        initializeAccountKit(
-          {
-            appId: this.props.appId,
-            csrf: this.props.csrf,
-            version: this.props.version,
-            debug: this.props.debug,
-            display: this.props.display,
-            redirect: this.props.redirect,
-            language: this.props.language
-          },
-          this.onLoad
-        );
-      }
+    this.setState({
+      mounted: true
+    });
+    if (!this.state.initialized) {
+      delete window.AccountKit;
+      delete window.AccountKit_OnInteractive;
+      initializeAccountKit(
+        {
+          appId: this.props.appId,
+          csrf: this.props.csrf,
+          version: this.props.version,
+          debug: this.props.debug,
+          display: this.props.display,
+          redirect: this.props.redirect,
+          language: this.props.language
+        },
+        this.onLoad
+      );
     }
   }
 
@@ -81,8 +81,9 @@ class AccountKit extends React.PureComponent {
 
   componentWillUnmount() {
     if (document.getElementById("account-kit")) {
-      console.log("componentWillUnmount");
-      this.mounted = false;
+      this.setState({
+        mounted: false
+      });
       delete window.AccountKit_OnInteractive;
       delete window.AccountKit;
       document.head.removeChild(document.getElementById("account-kit"));
@@ -90,7 +91,7 @@ class AccountKit extends React.PureComponent {
   }
 
   onLoad = () => {
-    if (this.mounted) {
+    if (this.state.mounted) {
       this.setState({
         initialized: true
       });
@@ -98,7 +99,6 @@ class AccountKit extends React.PureComponent {
   };
 
   signIn = async e => {
-    console.log(e, this.props, "SignInaccountKit");
     e.preventDefault();
     if (this.props.disabled && !(await this.props.validateForm())) {
       return false;
@@ -127,18 +127,10 @@ class AccountKit extends React.PureComponent {
   };
 
   render() {
-    if (!this.mounted) {
+    if (!this.state.mounted) {
       return null;
     }
-    return (
-      <div
-        onClick={() => {
-          console.log("clicked on signin");
-        }}
-      >
-        {this.props.children}
-      </div>
-    );
+    return <div onClick={this.signIn}>{this.props.children}</div>;
   }
 }
 
