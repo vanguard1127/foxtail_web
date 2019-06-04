@@ -78,18 +78,23 @@ class ContactUs extends Component {
       </div>
     ) : null;
 
-  handleSubmit = (e, messageAdmin) => {
+  handleSubmit = (e, messageAdmin, skipCallback) => {
+    const { close, t, callback } = this.props;
     ErrorHandler.setBreadcrumb("contact us");
     e.preventDefault();
     this.setState({ sending: true }, () => {
       messageAdmin()
         .then(async ({ data }) => {
-          if (data.messageAdmin) {
-            toast.success(this.props.t("common:msgsent"));
-            this.setState({ text: "" });
-            this.props.close();
+          if (callback && !skipCallback) {
+            callback();
           } else {
-            toast.error(this.props.t("msgnotsent"));
+            if (data.messageAdmin) {
+              toast.success(t("common:msgsent"));
+              this.setState({ text: "" });
+              close();
+            } else {
+              toast.error(t("msgnotsent"));
+            }
           }
         })
         .catch(res => {
@@ -103,7 +108,7 @@ class ContactUs extends Component {
   };
 
   render() {
-    const { close, t, guest } = this.props;
+    const { close, t, guest, isDelete } = this.props;
     const {
       text,
       name,
@@ -113,13 +118,21 @@ class ContactUs extends Component {
       errors,
       isValid
     } = this.state;
+    let header,
+      description = "";
+    header = isDelete ? "Why are you leaving?" : "Send us a Message";
+    if (isDelete) {
+      description = "Let us know what we can do to improve";
+    } else if (guest) {
+      description = "Questions/Comments/Suggestions/etc...";
+    }
     return (
       <Modal
-        header={"Send us a Message"}
+        header={header}
         close={close}
-        description={!guest && "Questions/Comments/Suggestions/etc..."}
+        description={description}
         okSpan={
-          (captchaOK && isValid) || (!guest && text) ? (
+          (captchaOK && isValid) || (!guest && text) || isDelete ? (
             <Mutation
               mutation={MESSAGE_ADMIN}
               variables={{
@@ -130,14 +143,26 @@ class ContactUs extends Component {
             >
               {(messageAdmin, { loading, error }) => {
                 return (
-                  <button
-                    className="color"
-                    type="submit"
-                    onClick={e => this.handleSubmit(e, messageAdmin)}
-                    disabled={sending}
-                  >
-                    {t("common:Send")}
-                  </button>
+                  <>
+                    {isDelete && text && (
+                      <button
+                        className="color"
+                        type="submit"
+                        onClick={e => this.handleSubmit(e, messageAdmin, true)}
+                        disabled={sending}
+                      >
+                        Send Complaint & Keep Profile
+                      </button>
+                    )}
+                    <button
+                      className="border"
+                      type="submit"
+                      onClick={e => this.handleSubmit(e, messageAdmin, false)}
+                      disabled={sending}
+                    >
+                      {isDelete ? "Delete My Profile" : t("common:Send")}
+                    </button>
+                  </>
                 );
               }}
             </Mutation>

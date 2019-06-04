@@ -150,6 +150,7 @@ class SearchProfilesPage extends Component {
           isBlackMember={session.currentuser.blackMember.active}
           locationErr={locationErr}
           refetchUser={refetch}
+          userID={session.currentuser.userID}
         />
       );
     }

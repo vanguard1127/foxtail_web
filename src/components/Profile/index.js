@@ -292,6 +292,7 @@ class ProfilePage extends Component {
                     )}
                     {profile && shareModalVisible && (
                       <ShareModal
+                        userID={session.currentuser.userID}
                         profile={profile}
                         close={() => this.setShareModalVisible(false)}
                         ErrorBoundary={ErrorHandler.ErrorBoundary}

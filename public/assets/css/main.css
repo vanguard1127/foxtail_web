@@ -7739,7 +7739,7 @@ section.desires-popup .modal-popup .m-body .search input {
   border-radius: 2px;
 }
 
-section.settings textarea {
+section.settings textarea.bio {
   padding-top: 38px !important;
 }
 

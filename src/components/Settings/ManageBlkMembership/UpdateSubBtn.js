@@ -52,7 +52,10 @@ class UpdateSubBtn extends PureComponent {
               panelLabel="Update"
               locale={lang}
             >
-              <span className="clickverify-btn photo"> {t("cardchange")}</span>
+              <span className="clickverify-btn photo">
+                {" "}
+                {ccLast4 ? t("cardchange") : t("addchange")}
+              </span>
             </StripeCheckout>
           );
         }}

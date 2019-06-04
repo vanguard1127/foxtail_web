@@ -18,6 +18,7 @@ import SubmitPhotoModal from "../Modals/SubmitPhoto";
 import CoupleModal from "../Modals/Couples";
 import BlackModal from "../Modals/Black";
 import getCityCountry from "../../utils/getCityCountry";
+import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import Modal from "../common/Modal";
 import { toast } from "react-toastify";
 
@@ -779,6 +780,11 @@ class SettingsPage extends Component {
                             ErrorHandler={ErrorHandler}
                             lang={lang}
                           />
+                          <DeactivateAcctBtn
+                            t={t}
+                            ErrorHandler={ErrorHandler}
+                            history={history}
+                          />
                         </div>
                       </div>
                     </div>
@@ -851,6 +857,7 @@ class SettingsPage extends Component {
               )}
               {showSharePopup && (
                 <ShareModal
+                  userID={userID}
                   visible={showSharePopup}
                   close={this.toggleSharePopup}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}

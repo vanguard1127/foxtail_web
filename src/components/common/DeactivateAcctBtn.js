@@ -2,9 +2,12 @@ import React, { PureComponent } from "react";
 import { DELETE_USER } from "../../queries";
 import { Mutation } from "react-apollo";
 import { ApolloConsumer } from "react-apollo";
+import ContactUsModal from "../Modals/ContactUs";
 
 class DeactivateAcctBtn extends PureComponent {
+  state = { showContactModal: false };
   handleSubmit = ({ client, deleteUser }) => {
+    const { t, history } = this.props;
     deleteUser()
       .then(({ data }) => {
         alert(t("common:acctdeleted") + ".");
@@ -14,37 +17,52 @@ class DeactivateAcctBtn extends PureComponent {
         sessionStorage.clear();
         client.resetStore();
 
-        this.props.history.push("/");
+        history.push("/");
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
+  toggleContactModal = () => {
+    this.setState({ showContactModal: !this.state.showContactModal });
+  };
   render() {
     const { t } = this.props;
+    const { showContactModal } = this.state;
     return (
-      <Mutation mutation={DELETE_USER}>
-        {deleteUser => {
-          return (
-            <ApolloConsumer>
-              {client => {
-                return (
-                  <button
-                    onClick={() =>
-                      this.handleSubmit({
-                        client,
-                        deleteUser
-                      })
-                    }
-                  >
-                    {t("common:deactacct")}
-                  </button>
-                );
-              }}
-            </ApolloConsumer>
-          );
-        }}
-      </Mutation>
+      <div className="content">
+        <div className="row">
+          <Mutation mutation={DELETE_USER}>
+            {deleteUser => {
+              return (
+                <ApolloConsumer>
+                  {client => {
+                    return (
+                      <>
+                        <button onClick={() => this.toggleContactModal()}>
+                          {t("common:deactacct")}
+                        </button>
+                        {showContactModal && (
+                          <ContactUsModal
+                            close={() => this.toggleContactModal()}
+                            isDelete={true}
+                            callback={() =>
+                              this.handleSubmit({
+                                client,
+                                deleteUser
+                              })
+                            }
+                          />
+                        )}
+                      </>
+                    );
+                  }}
+                </ApolloConsumer>
+              );
+            }}
+          </Mutation>
+        </div>
+      </div>
     );
   }
 }
