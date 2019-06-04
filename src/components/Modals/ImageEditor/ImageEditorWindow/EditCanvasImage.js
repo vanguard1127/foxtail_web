@@ -322,11 +322,6 @@ class EditCanvasImage extends PureComponent {
                   sourceImageObject={this.props.imageObject}
                   rotation={this.state.rotation}
                   dragComplete={(x_pos, y_pos) => {
-                    konvaImageList.forEach(element => {
-                      element.x = x_pos + (x_pos - init_x) / 2;
-                      element.y = y_pos + (y_pos - init_y) / 2;
-                      console.log("AYY", element);
-                    });
                     this.setState({ x_pos, y_pos });
                   }}
                 />
@@ -343,9 +338,10 @@ class EditCanvasImage extends PureComponent {
                   //   "displace",
                   //   y_pos - init_y
                   // );
-                  // var x = img.x + (x_pos - init_x) / 2;
-                  // var y = img.y + (y_pos - init_y) / 2;
-                  // console.log("new x:", x, "y:", y);
+                  var x = (img.x + x_pos) / 2;
+                  var y = (img.y + y_pos) / 2;
+
+                  console.log("new x:", x, "y:", y);
                   return (
                     <KonvaImage
                       src={img.src}
@@ -354,8 +350,8 @@ class EditCanvasImage extends PureComponent {
                       width={100 * this.state.scale}
                       height={100 * this.state.scale}
                       name={img.name}
-                      x={x_pos}
-                      y={y_pos}
+                      x={x}
+                      y={y}
                       rotation={0}
                     />
                   );
