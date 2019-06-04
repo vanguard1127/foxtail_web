@@ -18,7 +18,7 @@ class Settings extends Component {
   }
   componentDidMount() {
     const { session, t } = this.props;
-
+    console.log("Is profiel ok", session.currentuser.isProfileOK);
     if (!session.currentuser.isProfileOK) {
       if (!toast.isActive("nopro")) {
         toast.info(t("plscomplete"), {
@@ -44,7 +44,7 @@ class Settings extends Component {
     let isInitial = false;
     let showBlkModal = false;
     let showCplModal = false;
-    console.log("CHECK FOR REFEL", state);
+
     //For page open responses
     if (state) {
       if (state.couple) isCouple = state.couple;

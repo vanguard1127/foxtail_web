@@ -21,15 +21,15 @@ class Share extends Component {
   }
 
   render() {
-    const { profile, event, close, t, ErrorBoundary } = this.props;
+    const { userID, profile, event, close, t, ErrorBoundary } = this.props;
     let shareUrl = "";
     let title = "";
     const body = (profile, event, t) => {
       if (profile) {
         shareUrl =
           process.env.NODE_ENV === "production"
-            ? "https://foxtailapp.com/member/" + profile.id
-            : "http://localhost:3000/member/" + profile.id;
+            ? "https://foxtailapp.com?refer=" + userID + "&mem=" + profile.id
+            : "http://localhost:3000?refer=" + userID + "&mem=" + profile.id;
         title = t("intrstmsg") + ":";
         return (
           <div>
@@ -44,15 +44,15 @@ class Share extends Component {
       } else if (event) {
         shareUrl =
           process.env.NODE_ENV === "production"
-            ? "https://foxtailapp.com/event/" + event.id
-            : "http://localhost:3000/event/" + event.id;
+            ? "https://foxtailapp.com?refer=" + userID + "&eve=" + event.id
+            : "http://localhost:3000?refer=" + userID + "&eve=" + event.id;
         title = t("invitation") + " " + event.eventname;
         return <div>{t("shareevent")}?</div>;
       } else {
         shareUrl =
           process.env.NODE_ENV === "production"
-            ? "https://foxtailapp.com/"
-            : "http://localhost:3000/";
+            ? "https://foxtailapp.com?refer=" + userID
+            : "http://localhost:3000?refer=" + userID;
         title =
           "Check out Foxtail. It's Sexy, Safe, Fun Dating. And it's FREE:";
         return (

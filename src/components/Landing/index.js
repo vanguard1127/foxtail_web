@@ -34,9 +34,12 @@ class Landing extends PureComponent {
   render() {
     const { t, parentProps } = this.props;
     const params = new URLSearchParams(parentProps.location.search);
-    const referral = params.get("referral");
-    const suggest = params.get("suggest");
+    const refer = params.get("refer");
+    const aff = params.get("aff");
+    const mem = params.get("mem");
+    const eve = params.get("eve");
     const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
+
     if (parentProps.location.state) {
       if (parentProps.location.state.emailVer === true) {
         if (!toast.isActive("emailVer")) {
@@ -92,7 +95,6 @@ class Landing extends PureComponent {
                         history={parentProps.history}
                         ErrorHandler={ErrorHandler}
                         lang={lang}
-                        suggest={suggest}
                       />
                     </ErrorHandler.ErrorBoundary>
                     <ErrorHandler.ErrorBoundary>
@@ -168,8 +170,11 @@ class Landing extends PureComponent {
                         t={t}
                         ErrorHandler={ErrorHandler}
                         lang={lang}
-                        referral={referral}
-                        suggest={suggest}
+                        refer={refer}
+                        aff={aff}
+                        mem={mem}
+                        eve={eve}
+                        toast={toast}
                       />
                     </ErrorHandler.ErrorBoundary>
                   </div>
@@ -292,7 +297,7 @@ class Landing extends PureComponent {
             guest={true}
           />
         )}
-        <ToastContainer />
+        <ToastContainer position="top-center" />
       </>
     );
   }

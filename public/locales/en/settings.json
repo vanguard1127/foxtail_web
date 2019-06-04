@@ -44,6 +44,7 @@
   "subcancel": "Cancel Subscription",
   "ccupdate": "Credit Card Updated Successfully",
   "cardchange": "Change Credit Card",
+  "addchange": "Add Credit Card",
   "changenum": "Phone number has been changed",
   "changephone": "Change Phone",
   "invemail": "Invalid email address",

@@ -322,6 +322,7 @@ class SearchEvents extends Component {
 
         {event && (
           <ShareModal
+            userID={session.currentuser.userID}
             event={event}
             visible={shareModalVisible}
             close={() => this.setShareModalVisible(false)}

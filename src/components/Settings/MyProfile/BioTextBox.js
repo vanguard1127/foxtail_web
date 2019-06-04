@@ -6,6 +6,7 @@ const BioTextBox = ({ t, setValue, ErrorBoundary, about }) => {
       <label>{t("probio")}:</label>
       <ErrorBoundary>
         <textarea
+          className="bio"
           onChange={e =>
             setValue({
               name: "about",

@@ -21,16 +21,21 @@ class Signup extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    this.props.ErrorHandler.setBreadcrumb("Signup loaded");
+    const { mem, eve, history, session, ErrorHandler, toast } = this.props;
+    ErrorHandler.setBreadcrumb("Signup loaded");
 
     if (localStorage.getItem("token") !== null) {
-      if (
-        this.props.session &&
-        this.props.session.currentuser &&
-        this.props.session.currentuser.active
-      ) {
-        this.props.history.push("/members");
+      if (session && session.currentuser && session.currentuser.active) {
+        if (mem) {
+          history.push("/member/" + mem);
+        } else if (eve) {
+          history.push("/event/" + eve);
+        } else {
+          history.push("/members");
+        }
       }
+    } else if (mem || eve) {
+      toast.info("Please login before using that link.");
     }
   }
 
@@ -51,7 +56,6 @@ class Signup extends PureComponent {
   };
 
   handleFBReturn = ({ state, code }, fbResolve) => {
-    const { referral, suggest } = this.props;
     if (!state || !code) {
       return;
     }
@@ -81,12 +85,12 @@ class Signup extends PureComponent {
               if (isCouple) {
                 this.props.history.push({
                   pathname: "/settings",
-                  state: { couple: true, initial: true, referral, suggest }
+                  state: { couple: true, initial: true }
                 });
               } else {
                 this.props.history.push({
                   pathname: "/settings",
-                  state: { initial: true, referral, suggest }
+                  state: { initial: true }
                 });
               }
             })
@@ -117,7 +121,7 @@ class Signup extends PureComponent {
             "refreshToken",
             data.login.find(token => token.access === "refresh").token
           );
-          // await this.props.refetch();
+
           this.props.history.push("/members");
         })
         .catch(res => {
@@ -131,7 +135,8 @@ class Signup extends PureComponent {
     // }
   };
   render() {
-    const { t, setBreadcrumb, ErrorHandler, lang } = this.props;
+    const { t, setBreadcrumb, ErrorHandler, lang, refer, aff } = this.props;
+
     let {
       csrf,
       code,
@@ -157,7 +162,9 @@ class Signup extends PureComponent {
           gender,
           isCouple,
           lang,
-          isCreate: true
+          isCreate: true,
+          refer,
+          aff
         }}
       >
         {fbResolve => {

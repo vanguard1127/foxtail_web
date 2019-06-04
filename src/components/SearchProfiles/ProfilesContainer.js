@@ -237,7 +237,8 @@ class ProfilesContainer extends Component {
       ageRange,
       interestedIn,
       dayjs,
-      distanceMetric
+      distanceMetric,
+      userID
     } = this.props;
 
     const {
@@ -340,6 +341,7 @@ class ProfilesContainer extends Component {
                 </div>
                 {shareModalVisible && (
                   <ShareModal
+                    userID={userID}
                     visible={shareModalVisible}
                     close={this.toggleShareModal}
                     ErrorBoundary={ErrorHandler.ErrorBoundary}

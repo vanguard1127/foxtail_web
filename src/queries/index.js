@@ -408,6 +408,8 @@ export const FB_RESOLVE = gql`
     $dob: String
     $gender: String
     $interestedIn: [String]
+    $refer: String
+    $aff: String
   ) {
     fbResolve(
       csrf: $csrf
@@ -419,6 +421,8 @@ export const FB_RESOLVE = gql`
       dob: $dob
       gender: $gender
       interestedIn: $interestedIn
+      refer: $refer
+      aff: $aff
     ) {
       token
       access
