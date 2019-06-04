@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 import { Layer, Stage } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
@@ -6,6 +7,7 @@ import KonvaImage from "./KonvaImage";
 import RotateIcon from "@material-ui/icons/RotateRight";
 import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
+import Konva from "konva";
 
 class EditCanvasImage extends PureComponent {
   constructor(props) {
@@ -22,9 +24,7 @@ class EditCanvasImage extends PureComponent {
       uploading: false,
       scale: 1,
       imageWidth: 0,
-      imageHeight: 0,
-      init_x: 0,
-      init_y: 0
+      imageHeight: 0
     };
     this.pixelRatio = 1;
   }
@@ -57,12 +57,10 @@ class EditCanvasImage extends PureComponent {
   }
 
   checkSize = () => {
-    const { imageHeight, imageWidth, x_pos, y_pos, scale } = this.state;
     const width = this.container.offsetWidth;
     const height = width / 3;
-
     this.setState({ width, height });
-    if (imageWidth == 0 || imageHeight == 0) {
+    if (this.state.imageWidth == 0 || this.state.imageHeight == 0) {
       const reader = new FileReader();
       reader.readAsDataURL(this.props.imageObject);
       reader.onload = e => {
@@ -84,54 +82,58 @@ class EditCanvasImage extends PureComponent {
           }
           const x_pos = (width - initImageWidth) / 2;
           const y_pos = (height - initImageHeight) / 2;
-
           this.setState({
             imageWidth: initImageWidth,
             imageHeight: initImageHeight,
             x_pos: x_pos + initImageWidth / 2,
-            y_pos: y_pos + initImageHeight / 2,
-            init_x: x_pos + initImageWidth / 2,
-            init_y: y_pos + initImageHeight / 2
+            y_pos: y_pos + initImageHeight / 2
           });
         }.bind(this);
       };
     }
-
-    if (x_pos == 0 || y_pos == 0) {
+    if (this.state.x_pos == 0 || this.state.y_pos == 0) {
       return;
     }
 
-    //TODO: figure out resize
-    // var vx_pos = x_pos;
-
-    // var vimageWidth = imageWidth;
-    // if (vimageWidth * scale < width) {
-    //   if (x_pos - vimageWidth / 2 + vimageWidth * scale > width) {
-    //     vx_pos = width - vimageWidth * scale + vimageWidth / 2;
-    //   }
-    // } else {
-    //   vx_pos = width / 2;
-    //   vimageWidth = width / scale;
-    // }
-    // var vy_pos = y_pos;
-    // var vimageHeight = imageHeight;
-    // if (imageHeight * scale < height) {
-    //   if (y_pos - vimageHeight / 2 + imageHeight * scale > height) {
-    //     vy_pos = height - imageHeight * scale + vimageHeight / 2;
-    //   }
-    // } else {
-    //   vy_pos = height / 2;
-    //   vimageHeight = height / scale;
-    // }
-
-    // this.setState({
-    //   width: width,
-    //   height: height,
-    //   x_pos: vx_pos,
-    //   y_pos: vy_pos,
-    //   imageWidth: vimageWidth,
-    //   imageHeight: vimageHeight
-    // });
+    var x_pos = this.state.x_pos;
+    var imageWidth = this.state.imageWidth;
+    if (imageWidth * this.state.scale < width) {
+      if (
+        this.state.x_pos - imageWidth / 2 + imageWidth * this.state.scale >
+        width
+      ) {
+        x_pos = width - imageWidth * this.state.scale + imageWidth / 2;
+      } else {
+      }
+    } else {
+      x_pos = width / 2;
+      imageWidth = width / this.state.scale;
+    }
+    var y_pos = this.state.y_pos;
+    var imageHeight = this.state.imageHeight;
+    if (this.state.imageHeight * this.state.scale < height) {
+      if (
+        this.state.y_pos -
+          imageHeight / 2 +
+          this.state.imageHeight * this.state.scale >
+        height
+      ) {
+        y_pos =
+          height - this.state.imageHeight * this.state.scale + imageHeight / 2;
+      } else {
+      }
+    } else {
+      y_pos = height / 2;
+      imageHeight = height / this.state.scale;
+    }
+    this.setState({
+      width: width,
+      height: height,
+      x_pos: x_pos,
+      y_pos: y_pos,
+      imageWidth: imageWidth,
+      imageHeight: imageHeight
+    });
   };
 
   handleStageClick = e => {
@@ -229,7 +231,7 @@ class EditCanvasImage extends PureComponent {
 
     let nwidth = this.state.width;
     let nheight = this.state.height;
-    console.log("MOVE");
+
     if (nwidth === width && nheight === height) {
       x = (x + width) / 2 - 50;
       y = (y + height) / 2 - 50;
@@ -285,8 +287,6 @@ class EditCanvasImage extends PureComponent {
       height,
       x_pos,
       y_pos,
-      init_x,
-      init_y,
       hideTransformer,
       selectedShapeName,
       uploading
@@ -305,7 +305,6 @@ class EditCanvasImage extends PureComponent {
         />
       </div>
     );
-    console.log("Source X:", x_pos, " Y:", y_pos);
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div
@@ -338,40 +337,34 @@ class EditCanvasImage extends PureComponent {
                   sourceImageObject={this.props.imageObject}
                   rotation={this.state.rotation}
                   dragComplete={(x_pos, y_pos) => {
-                    this.setState({ x_pos, y_pos });
+                    this.setState({ x_pos: x_pos, y_pos: y_pos });
                   }}
                 />
               )}
               {konvaImageList.length > 0 &&
-                konvaImageList.map((img, idx) => {
-                  // console.log(
-                  //   "Image X:",
-                  //   img.x,
-                  //   "displace",
-                  //   x_pos - init_x,
-                  //   "Y:",
-                  //   img.y,
-                  //   "displace",
-                  //   y_pos - init_y
-                  // );
-                  var x = (img.x + x_pos) / 2;
-                  var y = (img.y + y_pos) / 2;
-
-                  console.log("new x:", x, "y:", y);
-                  return (
-                    <KonvaImage
-                      src={img.src}
-                      key={img.id + idx}
-                      onDragStart={this.handleDragStart}
-                      width={100 * this.state.scale}
-                      height={100 * this.state.scale}
-                      name={img.name}
-                      x={x}
-                      y={y}
-                      rotation={0}
-                    />
-                  );
-                })}
+                konvaImageList.map((img, idx) => (
+                  <KonvaImage
+                    src={img.src}
+                    key={img.id + idx}
+                    onDragStart={this.handleDragStart}
+                    width={100}
+                    height={100}
+                    name={img.name}
+                    x={img.x}
+                    y={img.y}
+                    rotation={0}
+                    dragComplete={img => {
+                      this.setState({
+                        konvaImageList: this.state.konvaImageList.map(img => {
+                          return Object.assign(img, {
+                            x: img.x + x_pos,
+                            y: img.y + y_pos
+                          });
+                        })
+                      });
+                    }}
+                  />
+                ))}
               {hideTransformer === false && (
                 <TransformerHandler selectedShapeName={selectedShapeName} />
               )}

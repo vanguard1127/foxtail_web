@@ -62,7 +62,7 @@ class KonvaImage extends PureComponent {
       x: x_pos,
       y: y_pos
     });
-    // this.props.dragComplete(x_pos, y_pos);
+    this.props.dragComplete(x_pos, y_pos);
 
     // if (left_pos > 0) {
     //   e.target.to({

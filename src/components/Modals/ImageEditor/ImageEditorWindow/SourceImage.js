@@ -24,7 +24,6 @@ class SourceImage extends PureComponent {
   };
 
   handleDragStart = e => {
-    console.log("ec", e);
     this.setState({
       isDragging: true
     });
