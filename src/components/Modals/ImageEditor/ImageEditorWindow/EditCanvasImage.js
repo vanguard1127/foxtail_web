@@ -40,6 +40,22 @@ class EditCanvasImage extends PureComponent {
     window.removeEventListener("resize", this.checkSize);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.x_pos !== this.state.x_pos ||
+      prevState.y_pos !== this.state.y_pos
+    ) {
+      const x_pos = this.state.x_pos - prevState.x_pos;
+      const y_pos = this.state.y_pos - prevState.y_pos;
+
+      this.setState({
+        konvaImageList: this.state.konvaImageList.map(img => {
+          return Object.assign(img, { x: img.x + x_pos, y: img.y + y_pos });
+        })
+      });
+    }
+  }
+
   checkSize = () => {
     const { imageHeight, imageWidth, x_pos, y_pos, scale } = this.state;
     const width = this.container.offsetWidth;
