@@ -19,7 +19,8 @@ class Logout extends Component {
 
     //Causes console error but currently best option.
     client.resetStore();
-    history.push("/");
+
+    window.location.replace("/");
   };
 
   render() {
