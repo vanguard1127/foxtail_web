@@ -32,8 +32,8 @@ class KonvaImage extends PureComponent {
     this.setState({
       isDragging: false
     });
-    var x_pos = e.target.x();
-    var y_pos = e.target.y();
+    let x_pos = e.target.x();
+    let y_pos = e.target.y();
     const canvasWidth = this.props.canvasWidth;
     const canvasHeight = this.props.canvasHeight;
     const rotation = this.props.rotation % 360;
@@ -43,26 +43,32 @@ class KonvaImage extends PureComponent {
       rotation == 0 || rotation == 180 ? this.props.height : this.props.width;
     const offsetX = width / 2;
     const offsetY = height / 2;
-    if (x_pos - offsetX < 0) {
-      x_pos = offsetX;
-    } else {
-      if (x_pos - offsetX + width > canvasWidth) {
-        x_pos = canvasWidth - width + offsetX;
-      }
-    }
-    if (y_pos - offsetY < 0) {
-      y_pos = offsetY;
-    } else {
-      if (y_pos - offsetY + height > canvasHeight) {
-        y_pos = canvasHeight - height + offsetY;
-      }
-    }
-    e.target.to({
-      duration: 0,
-      x: x_pos,
-      y: y_pos
-    });
-    this.props.dragComplete(x_pos, y_pos);
+
+    // if (x_pos - offsetX < 0) {
+    //   x_pos = offsetX;
+    // } else {
+    //   if (x_pos - offsetX + width > canvasWidth) {
+    //     x_pos = canvasWidth - width + offsetX;
+    //   }
+    // }
+    // if (y_pos - offsetY < 0) {
+    //   y_pos = offsetY;
+    // } else {
+    //   if (y_pos - offsetY + height > canvasHeight) {
+    //     y_pos = canvasHeight - height + offsetY;
+    //   }
+    // }
+
+    x_pos = x_pos;
+    y_pos = y_pos;
+
+    // e.target.to({
+    //   duration: 0,
+    //   x: x_pos,
+    //   y: y_pos
+    // });
+
+    this.props.dragComplete(this.props.name, x_pos, y_pos);
 
     // if (left_pos > 0) {
     //   e.target.to({
