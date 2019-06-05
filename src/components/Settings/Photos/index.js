@@ -10,6 +10,7 @@ class Photos extends Component {
   }
   render() {
     const {
+      isBlackMember,
       isPrivate,
       showEditor,
       photos,
@@ -36,6 +37,7 @@ class Photos extends Component {
                 photos={photos}
                 isPrivate={isPrivate}
                 deleteImg={deleteImg}
+                isBlackMember={isBlackMember}
                 t={t}
               />
             </div>

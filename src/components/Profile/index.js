@@ -191,16 +191,13 @@ class ProfilePage extends Component {
                 const profile = data.profile;
                 document.title = profile.profileName;
 
-                const { users, photos, desires, about } = profile;
-
-                const publicPics = photos.filter(
-                  photoObject => !photoObject.private && photoObject.url !== ""
-                );
-                const privatePics = photos
-                  .slice(7, 14)
-                  .filter(
-                    photoObject => photoObject.private && photoObject.url !== ""
-                  );
+                const {
+                  users,
+                  publicPhotos,
+                  privatePhotos,
+                  desires,
+                  about
+                } = profile;
 
                 return (
                   <section className="profile">
@@ -260,18 +257,18 @@ class ProfilePage extends Component {
                               t={t}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                             />
-                            {publicPics.length > 0 && (
+                            {publicPhotos.length > 0 && (
                               <PhotoSlider
                                 isPublic={true}
-                                photos={publicPics}
+                                photos={publicPhotos}
                                 t={t}
                                 ErrorHandler={ErrorHandler}
                               />
                             )}
-                            {privatePics.length > 0 && (
+                            {privatePhotos.length > 0 && (
                               <PhotoSlider
                                 isPublic={false}
-                                photos={privatePics}
+                                photos={privatePhotos}
                                 t={t}
                                 ErrorHandler={ErrorHandler}
                               />

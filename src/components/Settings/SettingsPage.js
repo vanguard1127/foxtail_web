@@ -39,12 +39,8 @@ class SettingsPage extends Component {
     vibrateNotify: false,
     couplePartner: undefined,
     users: undefined,
-    publicPics: this.props.settings.photos.filter(
-      x => !x.private && x.url !== ""
-    ),
-    privatePics: this.props.settings.photos.filter(
-      x => x.private && x.url !== ""
-    ),
+    publicPhotos: this.props.settings.publicPhotos,
+    privatePhotos: this.props.settings.privatePhotos,
     about: undefined,
     desires: [],
     username: undefined,
@@ -108,13 +104,12 @@ class SettingsPage extends Component {
       this.state.okAction !== nextState.okAction ||
       this.state.phone !== nextState.phone ||
       this.state.photoSubmitType !== nextState.photoSubmitType ||
-      this.state.photos !== nextState.photos ||
-      this.state.privatePhotoList !== nextState.privatePhotoList ||
-      this.state.privatePics !== nextState.privatePics ||
+      this.state.publicPhotos !== nextState.publicPhotos ||
+      this.state.privatePhotos !== nextState.privatePhotos ||
       this.state.profilePic !== nextState.profilePic ||
       this.state.profilePicUrl !== nextState.profilePicUrl ||
       this.state.publicPhotoList !== nextState.publicPhotoList ||
-      this.state.publicPics !== nextState.publicPics ||
+      this.state.privatePhotoList !== nextState.privatePhotoList ||
       this.state.showBlackPopup !== nextState.showBlackPopup ||
       this.state.showSharePopup !== nextState.showSharePopup ||
       this.state.showCouplePopup !== nextState.showCouplePopup ||
@@ -138,6 +133,7 @@ class SettingsPage extends Component {
   componentDidMount() {
     const { history } = this.props;
     history.replace({ state: {} });
+
     this.mounted = true;
   }
 
@@ -177,16 +173,16 @@ class SettingsPage extends Component {
     const { t } = this.props;
     this.setErrorHandler("Photo list updated");
     if (isPrivate) {
-      let { privatePics } = this.state;
+      let { privatePhotos } = this.state;
 
       if (isDeleted) {
-        privatePics = privatePics.filter(x => x.id !== file.id);
+        privatePhotos = privatePhotos.filter(x => x.id !== file.id);
 
         this.setState({ showModal: false });
         toast.success(t("photodel"));
       } else {
-        privatePics = [
-          ...privatePics,
+        privatePhotos = [
+          ...privatePhotos,
           {
             uid: Date.now(),
             key,
@@ -195,45 +191,46 @@ class SettingsPage extends Component {
         ];
       }
       if (this.mounted) {
-        this.setState({
-          privatePics,
-          publicPhotoList: undefined,
-          privatePhotoList: privatePics.map(file => JSON.stringify(file))
-        });
+        this.setState(
+          {
+            privatePhotos,
+            publicPhotoList: undefined,
+            privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
+          },
+          () => this.handleSubmit(updateSettings, true)
+        );
       }
     } else {
-      let { publicPics, profilePic } = this.state;
+      let { publicPhotos } = this.state;
 
       if (isDeleted) {
-        if (profilePic === file.key) {
-          if (this.mounted) {
-            this.setState({ profilePic: "", profilePicUrl: "" });
-          }
-        }
-        publicPics = publicPics.filter(x => x.id !== file.id);
+        publicPhotos = publicPhotos.filter(x => x.id !== file.id);
         this.setState({ showModal: false });
         toast.success(t("photodel"));
       } else {
-        publicPics = [
-          ...publicPics,
+        publicPhotos = [
+          ...publicPhotos,
           {
             uid: Date.now(),
             key,
             url
           }
         ];
-        if (profilePic === "") {
-          if (this.mounted) {
-            this.setState({ profilePic: key, profilePicUrl: url });
-          }
-        }
+        // if (profilePic === "") {
+        //   if (this.mounted) {
+        //     this.setState({ profilePic: key, profilePicUrl: url });
+        //   }
+        // }
       }
       if (this.mounted) {
-        this.setState({
-          publicPics,
-          privatePhotoList: undefined,
-          publicPhotoList: publicPics.map(file => JSON.stringify(file))
-        });
+        this.setState(
+          {
+            publicPhotos,
+            privatePhotoList: undefined,
+            publicPhotoList: publicPhotos.map(file => JSON.stringify(file))
+          },
+          () => this.handleSubmit(updateSettings, true)
+        );
       }
     }
   };
@@ -333,9 +330,14 @@ class SettingsPage extends Component {
     const { desires } = this.state;
     if (this.mounted) {
       if (checked) {
-        this.setState({ desires: [...desires, value] });
+        this.setState({ desires: [...desires, value] }, () =>
+          this.handleSubmit(updateSettings)
+        );
       } else {
-        this.setState({ desires: desires.filter(desire => desire !== value) });
+        this.setState(
+          { desires: desires.filter(desire => desire !== value) },
+          () => this.handleSubmit(updateSettings)
+        );
       }
     }
   };
@@ -359,7 +361,9 @@ class SettingsPage extends Component {
 
   setProfilePic = ({ key, url, updateSettings }) => {
     if (this.mounted) {
-      this.setState({ profilePic: key, profilePicUrl: url });
+      this.setState({ profilePic: key, profilePicUrl: url }, () => {
+        this.handleSubmit(updateSettings);
+      });
     }
   };
 
@@ -496,8 +500,8 @@ class SettingsPage extends Component {
       users,
       publicPhotoList,
       privatePhotoList,
-      publicPics,
-      privatePics,
+      publicPhotos,
+      privatePhotos,
       about,
       desires,
       showPhotoVerPopup,
@@ -544,7 +548,7 @@ class SettingsPage extends Component {
     }
 
     let profilePicErr = "";
-    if (publicPics.length === 0) {
+    if (publicPhotos.length === 0) {
       profilePicErr = t("onepho");
     } else if (profilePic === "") {
       profilePicErr = t("selpho");
@@ -631,8 +635,7 @@ class SettingsPage extends Component {
                               this.setValue({
                                 name,
                                 value,
-                                updateSettings,
-                                noSave: false
+                                updateSettings
                               })
                             }
                             setLocationValues={({ lat, long, city }) =>
@@ -650,7 +653,7 @@ class SettingsPage extends Component {
                           <Photos
                             isPrivate={false}
                             showEditor={this.toggleImgEditorPopup}
-                            photos={publicPics}
+                            photos={publicPhotos}
                             setProfilePic={({ key, url }) =>
                               this.setProfilePic({
                                 key,
@@ -658,6 +661,7 @@ class SettingsPage extends Component {
                                 updateSettings
                               })
                             }
+                            isBlackMember={currentuser.blackMember.active}
                             deleteImg={({ file, key }) =>
                               this.setDialogContent({
                                 title: t("delpho"),
@@ -684,7 +688,8 @@ class SettingsPage extends Component {
                           <Photos
                             isPrivate={true}
                             showEditor={this.toggleImgEditorPopup}
-                            photos={privatePics}
+                            photos={privatePhotos}
+                            isBlackMember={currentuser.blackMember.active}
                             deleteImg={({ file, key }) =>
                               this.setDialogContent({
                                 title: t("delpho"),
@@ -726,8 +731,7 @@ class SettingsPage extends Component {
                               this.setValue({
                                 name,
                                 value,
-                                updateSettings,
-                                noSave: true
+                                updateSettings
                               })
                             }
                             visible={visible}
@@ -838,7 +842,7 @@ class SettingsPage extends Component {
                 <CoupleModal
                   close={this.toggleCouplesPopup}
                   setValue={({ name, value }) =>
-                    this.setValue({ name, value, updateSettings, noSave: true })
+                    this.setValue({ name, value, updateSettings })
                   }
                   username={couplePartner}
                   includeMsgs={includeMsgs}
