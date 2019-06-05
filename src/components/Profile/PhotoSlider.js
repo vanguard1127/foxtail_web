@@ -63,6 +63,7 @@ class PhotoSlider extends Component {
 
   render() {
     const { isPublic, photos, t, ErrorHandler } = this.props;
+
     return (
       <ErrorHandler.ErrorBoundary>
         <div
@@ -118,7 +119,7 @@ class PhotoSlider extends Component {
                       <img src={photo.url} alt="" />
                     </a>
                   ) : (
-                    <span onClick={this.warnPrivate}>
+                    <span onClick={this.warnPrivate.bind(this)}>
                       <img
                         className="blur"
                         src={"../assets/img/no-picture.png"}

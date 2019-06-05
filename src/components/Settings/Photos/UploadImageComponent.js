@@ -106,7 +106,7 @@ class UploadComponent extends PureComponent {
   };
 
   render() {
-    const { classes, photos, t, setProfilePic } = this.props;
+    const { classes, photos, t, setProfilePic, isBlackMember } = this.props;
     const { selectedImg, previewVisible } = this.state;
     return (
       <div className="header-container">
@@ -163,7 +163,7 @@ class UploadComponent extends PureComponent {
             </div>
           );
         })}
-        {photos.length >= 7 ? null : (
+        {photos.length >= 4 && !isBlackMember ? null : (
           <div className="box">
             <Upload
               onSuccess={this.imageUploaded}
@@ -178,7 +178,6 @@ class UploadComponent extends PureComponent {
             </Upload>
           </div>
         )}
-
         <Dialog
           onClose={this.handleClose}
           aria-labelledby="Image"

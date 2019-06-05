@@ -127,42 +127,67 @@ class SearchCriteria extends PureComponent {
     } = this.props;
     if (loading || !city) {
       return (
-        <section className="meet-filter">
-          <div className="container">
-            <div className="col-md-12">
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="item">
-                    <AddressSearch
-                      style={{ width: 150 }}
-                      setLocationValues={null}
-                      address={""}
-                      type={"(cities)"}
-                      placeholder={t("common:setloc") + "..."}
-                      isBlackMember={isBlackMember}
-                    />
+        <Mutation
+          mutation={UPDATE_SETTINGS}
+          variables={{
+            distance: this.state.distance,
+            distanceMetric: this.state.distanceMetric,
+            ageRange: this.state.ageRange,
+            interestedIn: this.state.interestedIn,
+            city: this.state.city,
+            country: this.state.country,
+            lat: this.state.lat,
+            long: this.state.long
+          }}
+        >
+          {updateSettings => {
+            return (
+              <section className="meet-filter">
+                <div className="container">
+                  <div className="col-md-12">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <div className="item">
+                          <AddressSearch
+                            style={{ width: 150 }}
+                            setLocationValues={({ lat, long, address }) => {
+                              this.setLocationValues({
+                                lat,
+                                long,
+                                city: address,
+                                updateSettings
+                              });
+                            }}
+                            address={""}
+                            type={"(cities)"}
+                            placeholder={t("common:setloc") + "..."}
+                            isBlackMember={isBlackMember}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="item">
+                          <Dropdown
+                            type={"interestedIn"}
+                            onChange={el => null}
+                            value={[]}
+                            placeholder={t("common:Interested") + ":"}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <DistanceSlider value={0} setValue={null} t={t} />
+                      </div>
+                      <div className="col-md-6">
+                        <AgeRange value={[18, 80]} setValue={null} t={t} />
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="col-md-6">
-                  <div className="item">
-                    <Dropdown
-                      type={"interestedIn"}
-                      onChange={el => null}
-                      value={[]}
-                      placeholder={t("common:Interested") + ":"}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <DistanceSlider value={0} setValue={null} t={t} />
-                </div>
-                <div className="col-md-6">
-                  <AgeRange value={[18, 80]} setValue={null} t={t} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+              </section>
+            );
+          }}
+        </Mutation>
       );
     }
 

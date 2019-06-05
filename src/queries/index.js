@@ -885,9 +885,13 @@ export const GET_SETTINGS = gql`
           }
         }
       }
-      photos {
+      publicPhotos {
         url
-        private
+        key
+        id
+      }
+      privatePhotos {
+        url
         key
         id
       }
@@ -913,9 +917,12 @@ export const GET_PROFILE = gql`
       profilePic
       profileName
       interestedIn
-      photos {
+      publicPhotos {
         url
-        private
+        id
+      }
+      privatePhotos {
+        url
         id
       }
       users {

@@ -22,14 +22,14 @@ class InboxItem extends Component {
     }
 
     return (
-      <div className={iconstyle} role="heading" aria-level="1">
-        <NavLink to="/inbox">
+      <NavLink to="/inbox">
+        <div className={iconstyle} role="heading" aria-level="1">
           <span className="icon mail">
             <span className="count">{count}</span>
           </span>
           <span className="text">{t("common:Inbox")}</span>
-        </NavLink>
-      </div>
+        </div>{" "}
+      </NavLink>
     );
   }
 }
