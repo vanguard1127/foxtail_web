@@ -149,7 +149,6 @@ class EditCanvasImage extends PureComponent {
             : this.state.imageWidth * this.state.scale;
         const x = this.state.x_pos - width / 2;
         const y = this.state.y_pos - height / 2;
-        console.log(width, height);
         const dataURL = this.stageRef.getStage().toDataURL({
           mimeType: "image/jpeg",
           x,
@@ -206,6 +205,8 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleStickerClick = (id, name, src) => {
+    const { x_pos, y_pos, init_x, init_y } = this.state;
+
     let x = 0;
     let y = 0;
     let width = this.state.width;
@@ -214,8 +215,8 @@ class EditCanvasImage extends PureComponent {
     let nwidth = this.state.width;
     let nheight = this.state.height;
     if (nwidth === width && nheight === height) {
-      x = (x + width) / 2 - 50;
-      y = (y + height) / 2 - 50;
+      x = (x + width) / 2 - 50 + (x_pos - init_x) / 2;
+      y = (y + height) / 2 - 50 + (y_pos - init_y) / 2;
 
       let imgList = [...this.state.konvaImageList];
       imgList = [...imgList, { id, name, src, x, y }];
@@ -274,7 +275,6 @@ class EditCanvasImage extends PureComponent {
       selectedShapeName,
       uploading
     } = this.state;
-    console.log(konvaImageList);
     const { t } = this.props;
     const Sticker = props => (
       <div
@@ -289,6 +289,7 @@ class EditCanvasImage extends PureComponent {
         />
       </div>
     );
+
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div
@@ -326,8 +327,8 @@ class EditCanvasImage extends PureComponent {
                       y_pos: updated_y_pos,
                       konvaImageList: this.state.konvaImageList.map(img => {
                         return Object.assign(img, {
-                          x: +(img.x + (updated_x_pos - x_pos) / 2).toFixed(2),
-                          y: +(img.y + (updated_y_pos - y_pos) / 2).toFixed(2)
+                          x: +(img.x + (updated_x_pos - x_pos)).toFixed(2),
+                          y: +(img.y + (updated_y_pos - y_pos)).toFixed(2)
                         });
                       })
                     });
@@ -336,8 +337,8 @@ class EditCanvasImage extends PureComponent {
               )}
               {konvaImageList.length > 0 &&
                 konvaImageList.map((img, idx) => {
-                  var x = img.x + (x_pos - init_x) / 2;
-                  var y = img.y + (y_pos - init_y) / 2;
+                  var x = img.x;
+                  var y = img.y;
 
                   return (
                     <KonvaImage
@@ -349,8 +350,6 @@ class EditCanvasImage extends PureComponent {
                       name={img.name}
                       x={x}
                       y={y}
-                      sourceImageXDiff={(x_pos - init_x) / 2}
-                      sourceImageYDiff={(y_pos - init_y) / 2}
                       rotation={0}
                       dragComplete={(
                         imageName,
