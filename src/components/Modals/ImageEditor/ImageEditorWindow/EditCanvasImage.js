@@ -340,6 +340,20 @@ class EditCanvasImage extends PureComponent {
                   var x = img.x;
                   var y = img.y;
 
+                  console.log(
+                    x,
+                    y,
+                    "X_Y",
+                    x_pos,
+                    "width",
+                    y_pos,
+                    "height",
+                    this.state.scale,
+                    "scale",
+                    100 * this.state.scale,
+                    "scale"
+                  );
+
                   return (
                     <KonvaImage
                       src={img.src}
@@ -415,8 +429,8 @@ class EditCanvasImage extends PureComponent {
         </div>
         <div className="avatar-style-vectors">
           <div className="content">
-            <Sticker id="1" name="stc1" src="test_mask_1.png" />
-            <Sticker id="2" name="stc2" src="test_mask_2.png" />
+            <Sticker id="1" name={`${Date.now()}str1`} src="test_mask_1.png" />
+            <Sticker id="2" name={`${Date.now()}str2`} src="test_mask_2.png" />
           </div>
           <span
             style={{
