@@ -104,6 +104,7 @@ class KonvaImage extends PureComponent {
         width={this.props.width}
         height={this.props.height}
         name={name}
+        rotation={this.props.rotation}
         draggable
         onDragEnd={this.handleDragEnd}
         image={this.state.image}

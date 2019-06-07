@@ -219,7 +219,7 @@ class EditCanvasImage extends PureComponent {
       y = (y + height) / 2 - 50 + (y_pos - init_y) / 2;
 
       let imgList = [...this.state.konvaImageList];
-      imgList = [...imgList, { id, name, src, x, y }];
+      imgList = [...imgList, { id, name, src, x, y, rotation: 0 }];
       if (this.mounted) {
         this.setState({ konvaImageList: imgList });
       }
@@ -229,7 +229,7 @@ class EditCanvasImage extends PureComponent {
       y = (y + nheight) / 2 - 50;
 
       let imgList = [...this.state.konvaImageList];
-      imgList = [...imgList, { id, name, src, x, y }];
+      imgList = [...imgList, { id, name, src, x, y, rotation: 0 }];
       if (this.mounted) {
         this.setState({ konvaImageList: imgList });
       }
@@ -247,9 +247,20 @@ class EditCanvasImage extends PureComponent {
 
   rotate = () => {
     if (this.mounted) {
-      this.setState({
-        rotation: this.state.rotation + 90
-      });
+      this.setState(
+        {
+          rotation: this.state.rotation + 90,
+          konvaImageList: this.state.konvaImageList.map(konvaImage => {
+            return {
+              ...konvaImage,
+              rotation: konvaImage.rotation + 90,
+              x: konvaImage.x,
+              y: konvaImage.y
+            };
+          })
+        },
+        () => console.log(this.state.konvaImageList, "konvaImageList")
+      );
     }
   };
 
@@ -364,7 +375,7 @@ class EditCanvasImage extends PureComponent {
                       name={img.name}
                       x={x}
                       y={y}
-                      rotation={0}
+                      rotation={img.rotation}
                       dragComplete={(
                         imageName,
                         updated_x_pos,
