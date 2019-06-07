@@ -178,7 +178,12 @@ class Footer extends Component {
           </Modal>
         )}
         {showContactModal && (
-          <ContactUsModal close={() => this.toggleContactModal()} />
+          <ContactUsModal
+            close={() => this.toggleContactModal()}
+            header="Send us a Message"
+            description="Questions/Comments/Suggestions/etc..."
+            okText={t("common:Send")}
+          />
         )}
       </footer>
     );

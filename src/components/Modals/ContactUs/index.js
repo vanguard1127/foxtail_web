@@ -108,7 +108,16 @@ class ContactUs extends Component {
   };
 
   render() {
-    const { close, t, guest, isDelete } = this.props;
+    const {
+      close,
+      t,
+      guest,
+      isDelete,
+      header,
+      description,
+      cancelText,
+      okText
+    } = this.props;
     const {
       text,
       name,
@@ -118,14 +127,7 @@ class ContactUs extends Component {
       errors,
       isValid
     } = this.state;
-    let header,
-      description = "";
-    header = isDelete ? "Why are you leaving?" : "Send us a Message";
-    if (isDelete) {
-      description = "Let us know what we can do to improve";
-    } else if (guest) {
-      description = "Questions/Comments/Suggestions/etc...";
-    }
+
     return (
       <Modal
         header={header}
@@ -151,7 +153,7 @@ class ContactUs extends Component {
                         onClick={e => this.handleSubmit(e, messageAdmin, true)}
                         disabled={sending}
                       >
-                        Send Complaint & Keep Profile
+                        {cancelText}
                       </button>
                     )}
                     <button
@@ -160,7 +162,7 @@ class ContactUs extends Component {
                       onClick={e => this.handleSubmit(e, messageAdmin, false)}
                       disabled={sending}
                     >
-                      {isDelete ? "Delete My Profile" : t("common:Send")}
+                      {okText}
                     </button>
                   </>
                 );

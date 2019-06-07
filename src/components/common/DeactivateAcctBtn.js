@@ -52,6 +52,10 @@ class DeactivateAcctBtn extends PureComponent {
                                 deleteUser
                               })
                             }
+                            header="Why are you leaving?"
+                            description="Let us know what we can do to improve"
+                            cancelText="Send Complaint & Keep Profile"
+                            okText="Delete My Profile"
                           />
                         )}
                       </>

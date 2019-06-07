@@ -29,7 +29,7 @@ header {
   display: block;
   float: left;
   position: relative;
-  z-index: 9999;
+  z-index: auto;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -508,6 +508,7 @@ header .toggle .notification {
   padding: 5px 15px;
   display: none;
   visibility: hidden;
+  z-index: 99999999 !important;
 }
 
 header .toggle .notification.open {
@@ -684,7 +685,7 @@ header .mobile-menu {
   position: absolute;
   top: 23px;
   float: left;
-  z-index: 999999;
+  z-index: 1000;
 }
 
 header .mobile-toggle {
@@ -9131,7 +9132,7 @@ section.meet-filter .search {
   position: relative;
   float: left;
   margin-bottom: 10px;
-  z-index: 200;
+  z-index: 201;
 }
 /*
 img {
@@ -9322,8 +9323,31 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   color: "black";
 }
 
-.ittest {
-  content: "\f004";
-  font-family: "foxtail-icon";
-  color: #f50043;
+.Toastify__toast.Toastify__toast--default{
+  color: #383838;
+  border-radius: 5px;
+}
+
+.Toastify__toast.Toastify__toast--info{
+  background: #3387f9;
+  border-radius: 5px;
+}
+
+.Toastify__toast.Toastify__toast--success{
+  background: #1fba3d;
+  border-radius: 5px;
+}
+
+.Toastify__toast.Toastify__toast--warn{
+  border-radius: 5px;
+}
+
+.Toastify__toast.Toastify__toast--error{
+  background: #E60013;
+  color:#FFF;
+  border-radius: 5px;
+}
+
+.Toastify__progress-bar.Toastify__progress-bar--default{
+  background: -webkit-linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
 }

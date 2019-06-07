@@ -9,6 +9,8 @@ import Dialog from "@material-ui/core/Dialog";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
 
 const styles = theme => ({
   addIcon: {
@@ -178,13 +180,9 @@ class UploadComponent extends PureComponent {
             </Upload>
           </div>
         )}
-        <Dialog
-          onClose={this.handleClose}
-          aria-labelledby="Image"
-          open={previewVisible}
-        >
-          <img src={selectedImg} alt="" />
-        </Dialog>
+        {previewVisible && (
+          <Lightbox mainSrc={selectedImg} onCloseRequest={this.handleClose} />
+        )}
       </div>
     );
   }
