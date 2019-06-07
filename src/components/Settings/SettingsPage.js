@@ -717,7 +717,7 @@ class SettingsPage extends Component {
                                 name,
                                 value,
                                 updateSettings,
-                                noSave: true
+                                noSave
                               })
                             }
                             t={t}
