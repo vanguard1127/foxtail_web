@@ -50,6 +50,7 @@ class ManageBlackSub extends Component {
                   ErrorHandler={ErrorHandler}
                   notifyClient={notifyClient}
                   lang={lang}
+                  currCCLast4={currentuser.ccLast4}
                 />
               </div>
             </div>

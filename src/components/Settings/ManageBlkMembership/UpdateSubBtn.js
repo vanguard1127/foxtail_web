@@ -28,7 +28,7 @@ class UpdateSubBtn extends PureComponent {
 
   render() {
     const { token, ccLast4 } = this.state;
-    const { t, lang } = this.props;
+    const { t, lang, currCCLast4 } = this.props;
     return (
       <Mutation
         mutation={UPDATE_SUBSCRIPTION}
@@ -54,7 +54,7 @@ class UpdateSubBtn extends PureComponent {
             >
               <span className="clickverify-btn photo">
                 {" "}
-                {ccLast4 ? t("cardchange") : t("addchange")}
+                {currCCLast4 ? t("cardchange") : t("addchange")}
               </span>
             </StripeCheckout>
           );

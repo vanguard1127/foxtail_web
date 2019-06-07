@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
-import ScrollUpButton from "react-scroll-up-button";
 import { GET_MESSAGES, NEW_MESSAGE_SUB } from "../../../queries";
 import { Waypoint } from "react-waypoint";
 import Spinner from "../../common/Spinner";
@@ -125,7 +124,6 @@ class ChatContent extends PureComponent {
             );
           }}
         </Query>
-        <ScrollUpButton />
       </div>
     );
   }

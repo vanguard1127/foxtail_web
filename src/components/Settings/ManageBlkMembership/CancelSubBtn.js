@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
 import { CANCEL_SUBSCRIPTION } from "../../../queries";
 import { Mutation } from "react-apollo";
+import ContactUsModal from "../../Modals/ContactUs";
 class CancelSubBtn extends PureComponent {
+  state = { showContactModal: false };
   handleSubmit = ({ cancelSubscription }) => {
     cancelSubscription()
       .then(({ data }) => {
@@ -12,31 +14,49 @@ class CancelSubBtn extends PureComponent {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
+  toggleContactModal = () => {
+    this.setState({ showContactModal: !this.state.showContactModal });
+  };
   render() {
     const { t, setDialogContent } = this.props;
+    const { showContactModal } = this.state;
     return (
       <Mutation mutation={CANCEL_SUBSCRIPTION}>
         {cancelSubscription => {
           return (
-            <span
-              onClick={() => {
-                const title = t("cancelblktitle");
-                const msg = t("canblkdes");
-                const btnText = t("common:Cancel");
-                setDialogContent({
-                  title,
-                  msg,
-                  btnText,
-                  okAction: () =>
-                    this.handleSubmit({
-                      cancelSubscription
-                    })
-                });
-              }}
-              className="clickverify-btn photo"
-            >
-              {t("subcancel")}
-            </span>
+            <>
+              <span
+                onClick={() => this.toggleContactModal()}
+                className="clickverify-btn photo"
+              >
+                {t("subcancel")}
+              </span>
+              {showContactModal && (
+                <ContactUsModal
+                  close={() => this.toggleContactModal()}
+                  isDelete={true}
+                  callback={() => {
+                    this.toggleContactModal();
+                    const title = t("cancelblktitle");
+                    const msg = t("canblkdes");
+                    const btnText = t("common:Cancel");
+                    setDialogContent({
+                      title,
+                      msg,
+                      btnText,
+                      okAction: () =>
+                        this.handleSubmit({
+                          cancelSubscription
+                        })
+                    });
+                  }}
+                  header="Why are you downgrading your membership?"
+                  description="Let us know what we can do to improve"
+                  cancelText="Send Complaint & Remain a Black Member"
+                  okText="Cancel Black Membership"
+                />
+              )}
+            </>
           );
         }}
       </Mutation>
