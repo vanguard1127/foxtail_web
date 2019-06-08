@@ -21,7 +21,7 @@ class ImageEditor extends Component {
 
     return (
       <Modal
-        fullWidth={true}
+        fullScreen
         header={t("editphoto")}
         close={close}
         ref={el => (this.container = el)}

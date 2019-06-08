@@ -33,17 +33,27 @@ class Modal extends Component {
       description,
       okSpan,
       cancelSpan,
-      fullWidth
+      fullWidth,
+      fullScreen
     } = this.props;
 
     return (
-      <section className="login-modal show" ref={this.wrapperRef}>
-        <div className="container">
-          {fullWidth ? (
+      <section
+        className={`login-modal show ${fullScreen ? "full-screen-modal" : ""} `}
+        ref={this.wrapperRef}
+      >
+        {fullScreen ? (
+          <div className="container" style={{ width: "100%", height: "100vh" }}>
             <div>
-              <div className="popup">
+              <div
+                className="popup"
+                style={{ height: "100vh", padding: "unset" }}
+              >
                 {/* <span className="head">{header}</span> */}
-                <a className="close" onClick={() => close()} />
+                <a
+                  className="close close-fullscreen-popup"
+                  onClick={() => close()}
+                />
                 <form>
                   <div className="form-content">
                     {children}
@@ -56,25 +66,46 @@ class Modal extends Component {
                 </form>
               </div>
             </div>
-          ) : (
-            <div className="offset-md-3 col-md-6">
-              <div className="popup">
-                <span className="head">{header}</span>
-                <a className="close" onClick={() => close()} />
-                <form>
-                  <div className="form-content">
-                    {children}
-                    {description && (
-                      <span className="description">{description}</span>
-                    )}
-                    {okSpan && <div className="submit">{okSpan}</div>}
-                    {cancelSpan && <div className="submit">{cancelSpan}</div>}
-                  </div>
-                </form>
+          </div>
+        ) : (
+          <div className="container">
+            {fullWidth ? (
+              <div>
+                <div className="popup">
+                  {/* <span className="head">{header}</span> */}
+                  <a className="close" onClick={() => close()} />
+                  <form>
+                    <div className="form-content">
+                      {children}
+                      {description && (
+                        <span className="description">{description}</span>
+                      )}
+                      {okSpan && <div className="submit">{okSpan}</div>}
+                      {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                    </div>
+                  </form>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div className="offset-md-3 col-md-6">
+                <div className="popup">
+                  <span className="head">{header}</span>
+                  <a className="close" onClick={() => close()} />
+                  <form>
+                    <div className="form-content">
+                      {children}
+                      {description && (
+                        <span className="description">{description}</span>
+                      )}
+                      {okSpan && <div className="submit">{okSpan}</div>}
+                      {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </section>
     );
   }

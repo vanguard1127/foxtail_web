@@ -303,143 +303,166 @@ class EditCanvasImage extends PureComponent {
 
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div
-          style={{ display: "flex", justifyContent: "center" }}
-          ref={node => {
-            this.container = node;
-          }}
-        >
-          <Stage
-            style={{ backgroundColor: "#0e0d0dc7" }}
-            width={width}
-            height={height}
-            onClick={this.handleStageClick}
+        <div style={{ position: "relative", height: "70vh", width: "100%" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              height: "70vh"
+            }}
             ref={node => {
-              this.stageRef = node;
+              this.container = node;
             }}
           >
-            <Layer>
-              {this.props.imageObject && (
-                <SourceImage
-                  ref={node => {
-                    this.SourceImageRef = node;
-                  }}
-                  width={this.state.imageWidth * this.state.scale}
-                  height={this.state.imageHeight * this.state.scale}
-                  canvasWidth={this.state.width}
-                  canvasHeight={this.state.height}
-                  x_pos={x_pos}
-                  y_pos={y_pos}
-                  sourceImageObject={this.props.imageObject}
-                  rotation={this.state.rotation}
-                  dragComplete={(updated_x_pos, updated_y_pos) => {
-                    this.setState({
-                      x_pos: updated_x_pos,
-                      y_pos: updated_y_pos,
-                      konvaImageList: this.state.konvaImageList.map(img => {
-                        return Object.assign(img, {
-                          x: +(img.x + (updated_x_pos - x_pos)).toFixed(2),
-                          y: +(img.y + (updated_y_pos - y_pos)).toFixed(2)
-                        });
-                      })
-                    });
-                  }}
-                />
-              )}
-              {konvaImageList.length > 0 &&
-                konvaImageList.map((img, idx) => {
-                  var x = img.x;
-                  var y = img.y;
+            <Stage
+              style={{ backgroundColor: "#0e0d0dc7" }}
+              width={width}
+              height={(window.innerHeight * 70) / 100}
+              onClick={this.handleStageClick}
+              ref={node => {
+                this.stageRef = node;
+              }}
+            >
+              <Layer>
+                {this.props.imageObject && (
+                  <SourceImage
+                    ref={node => {
+                      this.SourceImageRef = node;
+                    }}
+                    width={this.state.imageWidth * this.state.scale}
+                    height={this.state.imageHeight * this.state.scale}
+                    canvasWidth={this.state.width}
+                    canvasHeight={(window.innerHeight * 70) / 100}
+                    x_pos={x_pos}
+                    y_pos={y_pos}
+                    sourceImageObject={this.props.imageObject}
+                    rotation={this.state.rotation}
+                    dragComplete={(updated_x_pos, updated_y_pos) => {
+                      this.setState({
+                        x_pos: updated_x_pos,
+                        y_pos: updated_y_pos,
+                        konvaImageList: this.state.konvaImageList.map(img => {
+                          return Object.assign(img, {
+                            x: +(img.x + (updated_x_pos - x_pos)).toFixed(2),
+                            y: +(img.y + (updated_y_pos - y_pos)).toFixed(2)
+                          });
+                        })
+                      });
+                    }}
+                  />
+                )}
+                {konvaImageList.length > 0 &&
+                  konvaImageList.map((img, idx) => {
+                    var x = img.x;
+                    var y = img.y;
 
-                  console.log(
-                    x,
-                    y,
-                    "X_Y",
-                    x_pos,
-                    "width",
-                    y_pos,
-                    "height",
-                    this.state.scale,
-                    "scale",
-                    100 * this.state.scale,
-                    "scale"
-                  );
+                    console.log(
+                      x,
+                      y,
+                      "X_Y",
+                      x_pos,
+                      "width",
+                      y_pos,
+                      "height",
+                      this.state.scale,
+                      "scale",
+                      100 * this.state.scale,
+                      "scale"
+                    );
 
-                  return (
-                    <KonvaImage
-                      src={img.src}
-                      key={img.id + idx}
-                      onDragStart={this.handleDragStart}
-                      width={100 * this.state.scale}
-                      height={100 * this.state.scale}
-                      name={img.name}
-                      x={x}
-                      y={y}
-                      rotation={img.rotation}
-                      dragComplete={(
-                        imageName,
-                        updated_x_pos,
-                        updated_y_pos
-                      ) => {
-                        this.setState({
-                          konvaImageList: this.state.konvaImageList.map(img => {
-                            if (img.name === imageName) {
-                              return Object.assign(img, {
-                                x: updated_x_pos,
-                                y: updated_y_pos
-                              });
-                            } else {
-                              return img;
-                            }
-                          })
-                        });
-                      }}
-                    />
-                  );
-                })}
-              {hideTransformer === false && (
-                <TransformerHandler selectedShapeName={selectedShapeName} />
-              )}
-            </Layer>
-          </Stage>
-        </div>
+                    return (
+                      <KonvaImage
+                        src={img.src}
+                        key={img.id + idx}
+                        onDragStart={this.handleDragStart}
+                        width={100 * this.state.scale}
+                        height={100 * this.state.scale}
+                        name={img.name}
+                        x={x}
+                        y={y}
+                        rotation={img.rotation}
+                        dragComplete={(
+                          imageName,
+                          updated_x_pos,
+                          updated_y_pos
+                        ) => {
+                          this.setState({
+                            konvaImageList: this.state.konvaImageList.map(
+                              img => {
+                                if (img.name === imageName) {
+                                  return Object.assign(img, {
+                                    x: updated_x_pos,
+                                    y: updated_y_pos
+                                  });
+                                } else {
+                                  return img;
+                                }
+                              }
+                            )
+                          });
+                        }}
+                      />
+                    );
+                  })}
+                {hideTransformer === false && (
+                  <TransformerHandler selectedShapeName={selectedShapeName} />
+                )}
+              </Layer>
+            </Stage>
+          </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "baseline",
-            margin: "10px 0 10px 0"
-          }}
-        >
           <div
             style={{
               display: "flex",
               flexDirection: "row",
-              alignItems: "center"
+              justifyContent: "center",
+              alignItems: "baseline",
+              margin: "10px 0 10px 0",
+              width: "100%",
+              position: "absolute",
+              bottom: 0
             }}
           >
-            <ImageIcon style={{ fontSize: "18px", color: "grey" }} />
-            <input
-              name="scale"
-              type="range"
-              onChange={this.handleScale}
-              min="1"
-              max="2"
-              step="0.01"
-              defaultValue="1"
-              style={{ margin: "0 5px 0 5px", cursor: "grabbing" }}
-            />
-            <ImageIcon style={{ fontSize: "30px", color: "grey" }} />
-          </div>
+            <div
+              style={{
+                padding: "6px 8px",
+                background: "#ffffff17",
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}
+              >
+                <ImageIcon style={{ fontSize: "18px", color: "grey" }} />
+                <input
+                  name="scale"
+                  type="range"
+                  onChange={this.handleScale}
+                  min="1"
+                  max="2"
+                  step="0.01"
+                  defaultValue="1"
+                  style={{ margin: "0 5px 0 5px", cursor: "grabbing" }}
+                />
+                <ImageIcon style={{ fontSize: "30px", color: "grey" }} />
+              </div>
 
-          <span className="avatar-style-rotate" onClick={this.rotate}>
-            <RotateIcon style={{ fontSize: "30px", color: "grey" }} />
-          </span>
+              <span
+                style={{ marginLeft: "4px", display: "flex" }}
+                onClick={this.rotate}
+              >
+                <RotateIcon style={{ fontSize: "30px", color: "grey" }} />
+              </span>
+            </div>
+          </div>
         </div>
         <div className="avatar-style-vectors">
-          <div className="content">
+          <div className="content" style={{ margin: "30px 0" }}>
             <Sticker id="1" name={`${Date.now()}str1`} src="test_mask_1.png" />
             <Sticker id="2" name={`${Date.now()}str2`} src="test_mask_2.png" />
           </div>

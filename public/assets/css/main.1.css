@@ -1379,6 +1379,7 @@ section.members {
   float: left;
   margin-bottom: 30px;
   margin-top: 30px;
+  min-height: 40vh;
 }
 
 section.members span.head {
@@ -7165,6 +7166,10 @@ section.login-modal {
   visibility: hidden;
 }
 
+section.full-screen-modal {
+  padding: unset;
+}
+
 section.login-modal.show {
   display: inline-block;
   visibility: visible;
@@ -7193,6 +7198,10 @@ section.login-modal .popup a.close::before {
   cursor: pointer;
   z-index: 999;
   transition: 0.3s all;
+}
+
+section.login-modal .popup a.close-fullscreen-popup::before {
+  color: #fff !important;
 }
 
 section.login-modal .popup a.close:hover::before {
