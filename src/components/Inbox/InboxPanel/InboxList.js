@@ -45,7 +45,7 @@ class InboxList extends PureComponent {
               src={
                 item.profilePic !== ""
                   ? item.profilePic
-                  : "assets/img/usr/avatar/1001@2x.png"
+                  : "../assets/img/no-profile.png"
               }
               alt=""
               onContextMenu={preventContextMenu}

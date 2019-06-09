@@ -69,7 +69,11 @@ class ChatHeader extends PureComponent {
                 <img src={chatProfilePic} alt="" />
               </span>
             </div>
-            <span className="name couple">
+            <span
+              className={
+                currentChat.participants.length > 2 ? "name couple" : "name"
+              }
+            >
               <span>
                 {chatTitle}
                 {chatTitleExtra}

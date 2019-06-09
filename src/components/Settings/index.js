@@ -18,7 +18,7 @@ class Settings extends Component {
   }
   componentDidMount() {
     const { session, t } = this.props;
-    console.log("Is profiel ok", session.currentuser.isProfileOK);
+
     if (!session.currentuser.isProfileOK) {
       if (!toast.isActive("nopro")) {
         toast.info(t("plscomplete"), {

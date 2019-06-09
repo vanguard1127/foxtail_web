@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Layer, Stage } from "react-konva";
+import { Layer, Stage, Group } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
@@ -205,34 +205,19 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleStickerClick = (id, name, src) => {
-    const { x_pos, y_pos, init_x, init_y } = this.state;
+    const { rotation } = this.state;
 
     let x = 0;
     let y = 0;
-    let width = this.state.width;
-    let height = this.state.height;
 
-    let nwidth = this.state.width;
-    let nheight = this.state.height;
-    if (nwidth === width && nheight === height) {
-      x = (x + width) / 2 - 50 + (x_pos - init_x) / 2;
-      y = (y + height) / 2 - 50 + (y_pos - init_y) / 2;
+    //TODO: Figure out what to put here
+    x = 0 - 50;
+    y = 0 - 50;
 
-      let imgList = [...this.state.konvaImageList];
-      imgList = [...imgList, { id, name, src, x, y, rotation: 0 }];
-      if (this.mounted) {
-        this.setState({ konvaImageList: imgList });
-      }
-    } else {
-      // calculations
-      x = (x + nwidth) / 2 - 50;
-      y = (y + nheight) / 2 - 50;
-
-      let imgList = [...this.state.konvaImageList];
-      imgList = [...imgList, { id, name, src, x, y, rotation: 0 }];
-      if (this.mounted) {
-        this.setState({ konvaImageList: imgList });
-      }
+    let imgList = [...this.state.konvaImageList];
+    imgList = [...imgList, { id, name, src, x, y, rotation: 0 - rotation }];
+    if (this.mounted) {
+      this.setState({ konvaImageList: imgList });
     }
   };
 
@@ -271,6 +256,64 @@ class EditCanvasImage extends PureComponent {
         scale: scale
       });
     }
+  };
+
+  handleDragEnd = e => {
+    const { rotation, x_pos, y_pos, width } = this.state;
+    const canvasWidth = width;
+    const canvasHeight = (window.innerHeight * 70) / 100;
+    const rotationC = rotation % 360;
+    const widthC =
+      rotation == 0 || rotation == 180 ? this.props.width : this.props.height;
+    const heightC =
+      rotation == 0 || rotation == 180 ? this.props.height : this.props.width;
+    // const offsetX = width / 2;
+    // const offsetY = height / 2;
+    // if (x_pos - offsetX < 0) {
+    //   x_pos = offsetX;
+    // } else {
+    //   if (x_pos - offsetX + width > canvasWidth) {
+    //     console.log("1");
+    //     x_pos = canvasWidth - width + offsetX;
+    //   }
+    // }
+    // if (y_pos - offsetY < 0) {
+    //   y_pos = offsetY;
+    // } else {
+    //   console.log("2");
+    //   if (y_pos - offsetY + height > canvasHeight) {
+    //     y_pos = canvasHeight - height + offsetY;
+    //   }
+    // }
+    // e.target.to({
+    //   duration: 0,
+    //   x: x_pos,
+    //   y: y_pos
+    // });
+    //this.props.dragComplete(x_pos, y_pos);
+
+    // if (left_pos > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: 0
+    //   });
+    // } else if (left_pos + width < this.state.width) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: this.state.width - scaleWidth
+    //   });
+    // }
+    // if (e.target.y() > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: 0
+    //   });
+    // } else if (right_pos + scaleHeight < this.state.height) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: this.state.height - scaleHeight
+    //   });
+    // }
   };
 
   render() {
@@ -324,89 +367,61 @@ class EditCanvasImage extends PureComponent {
               }}
             >
               <Layer>
-                {this.props.imageObject && (
-                  <SourceImage
-                    ref={node => {
-                      this.SourceImageRef = node;
-                    }}
-                    width={this.state.imageWidth * this.state.scale}
-                    height={this.state.imageHeight * this.state.scale}
-                    canvasWidth={this.state.width}
-                    canvasHeight={(window.innerHeight * 70) / 100}
-                    x_pos={x_pos}
-                    y_pos={y_pos}
-                    sourceImageObject={this.props.imageObject}
-                    rotation={this.state.rotation}
-                    dragComplete={(updated_x_pos, updated_y_pos) => {
-                      this.setState({
-                        x_pos: updated_x_pos,
-                        y_pos: updated_y_pos,
-                        konvaImageList: this.state.konvaImageList.map(img => {
-                          return Object.assign(img, {
-                            x: +(img.x + (updated_x_pos - x_pos)).toFixed(2),
-                            y: +(img.y + (updated_y_pos - y_pos)).toFixed(2)
-                          });
-                        })
-                      });
-                    }}
-                  />
-                )}
-                {konvaImageList.length > 0 &&
-                  konvaImageList.map((img, idx) => {
-                    var x = img.x;
-                    var y = img.y;
+                <Group
+                  rotation={this.state.rotation}
+                  x={x_pos}
+                  y={y_pos}
+                  draggable
+                  scaleX={this.state.scale}
+                  scaleY={this.state.scale}
+                  // onDragEnd={this.handleDragEnd}
+                >
+                  {this.props.imageObject && (
+                    <SourceImage
+                      ref={node => {
+                        this.SourceImageRef = node;
+                      }}
+                      width={this.state.imageWidth}
+                      height={this.state.imageHeight}
+                      // canvasWidth={this.state.width}
+                      // canvasHeight={(window.innerHeight * 70) / 100}
+                      sourceImageObject={this.props.imageObject}
+                      // dragComplete={(updated_x_pos, updated_y_pos) => {
+                      //   this.setState({
+                      //     x_pos: updated_x_pos,
+                      //     y_pos: updated_y_pos,
+                      //     konvaImageList: this.state.konvaImageList.map(img => {
+                      //       return Object.assign(img, {
+                      //         x: +(img.x + (updated_x_pos - x_pos)).toFixed(2),
+                      //         y: +(img.y + (updated_y_pos - y_pos)).toFixed(2)
+                      //       });
+                      //     })
+                      //   });
+                      // }}
+                    />
+                  )}
+                  {konvaImageList.length > 0 &&
+                    konvaImageList.map((img, idx) => {
+                      var x = img.x;
+                      var y = img.y;
 
-                    console.log(
-                      x,
-                      y,
-                      "X_Y",
-                      x_pos,
-                      "width",
-                      y_pos,
-                      "height",
-                      this.state.scale,
-                      "scale",
-                      100 * this.state.scale,
-                      "scale"
-                    );
-
-                    return (
-                      <KonvaImage
-                        src={img.src}
-                        key={img.id + idx}
-                        onDragStart={this.handleDragStart}
-                        width={100 * this.state.scale}
-                        height={100 * this.state.scale}
-                        name={img.name}
-                        x={x}
-                        y={y}
-                        rotation={img.rotation}
-                        dragComplete={(
-                          imageName,
-                          updated_x_pos,
-                          updated_y_pos
-                        ) => {
-                          this.setState({
-                            konvaImageList: this.state.konvaImageList.map(
-                              img => {
-                                if (img.name === imageName) {
-                                  return Object.assign(img, {
-                                    x: updated_x_pos,
-                                    y: updated_y_pos
-                                  });
-                                } else {
-                                  return img;
-                                }
-                              }
-                            )
-                          });
-                        }}
-                      />
-                    );
-                  })}
-                {hideTransformer === false && (
-                  <TransformerHandler selectedShapeName={selectedShapeName} />
-                )}
+                      return (
+                        <KonvaImage
+                          src={img.src}
+                          key={img.id + idx}
+                          onDragStart={this.handleDragStart}
+                          width={100}
+                          height={100}
+                          name={img.name}
+                          x={x}
+                          y={y}
+                        />
+                      );
+                    })}
+                  {hideTransformer === false && (
+                    <TransformerHandler selectedShapeName={selectedShapeName} />
+                  )}
+                </Group>
               </Layer>
             </Stage>
           </div>
