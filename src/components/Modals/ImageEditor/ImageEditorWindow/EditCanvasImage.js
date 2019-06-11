@@ -147,9 +147,11 @@ class EditCanvasImage extends PureComponent {
           rotation == 0 || rotation == 180
             ? this.state.imageHeight * this.state.scale
             : this.state.imageWidth * this.state.scale;
+        //TODO: get image height from group
         const x = this.state.x_pos - width / 2;
         const y = this.state.y_pos - height / 2;
-        const dataURL = this.stageRef.getStage().toDataURL({
+        console.log("SAVE x", x, "y", y);
+        const dataURL = this.groupRef.toDataURL({
           mimeType: "image/jpeg",
           x,
           y,
@@ -168,6 +170,75 @@ class EditCanvasImage extends PureComponent {
         this.handleUpload(file);
       });
     }
+  };
+
+  //TODO: REMEMBER DRAG NO  LONGER RELATES TO IMAGE
+  handleDragEnd = e => {
+    let { rotation, x_pos, y_pos, width } = this.state;
+
+    const canvasWidth = width;
+    const canvasHeight = (window.innerHeight * 70) / 100;
+
+    const rotationC = rotation % 360;
+
+    const imgWidth =
+      rotationC == 0 || rotationC == 180
+        ? this.state.imageWidth * this.state.scale
+        : this.state.imageHeight * this.state.scale;
+    const imgHeight =
+      rotationC == 0 || rotationC == 180
+        ? this.state.imageHeight * this.state.scale
+        : this.state.imageWidth * this.state.scale;
+
+    const offsetX = imgWidth / 2;
+    const offsetY = imgHeight / 2;
+
+    if (x_pos - offsetX < 0) {
+      x_pos = offsetX;
+    } else {
+      if (x_pos - offsetX + imgWidth > canvasWidth) {
+        console.log("X out");
+        x_pos = canvasWidth - imgWidth + offsetX;
+      }
+    }
+    if (y_pos - offsetY < 0) {
+      y_pos = offsetY;
+    } else {
+      console.log("Y out");
+      if (y_pos - offsetY + imgHeight > canvasHeight) {
+        y_pos = canvasHeight - imgHeight + offsetY;
+      }
+    }
+    e.target.to({
+      duration: 0,
+      x: x_pos,
+      y: y_pos
+    });
+    this.setState({ x_pos, y_pos });
+    this.props.dragComplete(x_pos, y_pos);
+
+    // if (left_pos > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: 0
+    //   });
+    // } else if (left_pos + width < this.state.width) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: this.state.width - scaleWidth
+    //   });
+    // }
+    // if (e.target.y() > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: 0
+    //   });
+    // } else if (right_pos + scaleHeight < this.state.height) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: this.state.height - scaleHeight
+    //   });
+    // }
   };
 
   handleUpload = async file => {
@@ -258,64 +329,6 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
-  handleDragEnd = e => {
-    const { rotation, x_pos, y_pos, width } = this.state;
-    const canvasWidth = width;
-    const canvasHeight = (window.innerHeight * 70) / 100;
-    const rotationC = rotation % 360;
-    const widthC =
-      rotation == 0 || rotation == 180 ? this.props.width : this.props.height;
-    const heightC =
-      rotation == 0 || rotation == 180 ? this.props.height : this.props.width;
-    // const offsetX = width / 2;
-    // const offsetY = height / 2;
-    // if (x_pos - offsetX < 0) {
-    //   x_pos = offsetX;
-    // } else {
-    //   if (x_pos - offsetX + width > canvasWidth) {
-    //     console.log("1");
-    //     x_pos = canvasWidth - width + offsetX;
-    //   }
-    // }
-    // if (y_pos - offsetY < 0) {
-    //   y_pos = offsetY;
-    // } else {
-    //   console.log("2");
-    //   if (y_pos - offsetY + height > canvasHeight) {
-    //     y_pos = canvasHeight - height + offsetY;
-    //   }
-    // }
-    // e.target.to({
-    //   duration: 0,
-    //   x: x_pos,
-    //   y: y_pos
-    // });
-    //this.props.dragComplete(x_pos, y_pos);
-
-    // if (left_pos > 0) {
-    //   e.target.to({
-    //     duration: 0,
-    //     x: 0
-    //   });
-    // } else if (left_pos + width < this.state.width) {
-    //   e.target.to({
-    //     duration: 0,
-    //     x: this.state.width - scaleWidth
-    //   });
-    // }
-    // if (e.target.y() > 0) {
-    //   e.target.to({
-    //     duration: 0,
-    //     y: 0
-    //   });
-    // } else if (right_pos + scaleHeight < this.state.height) {
-    //   e.target.to({
-    //     duration: 0,
-    //     y: this.state.height - scaleHeight
-    //   });
-    // }
-  };
-
   render() {
     const {
       konvaImageList,
@@ -374,7 +387,31 @@ class EditCanvasImage extends PureComponent {
                   draggable
                   scaleX={this.state.scale}
                   scaleY={this.state.scale}
-                  // onDragEnd={this.handleDragEnd}
+                  //onDragEnd={this.handleDragEnd}
+                  ref={node => {
+                    this.groupRef = node;
+                  }}
+                  dragBoundFunc={pos => {
+                    console.log("POS", pos, this.groupRef, this.SourceImageRef);
+                    return pos;
+                    // var newY = pos.y < 50 ? 50 : pos.y;
+                    // return {
+                    //   x: pos.x,
+                    //   y: newY
+                    // };
+                    //  console.log("POS", pos);
+                    // var x = stage.width() / 2;
+                    // var y = 70;
+                    // var radius = 50;
+                    // var scale =
+                    //   radius / Math.sqrt(Math.pow(pos.x - x, 2) + Math.pow(pos.y - y, 2));
+                    // if (scale < 1)
+                    //   return {
+                    //     y: Math.round((pos.y - y) * scale + y),
+                    //     x: Math.round((pos.x - x) * scale + x)
+                    //   };
+                    // else return pos;
+                  }}
                 >
                   {this.props.imageObject && (
                     <SourceImage
