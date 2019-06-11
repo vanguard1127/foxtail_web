@@ -142,16 +142,7 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleExportClick = () => {
-    const {
-      rotation,
-      imageHeight,
-      imageWidth,
-      scale,
-      x_pos,
-      y_pos,
-      uploading,
-      width
-    } = this.state;
+    const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
     if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         const rotDegrees = rotation % 360;
@@ -163,29 +154,20 @@ class EditCanvasImage extends PureComponent {
           rotDegrees == 0 || rotDegrees == 180
             ? imageHeight * scale
             : imageWidth * scale;
-        //TODO: get image height from group
-        const x = x_pos - scaledImgWidth / 2;
-        const y = this.groupRef.y() + scaledImgHeight / 2;
-        const width = this.container.offsetWidth;
-        const height = window.innerHeight;
-        console.log(
-          "Group:",
-          this.groupRef,
-          this.groupRef.x(),
-          width,
-          this.groupRef.y(),
-          y_pos,
-          height
-        );
+
+        const x = this.groupRef.x() - scaledImgWidth / 2;
+        const y = this.groupRef.y() - scaledImgHeight / 2;
+
         const dataURL = this.groupRef.toDataURL({
           mimeType: "image/jpeg",
-          x: 0,
-          y: 0,
+          x,
+          y,
           width: scaledImgWidth,
           height: scaledImgHeight,
           quality: 1,
           pixelRatio: this.pixelRatio
         });
+
         const blobData = this.dataURItoBlob(dataURL);
         const file = {
           filename: this.props.imageObject.name,
@@ -380,7 +362,8 @@ class EditCanvasImage extends PureComponent {
       hideTransformer,
       selectedShapeName,
       uploading,
-      isShowStickers
+      isShowStickers,
+      rotation
     } = this.state;
     const { t } = this.props;
     const Sticker = props => (
@@ -435,18 +418,19 @@ class EditCanvasImage extends PureComponent {
                     const bottom =
                       window.innerHeight - this.state.imageHeight / 2;
                     const right = this.state.width - this.state.imageWidth / 2;
+                    const rotDegrees = rotation % 360;
 
                     let x = pos.x;
                     let y = pos.y;
                     if (pos.y > bottom) {
-                      y = bottom;
+                      y = rotDegrees === 0 ? bottom : left;
                     } else if (pos.y < top) {
-                      y = top;
+                      y = rotDegrees === 0 ? top : right;
                     }
                     if (pos.x > right) {
-                      x = right;
+                      x = rotDegrees === 0 ? right : top;
                     } else if (pos.x < left) {
-                      x = left;
+                      x = rotDegrees === 0 ? left : bottom;
                     }
                     return {
                       x,
