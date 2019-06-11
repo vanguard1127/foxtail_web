@@ -49,7 +49,7 @@ class EditCanvasImage extends PureComponent {
   checkSize = () => {
     const { imageHeight, imageWidth, x_pos, y_pos, scale } = this.state;
     const width = this.container.offsetWidth;
-    const height = width / 3;
+    const height = window.innerHeight;
 
     this.setState({ width, height });
     if (imageWidth == 0 || imageHeight == 0) {
@@ -142,27 +142,47 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleExportClick = () => {
-    if (this.mounted && !this.state.uploading && this.SourceImageRef) {
+    const {
+      rotation,
+      imageHeight,
+      imageWidth,
+      scale,
+      x_pos,
+      y_pos,
+      uploading,
+      width
+    } = this.state;
+    if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
-        const rotation = this.state.rotation % 360;
-        const width =
-          rotation == 0 || rotation == 180
-            ? this.state.imageWidth * this.state.scale
-            : this.state.imageHeight * this.state.scale;
-        const height =
-          rotation == 0 || rotation == 180
-            ? this.state.imageHeight * this.state.scale
-            : this.state.imageWidth * this.state.scale;
+        const rotDegrees = rotation % 360;
+        const scaledImgWidth =
+          rotDegrees == 0 || rotDegrees == 180
+            ? imageWidth * scale
+            : imageHeight * scale;
+        const scaledImgHeight =
+          rotDegrees == 0 || rotDegrees == 180
+            ? imageHeight * scale
+            : imageWidth * scale;
         //TODO: get image height from group
-        const x = this.state.x_pos - width / 2;
-        const y = this.state.y_pos - height / 2;
-        console.log("SAVE x", x, "y", y);
+        const x = x_pos - scaledImgWidth / 2;
+        const y = this.groupRef.y() + scaledImgHeight / 2;
+        const width = this.container.offsetWidth;
+        const height = window.innerHeight;
+        console.log(
+          "Group:",
+          this.groupRef,
+          this.groupRef.x(),
+          width,
+          this.groupRef.y(),
+          y_pos,
+          height
+        );
         const dataURL = this.groupRef.toDataURL({
           mimeType: "image/jpeg",
-          x,
-          y,
-          width,
-          height,
+          x: 0,
+          y: 0,
+          width: scaledImgWidth,
+          height: scaledImgHeight,
           quality: 1,
           pixelRatio: this.pixelRatio
         });
@@ -406,30 +426,32 @@ class EditCanvasImage extends PureComponent {
                   draggable
                   scaleX={this.state.scale}
                   scaleY={this.state.scale}
-                  //onDragEnd={this.handleDragEnd}
                   ref={node => {
                     this.groupRef = node;
                   }}
                   dragBoundFunc={pos => {
-                    console.log("POS", pos, this.groupRef, this.SourceImageRef);
-                    return pos;
-                    // var newY = pos.y < 50 ? 50 : pos.y;
-                    // return {
-                    //   x: pos.x,
-                    //   y: newY
-                    // };
-                    //  console.log("POS", pos);
-                    // var x = stage.width() / 2;
-                    // var y = 70;
-                    // var radius = 50;
-                    // var scale =
-                    //   radius / Math.sqrt(Math.pow(pos.x - x, 2) + Math.pow(pos.y - y, 2));
-                    // if (scale < 1)
-                    //   return {
-                    //     y: Math.round((pos.y - y) * scale + y),
-                    //     x: Math.round((pos.x - x) * scale + x)
-                    //   };
-                    // else return pos;
+                    const top = 56 + this.state.imageHeight / 2;
+                    const left = this.state.imageWidth / 2;
+                    const bottom =
+                      window.innerHeight - this.state.imageHeight / 2;
+                    const right = this.state.width - this.state.imageWidth / 2;
+
+                    let x = pos.x;
+                    let y = pos.y;
+                    if (pos.y > bottom) {
+                      y = bottom;
+                    } else if (pos.y < top) {
+                      y = top;
+                    }
+                    if (pos.x > right) {
+                      x = right;
+                    } else if (pos.x < left) {
+                      x = left;
+                    }
+                    return {
+                      x,
+                      y
+                    };
                   }}
                 >
                   {this.props.imageObject && (
@@ -439,21 +461,7 @@ class EditCanvasImage extends PureComponent {
                       }}
                       width={this.state.imageWidth}
                       height={this.state.imageHeight}
-                      // canvasWidth={this.state.width}
-                      // canvasHeight={(window.innerHeight * 70) / 100}
                       sourceImageObject={this.props.imageObject}
-                      // dragComplete={(updated_x_pos, updated_y_pos) => {
-                      //   this.setState({
-                      //     x_pos: updated_x_pos,
-                      //     y_pos: updated_y_pos,
-                      //     konvaImageList: this.state.konvaImageList.map(img => {
-                      //       return Object.assign(img, {
-                      //         x: +(img.x + (updated_x_pos - x_pos)).toFixed(2),
-                      //         y: +(img.y + (updated_y_pos - y_pos)).toFixed(2)
-                      //       });
-                      //     })
-                      //   });
-                      // }}
                     />
                   )}
                   {konvaImageList.length > 0 &&
