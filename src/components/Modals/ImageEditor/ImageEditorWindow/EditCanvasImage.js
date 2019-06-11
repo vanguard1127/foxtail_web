@@ -4,8 +4,13 @@ import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
 import KonvaImage from "./KonvaImage";
 import RotateIcon from "@material-ui/icons/RotateRight";
-import ImageIcon from "@material-ui/icons/Image";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
+import IconButton from "@material-ui/core/IconButton";
+import FaceIcon from "@material-ui/icons/Face";
+import CloseIcon from "@material-ui/icons/Close";
+import { Button } from "@material-ui/core";
 
 class EditCanvasImage extends PureComponent {
   constructor(props) {
@@ -24,7 +29,8 @@ class EditCanvasImage extends PureComponent {
       imageWidth: 0,
       imageHeight: 0,
       init_x: 0,
-      init_y: 0
+      init_y: 0,
+      isShowStickers: false
     };
     this.pixelRatio = 1;
   }
@@ -249,11 +255,24 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
-  handleScale = e => {
-    const scale = parseFloat(e.target.value);
+  handleShowStickers = () => {
+    this.setState({ isShowStickers: !this.state.isShowStickers });
+  };
+
+  handleScalePlus = () => {
     if (this.mounted) {
+      let scale = this.state.scale + 0.1;
       this.setState({
-        scale: scale
+        scale: scale > 2 ? 2 : scale
+      });
+    }
+  };
+
+  handleScaleMinus = () => {
+    if (this.mounted) {
+      let scale = this.state.scale - 0.1;
+      this.setState({
+        scale: scale < 1 ? 1 : scale
       });
     }
   };
@@ -261,7 +280,7 @@ class EditCanvasImage extends PureComponent {
   handleDragEnd = e => {
     const { rotation, x_pos, y_pos, width } = this.state;
     const canvasWidth = width;
-    const canvasHeight = (window.innerHeight * 70) / 100;
+    const canvasHeight = window.innerHeight;
     const rotationC = rotation % 360;
     const widthC =
       rotation == 0 || rotation == 180 ? this.props.width : this.props.height;
@@ -327,7 +346,8 @@ class EditCanvasImage extends PureComponent {
       init_y,
       hideTransformer,
       selectedShapeName,
-      uploading
+      uploading,
+      isShowStickers
     } = this.state;
     const { t } = this.props;
     const Sticker = props => (
@@ -346,12 +366,11 @@ class EditCanvasImage extends PureComponent {
 
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ position: "relative", height: "70vh", width: "100%" }}>
+        <div style={{ position: "relative", width: "100%" }}>
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
-              height: "70vh"
+              justifyContent: "center"
             }}
             ref={node => {
               this.container = node;
@@ -360,7 +379,7 @@ class EditCanvasImage extends PureComponent {
             <Stage
               style={{ backgroundColor: "#0e0d0dc7" }}
               width={width}
-              height={(window.innerHeight * 70) / 100}
+              height={window.innerHeight}
               onClick={this.handleStageClick}
               ref={node => {
                 this.stageRef = node;
@@ -441,7 +460,7 @@ class EditCanvasImage extends PureComponent {
             <div
               style={{
                 padding: "6px 8px",
-                background: "#ffffff17",
+                background: "#5f5f5f",
                 display: "flex",
                 alignItems: "center"
               }}
@@ -453,8 +472,7 @@ class EditCanvasImage extends PureComponent {
                   alignItems: "center"
                 }}
               >
-                <ImageIcon style={{ fontSize: "18px", color: "grey" }} />
-                <input
+                {/* <input
                   name="scale"
                   type="range"
                   onChange={this.handleScale}
@@ -463,45 +481,118 @@ class EditCanvasImage extends PureComponent {
                   step="0.01"
                   defaultValue="1"
                   style={{ margin: "0 5px 0 5px", cursor: "grabbing" }}
-                />
-                <ImageIcon style={{ fontSize: "30px", color: "grey" }} />
+                /> */}
+                <IconButton
+                  style={{ padding: "4px", outline: "none" }}
+                  onClick={this.handleScalePlus}
+                >
+                  <AddIcon style={{ fontSize: "30px", color: "#dadada" }} />
+                </IconButton>
+                <IconButton
+                  style={{ padding: "4px", outline: "none" }}
+                  onClick={this.handleScaleMinus}
+                >
+                  <RemoveIcon style={{ fontSize: "30px", color: "#dadada" }} />
+                </IconButton>
               </div>
-
-              <span
-                style={{ marginLeft: "4px", display: "flex" }}
+              <IconButton
+                style={{ padding: "4px", outline: "none" }}
                 onClick={this.rotate}
               >
-                <RotateIcon style={{ fontSize: "30px", color: "grey" }} />
-              </span>
+                <RotateIcon style={{ fontSize: "30px", color: "#dadada" }} />
+              </IconButton>
+              <IconButton
+                style={{ padding: "4px", outline: "none" }}
+                onClick={this.handleShowStickers}
+              >
+                <FaceIcon style={{ fontSize: "30px", color: "#dadada" }} />
+              </IconButton>
+              {selectedShapeName && (
+                <IconButton
+                  style={{ padding: "4px", outline: "none" }}
+                  onClick={this.removeSelectedSticker}
+                >
+                  <DeleteIcon
+                    style={{
+                      fontSize: "30px",
+                      color: "red"
+                    }}
+                  />
+                </IconButton>
+              )}
             </div>
           </div>
+          {isShowStickers ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%"
+              }}
+            >
+              <div className="avatar-style-vectors">
+                <div className="content">
+                  <Sticker
+                    id="1"
+                    name={`${Date.now()}str1`}
+                    src="test_mask_1.png"
+                  />
+                  <Sticker
+                    id="2"
+                    name={`${Date.now()}str2`}
+                    src="test_mask_2.png"
+                  />
+                  <div style={{ position: "absolute", right: "6px" }}>
+                    <IconButton
+                      style={{ padding: "unset", outline: "none" }}
+                      onClick={this.handleShowStickers}
+                    >
+                      <CloseIcon style={{ fontSize: "12px" }} />
+                    </IconButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-        <div className="avatar-style-vectors">
-          <div className="content" style={{ margin: "30px 0" }}>
-            <Sticker id="1" name={`${Date.now()}str1`} src="test_mask_1.png" />
-            <Sticker id="2" name={`${Date.now()}str2`} src="test_mask_2.png" />
-          </div>
-          <span
-            style={{
-              display: "flex",
-              flex: "1"
-            }}
-            onClick={this.removeSelectedSticker}
-          >
-            {selectedShapeName && (
-              <DeleteIcon
-                style={{ fontSize: "50px", color: "red", margin: "10px" }}
-              />
-            )}
-          </span>
-        </div>
-        <span
-          style={{ marginBottom: 5 }}
-          onClick={this.handleExportClick}
-          className="greenButton"
+
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            minHeight: "56px",
+            justifyContent: "space-between",
+            position: "absolute",
+            zIndex: "300",
+            background: "#717171",
+            alignItems: "center",
+            padding: "0 24px"
+          }}
         >
-          {!uploading ? t("Save") : t("Uploading")}
-        </span>
+          <div>
+            <span style={{ fontSize: "20px", color: "white" }}>
+              Foxtail Privacy Studio
+            </span>
+          </div>
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleExportClick}
+              className="green-button-small"
+            >
+              {!uploading ? t("Save") : t("Uploading")}
+            </Button>
+            <Button
+              style={{ color: "white", marginLeft: "8px" }}
+              onClick={() => this.props.close()}
+            >
+              {t("Cancel")}
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
