@@ -50,10 +50,10 @@ class Modal extends Component {
                 style={{ height: "100vh", padding: "unset" }}
               >
                 {/* <span className="head">{header}</span> */}
-                <a
+                {/* <a
                   className="close close-fullscreen-popup"
                   onClick={() => close()}
-                />
+                /> */}
                 <form>
                   <div className="form-content">
                     {children}

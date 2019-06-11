@@ -8008,14 +8008,14 @@ section.settings textarea {
   }
 
   section.inbox .left .conversations {
-    height: calc(100% - 60px);
+    height: calc(100% - 70px);
     overflow-x: hidden;
     overflow-y: scroll;
   }
 
   section.inbox .chat .content {
     padding: 20px 10px 20px 20px;
-    height: calc(100% - 158px);
+    height: calc(100% - 160px);
   }
 
   section.inbox .chat .content .msg-item .avatar {
