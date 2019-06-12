@@ -8759,3 +8759,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   color: #fff !important;
   background-color: #f50043 !important;
 }
+
+.chat-window-wrapper {
+  height: calc(100vh - 144px);
+}
