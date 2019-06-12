@@ -30,28 +30,29 @@ class SourceImage extends PureComponent {
   };
 
   handleDragEnd = e => {
-    this.setState({
-      isDragging: false
-    });
-    console.log(e.target);
-    var x_pos = this.props.x_pos + e.target.x();
-    var xdiff = e.target.x();
-    var y_pos = this.props.y_pos + e.target.y();
-    console.log(
-      "props x_pos",
-      this.props.x_pos,
-      "ImgX",
-      xdiff,
-      "New group X:",
-      x_pos
-    );
-    const canvasWidth = this.props.canvasWidth;
-    const canvasHeight = this.props.canvasHeight;
-    const rotation = this.props.rotation % 360;
-    const width =
-      rotation == 0 || rotation == 180 ? this.props.width : this.props.height;
-    const height =
-      rotation == 0 || rotation == 180 ? this.props.height : this.props.width;
+    console.log("end", e);
+    // this.setState({
+    //   isDragging: false
+    // });
+    // console.log(e.target);
+    // var x_pos = this.props.x_pos + e.target.x();
+    // var xdiff = e.target.x();
+    // var y_pos = this.props.y_pos + e.target.y();
+    // console.log(
+    //   "props x_pos",
+    //   this.props.x_pos,
+    //   "ImgX",
+    //   xdiff,
+    //   "New group X:",
+    //   x_pos
+    // );
+    // const canvasWidth = this.props.canvasWidth;
+    // const canvasHeight = this.props.canvasHeight;
+    // const rotation = this.props.rotation % 360;
+    // const width =
+    //   rotation == 0 || rotation == 180 ? this.props.width : this.props.height;
+    // const height =
+    //   rotation == 0 || rotation == 180 ? this.props.height : this.props.width;
     // const offsetX = width / 2;
     // const offsetY = height / 2;
     // if (x_pos - offsetX < 0) {
@@ -75,7 +76,7 @@ class SourceImage extends PureComponent {
     //   x: x_pos,
     //   y: y_pos
     // });
-    this.props.dragComplete(x_pos, y_pos);
+    //this.props.dragComplete(x_pos, y_pos);
 
     // if (left_pos > 0) {
     //   e.target.to({
@@ -109,7 +110,7 @@ class SourceImage extends PureComponent {
         height={this.props.height}
         //draggable
         // onDragStart={this.handleDragStart}
-        // onDragEnd={this.handleDragEnd}
+        onDragEnd={this.handleDragEnd}
         offsetX={this.props.width / 2}
         offsetY={this.props.height / 2}
       />

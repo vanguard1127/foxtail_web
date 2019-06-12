@@ -49,7 +49,7 @@ class EditCanvasImage extends PureComponent {
   checkSize = () => {
     const { imageHeight, imageWidth, x_pos, y_pos, scale } = this.state;
     const width = this.container.offsetWidth;
-    const height = width / 3;
+    const height = window.innerHeight;
 
     this.setState({ width, height });
     if (imageWidth == 0 || imageHeight == 0) {
@@ -142,28 +142,32 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleExportClick = () => {
-    if (this.mounted && !this.state.uploading && this.SourceImageRef) {
+    const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
+    if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
-        const rotation = this.state.rotation % 360;
-        const width =
-          rotation == 0 || rotation == 180
-            ? this.state.imageWidth * this.state.scale
-            : this.state.imageHeight * this.state.scale;
-        const height =
-          rotation == 0 || rotation == 180
-            ? this.state.imageHeight * this.state.scale
-            : this.state.imageWidth * this.state.scale;
-        const x = this.state.x_pos - width / 2;
-        const y = this.state.y_pos - height / 2;
-        const dataURL = this.stageRef.getStage().toDataURL({
+        const rotDegrees = rotation % 360;
+        const scaledImgWidth =
+          rotDegrees == 0 || rotDegrees == 180
+            ? imageWidth * scale
+            : imageHeight * scale;
+        const scaledImgHeight =
+          rotDegrees == 0 || rotDegrees == 180
+            ? imageHeight * scale
+            : imageWidth * scale;
+
+        const x = this.groupRef.x() - scaledImgWidth / 2;
+        const y = this.groupRef.y() - scaledImgHeight / 2;
+
+        const dataURL = this.groupRef.toDataURL({
           mimeType: "image/jpeg",
           x,
           y,
-          width,
-          height,
+          width: scaledImgWidth,
+          height: scaledImgHeight,
           quality: 1,
           pixelRatio: this.pixelRatio
         });
+
         const blobData = this.dataURItoBlob(dataURL);
         const file = {
           filename: this.props.imageObject.name,
@@ -174,6 +178,75 @@ class EditCanvasImage extends PureComponent {
         this.handleUpload(file);
       });
     }
+  };
+
+  //TODO: REMEMBER DRAG NO  LONGER RELATES TO IMAGE
+  handleDragEnd = e => {
+    let { rotation, x_pos, y_pos, width } = this.state;
+
+    const canvasWidth = width;
+    const canvasHeight = (window.innerHeight * 70) / 100;
+
+    const rotationC = rotation % 360;
+
+    const imgWidth =
+      rotationC == 0 || rotationC == 180
+        ? this.state.imageWidth * this.state.scale
+        : this.state.imageHeight * this.state.scale;
+    const imgHeight =
+      rotationC == 0 || rotationC == 180
+        ? this.state.imageHeight * this.state.scale
+        : this.state.imageWidth * this.state.scale;
+
+    const offsetX = imgWidth / 2;
+    const offsetY = imgHeight / 2;
+
+    if (x_pos - offsetX < 0) {
+      x_pos = offsetX;
+    } else {
+      if (x_pos - offsetX + imgWidth > canvasWidth) {
+        console.log("X out");
+        x_pos = canvasWidth - imgWidth + offsetX;
+      }
+    }
+    if (y_pos - offsetY < 0) {
+      y_pos = offsetY;
+    } else {
+      console.log("Y out");
+      if (y_pos - offsetY + imgHeight > canvasHeight) {
+        y_pos = canvasHeight - imgHeight + offsetY;
+      }
+    }
+    e.target.to({
+      duration: 0,
+      x: x_pos,
+      y: y_pos
+    });
+    this.setState({ x_pos, y_pos });
+    this.props.dragComplete(x_pos, y_pos);
+
+    // if (left_pos > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: 0
+    //   });
+    // } else if (left_pos + width < this.state.width) {
+    //   e.target.to({
+    //     duration: 0,
+    //     x: this.state.width - scaleWidth
+    //   });
+    // }
+    // if (e.target.y() > 0) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: 0
+    //   });
+    // } else if (right_pos + scaleHeight < this.state.height) {
+    //   e.target.to({
+    //     duration: 0,
+    //     y: this.state.height - scaleHeight
+    //   });
+    // }
   };
 
   handleUpload = async file => {
@@ -277,64 +350,6 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
-  handleDragEnd = e => {
-    const { rotation, x_pos, y_pos, width } = this.state;
-    const canvasWidth = width;
-    const canvasHeight = window.innerHeight;
-    const rotationC = rotation % 360;
-    const widthC =
-      rotation == 0 || rotation == 180 ? this.props.width : this.props.height;
-    const heightC =
-      rotation == 0 || rotation == 180 ? this.props.height : this.props.width;
-    // const offsetX = width / 2;
-    // const offsetY = height / 2;
-    // if (x_pos - offsetX < 0) {
-    //   x_pos = offsetX;
-    // } else {
-    //   if (x_pos - offsetX + width > canvasWidth) {
-    //     console.log("1");
-    //     x_pos = canvasWidth - width + offsetX;
-    //   }
-    // }
-    // if (y_pos - offsetY < 0) {
-    //   y_pos = offsetY;
-    // } else {
-    //   console.log("2");
-    //   if (y_pos - offsetY + height > canvasHeight) {
-    //     y_pos = canvasHeight - height + offsetY;
-    //   }
-    // }
-    // e.target.to({
-    //   duration: 0,
-    //   x: x_pos,
-    //   y: y_pos
-    // });
-    //this.props.dragComplete(x_pos, y_pos);
-
-    // if (left_pos > 0) {
-    //   e.target.to({
-    //     duration: 0,
-    //     x: 0
-    //   });
-    // } else if (left_pos + width < this.state.width) {
-    //   e.target.to({
-    //     duration: 0,
-    //     x: this.state.width - scaleWidth
-    //   });
-    // }
-    // if (e.target.y() > 0) {
-    //   e.target.to({
-    //     duration: 0,
-    //     y: 0
-    //   });
-    // } else if (right_pos + scaleHeight < this.state.height) {
-    //   e.target.to({
-    //     duration: 0,
-    //     y: this.state.height - scaleHeight
-    //   });
-    // }
-  };
-
   render() {
     const {
       konvaImageList,
@@ -347,7 +362,8 @@ class EditCanvasImage extends PureComponent {
       hideTransformer,
       selectedShapeName,
       uploading,
-      isShowStickers
+      isShowStickers,
+      rotation
     } = this.state;
     const { t } = this.props;
     const Sticker = props => (
@@ -393,7 +409,34 @@ class EditCanvasImage extends PureComponent {
                   draggable
                   scaleX={this.state.scale}
                   scaleY={this.state.scale}
-                  // onDragEnd={this.handleDragEnd}
+                  ref={node => {
+                    this.groupRef = node;
+                  }}
+                  dragBoundFunc={pos => {
+                    const top = 56 + this.state.imageHeight / 2;
+                    const left = this.state.imageWidth / 2;
+                    const bottom =
+                      window.innerHeight - this.state.imageHeight / 2;
+                    const right = this.state.width - this.state.imageWidth / 2;
+                    const rotDegrees = rotation % 360;
+
+                    let x = pos.x;
+                    let y = pos.y;
+                    if (pos.y > bottom) {
+                      y = rotDegrees === 0 ? bottom : left;
+                    } else if (pos.y < top) {
+                      y = rotDegrees === 0 ? top : right;
+                    }
+                    if (pos.x > right) {
+                      x = rotDegrees === 0 ? right : top;
+                    } else if (pos.x < left) {
+                      x = rotDegrees === 0 ? left : bottom;
+                    }
+                    return {
+                      x,
+                      y
+                    };
+                  }}
                 >
                   {this.props.imageObject && (
                     <SourceImage
@@ -402,21 +445,7 @@ class EditCanvasImage extends PureComponent {
                       }}
                       width={this.state.imageWidth}
                       height={this.state.imageHeight}
-                      // canvasWidth={this.state.width}
-                      // canvasHeight={(window.innerHeight * 70) / 100}
                       sourceImageObject={this.props.imageObject}
-                      // dragComplete={(updated_x_pos, updated_y_pos) => {
-                      //   this.setState({
-                      //     x_pos: updated_x_pos,
-                      //     y_pos: updated_y_pos,
-                      //     konvaImageList: this.state.konvaImageList.map(img => {
-                      //       return Object.assign(img, {
-                      //         x: +(img.x + (updated_x_pos - x_pos)).toFixed(2),
-                      //         y: +(img.y + (updated_y_pos - y_pos)).toFixed(2)
-                      //       });
-                      //     })
-                      //   });
-                      // }}
                     />
                   )}
                   {konvaImageList.length > 0 &&
