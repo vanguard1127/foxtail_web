@@ -413,25 +413,38 @@ class EditCanvasImage extends PureComponent {
                     this.groupRef = node;
                   }}
                   dragBoundFunc={pos => {
-                    const top = 56 + this.state.imageHeight / 2;
-                    const left = this.state.imageWidth / 2;
-                    const bottom =
-                      window.innerHeight - this.state.imageHeight / 2;
-                    const right = this.state.width - this.state.imageWidth / 2;
                     const rotDegrees = rotation % 360;
+                    const upright =
+                      rotDegrees == 0 || rotDegrees == 180 ? true : false;
+
+                    const top = upright
+                      ? 56 + this.state.imageHeight / 2
+                      : 56 + this.state.imageWidth / 2;
+                    const left = upright
+                      ? this.state.imageWidth / 2
+                      : this.state.imageHeight / 2;
+                    const bottom = upright
+                      ? window.innerHeight - this.state.imageHeight / 2
+                      : window.innerHeight - this.state.imageWidth / 2;
+                    const right = upright
+                      ? this.state.width - this.state.imageWidth / 2
+                      : this.state.width - this.state.imageHeight / 2;
 
                     let x = pos.x;
                     let y = pos.y;
+
                     if (pos.y > bottom) {
-                      y = rotDegrees === 0 ? bottom : left;
+                      y = bottom;
                     } else if (pos.y < top) {
-                      y = rotDegrees === 0 ? top : right;
+                      y = top;
                     }
+
                     if (pos.x > right) {
-                      x = rotDegrees === 0 ? right : top;
+                      x = right;
                     } else if (pos.x < left) {
-                      x = rotDegrees === 0 ? left : bottom;
+                      x = left;
                     }
+
                     return {
                       x,
                       y
