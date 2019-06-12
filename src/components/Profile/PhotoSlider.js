@@ -37,7 +37,7 @@ class PhotoSlider extends Component {
     const { classList, offsetParent } = target;
     if (
       classList.contains("lg-image") ||
-      offsetParent.classList.contains("lg-thumb")
+      (offsetParent && offsetParent.classList.contains("lg-thumb"))
     ) {
       preventContextMenu(event);
     }
