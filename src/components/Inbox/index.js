@@ -235,10 +235,7 @@ class InboxPage extends Component {
           <Header t={t} chatOpen={chatOpen} closeChat={this.closeChat} />
         </ErrorHandler.ErrorBoundary>
         <section className="inbox">
-          <div
-            className="row no-gutters"
-            style={{ height: "calc(100vh - 144px)" }}
-          >
+          <div className="row no-gutters chat-window-wrapper">
             {inboxPanel}
             <ErrorHandler.ErrorBoundary>
               {!chatID && (

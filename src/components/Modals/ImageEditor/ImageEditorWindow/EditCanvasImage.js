@@ -365,8 +365,8 @@ class EditCanvasImage extends PureComponent {
     );
 
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ position: "relative", width: "100%" }}>
+      <div className="edit-canvas-image-div">
+        <div className="edit-canvas-image-wrapper">
           <div
             style={{
               display: "flex",
@@ -445,76 +445,42 @@ class EditCanvasImage extends PureComponent {
             </Stage>
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "baseline",
-              margin: "10px 0 10px 0",
-              width: "100%",
-              position: "absolute",
-              bottom: 0
-            }}
-          >
-            <div
-              style={{
-                padding: "6px 8px",
-                background: "#5f5f5f",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center"
-                }}
-              >
-                {/* <input
-                  name="scale"
-                  type="range"
-                  onChange={this.handleScale}
-                  min="1"
-                  max="2"
-                  step="0.01"
-                  defaultValue="1"
-                  style={{ margin: "0 5px 0 5px", cursor: "grabbing" }}
-                /> */}
+          <div className="edit-canvas-action-bar-wrapper">
+            <div className="edit-canvas-action-bar">
+              <div className="edit-canvas-action-div">
                 <IconButton
-                  style={{ padding: "4px", outline: "none" }}
+                  className="edit-canvas-action-icon-button"
                   onClick={this.handleScalePlus}
                 >
-                  <AddIcon style={{ fontSize: "30px", color: "#dadada" }} />
+                  <AddIcon className="edit-canvas-action-icon" />
                 </IconButton>
                 <IconButton
-                  style={{ padding: "4px", outline: "none" }}
+                  className="edit-canvas-action-icon-button"
                   onClick={this.handleScaleMinus}
                 >
-                  <RemoveIcon style={{ fontSize: "30px", color: "#dadada" }} />
+                  <RemoveIcon className="edit-canvas-action-icon" />
                 </IconButton>
               </div>
               <IconButton
-                style={{ padding: "4px", outline: "none" }}
+                className="edit-canvas-action-icon-button"
                 onClick={this.rotate}
               >
-                <RotateIcon style={{ fontSize: "30px", color: "#dadada" }} />
+                <RotateIcon className="edit-canvas-action-icon" />
               </IconButton>
               <IconButton
-                style={{ padding: "4px", outline: "none" }}
+                className="edit-canvas-action-icon-button"
                 onClick={this.handleShowStickers}
               >
-                <FaceIcon style={{ fontSize: "30px", color: "#dadada" }} />
+                <FaceIcon className="edit-canvas-action-icon" />
               </IconButton>
               {selectedShapeName && (
                 <IconButton
-                  style={{ padding: "4px", outline: "none" }}
+                  className="edit-canvas-action-icon-button"
                   onClick={this.removeSelectedSticker}
                 >
                   <DeleteIcon
+                    className="edit-canvas-action-icon"
                     style={{
-                      fontSize: "30px",
                       color: "red"
                     }}
                   />
@@ -523,13 +489,7 @@ class EditCanvasImage extends PureComponent {
             </div>
           </div>
           {isShowStickers ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                width: "100%"
-              }}
-            >
+            <div className="edit-canvas-stickers-wrapper">
               <div className="avatar-style-vectors">
                 <div className="content">
                   <Sticker
@@ -542,7 +502,7 @@ class EditCanvasImage extends PureComponent {
                     name={`${Date.now()}str2`}
                     src="test_mask_2.png"
                   />
-                  <div style={{ position: "absolute", right: "6px" }}>
+                  <div className="edit-canvas-stickers-div-close-button-div">
                     <IconButton
                       style={{ padding: "unset", outline: "none" }}
                       onClick={this.handleShowStickers}
@@ -558,19 +518,7 @@ class EditCanvasImage extends PureComponent {
           )}
         </div>
 
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            minHeight: "56px",
-            justifyContent: "space-between",
-            position: "absolute",
-            zIndex: "300",
-            background: "#717171",
-            alignItems: "center",
-            padding: "0 24px"
-          }}
-        >
+        <div className="edit-canvas-dialog-topbar">
           <div>
             <span style={{ fontSize: "20px", color: "white" }}>
               Foxtail Privacy Studio
