@@ -15,6 +15,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
 import { withNamespaces } from "react-i18next";
 
+import LinkIcon from "@material-ui/icons/Link";
+
 class Share extends Component {
   shouldComponentUpdate() {
     return false;
@@ -106,12 +108,13 @@ class Share extends Component {
               </TumblrShareButton>
               <CopyToClipboard text={shareUrl}>
                 <span
-                  style={{ width: "32px", height: "32px" }}
+                  style={{ width: "32px", height: "32px", cursor: "pointer" }}
                   className="copyIcon"
                 >
                   <svg viewBox="0 0 64 64" width="32" height="32">
                     <g>
-                      <circle cx="32" cy="32" r="31" fill="#FF8749" />
+                      <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
+                      <LinkIcon className="linksvg" />
                     </g>
                   </svg>
                 </span>

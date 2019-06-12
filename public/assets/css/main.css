@@ -9425,7 +9425,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 }
 
 .edit-canvas-action-icon-button {
-  padding: 4px !important; 
+  padding: 4px !important;
   outline: none !important;
 }
 
@@ -9455,4 +9455,9 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   background: #717171;
   align-items: center;
   padding: 0 24px;
+}
+
+.linksvg {
+  color: white;
+  font-size: 10px;
 }

@@ -289,7 +289,6 @@ class EditCanvasImage extends PureComponent {
     let x = 0;
     let y = 0;
 
-    //TODO: Figure out what to put here
     x = 0 - 50;
     y = 0 - 50;
 
@@ -313,15 +312,7 @@ class EditCanvasImage extends PureComponent {
     if (this.mounted) {
       this.setState(
         {
-          rotation: this.state.rotation + 90,
-          konvaImageList: this.state.konvaImageList.map(konvaImage => {
-            return {
-              ...konvaImage,
-              rotation: konvaImage.rotation + 90,
-              x: konvaImage.x,
-              y: konvaImage.y
-            };
-          })
+          rotation: this.state.rotation + 90
         },
         () => console.log(this.state.konvaImageList, "konvaImageList")
       );
@@ -476,6 +467,7 @@ class EditCanvasImage extends PureComponent {
                           name={img.name}
                           x={x}
                           y={y}
+                          rotation={img.rotation}
                         />
                       );
                     })}
