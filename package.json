@@ -64,6 +64,7 @@
     "react-select": "^2.1.2",
     "react-share": "^2.3.1",
     "react-spinners": "^0.5.1",
+    "react-spring": "^8.0.23",
     "react-stripe-checkout": "^2.6.3",
     "react-toastify": "^5.0.0-rc.3",
     "react-waypoint": "^9.0.1",
