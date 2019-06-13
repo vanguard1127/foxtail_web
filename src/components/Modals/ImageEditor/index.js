@@ -22,7 +22,7 @@ class ImageEditor extends Component {
     } = this.props;
 
     return (
-      <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+      <Spring from={{ opacity: 0.4 }} to={{ opacity: 1 }}>
         {props => (
           <div style={props}>
             <Modal
