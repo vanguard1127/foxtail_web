@@ -72,6 +72,7 @@ class Preferences extends Component {
                   })
                 }
                 t={t}
+                style={{ zIndex: 0 }}
               />
             </div>
             <div className="col-md-6">
