@@ -42,7 +42,7 @@ header .logo {
   margin: 0 auto;
   position: relative;
   top: 12px;
-  z-index: 999;
+  /* z-index: 999; */
 }
 
 header .logo span {
