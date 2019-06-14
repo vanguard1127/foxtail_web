@@ -135,7 +135,11 @@ class NoticesList extends Component {
             />
           </span>
           <div>
-            <span className="text">{t(notif.text)}</span>
+            <span className="text">
+              {t(notif.name)}
+              {t(notif.text)}
+              {t(notif.event)}
+            </span>
             <span className="when">
               {dayjs(notif.date)
                 .locale(lang)
