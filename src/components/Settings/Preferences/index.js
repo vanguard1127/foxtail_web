@@ -60,6 +60,7 @@ class Preferences extends Component {
                 }
                 t={t}
                 metric={distanceMetric}
+                style={{ zIndex: 0 }}
               />
             </div>
             <div className="col-md-6">

@@ -19,8 +19,8 @@
   position: relative;
 }
 .arrow::after {
-  content: '\F004';
-  font-family: 'foxtail-icon';
+  content: "\F004";
+  font-family: "foxtail-icon";
   color: #f50043;
   position: absolute;
   right: 0;
@@ -58,7 +58,7 @@
   user-select: none;
 }
 .select-list-country ul::before {
-  content: '';
+  content: "";
   width: calc(100% - 30px);
   position: absolute;
   left: 15px;

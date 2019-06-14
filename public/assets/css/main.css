@@ -42,7 +42,7 @@ header .logo {
   margin: 0 auto;
   position: relative;
   top: 12px;
-  z-index: 999;
+  /* z-index: 999; */
 }
 
 header .logo span {
@@ -9171,7 +9171,7 @@ img {
   right: 12px;
   top: 16px;
   font-size: 16px;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .tooltip {

@@ -30,6 +30,7 @@ class DistanceSlider extends Component {
           defaultValue={value}
           tipFormatter={distance => milesToKilometers(distance, metric)}
           className="range-con"
+          style={this.props.style}
         />
         <div className="limit">
           <span>
