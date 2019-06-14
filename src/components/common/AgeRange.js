@@ -23,6 +23,7 @@ class AgeRange extends Component {
           defaultValue={value}
           tipFormatter={value => `${value}`}
           className="range-con"
+          style={this.props.style}
         />
         <div className="limit">
           <span>18 {t("common:years")}</span>
