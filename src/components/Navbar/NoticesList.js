@@ -136,9 +136,9 @@ class NoticesList extends Component {
           </span>
           <div>
             <span className="text">
-              {t(notif.name)}
+              {notif.name}
               {t(notif.text)}
-              {t(notif.event)}
+              {notif.event}
             </span>
             <span className="when">
               {dayjs(notif.date)
@@ -168,8 +168,13 @@ class NoticesList extends Component {
           </span>
           <div>
             <span className="text">
-              <b> {notif.fromProfile ? notif.fromProfile.profileName : ""} </b>
+              <b>
+                {" "}
+                {notif.fromProfile ? notif.fromProfile.profileName : ""}
+                {notif.name}{" "}
+              </b>
               {t(notif.text)}
+              {notif.event}
             </span>
             <span className="when">
               {dayjs(notif.date)

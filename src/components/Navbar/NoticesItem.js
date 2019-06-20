@@ -187,12 +187,15 @@ class NoticesItem extends Component {
         open={alertVisible}
       >
         {alert.text && (
-          <DialogTitle id="alert-dialog-title">{alert.text}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">
+            {this.props.t(alert.text)}
+          </DialogTitle>
         )}
         {alert.body && (
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {alert.body}
+              {alert.name}
+              {this.props.t(alert.body)}
             </DialogContentText>
           </DialogContent>
         )}

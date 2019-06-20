@@ -13,7 +13,7 @@ import {
 } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 import LinkIcon from "@material-ui/icons/Link";
 
@@ -134,4 +134,4 @@ class Share extends Component {
   }
 }
 
-export default withNamespaces("modals")(Share);
+export default withTranslation("modals")(Share);

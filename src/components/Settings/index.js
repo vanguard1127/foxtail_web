@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import dayjs from "dayjs";
 
 import { toast } from "react-toastify";
@@ -127,6 +127,6 @@ class Settings extends Component {
 
 export default withRouter(
   withAuth(session => session && session.currentuser)(
-    withNamespaces("settings")(Settings)
+    withTranslation("settings")(Settings)
   )
 );

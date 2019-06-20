@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import "./Select.css";
 
 class Select extends PureComponent {
@@ -148,4 +148,4 @@ class Select extends PureComponent {
   }
 }
 
-export default withNamespaces("common")(Select);
+export default withTranslation("common")(Select);

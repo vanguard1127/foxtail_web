@@ -3,7 +3,7 @@ import { Mutation } from "react-apollo";
 import { SIGNS3, SUBMIT_PHOTO } from "../../../queries";
 import axios from "axios";
 import PhotoUpload from "../../common/PhotoUpload";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
 import { toast } from "react-toastify";
 
@@ -169,4 +169,4 @@ class PhotoVerify extends PureComponent {
   }
 }
 
-export default withNamespaces("modals")(PhotoVerify);
+export default withTranslation("modals")(PhotoVerify);

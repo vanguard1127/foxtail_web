@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import EmailPhoneResetBtn from "./EmailPhoneResetBtn";
 import ResetPhoneButton from "./ResetPhoneButton";
 import Select from "./Select";
@@ -109,4 +109,4 @@ class ResetPhone extends PureComponent {
     );
   }
 }
-export default withNamespaces("modals")(ResetPhone);
+export default withTranslation("modals")(ResetPhone);

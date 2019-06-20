@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import CustomTour from "../common/CustomTour";
 import { withRouter } from "react-router-dom";
 class Tour extends PureComponent {
@@ -1058,4 +1058,4 @@ class Tour extends PureComponent {
   }
 }
 
-export default withRouter(withNamespaces("searchevents")(Tour));
+export default withRouter(withTranslation("searchevents")(Tour));

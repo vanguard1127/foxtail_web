@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { BLOCK_PROFILE, FLAG_ITEM, SEARCH_PROFILES } from "../../../queries";
 import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
@@ -239,4 +239,4 @@ class BlockModal extends Component {
   }
 }
 
-export default withNamespaces("modals")(BlockModal);
+export default withTranslation("modals")(BlockModal);

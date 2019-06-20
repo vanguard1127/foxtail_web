@@ -1,5 +1,5 @@
 import React, { PureComponent, cloneElement } from "react";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 class Menu extends PureComponent {
   constructor(props) {
     super(props);
@@ -59,4 +59,4 @@ class Menu extends PureComponent {
   }
 }
 
-export default withNamespaces("common")(Menu);
+export default withTranslation("common")(Menu);

@@ -4,7 +4,7 @@ import { FilePond, registerPlugin } from "react-filepond";
 
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
@@ -88,4 +88,4 @@ class PhotoUpload extends Component {
   }
 }
 
-export default withNamespaces("common")(PhotoUpload);
+export default withTranslation("common")(PhotoUpload);

@@ -10,7 +10,7 @@ import Rules from "../Information/Rules";
 import ContactUsModal from "../Modals/ContactUs";
 import { SEEN_TOUR } from "../../queries";
 
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class Footer extends Component {
   state = { showRulesModal: false, showContactModal: false };
@@ -190,4 +190,4 @@ class Footer extends Component {
   }
 }
 
-export default withNamespaces("footer")(Footer);
+export default withTranslation("footer")(Footer);

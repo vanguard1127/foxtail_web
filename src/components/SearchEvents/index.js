@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { withRouter } from "react-router-dom";
 import { Query, withApollo } from "react-apollo";
 import dayjs from "dayjs";
@@ -337,7 +337,7 @@ class SearchEvents extends Component {
 export default withApollo(
   withRouter(
     withAuth(session => session && session.currentuser)(
-      withLocation(withNamespaces("searchevents")(SearchEvents))
+      withLocation(withTranslation("searchevents")(SearchEvents))
     )
   )
 );

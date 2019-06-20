@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { desireOptions } from "../../../docs/options";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class Selector extends Component {
   shouldComponentUpdate(nextProps) {
@@ -11,7 +11,7 @@ class Selector extends Component {
   }
   render() {
     const { togglePopup, desires, t, ErrorBoundary } = this.props;
-
+    console.log(t);
     return (
       <span>
         <div
@@ -37,4 +37,4 @@ class Selector extends Component {
   }
 }
 
-export default withNamespaces("modals")(Selector);
+export default withTranslation("modals")(Selector);

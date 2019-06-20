@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { GET_SEARCH_SETTINGS } from "../../queries";
 import SearchProfilesPage from "./SearchProfilesPage";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class SearchProfiles extends Component {
   shouldComponentUpdate() {
@@ -44,4 +44,4 @@ class SearchProfiles extends Component {
   }
 }
 
-export default withNamespaces("searchprofiles")(SearchProfiles);
+export default withTranslation("searchprofiles")(SearchProfiles);

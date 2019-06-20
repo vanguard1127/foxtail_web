@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { desireOptions } from "../../../docs/options";
 import SearchBox from "./SearchBox";
 class Desires extends Component {
@@ -89,4 +89,4 @@ class Desires extends Component {
     );
   }
 }
-export default withNamespaces("modals")(Desires);
+export default withTranslation("modals")(Desires);

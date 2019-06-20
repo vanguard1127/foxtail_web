@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import dayjs from "dayjs";
 
 import withAuth from "../HOCs/withAuth";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import InboxPanel from "./InboxPanel/";
 import Header from "./Header";
 import ChatInfo from "./ChatInfo";
@@ -369,5 +369,5 @@ class InboxPage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withNamespaces("inbox")(InboxPage)
+  withTranslation("inbox")(InboxPage)
 );

@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from "react";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
@@ -311,5 +311,5 @@ class ProfileTour extends PureComponent {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces("profile")(ProfileTour))
+  withRouter(withTranslation("profile")(ProfileTour))
 );

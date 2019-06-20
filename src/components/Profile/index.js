@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { Query, Mutation } from "react-apollo";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
@@ -168,7 +168,11 @@ class ProfilePage extends Component {
       >
         {(likeProfile, { loading }) => {
           return (
-            <Query query={GET_PROFILE} variables={{ id }}>
+            <Query
+              query={GET_PROFILE}
+              variables={{ id }}
+              returnPartialData={true}
+            >
               {({ data, loading, error, refetch }) => {
                 if (error) {
                   document.title = "Error Occurred";
@@ -353,5 +357,5 @@ class ProfilePage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces("profile")(ProfilePage))
+  withRouter(withTranslation("profile")(ProfilePage))
 );

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import CreateSubBtn from "./CreateSubBtn";
 import Modal from "../../common/Modal";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class Black extends PureComponent {
   state = { token: "", ccLast4: "" };
@@ -42,4 +42,4 @@ class Black extends PureComponent {
     );
   }
 }
-export default withNamespaces("modals")(Black);
+export default withTranslation("modals")(Black);

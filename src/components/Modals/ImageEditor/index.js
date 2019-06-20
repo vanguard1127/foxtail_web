@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import EditCanvasImage from "./ImageEditorWindow/EditCanvasImage";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
 import { Spring } from "react-spring/renderprops";
 
@@ -50,4 +50,4 @@ class ImageEditor extends Component {
     );
   }
 }
-export default withNamespaces("modals")(ImageEditor);
+export default withTranslation("modals")(ImageEditor);

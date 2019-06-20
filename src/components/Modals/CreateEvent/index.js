@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import * as yup from "yup";
 import axios from "axios";
 import { Mutation } from "react-apollo";
@@ -548,4 +548,4 @@ class CreateEvent extends Component {
     );
   }
 }
-export default withNamespaces("modals")(CreateEvent);
+export default withTranslation("modals")(CreateEvent);

@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import dayjs from "dayjs";
 import { GET_EVENT, DELETE_EVENT } from "../../queries";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import BlockModal from "../Modals/Block";
 import Spinner from "../common/Spinner";
 import withAuth from "../HOCs/withAuth";
@@ -283,5 +283,5 @@ class EventPage extends Component {
 }
 
 export default withAuth(session => session && session.currentuser)(
-  withRouter(withNamespaces("event")(EventPage))
+  withRouter(withTranslation("event")(EventPage))
 );

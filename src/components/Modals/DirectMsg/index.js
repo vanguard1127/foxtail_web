@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Mutation, withApollo } from "react-apollo";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { SEND_MESSAGE, GET_COUNTS } from "../../../queries";
 import Modal from "../../common/Modal";
 import deleteFromCache from "../../../utils/deleteFromCache";
@@ -137,4 +137,4 @@ class DirectMsg extends Component {
     );
   }
 }
-export default withApollo(withNamespaces("modals")(DirectMsg));
+export default withApollo(withTranslation("modals")(DirectMsg));

@@ -3,7 +3,7 @@ import { UPDATE_LOCATION } from "../../../queries";
 import { Mutation } from "react-apollo";
 import AddressSearch from "../../common/AddressSearch";
 import { ErrorBoundary, catchErrors } from "../../common/ErrorHandler";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
 import { toast } from "react-toastify";
 
@@ -130,4 +130,4 @@ class SetLocationModal extends Component {
   }
 }
 
-export default withNamespaces("modals")(SetLocationModal);
+export default withTranslation("modals")(SetLocationModal);

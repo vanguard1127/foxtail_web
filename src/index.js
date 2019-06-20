@@ -29,7 +29,7 @@ import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import * as ErrorHandler from "./components/common/ErrorHandler";
 import withSession from "./components/HOCs/withSession";
-import "./i18n";
+import i18n from "./i18n";
 import Footer from "./components/Footer/";
 import tokenHandler from "./utils/tokenHandler";
 
@@ -136,7 +136,7 @@ const errorLink = onError(
       graphQLErrors.map(({ message, path }) => {
         if (~message.indexOf("Client")) {
           if (!toast.isActive(message)) {
-            toast(message.replace("Client:", "").trim(), {
+            toast(i18n.t("common:" + message.replace("Client:", "").trim()), {
               position: toast.POSITION.TOP_CENTER,
               toastId: message
             });

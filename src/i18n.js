@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import detector from "i18next-browser-languagedetector";
 import backend from "i18next-xhr-backend";
-import { reactI18nextModule } from "react-i18next";
+import { initReactI18next } from "react-i18next";
 
 // translations are already at
 // '../public/locales/en/translation.json'
@@ -10,7 +10,7 @@ import { reactI18nextModule } from "react-i18next";
 i18n
   .use(backend)
   .use(detector)
-  .use(reactI18nextModule) // passes i18n down to react-i18next
+  .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     fallbackLng: "en", // use en if detected lng is not available
     keySeparator: false, // we do not use keys in form messages.welcome
@@ -18,9 +18,10 @@ i18n
     interpolation: {
       escapeValue: false // react already safes from xss
     },
-    ns: ["common"],
+    ns: ["common", "searchprofiles"],
     // react-i18next options
     react: {
+      useSuspense: false,
       wait: true
     }
   });

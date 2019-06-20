@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import PlacesAutocomplete, {
   geocodeByAddress
 } from "react-places-autocomplete";
@@ -189,4 +189,4 @@ class AddressSearch extends Component {
   }
 }
 
-export default withNamespaces("common")(AddressSearch);
+export default withTranslation("common")(AddressSearch);

@@ -751,6 +751,8 @@ export const GET_NOTIFICATIONS = gql`
         date
         title
         body
+        name
+        event
       }
       total
     }

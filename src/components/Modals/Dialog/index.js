@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 import Dropdown from "../../common/Dropdown";
@@ -122,4 +122,4 @@ class Dialog extends PureComponent {
     );
   }
 }
-export default withNamespaces("modals")(Dialog);
+export default withTranslation("modals")(Dialog);

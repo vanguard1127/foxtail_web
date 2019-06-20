@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 //import 'react-toastify/dist/ReactToastify.css';
 // minified version is also included
 import "react-toastify/dist/ReactToastify.min.css";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
@@ -306,4 +306,4 @@ class Landing extends PureComponent {
   }
 }
 
-export default withNamespaces("landing")(Landing);
+export default withTranslation("landing")(Landing);

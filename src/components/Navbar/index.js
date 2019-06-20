@@ -1,7 +1,7 @@
 import React, { Fragment, Component, PureComponent } from "react";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import axios from "axios";
 import Logout from "./LogoutLink";
 
@@ -229,4 +229,4 @@ class NavbarAuth extends PureComponent {
   }
 }
 
-export default withNamespaces("common")(withRouter(Navbar));
+export default withTranslation("common")(withRouter(Navbar));

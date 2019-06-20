@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Mutation, withApollo } from "react-apollo";
-import { withNamespaces } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import ReCAPTCHA from "react-google-recaptcha";
 import { MESSAGE_ADMIN } from "../../../queries";
 import * as ErrorHandler from "../../common/ErrorHandler";
@@ -236,4 +236,4 @@ class ContactUs extends Component {
     );
   }
 }
-export default withApollo(withNamespaces("modals")(ContactUs));
+export default withApollo(withTranslation("modals")(ContactUs));
