@@ -3791,7 +3791,7 @@ section.event-detail::before {
   float: left;
   position: absolute;
   left: 0;
-  top: 0;
+  top: 65px;
   background-image: -webkit-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
   background-image: -o-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
   background-image: linear-gradient(226deg, #f70016 0%, #5f00a4 100%);
@@ -9391,6 +9391,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 
 
 .edit-canvas-image-wrapper {
+  margin-top: 56px;
   position: relative;
   width: 100%;
 }
