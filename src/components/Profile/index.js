@@ -80,6 +80,16 @@ class ProfilePage extends Component {
     this.props.ErrorHandler.setBreadcrumb(
       "Message Modal Opened:" + msgModalVisible
     );
+
+    if (!this.props.session.currentuser.blackMember.active) {
+      if (!toast.isActive("directerr")) {
+        toast.info(this.props.t("common:directerr"), {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: "directerr"
+        });
+      }
+      return;
+    }
     if (this.mounted) {
       if (profile) {
         this.setState({ profile, msgModalVisible });

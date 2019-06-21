@@ -86,7 +86,7 @@ class ProfilesContainer extends Component {
     );
     if (!this.props.isBlackMember) {
       if (!toast.isActive("directerr")) {
-        toast.info(this.props.t("directerr"), {
+        toast.info(this.props.t("common:directerr"), {
           position: toast.POSITION.TOP_CENTER,
           toastId: "directerr"
         });
