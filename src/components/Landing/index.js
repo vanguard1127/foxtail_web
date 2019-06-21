@@ -295,8 +295,8 @@ class Landing extends PureComponent {
           <ContactUsModal
             close={() => this.toggleContactModal()}
             guest={true}
-            header="Send us a Message"
-            description="Questions/Comments/Suggestions/etc..."
+            header={t("common:Send us a Message")}
+            description={t("common:Questions/Comments/Suggestions/etc...")}
             okText={t("common:Send")}
           />
         )}

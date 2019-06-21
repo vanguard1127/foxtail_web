@@ -173,7 +173,6 @@ class NoticesItem extends Component {
   showAlert = alert => {
     if (this.mounted) {
       this.setState({ userAlert: alert, alertVisible: true });
-      //handleCloseAlert = (alert.id, updateNotifications, refetch)
     }
   };
 

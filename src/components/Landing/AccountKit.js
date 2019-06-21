@@ -13,7 +13,6 @@ function initializeAccountKit(props, callback) {
     tag.onload = cb;
     document.head.appendChild(tag);
   })(() => {
-    console.log("open popup");
     window.AccountKit_OnInteractive = function() {
       const { appId, csrf, version, debug, display, redirect } = props;
       window.AccountKit.init({

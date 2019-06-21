@@ -169,6 +169,7 @@ class InboxPanel extends Component {
                   }
                 />
                 <InboxList
+                  t={t}
                   messages={messages}
                   readChat={readChat}
                   currentuser={currentuser}

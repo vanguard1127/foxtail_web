@@ -26,7 +26,7 @@ class ProfileDetails extends Component {
     } else {
       distance = profile.distance + " " + t(distanceUnits);
     }
-    console.log("SDD", users[0]);
+
     return (
       <ErrorBoundary>
         <div className="data-info">

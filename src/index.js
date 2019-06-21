@@ -178,7 +178,9 @@ const errorLink = onError(
     if (networkError) {
       if (!toast.isActive(networkError)) {
         toast.warn(
-          "We're having trouble connecting to you. Please check your connection and try again.",
+          i18n.t(
+            "common:We're having trouble connecting to you. Please check your connection and try again."
+          ),
           {
             position: toast.POSITION.TOP_CENTER,
             toastId: networkError

@@ -52,10 +52,14 @@ class DeactivateAcctBtn extends PureComponent {
                                 deleteUser
                               })
                             }
-                            header="Why are you leaving?"
-                            description="Let us know what we can do to improve"
-                            cancelText="Send Complaint & Keep Profile"
-                            okText="Delete My Profile"
+                            header={t("common:Why are you leaving?")}
+                            description={t(
+                              "common:Let us know what we can do to improve"
+                            )}
+                            cancelText={t(
+                              "common:Send Complaint & Keep Profile"
+                            )}
+                            okText={t("common:Delete My Profile")}
                           />
                         )}
                       </>

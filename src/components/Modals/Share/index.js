@@ -11,6 +11,7 @@ import {
   TumblrIcon,
   EmailIcon
 } from "react-share";
+import Tooltip from "@material-ui/core/Tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
 import { withTranslation } from "react-i18next";
@@ -24,6 +25,7 @@ class Share extends Component {
 
   render() {
     const { userID, profile, event, close, t, ErrorBoundary } = this.props;
+
     let shareUrl = "";
     let title = "";
     const body = (profile, event, t) => {
@@ -107,17 +109,19 @@ class Share extends Component {
                 <TumblrIcon size={32} round />
               </TumblrShareButton>
               <CopyToClipboard text={shareUrl}>
-                <span
-                  style={{ width: "32px", height: "32px", cursor: "pointer" }}
-                  className="copyIcon"
-                >
-                  <svg viewBox="0 0 64 64" width="32" height="32">
-                    <g>
-                      <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
-                      <LinkIcon className="linksvg" />
-                    </g>
-                  </svg>
-                </span>
+                <Tooltip title="Copy referral url" placement="top">
+                  <span
+                    style={{ width: "32px", height: "32px", cursor: "pointer" }}
+                    className="copyIcon"
+                  >
+                    <svg viewBox="0 0 64 64" width="32" height="32">
+                      <g>
+                        <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
+                        <LinkIcon className="linksvg" />
+                      </g>
+                    </svg>
+                  </span>
+                </Tooltip>
               </CopyToClipboard>
               <EmailShareButton
                 url={shareUrl}

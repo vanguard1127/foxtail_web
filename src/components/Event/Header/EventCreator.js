@@ -15,7 +15,7 @@ class EventCreator extends PureComponent {
               src={
                 ownerProfile.profilePic !== ""
                   ? ownerProfile.profilePic
-                  : "/assets/img/usr/avatar/1003@2x.png"
+                  : "/assets/img/no-profile.png"
               }
               alt=""
               onContextMenu={preventContextMenu}

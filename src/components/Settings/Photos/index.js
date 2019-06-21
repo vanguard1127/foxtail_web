@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Tooltip from "@material-ui/core/Tooltip";
 import UploadComponent from "./UploadImageComponent";
 
 class Photos extends Component {
@@ -26,7 +27,20 @@ class Photos extends Component {
             <div className="col-md-12">
               <span className="heading">
                 {!isPrivate ? t("pubphotos") : t("privphotos")}
-                <i> {!isPrivate ? "- " + t("nonude") : "- " + t("nudeok")}</i>
+                <i>
+                  {" "}
+                  {!isPrivate ? "- " + t("nonude") : "- " + t("nudeok")}
+                </i>{" "}
+                <Tooltip
+                  title={
+                    !isPrivate
+                      ? "Public Photos can be seen by all members. *Tip: Add at least one of each: face, upper body, and full body."
+                      : "Private Photos can only be seen by members you have matched with. Feel free to share more racy images of yourself."
+                  }
+                  placement="left-start"
+                >
+                  <span className="tip" />
+                </Tooltip>
               </span>
             </div>
             <div className="col-md-12">

@@ -16,7 +16,7 @@ class EventCreator extends Component {
               src={
                 ownerProfile.profilePic !== ""
                   ? ownerProfile.profilePic
-                  : "assets/img/usr/avatar/1002@2x.png"
+                  : "assets/img/no-profile.png"
               }
               alt=""
               onContextMenu={preventContextMenu}

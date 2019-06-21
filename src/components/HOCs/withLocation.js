@@ -14,7 +14,6 @@ const withLocation = PassedComponent =>
     };
 
     showConfirm = (setLocModalVisible, caller) => {
-      const { t } = i18next;
       setLocModalVisible(true);
     };
 
@@ -72,7 +71,7 @@ const withLocation = PassedComponent =>
 
         if (citycntry === null) {
           const { toast } = require("react-toastify");
-          toast.error("Location error, please set your location in settings");
+          toast.error(i18next.t("locerror"));
         } else {
           if (this.mounted) {
             this.setState({
@@ -132,10 +131,13 @@ const withLocation = PassedComponent =>
                       <div className="icon">
                         <i className="nico location" />
                       </div>
-                      <span className="head">Location not available.</span>
+                      <span className="head">
+                        {i18next.t("Location not available.")}
+                      </span>
                       <span className="description">
-                        Please enable location services on your device to see
-                        this page.
+                        {i18next.t(
+                          "Please enable location services on your device to see this page."
+                        )}
                       </span>
                     </div>
                   </div>

@@ -58,7 +58,6 @@
   "desireselect": "Desires Select",
   "setdesires": "Set your desires",
   "searchdesires": "Search desires",
-  "seldesires": "Select Desires",
   "writemsg": "Write Message Here",
   "Crop": "Crop",
   "Accept": "Accept",
@@ -120,5 +119,6 @@
   "processing": "Processing",
   "upgradeblk": "Upgrade to Black Membership",
   "blkmemsubheader": "Monthly membership. Cancel anytime.",
-  "blkmemheader": "Black Membership"
+  "blkmemheader": "Black Membership",
+  "infinite": "Infinite Photos!"
 }

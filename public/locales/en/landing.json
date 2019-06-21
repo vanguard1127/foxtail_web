@@ -38,5 +38,6 @@
   "birthreq": "Birthdate is required!",
   "invemail": "Invalid email address",
   "emailreq": "Email is required!",
-  "userreq": "Username is required!"
+  "userreq": "Username is required!",
+  "pleaselogin": "Please login before using that link."
 }

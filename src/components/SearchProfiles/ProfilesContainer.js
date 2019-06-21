@@ -325,7 +325,7 @@ class ProfilesContainer extends Component {
                     </div>
                     <span className="head">{t("nomems")}</span>
                     <span className="description">{t("nomemsdes")}</span>
-                    <span className="description">- and -</span>
+                    <span className="description">- {t("and")} -</span>
                     <span
                       className="greenButton"
                       style={{
@@ -335,7 +335,7 @@ class ProfilesContainer extends Component {
                       }}
                       onClick={this.toggleShareModal}
                     >
-                      Invite Your Friends
+                      {t("Invite Your Friends")}
                     </span>
                   </div>
                 </div>

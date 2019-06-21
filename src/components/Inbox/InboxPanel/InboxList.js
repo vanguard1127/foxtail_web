@@ -66,7 +66,7 @@ class InboxList extends PureComponent {
 
   renderMsgList = ({ messages }) => {
     if (messages.length === 0) {
-      return <span className="no-message">No messages found.</span>;
+      return <span className="no-message">{this.props.t("nomsgsInbox")}</span>;
     }
     return (
       <Fragment>

@@ -153,7 +153,6 @@ class SettingsPage extends Component {
       })
       .then(() => {
         refetchUser();
-        console.log("updateSettings saved.");
       })
       .catch(res => {
         ErrorHandler.catchErrors(res.graphQLErrors);
@@ -216,11 +215,6 @@ class SettingsPage extends Component {
             url
           }
         ];
-        // if (profilePic === "") {
-        //   if (this.mounted) {
-        //     this.setState({ profilePic: key, profilePicUrl: url });
-        //   }
-        // }
       }
       if (this.mounted) {
         this.setState(
@@ -247,7 +241,6 @@ class SettingsPage extends Component {
     }
   };
   handleSubmit = (updateSettings, saveImage) => {
-    console.log("handleSubmit");
     const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
 
     this.setErrorHandler("Settings updated...");
@@ -531,7 +524,6 @@ class SettingsPage extends Component {
     } = this.state;
 
     const {
-      userID,
       t,
       ErrorHandler,
       currentuser,
@@ -852,7 +844,7 @@ class SettingsPage extends Component {
               {showBlackPopup && (
                 <BlackModal
                   close={this.toggleBlackPopup}
-                  userID={userID}
+                  userID={currentuser.userID}
                   ErrorHandler={ErrorHandler}
                   t={t}
                   notifyClient={this.notifyClient}
@@ -861,7 +853,7 @@ class SettingsPage extends Component {
               )}
               {showSharePopup && (
                 <ShareModal
-                  userID={userID}
+                  userID={currentuser.userID}
                   visible={showSharePopup}
                   close={this.toggleSharePopup}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}

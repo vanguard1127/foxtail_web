@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Tooltip from "@material-ui/core/Tooltip";
 import DistanceSlider from "../../common/DistanceSlider";
 import Dropdown from "../../common/Dropdown";
 import AgeRange from "../../common/AgeRange";
@@ -47,7 +48,15 @@ class Preferences extends Component {
         <div className="content">
           <div className="row">
             <div className="col-md-12">
-              <span className="heading">{t("myserchpref")}</span>
+              <span className="heading">
+                {t("myserchpref")}
+                <Tooltip
+                  title="Search Preferences used to search members on the Meet Members page"
+                  placement="left-start"
+                >
+                  <span className="tip" />
+                </Tooltip>
+              </span>
             </div>
             <div className="col-md-6">
               <DistanceSlider

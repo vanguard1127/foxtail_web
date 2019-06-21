@@ -23,7 +23,7 @@ class ProfileActionBtns extends Component {
 
     let actions;
     if (liked && featured) {
-      actions = <div className="btn sent">Matched!</div>;
+      actions = <div className="btn sent">{t("common:matched")}</div>;
     } else if (!msgd) {
       actions = (
         <>

@@ -50,10 +50,10 @@ class CancelSubBtn extends PureComponent {
                         })
                     });
                   }}
-                  header="Why are you downgrading your membership?"
-                  description="Let us know what we can do to improve"
-                  cancelText="Send Complaint & Remain a Black Member"
-                  okText="Cancel Black Membership"
+                  header={t("Why are you downgrading your membership?")}
+                  description={t("Let us know what we can do to improve")}
+                  cancelText={t("Send Complaint & Remain a Black Member")}
+                  okText={t("Cancel Black Membership")}
                 />
               )}
             </>

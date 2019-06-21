@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { desireOptions } from "../../../docs/options";
-import { withTranslation } from "react-i18next";
 
 class Selector extends Component {
   shouldComponentUpdate(nextProps) {
@@ -11,14 +10,14 @@ class Selector extends Component {
   }
   render() {
     const { togglePopup, desires, t, ErrorBoundary } = this.props;
-    console.log(t);
+
     return (
       <span>
         <div
           className="select_desires desires_select_popup"
           onClick={togglePopup}
         >
-          <span className="label">{t("seldesires")}:</span>
+          <span className="label">{t("common:seldesires")}:</span>
           <ErrorBoundary>
             <ul>
               {desires.reduce(function(result, desire, idx) {
@@ -37,4 +36,4 @@ class Selector extends Component {
   }
 }
 
-export default withTranslation("modals")(Selector);
+export default Selector;

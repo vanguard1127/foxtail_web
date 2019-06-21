@@ -7,11 +7,7 @@ class ProfilePic extends PureComponent {
     return (
       <div className="image">
         <img
-          src={
-            profilePic !== ""
-              ? profilePic
-              : "assets/img/usr/medium-avatar/1001@2x.png"
-          }
+          src={profilePic !== "" ? profilePic : "assets/img/no-profile.png"}
           alt=""
           onContextMenu={preventContextMenu}
         />

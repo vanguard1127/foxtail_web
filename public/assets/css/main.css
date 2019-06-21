@@ -4715,6 +4715,23 @@ input.location-search-input {
   margin-bottom: 15px;
 }
 
+.page .content span.heading span.tip{
+  position: absolute;
+  right: 20px;
+  top:2px;
+}
+
+.page .content span.heading span.tip::before{
+  content: "\f29c";
+  font-family: "foxtail-icon";
+  color:#acacac;
+  font-size: 14px;
+}
+
+.toolTipText{
+  font-size: 30px;
+}
+
 .page .content span.heading i {
   font-weight: 400;
   text-transform: none;
@@ -4948,6 +4965,19 @@ input.location-search-input {
   display: inline-block;
   color: #565656;
   font-size: 14px;
+}
+
+.switch-con .sw-head .blkIcon::before {
+  content: "\e823";
+  font-family: "foxtail-icon";
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 14px;
+  padding-right: 5px;
+  padding-left: 1px;
 }
 
 .switch-con .sw-btn {
@@ -9300,7 +9330,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 }
 
 .sex.N::before {
-  content: "\f22a";
+  content: "\f22c";
 }
 
 .fullscreen {

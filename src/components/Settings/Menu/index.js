@@ -26,9 +26,6 @@ class Menu extends Component {
       <ErrorBoundary>
         <div className="menu">
           <ul>
-            {/* <li>
-              <span>{t("common:myaccount")}</span>
-            </li> */}
             <li>
               <span
                 onClick={() => coupleModalToggle()}
@@ -47,7 +44,7 @@ class Menu extends Component {
               )}
             </li>
             <li className="active">
-              <span onClick={shareModalToggle}>Share Foxtail!</span>
+              <span onClick={shareModalToggle}>{t("common:sharefox")}</span>
             </li>
           </ul>
         </div>

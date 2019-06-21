@@ -35,7 +35,7 @@ class Signup extends PureComponent {
         }
       }
     } else if (mem || eve) {
-      toast.info("Please login before using that link.");
+      toast.info(this.props.t("pleaselogin"));
     }
   }
 

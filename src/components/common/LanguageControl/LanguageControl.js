@@ -10,7 +10,7 @@ class LanguageControl extends PureComponent {
   state = {
     menuOpen: false,
     selectedLang: this.props.lang,
-    languages: ["en", "de", "tu"]
+    languages: ["en"]
   };
 
   setLang = lang => {

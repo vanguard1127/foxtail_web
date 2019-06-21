@@ -3,7 +3,6 @@ import React from "react";
 import { Query } from "react-apollo";
 
 import { Redirect } from "react-router-dom";
-import { toast } from "react-toastify";
 
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {

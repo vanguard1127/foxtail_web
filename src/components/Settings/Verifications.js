@@ -12,7 +12,7 @@ class Verifications extends Component {
           <div className="row">
             <div className="col-md-12">
               <span className="heading">
-                {t("Verifications")} <i>- ({t("vertitle")})</i>
+                {t("Verifications")} <i>- ({t("vertitle")})</i>{" "}
               </span>
             </div>
             <div className="col-md-6">

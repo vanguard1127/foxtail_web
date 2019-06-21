@@ -13,8 +13,7 @@ class ProfilePic extends Component {
           src={
             profilePic !== ""
               ? profilePic
-              : process.env.PUBLIC_URL +
-                "/assets/img/usr/big-avatar/1003@2x.png"
+              : process.env.PUBLIC_URL + "/assets/img/no-profile.png"
           }
           alt=""
           onContextMenu={preventContextMenu}

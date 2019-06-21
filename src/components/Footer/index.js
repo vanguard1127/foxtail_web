@@ -170,9 +170,10 @@ class Footer extends Component {
                   </li>
                   <li>Spamming and promtion</li>
                 </ul>
-                Please follow all of our rules for a better experience for all.
+                Please follow all of our rules so everyone may enjoy: Sexy Safe
+                Fun!
                 <br />
-                At Foxtail we're all about, Sexy safe fun!
+                Foxtail.
               </p>
             </div>
           </Modal>
@@ -180,8 +181,8 @@ class Footer extends Component {
         {showContactModal && (
           <ContactUsModal
             close={() => this.toggleContactModal()}
-            header="Send us a Message"
-            description="Questions/Comments/Suggestions/etc..."
+            header={t("common:Send us a Message")}
+            description={t("common:Questions/Comments/Suggestions/etc...")}
             okText={t("common:Send")}
           />
         )}

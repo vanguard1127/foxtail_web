@@ -34,7 +34,7 @@ class Black extends PureComponent {
               <li>{t("onlyliked")}</li>
               <li>{t("hidestat")}</li>
               <li>{t("higher")}</li>
-              <li>Infinite Photos!</li>
+              <li>{t("infinite")}</li>
             </ul>
           </>
         </ErrorHandler.ErrorBoundary>

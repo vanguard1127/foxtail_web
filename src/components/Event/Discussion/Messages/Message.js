@@ -13,7 +13,7 @@ const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
             src={
               message.profilePic !== ""
                 ? message.profilePic
-                : "/assets/img/usr/avatar/1001@2x.png"
+                : "/assets/img/no-profile.png"
             }
             alt=""
           />

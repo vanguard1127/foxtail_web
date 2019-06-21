@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Tooltip from "@material-ui/core/Tooltip";
 import DesiresSelector from "../../Modals/Desires/Selector";
 import Dropdown from "../../common/Dropdown";
 import BioTextBox from "./BioTextBox";
@@ -35,11 +36,20 @@ class MyProfile extends Component {
       <div className="content">
         <div className="row">
           <div className="col-md-12">
-            <span className="heading">{t("myprofile")}</span>
+            <span className="heading">
+              {t("myprofile")}{" "}
+              <Tooltip
+                title="Select and Desires that intrest you. In your bio, talk about who you are and what you're looking for ~ Honesty is Sexy."
+                placement="left-start"
+              >
+                <span className="tip" />
+              </Tooltip>
+            </span>
           </div>
           <div className="col-md-12">
             <div className="item">
               <DesiresSelector
+                t={t}
                 desires={desires}
                 togglePopup={togglePopup}
                 ErrorBoundary={ErrorBoundary}

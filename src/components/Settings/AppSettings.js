@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Tooltip from "@material-ui/core/Tooltip";
 import Dropdown from "../common/Dropdown";
 import i18n from "../../i18n";
 
@@ -37,7 +38,39 @@ class AppSettings extends Component {
         <div className="content">
           <div className="row">
             <div className="col-md-12">
-              <span className="heading">{t("appsetting")}</span>
+              <span className="heading">
+                {t("appsetting")}{" "}
+                <Tooltip
+                  title={
+                    <div>
+                      <div>Settings</div>
+                      <div>
+                        <ul>
+                          <li>
+                            Show My Profile: Makes your profile visible to other
+                            members
+                          </li>
+                          <li>
+                            Receive E-mails: Recieve notification emails such as
+                            new messages, event reminders, etc.
+                          </li>
+                          <li>
+                            Show Online Status (Black only): Show/Hide your
+                            online status from members
+                          </li>
+                          <li>
+                            Visible to Liked Only (Black only): Only show your
+                            profile to those you've liked
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  }
+                  placement="left-start"
+                >
+                  <span className="tip" />
+                </Tooltip>
+              </span>
             </div>
 
             <div className="col-md-12">
@@ -106,7 +139,12 @@ class AppSettings extends Component {
             <div className="col-md-6">
               <div className="item">
                 <div className="switch-con">
-                  <div className="sw-head">{t("hideonline")}:</div>
+                  <div className="sw-head blk">
+                    <Tooltip title="Black Members Only" placement="top">
+                      <span className="blkIcon" />
+                    </Tooltip>
+                    {t("hideonline")}:
+                  </div>
                   <div className="sw-btn">
                     <div className="switch">
                       <input
@@ -130,7 +168,12 @@ class AppSettings extends Component {
             <div className="col-md-6">
               <div className="item">
                 <div className="switch-con">
-                  <div className="sw-head">{t("onlyshow")}:</div>
+                  <div className="sw-head blk">
+                    <Tooltip title="Black Members Only" placement="top">
+                      <span className="blkIcon" />
+                    </Tooltip>
+                    {t("onlyshow")}:
+                  </div>
                   <div className="sw-btn">
                     <div className="switch">
                       <input

@@ -69,7 +69,7 @@ class PhotoUpload extends Component {
           t("browse") +
           `</span>.`
         }
-        fileRenameFunction={file => `Selected Image`}
+        fileRenameFunction={file => t("selimage")}
         labelFileProcessing={t("upload")}
         labelFileProcessingComplete={t("uploadcomp")}
         labelFileProcessingAborted={t("uploadcan")}
