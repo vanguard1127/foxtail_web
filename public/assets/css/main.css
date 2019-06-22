@@ -824,11 +824,11 @@ section.meet-filter .dropdown label {
   line-height: 17px;
   color: #8c909d;
   font-weight: 400;
-  z-index: 100;
+  /* z-index: 100; */
   -webkit-font-smoothing: antialiased;
   padding: 0;
   margin: 0;
-  z-index: 9999;
+  /* z-index: 9999; */
 }
 
 .select2-container {
@@ -3287,11 +3287,11 @@ section.go-events .header .settings-con .dropdown label {
   line-height: 17px;
   color: #8c909d;
   font-weight: 400;
-  z-index: 100;
+  /* z-index: 100; */
   -webkit-font-smoothing: antialiased;
   padding: 0;
   margin: 0;
-  z-index: 9999;
+  /* z-index: 9999; */
 }
 
 section.go-events .header .settings-con .dropdown span {
@@ -4772,7 +4772,7 @@ input.location-search-input {
   display: inline-block;
   font-size: 13px;
   color: #9d9d9d;
-  z-index: 500;
+  /* z-index: 500; */
 }
 
 .page .form .content .item .textarea textarea:valid + textarea::before,
@@ -5241,7 +5241,7 @@ input.location-search-input {
   line-height: 17px;
   color: #8c909d;
   font-weight: 400;
-  z-index: 100;
+  /* z-index: 100; */
   -webkit-font-smoothing: antialiased;
   padding: 0;
   margin: 0;
@@ -5467,7 +5467,7 @@ section.meet-filter .range-con {
   line-height: 17px;
   color: #8c909d;
   font-weight: 400;
-  z-index: 100;
+  /* z-index: 100; */
   -webkit-font-smoothing: antialiased;
   padding: 0;
   margin: 0;
@@ -7739,6 +7739,10 @@ section.settings .select-container {
   height: 60px !important;
 }
 
+.select-container label {
+  z-index: auto !important;
+}
+
 section.settings .select-list {
   top: 59px !important;
   margin: 0 0 0 15px;
@@ -7779,8 +7783,19 @@ section.desires-popup .modal-popup .m-body .search input {
   border-radius: 2px;
 }
 
+section.settings .profile-bio-textarea {
+  border: 1px solid #e3e3e3;
+  min-height: 120px;
+  margin-bottom: 15px;
+}
+
 section.settings textarea.bio {
-  padding-top: 38px !important;
+  /* padding-top: 38px !important; */
+  border: unset !important;
+  z-index: 0;
+  margin-top: 38px;
+  min-height: 80px !important;
+  padding-top: 0 !important;
 }
 
 /* REVISION ADD */
