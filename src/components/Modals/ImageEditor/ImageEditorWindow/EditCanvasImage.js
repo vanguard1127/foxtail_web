@@ -241,12 +241,9 @@ class EditCanvasImage extends PureComponent {
 
   rotate = () => {
     if (this.mounted) {
-      this.setState(
-        {
-          rotation: this.state.rotation + 90
-        },
-        () => console.log(this.state.konvaImageList, "konvaImageList")
-      );
+      this.setState({
+        rotation: this.state.rotation + 90
+      });
     }
   };
 
@@ -258,7 +255,7 @@ class EditCanvasImage extends PureComponent {
     if (this.mounted) {
       let scale = this.state.scale + 0.1;
       this.setState({
-        scale: scale > 2 ? 2 : scale
+        scale: scale > 3 ? 3 : scale
       });
     }
   };

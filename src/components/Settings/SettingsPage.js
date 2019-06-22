@@ -3,6 +3,7 @@ import { Mutation } from "react-apollo";
 import axios from "axios";
 import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
 import ImageEditor from "../Modals/ImageEditor";
+import ImageCropper from "../Modals/ImageCropper";
 import ProfilePic from "./ProfilePic";
 import Photos from "./Photos/";
 import Menu from "./Menu/";
@@ -52,6 +53,7 @@ class SettingsPage extends Component {
     showPhotoVerPopup: false,
     showBlackPopup: this.props.showBlkModal || false,
     showImgEditorPopup: false,
+    showImgCropperPopup: false,
     showSharePopup: false,
     showCouplePopup: this.props.showCplModal || false,
     photoSubmitType: "",
@@ -115,6 +117,7 @@ class SettingsPage extends Component {
       this.state.showCouplePopup !== nextState.showCouplePopup ||
       this.state.showDesiresPopup !== nextState.showDesiresPopup ||
       this.state.showImgEditorPopup !== nextState.showImgEditorPopup ||
+      this.state.showImgCropperPopup !== nextState.showImgCropperPopup ||
       this.state.showModal !== nextState.showModal ||
       this.state.showOnline !== nextState.showOnline ||
       this.state.showPhotoVerPopup !== nextState.showPhotoVerPopup ||
@@ -380,6 +383,17 @@ class SettingsPage extends Component {
     }
   };
 
+  toggleImgCropperPopup = url => {
+    this.setErrorHandler("Toggle image cropper");
+    console.log(url);
+    if (this.mounted) {
+      this.setState({
+        fileRecieved: url,
+        showImgCropperPopup: !this.state.showImgCropperPopup
+      });
+    }
+  };
+
   togglePhotoVerPopup = () => {
     this.setErrorHandler("Toggle Photo Ver Popup");
     if (this.mounted) {
@@ -501,6 +515,7 @@ class SettingsPage extends Component {
       showDesiresPopup,
       photoSubmitType,
       showImgEditorPopup,
+      showImgCropperPopup,
       showCouplePopup,
       showSharePopup,
       showBlackPopup,
@@ -645,6 +660,7 @@ class SettingsPage extends Component {
                           <Photos
                             isPrivate={false}
                             showEditor={this.toggleImgEditorPopup}
+                            showCropper={this.toggleImgCropperPopup}
                             photos={publicPhotos}
                             setProfilePic={({ key, url }) =>
                               this.setProfilePic({
@@ -808,6 +824,29 @@ class SettingsPage extends Component {
                         signS3={signS3}
                         close={this.toggleImgEditorPopup}
                         ErrorHandler={ErrorHandler}
+                      />
+                    );
+                  }}
+                </Mutation>
+              )}
+              {showImgCropperPopup && (
+                <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
+                  {signS3 => {
+                    return (
+                      <ImageCropper
+                        imgUrl={fileRecieved}
+                        setS3PhotoParams={this.setS3PhotoParams}
+                        uploadToS3={this.uploadToS3}
+                        signS3={signS3}
+                        close={this.toggleImgCropperPopup}
+                        ErrorHandler={ErrorHandler}
+                        setProfilePic={({ key, url }) =>
+                          this.setProfilePic({
+                            key,
+                            url,
+                            updateSettings
+                          })
+                        }
                       />
                     );
                   }}

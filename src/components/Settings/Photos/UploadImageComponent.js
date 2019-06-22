@@ -89,8 +89,8 @@ class UploadComponent extends PureComponent {
 
   handleClickProPic = ({ index, setProfilePic }) => {
     let img = this.props.photos[index];
-
-    setProfilePic({ key: img.key, url: img.url });
+    this.props.showCropper(img.url);
+    //   setProfilePic({ key: img.key, url: img.url });
   };
 
   handleClose = () => {

@@ -14,6 +14,7 @@ class Photos extends Component {
       isBlackMember,
       isPrivate,
       showEditor,
+      showCropper,
       photos,
       deleteImg,
       t,
@@ -48,6 +49,7 @@ class Photos extends Component {
                 setProfilePic={setProfilePic}
                 max={7}
                 showEditor={showEditor}
+                showCropper={showCropper}
                 photos={photos}
                 isPrivate={isPrivate}
                 deleteImg={deleteImg}
