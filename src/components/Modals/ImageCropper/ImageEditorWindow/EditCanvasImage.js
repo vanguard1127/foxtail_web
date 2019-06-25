@@ -1,10 +1,6 @@
 import React, { PureComponent } from "react";
-import { Layer, Stage, Group } from "react-konva";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import TransformerHandler from "./TransformerHandler";
-import SourceImage from "./SourceImage";
-import KonvaImage from "./KonvaImage";
 import RotateIcon from "@material-ui/icons/RotateRight";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -97,7 +93,9 @@ class EditCanvasImage extends PureComponent {
     const { uploading } = this.state;
     if (this.mounted && !uploading) {
       this.setState({ uploading: true }, () => {
-        const dataURL = this.cropper.getCroppedCanvas().toDataURL();
+        const dataURL = this.cropper
+          .getCroppedCanvas({ width: 90, height: 90 })
+          .toDataURL();
         const blobData = this.dataURItoBlob(dataURL);
         const file = {
           filename: "",
@@ -137,44 +135,50 @@ class EditCanvasImage extends PureComponent {
 
   _crop() {
     // image in dataUrl
-    //   console.log(this.refs.cropper.getCroppedCanvas().toDataURL());
+    // console.log(this.cropper.getCroppedCanvas());
+    // console.log(this.cropper.getContainerData());
+    // console.log(this.cropper);
   }
 
   handleScalePlus = () => {
     if (this.mounted) {
-      let scale = this.state.scale + 0.1;
-      this.setState(
-        {
-          scale: scale > 3 ? 3 : scale
-        },
-        () => {
-          const containerData = this.cropper.getContainerData();
+      if (this.state.scale <= 3) {
+        let scale = this.state.scale + 0.1;
+        this.setState(
+          {
+            scale: scale > 3 ? 3 : scale
+          },
+          () => {
+            const containerData = this.cropper.getContainerData();
 
-          this.cropper.zoomTo(this.state.scale, {
-            x: containerData.width / 2,
-            y: containerData.height / 2
-          });
-        }
-      );
+            this.cropper.zoomTo(this.state.scale, {
+              x: containerData.width / 2,
+              y: containerData.height / 2
+            });
+          }
+        );
+      }
     }
   };
 
   handleScaleMinus = () => {
     if (this.mounted) {
-      let scale = this.state.scale - 0.1;
-      this.setState(
-        {
-          scale: scale > 3 ? 3 : scale
-        },
-        () => {
-          const containerData = this.cropper.getContainerData();
+      if (this.state.scale >= 1) {
+        let scale = this.state.scale - 0.1;
+        this.setState(
+          {
+            scale: scale < 1 ? 1 : scale
+          },
+          () => {
+            const containerData = this.cropper.getContainerData();
 
-          this.cropper.zoomTo(this.state.scale, {
-            x: containerData.width / 2,
-            y: containerData.height / 2
-          });
-        }
-      );
+            this.cropper.zoomTo(this.state.scale, {
+              x: containerData.width / 2,
+              y: containerData.height / 2
+            });
+          }
+        );
+      }
     }
   };
 
@@ -207,10 +211,15 @@ class EditCanvasImage extends PureComponent {
           >
             <Cropper
               ref={cropper => (this.cropper = cropper)}
-              src={
-                "https://www.nps.gov/jotr/planyourvisit/images/24407090121_c56ad39c12_k.jpg"
-              }
+              src={imgUrl}
               style={{ height, width }}
+              responsive={true}
+              viewMode={1}
+              center={false}
+              dragMode="move"
+              cropBoxMovable={false}
+              toggleDragModeOnDblclick={false}
+              cropBoxResizable={false}
               // Cropper.js options
               aspectRatio={1}
               guides={false}
@@ -247,7 +256,7 @@ class EditCanvasImage extends PureComponent {
         <div className="edit-canvas-dialog-topbar">
           <div>
             <span style={{ fontSize: "20px", color: "white" }}>
-              Foxtail Privacy Studio
+              Profile Picture Selector
             </span>
           </div>
           <div>

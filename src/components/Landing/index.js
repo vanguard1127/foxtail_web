@@ -4,6 +4,8 @@ import LoginButton from "./LoginButton";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
 import * as ErrorHandler from "../common/ErrorHandler";
 import CountUp from "react-countup";
+import { withApollo } from "react-apollo";
+import { CONFIRM_EMAIL } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
 import ContactUsModal from "../Modals/ContactUs";
 import { ToastContainer, toast } from "react-toastify";
@@ -32,7 +34,7 @@ class Landing extends PureComponent {
   };
 
   render() {
-    const { t, parentProps } = this.props;
+    const { t, parentProps, client } = this.props;
     const params = new URLSearchParams(parentProps.location.search);
     const refer = params.get("refer");
     const aff = params.get("aff");
@@ -41,38 +43,48 @@ class Landing extends PureComponent {
     const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
 
     if (parentProps.location.state) {
-      if (parentProps.location.state.emailVer === true) {
-        if (!toast.isActive("emailVer")) {
-          toast.success(t("emailconfirmed"), {
-            position: toast.POSITION.TOP_CENTER,
-            toastId: "emailVer"
-          });
+      if (parentProps.location.state.type === "emailVer") {
+        client
+          .query({
+            query: CONFIRM_EMAIL,
+            variables: { token: parentProps.location.state.token }
+          })
+          .then(resp => {
+            if (resp.data.confirmEmail) {
+              if (!toast.isActive("emailVer")) {
+                toast.success(t("emailconfirmed"), {
+                  position: toast.POSITION.TOP_CENTER,
+                  toastId: "emailVer"
+                });
 
-          parentProps.history.replace({ state: {} });
-        }
-      } else if (parentProps.location.state.emailVer === false) {
-        if (!toast.isActive("errVer")) {
-          toast.error(t("emailconffail"), {
-            position: toast.POSITION.TOP_CENTER,
-            toastId: "errVer"
-          });
+                parentProps.history.replace({ state: {} });
+              }
+            } else {
+              if (!toast.isActive("errVer")) {
+                toast.error(t("emailconffail"), {
+                  position: toast.POSITION.TOP_CENTER,
+                  toastId: "errVer"
+                });
 
-          parentProps.history.replace({ state: {} });
-        }
-      } else if (parentProps.location.state.phoneReset === true) {
-        this.setState({
-          resetPhoneVisible: true,
-          token: parentProps.location.state.token
-        });
-        parentProps.history.replace({ state: {} });
-      } else if (parentProps.location.state.phoneReset === false) {
-        if (!toast.isActive("errVer")) {
-          toast.error(t("phonefail"), {
-            position: toast.POSITION.TOP_CENTER,
-            toastId: "errVer"
+                parentProps.history.replace({ state: {} });
+              }
+            }
           });
-
+      } else if (parentProps.location.state.type === "phoneVer") {
+        if (parentProps.location.state.token) {
+          this.setState({
+            resetPhoneVisible: true,
+            token: parentProps.location.state.token
+          });
           parentProps.history.replace({ state: {} });
+        } else {
+          if (!toast.isActive("errVer")) {
+            toast.error(t("phonefail"), {
+              position: toast.POSITION.TOP_CENTER,
+              toastId: "errVer"
+            });
+            parentProps.history.replace({ state: {} });
+          }
         }
       }
     }
@@ -190,7 +202,7 @@ class Landing extends PureComponent {
               <div className="row">
                 <div className="col-md-4">
                   <span className="created">
-                    Foxtail © 2018 {t("Created by")} <span>Foxtail</span>
+                    Foxtail © 2019 {t("Created by")} <span>Foxtail</span>
                   </span>
                 </div>
                 <div className="offset-md-2 col-md-6">
@@ -306,4 +318,4 @@ class Landing extends PureComponent {
   }
 }
 
-export default withTranslation("landing")(Landing);
+export default withApollo(withTranslation("landing")(Landing));

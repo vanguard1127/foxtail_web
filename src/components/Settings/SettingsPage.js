@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import axios from "axios";
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks
+} from "body-scroll-lock";
 import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
 import ImageEditor from "../Modals/ImageEditor";
 import ImageCropper from "../Modals/ImageCropper";
@@ -24,6 +29,11 @@ import Modal from "../common/Modal";
 import { toast } from "react-toastify";
 
 class SettingsPage extends Component {
+  constructor(props) {
+    super(props);
+    this.targetElement = React.createRef();
+  }
+
   state = {
     distance: 100,
     distanceMetric: "mi",
@@ -142,6 +152,7 @@ class SettingsPage extends Component {
 
   async componentWillUnmount() {
     const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
+    clearAllBodyScrollLocks();
     await this.updateSettings()
       .then(({ data }) => {
         if (data.updateSettings) {
@@ -363,23 +374,35 @@ class SettingsPage extends Component {
     }
   };
 
+  toggleScroll(enabled) {
+    enabled
+      ? disableBodyScroll(this.targetElement)
+      : enableBodyScroll(this.targetElement);
+  }
+
   toggleDesiresPopup = () => {
     this.setErrorHandler("Desires popup toggled");
     if (this.mounted) {
-      this.setState({
-        showDesiresPopup: !this.state.showDesiresPopup
-      });
+      this.setState(
+        {
+          showDesiresPopup: !this.state.showDesiresPopup
+        },
+        this.toggleScroll(!this.state.showDesiresPopup)
+      );
     }
   };
 
   toggleImgEditorPopup = (file, isPrivate) => {
     this.setErrorHandler("Toggle image editor");
     if (this.mounted) {
-      this.setState({
-        fileRecieved: file,
-        isPrivate,
-        showImgEditorPopup: !this.state.showImgEditorPopup
-      });
+      this.setState(
+        {
+          fileRecieved: file,
+          isPrivate,
+          showImgEditorPopup: !this.state.showImgEditorPopup
+        },
+        this.toggleScroll(!this.state.showImgEditorPopup)
+      );
     }
   };
 
@@ -387,47 +410,62 @@ class SettingsPage extends Component {
     this.setErrorHandler("Toggle image cropper");
     console.log(url);
     if (this.mounted) {
-      this.setState({
-        fileRecieved: url,
-        showImgCropperPopup: !this.state.showImgCropperPopup
-      });
+      this.setState(
+        {
+          fileRecieved: url,
+          showImgCropperPopup: !this.state.showImgCropperPopup
+        },
+        this.toggleScroll(!this.state.showImgCropperPopup)
+      );
     }
   };
 
   togglePhotoVerPopup = () => {
     this.setErrorHandler("Toggle Photo Ver Popup");
     if (this.mounted) {
-      this.setState({
-        showPhotoVerPopup: !this.state.showPhotoVerPopup
-      });
+      this.setState(
+        {
+          showPhotoVerPopup: !this.state.showPhotoVerPopup
+        },
+        this.toggleScroll(!this.state.showPhotoVerPopup)
+      );
     }
   };
 
   toggleCouplesPopup = () => {
     this.setErrorHandler("Toggle Couple popup");
     if (this.mounted) {
-      this.setState({
-        showCouplePopup: !this.state.showCouplePopup,
-        flashCpl: false
-      });
+      this.setState(
+        {
+          showCouplePopup: !this.state.showCouplePopup,
+          flashCpl: false
+        },
+        this.toggleScroll(!this.state.showCouplePopup)
+      );
     }
   };
 
   toggleBlackPopup = () => {
     this.setErrorHandler("Toggle Blk popup");
     if (this.mounted) {
-      this.setState({
-        showBlackPopup: !this.state.showBlackPopup
-      });
+      this.setState(
+        {
+          showBlackPopup: !this.state.showBlackPopup
+        },
+        this.toggleScroll(!this.state.showBlackPopup)
+      );
     }
   };
 
   toggleSharePopup = () => {
     this.setErrorHandler("Toggle Share popup");
     if (this.mounted) {
-      this.setState({
-        showSharePopup: !this.state.showSharePopup
-      });
+      this.setState(
+        {
+          showSharePopup: !this.state.showSharePopup
+        },
+        this.toggleScroll(!this.state.showSharePopup)
+      );
     }
   };
 
@@ -604,7 +642,7 @@ class SettingsPage extends Component {
           this.updateSettings = updateSettings;
           return (
             <section className="settings">
-              <div className="container">
+              <div className="container" ref={this.targetElement}>
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12 col-lg-3">
@@ -687,6 +725,7 @@ class SettingsPage extends Component {
                             }
                             t={t}
                             ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            toggleScroll={this.toggleScroll}
                           />
                           {errors.profilePic && (
                             <label className="errorLbl">

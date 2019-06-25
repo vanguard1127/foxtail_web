@@ -19,6 +19,7 @@ class Photos extends Component {
       deleteImg,
       t,
       setProfilePic,
+      toggleScroll,
       ErrorBoundary
     } = this.props;
     return (
@@ -54,6 +55,7 @@ class Photos extends Component {
                 isPrivate={isPrivate}
                 deleteImg={deleteImg}
                 isBlackMember={isBlackMember}
+                toggleScroll={toggleScroll}
                 t={t}
               />
             </div>

@@ -9,6 +9,7 @@ import {
   withRouter
 } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import i18n from "./i18n";
 import * as Sentry from "@sentry/browser";
 import { env } from "./docs/consts";
 import Landing from "./components/Landing";
@@ -29,7 +30,6 @@ import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import * as ErrorHandler from "./components/common/ErrorHandler";
 import withSession from "./components/HOCs/withSession";
-import i18n from "./i18n";
 import Footer from "./components/Footer/";
 import tokenHandler from "./utils/tokenHandler";
 

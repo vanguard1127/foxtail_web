@@ -156,7 +156,7 @@
   "Can't remove the owner!": "Can't remove the owner!",
   "Event no longer available.": "Event no longer available.",
   "Event not found.": "Event not found.",
-  "Private Event: You must be invited to join.": "Private Event: You must be invited to join.",
+  "Private Event = You must be invited to join.": "Private Event = You must be invited to join.",
   "Creator must attend the event!": "Creator must attend the event!",
   "Only the Owner can remove members.": "Only the Owner can remove members.",
   "The event creator is already going :)": "The event creator is already going :)",

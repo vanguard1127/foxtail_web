@@ -25,7 +25,7 @@
   "About": "About",
   "Support": "Support",
   "emailconfirmed": "Email has been confirmed.",
-  "emailconffail": "Email confirmation failed, please try again.",
+  "emailconffail": "Email confirmation has been used or is expired, please try again.",
   "phonefail": "Phone reset failed, please try again.",
   "resetphone": "Reset Phone Number",
   "antispam": "Anti Spam",

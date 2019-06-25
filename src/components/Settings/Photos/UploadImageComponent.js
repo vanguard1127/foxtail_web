@@ -80,22 +80,29 @@ class UploadComponent extends PureComponent {
     let img = this.props.photos[index];
 
     if (this.mounted) {
-      this.setState({
-        selectedImg: img.url,
-        previewVisible: true
-      });
+      this.setState(
+        {
+          selectedImg: img.url,
+          previewVisible: true
+        },
+        this.props.toggleScroll(true)
+      );
     }
   };
 
   handleClickProPic = ({ index, setProfilePic }) => {
     let img = this.props.photos[index];
-    this.props.showCropper(img.url);
+    //    this.props.showCropper(img.url);
+    this.props.showCropper(
+      "https://images.immediate.co.uk/production/volatile/sites/4/2018/08/GettyImages-184938350-0bfb578.jpg"
+    );
+
     //   setProfilePic({ key: img.key, url: img.url });
   };
 
   handleClose = () => {
     if (this.mounted) {
-      this.setState({ previewVisible: false });
+      this.setState({ previewVisible: false }, this.props.toggleScroll(false));
     }
   };
   switchLoader = () => {

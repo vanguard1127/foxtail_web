@@ -125,7 +125,8 @@ class SearchCriteria extends PureComponent {
       interestedIn,
       city
     } = this.props;
-    if (loading || !city) {
+
+    if (loading) {
       return (
         <Mutation
           mutation={UPDATE_SETTINGS}
