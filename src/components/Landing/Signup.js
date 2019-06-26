@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE, LOGIN } from "../../queries";
 import SignupForm from "./SignupForm";
-import withSession from "../HOCs/withSession";
+import withAuth from "../HOCs/withAuth";
 const initialState = {
   username: "",
   email: "",
@@ -248,4 +248,4 @@ class Signup extends PureComponent {
   }
 }
 
-export default withRouter(withSession(Signup));
+export default withRouter(withAuth(Signup));

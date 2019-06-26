@@ -816,6 +816,16 @@ export const CONFIRM_EMAIL = gql`
   }
 `;
 
+export const GET_DEMO_COUNTS = gql`
+  query {
+    getDemoCounts {
+      malesNum
+      femalesNum
+      couplesNum
+    }
+  }
+`;
+
 export const GET_CURRENT_USER = gql`
   query {
     currentuser {
@@ -832,6 +842,7 @@ export const GET_CURRENT_USER = gql`
       isEmailOK
       tours
       announcement
+      maintanence
       distanceMetric
       coupleProfileName
       location {

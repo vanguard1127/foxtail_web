@@ -4,8 +4,8 @@ import LoginButton from "./LoginButton";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
 import * as ErrorHandler from "../common/ErrorHandler";
 import CountUp from "react-countup";
-import { withApollo } from "react-apollo";
-import { CONFIRM_EMAIL } from "../../queries";
+import { withApollo, Query } from "react-apollo";
+import { CONFIRM_EMAIL, GET_DEMO_COUNTS } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
 import ContactUsModal from "../Modals/ContactUs";
 import { ToastContainer, toast } from "react-toastify";
@@ -136,42 +136,63 @@ class Landing extends PureComponent {
                           <span> {t("Welcome")}</span>{" "}
                           <span> {t("Foxtail Stats")}</span>
                         </div>
-                        <ErrorHandler.ErrorBoundary>
-                          <ul>
-                            <li>
-                              <span className="counter">
-                                <CountUp
-                                  end={19538}
-                                  duration={1.75}
-                                  separator="."
-                                />
-                              </span>
-                              <span>{t("Male Members")}</span>
-                            </li>
-                            <li>
-                              <span className="counter">
-                                {" "}
-                                <CountUp
-                                  end={19538}
-                                  duration={1.75}
-                                  separator="."
-                                />
-                              </span>
-                              <span>{t("Female Members")}</span>
-                            </li>
-                            <li>
-                              <span className="counter">
-                                {" "}
-                                <CountUp
-                                  end={19538}
-                                  duration={1.75}
-                                  separator="."
-                                />
-                              </span>
-                              <span>{t("Couple Profiles")}</span>
-                            </li>
-                          </ul>
-                        </ErrorHandler.ErrorBoundary>
+                        <Query
+                          query={GET_DEMO_COUNTS}
+                          fetchPolicy="cache-first"
+                        >
+                          {({ data, loading, error }) => {
+                            if (error) {
+                              console.error(error);
+                            }
+                            let malesNum = 0,
+                              femalesNum = 0,
+                              couplesNum = 0;
+
+                            if (!loading && data.getDemoCounts) {
+                              malesNum = data.getDemoCounts.malesNum;
+                              femalesNum = data.getDemoCounts.femalesNum;
+                              couplesNum = data.getDemoCounts.couplesNum;
+                            }
+                            return (
+                              <ErrorHandler.ErrorBoundary>
+                                <ul>
+                                  <li>
+                                    <span className="counter">
+                                      <CountUp
+                                        end={malesNum}
+                                        duration={1.75}
+                                        separator=","
+                                      />
+                                    </span>
+                                    <span>{t("Male Members")}</span>
+                                  </li>
+                                  <li>
+                                    <span className="counter">
+                                      {" "}
+                                      <CountUp
+                                        end={femalesNum}
+                                        duration={1.75}
+                                        separator=","
+                                      />
+                                    </span>
+                                    <span>{t("Female Members")}</span>
+                                  </li>
+                                  <li>
+                                    <span className="counter">
+                                      {" "}
+                                      <CountUp
+                                        end={couplesNum}
+                                        duration={1.75}
+                                        separator=","
+                                      />
+                                    </span>
+                                    <span>{t("Couple Profiles")}</span>
+                                  </li>
+                                </ul>
+                              </ErrorHandler.ErrorBoundary>
+                            );
+                          }}
+                        </Query>
                       </div>
                     </div>
                   </div>

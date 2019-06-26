@@ -3,6 +3,7 @@ import React from "react";
 import { Query } from "react-apollo";
 
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
@@ -19,6 +20,23 @@ const withAuth = conditionFunc => Component => props => {
         {({ data, loading, refetch }) => {
           if (loading) {
             return null;
+          }
+          console.log("WithAuth");
+
+          {
+            /* if (data && data.currentuser.maintanence === true) {
+            return <div>maintence</div>;
+          } */
+          }
+
+          if (data && data.currentuser.announcement !== null) {
+            if (!toast.isActive("announce")) {
+              toast.info(data.currentuser.announcement, {
+                position: toast.POSITION.BOTTOM_LEFT,
+                autoClose: false,
+                toastId: "announce"
+              });
+            }
           }
 
           if (conditionFunc(data)) {
