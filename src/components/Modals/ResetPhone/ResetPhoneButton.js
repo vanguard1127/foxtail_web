@@ -69,7 +69,7 @@ class ResetPhoneButton extends PureComponent {
             >
               {p => (
                 <span className="color" {...p}>
-                  {t("updatedphone")}
+                  {t("updphone")}
                 </span>
               )}
             </AccountKit>

@@ -41,7 +41,6 @@ class LoginButton extends PureComponent {
               "refreshToken",
               data.fbResolve.find(token => token.access === "refresh").token
             );
-            //  await this.props.refetch();
             this.props.history.push("/members");
           }
         })

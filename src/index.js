@@ -19,8 +19,6 @@ import Privacy from "./components/Information/Privacy";
 import AntiSpam from "./components/Information/AntiSpam";
 import ToS from "./components/Information/ToS";
 import LawEnforce from "./components/Information/LawEnforce";
-import EmailConfirm from "./components/Landing/EmailConfirm";
-import PhoneConfirm from "./components/Landing/PhoneConfirm";
 import Navbar from "./components/Navbar/";
 import ProfileSearch from "./components/SearchProfiles/";
 import Settings from "./components/Settings/";
@@ -209,107 +207,90 @@ const Root = () => (
   </Router>
 );
 
-const Wrapper = withAuth(session => session && session.currentuser)(
-  withRouter(props => {
-    let location = props.location;
-    if (location.pathname) {
-      if (location.pathname === "/") {
-        return <Landing parentProps={props} />;
-      } else if (location.pathname === "/tos") {
-        return <ToS />;
-      } else if (location.pathname === "/about") {
-        return <About />;
-      } else if (location.pathname === "/faq") {
-        return <FAQ />;
-      } else if (location.pathname === "/privacy") {
-        return <Privacy />;
-      } else if (location.pathname === "/antispam") {
-        return <AntiSpam />;
-      } else if (location.pathname === "/lawenforcement") {
-        return <LawEnforce />;
-      }
-      let showFooter =
-        location.pathname && location.pathname.match(/^\/inbox/) === null;
-
-      return (
-        <div>
-          <Body showFooter={showFooter} session={props.session} />
-        </div>
-      );
-    } else {
-      return null;
+const Wrapper = withRouter(props => {
+  let location = props.location;
+  if (location.pathname) {
+    if (location.pathname === "/") {
+      return <Landing {...props} />;
+    } else if (location.pathname === "/tos") {
+      return <ToS />;
+    } else if (location.pathname === "/about") {
+      return <About />;
+    } else if (location.pathname === "/faq") {
+      return <FAQ />;
+    } else if (location.pathname === "/privacy") {
+      return <Privacy />;
+    } else if (location.pathname === "/antispam") {
+      return <AntiSpam />;
+    } else if (location.pathname === "/lawenforcement") {
+      return <LawEnforce />;
     }
-  })
-);
+    let showFooter =
+      location.pathname && location.pathname.match(/^\/inbox/) === null;
 
-const Body = ({ showFooter, session }) => (
-  <div
-    className="layout"
-    style={{
-      height: "auto",
-      margin: "0",
-      display: "flex",
-      flexDirection: "column",
-      minHeight: "100vh"
-    }}
-  >
-    <header>
-      <Navbar ErrorHandler={ErrorHandler} session={session} />
-    </header>
-    <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
-      <Switch>
-        <Route
-          path="/members"
-          render={() => <ProfileSearch ErrorHandler={ErrorHandler} />}
-          exact
-        />
-        <Route
-          path="/events"
-          render={() => <SearchEvents ErrorHandler={ErrorHandler} />}
-          exact
-        />
-        <Route
-          path="/event/:id"
-          render={() => <EventPage ErrorHandler={ErrorHandler} />}
-        />
-        <Route
-          path="/member/:id"
-          render={() => <ProfilePage ErrorHandler={ErrorHandler} />}
-        />
-        <Route
-          path="/inbox/:chatID"
-          component={InboxPage}
-          ErrorHandler={ErrorHandler}
-        />
-        <Route
-          path="/inbox"
-          component={InboxPage}
-          ErrorHandler={ErrorHandler}
-        />
-        <Route
-          path="/settings"
-          render={() => <Settings ErrorHandler={ErrorHandler} />}
-        />
-        <Route
-          path="/confirmation/:token"
-          render={props => (
-            <EmailConfirm ErrorHandler={ErrorHandler} {...props} />
-          )}
-        />
-        <Route
-          path="/phonereset/:token"
-          render={props => (
-            <PhoneConfirm ErrorHandler={ErrorHandler} {...props} />
-          )}
-        />
-        <Redirect to="/" />
-      </Switch>
-    </main>
-    {showFooter && <Footer />}
-    <ToastContainer position="top-center" />
-  </div>
-);
+    return <Body showFooter={showFooter} location={location} />;
+  } else {
+    return null;
+  }
+});
 
+const Body = withAuth(session => session && session.currentuser)(
+  ({ showFooter, session }) => (
+    <div
+      className="layout"
+      style={{
+        height: "auto",
+        margin: "0",
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh"
+      }}
+    >
+      <header>
+        <Navbar ErrorHandler={ErrorHandler} session={session} />
+      </header>
+      <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
+        <Switch>
+          <Route
+            path="/members"
+            render={() => <ProfileSearch ErrorHandler={ErrorHandler} />}
+            exact
+          />
+          <Route
+            path="/events"
+            render={() => <SearchEvents ErrorHandler={ErrorHandler} />}
+            exact
+          />
+          <Route
+            path="/event/:id"
+            render={() => <EventPage ErrorHandler={ErrorHandler} />}
+          />
+          <Route
+            path="/member/:id"
+            render={() => <ProfilePage ErrorHandler={ErrorHandler} />}
+          />
+          <Route
+            path="/inbox/:chatID"
+            component={InboxPage}
+            ErrorHandler={ErrorHandler}
+          />
+          <Route
+            path="/inbox"
+            component={InboxPage}
+            ErrorHandler={ErrorHandler}
+          />
+          <Route
+            path="/settings"
+            render={() => <Settings ErrorHandler={ErrorHandler} />}
+          />
+          <Redirect to="/" />
+        </Switch>
+      </main>
+      {showFooter && <Footer />}
+      <ToastContainer position="top-center" />
+    </div>
+  )
+);
 render(
   <ApolloProvider client={client}>
     <Root />

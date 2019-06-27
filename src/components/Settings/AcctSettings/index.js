@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Dialog from "../../Modals/Dialog";
+import RequestEmailVerBtn from "./RequestEmailVerBtn";
 import ChangePhoneBtn from "./ChangePhoneBtn";
 import * as yup from "yup";
 class AcctSettings extends Component {
@@ -34,7 +35,7 @@ class AcctSettings extends Component {
   };
 
   render() {
-    const { ErrorHandler, t, setValue, lang } = this.props;
+    const { ErrorHandler, t, setValue, lang, isEmailOK } = this.props;
     const { showDialog, title, msg, btnText, setting, successMsg } = this.state;
     let schema;
     if (setting === "email") {
@@ -135,6 +136,13 @@ class AcctSettings extends Component {
                 </span>
               </div>
             </div>
+            {!isEmailOK && (
+              <div className="col-md-6">
+                <div className="verification-box">
+                  <RequestEmailVerBtn t={t} ErrorHandler={ErrorHandler} />
+                </div>
+              </div>
+            )}
           </div>
           {showDialog && (
             <Dialog

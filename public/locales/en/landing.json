@@ -25,7 +25,7 @@
   "About": "About",
   "Support": "Support",
   "emailconfirmed": "Email has been confirmed.",
-  "emailconffail": "Email confirmation has been used or is expired, please try again.",
+  "emailconffail": "Email confirmation has been used or is expired, please go to your 'My Account' page to request another.",
   "phonefail": "Phone reset failed, please try again.",
   "resetphone": "Reset Phone Number",
   "antispam": "Anti Spam",

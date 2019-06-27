@@ -3387,6 +3387,22 @@ section.go-events .events-card-content span.head {
   margin-bottom: 20px;
 }
 
+section.not-found span.logo {
+  width: 80px;
+  height: 51px;
+  margin: 0 auto;
+  position: relative;
+  top: 50px;
+  display: flex;
+  flex: 1;
+
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url("../img/logo/logo-color@2x.png");
+  /* z-index: 999; */
+}
+
+
 section.go-events .events-card-content .card-item {
   width: 100%;
   display: block;
@@ -8006,6 +8022,9 @@ section.not-found .icon i.nico.message::before {
   content: "\e80c";
   background-color: #dfe1e6;
   background-image: none;
+}
+section.not-found .icon i.nico.cogs::before {
+  content: "\e800";
 }
 
 section.not-found span.head.nopad {

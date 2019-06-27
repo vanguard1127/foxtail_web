@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import Signup from "./Signup";
 import LoginButton from "./LoginButton";
+import withAuth from "../HOCs/withAuth";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
 import * as ErrorHandler from "../common/ErrorHandler";
 import CountUp from "react-countup";
@@ -34,56 +35,64 @@ class Landing extends PureComponent {
   };
 
   render() {
-    const { t, parentProps, client } = this.props;
-    const params = new URLSearchParams(parentProps.location.search);
-    const refer = params.get("refer");
-    const aff = params.get("aff");
-    const mem = params.get("mem");
-    const eve = params.get("eve");
+    const { t, client, location, history, session } = this.props;
     const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
+    let refer = null;
+    let aff = null;
+    let mem = null;
+    let eve = null;
 
-    if (parentProps.location.state) {
-      if (parentProps.location.state.type === "emailVer") {
-        client
-          .query({
-            query: CONFIRM_EMAIL,
-            variables: { token: parentProps.location.state.token }
-          })
-          .then(resp => {
-            if (resp.data.confirmEmail) {
-              if (!toast.isActive("emailVer")) {
-                toast.success(t("emailconfirmed"), {
-                  position: toast.POSITION.TOP_CENTER,
-                  toastId: "emailVer"
-                });
+    if (location) {
+      const params = new URLSearchParams(location.search);
+      refer = params.get("refer");
+      aff = params.get("aff");
+      mem = params.get("mem");
+      eve = params.get("eve");
 
-                parentProps.history.replace({ state: {} });
+      if (location.state) {
+        if (location.state.type === "emailVer") {
+          client
+            .query({
+              query: CONFIRM_EMAIL,
+              variables: { token: location.state.token }
+            })
+            .then(resp => {
+              if (resp.data.confirmEmail) {
+                if (!toast.isActive("emailVer")) {
+                  toast.success(t("emailconfirmed"), {
+                    position: toast.POSITION.TOP_CENTER,
+                    toastId: "emailVer"
+                  });
+
+                  history.replace({ state: {} });
+                }
+              } else {
+                if (!toast.isActive("errVer")) {
+                  toast.error(t("emailconffail"), {
+                    position: toast.POSITION.TOP_CENTER,
+                    toastId: "errVer",
+                    autoClose: 8000
+                  });
+
+                  history.replace({ state: {} });
+                }
               }
-            } else {
-              if (!toast.isActive("errVer")) {
-                toast.error(t("emailconffail"), {
-                  position: toast.POSITION.TOP_CENTER,
-                  toastId: "errVer"
-                });
-
-                parentProps.history.replace({ state: {} });
-              }
-            }
-          });
-      } else if (parentProps.location.state.type === "phoneVer") {
-        if (parentProps.location.state.token) {
-          this.setState({
-            resetPhoneVisible: true,
-            token: parentProps.location.state.token
-          });
-          parentProps.history.replace({ state: {} });
-        } else {
-          if (!toast.isActive("errVer")) {
-            toast.error(t("phonefail"), {
-              position: toast.POSITION.TOP_CENTER,
-              toastId: "errVer"
             });
-            parentProps.history.replace({ state: {} });
+        } else if (location.state.type === "phoneReset") {
+          if (location.state.token) {
+            this.setState({
+              resetPhoneVisible: true,
+              token: location.state.token
+            });
+            history.replace({ state: {} });
+          } else {
+            if (!toast.isActive("errVer")) {
+              toast.error(t("phonefail"), {
+                position: toast.POSITION.TOP_CENTER,
+                toastId: "errVer"
+              });
+              history.replace({ state: {} });
+            }
           }
         }
       }
@@ -104,7 +113,7 @@ class Landing extends PureComponent {
                     <ErrorHandler.ErrorBoundary>
                       <LoginButton
                         t={t}
-                        history={parentProps.history}
+                        history={history}
                         ErrorHandler={ErrorHandler}
                         lang={lang}
                       />
@@ -143,6 +152,9 @@ class Landing extends PureComponent {
                           {({ data, loading, error }) => {
                             if (error) {
                               console.error(error);
+                            }
+                            if (loading) {
+                              return null;
                             }
                             let malesNum = 0,
                               femalesNum = 0,
@@ -198,7 +210,6 @@ class Landing extends PureComponent {
                   </div>
                   <div className="col-lg-5 col-md-12">
                     <ErrorHandler.ErrorBoundary>
-                      {" "}
                       <Signup
                         t={t}
                         ErrorHandler={ErrorHandler}
@@ -208,6 +219,8 @@ class Landing extends PureComponent {
                         mem={mem}
                         eve={eve}
                         toast={toast}
+                        session={session}
+                        history={history}
                       />
                     </ErrorHandler.ErrorBoundary>
                   </div>
@@ -245,38 +258,26 @@ class Landing extends PureComponent {
                           <span className="tooltiptext">
                             <div>
                               {" "}
-                              <span
-                                onClick={() => parentProps.history.push("/tos")}
-                              >
+                              <span onClick={() => history.push("/tos")}>
                                 {t("common:Terms")}
                               </span>
                             </div>
                             <div>
                               {" "}
-                              <span
-                                onClick={() =>
-                                  parentProps.history.push("/privacy")
-                                }
-                              >
+                              <span onClick={() => history.push("/privacy")}>
                                 {t("common:Privacy")}
                               </span>
                             </div>
                             <div>
                               {" "}
-                              <span
-                                onClick={() =>
-                                  parentProps.history.push("/antispam")
-                                }
-                              >
+                              <span onClick={() => history.push("/antispam")}>
                                 {t("antispam")}
                               </span>
                             </div>
                             <div>
                               {" "}
                               <span
-                                onClick={() =>
-                                  parentProps.history.push("/lawenforcement")
-                                }
+                                onClick={() => history.push("/lawenforcement")}
                               >
                                 {t("lawenf")}
                               </span>
@@ -291,14 +292,12 @@ class Landing extends PureComponent {
                         </span>
                       </li>
                       <li>
-                        <span onClick={() => parentProps.history.push("/faq")}>
+                        <span onClick={() => history.push("/faq")}>
                           {t("FAQ")}
                         </span>
                       </li>
                       <li>
-                        <span
-                          onClick={() => parentProps.history.push("/about")}
-                        >
+                        <span onClick={() => history.push("/about")}>
                           {t("About")}
                         </span>
                       </li>
@@ -318,9 +317,11 @@ class Landing extends PureComponent {
           <ResetPhoneModal
             t={t}
             token={token}
-            close={() => this.setState({ resetPhoneVisible: false })}
+            close={() =>
+              this.setState({ resetPhoneVisible: false, token: null })
+            }
             ErrorHandler={ErrorHandler}
-            history={parentProps.history}
+            history={history}
             lang={lang}
           />
         )}
@@ -339,4 +340,6 @@ class Landing extends PureComponent {
   }
 }
 
-export default withApollo(withTranslation("landing")(Landing));
+export default withAuth(session => session && session.currentuser)(
+  withApollo(withTranslation("landing")(Landing))
+);

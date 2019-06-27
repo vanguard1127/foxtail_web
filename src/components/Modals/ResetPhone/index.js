@@ -9,7 +9,9 @@ class ResetPhone extends PureComponent {
   state = { text: "", code: "+1" };
   componentDidMount() {
     this.mounted = true;
-    this.textInput.focus();
+    if (this.textInput) {
+      this.textInput.focus();
+    }
   }
   handleTextChange = event => {
     if (this.mounted) {

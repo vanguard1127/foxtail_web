@@ -1,66 +1,128 @@
 import React from "react";
 
 import { Query } from "react-apollo";
-
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
-  if (localStorage.getItem("token") === null) {
-    window.location.replace(
-      process.env.NODE_ENV === "production"
-        ? "https://foxtailapp.com/"
-        : "http://localhost:3000/"
-    );
-    return null;
-  } else {
-    return (
-      <Query query={GET_CURRENT_USER}>
-        {({ data, loading, refetch }) => {
-          if (loading) {
-            return null;
-          }
-          console.log("WithAuth");
+  const { location } = props;
+  return (
+    <Query query={GET_CURRENT_USER} fetchPolicy="network-only">
+      {({ data, loading, refetch }) => {
+        if (loading) {
+          return null;
+        }
 
-          {
-            /* if (data && data.currentuser.maintanence === true) {
-            return <div>maintence</div>;
-          } */
-          }
+        if (data && data.currentuser.maintanence === true) {
+          return (
+            <section className="not-found">
+              <div className="container">
+                <div className="col-md-12">
+                  <div className="icon">
+                    <i className="nico cogs" />
+                  </div>
+                  <span className="head">We'll Be Right Back</span>
+                  <span className="description">
+                    Foxtail is currently being upgraded. Please check back soon!
+                  </span>
+                  <span className="description">
+                    Sorry for any inconveience.
+                  </span>
+                  <div>
+                    <span className="logo"></span>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        }
 
-          if (data && data.currentuser.announcement !== null) {
-            if (!toast.isActive("announce")) {
-              toast.info(data.currentuser.announcement, {
-                position: toast.POSITION.BOTTOM_LEFT,
-                autoClose: false,
-                toastId: "announce"
-              });
-            }
+        if (data && data.currentuser.announcement !== null) {
+          if (!toast.isActive("announce")) {
+            toast.info(data.currentuser.announcement, {
+              position: toast.POSITION.BOTTOM_LEFT,
+              autoClose: false,
+              toastId: "announce"
+            });
           }
+        }
 
-          if (conditionFunc(data)) {
-            if (
-              !data.currentuser.isProfileOK &&
-              ~window.location.href.indexOf("/settings") === 0
-            ) {
+        if (location) {
+          if (location.pathname === "/confirmation") {
+            return (
+              <Redirect
+                to={{
+                  pathname: "/",
+                  state: {
+                    type: "emailVer",
+                    token: new URLSearchParams(location.search).get("token")
+                  }
+                }}
+              />
+            );
+          } else if (location.pathname === "/phonereset") {
+            return (
+              <Redirect
+                to={{
+                  pathname: "/",
+                  state: {
+                    type: "phoneReset",
+                    token: new URLSearchParams(location.search).get("token")
+                  }
+                }}
+              />
+            );
+          }
+        }
+
+        if (conditionFunc(data)) {
+          if (
+            !data.currentuser.isProfileOK &&
+            ~window.location.href.indexOf("/settings") === 0
+          ) {
+            return (
+              <Redirect
+                to={{
+                  pathname: "/settings"
+                }}
+              />
+            );
+          } else if (location && location.pathname === "/") {
+            const params = new URLSearchParams(location.search);
+
+            const mem = params.get("mem");
+            const eve = params.get("eve");
+            if (mem) {
               return (
                 <Redirect
                   to={{
-                    pathname: "/settings"
+                    pathname: "/member/" + mem
+                  }}
+                />
+              );
+            } else if (eve) {
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/event/" + eve
+                  }}
+                />
+              );
+            } else {
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/members"
                   }}
                 />
               );
             }
-
-            return <Component {...props} session={data} refetch={refetch} />;
-          } else {
-            return <Redirect to="/" />;
           }
-        }}
-      </Query>
-    );
-  }
+        }
+        return <Component {...props} session={data} refetch={refetch} />;
+      }}
+    </Query>
+  );
 };
-
 export default withAuth;

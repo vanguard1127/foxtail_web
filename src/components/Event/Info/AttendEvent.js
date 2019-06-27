@@ -137,4 +137,4 @@ class AttendEvent extends Component {
   }
 }
 
-export default withAuth(AttendEvent);
+export default withAuth(session => session && session.currentuser)(AttendEvent);

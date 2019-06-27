@@ -1,9 +1,7 @@
 import React, { PureComponent } from "react";
-import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE, LOGIN } from "../../queries";
 import SignupForm from "./SignupForm";
-import withAuth from "../HOCs/withAuth";
 const initialState = {
   username: "",
   email: "",
@@ -21,7 +19,7 @@ class Signup extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const { mem, eve, history, session, ErrorHandler, toast } = this.props;
+    const { mem, eve, history, session, ErrorHandler, toast, t } = this.props;
     ErrorHandler.setBreadcrumb("Signup loaded");
 
     if (localStorage.getItem("token") !== null) {
@@ -35,7 +33,7 @@ class Signup extends PureComponent {
         }
       }
     } else if (mem || eve) {
-      toast.info(this.props.t("pleaselogin"));
+      toast.info(t("pleaselogin"));
     }
   }
 
@@ -60,6 +58,7 @@ class Signup extends PureComponent {
       return;
     }
     if (this.mounted) {
+      const { ErrorHandler, history } = this.props;
       this.setState(
         {
           csrf: state,
@@ -83,19 +82,19 @@ class Signup extends PureComponent {
               );
 
               if (isCouple) {
-                this.props.history.push({
+                history.push({
                   pathname: "/settings",
                   state: { couple: true, initial: true }
                 });
               } else {
-                this.props.history.push({
+                history.push({
                   pathname: "/settings",
                   state: { initial: true }
                 });
               }
             })
             .catch(res => {
-              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+              ErrorHandler.catchErrors(res.graphQLErrors);
             });
         }
       );
@@ -104,7 +103,6 @@ class Signup extends PureComponent {
 
   //TODO:DELETE THIS PRE LAUNCH
   handleLogin = login => {
-    //if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
     if (this.mounted) {
       login()
         .then(async ({ data }) => {
@@ -135,7 +133,15 @@ class Signup extends PureComponent {
     // }
   };
   render() {
-    const { t, setBreadcrumb, ErrorHandler, lang, refer, aff } = this.props;
+    const {
+      t,
+      setBreadcrumb,
+      ErrorHandler,
+      lang,
+      refer,
+      aff,
+      history
+    } = this.props;
 
     let {
       csrf,
@@ -180,7 +186,7 @@ class Signup extends PureComponent {
                 setBreadcrumb={setBreadcrumb}
                 t={t}
                 ErrorHandler={ErrorHandler}
-                history={this.props.history}
+                history={history}
                 lang={lang}
               />
               <div className="form terms">
@@ -248,4 +254,4 @@ class Signup extends PureComponent {
   }
 }
 
-export default withRouter(withAuth(Signup));
+export default Signup;

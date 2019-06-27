@@ -408,7 +408,7 @@ class SettingsPage extends Component {
 
   toggleImgCropperPopup = url => {
     this.setErrorHandler("Toggle image cropper");
-    console.log(url);
+
     if (this.mounted) {
       this.setState(
         {
@@ -830,6 +830,7 @@ class SettingsPage extends Component {
                             t={t}
                             ErrorHandler={ErrorHandler}
                             lang={lang}
+                            isEmailOK={currentuser.isEmailOK}
                           />
                           <DeactivateAcctBtn
                             t={t}

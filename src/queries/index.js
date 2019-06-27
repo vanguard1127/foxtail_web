@@ -152,6 +152,12 @@ export const SUBMIT_PHOTO_REVIEW = gql`
   }
 `;
 
+export const RESEND_EMAIL_VER = gql`
+  mutation {
+    resendVerEMail
+  }
+`;
+
 export const DELETE_PHOTO = gql`
   mutation($publicPhotoList: [String], $privatePhotoList: [String]) {
     deletePhoto(
