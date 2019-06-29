@@ -13,7 +13,10 @@ import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
 class Settings extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   componentDidMount() {
@@ -29,7 +32,7 @@ class Settings extends Component {
     }
 
     this.mounted = true;
-    document.title = t("myacct");
+    document.title = t("common:myaccount");
   }
 
   componentWillUnmount() {
@@ -70,7 +73,7 @@ class Settings extends Component {
               </div>
             );
           }
-          document.title = t("myacct");
+          document.title = t("common:myaccount");
           if (error) {
             return (
               <ErrorHandler.report

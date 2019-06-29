@@ -54,7 +54,8 @@ class SignupForm extends Component {
       interestedIn.length !== nextState.interestedIn.length ||
       isCouple !== nextState.isCouple ||
       isValid !== nextState.isValid ||
-      errors !== nextState.errors
+      errors !== nextState.errors ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

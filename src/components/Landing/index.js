@@ -140,32 +140,33 @@ class Landing extends PureComponent {
                         <h1>{t("title")}</h1>
                         <span className="title">{t("subtitle")}</span>
                       </div>
-                      <div className="stats">
-                        <div className="head">
-                          <span> {t("Welcome")}</span>{" "}
-                          <span> {t("Foxtail Stats")}</span>
-                        </div>
-                        <Query
-                          query={GET_DEMO_COUNTS}
-                          fetchPolicy="cache-first"
-                        >
-                          {({ data, loading, error }) => {
-                            if (error) {
-                              console.error(error);
-                            }
-                            if (loading) {
-                              return null;
-                            }
-                            let malesNum = 0,
-                              femalesNum = 0,
-                              couplesNum = 0;
 
-                            if (!loading && data.getDemoCounts) {
-                              malesNum = data.getDemoCounts.malesNum;
-                              femalesNum = data.getDemoCounts.femalesNum;
-                              couplesNum = data.getDemoCounts.couplesNum;
-                            }
-                            return (
+                      <Query query={GET_DEMO_COUNTS} fetchPolicy="cache-first">
+                        {({ data, loading, error }) => {
+                          if (error) {
+                            console.error(error);
+                          }
+                          if (loading && !data) {
+                            return null;
+                          }
+                          let malesNum = 0,
+                            femalesNum = 0,
+                            couplesNum = 0;
+
+                          if (!loading && data && data.getDemoCounts) {
+                            malesNum = data.getDemoCounts.malesNum;
+                            femalesNum = data.getDemoCounts.femalesNum;
+                            couplesNum = data.getDemoCounts.couplesNum;
+                          }
+                          if (malesNum === 0) {
+                            return null;
+                          }
+                          return (
+                            <div className="stats">
+                              <div className="head">
+                                <span> {t("Welcome")}</span>{" "}
+                                <span> {t("Foxtail Stats")}</span>
+                              </div>
                               <ErrorHandler.ErrorBoundary>
                                 <ul>
                                   <li>
@@ -202,10 +203,10 @@ class Landing extends PureComponent {
                                   </li>
                                 </ul>
                               </ErrorHandler.ErrorBoundary>
-                            );
-                          }}
-                        </Query>
-                      </div>
+                            </div>
+                          );
+                        }}
+                      </Query>
                     </div>
                   </div>
                   <div className="col-lg-5 col-md-12">

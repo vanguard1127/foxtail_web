@@ -9395,6 +9395,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 }
 
 .aboutlogo {
+  margin:40px;
   width: 21%;
   height: 10%;
   background-size: 100%;

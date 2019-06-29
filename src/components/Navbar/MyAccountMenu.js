@@ -4,6 +4,9 @@ import Logout from "./LogoutLink";
 
 class MyAccountMenu extends Component {
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
 
@@ -28,20 +31,19 @@ class MyAccountMenu extends Component {
       <div className="toggle">
         <div className="dropdown hidden-mobile open">
           <ul>
-            {isCouple ? (
-              <NavLink to="/settings">
-                {" "}
-                <li>{t("ouracct")}</li>
-              </NavLink>
-            ) : (
-              <NavLink to="/settings">
-                {" "}
-                <li>{t("common:myaccount")} </li>
-              </NavLink>
-            )}
-
             {this.props.location.pathname !== "/settings" && (
               <>
+                {isCouple ? (
+                  <NavLink to="/settings">
+                    {" "}
+                    <li>{t("ouracct")}</li>
+                  </NavLink>
+                ) : (
+                  <NavLink to="/settings">
+                    {" "}
+                    <li>{t("common:myaccount")} </li>
+                  </NavLink>
+                )}
                 {!isCouple && (
                   <li onClick={this.onAddCouple}>
                     <span role="heading" aria-level="2">

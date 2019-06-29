@@ -43,7 +43,8 @@ class NoticesItem extends Component {
       this.state.visible !== nextState.visible ||
       this.state.alertVisible !== nextState.alertVisible ||
       this.state.userAlert !== nextState.userAlert ||
-      this.props.count !== nextProps.count
+      this.props.count !== nextProps.count ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }
@@ -246,6 +247,7 @@ class NoticesItem extends Component {
               }) => {
                 if (
                   loading ||
+                  !data ||
                   !data.getNotifications ||
                   !data.getNotifications.notifications
                 ) {

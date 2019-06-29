@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 class ProfileBio extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   render() {

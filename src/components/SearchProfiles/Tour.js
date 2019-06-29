@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
 import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
@@ -49,19 +49,23 @@ class Tour extends PureComponent {
     const tourConfig = [
       {
         selector: "",
-        content: `Welcome to the Member Search page.`
+        content: t("Welcome to the Member Search page.")
       },
       {
         selector: '[data-tut="criteria"]',
-        content: `Set your preferences to find your ideals members to meet. This uses your current location unless you have a Black membership.`
+        content: t(
+          "Set your preferences to find your ideals members to meet. This uses your current location unless you have a Black membership."
+        )
       },
       {
         selector: '[data-tut="profiles"]',
-        content: `Here are all the users that meet your criteria.`
+        content: t("Here are all the users that meet your criteria.")
       },
       {
         selector: '[data-tut="single"]',
-        content: `When you find someone you're interested in, click their name to go to their profile. **Hint: Click this user's profile**`
+        content: t(
+          "When you find someone you're interested in, click their name to go to their profile. **Hint: Click this user's profile**"
+        )
       }
     ];
 
@@ -85,7 +89,7 @@ class Tour extends PureComponent {
                             <div style={{ display: "flex" }}>
                               <input
                                 className={"location-search-input"}
-                                value="  My Location"
+                                value={t("My Location")}
                                 readOnly
                               />
                               <span className="reset-icon" />
@@ -97,7 +101,7 @@ class Tour extends PureComponent {
                         <div className="item">
                           <div>
                             <div className="select-container dropdown">
-                              <label>Interested In:</label>
+                              <label>{t("Interested")}:</label>
                               <div className="multiple-options" />
                             </div>
                           </div>
@@ -105,7 +109,7 @@ class Tour extends PureComponent {
                       </div>
                       <div className="col-md-6">
                         <div className="item">
-                          <div className="range-head">Distance:</div>
+                          <div className="range-head">{t("distance")}:</div>
                           <div className="rc-slider range-con">
                             <div className="rc-slider-rail" />
                             <div
@@ -133,7 +137,7 @@ class Tour extends PureComponent {
                       </div>
                       <div className="col-md-6">
                         <div className="item">
-                          <div className="range-head">Age:</div>
+                          <div className="range-head">{t("Age")}:</div>
                           <div className="rc-slider range-con">
                             <div className="rc-slider-rail" />
                             <div
@@ -164,8 +168,8 @@ class Tour extends PureComponent {
                             <div className="rc-slider-mark" />
                           </div>
                           <div className="limit">
-                            <span>18 years</span>
-                            <span>80+ years</span>
+                            <span>18 {t("years")}</span>
+                            <span>80+ {t("years")}</span>
                           </div>
                         </div>
                       </div>
@@ -711,7 +715,7 @@ class Tour extends PureComponent {
                       </div>
                       <div className="col-md-12">
                         <div className="more-content-btn">
-                          <a href="#">More Profiles</a>
+                          <a href="#">{t("morepros")}</a>
                         </div>
                       </div>
                     </div>

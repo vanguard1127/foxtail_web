@@ -8,7 +8,7 @@ const SliderWithToolTip = createSliderWithTooltip(Slider);
 class DistanceSlider extends Component {
   shouldComponentUpdate(nextProps) {
     const { value } = this.props;
-    if (value !== nextProps.value) return true;
+    if (value !== nextProps.value || this.props.t !== nextProps.t) return true;
     return false;
   }
 

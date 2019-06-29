@@ -94,7 +94,7 @@ class EditCanvasImage extends PureComponent {
     if (this.mounted && !uploading) {
       this.setState({ uploading: true }, () => {
         const dataURL = this.cropper
-          .getCroppedCanvas({ width: 90, height: 90 })
+          .getCroppedCanvas({ width: 250, height: 250 })
           .toDataURL();
         const blobData = this.dataURItoBlob(dataURL);
         const file = {

@@ -3,6 +3,9 @@ import UpdateSubBtn from "./UpdateSubBtn";
 import CancelSubBtn from "./CancelSubBtn";
 class ManageBlackSub extends Component {
   shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   render() {

@@ -16,7 +16,10 @@ class SetLocationModal extends Component {
     this.mounted = false;
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.address !== nextState.address) {
+    if (
+      this.state.address !== nextState.address ||
+      this.props.t !== nextProps.t
+    ) {
       return true;
     }
     return false;

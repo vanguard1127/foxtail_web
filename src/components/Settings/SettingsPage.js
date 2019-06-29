@@ -135,7 +135,8 @@ class SettingsPage extends Component {
       this.state.username !== nextState.username ||
       this.state.users !== nextState.users ||
       this.state.vibrateNotify !== nextState.vibrateNotify ||
-      this.state.visible !== nextState.visible
+      this.state.visible !== nextState.visible ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

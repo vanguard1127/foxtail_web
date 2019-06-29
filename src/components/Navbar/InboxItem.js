@@ -5,7 +5,8 @@ class InboxItem extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.count !== nextProps.count ||
-      this.props.active !== nextProps.active
+      this.props.active !== nextProps.active ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

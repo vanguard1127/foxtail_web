@@ -20,7 +20,7 @@ class DirectMsg extends Component {
     deleteFromCache({ cache, query: "getInbox" });
   };
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.text !== nextState.text) {
+    if (this.state.text !== nextState.text || this.props.t !== nextProps.t) {
       return true;
     }
     return false;

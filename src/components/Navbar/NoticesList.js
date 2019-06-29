@@ -38,7 +38,8 @@ class NoticesList extends Component {
       this.state.skip !== nextState.skip ||
       this.state.visible !== nextState.visible ||
       this.props.notifications !== nextProps.notifications ||
-      this.state.loading !== nextState.loading
+      this.state.loading !== nextState.loading ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

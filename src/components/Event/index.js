@@ -29,7 +29,7 @@ class EventPage extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state !== nextState) {
+    if (this.state !== nextState || this.props.t !== nextProps.t) {
       return true;
     }
     return false;

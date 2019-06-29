@@ -9,7 +9,8 @@ class Preferences extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.distanceMetric !== nextProps.distanceMetric ||
-      this.props.city !== nextProps.city
+      this.props.city !== nextProps.city ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

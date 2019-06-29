@@ -6,7 +6,6 @@ import {
   EmailShareButton
 } from "react-share";
 import Modal from "../common/Modal";
-import Rules from "../Information/Rules";
 import ContactUsModal from "../Modals/ContactUs";
 import { SEEN_TOUR } from "../../queries";
 
@@ -17,7 +16,8 @@ class Footer extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.showRulesModal !== nextState.showRulesModal ||
-      this.state.showContactModal !== nextState.showContactModal
+      this.state.showContactModal !== nextState.showContactModal ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }
@@ -81,7 +81,7 @@ class Footer extends Component {
               <div className="menu">
                 <ul>
                   <li>
-                    <span onClick={this.toggleRuleModal}>Rules</span>
+                    <span onClick={this.toggleRuleModal}>{t("Rules")}</span>
                   </li>
                   {process.env.NODE_ENV === "development" && (
                     <li>
@@ -122,56 +122,55 @@ class Footer extends Component {
         </div>
         {showRulesModal && (
           <Modal
-            header={"Quick Rules Review"}
+            header={t("Quick Rules Review")}
             close={() => this.toggleRuleModal()}
             okSpan={
               <span className="color" onClick={() => this.toggleRuleModal()}>
-                I understand
+                {t("I understand")}
               </span>
             }
           >
             <div>
               <p>
-                We expect everyone to read our Terms & Conditions. But for those
-                who need a quick list of rules, we have a list here. THESE ARE
-                NOT ALL OF THE RULES, but some of the most important. Failure to
-                follow these rules could result in your account: being suspended
-                to being reported to law enforcement.
+                {t("weexpect")}
                 <br />
-                Rules:
+                {t("Rules")}:
               </p>
               <p>
-                Will get you banned and reported to law enforcement:
-                <ul>
-                  <li>Sex for hire activity (including companionship)</li>
-                  <li>
-                    Anything involving minors (including talking Rules them)
-                  </li>
-                  <li>
-                    Anything that is illegal in your juristdion. It is your
-                    responsioility to abide by your local laws
-                  </li>
-                </ul>
-                Will get your account flagged. *Flags make your profile show
-                lower in results. Once you get 3 flags, your acount is
-                suspended.
+                {t("Will get you banned and reported to law enforcement")}:
                 <ul>
                   <li>
-                    Harassing members (including rude remarks, stalking,
-                    shaming, insulting, accusing, and more...){" "}
+                    {t("Sex for hire activity (including companionship)")}
                   </li>
+                  <li>{t("Anything involving sexual acts with minors")}</li>
                   <li>
-                    Using automated means (bots) to manipulate or store
-                    information on Foxtail
+                    {t(
+                      "Anything that is illegal in your juristdion. It is your responsioility to abide by your local laws."
+                    )}
                   </li>
-                  <li>
-                    Taking any data from Foxtail and sharing or storing
-                    elsewhere
-                  </li>
-                  <li>Spamming and promtion</li>
                 </ul>
-                Please follow all of our rules so everyone may enjoy: Sexy Safe
-                Fun!
+                {t(
+                  "Will get your account flagged. *Flags make your profile show lower in results. Once you get 3 flags, your acount is suspended."
+                )}
+                <ul>
+                  <li>
+                    {t(
+                      "Harassing members (including rude remarks, stalking, shaming, insulting, accusing, and more...)"
+                    )}
+                  </li>
+                  <li>
+                    {t(
+                      "Using automated means (bots) to manipulate or store information on Foxtail"
+                    )}
+                  </li>
+                  <li>
+                    {t(
+                      "Taking any data from Foxtail and sharing or storing elsewhere"
+                    )}
+                  </li>
+                  <li>{t("Spamming and promtion")}</li>
+                </ul>
+                {t("Please follow all of our rules. Stay Sexy, Stay Safe")}
                 <br />
                 Foxtail.
               </p>

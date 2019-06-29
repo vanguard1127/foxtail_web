@@ -14,7 +14,8 @@ class AppSettings extends Component {
       this.props.emailNotify !== nextProps.emailNotify ||
       this.props.showOnline !== nextProps.showOnline ||
       this.props.isBlackMember !== nextProps.isBlackMember ||
-      this.props.likedOnly !== nextProps.likedOnly
+      this.props.likedOnly !== nextProps.likedOnly ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

@@ -46,28 +46,32 @@ class Tour extends PureComponent {
     const tourConfig = [
       {
         selector: '[data-tut=""]',
-        content: `Let's find an event nearby to attend.`
+        content: "Let's find an event nearby to attend."
       },
 
       {
         selector: '[data-tut="search"]',
-        content: `Here you can limit your search to events near you. *Only BLACK members can chage their location.`
+        content: t(
+          "Here you can limit your search to events near you. *Only BLACK members can chage their location."
+        )
       },
       {
         selector: '[data-tut="create"]',
-        content: `If you want to create your own event for the Foxtail community to attend. Click "Create Event"`
+        content: t(
+          "If you want to create your own event for the Foxtail community to attend. Click 'Create Event'"
+        )
       },
       {
         selector: '[data-tut="myevents"]',
-        content: `These are the events you've planned to attend`
+        content: t("These are the events you've planned to attend")
       },
       {
         selector: '[data-tut="events"]',
-        content: `Events meeting your criteria, are here sorted by date.`
+        content: t("Events meeting your criteria, are here sorted by date.")
       },
       {
         selector: '[data-tut="item"]',
-        content: `Let's look at this event. **Hint: Click the Event Name**`
+        content: t("Let's look at this event. **Hint: Click the Event Name**")
       }
     ];
 
@@ -84,10 +88,8 @@ class Tour extends PureComponent {
               <section className="breadcrumb">
                 <div className="container">
                   <div className="col-md-12">
-                    <span className="head">Go to Events</span>
-                    <span className="title">
-                      Attend events nearby. Discuss events you're attending
-                    </span>
+                    <span className="head">{t("goevents")}</span>
+                    <span className="title">{t("eventsubtitle")}</span>
                   </div>
                 </div>
               </section>
@@ -98,20 +100,20 @@ class Tour extends PureComponent {
                       <div className="settings-con" data-tut="search">
                         <div>
                           <div className="select-container dropdown">
-                            <label>Distance Away:</label>
+                            <label>{t("disway")}:</label>
                             <span>50 miles</span>
                           </div>
                         </div>
                         <div>
-                          <label>From:</label>
+                          <label>{t("From")}:</label>
                           <div className="search">
                             <div style={{ display: "flex" }}>
                               <input
                                 type="text"
                                 aria-autocomplete="list"
-                                placeholder="Search by city..."
+                                placeholder={t("Search by city")}
                                 className="location-search-input"
-                                value="My Location"
+                                value={t("My Location")}
                                 readOnly
                               />
                             </div>
@@ -119,7 +121,7 @@ class Tour extends PureComponent {
                         </div>
                       </div>
                       <div className="create-event-btn" data-tut="create">
-                        <a href="#">Create Event</a>
+                        <a href="#">{t("Create Event")}</a>
                       </div>
                     </div>
                   </div>
@@ -132,7 +134,7 @@ class Tour extends PureComponent {
                     <div className="col-md-12">
                       <div className="row">
                         <div className="col-md-12">
-                          <span className="head">My Events</span>
+                          <span className="head">{t("myevents")}</span>
                         </div>
                         <div className="col-md-12 col-lg-6">
                           <div
@@ -167,7 +169,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -208,7 +212,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -216,7 +220,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -255,7 +259,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -296,7 +302,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -304,7 +310,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -357,7 +363,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -398,7 +406,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -406,7 +414,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -445,7 +453,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -486,7 +496,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -494,7 +504,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -533,7 +543,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -574,7 +586,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -582,7 +594,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -621,7 +633,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -662,7 +676,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -670,7 +684,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -709,7 +723,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -750,7 +766,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -758,7 +774,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -797,7 +813,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -838,7 +856,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -846,7 +864,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -885,7 +903,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -926,7 +946,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -934,7 +954,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -973,7 +993,9 @@ class Tour extends PureComponent {
                               <div className="event-name">
                                 <a href="#">Date Night In The East Village!</a>
                               </div>
-                              <span className="distance">9.2 mil away</span>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
                               <div className="goings">
                                 <ul>
                                   <li>
@@ -1014,7 +1036,7 @@ class Tour extends PureComponent {
                                   </li>
                                 </ul>
                                 <span className="stats">
-                                  <b>32 people</b> going
+                                  <b>32 {t("people")}</b> {t("going")}
                                 </span>
                               </div>
                               <div
@@ -1022,7 +1044,7 @@ class Tour extends PureComponent {
                                 onClick={() => this.closeTour(seenTour, true)}
                               >
                                 <div className="btn go-detail">
-                                  <a href="#">Event Detail</a>
+                                  <a href="#">{t("eventdetail")}</a>
                                 </div>
                                 <div className="btn share">
                                   <a href="#" />
@@ -1034,7 +1056,7 @@ class Tour extends PureComponent {
 
                         <div className="col-md-12">
                           <div className="more-content-btn">
-                            <a href="#">More Events</a>
+                            <a href="#">{t("moreevents")}</a>
                           </div>
                         </div>
                       </div>

@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { desireOptions } from "../../docs/options";
 class DesiresSection extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   render() {

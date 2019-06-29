@@ -19,7 +19,10 @@ import { withTranslation } from "react-i18next";
 import LinkIcon from "@material-ui/icons/Link";
 
 class Share extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
 

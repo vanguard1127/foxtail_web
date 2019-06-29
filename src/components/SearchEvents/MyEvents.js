@@ -12,7 +12,10 @@ const configLightGallery = {
   width: "100%"
 };
 class MyEvents extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   fetchData = fetchMore => {

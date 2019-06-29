@@ -5,7 +5,10 @@ import EventDate from "../../common/Event/EventDate";
 import EventCreator from "./EventCreator";
 
 class EventCard extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
 

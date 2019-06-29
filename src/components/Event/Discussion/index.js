@@ -3,7 +3,10 @@ import ChatPanel from "./ChatPanel";
 import ChatContent from "./ChatContent";
 import { EVENTDISC_LIMIT } from "../../../docs/consts";
 class EventDiscussion extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   render() {

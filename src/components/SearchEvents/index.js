@@ -39,7 +39,8 @@ class SearchEvents extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state !== nextState ||
-      this.props.location.lat !== nextProps.location.lat
+      this.props.location.lat !== nextProps.location.lat ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

@@ -22,7 +22,8 @@ class Couples extends Component {
     if (
       this.state.code !== nextState.code ||
       this.state.currSlide !== nextState.currSlide ||
-      this.props.includeMsgs !== nextProps.includeMsgs
+      this.props.includeMsgs !== nextProps.includeMsgs ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

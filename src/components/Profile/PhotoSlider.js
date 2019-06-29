@@ -19,7 +19,10 @@ const configLightGallery = {
 };
 
 class PhotoSlider extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   onLightGallery = node => {

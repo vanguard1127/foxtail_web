@@ -1,7 +1,9 @@
 {
   "loadmems": "Loading Members",
   "nopros": "No More Profiles",
+  "morepros": "More Profiles",
   "allmems": "All Members",
+  "My Location": "My Location",
   "mi": "mi",
   "km": "km",
   "Genders": "Genders",
@@ -9,5 +11,9 @@
   "cantsee": "You cannot see user profiles while invisible unless you're a Black Member",
   "cantseeinstr": "Please set your profile to visible under settings to see members.",
   "nomems": "No members near you.",
-  "nomemsdes": "Change your search criteria or try again later."
+  "nomemsdes": "Change your search criteria or try again later.",
+  "Welcome to the Member Search page.": "Welcome to the Member Search page.",
+  "Set your preferences to find your ideals members to meet. This uses your current location unless you have a Black membership.": "Set your preferences to find your ideals members to meet. This uses your current location unless you have a Black membership.",
+  "Here are all the users that meet your criteria.": "Here are all the users that meet your criteria.",
+  "When you find someone you're interested in, click their name to go to their profile. **Hint: Click this user's profile**": "When you find someone you're interested in, click their name to go to their profile. **Hint: Click this user's profile**"
 }

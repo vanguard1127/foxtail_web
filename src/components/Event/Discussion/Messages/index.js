@@ -6,7 +6,8 @@ class MessageList extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.messages.length !== nextProps.messages.length ||
-      this.props.loading !== nextProps.loading
+      this.props.loading !== nextProps.loading ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

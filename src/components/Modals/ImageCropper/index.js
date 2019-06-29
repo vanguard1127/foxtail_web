@@ -5,7 +5,10 @@ import Modal from "../../common/Modal";
 import { Spring } from "react-spring/renderprops";
 
 class ImageEditor extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
 

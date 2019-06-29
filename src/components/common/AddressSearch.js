@@ -61,7 +61,8 @@ class AddressSearch extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       nextState.address !== this.state.address ||
-      nextProps.address !== this.props.address
+      nextProps.address !== this.props.address ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

@@ -3,7 +3,7 @@ import { withTranslation } from "react-i18next";
 import * as yup from "yup";
 import axios from "axios";
 import { Mutation } from "react-apollo";
-import { SIGNS3, CREATE_EVENT, GET_MY_EVENTS } from "../../../queries";
+import { SIGNS3, CREATE_EVENT } from "../../../queries";
 import PhotoUpload from "../../common/PhotoUpload";
 import DesiresModal from "../../Modals/Desires/Modal";
 import DesiresSelector from "../../Modals/Desires/Selector";
@@ -48,7 +48,8 @@ class CreateEvent extends Component {
       this.state.showDesiresPopup !== nextState.showDesiresPopup ||
       this.state.type !== nextState.type ||
       this.state.errors !== nextState.errors ||
-      this.state.removeCurrentImage !== nextState.removeCurrentImage
+      this.state.removeCurrentImage !== nextState.removeCurrentImage ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }
@@ -345,6 +346,7 @@ class CreateEvent extends Component {
                           desires={desires}
                           togglePopup={this.toggleDesiresPopup}
                           ErrorBoundary={ErrorHandler.ErrorBoundary}
+                          t={t}
                         />
                       </div>
                       <div className="item">

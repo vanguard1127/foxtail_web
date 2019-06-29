@@ -5,7 +5,8 @@ class ChatActions extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.invDropOpen !== nextState.invDropOpen ||
-      this.state.remDropOpen !== nextState.remDropOpen
+      this.state.remDropOpen !== nextState.remDropOpen ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

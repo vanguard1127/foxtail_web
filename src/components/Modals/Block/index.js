@@ -17,7 +17,8 @@ class BlockModal extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.reason !== nextState.reason ||
-      this.state.other !== nextState.other
+      this.state.other !== nextState.other ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

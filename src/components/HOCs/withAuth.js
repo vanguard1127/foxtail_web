@@ -120,6 +120,9 @@ const withAuth = conditionFunc => Component => props => {
             }
           }
         }
+
+        //TODO: See of twe need to call withAuth so much
+        //console.log(":SESISN", data);
         return <Component {...props} session={data} refetch={refetch} />;
       }}
     </Query>

@@ -2,6 +2,7 @@
   "disway": "Distance Away",
   "From": "From",
   "miles": "miles",
+  "moreevents": "More Events",
   "kilometers": "kilometers",
   "srchcity": "Search by city",
   "Reset": "Reset",
@@ -14,5 +15,12 @@
   "upcomingevent": "Upcoming Events",
   "eventdetail": "Event Detail",
   "loadmyeve": "Loading My Events",
-  "searchevents": "Search Events"
+  "searchevents": "Search Events",
+  "Let's find an event nearby to attend.": "Let's find an event nearby to attend.",
+  "Here you can limit your search to events near you. *Only BLACK members can chage their location.": "Here you can limit your search to events near you. *Only BLACK members can chage their location.",
+  "If you want to create your own event for the Foxtail community to attend. Click 'Create Event'": "If you want to create your own event for the Foxtail community to attend. Click 'Create Event'",
+  "These are the events you've planned to attend": "These are the events you've planned to attend",
+  "Events meeting your criteria, are here sorted by date.": "Events meeting your criteria, are here sorted by date.",
+  "Let's look at this event. **Hint: Click the Event Name**": "Let's look at this event. **Hint: Click the Event Name**",
+  "My Location": "My Location"
 }

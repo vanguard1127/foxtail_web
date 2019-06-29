@@ -14,7 +14,8 @@ class InboxPanel extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.chatOpen !== nextProps.chatOpen ||
-      this.state.searchTerm !== nextState.searchTerm
+      this.state.searchTerm !== nextState.searchTerm ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

@@ -25,7 +25,8 @@ class Navbar extends Component {
       location.pathname !== nextProps.location.pathname ||
       session.currentuser.username !== nextProps.session.currentuser.username ||
       session.currentuser.userID !== nextProps.session.currentuser.userID ||
-      online !== nextState.online
+      online !== nextState.online ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

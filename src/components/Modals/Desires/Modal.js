@@ -28,7 +28,8 @@ class Desires extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.searchText !== nextState.searchText ||
-      this.props.desires !== nextProps.desires
+      this.props.desires !== nextProps.desires ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

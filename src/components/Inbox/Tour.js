@@ -51,24 +51,28 @@ class ProfileTour extends PureComponent {
     let tourConfig = [
       {
         selector: '[data-tut=""]',
-        content: `Welcome to your Inbox.`
+        content: t("Welcome to your Inbox.")
       },
       {
         selector: '[data-tut="list"]',
-        content: `These are your chats.`
+        content: t("These are your chats.")
       },
       {
         selector: '[data-tut="item"]',
-        content: `Each chat shows the number of messages you haven't seen.`,
+        content: t("Each chat shows the number of messages you haven't seen."),
         observe: '[data-tut="actions"]'
       },
       {
         selector: '[data-tut="actions"]',
-        content: `Your chat actions can be found here including leaving and reporting a chat. Please report any behavior that makes you uncomfortable.`
+        content: t(
+          "Your chat actions can be found here including leaving and reporting a chat. Please report any behavior that makes you uncomfortable."
+        )
       },
       {
         selector: '[data-tut="na"]',
-        content: `If no chat is selected there will be random information or ads here.`
+        content: t(
+          "If no chat is selected there will be random information or ads here."
+        )
       }
     ];
 
@@ -76,22 +80,26 @@ class ProfileTour extends PureComponent {
       tourConfig = [
         {
           selector: '[data-tut=""]',
-          content: `Welcome to your Inbox.`
+          content: t("Welcome to your Inbox.")
         },
         {
           selector: '[data-tut="list"]',
-          content: `These are all of your chats. **Hint: Click one to see messages**`
+          content: t(
+            "These are your chats. **Hint: Click one to see messages**"
+          )
         }
       ];
     } else if (window.innerWidth < 1200) {
       tourConfig = [
         {
           selector: '[data-tut="menubtn"]',
-          content: `Clicking the menu to the right will open chat actions.`
+          content: t("Clicking the menu to the right will open chat actions.")
         },
         {
           selector: '[data-tut="na"]',
-          content: `If no chat is selected there will be random information or ads here.`
+          content: t(
+            "If no chat is selected there will be random information or ads here."
+          )
         }
       ];
     }
@@ -102,12 +110,9 @@ class ProfileTour extends PureComponent {
           <div className="container">
             <div className="col-md-12">
               <span className={menuOpen ? "head" : "head back"}>
-                <a href="#">Inbox</a>
+                <a href="#">{t("Inbox")}</a>
               </span>
-              <span className="title">
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.{" "}
-              </span>
+              <span className="title">{t("subtitle")}. </span>
             </div>
           </div>
         </section>
@@ -122,7 +127,7 @@ class ProfileTour extends PureComponent {
                 }
               >
                 <div className="search">
-                  <input type="text" placeholder="Search messages..." />
+                  <input type="text" placeholder={t("search")} />
                 </div>
 
                 <div className="conversations">
@@ -292,10 +297,10 @@ class ProfileTour extends PureComponent {
                 <div className="panel">
                   <div className="files" />
                   <div className="textarea">
-                    <input placeholder="Type a message…" />
+                    <input placeholder={t("typemsg")} />
                   </div>
                   <div className="send">
-                    <button>Send</button>
+                    <button>{t("Send")}</button>
                   </div>
                 </div>
               </div>
@@ -307,16 +312,16 @@ class ProfileTour extends PureComponent {
                   <div className="functions">
                     <ul>
                       <li className="members">
-                        <span>Participants</span>
+                        <span>{t("participants")}</span>
                       </li>
                       <li className="invite">
-                        <span>Invite Members</span>
+                        <span>{t("invitemem")}</span>
                       </li>
                       <li className="leave">
-                        <span>Leave Conversation</span>
+                        <span>{t("leaveconv")}</span>
                       </li>{" "}
                       <li className="report">
-                        <span>Report Conversation</span>
+                        <span>{t("reportconv")}</span>
                       </li>
                     </ul>
                   </div>

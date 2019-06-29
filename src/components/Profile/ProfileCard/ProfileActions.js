@@ -3,7 +3,8 @@ class ProfileActions extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.liked !== nextProps.liked ||
-      this.props.msgd !== nextProps.msgd
+      this.props.msgd !== nextProps.msgd ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

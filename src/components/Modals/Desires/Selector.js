@@ -3,7 +3,10 @@ import { desireOptions } from "../../../docs/options";
 
 class Selector extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.desires !== nextProps.desires) {
+    if (
+      this.props.desires !== nextProps.desires ||
+      this.props.t !== nextProps.t
+    ) {
       return true;
     }
     return false;

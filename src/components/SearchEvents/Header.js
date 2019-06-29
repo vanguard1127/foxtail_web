@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 class EventHeader extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   render() {

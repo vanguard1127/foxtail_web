@@ -44,7 +44,8 @@ class ProfilesContainer extends Component {
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
       this.state.chatID !== nextState.chatID ||
       !arraysEqual(this.state.likedProfiles, nextState.likedProfiles) ||
-      !arraysEqual(this.state.msgdProfiles, nextState.msgdProfiles)
+      !arraysEqual(this.state.msgdProfiles, nextState.msgdProfiles) ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

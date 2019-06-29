@@ -40,7 +40,8 @@ class SearchProfilesPage extends Component {
       this.state.distanceMetric !== nextState.distanceMetric ||
       this.state.ageRange !== nextState.ageRange ||
       this.state.interestedIn !== nextState.interestedIn ||
-      this.state.lang !== nextState.lang
+      this.state.lang !== nextState.lang ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
 import {
@@ -20,12 +20,6 @@ import AntiSpam from "./components/Information/AntiSpam";
 import ToS from "./components/Information/ToS";
 import LawEnforce from "./components/Information/LawEnforce";
 import Navbar from "./components/Navbar/";
-import ProfileSearch from "./components/SearchProfiles/";
-import Settings from "./components/Settings/";
-import EventPage from "./components/Event";
-import ProfilePage from "./components/Profile/";
-import InboxPage from "./components/Inbox/";
-import SearchEvents from "./components/SearchEvents";
 import * as ErrorHandler from "./components/common/ErrorHandler";
 import withAuth from "./components/HOCs/withAuth";
 import Footer from "./components/Footer/";
@@ -40,10 +34,20 @@ import { ApolloLink, split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
+import EmptySite from "./components/common/Loading/EmptySite";
+const ProfileSearch = lazy(() => import("./components/SearchProfiles"));
+const Settings = lazy(() => import("./components/Settings"));
+const EventPage = lazy(() => import("./components/Event"));
+const ProfilePage = lazy(() => import("./components/Profile"));
+const InboxPage = lazy(() => import("./components/Inbox"));
+const SearchEvents = lazy(() => import("./components/SearchEvents"));
 
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DNS
-});
+//TODO: REMOVE THIS IF
+if (process.env.NODE_ENV !== "development") {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DNS
+  });
+}
 
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -142,9 +146,10 @@ const errorLink = onError(
         } else if (~message.indexOf("authenticated")) {
           tokenHandler({ operation, forward, HTTPSurl, ErrorHandler });
         } else {
-          if (process.env.NODE_ENV === "development") {
-            console.error("ERROR::::", message);
-          }
+          //TODO: Uncomment
+          //  if (process.env.NODE_ENV === "development") {
+          console.error("ERROR::::", message);
+          // }
           Sentry.withScope(scope => {
             scope.setLevel("error");
             scope.setTag("resolver", path);
@@ -174,6 +179,7 @@ const errorLink = onError(
       });
     }
     if (networkError) {
+      console.log("NETWORK ERROR::::", networkError);
       if (!toast.isActive(networkError)) {
         toast.warn(
           i18n.t(
@@ -250,41 +256,43 @@ const Body = withAuth(session => session && session.currentuser)(
         <Navbar ErrorHandler={ErrorHandler} session={session} />
       </header>
       <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
-        <Switch>
-          <Route
-            path="/members"
-            render={() => <ProfileSearch ErrorHandler={ErrorHandler} />}
-            exact
-          />
-          <Route
-            path="/events"
-            render={() => <SearchEvents ErrorHandler={ErrorHandler} />}
-            exact
-          />
-          <Route
-            path="/event/:id"
-            render={() => <EventPage ErrorHandler={ErrorHandler} />}
-          />
-          <Route
-            path="/member/:id"
-            render={() => <ProfilePage ErrorHandler={ErrorHandler} />}
-          />
-          <Route
-            path="/inbox/:chatID"
-            component={InboxPage}
-            ErrorHandler={ErrorHandler}
-          />
-          <Route
-            path="/inbox"
-            component={InboxPage}
-            ErrorHandler={ErrorHandler}
-          />
-          <Route
-            path="/settings"
-            render={() => <Settings ErrorHandler={ErrorHandler} />}
-          />
-          <Redirect to="/" />
-        </Switch>
+        <Suspense fallback={<EmptySite />}>
+          <Switch>
+            <Route
+              path="/members"
+              render={() => <ProfileSearch ErrorHandler={ErrorHandler} />}
+              exact
+            />
+            <Route
+              path="/events"
+              render={() => <SearchEvents ErrorHandler={ErrorHandler} />}
+              exact
+            />
+            <Route
+              path="/event/:id"
+              render={() => <EventPage ErrorHandler={ErrorHandler} />}
+            />
+            <Route
+              path="/member/:id"
+              render={() => <ProfilePage ErrorHandler={ErrorHandler} />}
+            />
+            <Route
+              path="/inbox/:chatID"
+              component={InboxPage}
+              ErrorHandler={ErrorHandler}
+            />
+            <Route
+              path="/inbox"
+              component={InboxPage}
+              ErrorHandler={ErrorHandler}
+            />
+            <Route
+              path="/settings"
+              render={() => <Settings ErrorHandler={ErrorHandler} />}
+            />
+            <Redirect to="/" />
+          </Switch>
+        </Suspense>
       </main>
       {showFooter && <Footer />}
       <ToastContainer position="top-center" />

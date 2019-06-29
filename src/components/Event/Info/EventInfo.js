@@ -14,7 +14,8 @@ class EventInfo extends Component {
       eventProps.distance !== nextEventProps.distance ||
       eventProps.endTime !== nextEventProps.endTime ||
       eventProps.startTime !== nextEventProps.startTime ||
-      eventProps.type !== nextEventProps.type
+      eventProps.type !== nextEventProps.type ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

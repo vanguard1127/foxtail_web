@@ -12,7 +12,8 @@ class UserToolbar extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.currentuser !== nextProps.currentuser ||
-      this.props.href !== nextProps.href
+      this.props.href !== nextProps.href ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

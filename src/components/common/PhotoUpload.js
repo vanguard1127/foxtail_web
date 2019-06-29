@@ -26,7 +26,10 @@ registerPlugin(
 // Our app
 class PhotoUpload extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.photos.name !== nextProps.photos.name) {
+    if (
+      this.props.photos.name !== nextProps.photos.name ||
+      this.props.t !== nextProps.t
+    ) {
       return true;
     }
     return false;

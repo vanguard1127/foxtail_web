@@ -40,7 +40,8 @@ class ProfilePage extends Component {
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
       this.state.msgModalVisible !== nextState.msgModalVisible ||
       this.state.profile !== nextState.profile ||
-      this.state.shareModalVisible !== nextState.shareModalVisible
+      this.state.shareModalVisible !== nextState.shareModalVisible ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

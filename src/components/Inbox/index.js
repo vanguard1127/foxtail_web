@@ -54,7 +54,8 @@ class InboxPage extends Component {
       this.state.blockModalVisible !== nextState.blockModalVisible ||
       this.state.chatOpen !== nextState.chatOpen ||
       this.state.showModal !== nextState.showModal ||
-      chatIDChange
+      chatIDChange ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

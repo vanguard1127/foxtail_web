@@ -13,7 +13,8 @@ class MyProfile extends Component {
       this.props.about !== nextProps.about ||
       this.props.togglePopup !== nextProps.togglePopup ||
       this.props.errors.about !== nextProps.errors.about ||
-      this.props.errors.desires !== nextProps.errors.desires
+      this.props.errors.desires !== nextProps.errors.desires ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

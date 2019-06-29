@@ -13,7 +13,7 @@ class AcctSettings extends Component {
     successMsg: ""
   };
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state !== nextState) {
+    if (this.state !== nextState || this.props.t !== nextProps.t) {
       return true;
     }
     return false;

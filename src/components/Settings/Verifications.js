@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 class Verifications extends Component {
   shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   render() {

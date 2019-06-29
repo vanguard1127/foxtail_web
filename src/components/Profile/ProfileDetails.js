@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { genderOptions } from "../../docs/options/en";
 import TimeAgo from "../../utils/TimeAgo";
 class ProfileDetails extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   render() {

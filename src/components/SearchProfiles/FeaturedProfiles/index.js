@@ -15,7 +15,8 @@ class FeaturedDiv extends Component {
     if (
       this.props.featuredProfiles !== nextProps.featuredProfiles ||
       !arraysEqual(this.props.likedProfiles, nextProps.likedProfiles) ||
-      !arraysEqual(this.props.msgdProfiles, nextProps.msgdProfiles)
+      !arraysEqual(this.props.msgdProfiles, nextProps.msgdProfiles) ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

@@ -6,7 +6,7 @@ const Range = createSliderWithTooltip(Slider.Range);
 
 class AgeRange extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.value !== nextProps.value) {
+    if (this.props.value !== nextProps.value || this.props.t !== nextProps.t) {
       return true;
     }
     return false;

@@ -41,7 +41,8 @@ class ContactUs extends Component {
       this.state.name !== nextState.name ||
       this.state.captchaOK !== nextState.captchaOK ||
       this.state.errors !== nextState.errors ||
-      this.state.email !== nextState.email
+      this.state.email !== nextState.email ||
+      this.props.t !== nextProps.t
     ) {
       return true;
     }

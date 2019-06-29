@@ -4,7 +4,10 @@ import UploadComponent from "./UploadImageComponent";
 
 class Photos extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.photos !== nextProps.photos) {
+    if (
+      this.props.photos !== nextProps.photos ||
+      this.props.t !== nextProps.t
+    ) {
       return true;
     }
     return false;

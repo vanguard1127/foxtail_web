@@ -5,8 +5,12 @@ import { Waypoint } from "react-waypoint";
 
 class EventsList extends Component {
   shouldComponentUpdate(nextProps) {
-    const { events, loading } = this.props;
-    if (events !== nextProps.events || loading !== nextProps.loading) {
+    const { events, loading, t } = this.props;
+    if (
+      events !== nextProps.events ||
+      loading !== nextProps.loading ||
+      t !== nextProps.t
+    ) {
       return true;
     }
     return false;

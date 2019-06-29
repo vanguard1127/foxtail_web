@@ -4,6 +4,9 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 class Logout extends Component {
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.t !== nextProps.t) {
+      return true;
+    }
     return false;
   }
   handleLogout = (client, history) => {
