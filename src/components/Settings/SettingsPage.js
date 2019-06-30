@@ -919,6 +919,7 @@ class SettingsPage extends Component {
                   username={couplePartner}
                   includeMsgs={includeMsgs}
                   ErrorHandler={ErrorHandler}
+                  t={t}
                 />
               )}
               {showBlackPopup && (

@@ -22,9 +22,15 @@ class Navbar extends Component {
     const { session, location } = this.props;
     const { online } = this.state;
     if (
+      session &&
+      (session.currentuser.username !==
+        nextProps.session.currentuser.username ||
+        session.currentuser.userID !== nextProps.session.currentuser.userID)
+    ) {
+      return true;
+    }
+    if (
       location.pathname !== nextProps.location.pathname ||
-      session.currentuser.username !== nextProps.session.currentuser.username ||
-      session.currentuser.userID !== nextProps.session.currentuser.userID ||
       online !== nextState.online ||
       this.props.t !== nextProps.t
     ) {

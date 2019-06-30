@@ -24,7 +24,7 @@ class Settings extends Component {
 
     if (!session.currentuser.isProfileOK) {
       if (!toast.isActive("nopro")) {
-        toast.info(t("plscomplete"), {
+        toast.info(t("common:plscomplete"), {
           position: toast.POSITION.TOP_CENTER,
           toastId: "nopro"
         });

@@ -63,7 +63,7 @@
   "updateevent": "Update Event",
   "setloc": "Set Location",
   "myaccount": "My Account",
-  "addcoup": "Add Couple Partner",
+  "addcoup": "Add CoupleLink",
   "becomeblk": "Become a Black Member",
   "nonots": "No more notifications",
   "meetmembers": "Meet Members",
@@ -110,7 +110,7 @@
   "Congratulations! Someone has joined using your referal code. We've upgraded you to Black Membership for 1 week (if you already have Black Membership, we've extended it by 1 week). We will add more weeks, the more you share Foxtail. Thanks for sharing :).": "Congratulations! Someone has joined using your referal code. We've upgraded you to Black Membership for 1 week (if you already have Black Membership, we've extended it by 1 week). We will add more weeks, the more you share Foxtail. Thanks for sharing :).",
   "Please check your inbox to confirm your email before contacting members! *Check your spam, just in case": "Please check your inbox to confirm your email before contacting members! *Check your spam, just in case",
   "Your couple profile couple profile has been closed. Check your out your new profile on the settings page": "Your couple profile couple profile has been closed. Check your out your new profile on the settings page",
-  "and you have created a Couple Profile! Please complete your profile together. Enjoy :)": "and you have created a Couple Profile! Please complete your profile together. Enjoy :)",
+  "and you have created a Couple Profile! Please complete your profile together. Enjoy!": "and you have created a Couple Profile! Please complete your profile together. Enjoy!",
   "Username should be bewteen 3 and 500 characters!": "Username should be bewteen 3 and 500 characters!",
   "This number has been flagged for review. Please contact support at support@foxtailapp.com if this is a mistake.": "This number has been flagged for review. Please contact support at support@foxtailapp.com if this is a mistake.",
   "Profile not found": "Profile not found",
@@ -178,6 +178,12 @@
   "You must be at least 18 years old to join.": "You must be at least 18 years old to join.",
   "Username may only contain letters and numbers.": "Username may only contain letters and numbers.",
   "Event description should be between 3 and 120 characters.": "Event description should be between 3 and 120 characters.",
+  "Invalid age range selection.": "Invalid age range selection.",
+  "Invalid interested in selction.": "Invalid interested in selection.",
+  "Invalid desire in selection.": "Invalid desire in selection.",
+  "Event Type is invalid.": "Event Type is invalid.",
+  "Language selection is invalid.": "Language selection is invalid.",
+  "Sexuality selection is invalid.": "Sexuality selection is invalid.",
   "Invalid phone number.": "Invalid phone number.",
   "Phone number is invalid.": "Phone number is invalid.",
   "Event name should be between 3 and 120 characters.": "Event name should be between 3 and 120 characters.",
@@ -206,5 +212,6 @@
   "Send Complaint & Keep Profile": "Send Complaint & Keep Profile",
   "Delete My Profile": "Delete My Profile",
   "seldesires": "Select Desires",
-  "directerr": "Direct Send is only available to Black Members"
+  "directerr": "Direct Send is only available to Black Members",
+  "plscomplete": "Please complete your profile."
 }
