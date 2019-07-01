@@ -35,12 +35,18 @@ import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 import EmptySite from "./components/common/Loading/EmptySite";
-const ProfileSearch = lazy(() => import("./components/SearchProfiles"));
-const Settings = lazy(() => import("./components/Settings"));
-const EventPage = lazy(() => import("./components/Event"));
-const ProfilePage = lazy(() => import("./components/Profile"));
-const InboxPage = lazy(() => import("./components/Inbox"));
-const SearchEvents = lazy(() => import("./components/SearchEvents"));
+// const ProfileSearch = lazy(() => import("./components/SearchProfiles"));
+// const Settings = lazy(() => import("./components/Settings"));
+// const EventPage = lazy(() => import("./components/Event"));
+// const ProfilePage = lazy(() => import("./components/Profile"));
+// const InboxPage = lazy(() => import("./components/Inbox"));
+// const SearchEvents = lazy(() => import("./components/SearchEvents"));
+import ProfileSearch from "./components/SearchProfiles/";
+import Settings from "./components/Settings/";
+import EventPage from "./components/Event";
+import ProfilePage from "./components/Profile/";
+import InboxPage from "./components/Inbox/";
+import SearchEvents from "./components/SearchEvents";
 
 //TODO: REMOVE THIS IF
 if (process.env.NODE_ENV !== "development") {
@@ -256,43 +262,43 @@ const Body = withAuth(session => session && session.currentuser)(
         <Navbar ErrorHandler={ErrorHandler} session={session} />
       </header>
       <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
-        <Suspense fallback={<EmptySite />}>
-          <Switch>
-            <Route
-              path="/members"
-              render={() => <ProfileSearch ErrorHandler={ErrorHandler} />}
-              exact
-            />
-            <Route
-              path="/events"
-              render={() => <SearchEvents ErrorHandler={ErrorHandler} />}
-              exact
-            />
-            <Route
-              path="/event/:id"
-              render={() => <EventPage ErrorHandler={ErrorHandler} />}
-            />
-            <Route
-              path="/member/:id"
-              render={() => <ProfilePage ErrorHandler={ErrorHandler} />}
-            />
-            <Route
-              path="/inbox/:chatID"
-              component={InboxPage}
-              ErrorHandler={ErrorHandler}
-            />
-            <Route
-              path="/inbox"
-              component={InboxPage}
-              ErrorHandler={ErrorHandler}
-            />
-            <Route
-              path="/settings"
-              render={() => <Settings ErrorHandler={ErrorHandler} />}
-            />
-            <Redirect to="/" />
-          </Switch>
-        </Suspense>
+        {/* <Suspense fallback={<EmptySite />}> */}
+        <Switch>
+          <Route
+            path="/members"
+            render={() => <ProfileSearch ErrorHandler={ErrorHandler} />}
+            exact
+          />
+          <Route
+            path="/events"
+            render={() => <SearchEvents ErrorHandler={ErrorHandler} />}
+            exact
+          />
+          <Route
+            path="/event/:id"
+            render={() => <EventPage ErrorHandler={ErrorHandler} />}
+          />
+          <Route
+            path="/member/:id"
+            render={() => <ProfilePage ErrorHandler={ErrorHandler} />}
+          />
+          <Route
+            path="/inbox/:chatID"
+            component={InboxPage}
+            ErrorHandler={ErrorHandler}
+          />
+          <Route
+            path="/inbox"
+            component={InboxPage}
+            ErrorHandler={ErrorHandler}
+          />
+          <Route
+            path="/settings"
+            render={() => <Settings ErrorHandler={ErrorHandler} />}
+          />
+          <Redirect to="/" />
+        </Switch>
+        {/* </Suspense> */}
       </main>
       {showFooter && <Footer />}
       <ToastContainer position="top-center" />

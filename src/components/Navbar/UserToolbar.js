@@ -38,6 +38,7 @@ class UserToolbar extends Component {
             console.error(error.message);
           }
           let { msgsCount, noticesCount } = data.getCounts;
+
           if (!this.unsubscribe) {
             this.unsubscribe = [
               subscribeToMore({

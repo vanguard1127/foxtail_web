@@ -18,7 +18,7 @@ i18n
     interpolation: {
       escapeValue: false // react already safes from xss
     },
-    ns: ["common", "searchprofiles"],
+    ns: ["common", "searchprofiles", "landing"],
     // react-i18next options
     react: {
       useSuspense: false,

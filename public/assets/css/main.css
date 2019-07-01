@@ -1255,7 +1255,7 @@ section.featured-profiles
   span.detail
   ul
   li.gender.f::before {
-  content: "\e800";
+  content: "\e801";
 }
 
 section.featured-profiles
@@ -1266,7 +1266,7 @@ section.featured-profiles
   span.detail
   ul
   li.gender.m::before {
-  content: "\e801";
+  content: "\e802";
 }
 
 section.featured-profiles .slider .item .info .data span.interest {
@@ -1544,12 +1544,12 @@ section.members .card-item .info span.detail ul li.gender::before {
 }
 
 section.members .card-item .info span.detail ul li.gender.f::before {
-  content: "\e800";
+  content: "\e801";
   font-size: 12px;
 }
 
 section.members .card-item .info span.detail ul li.gender.m::before {
-  content: "\e801";
+  content: "\e802";
   font-size: 12px;
 }
 
@@ -8391,6 +8391,10 @@ section.not-found span.description {
     left: initial;
   }
 
+  header .toggle {
+    right: 0px !important;
+  }
+
   header .toggle .invite-member,
   header .toggle .notification {
     width: 310px;
@@ -9353,10 +9357,10 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   color: #8f969c;
 }
 .sex.M::before {
-  content: "\e801";
+  content: "\e802";
 }
 .sex.F::before {
-  content: "\e800";
+  content: "\e801";
 }
 
 .sex.T::before {

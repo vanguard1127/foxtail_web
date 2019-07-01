@@ -19,21 +19,10 @@ class Signup extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const { mem, eve, history, session, ErrorHandler, toast, t } = this.props;
+    const { mem, eve, ErrorHandler, toast, t } = this.props;
     ErrorHandler.setBreadcrumb("Signup loaded");
-
-    if (localStorage.getItem("token") !== null) {
-      if (session && session.currentuser && session.currentuser.active) {
-        if (mem) {
-          history.push("/member/" + mem);
-        } else if (eve) {
-          history.push("/event/" + eve);
-        } else {
-          history.push("/members");
-        }
-      }
-    } else if (mem || eve) {
-      toast.info(t("pleaselogin"));
+    if (mem || eve) {
+      toast.info(t("common:pleaselogin"));
     }
   }
 

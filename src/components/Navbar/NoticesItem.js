@@ -30,7 +30,8 @@ const intialState = {
 class NoticesItem extends Component {
   unsubscribe = null;
   state = {
-    ...intialState
+    ...intialState,
+    hasMore: true
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -43,6 +44,7 @@ class NoticesItem extends Component {
       this.state.visible !== nextState.visible ||
       this.state.alertVisible !== nextState.alertVisible ||
       this.state.userAlert !== nextState.userAlert ||
+      this.state.hasMore !== nextState.hasMore ||
       this.props.count !== nextProps.count ||
       this.props.t !== nextProps.t
     ) {
@@ -61,6 +63,12 @@ class NoticesItem extends Component {
   clearState = () => {
     if (this.mounted) {
       this.setState({ ...intialState });
+    }
+  };
+
+  noMoreItems = () => {
+    if (this.mounted) {
+      this.setState({ hasMore: false });
     }
   };
 
@@ -216,10 +224,10 @@ class NoticesItem extends Component {
       notificationIDs,
       skip,
       alertVisible,
-      userAlert
+      userAlert,
+      hasMore
     } = this.state;
     const { t, count, history, ErrorHandler } = this.props;
-
     return (
       <Mutation
         mutation={UPDATE_NOTIFICATIONS}
@@ -317,6 +325,8 @@ class NoticesItem extends Component {
                         }
                         showAlert={this.showAlert}
                         ErrorHandler={ErrorHandler}
+                        noMoreItems={this.noMoreItems}
+                        hasMore={hasMore}
                       />
                     </Menu>
                     {alert &&

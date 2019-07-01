@@ -22,7 +22,8 @@ const intialState = {
 
 class NoticesList extends Component {
   state = {
-    ...intialState
+    ...intialState,
+    hasMore: this.props.hasMore
   };
 
   componentDidMount() {
@@ -54,13 +55,15 @@ class NoticesList extends Component {
 
   handleEnd = ({ previousPosition, fetchMore }) => {
     //if totoal reach skip and show no more sign
-    const { skip } = this.state;
-    if (previousPosition === Waypoint.below) {
-      if (this.mounted) {
-        this.setState(
-          state => ({ skip: skip + NOTICELIST_LIMIT, loading: true }),
-          () => this.fetchData(fetchMore)
-        );
+    if (this.state.hasMore) {
+      const { skip } = this.state;
+      if (previousPosition === Waypoint.below) {
+        if (this.mounted) {
+          this.setState(
+            state => ({ skip: skip + NOTICELIST_LIMIT, loading: true }),
+            () => this.fetchData(fetchMore)
+          );
+        }
       }
     }
   };
@@ -83,7 +86,9 @@ class NoticesList extends Component {
               !fetchMoreResult.getNotifications ||
               fetchMoreResult.getNotifications.notifications.length === 0
             ) {
-              return previousResult;
+              this.setState({ hasMore: false });
+              this.props.noMoreItems();
+              return;
             }
             previousResult.getNotifications.notifications = [
               ...previousResult.getNotifications.notifications,
@@ -190,6 +195,7 @@ class NoticesList extends Component {
 
   render() {
     const { t, notifications, fetchMore } = this.props;
+
     return (
       <div className="toggle">
         <div className="notification open">
