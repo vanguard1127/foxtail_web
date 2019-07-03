@@ -128,6 +128,12 @@ export const LINK_PROFILE = gql`
   }
 `;
 
+export const CONFIRM_HUMAN = gql`
+  mutation($capToken: String!) {
+    confirmHuman(capToken: $capToken)
+  }
+`;
+
 export const RESET_CHAT = gql`
   mutation($chatID: ID!) {
     resetChat(chatID: $chatID)
@@ -859,6 +865,7 @@ export const GET_CURRENT_USER = gql`
         }
       }
       active
+      captchaReq
     }
   }
 `;

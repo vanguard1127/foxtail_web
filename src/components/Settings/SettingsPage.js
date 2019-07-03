@@ -653,6 +653,13 @@ class SettingsPage extends Component {
                           ErrorBoundary={ErrorHandler.ErrorBoundary}
                           history={history}
                           id={currentuser.profileID}
+                          removeProfilePic={() =>
+                            this.setProfilePic({
+                              key: "",
+                              url: "",
+                              updateSettings
+                            })
+                          }
                         />
                         <Menu
                           coupleModalToggle={this.toggleCouplesPopup}

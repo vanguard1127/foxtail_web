@@ -15,7 +15,7 @@ class ProfileActions extends Component {
 
     return (
       <div className="functions">
-        {!msgd ? (
+        {!msgd && (
           <>
             <div className="btn send-msg" onClick={showMsgModal}>
               {t("common:sendmsg")}
@@ -25,8 +25,6 @@ class ProfileActions extends Component {
               onClick={likeProfile}
             />
           </>
-        ) : (
-          <div className="btn send-msg"> {t("common:msgsent")}</div>
         )}
       </div>
     );

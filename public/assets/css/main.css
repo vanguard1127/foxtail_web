@@ -8391,9 +8391,12 @@ section.not-found span.description {
     left: initial;
   }
 
-  header .toggle {
-    right: 0px !important;
+  header .toggleNotifications {
+    right: 106px !important;
   }
+  header .toggleNotifications .notification {
+    right: 0px !important;
+}
 
   header .toggle .invite-member,
   header .toggle .notification {
@@ -9531,3 +9534,163 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   color: white;
   font-size: 10px;
 }
+
+
+.deleteProfile{
+  width: 90px;
+  height: 45px;
+  position: absolute;
+  top: 66px;
+  border-bottom-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+  margin: 0 1em 1em 0;
+  cursor: pointer;
+  color:transparent;
+}
+section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfile {
+  color:#1e1e2b;
+  background:#505050 ;
+  opacity: 0.6;
+  font-size: 12px;
+  text-align: center;
+  color:white;
+}
+section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfile::before{
+  font-family: "foxtail-icon";
+  content: "\e80a";
+  font-size: 16px;
+  color:white;
+  text-align: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.css-times {
+  position: absolute;
+  width: 100px;
+  height: 90px;
+}
+
+.css-times:before,
+.css-times:after {
+  position: absolute;
+  content: "";
+  left: 50px;
+  top: 0;
+  width: 2px;
+  height: 65px;
+  background: red;
+  border-radius: 50px 50px 0 0;
+  -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  -webkit-transform-origin: 0 100%;
+      -ms-transform-origin: 0 100%;
+          transform-origin: 0 100%;
+  -webkit-animation: times-background 1s ease-in-out infinite;
+          animation: times-background 1s ease-in-out infinite;
+}
+
+.css-times:after {
+  left: 0;
+  -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+  -webkit-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+}
+#root:empty ~ .xxxloader{
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  border-radius: 50%;
+  margin: 75px;
+
+}
+#root:empty ~ .loadingContainer{
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+.xxxloader{
+  position: relative;
+  width: 60px;
+  height: 97px;
+}
+
+.loadingContainer{
+  display: none;
+}
+.xxxloader-21 {
+  margin: 0 auto;
+  right: 22px;
+}
+
+.xxxloader-21 .times1 {
+  -webkit-animation: times-pulse 1s ease-in-out infinite;
+          animation: times-pulse 1s ease-in-out infinite;
+  left: 0;
+}
+
+.xxxloader-21 .times2 {
+  -webkit-animation: times-pulse 1s 0.2s ease-in-out infinite;
+          animation: times-pulse 1s 0.2s ease-in-out infinite;
+  left: 25px;
+}
+
+.xxxloader-21 .times3 {
+  -webkit-animation: times-pulse 1s 0.4s ease-in-out infinite;
+          animation: times-pulse 1s 0.4s ease-in-out infinite;
+  left: 50px;
+}
+
+@-webkit-keyframes times-pulse {
+  0%,
+  100% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+  }
+  60% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      opacity: 0;
+  }
+}
+
+@keyframes times-pulse {
+  0%,
+  100% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+  }
+  60% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      opacity: 0;
+  }
+}
+
+@-webkit-keyframes times-background {
+  0%,
+  100% {
+      background: #5f00a4 ;
+  }
+  60% {
+      background: #f70016;
+  }
+}
+
+@keyframes times-background {
+  0%,
+  100% {
+      background: #5f00a4 ;
+  }
+  60% {
+      background: #f70016;
+  }
+}
+

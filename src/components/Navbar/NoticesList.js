@@ -197,7 +197,7 @@ class NoticesList extends Component {
     const { t, notifications, fetchMore } = this.props;
 
     return (
-      <div className="toggle">
+      <div className="toggle toggleNotifications">
         <div className="notification open">
           {notifications.length > 0 ? (
             notifications.map(notif => (

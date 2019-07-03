@@ -41,6 +41,7 @@ class DirectMsg extends Component {
           if (data.sendMessage) {
             this.setState({ text: "" });
             this.clearInboxResults();
+            toast.success(this.props.t("common:msgsent"));
             if (this.props.setMsgd) {
               this.props.setMsgd(this.props.profile.id);
             } else {

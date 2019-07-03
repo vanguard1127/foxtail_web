@@ -3,6 +3,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
+import ReCaptcha from "../Modals/ReCaptcha";
 
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
@@ -36,6 +37,8 @@ const withAuth = conditionFunc => Component => props => {
               </div>
             </section>
           );
+        } else if (data && data.currentuser.captchaReq === true) {
+          return <ReCaptcha />;
         }
 
         if (data && data.currentuser.announcement !== null) {

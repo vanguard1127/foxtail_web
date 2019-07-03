@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
 import {
@@ -23,6 +23,7 @@ import Navbar from "./components/Navbar/";
 import * as ErrorHandler from "./components/common/ErrorHandler";
 import withAuth from "./components/HOCs/withAuth";
 import Footer from "./components/Footer/";
+import ReCaptcha from "./components/Modals/ReCaptcha";
 import tokenHandler from "./utils/tokenHandler";
 
 import { ApolloProvider } from "react-apollo";
@@ -34,13 +35,6 @@ import { ApolloLink, split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
-import EmptySite from "./components/common/Loading/EmptySite";
-// const ProfileSearch = lazy(() => import("./components/SearchProfiles"));
-// const Settings = lazy(() => import("./components/Settings"));
-// const EventPage = lazy(() => import("./components/Event"));
-// const ProfilePage = lazy(() => import("./components/Profile"));
-// const InboxPage = lazy(() => import("./components/Inbox"));
-// const SearchEvents = lazy(() => import("./components/SearchEvents"));
 import ProfileSearch from "./components/SearchProfiles/";
 import Settings from "./components/Settings/";
 import EventPage from "./components/Event";
@@ -262,7 +256,6 @@ const Body = withAuth(session => session && session.currentuser)(
         <Navbar ErrorHandler={ErrorHandler} session={session} />
       </header>
       <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
-        {/* <Suspense fallback={<EmptySite />}> */}
         <Switch>
           <Route
             path="/members"
@@ -298,10 +291,10 @@ const Body = withAuth(session => session && session.currentuser)(
           />
           <Redirect to="/" />
         </Switch>
-        {/* </Suspense> */}
       </main>
       {showFooter && <Footer />}
       <ToastContainer position="top-center" />
+      {/* {showCaptcha && <ReCaptcha />} */}
     </div>
   )
 );

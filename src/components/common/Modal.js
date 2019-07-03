@@ -21,7 +21,9 @@ class Modal extends Component {
 
   handleClickOutside = event => {
     if (this.wrapperRef && this.wrapperRef.current === event.target) {
-      this.props.close();
+      if (this.props.close) {
+        this.props.close();
+      }
     }
   };
 
@@ -90,7 +92,8 @@ class Modal extends Component {
               <div className="offset-md-3 col-md-6">
                 <div className="popup">
                   <span className="head">{header}</span>
-                  <a className="close" onClick={() => close()} />
+                  {close && <a className="close" onClick={() => close()} />}
+
                   <form>
                     <div className="form-content">
                       {children}
