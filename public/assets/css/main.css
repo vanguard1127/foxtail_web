@@ -8392,7 +8392,7 @@ section.not-found span.description {
   }
 
   header .toggleNotifications {
-    right: 106px !important;
+    right: 42px;
   }
   header .toggleNotifications .notification {
     right: 0px !important;
@@ -8992,6 +8992,9 @@ section.not-found span.description {
   header .toggle {
     right: -15px;
   }
+  header .toggleNotifications {
+    right: 106px;
+}
   section.event-detail .event-info-content.hid-mobile {
     display: inline-block;
     visibility: visible;
@@ -9694,3 +9697,9 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   }
 }
 
+
+.coupleIcon::after {
+  content: "\f234";
+  font-family: "foxtail-icon";
+  padding-left: 8px;
+}

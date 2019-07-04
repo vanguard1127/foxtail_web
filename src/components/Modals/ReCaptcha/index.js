@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-import { withTranslation } from "react-i18next";
 import ReCAPTCHA from "react-google-recaptcha";
+import { withTranslation } from "react-i18next";
 import { CONFIRM_HUMAN } from "../../../queries";
 import * as ErrorHandler from "../../common/ErrorHandler";
 import Modal from "../../common/Modal";
@@ -45,7 +45,9 @@ class ReCaptcha extends Component {
             window.location.reload();
           } else {
             toast.error(
-              "Please contact support at support@foxtailapp.com to regian access to your account."
+              this.props.t(
+                "common:Please contact support at support@foxtailapp.com to regian access to your account."
+              )
             );
           }
         })
@@ -62,9 +64,9 @@ class ReCaptcha extends Component {
     return (
       <Modal
         header={"Are you Human?"}
-        description={
-          "We've detected some bot-like behavior from your session. Please complete this captcha so we know you're human. Sorry for the inconvienence."
-        }
+        description={t(
+          "common:We've detected some bot-like behavior from your session. Please complete this captcha so we know you're human. Sorry for the inconvienence."
+        )}
       >
         <>
           <Mutation
@@ -77,7 +79,7 @@ class ReCaptcha extends Component {
               return (
                 <div>
                   <ReCAPTCHA
-                    sitekey="6LdvxqYUAAAAAEnP6CGkMWBUiznH8Ulm6K1Mm4A9"
+                    sitekey={process.env.REACT_APP_GOOGLE_CLIENT_KEY}
                     onChange={value => this.onChange(value, confirmHuman)}
                   />
                 </div>

@@ -46,7 +46,9 @@ class CodeBox extends PureComponent {
                       <span />
                       <b>{t("includemsg")}?</b>
                       <br />
-                      <div>{t("onlychatres")}</div>
+                      <div>
+                        <small>{t("onlychatres")}</small>
+                      </div>
                     </label>
                   </div>
                 </div>

@@ -341,6 +341,8 @@ class Landing extends PureComponent {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(
-  withApollo(withTranslation("landing")(Landing))
+export default withApollo(
+  withTranslation("landing")(
+    withAuth(session => session && session.currentuser)(Landing)
+  )
 );

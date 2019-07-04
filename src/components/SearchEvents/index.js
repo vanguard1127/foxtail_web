@@ -337,8 +337,10 @@ class SearchEvents extends Component {
 
 export default withApollo(
   withRouter(
-    withAuth(session => session && session.currentuser)(
-      withLocation(withTranslation("searchevents")(SearchEvents))
+    withTranslation("searchevents")(
+      withAuth(session => session && session.currentuser)(
+        withLocation(SearchEvents)
+      )
     )
   )
 );

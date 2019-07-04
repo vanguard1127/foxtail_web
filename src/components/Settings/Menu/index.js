@@ -30,7 +30,7 @@ class Menu extends Component {
             <li>
               <span
                 onClick={() => coupleModalToggle()}
-                className={flashCpl ? "flashCpl" : null}
+                className={flashCpl ? "flashCpl coupleIcon" : "coupleIcon"}
               >
                 {couplePartner === null
                   ? t("common:addcoup")

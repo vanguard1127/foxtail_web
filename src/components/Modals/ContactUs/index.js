@@ -229,6 +229,7 @@ class ContactUs extends Component {
               <ReCAPTCHA
                 sitekey="6LdvxqYUAAAAAEnP6CGkMWBUiznH8Ulm6K1Mm4A9"
                 onChange={this.onChange}
+                t={t}
               />
             </div>
           )}

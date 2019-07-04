@@ -282,6 +282,8 @@ class EventPage extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(
-  withRouter(withTranslation("event")(EventPage))
+export default withRouter(
+  withTranslation("event")(
+    withAuth(session => session && session.currentuser)(EventPage)
+  )
 );

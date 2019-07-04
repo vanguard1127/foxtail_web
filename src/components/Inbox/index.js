@@ -369,6 +369,6 @@ class InboxPage extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(
-  withTranslation("inbox")(InboxPage)
+export default withTranslation("inbox")(
+  withAuth(session => session && session.currentuser)(InboxPage)
 );

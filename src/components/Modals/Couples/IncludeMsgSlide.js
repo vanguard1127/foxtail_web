@@ -15,9 +15,9 @@ class IncludeMsgSlide extends PureComponent {
 
     return (
       <>
-        <div> {t("includeold")}?</div>
-        <br />
-        <div>{t("onlychatres")}</div>
+        <div>
+          <span> {t("includeold")}?</span>
+        </div>
         <div style={{ padding: "20px" }}>
           {" "}
           <input
@@ -33,7 +33,10 @@ class IncludeMsgSlide extends PureComponent {
           />
           <label htmlFor="cbox">
             <span style={{ paddingLeft: "5px" }}>{t("includemsg")}</span>
-          </label>
+          </label>{" "}
+          <div>
+            <small>{t("onlychatres")}</small>
+          </div>
         </div>
         <div className="submit">
           <Mutation

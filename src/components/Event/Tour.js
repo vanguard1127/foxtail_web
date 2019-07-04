@@ -446,6 +446,8 @@ class ProfileTour extends PureComponent {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(
-  withRouter(withTranslation("profile")(ProfileTour))
+export default withRouter(
+  withTranslation("event")(
+    withAuth(session => session && session.currentuser)(ProfileTour)
+  )
 );

@@ -179,17 +179,25 @@ const errorLink = onError(
       });
     }
     if (networkError) {
-      console.log("NETWORK ERROR::::", networkError);
-      if (!toast.isActive(networkError)) {
-        toast.warn(
-          i18n.t(
-            "common:We're having trouble connecting to you. Please check your connection and try again."
-          ),
-          {
+      if (networkError.statusCode === 429) {
+        if (!toast.isActive("networkError")) {
+          toast.info("Security triggered: Please prove you're human", {
             position: toast.POSITION.TOP_CENTER,
-            toastId: networkError
-          }
-        );
+            toastId: "networkError"
+          });
+        }
+      } else {
+        if (!toast.isActive("networkError")) {
+          toast.info(
+            i18n.t(
+              "common:We're having trouble connecting to you. Please check your connection and try again."
+            ),
+            {
+              position: toast.POSITION.TOP_CENTER,
+              toastId: "networkError"
+            }
+          );
+        }
       }
     }
     return null;

@@ -64,13 +64,9 @@ class MessageList extends Component {
             }
           />
         </div>
-        {loading ? (
+        {loading && (
           <div className="item">
             <span> {t("common:Loading")}</span>
-          </div>
-        ) : (
-          <div className="item" style={{ textAlign: "center" }}>
-            {t("nomocomm")}
           </div>
         )}
       </div>

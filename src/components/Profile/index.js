@@ -367,6 +367,8 @@ class ProfilePage extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(
-  withRouter(withTranslation("profile")(ProfilePage))
+export default withRouter(
+  withTranslation("profile")(
+    withAuth(session => session && session.currentuser)(ProfilePage)
+  )
 );

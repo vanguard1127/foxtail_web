@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 
 class LinkBox extends PureComponent {
   render() {
@@ -6,9 +6,15 @@ class LinkBox extends PureComponent {
 
     return (
       <div className="receive-code">
+        <div>
+          <span className="second">{t("cplProfileDesc")}</span>
+        </div>
+        <br />
         <div className="couple-head">
-          <span className="first">{t('coderecv')}?</span>
-          <span className="second">{t('addcode')}:</span>
+          <div>
+            <span className="first">{t("coderecv")}?</span>
+            <span className="second">{t("addcode")}:</span>
+          </div>
         </div>
         <div className="item nobottom">
           <div className="input">
@@ -19,16 +25,16 @@ class LinkBox extends PureComponent {
               onChange={e => handleTextChange(e.target.value)}
               value={code}
             />
-            <label title={t('code')} htmlFor="couples_code" />
+            <label title={t("code")} htmlFor="couples_code" />
           </div>
         </div>
         <div className="item sticky">
           <div className="button">
             <button
-              disabled={code !== '' ? false : true}
+              disabled={code !== "" ? false : true}
               onClick={() => next()}
             >
-              {t('Next')}
+              {t("Next")}
             </button>
           </div>
         </div>

@@ -7,12 +7,17 @@ import ReCaptcha from "../Modals/ReCaptcha";
 
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
-  const { location } = props;
+  const { location, t } = props;
+
   return (
     <Query query={GET_CURRENT_USER} fetchPolicy="network-only">
       {({ data, loading, refetch }) => {
         if (loading) {
           return null;
+        }
+
+        if (!data) {
+          return <ReCaptcha />;
         }
 
         if (data && data.currentuser.maintanence === true) {
@@ -23,12 +28,14 @@ const withAuth = conditionFunc => Component => props => {
                   <div className="icon">
                     <i className="nico cogs" />
                   </div>
-                  <span className="head">We'll Be Right Back</span>
+                  <span className="head">{t("We'll Be Right Back")}</span>
                   <span className="description">
-                    Foxtail is currently being upgraded. Please check back soon!
+                    {t(
+                      "Foxtail is currently being upgraded. Please check back soon!"
+                    )}
                   </span>
                   <span className="description">
-                    Sorry for any inconveience.
+                    {t("Sorry for any inconveience.")}
                   </span>
                   <div>
                     <span className="logo"></span>
