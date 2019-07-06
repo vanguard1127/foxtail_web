@@ -20,7 +20,7 @@ class LoginButton extends PureComponent {
       if (!state || !code) {
         return null;
       }
-      const { t } = this.props;
+      const { t, ReactGA } = this.props;
 
       this.setState({
         csrf: state,
@@ -30,9 +30,18 @@ class LoginButton extends PureComponent {
       fbResolve()
         .then(async ({ data }) => {
           if (data.fbResolve === null) {
+            ReactGA.event({
+              category: "Login",
+              action: "Fail"
+            });
             alert(t("noUserError") + ".");
+
             return;
           } else {
+            ReactGA.event({
+              category: "Login",
+              action: "Success"
+            });
             localStorage.setItem(
               "token",
               data.fbResolve.find(token => token.access === "auth").token

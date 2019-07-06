@@ -21,7 +21,8 @@ class ChatActions extends Component {
       setBlockModalVisible,
       isOwner,
       ErrorHandler,
-      leaveDialog
+      leaveDialog,
+      ReactGA
     } = this.props;
 
     const { invDropOpen, remDropOpen } = this.state;
@@ -41,6 +42,7 @@ class ChatActions extends Component {
             close={this.closeRemDropdown}
             isOwner={isOwner}
             ErrorHandler={ErrorHandler}
+            ReactGA={ReactGA}
           />
         )}
         <li className="invite">
@@ -57,6 +59,7 @@ class ChatActions extends Component {
             close={this.closeInvDropdown}
             style={{ top: "90px" }}
             ErrorHandler={ErrorHandler}
+            ReactGA={ReactGA}
           />
         )}
         <li className="leave">

@@ -256,7 +256,14 @@ class SettingsPage extends Component {
     }
   };
   handleSubmit = (updateSettings, saveImage) => {
-    const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
+    const {
+      ErrorHandler,
+      isCouple,
+      isInitial,
+      refetchUser,
+      t,
+      ReactGA
+    } = this.props;
 
     this.setErrorHandler("Settings updated...");
     if (!saveImage) {
@@ -277,6 +284,10 @@ class SettingsPage extends Component {
                       });
                     }
                     if (this.mounted) this.setState({ flashCpl: true });
+                    ReactGA.event({
+                      category: "Settings",
+                      action: "Updated"
+                    });
                   }
                 }
               })
@@ -295,6 +306,10 @@ class SettingsPage extends Component {
       updateSettings()
         .then(({ data }) => {
           if (data.updateSettings) {
+            ReactGA.event({
+              category: "Settings",
+              action: "Updated"
+            });
             if (isCouple && isInitial) {
               if (this.mounted) this.setState({ flashCpl: true });
             }
@@ -583,7 +598,8 @@ class SettingsPage extends Component {
       currentuser,
       refetchUser,
       dayjs,
-      history
+      history,
+      ReactGA
     } = this.props;
 
     let aboutErr = "";
@@ -825,6 +841,7 @@ class SettingsPage extends Component {
                               notifyClient={this.notifyClient}
                               setDialogContent={this.setDialogContent}
                               lang={lang}
+                              ReactGA={ReactGA}
                             />
                           )}
                           <AcctSettings
@@ -839,6 +856,7 @@ class SettingsPage extends Component {
                             ErrorHandler={ErrorHandler}
                             lang={lang}
                             isEmailOK={currentuser.isEmailOK}
+                            ReactGA={ReactGA}
                           />
                           <DeactivateAcctBtn
                             t={t}

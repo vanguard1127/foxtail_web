@@ -102,6 +102,12 @@ class ProfilesContainer extends Component {
 
   toggleShareModal = () => {
     this.props.ErrorHandler.setBreadcrumb("Share Modal Toggled:");
+    if (!this.state.shareModalVisible) {
+      this.props.ReactGA.event({
+        category: "Search Profiles",
+        action: "Share Modal"
+      });
+    }
     this.setState({ shareModalVisible: !this.state.shareModalVisible });
   };
 
@@ -123,22 +129,34 @@ class ProfilesContainer extends Component {
     }
 
     if (this.mounted) {
-      const { ErrorHandler, t } = this.props;
+      const { ErrorHandler, t, ReactGA } = this.props;
       this.setState({ profile, likedProfiles }, () => {
         likeProfile()
           .then(({ data }) => {
             switch (data.likeProfile) {
               case "like":
+                ReactGA.event({
+                  category: "Search Profiles",
+                  action: "Liked"
+                });
                 toast.success(
                   t("common:Liked") + " " + profile.profileName + "!"
                 );
                 break;
               case "unlike":
+                ReactGA.event({
+                  category: "Search Profiles",
+                  action: "UnLiked"
+                });
                 toast.success(
                   t("common:UnLiked") + " " + profile.profileName + "!"
                 );
                 break;
               default:
+                ReactGA.event({
+                  category: "Search Profiles",
+                  action: "Matched"
+                });
                 this.setMatchDlgVisible(true, profile, data.likeProfile);
                 break;
             }
@@ -239,7 +257,8 @@ class ProfilesContainer extends Component {
       interestedIn,
       dayjs,
       distanceMetric,
-      userID
+      userID,
+      ReactGA
     } = this.props;
 
     const {
@@ -421,6 +440,7 @@ class ProfilesContainer extends Component {
                         close={() => this.setMsgModalVisible(false)}
                         ErrorHandler={ErrorHandler}
                         setMsgd={this.setMessaged}
+                        ReactGA={ReactGA}
                       />
                     )}
                     {profile && chatID && matchDlgVisible && (

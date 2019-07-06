@@ -22,6 +22,10 @@ class ChatPanel extends PureComponent {
     postComment()
       .then(({ data }) => {
         if (this.mounted) {
+          this.props.ReactGA.event({
+            category: "Event",
+            action: "Post Comment"
+          });
           this.setState({ text: "" });
         }
       })

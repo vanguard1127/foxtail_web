@@ -70,9 +70,16 @@ class SearchCriteria extends PureComponent {
   };
 
   handleSubmit = updateSettings => {
-    updateSettings().catch(res => {
-      this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-    });
+    updateSettings()
+      .then(() =>
+        this.props.ReactGA.event({
+          category: "Profile Search",
+          action: "Change criteria"
+        })
+      )
+      .catch(res => {
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+      });
   };
 
   handleRemoveLocLock = async updateSettings => {

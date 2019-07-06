@@ -3,16 +3,21 @@ import MembersDropdown from "../../common/MembersDropdown/MembersDropdown";
 class GoingBar extends PureComponent {
   state = { remDropOpen: false };
   closeRemDropdown = () => this.setState({ remDropOpen: false });
+  remDropOpen = () => {
+    this.props.ReactGA.event({
+      category: "Event",
+      action: !this.state.remDropOpen ? "Close Invite" : "Open Invite"
+    });
+    this.setState({ remDropOpen: !this.state.remDropOpen });
+  };
   render() {
-    const { id, participants, t, isOwner, ErrorHandler } = this.props;
+    const { id, participants, t, isOwner, ErrorHandler, ReactGA } = this.props;
     const { remDropOpen } = this.state;
+
     return (
       <div className="goings">
         <span className="stats">
-          <div
-            className="content"
-            onClick={() => this.setState({ remDropOpen: !remDropOpen })}
-          >
+          <div className="content" onClick={this.remDropOpen}>
             <ul>
               {participants.map(el => (
                 <li key={el.id}>
@@ -36,6 +41,7 @@ class GoingBar extends PureComponent {
               t={t}
               close={this.closeRemDropdown}
               ErrorHandler={ErrorHandler}
+              ReactGA={ReactGA}
             />
           )}
         </span>

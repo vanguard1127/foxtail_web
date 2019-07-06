@@ -35,7 +35,7 @@ class Landing extends PureComponent {
   };
 
   render() {
-    const { t, client, location, history, session } = this.props;
+    const { t, client, location, history, session, ReactGA } = this.props;
     const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
     let refer = null;
     let aff = null;
@@ -116,6 +116,7 @@ class Landing extends PureComponent {
                         history={history}
                         ErrorHandler={ErrorHandler}
                         lang={lang}
+                        ReactGA={ReactGA}
                       />
                     </ErrorHandler.ErrorBoundary>
                     <ErrorHandler.ErrorBoundary>
@@ -222,6 +223,7 @@ class Landing extends PureComponent {
                         toast={toast}
                         session={session}
                         history={history}
+                        ReactGA={ReactGA}
                       />
                     </ErrorHandler.ErrorBoundary>
                   </div>

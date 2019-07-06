@@ -40,7 +40,15 @@ class Settings extends Component {
   }
 
   render() {
-    const { session, refetch, t, ErrorHandler, location, history } = this.props;
+    const {
+      session,
+      refetch,
+      t,
+      ErrorHandler,
+      location,
+      history,
+      ReactGA
+    } = this.props;
     const { state } = location;
 
     let isCouple = false;
@@ -118,6 +126,7 @@ class Settings extends Component {
                   currentuser={session.currentuser}
                   dayjs={dayjs}
                   lang={lang}
+                  ReactGA={ReactGA}
                 />
               )}
             </Fragment>

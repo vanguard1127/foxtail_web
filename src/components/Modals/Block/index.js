@@ -42,20 +42,32 @@ class BlockModal extends Component {
   };
 
   handleSubmit = (blockProfile, flagItem) => {
-    const { t, close, goToMain, ErrorHandler } = this.props;
+    const { t, close, goToMain, ErrorHandler, ReactGA } = this.props;
     flagItem()
       .then(() => {
         if (this.state.type === flagOptions.Profile) {
           blockProfile().then(({ data }) => {
             if (data.blockProfile) {
+              ReactGA.event({
+                category: "Profile",
+                action: "Block"
+              });
               toast.success(t("selproreported"));
               goToMain();
             }
           });
         } else if (this.state.type === flagOptions.Chat) {
+          ReactGA.event({
+            category: "Chat",
+            action: "Block"
+          });
           toast.success(t("chatreported"));
           close();
         } else if (this.state.type === flagOptions.Event) {
+          ReactGA.event({
+            category: "Event",
+            action: "Block"
+          });
           toast.success(t("evereported"));
           close();
         }

@@ -32,7 +32,8 @@ class EventInfoMobile extends Component {
       dayjs,
       distanceMetric,
       lang,
-      refetch
+      refetch,
+      ReactGA
     } = this.props;
 
     const {
@@ -115,6 +116,7 @@ class EventInfoMobile extends Component {
             participants={participants}
             t={t}
             ErrorHandler={ErrorHandler}
+            ReactGA={ReactGA}
           />
         ) : (
           <>
@@ -124,6 +126,7 @@ class EventInfoMobile extends Component {
               ErrorHandler={ErrorHandler}
               updateEventProps={event}
               refetch={refetch}
+              ReactGA={ReactGA}
               lang={lang}
             />
             <div className="join-event">

@@ -4,7 +4,14 @@ class EventShare extends PureComponent {
   state = { invDropOpen: false };
   closeInvDropdown = () => this.setState({ invDropOpen: false });
   render() {
-    const { id, t, showShareModal, showBlockModal, ErrorHandler } = this.props;
+    const {
+      id,
+      t,
+      showShareModal,
+      showBlockModal,
+      ErrorHandler,
+      ReactGA
+    } = this.props;
     const { invDropOpen } = this.state;
     return (
       <>
@@ -28,6 +35,7 @@ class EventShare extends PureComponent {
               t={t}
               close={this.closeInvDropdown}
               ErrorHandler={ErrorHandler}
+              ReactGA={ReactGA}
             />
           )}
         </div>

@@ -53,6 +53,10 @@ class EventPage extends Component {
     this.props.ErrorHandler.setBreadcrumb("Delete Event");
     deleteEvent()
       .then(({ data }) => {
+        this.props.ReactGA.event({
+          category: "Event",
+          action: "Deleted Event"
+        });
         toast.success("Event Deleted");
         this.props.history.push("/events");
       })
@@ -65,6 +69,12 @@ class EventPage extends Component {
     this.props.ErrorHandler.setBreadcrumb(
       "Share Modal Opened:" + shareModalVisible
     );
+    if (shareModalVisible) {
+      this.props.ReactGA.event({
+        category: "Event",
+        action: "Share Modal"
+      });
+    }
     if (this.mounted) {
       if (profile) this.setState({ profile, shareModalVisible });
       else this.setState({ shareModalVisible });
@@ -83,46 +93,10 @@ class EventPage extends Component {
 
   closeBlockModal = () => this.setBlockModalVisible(false);
 
-  handleDelete = deleteEvent => {
-    this.props.ErrorHandler.setBreadcrumb("Delete Event");
-    const confirmDelete = window.confirm(this.props.t("surewarn"));
-    if (confirmDelete) {
-      deleteEvent().catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-      });
-    }
-  };
-
-  handleSubmit = (e, createEvent) => {
-    this.props.ErrorHandler.setBreadcrumb("update event");
-    e.preventDefault();
-
-    this.formRef.props.form.validateFields((err, fieldsValue) => {
-      if (err) {
-        return;
-      }
-
-      createEvent()
-        .then(({ data }) => {
-          if (this.mounted) {
-            this.setState({ visible: false });
-          }
-        })
-
-        .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-        });
-    });
-  };
-
-  saveFormRef = formRef => {
-    this.formRef = formRef;
-  };
-
   render() {
     const { id } = this.props.match.params;
     const { blockModalVisible, showDelete, shareModalVisible } = this.state;
-    const { session, history, t, ErrorHandler } = this.props;
+    const { session, history, t, ErrorHandler, ReactGA } = this.props;
     if (id === "tour" && session.currentuser.tours.indexOf("e") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Event");
       return (
@@ -178,6 +152,7 @@ class EventPage extends Component {
                         }
                         ErrorHandler={ErrorHandler}
                         lang={lang}
+                        ReactGA={ReactGA}
                       />
                     </div>
                     <div className="col-lg-9 col-md-12">
@@ -191,7 +166,8 @@ class EventPage extends Component {
                         }
                         t={t}
                         ErrorHandler={ErrorHandler}
-                      />{" "}
+                        ReactGA={ReactGA}
+                      />
                       <EventInfoMobile
                         event={event}
                         t={t}
@@ -201,7 +177,8 @@ class EventPage extends Component {
                         distanceMetric={session.currentuser.distanceMetric}
                         lang={lang}
                         refetch={refetch}
-                      />{" "}
+                        ReactGA={ReactGA}
+                      />
                       <Discussion
                         chatID={chatID}
                         history={history}
@@ -210,6 +187,7 @@ class EventPage extends Component {
                         dayjs={dayjs}
                         currentuser={session.currentuser}
                         lang={lang}
+                        ReactGA={ReactGA}
                       />
                     </div>
                     <div className="col-lg-3 col-md-12">
@@ -226,6 +204,7 @@ class EventPage extends Component {
                         dayjs={dayjs}
                         distanceMetric={session.currentuser.distanceMetric}
                         lang={lang}
+                        ReactGA={ReactGA}
                       />
                     </div>
                   </div>

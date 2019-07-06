@@ -17,7 +17,8 @@ class ChatHeader extends PureComponent {
       isOwner,
       ErrorHandler,
       leaveDialog,
-      handleRemoveSelf
+      handleRemoveSelf,
+      ReactGA
     } = this.props;
 
     const { open } = this.state;
@@ -94,6 +95,7 @@ class ChatHeader extends PureComponent {
             isOwner={isOwner}
             ErrorHandler={ErrorHandler}
             leaveDialog={leaveDialog}
+            ReactGA={ReactGA}
           />
         </div>
       </div>

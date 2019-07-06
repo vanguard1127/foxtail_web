@@ -17,7 +17,8 @@ class EventDiscussion extends Component {
       ErrorHandler,
       dayjs,
       currentuser,
-      lang
+      lang,
+      ReactGA
     } = this.props;
     return (
       <ErrorHandler.ErrorBoundary>
@@ -29,6 +30,7 @@ class EventDiscussion extends Component {
             ErrorHandler={ErrorHandler}
             currentuser={currentuser}
             limit={EVENTDISC_LIMIT}
+            ReactGA={ReactGA}
           />
           <ChatContent
             chatID={chatID}

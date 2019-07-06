@@ -8,7 +8,15 @@ class EditEventBtn extends PureComponent {
     });
   };
   render() {
-    const { ErrorHandler, id, updateEventProps, refetch, lang, t } = this.props;
+    const {
+      ErrorHandler,
+      id,
+      updateEventProps,
+      refetch,
+      lang,
+      t,
+      ReactGA
+    } = this.props;
     this.props.ErrorHandler.setBreadcrumb("Open Edit Event");
     return (
       <Fragment>
@@ -26,6 +34,7 @@ class EditEventBtn extends PureComponent {
             updateEventProps={updateEventProps}
             refetch={refetch}
             lang={lang}
+            ReactGA={ReactGA}
           />
         ) : null}
       </Fragment>

@@ -19,7 +19,8 @@ class EventAbout extends Component {
       description,
       isOwner,
       t,
-      ErrorHandler
+      ErrorHandler,
+      ReactGA
     } = this.props;
     return (
       <ErrorHandler.ErrorBoundary>
@@ -31,6 +32,7 @@ class EventAbout extends Component {
             t={t}
             isOwner={isOwner}
             ErrorHandler={ErrorHandler}
+            ReactGA={ReactGA}
           />
         </div>
       </ErrorHandler.ErrorBoundary>

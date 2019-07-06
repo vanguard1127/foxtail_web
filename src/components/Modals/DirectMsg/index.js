@@ -33,26 +33,31 @@ class DirectMsg extends Component {
   };
 
   handleSubmit = (e, sendMessage) => {
-    this.props.ErrorHandler.setBreadcrumb("send direct message");
     e.preventDefault();
+    const { t, close, setMsgd, ReactGA, profile, ErrorHandler } = this.props;
+    ErrorHandler.setBreadcrumb("send direct message");
     this.setState({ sending: true }, () => {
       sendMessage()
         .then(async ({ data }) => {
           if (data.sendMessage) {
             this.setState({ text: "" });
             this.clearInboxResults();
-            toast.success(this.props.t("common:msgsent"));
-            if (this.props.setMsgd) {
-              this.props.setMsgd(this.props.profile.id);
+            toast.success(t("common:msgsent"));
+            ReactGA.event({
+              category: "Profile",
+              action: "Send Direct Msg"
+            });
+            if (setMsgd) {
+              setMsgd(profile.id);
             } else {
-              this.props.close();
+              close();
             }
           } else {
-            toast.error(this.props.t("msgnotsent"));
+            toast.error(t("msgnotsent"));
           }
         })
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          ErrorHandler.catchErrors(res.graphQLErrors);
         });
     });
   };

@@ -16,8 +16,10 @@ const withAuth = conditionFunc => Component => props => {
           return null;
         }
 
-        if (!data) {
+        {
+          /* if (!data) {
           return <ReCaptcha />;
+        } */
         }
 
         if (data && data.currentuser.maintanence === true) {

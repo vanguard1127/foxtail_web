@@ -19,10 +19,14 @@ class RequestEmailVerBtn extends PureComponent {
   }
 
   handleClick = resendVerEMail => {
-    const { t } = this.props;
+    const { t, ReactGA } = this.props;
 
     resendVerEMail()
       .then(({ data }) => {
+        ReactGA.event({
+          category: "Settings",
+          action: "Resend Email Ver"
+        });
         // if (data.resendVerEMail) {
         toast.success("Email has sent successsfully");
         return;

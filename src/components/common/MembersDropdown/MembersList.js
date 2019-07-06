@@ -27,7 +27,7 @@ class MembersList extends PureComponent {
   }
 
   handleEnd = previousPosition => {
-    //if totoal reach skip and show no more sign
+    //if total reach skip and show no more sign
     const { skip } = this.state;
     if (previousPosition === Waypoint.below) {
       const { fetchMore } = this.props;
@@ -63,12 +63,16 @@ class MembersList extends PureComponent {
   };
 
   handleInvite = invite => {
-    const { targetType, close, t } = this.props;
+    const { targetType, close, t, ReactGA } = this.props;
 
     if (targetType === "event") {
       invite()
         .then(({ data }) => {
           if (data.inviteProfileEvent) {
+            ReactGA.event({
+              category: "Event",
+              action: "Invites Sent"
+            });
             close();
             toast.success(t("common:invitesent"));
           }
@@ -80,6 +84,10 @@ class MembersList extends PureComponent {
       invite()
         .then(({ data }) => {
           if (data.inviteProfile) {
+            ReactGA.event({
+              category: "Chat",
+              action: "Invites Sent"
+            });
             close();
             toast.success(t("common:invitesent"));
           }
@@ -91,11 +99,15 @@ class MembersList extends PureComponent {
   };
 
   handleRemove = remove => {
-    const { targetType, close, t } = this.props;
+    const { targetType, close, t, ReactGA } = this.props;
     if (targetType === "event") {
       remove()
         .then(({ data }) => {
           if (data.removeProfileEvent) {
+            ReactGA.event({
+              category: "Event",
+              action: "Remove Member"
+            });
             close();
             toast.success(t("common:memsremove"));
           }
@@ -107,6 +119,10 @@ class MembersList extends PureComponent {
       remove()
         .then(({ data }) => {
           if (data.removeProfilesChat) {
+            ReactGA.event({
+              category: "Chat",
+              action: "Remove Member"
+            });
             close();
             toast.success(t("common:removpros"));
           }

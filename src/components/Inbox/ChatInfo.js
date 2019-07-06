@@ -9,7 +9,8 @@ class ChatInfo extends PureComponent {
       handleRemoveSelf,
       isOwner,
       ErrorHandler,
-      leaveDialog
+      leaveDialog,
+      ReactGA
     } = this.props;
 
     return (
@@ -26,6 +27,7 @@ class ChatInfo extends PureComponent {
                 isOwner={isOwner}
                 ErrorHandler={ErrorHandler}
                 leaveDialog={leaveDialog}
+                ReactGA={ReactGA}
               />
             </div>
           </div>

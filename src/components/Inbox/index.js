@@ -99,7 +99,13 @@ class InboxPage extends Component {
         this.props.history.replace({ state: { chatID } });
         this.setState({ unSeenCount, chatOpen: true }, () => {
           readChat()
-            .then(() => (this.opening = false))
+            .then(() => {
+              this.props.ReactGA.event({
+                category: "Chat",
+                action: "Read"
+              });
+              this.opening = false;
+            })
             .catch(res => {
               ErrorHandler.catchErrors(res.graphQLErrors);
               this.opening = false;
@@ -121,6 +127,10 @@ class InboxPage extends Component {
     removeSelf()
       .then(({ data }) => {
         if (this.mounted) {
+          this.props.ReactGA.event({
+            category: "Chat",
+            action: "Remove Self"
+          });
           toast.success(t("succleft"));
           this.setState({ chat: null });
           refetch();
@@ -184,7 +194,7 @@ class InboxPage extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, ReactGA } = this.props;
     const { currentuser } = this.props.session;
     let {
       chat,
@@ -248,6 +258,7 @@ class InboxPage extends Component {
                   dayjs={dayjs}
                   chatOpen={chatOpen}
                   lang={lang}
+                  ReactGA={ReactGA}
                 />
               )}
               {chatID && (
@@ -330,6 +341,7 @@ class InboxPage extends Component {
                               btnText
                             });
                           }}
+                          ReactGA={ReactGA}
                         />
                         {showModal && (
                           <Modal
@@ -361,6 +373,7 @@ class InboxPage extends Component {
               id={chatID}
               close={this.setBlockModalVisible}
               ErrorHandler={ErrorHandler}
+              ReactGA={ReactGA}
             />
           )}
         </section>

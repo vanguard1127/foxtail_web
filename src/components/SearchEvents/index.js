@@ -90,6 +90,12 @@ class SearchEvents extends Component {
     this.props.ErrorHandler.setBreadcrumb(
       "share modal visible:" + shareModalVisible
     );
+    if (shareModalVisible) {
+      this.props.ReactGA.event({
+        category: "Event",
+        action: "Share Modal"
+      });
+    }
     if (this.mounted) {
       if (event) this.setState({ event, shareModalVisible });
       else this.setState({ event: null, shareModalVisible });
@@ -191,7 +197,8 @@ class SearchEvents extends Component {
       session,
       refetch,
       locationErr,
-      history
+      history,
+      ReactGA
     } = this.props;
 
     const distanceMetric = session.currentuser.distanceMetric;
@@ -222,6 +229,7 @@ class SearchEvents extends Component {
                 distanceMetric={distanceMetric}
                 lang={lang}
                 history={history}
+                ReactGA={ReactGA}
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>

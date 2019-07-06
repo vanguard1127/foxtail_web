@@ -7,6 +7,10 @@ class CancelSubBtn extends PureComponent {
   handleSubmit = ({ cancelSubscription }) => {
     cancelSubscription()
       .then(({ data }) => {
+        this.props.ReactGA.event({
+          category: "Subscription",
+          action: "Cancelled"
+        });
         this.props.notifyClient(this.props.t("cancelblk"));
         window.location.reload();
       })

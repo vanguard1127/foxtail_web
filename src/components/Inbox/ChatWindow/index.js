@@ -29,7 +29,8 @@ class ChatWindow extends PureComponent {
       handleRemoveSelf,
       isOwner,
       leaveDialog,
-      lang
+      lang,
+      ReactGA
     } = this.props;
     if (currentChat !== null) {
       sessionStorage.setItem("pid", currentChat.id);
@@ -50,6 +51,7 @@ class ChatWindow extends PureComponent {
               isOwner={isOwner}
               ErrorHandler={ErrorHandler}
               leaveDialog={leaveDialog}
+              ReactGA={ReactGA}
             />
             <ChatContent
               chatID={currentChat.id}

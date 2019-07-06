@@ -47,7 +47,7 @@ class Signup extends PureComponent {
       return;
     }
     if (this.mounted) {
-      const { ErrorHandler, history } = this.props;
+      const { ErrorHandler, history, ReactGA } = this.props;
       this.setState(
         {
           csrf: state,
@@ -58,9 +58,17 @@ class Signup extends PureComponent {
             .then(({ data }) => {
               const { isCouple } = this.state;
               if (data.fbResolve === null) {
+                ReactGA.event({
+                  category: "Signup",
+                  action: "Fail"
+                });
                 alert("Signup failed.");
                 return;
               }
+              ReactGA.event({
+                category: "Signup",
+                action: "Success"
+              });
               localStorage.setItem(
                 "token",
                 data.fbResolve.find(token => token.access === "auth").token
@@ -71,6 +79,10 @@ class Signup extends PureComponent {
               );
 
               if (isCouple) {
+                ReactGA.event({
+                  category: "Signup",
+                  action: "Couple"
+                });
                 history.push({
                   pathname: "/settings",
                   state: { couple: true, initial: true }

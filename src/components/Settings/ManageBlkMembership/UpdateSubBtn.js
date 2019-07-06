@@ -17,6 +17,10 @@ class UpdateSubBtn extends PureComponent {
       this.setState({ token, ccLast4 });
       updateSubscription()
         .then(({ data }) => {
+          this.props.ReactGA.event({
+            category: "Subscription",
+            action: "Updated"
+          });
           this.props.notifyClient(t("ccupdate"));
           window.location.reload();
         })

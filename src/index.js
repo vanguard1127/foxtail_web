@@ -225,7 +225,7 @@ const Wrapper = withRouter(props => {
   let location = props.location;
   if (location.pathname) {
     if (location.pathname === "/") {
-      return <Landing {...props} />;
+      return <Landing {...props} ReactGA={ReactGA} />;
     } else if (location.pathname === "/tos") {
       return <ToS />;
     } else if (location.pathname === "/about") {
@@ -267,35 +267,47 @@ const Body = withAuth(session => session && session.currentuser)(
         <Switch>
           <Route
             path="/members"
-            render={() => <ProfileSearch ErrorHandler={ErrorHandler} />}
+            render={() => (
+              <ProfileSearch ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+            )}
             exact
           />
           <Route
             path="/events"
-            render={() => <SearchEvents ErrorHandler={ErrorHandler} />}
+            render={() => (
+              <SearchEvents ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+            )}
             exact
           />
           <Route
             path="/event/:id"
-            render={() => <EventPage ErrorHandler={ErrorHandler} />}
+            render={() => (
+              <EventPage ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+            )}
           />
           <Route
             path="/member/:id"
-            render={() => <ProfilePage ErrorHandler={ErrorHandler} />}
+            render={() => (
+              <ProfilePage ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+            )}
           />
           <Route
             path="/inbox/:chatID"
             component={InboxPage}
             ErrorHandler={ErrorHandler}
+            ReactGA={ReactGA}
           />
           <Route
             path="/inbox"
             component={InboxPage}
             ErrorHandler={ErrorHandler}
+            ReactGA={ReactGA}
           />
           <Route
             path="/settings"
-            render={() => <Settings ErrorHandler={ErrorHandler} />}
+            render={() => (
+              <Settings ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+            )}
           />
           <Redirect to="/" />
         </Switch>

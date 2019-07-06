@@ -17,7 +17,8 @@ class ManageBlackSub extends Component {
       dayjs,
       notifyClient,
       setDialogContent,
-      lang
+      lang,
+      ReactGA
     } = this.props;
     return (
       <ErrorHandler.ErrorBoundary>
@@ -54,6 +55,7 @@ class ManageBlackSub extends Component {
                   notifyClient={notifyClient}
                   lang={lang}
                   currCCLast4={currentuser.ccLast4}
+                  ReactGA={ReactGA}
                 />
               </div>
             </div>
@@ -65,6 +67,7 @@ class ManageBlackSub extends Component {
                   ErrorHandler={ErrorHandler}
                   notifyClient={notifyClient}
                   setDialogContent={setDialogContent}
+                  ReactGA={ReactGA}
                 />
               </div>
             </div>

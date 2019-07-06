@@ -29,7 +29,8 @@ class EventHeader extends Component {
       showShareModal,
       showBlockModal,
       ErrorHandler,
-      lang
+      lang,
+      ReactGA
     } = this.props;
 
     return (
@@ -52,6 +53,7 @@ class EventHeader extends Component {
               showShareModal={showShareModal}
               showBlockModal={showBlockModal}
               ErrorHandler={ErrorHandler}
+              ReactGA={ReactGA}
             />
           </div>
         </div>

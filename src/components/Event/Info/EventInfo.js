@@ -31,7 +31,8 @@ class EventInfo extends Component {
       refetch,
       dayjs,
       distanceMetric,
-      lang
+      lang,
+      ReactGA
     } = this.props;
 
     const {
@@ -117,6 +118,7 @@ class EventInfo extends Component {
               participants={participants}
               t={t}
               ErrorHandler={ErrorHandler}
+              ReactGA={ReactGA}
             />
           ) : (
             <>
@@ -127,6 +129,7 @@ class EventInfo extends Component {
                 updateEventProps={event}
                 refetch={refetch}
                 lang={lang}
+                ReactGA={ReactGA}
               />
               <div className="join-event">
                 <span onClick={() => openDelete()}>{t("canevent")}</span>

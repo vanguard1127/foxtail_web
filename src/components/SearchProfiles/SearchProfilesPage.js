@@ -103,7 +103,8 @@ class SearchProfilesPage extends Component {
       refetch,
       client,
       history,
-      locationErr
+      locationErr,
+      ReactGA
     } = this.props;
 
     const {
@@ -152,6 +153,7 @@ class SearchProfilesPage extends Component {
           locationErr={locationErr}
           refetchUser={refetch}
           userID={session.currentuser.userID}
+          ReactGA={ReactGA}
         />
       );
     }
@@ -175,6 +177,7 @@ class SearchProfilesPage extends Component {
             refetch={refetch}
             ErrorHandler={ErrorHandler}
             isBlackMember={session.currentuser.blackMember.active}
+            ReactGA={ReactGA}
           />
         </ErrorHandler.ErrorBoundary>
         <ErrorHandler.ErrorBoundary>{body}</ErrorHandler.ErrorBoundary>

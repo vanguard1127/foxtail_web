@@ -23,7 +23,7 @@ class ChangePhoneBtn extends PureComponent {
     if (!state || !code) {
       return;
     }
-    const { t } = this.props;
+    const { t, ReactGA } = this.props;
     if (this.mounted) {
       this.setState({
         csrf: state,
@@ -36,6 +36,10 @@ class ChangePhoneBtn extends PureComponent {
           alert(t("common:tryagain"));
           return;
         }
+        ReactGA.event({
+          category: "Settings",
+          action: "Change Phone"
+        });
         toast.success(t("changenum"));
       })
       .catch(res => {

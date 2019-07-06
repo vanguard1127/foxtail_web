@@ -147,7 +147,7 @@ class CreateEvent extends Component {
   };
 
   handleSubmit = async ({ createEvent, signS3 }) => {
-    const { t, ErrorHandler, refetch, close, history } = this.props;
+    const { t, ErrorHandler, refetch, close, history, ReactGA } = this.props;
     if (await this.validateForm()) {
       if (this.state.image !== "") {
         await this.handleUpload({ signS3 });
@@ -157,8 +157,16 @@ class CreateEvent extends Component {
           toast.success(t("evevtsaved"));
 
           if (refetch) {
+            ReactGA.event({
+              category: "Event",
+              action: "Update"
+            });
             refetch();
           } else {
+            ReactGA.event({
+              category: "Event",
+              action: "Create"
+            });
             history.push("/event/" + data.createEvent.id);
           }
           close();

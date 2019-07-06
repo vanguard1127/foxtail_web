@@ -11,8 +11,7 @@ class SearchProfiles extends Component {
   }
   render() {
     document.title = "Search Profiles";
-
-    const { t, ErrorHandler } = this.props;
+    const { t, ErrorHandler, ReactGA } = this.props;
 
     ErrorHandler.setBreadcrumb("Enter Search Profiles");
     return (
@@ -36,6 +35,7 @@ class SearchProfiles extends Component {
               t={t}
               ErrorHandler={ErrorHandler}
               searchCriteria={data.getSettings}
+              ReactGA={ReactGA}
             />
           );
         }}

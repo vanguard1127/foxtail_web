@@ -104,6 +104,12 @@ class ProfilePage extends Component {
     this.props.ErrorHandler.setBreadcrumb(
       "Share Modal Opened:" + shareModalVisible
     );
+    if (shareModalVisible) {
+      this.props.ReactGA.event({
+        category: "Profile",
+        action: "Share Modal"
+      });
+    }
     if (this.mounted) {
       if (profile) this.setState({ profile, shareModalVisible });
       else this.setState({ shareModalVisible });
@@ -121,7 +127,7 @@ class ProfilePage extends Component {
   };
 
   handleLike = (profile, likeProfile, refetch) => {
-    const { ErrorHandler, t } = this.props;
+    const { ErrorHandler, t, ReactGA } = this.props;
     ErrorHandler.setBreadcrumb("Like Profile:" + likeProfile);
 
     likeProfile()
@@ -129,12 +135,24 @@ class ProfilePage extends Component {
         switch (data.likeProfile) {
           case "like":
             toast.success(t("common:Liked") + profile.profileName + "!");
+            ReactGA.event({
+              category: "Profile",
+              action: "Like"
+            });
             break;
           case "unlike":
             toast.success(t("common:UnLiked") + profile.profileName + "!");
+            ReactGA.event({
+              category: "Profile",
+              action: "UnLike"
+            });
             break;
           default:
             this.setMatchDlgVisible(true, profile, data.likeProfile);
+            ReactGA.event({
+              category: "Profile",
+              action: "Match"
+            });
             break;
         }
         refetch();
@@ -159,7 +177,7 @@ class ProfilePage extends Component {
       matchDlgVisible,
       chatID
     } = this.state;
-    const { t, ErrorHandler, session } = this.props;
+    const { t, ErrorHandler, session, ReactGA } = this.props;
     ErrorHandler.setBreadcrumb("Open Profile:" + id);
 
     if (id === "tour" && session.currentuser.tours.indexOf("p") < 0) {
@@ -300,6 +318,7 @@ class ProfilePage extends Component {
                         goToMain={() => this.props.history.push("/members")}
                         type={flagOptions.Profile}
                         ErrorHandler={ErrorHandler}
+                        ReactGA={ReactGA}
                       />
                     )}
                     {profile && shareModalVisible && (
@@ -316,6 +335,7 @@ class ProfilePage extends Component {
                         close={() => this.setMsgModalVisible(false)}
                         ErrorHandler={ErrorHandler}
                         setMsgd={pid => this.setMessaged(pid, refetch)}
+                        ReactGA={ReactGA}
                       />
                     )}
                     {profile && chatID && matchDlgVisible && (
