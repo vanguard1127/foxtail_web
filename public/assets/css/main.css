@@ -19,6 +19,8 @@
   top: 0;
 }
 
+button,aside,div:focus {outline:0;}
+
 /*---- HEADER ----*/
 
 /* LOGO */
@@ -494,7 +496,7 @@ header .toggle {
 
 header .toggle .notification {
   width: 100%;
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: #fff;
@@ -3231,7 +3233,7 @@ section.go-events .header .settings-con {
   width: 100%;
   float: left;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 section.go-events .header .settings-con .dropdown {
@@ -3385,6 +3387,14 @@ section.go-events .events-card-content span.head {
   padding-left: 10px;
   padding-top: 1px;
   margin-bottom: 20px;
+}
+
+section.not-found{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 section.not-found span.logo {
@@ -4699,11 +4709,13 @@ input.location-search-input {
 .suggestion-item {
   padding: 5px 15px !important;
   font-size: 14px !important;
+  border: 1px solid #e3e3e3 !important;
 }
 
 .suggestion-item--active {
   padding: 5px 15px !important;
   font-size: 14px !important;
+  border: 1px solid #e3e3e3 !important;
 }
 
 .page .form,
@@ -9621,6 +9633,12 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   position: relative;
   width: 60px;
   height: 97px;
+}
+
+.loadingActive{
+  display: flex;
+  flex: 1;
+  align-items: center;
 }
 
 .loadingContainer{

@@ -90,14 +90,12 @@ class UploadComponent extends PureComponent {
     }
   };
 
-  handleClickProPic = ({ index, setProfilePic }) => {
+  handleClickProPic = ({ index }) => {
     let img = this.props.photos[index];
-    this.props.showCropper(img.url);
-    // this.props.showCropper(
-    //   "https://images.immediate.co.uk/production/volatile/sites/4/2018/08/GettyImages-184938350-0bfb578.jpg"
-    // );
-
-    //   setProfilePic({ key: img.key, url: img.url });
+    //TODO: use global var here
+    this.props.showCropper(
+      "https://prod-ft-img-bucket.s3.us-west-2.amazonaws.com/" + img.key
+    );
   };
 
   handleClose = () => {

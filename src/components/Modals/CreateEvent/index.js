@@ -73,6 +73,7 @@ class CreateEvent extends Component {
     errors: {},
     showInfo: true,
     showDesiresPopup: false,
+    isImageAlt: false,
     removeCurrentImage: this.props.updateEventProps
       ? !!this.props.updateEventProps.image
       : false,
@@ -192,7 +193,7 @@ class CreateEvent extends Component {
         const { signedRequest, key } = data.signS3;
         await this.uploadToS3(file, signedRequest);
         if (this.mounted) {
-          this.setState({ image: key });
+          this.setState({ image: key, isImageAlt: true });
         }
       })
       .catch(res => {
@@ -251,7 +252,8 @@ class CreateEvent extends Component {
     this.setState({
       image: "",
       removeCurrentImage: false,
-      setOlderImage: true
+      setOlderImage: true,
+      isImageAlt: true
     });
   };
 
@@ -259,7 +261,8 @@ class CreateEvent extends Component {
     this.setState({
       image: this.props.updateEventProps.image,
       removeCurrentImage: true,
-      setOlderImage: false
+      setOlderImage: false,
+      isImageAlt: false
     });
   };
 
@@ -284,12 +287,17 @@ class CreateEvent extends Component {
       filename,
       filetype,
       removeCurrentImage,
-      setOlderImage
+      setOlderImage,
+      isImageAlt
     } = this.state;
 
     return (
       <section>
-        <Modal header={eventID ? t("updateeve") : t("createeve")} close={close}>
+        <Modal
+          header={eventID ? t("updateeve") : t("createeve")}
+          close={close}
+          disableOffClick
+        >
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
               <div className="page">
@@ -447,6 +455,18 @@ class CreateEvent extends Component {
                             minDate: new Date()
                           }}
                           onChange={e => {
+                            if (endTime && e > endTime) {
+                              if (!toast.isActive("startTime")) {
+                                toast.info(
+                                  "Start time may not be after ending time",
+                                  {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    toastId: "startTime"
+                                  }
+                                );
+                              }
+                              return;
+                            }
                             this.setValue({
                               name: "startTime",
                               value: e
@@ -462,6 +482,18 @@ class CreateEvent extends Component {
                           value={endTime}
                           p={{ minDate: new Date(startTime) || new Date() }}
                           onChange={e => {
+                            if (startTime && startTime > e) {
+                              if (!toast.isActive("endTime")) {
+                                toast.info(
+                                  "End time may not be before starting time",
+                                  {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    toastId: "endTime"
+                                  }
+                                );
+                              }
+                              return;
+                            }
                             this.setValue({
                               name: "endTime",
                               value: e
@@ -506,7 +538,8 @@ class CreateEvent extends Component {
                                     startTime,
                                     endTime,
                                     image,
-                                    eventID
+                                    eventID,
+                                    isImageAlt
                                   }}
                                 >
                                   {(createEvent, { loading }) => {

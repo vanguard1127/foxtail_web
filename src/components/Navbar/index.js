@@ -221,7 +221,7 @@ class NavbarAuth extends PureComponent {
               </div>
             </div>
             <div className="col-md-5 flexible">
-              {session.currentuser && (
+              {session && session.currentuser && (
                 <UserToolbar
                   currentuser={session.currentuser}
                   href={href}

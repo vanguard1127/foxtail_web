@@ -194,8 +194,6 @@ class InboxPage extends Component {
   };
 
   render() {
-    const { t, ReactGA } = this.props;
-    const { currentuser } = this.props.session;
     let {
       chat,
       blockModalVisible,
@@ -205,7 +203,12 @@ class InboxPage extends Component {
       title,
       chatOpen
     } = this.state;
+    const { t, ReactGA, session } = this.props;
 
+    if (!session) {
+      return null;
+    }
+    const { currentuser } = session;
     if (currentuser.tours.indexOf("i") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
       return (

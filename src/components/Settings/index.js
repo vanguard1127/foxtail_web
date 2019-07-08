@@ -22,7 +22,7 @@ class Settings extends Component {
   componentDidMount() {
     const { session, t } = this.props;
 
-    if (!session.currentuser.isProfileOK) {
+    if (session && !session.currentuser.isProfileOK) {
       if (!toast.isActive("nopro")) {
         toast.info(t("common:plscomplete"), {
           position: toast.POSITION.TOP_CENTER,
@@ -67,7 +67,12 @@ class Settings extends Component {
     return (
       <Query query={GET_SETTINGS} fetchPolicy="network-only">
         {({ data, loading, error }) => {
-          if (loading || !data.getSettings) {
+          if (
+            loading ||
+            !data.getSettings ||
+            !session ||
+            !session.currentuser
+          ) {
             document.title = t("common:Loading");
             return (
               <div

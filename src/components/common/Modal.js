@@ -12,11 +12,15 @@ class Modal extends Component {
     return false;
   }
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
+    if (!this.props.disableOffClick) {
+      document.addEventListener("mousedown", this.handleClickOutside);
+    }
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
+    if (!this.props.disableOffClick) {
+      document.removeEventListener("mousedown", this.handleClickOutside);
+    }
   }
 
   handleClickOutside = event => {

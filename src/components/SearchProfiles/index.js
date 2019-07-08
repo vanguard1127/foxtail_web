@@ -25,7 +25,7 @@ class SearchProfiles extends Component {
               />
             );
           }
-          if (!data.getSettings || loading) {
+          if (!data || !data.getSettings || loading) {
             return null;
           }
           return (

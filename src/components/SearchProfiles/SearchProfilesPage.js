@@ -120,7 +120,7 @@ class SearchProfilesPage extends Component {
       elapse
     } = this.state;
 
-    if (session.currentuser.tours.indexOf("sp") < 0) {
+    if (session && session.currentuser.tours.indexOf("sp") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Search Profiles");
       return (
         <div>
@@ -157,6 +157,7 @@ class SearchProfilesPage extends Component {
         />
       );
     }
+
     return (
       <Fragment>
         <ErrorHandler.ErrorBoundary>

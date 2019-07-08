@@ -19,15 +19,26 @@ import { withTranslation } from "react-i18next";
 import LinkIcon from "@material-ui/icons/Link";
 
 class Share extends Component {
-  shouldComponentUpdate(nextProps) {
-    if (this.props.t !== nextProps.t) {
+  state = {
+    copied: false
+  };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.t !== nextProps.t ||
+      this.state.copied !== nextState.copied
+    ) {
       return true;
     }
     return false;
   }
 
+  toggleCopied = val => {
+    this.setState({ copied: val });
+  };
+
   render() {
     const { userID, profile, event, close, t, ErrorBoundary } = this.props;
+    const { copied } = this.state;
 
     let shareUrl = "";
     let title = "";
@@ -112,7 +123,14 @@ class Share extends Component {
                 <TumblrIcon size={32} round />
               </TumblrShareButton>
               <CopyToClipboard text={shareUrl}>
-                <Tooltip title="Copy referral url" placement="top">
+                <Tooltip
+                  title={
+                    copied ? "Copied url to clipboard" : "Copy referral url"
+                  }
+                  placement="top"
+                  onClick={() => this.toggleCopied(true)}
+                  onClose={() => this.toggleCopied(false)}
+                >
                   <span
                     style={{ width: "32px", height: "32px", cursor: "pointer" }}
                     className="copyIcon"

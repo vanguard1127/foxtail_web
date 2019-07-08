@@ -26,7 +26,12 @@ export default class CustomDatePicker extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const { value } = this.props;
-    if (nextProps.value !== value || this.props.t !== nextProps.t) return true;
+    if (
+      nextProps.value !== value ||
+      this.props.t !== nextProps.t ||
+      this.props.p !== nextProps.p
+    )
+      return true;
     return false;
   }
 
@@ -65,7 +70,6 @@ export default class CustomDatePicker extends Component {
             selected={selectedDate && new Date(selectedDate)}
             onChange={this.handleChange}
             dropdownMode="select"
-            minDate={date}
             timeFormat="HH:mm"
             dateFormat="MMMM d, yyyy h:mm aa"
             timeCaption="time"

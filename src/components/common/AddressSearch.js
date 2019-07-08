@@ -76,10 +76,11 @@ class AddressSearch extends Component {
   }
 
   handleSelect = address => {
+    const { setLocationValues, ErrorHandler, type } = this.props;
     geocodeByAddress(address)
       .then(async results => {
         if (this.mounted) {
-          if (this.props.type === "address") {
+          if (type === "address") {
             this.props.setLocationValues({
               lat: results[0].geometry.location.lat(),
               long: results[0].geometry.location.lng(),
@@ -91,7 +92,7 @@ class AddressSearch extends Component {
               lat: results[0].geometry.location.lat()
             });
             this.setState({ address: citycntry.city }, () =>
-              this.props.setLocationValues({
+              setLocationValues({
                 lat: results[0].geometry.location.lat(),
                 long: results[0].geometry.location.lng(),
                 address: citycntry.city
@@ -100,14 +101,11 @@ class AddressSearch extends Component {
           }
         }
       })
-      .catch(
-        error =>
-          this.props.ErrorHandler && this.props.ErrorHandler.catchErrors(error)
-      );
+      .catch(error => ErrorHandler && ErrorHandler.catchErrors(error));
   };
 
   render() {
-    const { type, t, placeholder, hideReset } = this.props;
+    const { type, t, placeholder, hideReset, isBlackMember } = this.props;
     const { address } = this.state;
     const onError = (status, clearSuggestions) => {
       this.props.ErrorHandler && this.props.ErrorHandler.catchErrors(status);
@@ -131,6 +129,16 @@ class AddressSearch extends Component {
               {/* <label>Location</label> */}
               <div style={{ display: "flex" }}>
                 <input
+                  readOnly={isBlackMember !== undefined && !isBlackMember}
+                  onClick={() => {
+                    if (isBlackMember !== undefined && !isBlackMember) {
+                      if (!toast.isActive("onlyblkmem")) {
+                        toast(t("onlyblkmem"), {
+                          toastId: "onlyblkmem"
+                        });
+                      }
+                    }
+                  }}
                   aria-label="search location"
                   {...getInputProps({
                     placeholder,

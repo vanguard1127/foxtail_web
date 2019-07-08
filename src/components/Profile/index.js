@@ -180,7 +180,11 @@ class ProfilePage extends Component {
     const { t, ErrorHandler, session, ReactGA } = this.props;
     ErrorHandler.setBreadcrumb("Open Profile:" + id);
 
-    if (id === "tour" && session.currentuser.tours.indexOf("p") < 0) {
+    if (
+      id === "tour" &&
+      session &&
+      session.currentuser.tours.indexOf("p") < 0
+    ) {
       ErrorHandler.setBreadcrumb("Opened Tour: Profile");
       return (
         <div>

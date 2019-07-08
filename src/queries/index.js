@@ -348,6 +348,7 @@ export const CREATE_EVENT = gql`
     $endTime: String!
     $image: String
     $eventID: ID
+    $isImageAlt: Boolean
   ) {
     createEvent(
       eventname: $eventname
@@ -363,6 +364,7 @@ export const CREATE_EVENT = gql`
       address: $address
       image: $image
       type: $type
+      isImageAlt: $isImageAlt
     ) {
       id
       eventname

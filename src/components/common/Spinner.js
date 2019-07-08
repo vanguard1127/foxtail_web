@@ -76,22 +76,13 @@ class Spinner extends PureComponent {
       );
     } else {
       return (
-        <section className="loading">
-          <div className="container">
-            <div className="col-md-12">
-              <div className="content">
-                <div className="bar">
-                  <div className="lo-bar">
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="loadingActive">
+          <div className="xxxloader xxxloader-21">
+            <div className="css-times times1"></div>
+            <div className="css-times times2"></div>
+            <div className="css-times times3"></div>
           </div>
-        </section>
+        </div>
       );
     }
   }

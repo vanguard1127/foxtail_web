@@ -97,7 +97,11 @@ class EventPage extends Component {
     const { id } = this.props.match.params;
     const { blockModalVisible, showDelete, shareModalVisible } = this.state;
     const { session, history, t, ErrorHandler, ReactGA } = this.props;
-    if (id === "tour" && session.currentuser.tours.indexOf("e") < 0) {
+    if (
+      id === "tour" &&
+      session &&
+      session.currentuser.tours.indexOf("e") < 0
+    ) {
       ErrorHandler.setBreadcrumb("Opened Tour: Event");
       return (
         <div>
@@ -171,12 +175,16 @@ class EventPage extends Component {
                       <EventInfoMobile
                         event={event}
                         t={t}
-                        openDelete={this.toggleDeleteDialog}
-                        dayjs={dayjs}
                         ErrorHandler={ErrorHandler}
+                        isOwner={
+                          event.ownerProfile.id ===
+                          session.currentuser.profileID
+                        }
+                        openDelete={this.toggleDeleteDialog}
+                        refetch={refetch}
+                        dayjs={dayjs}
                         distanceMetric={session.currentuser.distanceMetric}
                         lang={lang}
-                        refetch={refetch}
                         ReactGA={ReactGA}
                       />
                       <Discussion
