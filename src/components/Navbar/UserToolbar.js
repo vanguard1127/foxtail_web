@@ -24,7 +24,7 @@ class UserToolbar extends Component {
     return (
       <Query query={GET_COUNTS} fetchPolicy="cache-first">
         {({ data, loading, error, refetch, subscribeToMore }) => {
-          if (loading) {
+          if (loading || !data) {
             return (
               <div className="function">
                 <InboxItem t={t} />

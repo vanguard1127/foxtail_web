@@ -180,12 +180,7 @@ const errorLink = onError(
     }
     if (networkError) {
       if (networkError.statusCode === 429) {
-        if (!toast.isActive("networkError")) {
-          toast.info("Security triggered: Please prove you're human", {
-            position: toast.POSITION.TOP_CENTER,
-            toastId: "networkError"
-          });
-        }
+        window.location.replace("/captcha");
       } else {
         if (!toast.isActive("networkError")) {
           toast.info(
@@ -238,6 +233,8 @@ const Wrapper = withRouter(props => {
       return <AntiSpam />;
     } else if (location.pathname === "/lawenforcement") {
       return <LawEnforce />;
+    } else if (location.pathname === "/captcha") {
+      return <ReCaptcha />;
     }
     let showFooter =
       location.pathname && location.pathname.match(/^\/inbox/) === null;

@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReCaptcha from "../Modals/ReCaptcha";
+import Spinner from "../common/Spinner";
 
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
@@ -13,51 +14,48 @@ const withAuth = conditionFunc => Component => props => {
     <Query query={GET_CURRENT_USER} fetchPolicy="network-only">
       {({ data, loading, refetch }) => {
         if (loading) {
-          return null;
+          return <Spinner size="large" />;
         }
 
-        {
-          /* if (!data) {
-          return <ReCaptcha />;
-        } */
-        }
-
-        if (data && data.currentuser.maintanence === true) {
-          return (
-            <section className="not-found">
-              <div className="container">
-                <div className="col-md-12">
-                  <div className="icon">
-                    <i className="nico cogs" />
-                  </div>
-                  <span className="head">{t("We'll Be Right Back")}</span>
-                  <span className="description">
-                    {t(
-                      "Foxtail is currently being upgraded. Please check back soon!"
-                    )}
-                  </span>
-                  <span className="description">
-                    {t("Sorry for any inconveience.")}
-                  </span>
-                  <div>
-                    <span className="logo"></span>
+        if (data) {
+          if (data.currentuser.maintanence === true) {
+            return (
+              <section className="not-found">
+                <div className="container">
+                  <div className="col-md-12">
+                    <div className="icon">
+                      <i className="nico cogs" />
+                    </div>
+                    <span className="head">{t("We'll Be Right Back")}</span>
+                    <span className="description">
+                      {t(
+                        "Foxtail is currently being upgraded. Please check back soon!"
+                      )}
+                    </span>
+                    <span className="description">
+                      {t("Sorry for any inconveience.")}
+                    </span>
+                    <div>
+                      <span className="logo"></span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
-          );
-        } else if (data && data.currentuser.captchaReq === true) {
-          console.log("REQ CALLED");
-          return <ReCaptcha />;
-        }
+              </section>
+            );
+          } else if (data.currentuser.captchaReq === true) {
+            console.log("CAPTCHA REQUIRED");
+            return <ReCaptcha />;
+          }
 
-        if (data && data.currentuser.announcement !== null) {
-          if (!toast.isActive("announce")) {
-            toast.info(data.currentuser.announcement, {
-              position: toast.POSITION.BOTTOM_LEFT,
-              autoClose: false,
-              toastId: "announce"
-            });
+          //SHOW ANNOUNCE ON LOGIN
+          if (data.currentuser.announcement !== null) {
+            if (!toast.isActive("announce")) {
+              toast.info(data.currentuser.announcement, {
+                position: toast.POSITION.BOTTOM_LEFT,
+                autoClose: false,
+                toastId: "announce"
+              });
+            }
           }
         }
 
@@ -133,7 +131,6 @@ const withAuth = conditionFunc => Component => props => {
             }
           }
         }
-
         //TODO: See of twe need to call withAuth so much
         //console.log(":SESISN", data);
         return <Component {...props} session={data} refetch={refetch} />;

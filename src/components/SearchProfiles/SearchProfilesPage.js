@@ -130,7 +130,7 @@ class SearchProfilesPage extends Component {
     }
 
     let body = null;
-    if (!lat && !elapse) {
+    if ((!lat && !elapse) || !session) {
       body = <Spinner message={t("common:Loading")} size="large" />;
     } else if (!lat) {
       body = locationErr;
