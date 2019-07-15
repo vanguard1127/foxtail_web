@@ -29,7 +29,11 @@ class EventPage extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state !== nextState || this.props.t !== nextProps.t) {
+    if (
+      this.state !== nextState ||
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
+    ) {
       return true;
     }
     return false;
@@ -96,7 +100,10 @@ class EventPage extends Component {
   render() {
     const { id } = this.props.match.params;
     const { blockModalVisible, showDelete, shareModalVisible } = this.state;
-    const { session, history, t, ErrorHandler, ReactGA } = this.props;
+    const { session, history, t, ErrorHandler, ReactGA, tReady } = this.props;
+    if (!tReady) {
+      return <Spinner />;
+    }
     if (
       id === "tour" &&
       session &&
@@ -127,7 +134,7 @@ class EventPage extends Component {
 
           if (loading) {
             document.title = t("common:Loading");
-            return <Spinner message={t("common:Loading")} size="large" />;
+            return <Spinner />;
           } else if (!data || !data.event) {
             return <div>{t("noevent")}.</div>;
           }

@@ -5,6 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { MESSAGE_ADMIN } from "../../../queries";
 import * as ErrorHandler from "../../common/ErrorHandler";
 import Modal from "../../common/Modal";
+import Spinner from "../../common/Spinner";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 
@@ -24,10 +25,12 @@ class ContactUs extends Component {
   };
   componentDidMount() {
     this.mounted = true;
-    if (this.props.guest) {
-      this.nameInput.focus();
-    } else {
-      this.textInput.focus();
+    if (this.props.tReady) {
+      if (this.props.guest) {
+        this.nameInput.focus();
+      } else {
+        this.textInput.focus();
+      }
     }
   }
 
@@ -42,7 +45,8 @@ class ContactUs extends Component {
       this.state.captchaOK !== nextState.captchaOK ||
       this.state.errors !== nextState.errors ||
       this.state.email !== nextState.email ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -117,7 +121,8 @@ class ContactUs extends Component {
       header,
       description,
       cancelText,
-      okText
+      okText,
+      tReady
     } = this.props;
     const {
       text,
@@ -129,6 +134,13 @@ class ContactUs extends Component {
       isValid
     } = this.state;
 
+    if (!tReady) {
+      return (
+        <Modal close={close}>
+          <Spinner />
+        </Modal>
+      );
+    }
     return (
       <Modal
         header={header}

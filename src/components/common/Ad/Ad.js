@@ -1,7 +1,11 @@
 import React from "react";
-import ProgressiveImage from "react-progressive-image";
 
-const Ad = ({ t, ad: { message, img, tinyImg, btnText, title } }) => {
+const Ad = ({
+  t,
+  ad: { message, img, link, btnText, title },
+  goToBlk,
+  goToCpl
+}) => {
   if (message === "") {
     return (
       <section className="not-found">
@@ -16,21 +20,25 @@ const Ad = ({ t, ad: { message, img, tinyImg, btnText, title } }) => {
       </section>
     );
   }
+  let callback = null;
+  if (link === "blk") {
+    callback = goToBlk;
+  } else if (link === "cpl") {
+    callback = goToCpl;
+  }
   return (
     <div className="col-md-12">
       <div className="inbox-ads">
         <div className="content">
           <div className="ad-con">
-            <ProgressiveImage src={img} placeholder={tinyImg}>
-              {src => <img src={src} alt="" width="100%" height="100%" />}
-            </ProgressiveImage>{" "}
+            <img src={img} alt="" width="100%" height="100%" />
           </div>
           <div className="detail-con">
             <span className="head">{title}</span>
             <span className="description">{message}</span>
-            <a href="#" className="button">
+            <span href="#" className="button" onClick={callback}>
               {btnText}
-            </a>
+            </span>
           </div>
         </div>
       </div>

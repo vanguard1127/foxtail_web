@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import Spinner from "../../common/Spinner";
 
 import Dropdown from "../../common/Dropdown";
 import Modal from "../../common/Modal";
@@ -64,9 +65,17 @@ class Dialog extends PureComponent {
       setValue,
       successMsg,
       specialType,
-      lang
+      lang,
+      tReady
     } = this.props;
     const { text, errors } = this.state;
+    if (!tReady) {
+      return (
+        <Modal close={close}>
+          <Spinner />
+        </Modal>
+      );
+    }
     let inputField;
     if (specialType === "gender") {
       inputField = (

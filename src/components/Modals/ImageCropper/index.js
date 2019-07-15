@@ -6,7 +6,10 @@ import { Spring } from "react-spring/renderprops";
 
 class ImageEditor extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.t !== nextProps.t) {
+    if (
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
+    ) {
       return true;
     }
     return false;
@@ -22,9 +25,12 @@ class ImageEditor extends Component {
       t,
       ErrorHandler,
       imgUrl,
-      setProfilePic
+      setProfilePic,
+      tReady
     } = this.props;
-
+    if (!tReady) {
+      return null;
+    }
     return (
       <Spring from={{ opacity: 0.4 }} to={{ opacity: 1 }}>
         {props => (

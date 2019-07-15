@@ -3,6 +3,7 @@ import { withTranslation } from "react-i18next";
 import EmailPhoneResetBtn from "./EmailPhoneResetBtn";
 import ResetPhoneButton from "./ResetPhoneButton";
 import Select from "./Select";
+import Spinner from "../../common/Spinner";
 import { countryCodeOptions } from "../../../docs/options";
 
 class ResetPhone extends PureComponent {
@@ -26,8 +27,22 @@ class ResetPhone extends PureComponent {
   };
 
   render() {
-    const { close, t, ErrorHandler, token, history, lang } = this.props;
+    const { close, t, ErrorHandler, token, history, lang, tReady } = this.props;
     const { code, text } = this.state;
+    if (!tReady) {
+      return (
+        <section className="login-modal show">
+          <div className="container">
+            <div className="offset-md-3 col-md-6">
+              <div className="popup">
+                <a className="close" onClick={() => close()} />
+                <Spinner />{" "}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
     if (!token) {
       return (
         <section className="login-modal show">

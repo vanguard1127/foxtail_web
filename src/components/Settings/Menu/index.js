@@ -23,6 +23,16 @@ class Menu extends Component {
       shareModalToggle
     } = this.props;
 
+    let cplItemStyle = "";
+    if (flashCpl) {
+      cplItemStyle += "flashCpl ";
+    }
+    if (couplePartner === null) {
+      cplItemStyle += "coupleIcon";
+    } else {
+      cplItemStyle += "coupleRemIcon ";
+    }
+
     return (
       <ErrorBoundary>
         <div className="menu">
@@ -30,11 +40,11 @@ class Menu extends Component {
             <li>
               <span
                 onClick={() => coupleModalToggle()}
-                className={flashCpl ? "flashCpl coupleIcon" : "coupleIcon"}
+                className={cplItemStyle}
               >
                 {couplePartner === null
                   ? t("common:addcoup")
-                  : "Partner: " + couplePartner}
+                  : t("common:Partner") + ": " + couplePartner}
               </span>
             </li>
             <li className="highlightTxt">

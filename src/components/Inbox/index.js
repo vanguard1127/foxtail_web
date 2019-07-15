@@ -55,7 +55,8 @@ class InboxPage extends Component {
       this.state.chatOpen !== nextState.chatOpen ||
       this.state.showModal !== nextState.showModal ||
       chatIDChange ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -203,11 +204,12 @@ class InboxPage extends Component {
       title,
       chatOpen
     } = this.state;
-    const { t, ReactGA, session } = this.props;
+    const { t, ReactGA, session, history, tReady } = this.props;
 
-    if (!session) {
-      return null;
+    if (!tReady || !session) {
+      return <Spinner />;
     }
+
     const { currentuser } = session;
     if (currentuser.tours.indexOf("i") < 0) {
       ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
@@ -262,6 +264,7 @@ class InboxPage extends Component {
                   chatOpen={chatOpen}
                   lang={lang}
                   ReactGA={ReactGA}
+                  history={history}
                 />
               )}
               {chatID && (
@@ -296,6 +299,7 @@ class InboxPage extends Component {
                         ErrorHandler={ErrorHandler}
                         dayjs={dayjs}
                         chatOpen={chatOpen}
+                        history={history}
                         setBlockModalVisible={this.setBlockModalVisible}
                         lang={lang}
                         isOwner={

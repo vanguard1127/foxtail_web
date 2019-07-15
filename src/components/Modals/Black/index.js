@@ -1,14 +1,21 @@
 import React, { PureComponent } from "react";
 import CreateSubBtn from "./CreateSubBtn";
 import Modal from "../../common/Modal";
+import Spinner from "../../common/Spinner";
 import { withTranslation } from "react-i18next";
 
 class Black extends PureComponent {
   state = { token: "", ccLast4: "" };
 
   render() {
-    const { close, t, ErrorHandler, notifyClient, lang } = this.props;
-
+    const { close, t, ErrorHandler, notifyClient, lang, tReady } = this.props;
+    if (!tReady) {
+      return (
+        <Modal close={close}>
+          <Spinner />
+        </Modal>
+      );
+    }
     return (
       <Modal
         close={close}

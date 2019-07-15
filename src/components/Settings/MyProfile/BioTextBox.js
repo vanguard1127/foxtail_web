@@ -14,18 +14,6 @@ const BioTextBox = ({ t, setValue, ErrorBoundary, about }) => {
               noSave: true
             })
           }
-          onMouseLeave={e => {
-            setValue({
-              name: "about",
-              value: e.target.value
-            });
-          }}
-          onBlur={e => {
-            setValue({
-              name: "about",
-              value: e.target.value
-            });
-          }}
           value={about}
         />
       </ErrorBoundary>

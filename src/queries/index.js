@@ -674,31 +674,27 @@ export const GET_INBOX = gql`
 export const GET_MY_EVENTS = gql`
   query {
     getMyEvents {
-      docs {
+      id
+      eventname
+      type
+      image
+      participants {
+        profileName
+        profilePic
         id
-        eventname
-        type
-        image
-        participants {
-          profileName
-          profilePic
-          id
-        }
-        description
-        desires
-        interestedIn
-        address
-        startTime
-        endTime
-        distance
-        ownerProfile {
-          profilePic
-          profileName
-          id
-        }
       }
-      total
-      offset
+      description
+      desires
+      interestedIn
+      address
+      startTime
+      endTime
+      distance
+      ownerProfile {
+        profilePic
+        profileName
+        id
+      }
     }
   }
 `;

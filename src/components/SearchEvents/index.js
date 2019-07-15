@@ -40,7 +40,8 @@ class SearchEvents extends Component {
     if (
       this.state !== nextState ||
       this.props.location.lat !== nextProps.location.lat ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -198,9 +199,12 @@ class SearchEvents extends Component {
       refetch,
       locationErr,
       history,
-      ReactGA
+      ReactGA,
+      tReady
     } = this.props;
-
+    if (!tReady) {
+      return <Spinner />;
+    }
     const distanceMetric = session.currentuser.distanceMetric;
     ErrorHandler.setBreadcrumb("Search Events");
 
@@ -280,7 +284,10 @@ class SearchEvents extends Component {
                       data.searchEvents.length === 0
                     ) {
                       return (
-                        <section className="not-found">
+                        <section
+                          className="not-found"
+                          style={{ display: "block" }}
+                        >
                           <div className="container">
                             {/* <div className="col-md-12">
                               <span className="lblHeader">

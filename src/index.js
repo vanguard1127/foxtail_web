@@ -54,6 +54,7 @@ ReactGA.pageview(window.location.pathname + window.location.search);
 
 //let { httpurl, HTTPSurl, wsurl } = env.production;
 let { httpurl, HTTPSurl, wsurl } = env.local;
+//let { httpurl, HTTPSurl, wsurl } = env.stage;
 
 const wsLink = new WebSocketLink({
   uri: wsurl,
@@ -180,6 +181,7 @@ const errorLink = onError(
     }
     if (networkError) {
       if (networkError.statusCode === 429) {
+        console.log("HAPPENDED to 429");
         window.location.replace("/captcha");
       } else {
         if (!toast.isActive("networkError")) {
@@ -192,6 +194,8 @@ const errorLink = onError(
               toastId: "networkError"
             }
           );
+
+          window.location.replace("/");
         }
       }
     }
@@ -246,7 +250,7 @@ const Wrapper = withRouter(props => {
 });
 
 const Body = withAuth(session => session && session.currentuser)(
-  ({ showFooter, session }) => (
+  ({ showFooter, session, refetch }) => (
     <div
       className="layout"
       style={{
@@ -263,6 +267,7 @@ const Body = withAuth(session => session && session.currentuser)(
       <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
         <Switch>
           <Route
+            onEnter={refetch}
             path="/members"
             render={() => (
               <ProfileSearch ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
@@ -311,7 +316,6 @@ const Body = withAuth(session => session && session.currentuser)(
       </main>
       {showFooter && <Footer />}
       <ToastContainer position="top-center" />
-      {/* {showCaptcha && <ReCaptcha />} */}
     </div>
   )
 );

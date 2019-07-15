@@ -3,6 +3,7 @@ import { withTranslation } from "react-i18next";
 import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
+import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
@@ -43,9 +44,11 @@ class Tour extends PureComponent {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, tReady } = this.props;
     const { isTourOpen } = this.state;
-
+    if (!tReady) {
+      return <Spinner />;
+    }
     const tourConfig = [
       {
         selector: "",

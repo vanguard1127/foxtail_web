@@ -4,6 +4,7 @@ import { BLOCK_PROFILE, FLAG_ITEM, SEARCH_PROFILES } from "../../../queries";
 import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
 import Modal from "../../common/Modal";
+import Spinner from "../../common/Spinner";
 import { flagOptions } from "../../../docs/options";
 
 class BlockModal extends Component {
@@ -18,7 +19,8 @@ class BlockModal extends Component {
     if (
       this.state.reason !== nextState.reason ||
       this.state.other !== nextState.other ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -162,8 +164,17 @@ class BlockModal extends Component {
       close,
       id,
       t,
+      tReady,
       ErrorHandler: { ErrorBoundary }
     } = this.props;
+
+    if (!tReady) {
+      return (
+        <Modal close={close}>
+          <Spinner />
+        </Modal>
+      );
+    }
 
     const { other, reason, type } = this.state;
     const blockMenu = this.menu();

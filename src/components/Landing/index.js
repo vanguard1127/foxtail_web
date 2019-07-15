@@ -10,8 +10,6 @@ import { CONFIRM_EMAIL, GET_DEMO_COUNTS } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
 import ContactUsModal from "../Modals/ContactUs";
 import { ToastContainer, toast } from "react-toastify";
-//import 'react-toastify/dist/ReactToastify.css';
-// minified version is also included
 import "react-toastify/dist/ReactToastify.min.css";
 import { withTranslation } from "react-i18next";
 import getLang from "../../utils/getLang";

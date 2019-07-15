@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import { Mutation, withApollo } from "react-apollo";
 import { withTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import { SEND_MESSAGE, GET_COUNTS } from "../../../queries";
 import Modal from "../../common/Modal";
 import deleteFromCache from "../../../utils/deleteFromCache";
-import { toast } from "react-toastify";
+import Spinner from "../../common/Spinner";
 
 class DirectMsg extends Component {
   state = { text: "", sending: false };
   componentDidMount() {
     this.mounted = true;
-    this.textInput.focus();
+    if (this.props.tReady) {
+      this.textInput.focus();
+    }
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -20,7 +23,11 @@ class DirectMsg extends Component {
     deleteFromCache({ cache, query: "getInbox" });
   };
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.text !== nextState.text || this.props.t !== nextProps.t) {
+    if (
+      this.state.text !== nextState.text ||
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
+    ) {
       return true;
     }
     return false;
@@ -81,8 +88,17 @@ class DirectMsg extends Component {
       close,
       profile,
       t,
-      ErrorHandler: { ErrorBoundary }
+      ErrorHandler: { ErrorBoundary },
+      tReady
     } = this.props;
+
+    if (!tReady) {
+      return (
+        <Modal close={close}>
+          <Spinner />
+        </Modal>
+      );
+    }
     const { text, sending } = this.state;
     return (
       <Modal

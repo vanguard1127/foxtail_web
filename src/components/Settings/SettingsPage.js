@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Mutation } from "react-apollo";
+import { Mutation, withApollo } from "react-apollo";
 import axios from "axios";
 import {
   disableBodyScroll,
@@ -26,6 +26,7 @@ import BlackModal from "../Modals/Black";
 import getCityCountry from "../../utils/getCityCountry";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import Modal from "../common/Modal";
+import deleteFromCache from "../../utils/deleteFromCache";
 import { toast } from "react-toastify";
 
 class SettingsPage extends Component {
@@ -147,11 +148,20 @@ class SettingsPage extends Component {
   componentDidMount() {
     const { history } = this.props;
     history.replace({ state: {} });
+    window.addEventListener("beforeunload", async () => {
+      await this.saveSettings();
+    });
+    window.addEventListener("unload", this.logData, false);
 
     this.mounted = true;
   }
 
   async componentWillUnmount() {
+    await this.saveSettings();
+    this.mounted = false;
+  }
+
+  async saveSettings() {
     const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
     clearAllBodyScrollLocks();
     await this.updateSettings()
@@ -167,14 +177,19 @@ class SettingsPage extends Component {
         }
       })
       .then(() => {
+        this.clearUserData();
         refetchUser();
       })
       .catch(res => {
         ErrorHandler.catchErrors(res.graphQLErrors);
       });
-
-    this.mounted = false;
   }
+
+  clearUserData = () => {
+    const { cache } = this.props.client;
+    console.log(cache);
+    deleteFromCache({ cache, query: "currentuser" });
+  };
 
   handlePhotoListChange = ({
     file,
@@ -205,14 +220,11 @@ class SettingsPage extends Component {
         ];
       }
       if (this.mounted) {
-        this.setState(
-          {
-            privatePhotos,
-            publicPhotoList: undefined,
-            privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
-          },
-          () => this.handleSubmit(updateSettings, true)
-        );
+        this.setState({
+          privatePhotos,
+          publicPhotoList: undefined,
+          privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
+        });
       }
     } else {
       let { publicPhotos } = this.state;
@@ -232,14 +244,11 @@ class SettingsPage extends Component {
         ];
       }
       if (this.mounted) {
-        this.setState(
-          {
-            publicPhotos,
-            privatePhotoList: undefined,
-            publicPhotoList: publicPhotos.map(file => JSON.stringify(file))
-          },
-          () => this.handleSubmit(updateSettings, true)
-        );
+        this.setState({
+          publicPhotos,
+          privatePhotoList: undefined,
+          publicPhotoList: publicPhotos.map(file => JSON.stringify(file))
+        });
       }
     }
   };
@@ -353,14 +362,9 @@ class SettingsPage extends Component {
     const { desires } = this.state;
     if (this.mounted) {
       if (checked) {
-        this.setState({ desires: [...desires, value] }, () =>
-          this.handleSubmit(updateSettings)
-        );
+        this.setState({ desires: [...desires, value] });
       } else {
-        this.setState(
-          { desires: desires.filter(desire => desire !== value) },
-          () => this.handleSubmit(updateSettings)
-        );
+        this.setState({ desires: desires.filter(desire => desire !== value) });
       }
     }
   };
@@ -384,9 +388,7 @@ class SettingsPage extends Component {
 
   setProfilePic = ({ key, url, updateSettings }) => {
     if (this.mounted) {
-      this.setState({ profilePic: key, profilePicUrl: url }, () => {
-        this.handleSubmit(updateSettings);
-      });
+      this.setState({ profilePic: key, profilePicUrl: url });
     }
   };
 
@@ -802,7 +804,8 @@ class SettingsPage extends Component {
                               this.setValue({
                                 name,
                                 value,
-                                updateSettings
+                                updateSettings,
+                                noSave: true
                               })
                             }
                             visible={visible}
@@ -973,4 +976,4 @@ class SettingsPage extends Component {
   }
 }
 
-export default SettingsPage;
+export default withApollo(SettingsPage);

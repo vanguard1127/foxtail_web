@@ -14,6 +14,7 @@ import {
 import Tooltip from "@material-ui/core/Tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
+import Spinner from "../../common/Spinner";
 import { withTranslation } from "react-i18next";
 
 import LinkIcon from "@material-ui/icons/Link";
@@ -25,7 +26,8 @@ class Share extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.t !== nextProps.t ||
-      this.state.copied !== nextState.copied
+      this.state.copied !== nextState.copied ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -37,9 +39,24 @@ class Share extends Component {
   };
 
   render() {
-    const { userID, profile, event, close, t, ErrorBoundary } = this.props;
+    const {
+      userID,
+      profile,
+      event,
+      close,
+      t,
+      ErrorBoundary,
+      tReady
+    } = this.props;
     const { copied } = this.state;
 
+    if (!tReady) {
+      return (
+        <Modal close={close}>
+          <Spinner />
+        </Modal>
+      );
+    }
     let shareUrl = "";
     let title = "";
     const body = (profile, event, t) => {
@@ -71,11 +88,13 @@ class Share extends Component {
           process.env.NODE_ENV === "production"
             ? "https://foxtailapp.com?refer=" + userID
             : "http://localhost:3000?refer=" + userID;
-        title =
-          "Check out Foxtail. It's Sexy, Safe, Fun Dating. And it's FREE:";
+        title = t(
+          "Check out Foxtail. It's Sexy, Safe, Fun Dating. And it's FREE:"
+        );
         return (
           <div>
-            Share Foxtail <small>- "thank you"</small>
+            {t("Share Foxtail")} <br />
+            <small>&quot;{t("thank you")}&quot;</small>
           </div>
         );
       }
@@ -125,7 +144,9 @@ class Share extends Component {
               <CopyToClipboard text={shareUrl}>
                 <Tooltip
                   title={
-                    copied ? "Copied url to clipboard" : "Copy referral url"
+                    copied
+                      ? t("Copied url to clipboard")
+                      : t("Copy referral url")
                   }
                   placement="top"
                   onClick={() => this.toggleCopied(true)}

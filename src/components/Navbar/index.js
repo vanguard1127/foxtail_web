@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import axios from "axios";
+import Spinner from "../common/Spinner";
 import Logout from "./LogoutLink";
 
 import UserToolbar from "./UserToolbar";
@@ -21,6 +22,7 @@ class Navbar extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { session, location } = this.props;
     const { online } = this.state;
+
     if (
       session &&
       (session.currentuser.username !==
@@ -32,7 +34,8 @@ class Navbar extends Component {
     if (
       location.pathname !== nextProps.location.pathname ||
       online !== nextState.online ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -40,7 +43,10 @@ class Navbar extends Component {
   }
 
   render() {
-    const { session, history, t } = this.props;
+    const { session, history, t, tReady } = this.props;
+    if (!tReady) {
+      return <Spinner />;
+    }
     return (
       <Fragment>
         {session && session.currentuser ? (

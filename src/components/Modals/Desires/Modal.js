@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { desireOptions } from "../../../docs/options";
+import Spinner from "../../common/Spinner";
 import SearchBox from "./SearchBox";
 class Desires extends Component {
   state = { searchText: "" };
@@ -29,7 +30,8 @@ class Desires extends Component {
     if (
       this.state.searchText !== nextState.searchText ||
       this.props.desires !== nextProps.desires ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -37,8 +39,10 @@ class Desires extends Component {
   }
   render() {
     const { searchText } = this.state;
-    const { close, onChange, desires, t, ErrorBoundary } = this.props;
-
+    const { close, onChange, desires, t, ErrorBoundary, tReady } = this.props;
+    if (!tReady) {
+      return <Spinner />;
+    }
     return (
       <section className="desires-popup show" ref={this.wrapperRef}>
         <div className="modal-popup desires-select">

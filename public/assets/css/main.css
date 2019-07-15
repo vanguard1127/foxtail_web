@@ -3397,6 +3397,12 @@ section.not-found{
   transform: translateY(-50%);
 }
 
+@media only screen and (max-width: 768px) {
+  section.not-found {
+    top: 57%;
+}
+}
+
 section.not-found span.logo {
   width: 80px;
   height: 51px;
@@ -7991,7 +7997,6 @@ section.profile .avatar-card.profile-verified::after {
 }
 section.not-found {
   width: 100%;
-  float: left;
   display: inline-block;
   padding: 140px 0;
 }
@@ -8094,8 +8099,8 @@ section.not-found span.description {
 .inbox-ads .ad-con {
   width: 100%;
   height: 208px;
-  display: inline-block;
-  float: left;
+  display: flex;
+  justify-content: center;
   background-image: -webkit-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
   background-image: -o-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
   background-image: linear-gradient(226deg, #f70016 0%, #5f00a4 100%);
@@ -8107,6 +8112,12 @@ section.not-found span.description {
   float: left;
   padding: 40px 53px;
   background: #ffffff;
+}
+
+.inbox-ads img {
+  max-width: 550px;
+  max-height: 300px;
+  width: auto;
 }
 
 .inbox-ads .detail-con span.head {
@@ -8139,7 +8150,6 @@ section.not-found span.description {
   background-color: #27c635;
   text-align: center;
   display: inline-block;
-  float: left;
   line-height: 50px;
   text-transform: uppercase;
   color: #fff !important;
@@ -8150,6 +8160,7 @@ section.not-found span.description {
   border: none;
   margin-top: 25px;
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .loading {
@@ -9715,9 +9726,19 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   }
 }
 
-
 .coupleIcon::after {
   content: "\f234";
   font-family: "foxtail-icon";
   padding-left: 8px;
+}
+
+.coupleRemIcon::after {
+  content: "\f235";
+  font-family: "foxtail-icon";
+  padding-left: 8px;
+}
+
+.text-center{
+  text-align: center;
+  text-align: -webkit-center;
 }

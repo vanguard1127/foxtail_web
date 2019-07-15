@@ -6,6 +6,7 @@ import {
   EmailShareButton
 } from "react-share";
 import Modal from "../common/Modal";
+import Spinner from "../common/Spinner";
 import ContactUsModal from "../Modals/ContactUs";
 import { SEEN_TOUR } from "../../queries";
 
@@ -17,7 +18,8 @@ class Footer extends Component {
     if (
       this.state.showRulesModal !== nextState.showRulesModal ||
       this.state.showContactModal !== nextState.showContactModal ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -32,10 +34,13 @@ class Footer extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, tReady } = this.props;
     const { showRulesModal, showContactModal } = this.state;
     const shareUrl = "www.fotxtailapp.com";
     const title = "Foxtail";
+    if (!tReady) {
+      return <Spinner />;
+    }
     return (
       <footer>
         <div className="brand">

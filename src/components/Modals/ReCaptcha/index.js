@@ -2,6 +2,7 @@ import React from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
+import Spinner from "../../common/Spinner";
 import axios from "axios";
 //TODO: BEST WAY TO HANDLE URLS BY ENVIRONMENT
 function onChange(value) {
@@ -22,7 +23,14 @@ const go = () => {
     window.location.reload();
   }
 };
-const ReCaptcha = ({ t }) => {
+const ReCaptcha = ({ t, tReady }) => {
+  if (!tReady) {
+    return (
+      <Modal>
+        <Spinner />
+      </Modal>
+    );
+  }
   return (
     <Modal
       header={"Are you Human?"}
@@ -31,11 +39,11 @@ const ReCaptcha = ({ t }) => {
       )}
     >
       <div>
-        {/* <span onClick={() => onChange("value")}>DDFFDF</span> */}
         <ReCAPTCHA
           sitekey={process.env.REACT_APP_GOOGLE_CLIENT_KEY}
           onChange={value => onChange(value)}
         />
+        <br />
       </div>
     </Modal>
   );

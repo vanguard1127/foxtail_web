@@ -41,7 +41,8 @@ class ProfilePage extends Component {
       this.state.msgModalVisible !== nextState.msgModalVisible ||
       this.state.profile !== nextState.profile ||
       this.state.shareModalVisible !== nextState.shareModalVisible ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -177,7 +178,10 @@ class ProfilePage extends Component {
       matchDlgVisible,
       chatID
     } = this.state;
-    const { t, ErrorHandler, session, ReactGA } = this.props;
+    const { t, ErrorHandler, session, ReactGA, tReady } = this.props;
+    if (!tReady) {
+      return <Spinner />;
+    }
     ErrorHandler.setBreadcrumb("Open Profile:" + id);
 
     if (

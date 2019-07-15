@@ -62,7 +62,8 @@ class AddressSearch extends Component {
     if (
       nextState.address !== this.state.address ||
       nextProps.address !== this.props.address ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }

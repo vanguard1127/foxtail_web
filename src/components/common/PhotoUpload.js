@@ -28,7 +28,8 @@ class PhotoUpload extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.photos.name !== nextProps.photos.name ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }

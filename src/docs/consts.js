@@ -7,6 +7,8 @@
 // 1. ENVIRONMENT
 const localserver = "localhost:4444";
 const prodserver = "prod.foxtailapi.com";
+const stageserver =
+  "https://internal-foxtail-staging-private-alb-1501692418.us-west-2.elb.amazonaws.com";
 
 export const env = {
   local: {
@@ -20,6 +22,12 @@ export const env = {
     httpurl: `https://${prodserver}/graphql`,
     HTTPSurl: `https://${prodserver}`,
     wsurl: `wss://${prodserver}/subscriptions`
+  },
+  stage: {
+    server: stageserver,
+    httpurl: `https://${stageserver}/graphql`,
+    HTTPSurl: `https://${stageserver}`,
+    wsurl: `wss://${stageserver}/subscriptions`
   }
 };
 

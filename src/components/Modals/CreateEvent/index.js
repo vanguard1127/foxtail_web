@@ -10,6 +10,7 @@ import DesiresSelector from "../../Modals/Desires/Selector";
 import AddressSearch from "../../common/AddressSearch";
 import DatePicker from "../../common/DatePicker";
 import Modal from "../../common/Modal";
+import Spinner from "../../common/Spinner";
 import isEmpty from "../../../utils/isEmpty";
 import { toast } from "react-toastify";
 import Dropdown from "../../common/Dropdown";
@@ -49,7 +50,8 @@ class CreateEvent extends Component {
       this.state.type !== nextState.type ||
       this.state.errors !== nextState.errors ||
       this.state.removeCurrentImage !== nextState.removeCurrentImage ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -84,8 +86,9 @@ class CreateEvent extends Component {
   componentDidMount() {
     this.mounted = true;
     this.props.ErrorHandler.setBreadcrumb("Create Event Modal");
-
-    this.textInput.focus();
+    if (this.props.tReady) {
+      this.textInput.focus();
+    }
   }
 
   componentWillUnmount() {
@@ -267,7 +270,7 @@ class CreateEvent extends Component {
   };
 
   render() {
-    const { close, t, ErrorHandler, eventID, lang } = this.props;
+    const { close, t, ErrorHandler, eventID, lang, tReady } = this.props;
     const {
       eventname,
       tagline,
@@ -290,7 +293,13 @@ class CreateEvent extends Component {
       setOlderImage,
       isImageAlt
     } = this.state;
-
+    if (!tReady) {
+      return (
+        <Modal close={close}>
+          <Spinner />
+        </Modal>
+      );
+    }
     return (
       <section>
         <Modal

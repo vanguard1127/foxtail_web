@@ -3,16 +3,22 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { GET_SEARCH_SETTINGS } from "../../queries";
 import SearchProfilesPage from "./SearchProfilesPage";
+import Spinner from "../common/Spinner";
 import { withTranslation } from "react-i18next";
 
 class SearchProfiles extends Component {
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.tReady !== nextProps.tReady) {
+      return true;
+    }
     return false;
   }
   render() {
     document.title = "Search Profiles";
-    const { t, ErrorHandler, ReactGA } = this.props;
-
+    const { t, ErrorHandler, ReactGA, tReady } = this.props;
+    if (!tReady) {
+      return <Spinner />;
+    }
     ErrorHandler.setBreadcrumb("Enter Search Profiles");
     return (
       <Query query={GET_SEARCH_SETTINGS} fetchPolicy="cache-and-network">

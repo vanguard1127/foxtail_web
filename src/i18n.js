@@ -15,6 +15,8 @@ i18n
     fallbackLng: "en", // use en if detected lng is not available
     keySeparator: false, // we do not use keys in form messages.welcome
     saveMissing: false, // send not translated keys to endpoint
+    whitelist: ["en"],
+    load: "languageOnly",
     interpolation: {
       escapeValue: false // react already safes from xss
     },

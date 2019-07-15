@@ -23,7 +23,8 @@ class Couples extends Component {
       this.state.code !== nextState.code ||
       this.state.currSlide !== nextState.currSlide ||
       this.props.includeMsgs !== nextProps.includeMsgs ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
     ) {
       return true;
     }
@@ -136,12 +137,17 @@ class Couples extends Component {
   };
 
   showDeleteConfirm(close, username) {
-    const { t } = this.props;
+    const { t, tReady } = this.props;
+
     return (
       <Mutation mutation={UNLINK_PROFILE}>
         {(unlinkProfile, { loading }) => {
-          if (loading) {
-            return <Spinner message={t("Unlinking")} size="large" />;
+          if (loading || !tReady) {
+            return (
+              <Modal close={close}>
+                <Spinner />
+              </Modal>
+            );
           }
           return (
             <Modal

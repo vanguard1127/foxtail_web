@@ -14,7 +14,10 @@ const lang = getLang();
 require("dayjs/locale/" + lang);
 class Settings extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.t !== nextProps.t) {
+    if (
+      this.props.t !== nextProps.t ||
+      this.props.tReady !== nextProps.tReady
+    ) {
       return true;
     }
     return false;
@@ -47,8 +50,12 @@ class Settings extends Component {
       ErrorHandler,
       location,
       history,
-      ReactGA
+      ReactGA,
+      tReady
     } = this.props;
+    if (!tReady) {
+      return <Spinner />;
+    }
     const { state } = location;
 
     let isCouple = false;

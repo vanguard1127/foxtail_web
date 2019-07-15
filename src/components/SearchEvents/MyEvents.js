@@ -25,7 +25,7 @@ class MyEvents extends Component {
         skip: this.state.skip
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult || fetchMoreResult.getMyEvents.docs.length === 0) {
+        if (!fetchMoreResult || fetchMoreResult.getMyEvents.length === 0) {
           return previousResult;
         }
 
@@ -60,10 +60,10 @@ class MyEvents extends Component {
               <ErrorHandler.report error={error} calledName={"getMyEvents"} />
             );
           }
-          if (!data.getMyEvents || data.getMyEvents.docs.length === 0) {
+          if (!data.getMyEvents || data.getMyEvents.length === 0) {
             return null;
           }
-          const myEvents = data.getMyEvents.docs;
+          const myEvents = data.getMyEvents;
           return (
             <div className="events-card-content my-events">
               <div className="container">

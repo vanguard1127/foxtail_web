@@ -5,6 +5,7 @@ import axios from "axios";
 import PhotoUpload from "../../common/PhotoUpload";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
+import Spinner from "../../common/Spinner";
 import { toast } from "react-toastify";
 
 class PhotoVerify extends PureComponent {
@@ -88,9 +89,15 @@ class PhotoVerify extends PureComponent {
       close,
       type,
       t,
+      tReady,
       ErrorHandler: { ErrorBoundary }
     } = this.props;
     const { photos, filename, filetype, photoKey } = this.state;
+
+    if (!tReady) {
+      return null;
+    }
+
     let header, body, instruction, btnText;
     header = body = instruction = btnText = "";
     if (type === "verify") {

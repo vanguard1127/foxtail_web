@@ -9,8 +9,8 @@ function getRandomInt(min, max) {
 }
 const ad = ads[getRandomInt(0, ads.length)];
 
-const AdManager = ({ t }) => {
-  return <Ad ad={ad} t={t} />;
+const AdManager = ({ t, goToBlk, goToCpl }) => {
+  return <Ad ad={ad} t={t} goToBlk={goToBlk} goToCpl={goToCpl} />;
 };
 
 export default AdManager;

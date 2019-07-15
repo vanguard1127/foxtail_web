@@ -17,6 +17,21 @@ class ChatWindow extends PureComponent {
     this.setState({ [name]: value });
   };
 
+  onMenuClick = state => {
+    this.props.history.push({
+      state,
+      pathname: "/settings"
+    });
+  };
+
+  onAddCouple = () => {
+    this.onMenuClick({ showCplMdl: true });
+  };
+
+  onShowBlackMember = () => {
+    this.onMenuClick({ showBlkMdl: true });
+  };
+
   render() {
     const {
       currentChat,
@@ -75,7 +90,11 @@ class ChatWindow extends PureComponent {
             />
           </div>
         ) : (
-          <AdManager t={t} />
+          <AdManager
+            t={t}
+            goToBlk={this.onShowBlackMember}
+            goToCpl={this.onAddCouple}
+          />
         )}
       </div>
     );
