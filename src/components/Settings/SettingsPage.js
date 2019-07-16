@@ -26,13 +26,13 @@ import BlackModal from "../Modals/Black";
 import getCityCountry from "../../utils/getCityCountry";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import Modal from "../common/Modal";
-import deleteFromCache from "../../utils/deleteFromCache";
 import { toast } from "react-toastify";
 
 class SettingsPage extends Component {
   constructor(props) {
     super(props);
     this.targetElement = React.createRef();
+    this.isPhotoChanged = false;
   }
 
   state = {
@@ -83,7 +83,8 @@ class SettingsPage extends Component {
     msg: "",
     btnText: "",
     title: "",
-    okAction: null
+    okAction: null,
+    errors: this.props.errors
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -137,7 +138,8 @@ class SettingsPage extends Component {
       this.state.users !== nextState.users ||
       this.state.vibrateNotify !== nextState.vibrateNotify ||
       this.state.visible !== nextState.visible ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.errors !== nextProps.errors
     ) {
       return true;
     }
@@ -149,7 +151,7 @@ class SettingsPage extends Component {
     const { history } = this.props;
     history.replace({ state: {} });
     window.addEventListener("beforeunload", async () => {
-      await this.saveSettings();
+      await this.handleSubmit(this.updateSettings);
     });
     window.addEventListener("unload", this.logData, false);
 
@@ -157,69 +159,33 @@ class SettingsPage extends Component {
   }
 
   async componentWillUnmount() {
-    await this.saveSettings();
+    await this.handleSubmit(this.updateSettings);
     this.mounted = false;
   }
 
-  async saveSettings() {
-    const { ErrorHandler, isCouple, isInitial, refetchUser, t } = this.props;
-    clearAllBodyScrollLocks();
-    await this.updateSettings()
-      .then(({ data }) => {
-        if (data.updateSettings) {
-          if (isCouple && isInitial && !this.state.flashCpl) {
-            if (!toast.isActive("clickcpl")) {
-              toast(t("clickcpl"), {
-                toastId: "clickcpl"
-              });
-            }
-          }
-        }
-      })
-      .then(() => {
-        this.clearUserData();
-        refetchUser();
-      })
-      .catch(res => {
-        ErrorHandler.catchErrors(res.graphQLErrors);
-      });
-  }
-
-  clearUserData = () => {
-    const { cache } = this.props.client;
-    console.log(cache);
-    deleteFromCache({ cache, query: "currentuser" });
-  };
-
-  handlePhotoListChange = ({
-    file,
-    key,
-    url,
-    isPrivate,
-    isDeleted,
-    updateSettings
-  }) => {
+  handlePhotoListChange = ({ file, key, url, isPrivate, isDeleted }) => {
     const { t } = this.props;
+    this.isPhotoChanged = true;
     this.setErrorHandler("Photo list updated");
     if (isPrivate) {
       let { privatePhotos } = this.state;
 
-      if (isDeleted) {
-        privatePhotos = privatePhotos.filter(x => x.id !== file.id);
-
-        this.setState({ showModal: false });
-        toast.success(t("photodel"));
-      } else {
-        privatePhotos = [
-          ...privatePhotos,
-          {
-            uid: Date.now(),
-            key,
-            url
-          }
-        ];
-      }
       if (this.mounted) {
+        if (isDeleted) {
+          privatePhotos = privatePhotos.filter(x => x.id !== file.id);
+
+          this.setState({ showModal: false });
+          toast.success(t("photodel"));
+        } else {
+          privatePhotos = [
+            ...privatePhotos,
+            {
+              uid: Date.now(),
+              key,
+              url
+            }
+          ];
+        }
         this.setState({
           privatePhotos,
           publicPhotoList: undefined,
@@ -229,26 +195,29 @@ class SettingsPage extends Component {
     } else {
       let { publicPhotos } = this.state;
 
-      if (isDeleted) {
-        publicPhotos = publicPhotos.filter(x => x.id !== file.id);
-        this.setState({ showModal: false });
-        toast.success(t("photodel"));
-      } else {
-        publicPhotos = [
-          ...publicPhotos,
-          {
-            uid: Date.now(),
-            key,
-            url
-          }
-        ];
-      }
       if (this.mounted) {
-        this.setState({
-          publicPhotos,
-          privatePhotoList: undefined,
-          publicPhotoList: publicPhotos.map(file => JSON.stringify(file))
-        });
+        if (isDeleted) {
+          publicPhotos = publicPhotos.filter(x => x.id !== file.id);
+          this.setState({ showModal: false });
+          toast.success(t("photodel"));
+        } else {
+          publicPhotos = [
+            ...publicPhotos,
+            {
+              uid: Date.now(),
+              key,
+              url
+            }
+          ];
+        }
+        this.setState(
+          {
+            publicPhotos,
+            privatePhotoList: undefined,
+            publicPhotoList: publicPhotos.map(file => JSON.stringify(file))
+          },
+          () => this.fillInErrors()
+        );
       }
     }
   };
@@ -264,7 +233,7 @@ class SettingsPage extends Component {
       });
     }
   };
-  handleSubmit = (updateSettings, saveImage) => {
+  handleSubmit = updateSettings => {
     const {
       ErrorHandler,
       isCouple,
@@ -273,9 +242,10 @@ class SettingsPage extends Component {
       t,
       ReactGA
     } = this.props;
-
     this.setErrorHandler("Settings updated...");
-    if (!saveImage) {
+    clearAllBodyScrollLocks();
+    if (!this.isPhotoChanged) {
+      this.isPhotoChanged = false;
       if (this.mounted) {
         this.setState(
           {
@@ -358,7 +328,7 @@ class SettingsPage extends Component {
     }
   };
 
-  toggleDesires = ({ checked, value }, updateSettings) => {
+  toggleDesires = ({ checked, value }) => {
     const { desires } = this.state;
     if (this.mounted) {
       if (checked) {
@@ -373,6 +343,14 @@ class SettingsPage extends Component {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
         if (noSave === true) {
+          if (
+            name === "about" ||
+            name === "publicPhotos" ||
+            name === "profilePic" ||
+            name === "desires"
+          ) {
+            this.fillInErrors();
+          }
           return;
         }
 
@@ -386,9 +364,11 @@ class SettingsPage extends Component {
     ErrorHandler.setBreadcrumb(message);
   };
 
-  setProfilePic = ({ key, url, updateSettings }) => {
+  setProfilePic = ({ key, url }) => {
     if (this.mounted) {
-      this.setState({ profilePic: key, profilePicUrl: url });
+      this.setState({ profilePic: key, profilePicUrl: url }, () =>
+        this.fillInErrors()
+      );
     }
   };
 
@@ -400,12 +380,19 @@ class SettingsPage extends Component {
 
   toggleDesiresPopup = () => {
     this.setErrorHandler("Desires popup toggled");
+    const { showDesiresPopup } = this.state;
     if (this.mounted) {
       this.setState(
         {
-          showDesiresPopup: !this.state.showDesiresPopup
+          showDesiresPopup: !showDesiresPopup
         },
-        this.toggleScroll(!this.state.showDesiresPopup)
+        () => {
+          this.toggleScroll(!showDesiresPopup);
+
+          if (showDesiresPopup) {
+            this.fillInErrors();
+          }
+        }
       );
     }
   };
@@ -542,6 +529,42 @@ class SettingsPage extends Component {
     });
   };
 
+  fillInErrors = async () => {
+    const { about, publicPhotos, profilePic, desires } = this.state;
+
+    const { t } = this.props;
+    let aboutErr = null;
+    if (about === "") {
+      aboutErr = t("fillbio");
+    } else if (about.length <= 20) {
+      aboutErr = t("biolen");
+    }
+
+    let profilePicErr = null;
+    if (publicPhotos.length === 0) {
+      profilePicErr = t("onepho");
+    } else if (profilePic === "") {
+      profilePicErr = t("selpho");
+    }
+
+    let desiresErr = desires.length === 0 ? t("onedes") : null;
+
+    if (
+      this.state.errors.profilePic !== profilePicErr ||
+      this.state.errors.about !== aboutErr ||
+      this.state.errors.desires !== desiresErr
+    ) {
+      await this.handleSubmit(this.updateSettings);
+      this.setState({
+        errors: {
+          profilePic: profilePicErr,
+          about: aboutErr,
+          desires: desiresErr
+        }
+      });
+    }
+  };
+
   render() {
     const {
       lat,
@@ -591,7 +614,8 @@ class SettingsPage extends Component {
       btnText,
       title,
       okAction,
-      sexuality
+      sexuality,
+      errors
     } = this.state;
 
     const {
@@ -603,26 +627,6 @@ class SettingsPage extends Component {
       history,
       ReactGA
     } = this.props;
-
-    let aboutErr = "";
-    if (about === "") {
-      aboutErr = t("fillbio");
-    } else if (about.length < 20) {
-      aboutErr = t("biolen");
-    }
-
-    let profilePicErr = "";
-    if (publicPhotos.length === 0) {
-      profilePicErr = t("onepho");
-    } else if (profilePic === "") {
-      profilePicErr = t("selpho");
-    }
-
-    const errors = {
-      profilePic: profilePicErr !== "" ? profilePicErr : null,
-      about: aboutErr !== "" ? aboutErr : null,
-      desires: desires.length === 0 ? t("onedes") : null
-    };
 
     return (
       <Mutation

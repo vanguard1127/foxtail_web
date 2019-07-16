@@ -132,27 +132,33 @@ class NoticesList extends Component {
   handleNotice = ({ notif, t }) => {
     if (notif.type === "alert") {
       return (
-        <span onClick={() => this.props.showAlert(notif)}>
-          <span className="avatar">
-            <img
-              src={"../assets/img/no-profile.png"}
-              alt=""
-              onContextMenu={preventContextMenu}
-            />
+        <div
+          className={notif.read ? "item read" : "item unread"}
+          key={notif.id}
+          onClick={() => this.props.showAlert(notif)}
+        >
+          <span>
+            <span className="avatar">
+              <img
+                src={"../assets/img/no-profile.png"}
+                alt=""
+                onContextMenu={preventContextMenu}
+              />
+            </span>
+            <div>
+              <span className="text">
+                {notif.name}
+                {t(notif.text)}
+                {notif.event}
+              </span>
+              <span className="when">
+                {dayjs(notif.date)
+                  .locale(lang)
+                  .fromNow()}
+              </span>
+            </div>
           </span>
-          <div>
-            <span className="text">
-              {notif.name}
-              {t(notif.text)}
-              {notif.event}
-            </span>
-            <span className="when">
-              {dayjs(notif.date)
-                .locale(lang)
-                .fromNow()}
-            </span>
-          </div>
-        </span>
+        </div>
       );
     } else {
       return (
@@ -200,14 +206,7 @@ class NoticesList extends Component {
       <div className="toggle toggleNotifications">
         <div className="notification open">
           {notifications.length > 0 ? (
-            notifications.map(notif => (
-              <div
-                className={notif.read ? "item read" : "item unread"}
-                key={notif.id}
-              >
-                {this.handleNotice({ notif, t })}
-              </div>
-            ))
+            notifications.map(notif => this.handleNotice({ notif, t }))
           ) : (
             <div className="item" key="na">
               <span className="text">{t("nonotif")}</span>

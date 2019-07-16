@@ -140,12 +140,18 @@ class Landing extends PureComponent {
                         <span className="title">{t("subtitle")}</span>
                       </div>
 
-                      <Query query={GET_DEMO_COUNTS} fetchPolicy="cache-first">
+                      <Query
+                        query={GET_DEMO_COUNTS}
+                        fetchPolicy="cache-first"
+                        errorPolicy="ignore"
+                      >
                         {({ data, loading, error }) => {
-                          if (error) {
+                          if (loading) {
+                            return <div>Loading stats...</div>;
+                          } else if (error) {
                             console.error(error);
-                          }
-                          if (loading && !data) {
+                            return null;
+                          } else if (!data) {
                             return null;
                           }
                           let malesNum = 0,

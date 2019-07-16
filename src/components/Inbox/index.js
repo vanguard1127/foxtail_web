@@ -65,7 +65,7 @@ class InboxPage extends Component {
   componentDidMount() {
     this.mounted = true;
 
-    document.title = this.props.t("Inbox");
+    document.title = this.props.t("common:Inbox");
     sessionStorage.setItem("page", "inbox");
   }
 

@@ -11,8 +11,8 @@ const withAuth = conditionFunc => Component => props => {
   const { location, t } = props;
 
   return (
-    <Query query={GET_CURRENT_USER} fetchPolicy="network-only">
-      {({ data, loading, refetch }) => {
+    <Query query={GET_CURRENT_USER}>
+      {({ data, loading, error, refetch }) => {
         if (loading) {
           return <Spinner size="large" />;
         }

@@ -16,16 +16,17 @@ class Settings extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.t !== nextProps.t ||
-      this.props.tReady !== nextProps.tReady
+      this.props.tReady !== nextProps.tReady ||
+      this.props.session.currentuser !== nextProps.session.currentuser
     ) {
       return true;
     }
     return false;
   }
   componentDidMount() {
-    const { session, t } = this.props;
+    const { session, t, tReady } = this.props;
 
-    if (session && !session.currentuser.isProfileOK) {
+    if (session && !session.currentuser.isProfileOK && tReady) {
       if (!toast.isActive("nopro")) {
         toast.info(t("common:plscomplete"), {
           position: toast.POSITION.TOP_CENTER,
@@ -72,7 +73,11 @@ class Settings extends Component {
     }
 
     return (
-      <Query query={GET_SETTINGS} fetchPolicy="network-only">
+      <Query
+        query={GET_SETTINGS}
+        fetchPolicy="cache-and-network"
+        returnPartialData={true}
+      >
         {({ data, loading, error }) => {
           if (
             loading ||
@@ -105,6 +110,30 @@ class Settings extends Component {
           }
 
           const settings = data.getSettings;
+          const { about, publicPhotos, profilePic, desires } = settings;
+          // console.log("photos", publicPhotos);
+          let aboutErr = null;
+          if (about === "") {
+            aboutErr = t("fillbio");
+          } else if (about.length <= 20) {
+            aboutErr = t("biolen");
+          }
+
+          let profilePicErr = null;
+          if (publicPhotos.length === 0) {
+            profilePicErr = t("onepho");
+          } else if (profilePic === "") {
+            profilePicErr = t("selpho");
+          }
+
+          let desiresErr = desires.length === 0 ? t("onedes") : null;
+
+          const errors = {
+            profilePic: profilePicErr,
+            about: aboutErr,
+            desires: desiresErr
+          };
+
           return (
             <Fragment>
               <section className="breadcrumb settings">
@@ -139,6 +168,7 @@ class Settings extends Component {
                   dayjs={dayjs}
                   lang={lang}
                   ReactGA={ReactGA}
+                  errors={errors}
                 />
               )}
             </Fragment>

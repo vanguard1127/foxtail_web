@@ -267,7 +267,12 @@ class NoticesItem extends Component {
                     </span>
                   );
                 } else if (error) {
-                  return <div>{error.message}</div>;
+                  return (
+                    <ErrorHandler.report
+                      error={error}
+                      calledName={"getNotifications"}
+                    />
+                  );
                 } else if (!data.getNotifications.notifications.length === 0) {
                   return <div>{t("nonots")} :)</div>;
                 }

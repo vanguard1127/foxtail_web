@@ -35,7 +35,13 @@ class UserToolbar extends Component {
             );
           }
           if (error) {
-            console.error(error.message);
+            return (
+              <ErrorHandler.report
+                error={error}
+                calledName={"getCounts"}
+                userID={currentuser.userID}
+              />
+            );
           }
           let { msgsCount, noticesCount } = data.getCounts;
 

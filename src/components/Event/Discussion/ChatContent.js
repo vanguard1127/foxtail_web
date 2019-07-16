@@ -70,6 +70,9 @@ class ChatContent extends PureComponent {
         fetch-policy="cache-and-network"
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
+          if (loading) {
+            return <div>{t("Loading")}</div>;
+          }
           if (error || !data) {
             return (
               <ErrorHandler.report

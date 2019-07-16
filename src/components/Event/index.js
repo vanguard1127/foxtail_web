@@ -117,10 +117,14 @@ class EventPage extends Component {
       );
     }
     return (
-      <Query query={GET_EVENT} variables={{ id }}>
+      <Query
+        query={GET_EVENT}
+        variables={{ id }}
+        fetchPolicy="cache-and-network"
+      >
         {({ data, loading, error, refetch }) => {
           if (error) {
-            document.title = t("Event");
+            document.title = t("common:Event");
             return (
               <ErrorHandler.report
                 error={error}

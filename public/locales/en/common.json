@@ -169,9 +169,8 @@
   "Please keep name between 1 and 120 characters.": "Please keep name between 1 and 120 characters.",
   "Invalid email.": "Invalid email.",
   "Last 4 of credit card only.": "Last 4 of credit card only.",
-  "Bio should be bewteen 3 and 500 characters.": "Bio should be bewteen 3 and 500 characters.",
+  "Bio should be a maximum of 500 characters.": "Bio should be a maximum of 500 characters.",
   "Phone Number invalid.": "Phone Number invalid.",
-  "Bio should be bewteen 3 and 500 characters!": "Bio should be bewteen 3 and 500 characters!",
   "Username should be bewteen 3 and 500 characters.": "Username should be bewteen 3 and 500 characters.",
   "Gender is invalid.": "Gender is invalid.",
   "You must be at least 18 years old to join.": "You must be at least 18 years old to join.",
@@ -223,5 +222,8 @@
   "Share Foxtail": "Share Foxtail",
   "thank you": "thank you",
   "Copied url to clipboard": "Copied url to clipboard",
-  "Copy referral url": "Copy referral url"
+  "Copy referral url": "Copy referral url",
+  "Event": "Event",
+  "Error Occurred": "Error Occurred",
+  "Search Profiles": "Search Profiles"
 }

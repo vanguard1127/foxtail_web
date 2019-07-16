@@ -209,10 +209,11 @@ class ProfilePage extends Component {
               query={GET_PROFILE}
               variables={{ id }}
               returnPartialData={true}
+              fetchPolicy="cache-and-network"
             >
               {({ data, loading, error, refetch }) => {
                 if (error) {
-                  document.title = "Error Occurred";
+                  document.title = t("common:Error Occurred");
                   return (
                     <ErrorHandler.report
                       error={error}

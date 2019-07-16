@@ -3,6 +3,7 @@ import { GENERATE_CODE } from "../../../queries";
 import { Query } from "react-apollo";
 import { EmailShareButton, EmailIcon } from "react-share";
 import Spinner from "../../common/Spinner";
+import * as ErrorHandler from "../../common/ErrorHandler";
 
 class CodeBox extends PureComponent {
   render() {
@@ -19,6 +20,11 @@ class CodeBox extends PureComponent {
             if (loading) {
               return (
                 <Spinner message={t("common:Loading") + "..."} size="large" />
+              );
+            }
+            if (error) {
+              return (
+                <ErrorHandler.report error={error} calledName={"codeBox"} />
               );
             }
             if (!data.generateCode) {

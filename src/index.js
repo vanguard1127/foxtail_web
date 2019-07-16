@@ -181,7 +181,6 @@ const errorLink = onError(
     }
     if (networkError) {
       if (networkError.statusCode === 429) {
-        console.log("HAPPENDED to 429");
         window.location.replace("/captcha");
       } else {
         if (!toast.isActive("networkError")) {
