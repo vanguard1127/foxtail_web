@@ -150,8 +150,9 @@ class SettingsPage extends Component {
   componentDidMount() {
     const { history } = this.props;
     history.replace({ state: {} });
-    window.addEventListener("beforeunload", async () => {
-      await this.handleSubmit(this.updateSettings);
+    window.addEventListener("beforeunload", () => {
+      console.log("PROPIC GOT SAVED", this.state.profilePic);
+      this.handleSubmit(this.updateSettings);
     });
     window.addEventListener("unload", this.logData, false);
 
@@ -159,7 +160,9 @@ class SettingsPage extends Component {
   }
 
   async componentWillUnmount() {
+    console.log("GO");
     await this.handleSubmit(this.updateSettings);
+    clearAllBodyScrollLocks();
     this.mounted = false;
   }
 
@@ -243,45 +246,41 @@ class SettingsPage extends Component {
       ReactGA
     } = this.props;
     this.setErrorHandler("Settings updated...");
-    clearAllBodyScrollLocks();
+    console.log("SAVE");
     if (!this.isPhotoChanged) {
-      this.isPhotoChanged = false;
       if (this.mounted) {
-        this.setState(
-          {
-            privatePhotoList: undefined,
-            publicPhotoList: undefined
-          },
-          () => {
-            updateSettings()
-              .then(({ data }) => {
-                if (data.updateSettings) {
-                  if (isCouple && isInitial && !this.state.flashCpl) {
-                    if (!toast.isActive("clickcpl")) {
-                      toast(t("clickcpl"), {
-                        toastId: "clickcpl"
-                      });
-                    }
-                    if (this.mounted) this.setState({ flashCpl: true });
-                    ReactGA.event({
-                      category: "Settings",
-                      action: "Updated"
-                    });
-                  }
+        this.setState({
+          privatePhotoList: undefined,
+          publicPhotoList: undefined
+        });
+        updateSettings()
+          .then(({ data }) => {
+            if (data.updateSettings) {
+              if (isCouple && isInitial && !this.state.flashCpl) {
+                if (!toast.isActive("clickcpl")) {
+                  toast(t("clickcpl"), {
+                    toastId: "clickcpl"
+                  });
                 }
-              })
-              .then(() => {
-                this.resetAcctSettingState();
-                refetchUser();
-              })
-              .catch(res => {
-                this.resetAcctSettingState();
-                ErrorHandler.catchErrors(res.graphQLErrors);
-              });
-          }
-        );
+                if (this.mounted) this.setState({ flashCpl: true });
+                ReactGA.event({
+                  category: "Settings",
+                  action: "Updated"
+                });
+              }
+            }
+          })
+          .then(() => {
+            this.resetAcctSettingState();
+            refetchUser();
+          })
+          .catch(res => {
+            this.resetAcctSettingState();
+            ErrorHandler.catchErrors(res.graphQLErrors);
+          });
       }
     } else {
+      this.isPhotoChanged = false;
       updateSettings()
         .then(({ data }) => {
           if (data.updateSettings) {
@@ -332,9 +331,14 @@ class SettingsPage extends Component {
     const { desires } = this.state;
     if (this.mounted) {
       if (checked) {
-        this.setState({ desires: [...desires, value] });
+        this.setState({ desires: [...desires, value] }, () =>
+          this.fillInErrors()
+        );
       } else {
-        this.setState({ desires: desires.filter(desire => desire !== value) });
+        this.setState(
+          { desires: desires.filter(desire => desire !== value) },
+          () => this.fillInErrors()
+        );
       }
     }
   };
@@ -388,10 +392,6 @@ class SettingsPage extends Component {
         },
         () => {
           this.toggleScroll(!showDesiresPopup);
-
-          if (showDesiresPopup) {
-            this.fillInErrors();
-          }
         }
       );
     }
@@ -550,21 +550,25 @@ class SettingsPage extends Component {
     let desiresErr = desires.length === 0 ? t("onedes") : null;
 
     if (
-      this.state.errors.profilePic !== profilePicErr ||
-      this.state.errors.about !== aboutErr ||
-      this.state.errors.desires !== desiresErr
+      this.isNull(this.state.errors.profilePic) !==
+        this.isNull(profilePicErr) ||
+      this.isNull(this.state.errors.about) !== this.isNull(aboutErr) ||
+      this.isNull(this.state.errors.desires) !== this.isNull(desiresErr)
     ) {
       await this.handleSubmit(this.updateSettings);
-      this.setState({
-        errors: {
-          profilePic: profilePicErr,
-          about: aboutErr,
-          desires: desiresErr
-        }
-      });
     }
+    this.setState({
+      errors: {
+        profilePic: profilePicErr,
+        about: aboutErr,
+        desires: desiresErr
+      }
+    });
   };
 
+  isNull = word => {
+    return word === null;
+  };
   render() {
     const {
       lat,
@@ -658,7 +662,8 @@ class SettingsPage extends Component {
           gender,
           phone,
           profilePic,
-          sexuality
+          sexuality,
+          profileID: currentuser.profileID
         }}
       >
         {(updateSettings, { loading }) => {

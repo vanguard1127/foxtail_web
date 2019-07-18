@@ -259,6 +259,7 @@ class ProfilePage extends Component {
                               liked={profile.likedByMe}
                               msgd={profile.msgdByMe}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              isSelf={session.currentuser.profileID === id}
                             />
                             <DesiresSection
                               desires={desires}

@@ -241,6 +241,7 @@ export const UPDATE_SETTINGS = gql`
     $publicPhotoList: [String]
     $privatePhotoList: [String]
     $includeMsgs: Boolean
+    $profileID: String
   ) {
     updateSettings(
       distance: $distance
@@ -269,6 +270,7 @@ export const UPDATE_SETTINGS = gql`
       publicPhotoList: $publicPhotoList
       privatePhotoList: $privatePhotoList
       includeMsgs: $includeMsgs
+      profileID: $profileID
     )
   }
 `;

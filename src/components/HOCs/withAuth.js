@@ -43,7 +43,6 @@ const withAuth = conditionFunc => Component => props => {
               </section>
             );
           } else if (data.currentuser.captchaReq === true) {
-            console.log("CAPTCHA REQUIRED");
             return <ReCaptcha />;
           }
 

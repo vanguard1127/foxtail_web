@@ -91,11 +91,11 @@ class NoticesItem extends Component {
     if (read) {
       const [id] = notificationIDs;
       var readNotice = notifications.find(notice => notice.id === id);
-      readNotice.read = true;
+      if (readNotice) readNotice.read = true;
     } else {
       notificationIDs.forEach(notifID => {
         var seenNotice = notifications.find(notice => notice.id === notifID);
-        seenNotice.seen = true;
+        if (seenNotice) seenNotice.seen = true;
       });
 
       const { getCounts } = cache.readQuery({

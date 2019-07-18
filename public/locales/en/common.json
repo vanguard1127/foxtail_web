@@ -111,7 +111,6 @@
   "Please check your inbox to confirm your email before contacting members! *Check your spam, just in case": "Please check your inbox to confirm your email before contacting members! *Check your spam, just in case",
   "Your couple profile couple profile has been closed. Check your out your new profile on the settings page": "Your couple profile couple profile has been closed. Check your out your new profile on the settings page",
   "and you have created a Couple Profile! Please complete your profile together. Enjoy!": "and you have created a Couple Profile! Please complete your profile together. Enjoy!",
-  "Username should be bewteen 3 and 500 characters!": "Username should be bewteen 3 and 500 characters!",
   "This account has been flagged for review. Please contact support at support@foxtailapp.com if this is a mistake.": "This account has been flagged for review. Please contact support at support@foxtailapp.com if this is a mistake.",
   "Profile not found": "Profile not found",
   "User not found.": "User not found.",
@@ -171,7 +170,7 @@
   "Last 4 of credit card only.": "Last 4 of credit card only.",
   "Bio should be a maximum of 500 characters.": "Bio should be a maximum of 500 characters.",
   "Phone Number invalid.": "Phone Number invalid.",
-  "Username should be bewteen 3 and 500 characters.": "Username should be bewteen 3 and 500 characters.",
+  "Username should be bewteen 3 and 30 characters.": "Username should be bewteen 3 and 30 characters.",
   "Gender is invalid.": "Gender is invalid.",
   "You must be at least 18 years old to join.": "You must be at least 18 years old to join.",
   "Username may only contain letters and numbers.": "Username may only contain letters and numbers.",
@@ -225,5 +224,6 @@
   "Copy referral url": "Copy referral url",
   "Event": "Event",
   "Error Occurred": "Error Occurred",
-  "Search Profiles": "Search Profiles"
+  "Search Profiles": "Search Profiles",
+  "ID Invalid.": "ID Invalid."
 }

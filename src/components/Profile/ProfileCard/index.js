@@ -19,7 +19,8 @@ class ProfileCard extends Component {
       t,
       ErrorBoundary,
       liked,
-      msgd
+      msgd,
+      isSelf
     } = this.props;
     const { profilePic, id, users } = profile;
 
@@ -42,14 +43,16 @@ class ProfileCard extends Component {
         <div className="avatar-content">
           <div className={"avatar-card " + badge}>
             <ProfilePic profilePic={profilePic} />
-            <ProfileActions
-              profileID={id}
-              likeProfile={likeProfile}
-              showMsgModal={showMsgModal}
-              t={t}
-              liked={liked}
-              msgd={msgd}
-            />
+            {!isSelf && (
+              <ProfileActions
+                profileID={id}
+                likeProfile={likeProfile}
+                showMsgModal={showMsgModal}
+                t={t}
+                liked={liked}
+                msgd={msgd}
+              />
+            )}
           </div>
         </div>
       </ErrorBoundary>

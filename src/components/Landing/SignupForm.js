@@ -22,7 +22,11 @@ class SignupForm extends Component {
       .string()
       .email(this.props.t("invemail"))
       .required(this.props.t("emailreq")),
-    username: yup.string().required(this.props.t("userreq"))
+    username: yup
+      .string()
+      .required(this.props.t("userreq"))
+      .min(3, this.props.t("usernameLen"))
+      .max(30, this.props.t("usernameLen"))
   });
   state = {
     username: "",
