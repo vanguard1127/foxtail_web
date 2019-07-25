@@ -93,6 +93,7 @@ class InboxPage extends Component {
   };
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
+    console.log("GO", unSeenCount, this.state.chatOpen);
     if (!this.opening) {
       this.opening = true;
       ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
@@ -101,6 +102,7 @@ class InboxPage extends Component {
         this.setState({ unSeenCount, chatOpen: true }, () => {
           readChat()
             .then(() => {
+              console.log("uiu");
               this.props.ReactGA.event({
                 category: "Chat",
                 action: "Read"
@@ -181,6 +183,7 @@ class InboxPage extends Component {
     });
 
     const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
+
     if (chatIndex > -1) {
       getInbox[chatIndex].unSeenCount = 0;
 
@@ -202,7 +205,8 @@ class InboxPage extends Component {
       msg,
       btnText,
       title,
-      chatOpen
+      chatOpen,
+      unSeenCount
     } = this.state;
     const { t, ReactGA, session, history, tReady } = this.props;
 
@@ -235,7 +239,7 @@ class InboxPage extends Component {
                 readChat={(id, unSeenCount) =>
                   this.handleChatClick(id, unSeenCount, readChat)
                 }
-                chatOpen={chatOpen}
+                unSeenCount={unSeenCount}
                 currentuser={currentuser}
                 ErrorHandler={ErrorHandler}
                 t={t}

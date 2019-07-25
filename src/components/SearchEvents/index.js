@@ -278,6 +278,7 @@ class SearchEvents extends Component {
                         />
                       );
                     }
+
                     if (
                       !data ||
                       !data.searchEvents ||

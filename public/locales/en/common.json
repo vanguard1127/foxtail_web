@@ -163,7 +163,7 @@
   "You've already contacted this member.": "You've already contacted this member.",
   "Cannot invite yourself!": "Cannot invite yourself!",
   "Please wait for user to respond.": "Please wait for user to respond.",
-  "Please confirm you email before contacting members.": "Please confirm you email before contacting members.",
+  "Please confirm your email before contacting members.": "Please confirm your email before contacting members.",
   "Name may only contain letters.": "Name may only contain letters.",
   "Please keep name between 1 and 120 characters.": "Please keep name between 1 and 120 characters.",
   "Invalid email.": "Invalid email.",
@@ -225,5 +225,8 @@
   "Event": "Event",
   "Error Occurred": "Error Occurred",
   "Search Profiles": "Search Profiles",
-  "ID Invalid.": "ID Invalid."
+  "ID Invalid.": "ID Invalid.",
+  "Gender has been updated.": "Gender has been updated.",
+  "Username has been updated.": "Username has been updated.",
+  "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox.": "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox."
 }

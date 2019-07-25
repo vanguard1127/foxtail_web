@@ -110,7 +110,7 @@ class Settings extends Component {
           }
 
           const settings = data.getSettings;
-          console.log("PROFILE PIC:", settings.profilePic);
+
           const { about, publicPhotos, profilePic, desires } = settings;
 
           let aboutErr = null;

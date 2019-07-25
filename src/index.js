@@ -294,15 +294,23 @@ const Body = withAuth(session => session && session.currentuser)(
           />
           <Route
             path="/inbox/:chatID"
-            component={InboxPage}
-            ErrorHandler={ErrorHandler}
-            ReactGA={ReactGA}
+            render={routeProps => (
+              <InboxPage
+                {...routeProps}
+                ReactGA={ReactGA}
+                ErrorHandler={ErrorHandler}
+              />
+            )}
           />
           <Route
             path="/inbox"
-            component={InboxPage}
-            ErrorHandler={ErrorHandler}
-            ReactGA={ReactGA}
+            render={routeProps => (
+              <InboxPage
+                {...routeProps}
+                ReactGA={ReactGA}
+                ErrorHandler={ErrorHandler}
+              />
+            )}
           />
           <Route
             path="/settings"

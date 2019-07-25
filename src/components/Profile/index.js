@@ -179,6 +179,7 @@ class ProfilePage extends Component {
       chatID
     } = this.state;
     const { t, ErrorHandler, session, ReactGA, tReady } = this.props;
+
     if (!tReady) {
       return <Spinner />;
     }

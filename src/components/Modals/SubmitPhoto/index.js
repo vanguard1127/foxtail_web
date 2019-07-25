@@ -5,7 +5,6 @@ import axios from "axios";
 import PhotoUpload from "../../common/PhotoUpload";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
-import Spinner from "../../common/Spinner";
 import { toast } from "react-toastify";
 
 class PhotoVerify extends PureComponent {
@@ -31,7 +30,6 @@ class PhotoVerify extends PureComponent {
     }
 
     const file = photos[0];
-
     await this.setS3PhotoParams(file.name, file.type);
 
     await signS3()
@@ -51,6 +49,7 @@ class PhotoVerify extends PureComponent {
   handleSubmit = async submitPhoto => {
     await submitPhoto()
       .then(({ data }) => {
+        toast.success(this.props.t("verok"));
         this.props.close();
       })
       .catch(res => {
@@ -123,7 +122,7 @@ class PhotoVerify extends PureComponent {
           photos.length !== 0 ? (
             <Mutation
               mutation={SUBMIT_PHOTO}
-              variables={{ reason: "std", photo: photoKey }}
+              variables={{ type, image: photoKey }}
             >
               {submitPhoto => {
                 return (

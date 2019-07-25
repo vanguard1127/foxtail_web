@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
+import Avatar from "react-avatar";
 import { NOTICELIST_LIMIT } from "../../docs/consts";
 import { Waypoint } from "react-waypoint";
 import { preventContextMenu } from "../../utils/image";
@@ -162,7 +163,9 @@ class NoticesList extends Component {
       );
     } else {
       return (
-        <span
+        <div
+          className={notif.read ? "item read" : "item unread"}
+          key={notif.id}
           onClick={() =>
             this.readAndGo({
               notifications: [notif.id],
@@ -171,30 +174,32 @@ class NoticesList extends Component {
             })
           }
         >
-          <span className="avatar">
-            <img
-              src={notif.fromProfile ? notif.fromProfile.profilePic : ""}
-              alt=""
-              onContextMenu={preventContextMenu}
-            />
+          <span>
+            <span className="avatar">
+              <img
+                src={notif.fromProfile ? notif.fromProfile.profilePic : ""}
+                onContextMenu={preventContextMenu}
+                className="avatar"
+              />
+            </span>
+            <div>
+              <span className="text">
+                <b>
+                  {" "}
+                  {notif.fromProfile ? notif.fromProfile.profileName : ""}
+                  {notif.name}{" "}
+                </b>
+                {t(notif.text)}
+                {notif.event}
+              </span>
+              <span className="when">
+                {dayjs(notif.date)
+                  .locale(lang)
+                  .fromNow()}
+              </span>
+            </div>
           </span>
-          <div>
-            <span className="text">
-              <b>
-                {" "}
-                {notif.fromProfile ? notif.fromProfile.profileName : ""}
-                {notif.name}{" "}
-              </b>
-              {t(notif.text)}
-              {notif.event}
-            </span>
-            <span className="when">
-              {dayjs(notif.date)
-                .locale(lang)
-                .fromNow()}
-            </span>
-          </div>
-        </span>
+        </div>
       );
     }
   };

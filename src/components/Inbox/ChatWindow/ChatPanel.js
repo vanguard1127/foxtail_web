@@ -11,7 +11,6 @@ class ChatPanel extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    this.textInput.focus();
   }
 
   componentWillUnmount() {
@@ -114,9 +113,7 @@ class ChatPanel extends PureComponent {
               {/* <div className="files" /> */}
               <div className="textarea">
                 <input
-                  ref={input => {
-                    this.textInput = input;
-                  }}
+                  autoFocus
                   placeholder={t("typemsg") + "..."}
                   value={text}
                   onChange={e => this.setText(e)}

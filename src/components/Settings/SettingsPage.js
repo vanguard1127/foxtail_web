@@ -151,7 +151,6 @@ class SettingsPage extends Component {
     const { history } = this.props;
     history.replace({ state: {} });
     window.addEventListener("beforeunload", () => {
-      console.log("PROPIC GOT SAVED", this.state.profilePic);
       this.handleSubmit(this.updateSettings);
     });
     window.addEventListener("unload", this.logData, false);
@@ -160,7 +159,6 @@ class SettingsPage extends Component {
   }
 
   async componentWillUnmount() {
-    console.log("GO");
     await this.handleSubmit(this.updateSettings);
     clearAllBodyScrollLocks();
     this.mounted = false;
@@ -246,7 +244,7 @@ class SettingsPage extends Component {
       ReactGA
     } = this.props;
     this.setErrorHandler("Settings updated...");
-    console.log("SAVE");
+
     if (!this.isPhotoChanged) {
       if (this.mounted) {
         this.setState({

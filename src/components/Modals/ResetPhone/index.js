@@ -10,9 +10,6 @@ class ResetPhone extends PureComponent {
   state = { text: "", code: "+1" };
   componentDidMount() {
     this.mounted = true;
-    if (this.textInput) {
-      this.textInput.focus();
-    }
   }
   handleTextChange = event => {
     if (this.mounted) {
@@ -67,9 +64,7 @@ class ResetPhone extends PureComponent {
                         placeholder={t("phonenum")}
                         onChange={this.handleTextChange}
                         value={text}
-                        ref={input => {
-                          this.textInput = input;
-                        }}
+                        autoFocus
                       />
                     </div>
 

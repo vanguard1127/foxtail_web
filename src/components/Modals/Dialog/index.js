@@ -9,9 +9,6 @@ class Dialog extends PureComponent {
   state = { text: "", errors: {} };
   componentDidMount() {
     this.mounted = true;
-    if (this.props.specialType !== "gender") {
-      this.textInput.focus();
-    }
   }
   handleTextChange = event => {
     if (this.mounted) {
@@ -96,9 +93,7 @@ class Dialog extends PureComponent {
             placeholder={t("writemsg") + "..."}
             value={text}
             onChange={this.handleTextChange}
-            ref={input => {
-              this.textInput = input;
-            }}
+            autoFocus
           />
         </div>
       );

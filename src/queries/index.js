@@ -108,8 +108,8 @@ export const UPDATE_SUBSCRIPTION = gql`
 `;
 
 export const SUBMIT_PHOTO = gql`
-  mutation($reason: String!, $photo: String!) {
-    submitPhoto(reason: $reason, photo: $photo)
+  mutation($type: String!, $image: String!) {
+    submitPhoto(type: $type, image: $image)
   }
 `;
 
@@ -149,12 +149,6 @@ export const READ_CHAT = gql`
 export const UNLINK_PROFILE = gql`
   mutation {
     unlinkProfile
-  }
-`;
-
-export const SUBMIT_PHOTO_REVIEW = gql`
-  mutation($reason: String!, $photo: String!) {
-    submitPhotoReview(reason: $reason, photo: $photo)
   }
 `;
 

@@ -67,6 +67,7 @@ class MembersDropdown extends PureComponent {
             }
 
             const members = data.getFriends;
+
             return (
               <div
                 className="event-inv-toggle"

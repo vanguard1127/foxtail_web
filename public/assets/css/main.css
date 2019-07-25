@@ -1321,6 +1321,7 @@ section.featured-profiles .slider .item .function .btn {
   border-radius: 2px;
   transition: 0.3s all;
   position: relative;
+  cursor: pointer;
 }
 
 section.featured-profiles .slider .item .function .btn.sent {
@@ -7797,9 +7798,9 @@ section.settings .select-list {
   color: #d3d3d3 !important;
 }
 .text {
-  margin-top: 0 !important;
-  font-size: 15px !important;
-  color: #7b7a7a !important;
+  margin-top: 0 ;
+  font-size: 15px ;
+  color: #7b7a7a ;
 }
 
 section.desires-popup .modal-popup .m-body .search {

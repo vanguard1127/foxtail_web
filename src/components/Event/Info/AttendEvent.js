@@ -42,10 +42,12 @@ class AttendEvent extends Component {
 
   handleClick = toggleAttend => {
     if (this.mounted) {
-      this.props.ReactGA.event({
-        category: "Event",
-        action: !this.state.prevState.isGoing ? "Unattend" : "Attend"
-      });
+      if (this.state.prevState) {
+        this.props.ReactGA.event({
+          category: "Event",
+          action: !this.state.prevState.isGoing ? "Unattend" : "Attend"
+        });
+      }
       this.setState(
         prevState => ({
           isGoing: !prevState.isGoing

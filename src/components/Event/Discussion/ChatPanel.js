@@ -9,7 +9,6 @@ class ChatPanel extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    this.textInput.focus();
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -56,9 +55,7 @@ class ChatPanel extends PureComponent {
               value={text}
               onChange={e => this.setText(e)}
               placeholder={t("nowyoucan") + "..."}
-              ref={input => {
-                this.textInput = input;
-              }}
+              autoFocus
             />
             <button
               onClick={e => this.submitMessage(e, postComment)}

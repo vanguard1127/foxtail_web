@@ -159,7 +159,7 @@ class InboxPanel extends Component {
                 .startsWith(searchTerm.toLocaleLowerCase())
             );
           }
-
+          console.log("RERENDER");
           return (
             <div className="col-md-4 col-lg-3 col-xl-3">
               <div className={chatOpen ? "left hide" : "left"}>

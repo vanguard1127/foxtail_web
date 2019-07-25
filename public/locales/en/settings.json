@@ -54,10 +54,8 @@
   "updemaildes": "Please enter an email that you check often. We use this only for communications from Foxtail and our members.",
   "updsuccess": "Please check your email for confirmation",
   "emailupdsuccess": "Email has been updated Successfully",
-  "userupdsuccess": "Username has been updated Successfully",
   "usrupd": "Change Username",
   "usrupddes": "You may change your username every 30 days.",
   "updgen": "Change Gender",
-  "updgendes": "You may only change your gender once!",
-  "updgensuccess": "Gender has been updated Successfully"
+  "updgendes": "You may only change your gender once!"
 }

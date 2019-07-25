@@ -11,9 +11,6 @@ class DirectMsg extends Component {
   state = { text: "", sending: false };
   componentDidMount() {
     this.mounted = true;
-    if (this.props.tReady) {
-      this.textInput.focus();
-    }
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -149,9 +146,7 @@ class DirectMsg extends Component {
               placeholder={t("writemsg") + "..."}
               value={text}
               onChange={this.handleTextChange}
-              ref={input => {
-                this.textInput = input;
-              }}
+              autoFocus
             />
           </div>
         </ErrorBoundary>

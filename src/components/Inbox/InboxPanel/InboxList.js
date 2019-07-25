@@ -33,9 +33,9 @@ class InboxList extends PureComponent {
         title = item.fromProfile.profileName;
       }
     }
-
+    console.log("fddf", item.unSeenCount);
     return (
-      <div className="item unread" key={item.id}>
+      <div className="item unread" key={item.chatID}>
         <span
           onClick={() => readChat(item.chatID, item.unSeenCount)}
           className="inbox-item"

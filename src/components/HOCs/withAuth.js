@@ -11,14 +11,21 @@ const withAuth = conditionFunc => Component => props => {
   const { location, t } = props;
 
   return (
-    <Query query={GET_CURRENT_USER}>
-      {({ data, loading, error, refetch }) => {
+    //TODO: See when cache-first works and add here
+    <Query
+      query={GET_CURRENT_USER}
+      fetchPolicy="network-only"
+      errorPolicy="none"
+    >
+      {({ data, loading, refetch }) => {
         if (loading) {
           return <Spinner size="large" />;
         }
 
         if (data) {
-          if (data.currentuser.maintanence === true) {
+          if (data.currentuser === undefined || data.currentuser === null) {
+            return <Spinner size="large" />;
+          } else if (data.currentuser.maintanence === true) {
             return (
               <section className="not-found">
                 <div className="container">

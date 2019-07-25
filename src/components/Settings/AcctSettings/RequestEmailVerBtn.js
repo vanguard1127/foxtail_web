@@ -27,10 +27,17 @@ class RequestEmailVerBtn extends PureComponent {
           category: "Settings",
           action: "Resend Email Ver"
         });
-        // if (data.resendVerEMail) {
-        toast.success("Email has sent successsfully");
-        return;
-        // }
+
+        if (data.resendVerEMail) {
+          toast.success("Email has sent successsfully");
+          return;
+        } else {
+          toast.error(
+            t(
+              "common:Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox."
+            )
+          );
+        }
       })
       .catch(res => {
         toast.error("Error sending email");

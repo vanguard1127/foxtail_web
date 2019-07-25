@@ -104,7 +104,6 @@ class AcctSettings extends Component {
                     const msg = t("usrupddes");
                     const btnText = t("common:Update");
                     const setting = "username";
-                    const successMsg = t("userupdsuccess");
                     this.setDialogContent({
                       title,
                       msg,
@@ -127,7 +126,6 @@ class AcctSettings extends Component {
                     const msg = t("updgendes");
                     const btnText = t("common:Update");
                     const setting = "gender";
-                    const successMsg = t("updgensuccess");
                     this.setDialogContent({
                       title,
                       msg,
@@ -142,7 +140,7 @@ class AcctSettings extends Component {
               </div>
             </div>
             {!isEmailOK && (
-              <div className="col-md-6">
+              <div className="col-md-12">
                 <div className="verification-box">
                   <RequestEmailVerBtn
                     t={t}

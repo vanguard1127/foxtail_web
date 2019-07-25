@@ -86,9 +86,6 @@ class CreateEvent extends Component {
   componentDidMount() {
     this.mounted = true;
     this.props.ErrorHandler.setBreadcrumb("Create Event Modal");
-    if (this.props.tReady) {
-      this.textInput.focus();
-    }
   }
 
   componentWillUnmount() {
@@ -326,9 +323,7 @@ class CreateEvent extends Component {
                               })
                             }
                             value={eventname || ""}
-                            ref={input => {
-                              this.textInput = input;
-                            }}
+                            autoFocus
                           />
                           <label title={t("evename")} htmlFor="eventname" />
                         </div>

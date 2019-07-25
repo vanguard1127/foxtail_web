@@ -25,13 +25,6 @@ class ContactUs extends Component {
   };
   componentDidMount() {
     this.mounted = true;
-    if (this.props.tReady) {
-      if (this.props.guest) {
-        this.nameInput.focus();
-      } else {
-        this.textInput.focus();
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -199,9 +192,7 @@ class ContactUs extends Component {
                       value: e.target.value
                     });
                   }}
-                  ref={input => {
-                    this.nameInput = input;
-                  }}
+                  autoFocus
                 />
                 {this.InputFeedback(errors.name)}
               </div>
@@ -231,9 +222,7 @@ class ContactUs extends Component {
                   value: e.target.value
                 });
               }}
-              ref={input => {
-                this.textInput = input;
-              }}
+              autoFocus
             />
           </div>
           {guest && (
