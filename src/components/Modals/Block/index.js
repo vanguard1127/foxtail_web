@@ -8,7 +8,7 @@ import Spinner from "../../common/Spinner";
 import { flagOptions } from "../../../docs/options";
 
 class BlockModal extends Component {
-  state = { other: false, reason: "nopro", type: this.props.type };
+  state = { other: false, reason: "", type: this.props.type };
   componentDidMount() {
     this.mounted = true;
   }
@@ -28,7 +28,7 @@ class BlockModal extends Component {
   }
 
   handleChange = e => {
-    if (this.mounted) {
+    if (this.mounted && e.target.value !== "") {
       if (e.target.value === "other") {
         this.setState({ other: true, reason: "" });
       } else {
@@ -45,6 +45,15 @@ class BlockModal extends Component {
 
   handleSubmit = (blockProfile, flagItem) => {
     const { t, close, goToMain, ErrorHandler, ReactGA } = this.props;
+    if (this.state.reason === "") {
+      if (!toast.isActive("err")) {
+        toast.error("Please select a reason before reporting.", {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: "err"
+        });
+      }
+      return;
+    }
     flagItem()
       .then(() => {
         if (this.state.type === flagOptions.Profile) {
@@ -84,10 +93,11 @@ class BlockModal extends Component {
     if (this.state.type === flagOptions.Profile) {
       return (
         <select
-          defaultValue="nopro"
+          defaultValue=""
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
+          <option value="">Please select a reason</option>
           <option value="nopro">{t("nopro")}</option>
           <option value="stolenPic">{t("stolepic")}</option>
           <option value="money">{t("money")}</option>
@@ -106,6 +116,7 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
+          <option value="">Please select a reason</option>
           <option value="money">{t("money")}</option>
           <option value="nudity">{t("Nudity")}</option>
           <option value="rude">{t("Rude")}</option>
@@ -121,6 +132,7 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
+          <option value="">Please select a reason</option>
           <option value="illegalEvent">{t("illevent")}</option>
           <option value="racist">{t("Racist")}</option>
           <option value="Spam">{t("Spam")}</option>

@@ -180,8 +180,4 @@ class Settings extends Component {
   }
 }
 
-export default withRouter(
-  withTranslation("settings")(
-    withAuth(session => session && session.currentuser)(Settings)
-  )
-);
+export default withRouter(withTranslation("settings")(Settings));

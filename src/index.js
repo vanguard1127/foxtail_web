@@ -315,7 +315,12 @@ const Body = withAuth(session => session && session.currentuser)(
           <Route
             path="/settings"
             render={() => (
-              <Settings ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+              <Settings
+                ErrorHandler={ErrorHandler}
+                ReactGA={ReactGA}
+                session={session}
+                refetch={refetch}
+              />
             )}
           />
           <Redirect to="/" />

@@ -202,7 +202,7 @@ class SearchEvents extends Component {
       ReactGA,
       tReady
     } = this.props;
-    if (!tReady) {
+    if (!tReady || !session) {
       return <Spinner />;
     }
     const distanceMetric = session.currentuser.distanceMetric;

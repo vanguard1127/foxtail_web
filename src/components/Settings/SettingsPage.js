@@ -368,9 +368,10 @@ class SettingsPage extends Component {
 
   setProfilePic = ({ key, url }) => {
     if (this.mounted) {
-      this.setState({ profilePic: key, profilePicUrl: url }, () =>
-        this.fillInErrors()
-      );
+      this.setState({ profilePic: key, profilePicUrl: url }, () => {
+        this.handleSubmit(this.updateSettings);
+        this.fillInErrors();
+      });
     }
   };
 
@@ -531,6 +532,7 @@ class SettingsPage extends Component {
     const { about, publicPhotos, profilePic, desires } = this.state;
 
     const { t } = this.props;
+
     let aboutErr = null;
     if (about === "") {
       aboutErr = t("fillbio");
@@ -548,8 +550,6 @@ class SettingsPage extends Component {
     let desiresErr = desires.length === 0 ? t("onedes") : null;
 
     if (
-      this.isNull(this.state.errors.profilePic) !==
-        this.isNull(profilePicErr) ||
       this.isNull(this.state.errors.about) !== this.isNull(aboutErr) ||
       this.isNull(this.state.errors.desires) !== this.isNull(desiresErr)
     ) {

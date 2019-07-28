@@ -139,18 +139,18 @@ class ProfilesContainer extends Component {
                   category: "Search Profiles",
                   action: "Liked"
                 });
-                toast.success(
-                  t("common:Liked") + " " + profile.profileName + "!"
-                );
+                // toast.success(
+                //   t("common:Liked") + " " + profile.profileName + "!"
+                // );
                 break;
               case "unlike":
                 ReactGA.event({
                   category: "Search Profiles",
                   action: "UnLiked"
                 });
-                toast.success(
-                  t("common:UnLiked") + " " + profile.profileName + "!"
-                );
+                // toast.success(
+                //   t("common:UnLiked") + " " + profile.profileName + "!"
+                // );
                 break;
               default:
                 ReactGA.event({

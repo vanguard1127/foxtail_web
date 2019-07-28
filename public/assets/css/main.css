@@ -8701,6 +8701,12 @@ section.not-found span.description {
   section.inbox .chat .navbar .user .name {
     width: auto;
   }
+
+  section.inbox .chat .navbar .user .name .more {
+    font-size: 10px;
+    color: #a0a0a0;
+  }
+
   section.inbox .chat .navbar .more-content {
     background: none;
   }
@@ -9700,6 +9706,7 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   display: flex;
   flex: 1;
   align-items: center;
+  height:100vh;
 }
 
 .loadingContainer{

@@ -57,10 +57,10 @@ class ChatHeader extends PureComponent {
       }
 
       if (currentChat.participants.length > 2) {
-        chatTitleExtra =
-          ` + ${currentChat.participants.length - 2}` + t("participants");
+        chatTitleExtra = ` +${currentChat.participants.length - 2}`;
       }
     }
+
     return (
       <div className="navbar">
         <div className="user">
@@ -70,14 +70,10 @@ class ChatHeader extends PureComponent {
                 <img src={chatProfilePic} alt="" />
               </span>
             </div>
-            <span
-              className={
-                currentChat.participants.length > 2 ? "name couple" : "name"
-              }
-            >
+            <span className="name">
               <span>
                 {chatTitle}
-                {chatTitleExtra}
+                &nbsp; {chatTitleExtra}
               </span>
             </span>
             {chatLastSeen !== "N/A" && (
@@ -96,6 +92,7 @@ class ChatHeader extends PureComponent {
             ErrorHandler={ErrorHandler}
             leaveDialog={leaveDialog}
             ReactGA={ReactGA}
+            participantsNum={currentChat.participants.length}
           />
         </div>
       </div>

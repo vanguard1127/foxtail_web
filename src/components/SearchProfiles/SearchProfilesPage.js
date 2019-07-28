@@ -8,10 +8,11 @@ import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
 import Tour from "./Tour";
+import { desireOptions } from "../../docs/options";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
-
+export const Context = React.createContext();
 class SearchProfilesPage extends Component {
   state = {
     lat: this.props.location.lat,
@@ -136,25 +137,27 @@ class SearchProfilesPage extends Component {
       body = locationErr;
     } else {
       body = (
-        <ProfilesContainer
-          loading={loading}
-          t={t}
-          history={history}
-          lat={lat}
-          long={long}
-          distance={distance}
-          distanceMetric={session.currentuser.distanceMetric}
-          ageRange={ageRange}
-          interestedIn={interestedIn}
-          ErrorHandler={ErrorHandler}
-          dayjs={dayjs}
-          client={client}
-          isBlackMember={session.currentuser.blackMember.active}
-          locationErr={locationErr}
-          refetchUser={refetch}
-          userID={session.currentuser.userID}
-          ReactGA={ReactGA}
-        />
+        <Context.Provider value={{ desireOptions }}>
+          <ProfilesContainer
+            loading={loading}
+            t={t}
+            history={history}
+            lat={lat}
+            long={long}
+            distance={distance}
+            distanceMetric={session.currentuser.distanceMetric}
+            ageRange={ageRange}
+            interestedIn={interestedIn}
+            ErrorHandler={ErrorHandler}
+            dayjs={dayjs}
+            client={client}
+            isBlackMember={session.currentuser.blackMember.active}
+            locationErr={locationErr}
+            refetchUser={refetch}
+            userID={session.currentuser.userID}
+            ReactGA={ReactGA}
+          />
+        </Context.Provider>
       );
     }
 

@@ -6,7 +6,8 @@ class ChatActions extends Component {
     if (
       this.state.invDropOpen !== nextState.invDropOpen ||
       this.state.remDropOpen !== nextState.remDropOpen ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.participantsNum !== nextProps.participantsNum
     ) {
       return true;
     }
@@ -14,6 +15,7 @@ class ChatActions extends Component {
   }
   closeRemDropdown = () => this.setState({ remDropOpen: false });
   closeInvDropdown = () => this.setState({ invDropOpen: false });
+
   render() {
     const {
       chatID,
@@ -22,16 +24,18 @@ class ChatActions extends Component {
       isOwner,
       ErrorHandler,
       leaveDialog,
-      ReactGA
+      ReactGA,
+      participantsNum
     } = this.props;
-
+    // console.log("ssdDS", participantsNum);
     const { invDropOpen, remDropOpen } = this.state;
     return (
       <ul>
-        <li className="members">
-          <span onClick={() => this.setState({ remDropOpen: !remDropOpen })}>
-            {t("common:Participants")}
-          </span>
+        <li
+          className="members"
+          onClick={() => this.setState({ remDropOpen: !remDropOpen })}
+        >
+          <span>{t("common:Participants")}</span>
         </li>{" "}
         {remDropOpen && (
           <MembersDropdown
@@ -45,10 +49,11 @@ class ChatActions extends Component {
             ReactGA={ReactGA}
           />
         )}
-        <li className="invite">
-          <span onClick={() => this.setState({ invDropOpen: !invDropOpen })}>
-            {t("invitemem")}
-          </span>
+        <li
+          className="invite"
+          onClick={() => this.setState({ invDropOpen: !invDropOpen })}
+        >
+          <span>{t("invitemem")}</span>
         </li>{" "}
         {invDropOpen && (
           <MembersDropdown
@@ -61,11 +66,11 @@ class ChatActions extends Component {
             ReactGA={ReactGA}
           />
         )}
-        <li className="leave">
-          <span onClick={leaveDialog}>{t("leaveconv")}</span>
+        <li className="leave" onClick={leaveDialog}>
+          <span>{t("leaveconv")}</span>
         </li>{" "}
-        <li className="report">
-          <span onClick={setBlockModalVisible}>{t("reportconv")}</span>
+        <li className="report" onClick={setBlockModalVisible}>
+          <span>{t("reportconv")}</span>
         </li>
       </ul>
     );

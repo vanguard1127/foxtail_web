@@ -33,7 +33,7 @@ class InboxList extends PureComponent {
         title = item.fromProfile.profileName;
       }
     }
-    console.log("fddf", item.unSeenCount);
+
     return (
       <div className="item unread" key={item.chatID}>
         <span

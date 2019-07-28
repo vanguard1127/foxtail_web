@@ -71,6 +71,7 @@ class DateItem extends Component {
           background: "#ffffff70",
           padding: "20px 0",
           textAlign: "center",
+          marginBottom: "10px",
           ...style
         }}
       >

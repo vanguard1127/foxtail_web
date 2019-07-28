@@ -27,7 +27,9 @@ class Navbar extends Component {
       session &&
       (session.currentuser.username !==
         nextProps.session.currentuser.username ||
-        session.currentuser.userID !== nextProps.session.currentuser.userID)
+        session.currentuser.userID !== nextProps.session.currentuser.userID ||
+        session.currentuser.profilePic !==
+          nextProps.session.currentuser.profilePic)
     ) {
       return true;
     }
