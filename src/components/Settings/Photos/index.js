@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from "../../common/Tooltip";
 import UploadComponent from "./UploadImageComponent";
 
 class Photos extends Component {

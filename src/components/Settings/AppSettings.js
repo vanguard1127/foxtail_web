@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from "../common/Tooltip";
 import Dropdown from "../common/Dropdown";
 import i18n from "../../i18n";
 

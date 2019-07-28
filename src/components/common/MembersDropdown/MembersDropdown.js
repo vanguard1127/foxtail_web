@@ -70,7 +70,11 @@ class MembersDropdown extends PureComponent {
 
             return (
               <div
-                className="event-inv-toggle"
+                className={
+                  targetType === "event"
+                    ? "members-toggle invite-event"
+                    : "members-toggle invite"
+                }
                 ref={this.wrapperRef}
                 style={{ ...style }}
               >
@@ -119,7 +123,7 @@ class MembersDropdown extends PureComponent {
             const members = data.chat.participants;
             return (
               <div
-                className="event-inv-toggle"
+                className="members-toggle participants"
                 ref={this.wrapperRef}
                 style={{ ...style }}
               >
@@ -167,7 +171,7 @@ class MembersDropdown extends PureComponent {
 
             return (
               <div
-                className="event-inv-toggle"
+                className="members-toggle participants"
                 ref={this.wrapperRef}
                 style={{ ...style }}
               >
@@ -215,7 +219,7 @@ class MembersDropdown extends PureComponent {
 
             return (
               <div
-                className="event-inv-toggle"
+                className="members-toggle"
                 ref={this.wrapperRef}
                 style={{ ...style }}
               >
@@ -263,7 +267,7 @@ class MembersDropdown extends PureComponent {
 
             return (
               <div
-                className="event-inv-toggle"
+                className="members-toggle"
                 ref={this.wrapperRef}
                 style={{ ...style }}
               >

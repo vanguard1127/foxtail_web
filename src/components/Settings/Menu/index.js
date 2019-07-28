@@ -49,7 +49,7 @@ class Menu extends Component {
             </li>
             <li className="highlightTxt">
               {currentuser.blackMember.active ? (
-                <span style={{ cursor: "auto" }}>{t("common:thanks")}.</span>
+                <span style={{ cursor: "default" }}>{t("common:thanks")}.</span>
               ) : (
                 <span onClick={blackModalToggle}>{t("common:becomeblk")}</span>
               )}

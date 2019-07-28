@@ -323,11 +323,26 @@ header .toggle {
 
 /* INVITE MEMBER */
 
-.event-inv-toggle {
+.members-toggle {
   position: relative;
   z-index: 9;
   top: 34px;
+  max-width: 300px;
 }
+
+.members-toggle.participants{
+  top: 27px;
+}
+
+.members-toggle.invite {
+  top: 73px;
+}
+
+.members-toggle.invite-event {
+  top: 4px;
+}
+
+
 
 .invite-member {
   max-height: 300px;
@@ -336,7 +351,7 @@ header .toggle {
   background-color: #fff;
   float: left;
   position: absolute;
-  top: 6px;
+  top: 16px;
   right: 0px;
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
     0 15px 65px 0 rgba(17, 25, 40, 0.12);
@@ -1091,6 +1106,7 @@ section.featured-profiles .slider .item .info {
   display: block;
   float: left;
   position: relative;
+  cursor: pointer;
 }
 
 section.featured-profiles .slider .item .info a {
@@ -2374,6 +2390,7 @@ section.inbox .chat .navbar .more-dropdown ul li {
   letter-spacing: -0.3px;
   color: #464648;
   transition: 0.3s all;
+  cursor: pointer;
 }
 
 section.inbox .chat .navbar .more-dropdown ul li span,
@@ -3304,6 +3321,10 @@ section.go-events .header .settings-con .dropdown span {
 
 section.go-events .header .select-list {
   top: 53px !important;
+}
+
+section.go-events .header  .autocomplete-dropdown-container {
+  top: 54px !important;
 }
 
 section.go-events .header .settings-con > div + div > a,
@@ -8830,6 +8851,10 @@ section.not-found span.description {
     visibility: visible;
   }
 
+  section.event-detail .members-toggle.invite-event {
+    top: 24px;
+  }
+
   section.event-detail::before {
     height: 350px;
   }
@@ -8913,6 +8938,10 @@ section.not-found span.description {
   section.landing .register-form .head {
     font-size: 25px;
     margin-bottom: 25px;
+  }
+
+  section.landing .register-form .select-list {
+    top: 53px !important;
   }
 
   footer.landing {
@@ -9147,6 +9176,26 @@ section.not-found span.description {
   section.inbox .right {
     display: inline-block;
     visibility: visible;
+  }
+
+  .members-toggle {
+    top:35px;
+  }
+
+  .members-toggle.participants {
+    top: 35px;
+}
+
+  .members-toggle.invite {
+    top: 85px;
+  }
+
+  .members-toggle.invite-event {
+    top: 24px;
+  }
+
+  .invite-toggle {
+    top: 85px;
   }
 
   section.inbox .chat .navbar .more,
@@ -9743,3 +9792,4 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   text-align: center;
   text-align: -webkit-center;
 }
+

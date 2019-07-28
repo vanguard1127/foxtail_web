@@ -11,7 +11,7 @@ import {
   TumblrIcon,
   EmailIcon
 } from "react-share";
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from "../../common/Tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
 import Spinner from "../../common/Spinner";

@@ -18,7 +18,7 @@ class CreateSubBtn extends PureComponent {
     }
     createSubscription()
       .then(({ data }) => {
-        notifyClient(t("blkcancel"));
+        notifyClient(t("blkcreated"));
 
         close();
         window.location.reload();

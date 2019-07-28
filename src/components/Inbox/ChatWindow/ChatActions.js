@@ -57,7 +57,6 @@ class ChatActions extends Component {
             listType={"friends"}
             t={t}
             close={this.closeInvDropdown}
-            style={{ top: "90px" }}
             ErrorHandler={ErrorHandler}
             ReactGA={ReactGA}
           />
