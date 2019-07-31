@@ -1,8 +1,6 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
-import { SEND_MESSAGE, GET_MESSAGES, GET_INBOX } from "../../../queries";
-import { INBOXLIST_LIMIT } from "../../../docs/consts";
-
+import { SEND_MESSAGE, GET_MESSAGES } from "../../../queries";
 class ChatPanel extends PureComponent {
   sending = false;
   state = {

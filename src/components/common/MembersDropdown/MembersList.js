@@ -325,7 +325,7 @@ class MembersList extends PureComponent {
       showActionButton
     } = this.props;
     const { invitedProfiles } = this.state;
-    console.log(members);
+
     const membersList = this.handleFriendList({ members, t });
     const actionButton = this.actionButton({
       targetID,

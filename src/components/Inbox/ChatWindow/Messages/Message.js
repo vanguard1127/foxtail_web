@@ -3,10 +3,11 @@ import { preventContextMenu } from "../../../../utils/image";
 
 const Message = React.forwardRef(
   ({ message, currentUserID, t, dayjs, lang }, ref) => {
+    console.log(message);
     const messageText =
       message.type === "msg"
         ? message.text
-        : `${message.fromUser.username}` + t("leftchat");
+        : `${message.fromUser.username}` + t("leftchat") + "3";
 
     return (
       <div

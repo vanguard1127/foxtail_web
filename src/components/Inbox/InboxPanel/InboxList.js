@@ -7,7 +7,7 @@ class InboxList extends PureComponent {
   state = { chatID: null };
 
   renderItem = (item, timeAgo) => {
-    const { currentuser, readChat } = this.props;
+    const { currentuser, readChat, t } = this.props;
 
     let title;
     if (item.type === "alert" || item.type === "left") {
@@ -54,7 +54,11 @@ class InboxList extends PureComponent {
           <div className="data">
             <span className="name">{title}</span>
             <span className="time">{timeAgo}</span>
-            <span className="msg">{item.text}</span>
+            <span className="msg">
+              {item.type === "left"
+                ? item.text + " " + t("leftchat")
+                : item.text}
+            </span>
             {item.unSeenCount !== 0 && (
               <span className="notif">{item.unSeenCount}</span>
             )}

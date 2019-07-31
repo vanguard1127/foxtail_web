@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import dayjs from "dayjs";
 
-import withAuth from "../HOCs/withAuth";
 import { withTranslation } from "react-i18next";
 import InboxPanel from "./InboxPanel/";
 import Header from "./Header";
@@ -93,7 +92,6 @@ class InboxPage extends Component {
   };
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
-    console.log("GO", unSeenCount, this.state.chatOpen);
     if (!this.opening) {
       this.opening = true;
       ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
@@ -102,7 +100,6 @@ class InboxPage extends Component {
         this.setState({ unSeenCount, chatOpen: true }, () => {
           readChat()
             .then(() => {
-              console.log("uiu");
               this.props.ReactGA.event({
                 category: "Chat",
                 action: "Read"
@@ -134,8 +131,6 @@ class InboxPage extends Component {
             category: "Chat",
             action: "Remove Self"
           });
-          toast.success(t("succleft"));
-          this.setState({ chat: null });
           refetch();
           history.push("/inbox");
         }
@@ -199,7 +194,6 @@ class InboxPage extends Component {
 
   render() {
     let {
-      chat,
       blockModalVisible,
       showModal,
       msg,
@@ -208,6 +202,7 @@ class InboxPage extends Component {
       chatOpen,
       unSeenCount
     } = this.state;
+
     const { t, ReactGA, session, history, tReady } = this.props;
 
     if (!tReady || !session) {
@@ -219,7 +214,11 @@ class InboxPage extends Component {
       ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
       return (
         <div>
-          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+          <Tour
+            ErrorHandler={ErrorHandler}
+            refetchUser={this.props.refetch}
+            session={session}
+          />
         </div>
       );
     }
@@ -294,50 +293,20 @@ class InboxPage extends Component {
                       return <div className="col-md-7">{t("nomsgs")}</div>;
                     }
 
-                    const { readChatQuery } = data;
-                    return (
-                      <ChatWindow
-                        currentChat={readChatQuery}
-                        currentuser={currentuser}
-                        t={t}
-                        ErrorHandler={ErrorHandler}
-                        dayjs={dayjs}
-                        chatOpen={chatOpen}
-                        history={history}
-                        setBlockModalVisible={this.setBlockModalVisible}
-                        lang={lang}
-                        isOwner={
-                          chat && chat.ownerProfile.id === currentuser.profileID
-                        }
-                        leaveDialog={() => {
-                          const title = t("leaveconv");
-                          const msg = t("leavewarn");
-                          const btnText = t("Leave");
-                          this.setDialogContent({
-                            title,
-                            msg,
-                            btnText
-                          });
-                        }}
-                      />
-                    );
-                  }}
-                </Query>
-              )}
-              {chatID && (
-                <Mutation
-                  mutation={REMOVE_SELF}
-                  variables={{ chatID }}
-                  update={this.updateMail}
-                >
-                  {removeSelf => {
+                    const { readChatQuery: chat } = data;
+
                     return (
                       <>
-                        <ChatInfo
-                          ErrorHandler={ErrorHandler}
+                        <ChatWindow
+                          currentChat={chat}
+                          currentuser={currentuser}
                           t={t}
+                          ErrorHandler={ErrorHandler}
+                          dayjs={dayjs}
+                          chatOpen={chatOpen}
+                          history={history}
                           setBlockModalVisible={this.setBlockModalVisible}
-                          chatID={chatID}
+                          lang={lang}
                           isOwner={
                             chat &&
                             chat.ownerProfile.id === currentuser.profileID
@@ -352,29 +321,67 @@ class InboxPage extends Component {
                               btnText
                             });
                           }}
-                          ReactGA={ReactGA}
                         />
-                        {showModal && (
-                          <Modal
-                            header={title}
-                            close={() => this.toggleDialog()}
-                            description={msg}
-                            okSpan={
-                              <span
-                                className="color"
-                                onClick={() =>
-                                  this.handleRemoveSelf(removeSelf)
-                                }
-                              >
-                                {btnText}
-                              </span>
-                            }
-                          />
-                        )}
+                        <Mutation
+                          mutation={REMOVE_SELF}
+                          variables={{ chatID }}
+                          update={this.updateMail}
+                        >
+                          {removeSelf => {
+                            return (
+                              <>
+                                <ChatInfo
+                                  ErrorHandler={ErrorHandler}
+                                  t={t}
+                                  setBlockModalVisible={
+                                    this.setBlockModalVisible
+                                  }
+                                  chatID={chatID}
+                                  isOwner={
+                                    chat &&
+                                    chat.ownerProfile.id ===
+                                      currentuser.profileID
+                                  }
+                                  leaveDialog={() => {
+                                    const title = t("leaveconv");
+                                    const msg = t("leavewarn");
+                                    const btnText = t("Leave");
+                                    this.setDialogContent({
+                                      title,
+                                      msg,
+                                      btnText
+                                    });
+                                  }}
+                                  ReactGA={ReactGA}
+                                  participantsNum={
+                                    chat && chat.participants.length
+                                  }
+                                />
+                                {showModal && (
+                                  <Modal
+                                    header={title}
+                                    close={() => this.toggleDialog()}
+                                    description={msg}
+                                    okSpan={
+                                      <span
+                                        className="color"
+                                        onClick={() =>
+                                          this.handleRemoveSelf(removeSelf)
+                                        }
+                                      >
+                                        {btnText}
+                                      </span>
+                                    }
+                                  />
+                                )}
+                              </>
+                            );
+                          }}
+                        </Mutation>
                       </>
                     );
                   }}
-                </Mutation>
+                </Query>
               )}
             </ErrorHandler.ErrorBoundary>
           </div>
@@ -393,6 +400,4 @@ class InboxPage extends Component {
   }
 }
 
-export default withTranslation("inbox")(
-  withAuth(session => session && session.currentuser)(InboxPage)
-);
+export default withTranslation("inbox")(InboxPage);

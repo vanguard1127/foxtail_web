@@ -2,10 +2,20 @@ import React, { PureComponent, Fragment } from "react";
 import CreateEvent from "../../Modals/CreateEvent/";
 class EditEventBtn extends PureComponent {
   state = { showPopup: false };
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   togglePopup = () => {
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
+    if (this.mounted) {
+      this.setState({
+        showPopup: !this.state.showPopup
+      });
+    }
   };
   render() {
     const {

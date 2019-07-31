@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import { Query, Mutation } from "react-apollo";
+import { Query, Mutation, withApollo } from "react-apollo";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
-import withAuth from "../HOCs/withAuth";
 import DesiresSection from "./DesiresSection";
 import ProfileCard from "./ProfileCard/";
 import Tour from "./Tour";
@@ -20,6 +19,7 @@ import ShareModal from "../Modals/Share";
 import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
 import { flagOptions } from "../../docs/options";
+import deleteFromCache from "../../utils/deleteFromCache";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
@@ -127,6 +127,10 @@ class ProfilePage extends Component {
     }
   };
 
+  goToMembers = () => {
+    this.props.history.push("/members");
+  };
+
   handleLike = (profile, likeProfile, refetch) => {
     const { ErrorHandler, t, ReactGA } = this.props;
     ErrorHandler.setBreadcrumb("Like Profile:" + likeProfile);
@@ -135,14 +139,14 @@ class ProfilePage extends Component {
       .then(({ data }) => {
         switch (data.likeProfile) {
           case "like":
-            toast.success(t("common:Liked") + profile.profileName + "!");
+            // toast.success(t("common:Liked") + profile.profileName + "!");
             ReactGA.event({
               category: "Profile",
               action: "Like"
             });
             break;
           case "unlike":
-            toast.success(t("common:UnLiked") + profile.profileName + "!");
+            // toast.success(t("common:UnLiked") + profile.profileName + "!");
             ReactGA.event({
               category: "Profile",
               action: "UnLike"
@@ -193,7 +197,11 @@ class ProfilePage extends Component {
       ErrorHandler.setBreadcrumb("Opened Tour: Profile");
       return (
         <div>
-          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+          <Tour
+            ErrorHandler={ErrorHandler}
+            refetchUser={this.props.refetch}
+            session={session}
+          />
         </div>
       );
     }
@@ -241,7 +249,6 @@ class ProfilePage extends Component {
                   desires,
                   about
                 } = profile;
-
                 return (
                   <section className="profile">
                     <div className="container">
@@ -326,7 +333,7 @@ class ProfilePage extends Component {
                         id={profile.id}
                         profile={profile}
                         close={() => this.setBlockModalVisible(false)}
-                        goToMain={() => this.props.history.push("/members")}
+                        goToMain={this.goToMembers}
                         type={flagOptions.Profile}
                         ErrorHandler={ErrorHandler}
                         ReactGA={ReactGA}
@@ -398,8 +405,4 @@ class ProfilePage extends Component {
   }
 }
 
-export default withRouter(
-  withTranslation("profile")(
-    withAuth(session => session && session.currentuser)(ProfilePage)
-  )
-);
+export default withRouter(withApollo(withTranslation("profile")(ProfilePage)));

@@ -7,6 +7,7 @@ import SetLocationModal from "../Modals/SetLocation";
 import DistanceSlider from "../common/DistanceSlider";
 import AgeRange from "../common/AgeRange";
 import getCityCountry from "../../utils/getCityCountry";
+import { SEARCHPROS_LIMIT } from "../../docs/consts";
 
 class SearchCriteria extends PureComponent {
   state = {
@@ -71,12 +72,14 @@ class SearchCriteria extends PureComponent {
 
   handleSubmit = updateSettings => {
     updateSettings()
-      .then(() =>
-        this.props.ReactGA.event({
-          category: "Profile Search",
-          action: "Change criteria"
-        })
-      )
+      .then(() => {
+        {
+          this.props.ReactGA.event({
+            category: "Profile Search",
+            action: "Change criteria"
+          });
+        }
+      })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });

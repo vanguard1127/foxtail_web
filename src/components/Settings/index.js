@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { Query } from "react-apollo";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
-import withAuth from "../HOCs/withAuth";
 import SettingsPage from "./SettingsPage";
 import getLang from "../../utils/getLang";
 const lang = getLang();

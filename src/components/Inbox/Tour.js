@@ -4,7 +4,6 @@ import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import Spinner from "../common/Spinner";
 import CustomTour from "../common/CustomTour";
-import withAuth from "../HOCs/withAuth";
 import { withRouter } from "react-router-dom";
 class ProfileTour extends PureComponent {
   state = {
@@ -357,8 +356,4 @@ class ProfileTour extends PureComponent {
   }
 }
 
-export default withRouter(
-  withTranslation("inbox")(
-    withAuth(session => session && session.currentuser)(ProfileTour)
-  )
-);
+export default withRouter(withTranslation("inbox")(ProfileTour));

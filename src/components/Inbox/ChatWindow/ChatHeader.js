@@ -56,8 +56,9 @@ class ChatHeader extends PureComponent {
         }
       }
 
+      console.log(currentChat.participants);
       if (currentChat.participants.length > 2) {
-        chatTitleExtra = ` +${currentChat.participants.length - 2}`;
+        chatTitleExtra = ` +${currentChat.participants.length - 1}`;
       }
     }
 

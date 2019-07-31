@@ -10,7 +10,8 @@ class ChatInfo extends PureComponent {
       isOwner,
       ErrorHandler,
       leaveDialog,
-      ReactGA
+      ReactGA,
+      participantsNum
     } = this.props;
 
     return (
@@ -28,6 +29,7 @@ class ChatInfo extends PureComponent {
                 ErrorHandler={ErrorHandler}
                 leaveDialog={leaveDialog}
                 ReactGA={ReactGA}
+                participantsNum={participantsNum}
               />
             </div>
           </div>

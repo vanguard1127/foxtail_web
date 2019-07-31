@@ -27,7 +27,7 @@ class ChatActions extends Component {
       ReactGA,
       participantsNum
     } = this.props;
-    // console.log("ssdDS", participantsNum);
+
     const { invDropOpen, remDropOpen } = this.state;
     return (
       <ul>
@@ -35,8 +35,10 @@ class ChatActions extends Component {
           className="members"
           onClick={() => this.setState({ remDropOpen: !remDropOpen })}
         >
-          <span>{t("common:Participants")}</span>
-        </li>{" "}
+          <span>
+            {t("common:Participants") + " (" + participantsNum + ") "}
+          </span>
+        </li>
         {remDropOpen && (
           <MembersDropdown
             targetID={chatID}

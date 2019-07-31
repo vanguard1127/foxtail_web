@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import dayjs from "dayjs";
 import withLocation from "../HOCs/withLocation";
-import withAuth from "../HOCs/withAuth";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import { withApollo } from "react-apollo";
@@ -99,9 +98,10 @@ class SearchProfilesPage extends Component {
     const {
       t,
       ErrorHandler,
+      refetch,
       session,
       loading,
-      refetch,
+      refetchSettings,
       client,
       history,
       locationErr,
@@ -178,7 +178,7 @@ class SearchProfilesPage extends Component {
             interestedIn={interestedIn}
             city={city}
             country={country}
-            refetch={refetch}
+            refetchSettings={refetchSettings}
             ErrorHandler={ErrorHandler}
             isBlackMember={session.currentuser.blackMember.active}
             ReactGA={ReactGA}
@@ -190,8 +190,4 @@ class SearchProfilesPage extends Component {
   }
 }
 
-export default withRouter(
-  withAuth(session => session && session.currentuser)(
-    withApollo(withLocation(SearchProfilesPage))
-  )
-);
+export default withRouter(withApollo(withLocation(SearchProfilesPage)));

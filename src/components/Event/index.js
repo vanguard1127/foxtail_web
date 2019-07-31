@@ -6,7 +6,6 @@ import { GET_EVENT, DELETE_EVENT } from "../../queries";
 import { withTranslation } from "react-i18next";
 import BlockModal from "../Modals/Block";
 import Spinner from "../common/Spinner";
-import withAuth from "../HOCs/withAuth";
 import Modal from "../common/Modal";
 import Header from "./Header/";
 import Tour from "./Tour";
@@ -112,7 +111,11 @@ class EventPage extends Component {
       ErrorHandler.setBreadcrumb("Opened Tour: Event");
       return (
         <div>
-          <Tour ErrorHandler={ErrorHandler} refetchUser={this.props.refetch} />
+          <Tour
+            ErrorHandler={ErrorHandler}
+            refetchUser={this.props.refetch}
+            session={session}
+          />
         </div>
       );
     }
@@ -280,8 +283,4 @@ class EventPage extends Component {
   }
 }
 
-export default withRouter(
-  withTranslation("event")(
-    withAuth(session => session && session.currentuser)(EventPage)
-  )
-);
+export default withRouter(withTranslation("event")(EventPage));

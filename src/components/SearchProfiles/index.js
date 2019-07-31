@@ -14,7 +14,7 @@ class SearchProfiles extends Component {
     return false;
   }
   render() {
-    const { t, ErrorHandler, ReactGA, tReady } = this.props;
+    const { t, ErrorHandler, ReactGA, tReady, refetch, session } = this.props;
     document.title = t("common:Search Profiles");
     if (!tReady) {
       return <Spinner />;
@@ -22,7 +22,7 @@ class SearchProfiles extends Component {
     ErrorHandler.setBreadcrumb("Enter Search Profiles");
     return (
       <Query query={GET_SEARCH_SETTINGS} fetchPolicy="cache-and-network">
-        {({ data, loading, error, refetch }) => {
+        {({ data, loading, error, refetch: { refetchSettings } }) => {
           if (error) {
             return (
               <ErrorHandler.report
@@ -36,12 +36,14 @@ class SearchProfiles extends Component {
           }
           return (
             <SearchProfilesPage
-              refetch={refetch}
+              refetchSettings={refetchSettings}
               loading={loading}
               t={t}
               ErrorHandler={ErrorHandler}
               searchCriteria={data.getSettings}
               ReactGA={ReactGA}
+              session={session}
+              refetch={refetch}
             />
           );
         }}

@@ -148,9 +148,9 @@ class NoticesList extends Component {
             </span>
             <div>
               <span className="text">
-                {notif.name}
+                {notif.name && notif.name + " "}
                 {t(notif.text)}
-                {notif.event}
+                {notif.event && " " + notif.event}
               </span>
               <span className="when">
                 {dayjs(notif.date)
@@ -180,17 +180,17 @@ class NoticesList extends Component {
                 src={notif.fromProfile ? notif.fromProfile.profilePic : ""}
                 onContextMenu={preventContextMenu}
                 className="avatar"
+                alt="avatar"
               />
             </span>
             <div>
               <span className="text">
                 <b>
-                  {" "}
                   {notif.fromProfile ? notif.fromProfile.profileName : ""}
                   {notif.name}{" "}
                 </b>
                 {t(notif.text)}
-                {notif.event}
+                {notif.event && " " + notif.event}
               </span>
               <span className="when">
                 {dayjs(notif.date)

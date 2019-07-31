@@ -142,34 +142,6 @@ class BlockModal extends Component {
     }
   };
 
-  updateBlocked = cache => {
-    if (this.state.type === flagOptions.Profile) {
-      sessionStorage.getItem("searchProsQuery");
-      if (sessionStorage.getItem("searchProsQuery")) {
-        const { id } = this.props;
-        const variables = JSON.parse(sessionStorage.getItem("searchProsQuery"));
-        const { searchProfiles } = cache.readQuery({
-          query: SEARCH_PROFILES,
-          variables
-        });
-        searchProfiles.profiles = searchProfiles.profiles.filter(
-          el => el.id !== id
-        );
-        searchProfiles.featuredProfiles = searchProfiles.featuredProfiles.filter(
-          el => el.id !== id
-        );
-
-        cache.writeQuery({
-          query: SEARCH_PROFILES,
-          variables,
-          data: {
-            searchProfiles
-          }
-        });
-      }
-    }
-  };
-
   render() {
     const {
       profile,
@@ -226,7 +198,6 @@ class BlockModal extends Component {
                   variables={{
                     blockedProfileID: id
                   }}
-                  update={this.updateBlocked}
                 >
                   {(blockProfile, { loading }) => {
                     if (loading) {

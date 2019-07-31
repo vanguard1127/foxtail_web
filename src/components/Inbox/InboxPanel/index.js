@@ -177,6 +177,7 @@ class InboxPanel extends Component {
                   handleEnd={previousPosition =>
                     this.handleEnd({ previousPosition, fetchMore })
                   }
+                  t={t}
                 />
               </div>
             </div>

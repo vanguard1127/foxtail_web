@@ -40,12 +40,15 @@ class Modal extends Component {
       okSpan,
       cancelSpan,
       fullWidth,
-      fullScreen
+      fullScreen,
+      className
     } = this.props;
 
     return (
       <section
-        className={`login-modal show ${fullScreen ? "full-screen-modal" : ""} `}
+        className={`login-modal show ${fullScreen ? "full-screen-modal" : ""}${
+          className ? className : ""
+        }`}
         ref={this.wrapperRef}
       >
         {fullScreen ? (

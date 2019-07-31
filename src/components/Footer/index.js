@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Mutation } from "react-apollo";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -8,7 +7,6 @@ import {
 import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
 import ContactUsModal from "../Modals/ContactUs";
-import { SEEN_TOUR } from "../../queries";
 
 import { withTranslation } from "react-i18next";
 
@@ -88,23 +86,11 @@ class Footer extends Component {
                   <li>
                     <span onClick={this.toggleRuleModal}>{t("Rules")}</span>
                   </li>
-                  {process.env.NODE_ENV === "development" && (
-                    <li>
-                      <Mutation
-                        mutation={SEEN_TOUR}
-                        variables={{
-                          tour: "reset"
-                        }}
-                      >
-                        {seenTour => {
-                          //TODO:REmove
-                          return (
-                            <span onClick={() => seenTour()}>Reset Tour</span>
-                          );
-                        }}
-                      </Mutation>
-                    </li>
-                  )}
+                  <li>
+                    <span onClick={() => window.location.replace("/faq")}>
+                      {t("FAQ")}
+                    </span>
+                  </li>
                   <li>
                     <span onClick={() => window.location.replace("/tos")}>
                       {t("termscon")}
@@ -129,6 +115,7 @@ class Footer extends Component {
           <Modal
             header={t("Quick Rules Review")}
             close={() => this.toggleRuleModal()}
+            className="rules"
             okSpan={
               <span className="color" onClick={() => this.toggleRuleModal()}>
                 {t("I understand")}

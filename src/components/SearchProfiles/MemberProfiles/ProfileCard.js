@@ -55,7 +55,7 @@ class ProfileCard extends Component {
             <ProfilePic profilePic={profile.profilePic} />
           </span>
           <div className="info">
-            <span onClick={this.onMemberClick}>
+            <span onClick={this.onMemberClick} className="profile-info">
               <ProfileInfoBox
                 users={profile.users}
                 online={profile.showOnline && profile.online}
@@ -64,8 +64,8 @@ class ProfileCard extends Component {
                 dayjs={dayjs}
                 distanceMetric={distanceMetric}
               />
+              <DesiresBlock desires={profile.desires} t={t} id={profile.id} />
             </span>
-            <DesiresBlock desires={profile.desires} t={t} id={profile.id} />
             <ProfileActionBtns
               profile={profile}
               likeProfile={likeProfile}

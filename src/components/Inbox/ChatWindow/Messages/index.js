@@ -236,7 +236,7 @@ class MessageList extends Component {
                 t
               };
 
-              if (message.type === "alert" || message.type === "left") {
+              if (message.type === "alert") {
                 return (
                   <div
                     style={{
@@ -248,6 +248,20 @@ class MessageList extends Component {
                     key={message.id}
                   >
                     {message.text}
+                  </div>
+                );
+              } else if (message.type === "left") {
+                return (
+                  <div
+                    style={{
+                      margin: "0 -20px 0 -20px",
+                      background: "#ffffff70",
+                      padding: "20px 0",
+                      textAlign: "center"
+                    }}
+                    key={message.id}
+                  >
+                    {message.text + " " + t("leftchat")}
                   </div>
                 );
               }

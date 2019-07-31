@@ -203,7 +203,7 @@ class NoticesItem extends Component {
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               {alert.name}
-              {this.props.t("common:" + alert.body)}
+              {this.props.t("common:" + alert.body) + " " + alert.event}
             </DialogContentText>
           </DialogContent>
         )}

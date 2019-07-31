@@ -269,27 +269,47 @@ const Body = withAuth(session => session && session.currentuser)(
             onEnter={refetch}
             path="/members"
             render={() => (
-              <ProfileSearch ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+              <ProfileSearch
+                ErrorHandler={ErrorHandler}
+                ReactGA={ReactGA}
+                session={session}
+                refetch={refetch}
+              />
             )}
             exact
           />
           <Route
             path="/events"
             render={() => (
-              <SearchEvents ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+              <SearchEvents
+                ErrorHandler={ErrorHandler}
+                ReactGA={ReactGA}
+                session={session}
+                refetch={refetch}
+              />
             )}
             exact
           />
           <Route
             path="/event/:id"
             render={() => (
-              <EventPage ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+              <EventPage
+                ErrorHandler={ErrorHandler}
+                ReactGA={ReactGA}
+                session={session}
+                refetch={refetch}
+              />
             )}
           />
           <Route
             path="/member/:id"
             render={() => (
-              <ProfilePage ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
+              <ProfilePage
+                ErrorHandler={ErrorHandler}
+                ReactGA={ReactGA}
+                session={session}
+                refetch={refetch}
+              />
             )}
           />
           <Route
@@ -299,6 +319,8 @@ const Body = withAuth(session => session && session.currentuser)(
                 {...routeProps}
                 ReactGA={ReactGA}
                 ErrorHandler={ErrorHandler}
+                session={session}
+                refetch={refetch}
               />
             )}
           />
@@ -309,6 +331,8 @@ const Body = withAuth(session => session && session.currentuser)(
                 {...routeProps}
                 ReactGA={ReactGA}
                 ErrorHandler={ErrorHandler}
+                session={session}
+                refetch={refetch}
               />
             )}
           />

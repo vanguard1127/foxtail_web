@@ -274,18 +274,7 @@ class ProfilesContainer extends Component {
     if (this.props.loading && loading) {
       return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
     }
-    sessionStorage.setItem(
-      "searchProsQuery",
-      JSON.stringify({
-        long,
-        lat,
-        distance,
-        ageRange,
-        interestedIn,
-        limit: SEARCHPROS_LIMIT,
-        skip: 0
-      })
-    );
+
     return (
       <Query
         query={SEARCH_PROFILES}

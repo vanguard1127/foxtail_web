@@ -10,7 +10,6 @@ import { Waypoint } from "react-waypoint";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
 import withLocation from "../HOCs/withLocation";
-import withAuth from "../HOCs/withAuth";
 import SearchEventToolbar from "./SearchEventToolbar/";
 import Header from "./Header";
 import Tour from "./Tour";
@@ -352,11 +351,5 @@ class SearchEvents extends Component {
 }
 
 export default withApollo(
-  withRouter(
-    withTranslation("searchevents")(
-      withAuth(session => session && session.currentuser)(
-        withLocation(SearchEvents)
-      )
-    )
-  )
+  withRouter(withTranslation("searchevents")(withLocation(SearchEvents)))
 );
