@@ -3,9 +3,15 @@ import CreateEvent from "../../Modals/CreateEvent/";
 class CreateEventBtn extends PureComponent {
   state = { showPopup: false };
   togglePopup = () => {
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
+    const { showPopup } = this.state;
+    this.setState(
+      {
+        showPopup: !showPopup
+      },
+      () => {
+        this.props.toggleScroll(!showPopup);
+      }
+    );
   };
   render() {
     const { lang, t, ErrorHandler, history, ReactGA } = this.props;

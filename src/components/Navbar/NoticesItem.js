@@ -136,6 +136,7 @@ class NoticesItem extends Component {
   };
 
   seeNotices = (notifications, updateNotifications) => {
+    //   console.log("seen");
     if (this.mounted) {
       const unseenIDs = notifications.reduce((res, el) => {
         if (!el.seen) {
@@ -308,7 +309,12 @@ class NoticesItem extends Component {
                         count > 0 ? "notification active" : "notification"
                       }
                       menuOpener={
-                        <span className="icon alert">
+                        <span
+                          className="icon alert"
+                          onClick={() =>
+                            this.seeNotices(notifications, updateNotifications)
+                          }
+                        >
                           {count > 0 && <span className="count">{count}</span>}
                         </span>
                       }

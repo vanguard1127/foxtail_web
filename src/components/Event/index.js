@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
 import dayjs from "dayjs";
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks
+} from "body-scroll-lock";
 import { GET_EVENT, DELETE_EVENT } from "../../queries";
 import { withTranslation } from "react-i18next";
 import BlockModal from "../Modals/Block";
@@ -27,6 +32,11 @@ class EventPage extends Component {
     showDelete: false
   };
 
+  constructor(props) {
+    super(props);
+    this.targetElement = React.createRef();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state !== nextState ||
@@ -43,6 +53,13 @@ class EventPage extends Component {
   }
   componentWillUnmount() {
     this.mounted = false;
+    clearAllBodyScrollLocks();
+  }
+
+  toggleScroll(enabled) {
+    enabled
+      ? disableBodyScroll(this.targetElement)
+      : enableBodyScroll(this.targetElement);
   }
 
   toggleDeleteDialog = () => {
@@ -153,7 +170,7 @@ class EventPage extends Component {
 
           return (
             <section className="event-detail">
-              <div className="container">
+              <div className="container" ref={this.targetElement}>
                 <div className="col-md-12">
                   <div className="row">
                     <div className="col-md-12">
@@ -200,6 +217,7 @@ class EventPage extends Component {
                         distanceMetric={session.currentuser.distanceMetric}
                         lang={lang}
                         ReactGA={ReactGA}
+                        toggleScroll={this.toggleScroll}
                       />
                       <Discussion
                         chatID={chatID}
@@ -227,6 +245,7 @@ class EventPage extends Component {
                         distanceMetric={session.currentuser.distanceMetric}
                         lang={lang}
                         ReactGA={ReactGA}
+                        toggleScroll={this.toggleScroll}
                       />
                     </div>
                   </div>

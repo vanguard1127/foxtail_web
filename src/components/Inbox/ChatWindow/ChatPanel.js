@@ -94,7 +94,7 @@ class ChatPanel extends PureComponent {
 
   render() {
     const { chatID, t } = this.props;
-    const { text, sending } = this.state;
+    const { text } = this.state;
 
     return (
       <Mutation

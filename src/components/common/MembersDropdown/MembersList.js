@@ -41,30 +41,31 @@ class MembersList extends PureComponent {
   };
 
   fetchData = fetchMore => {
-    this.setState({ loading: true });
+    if (this.mounted) {
+      this.setState({ loading: true });
 
-    fetchMore({
-      variables: {
-        skip: this.state.skip,
-        limit: MEMSLIST_LIMIT
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult || fetchMoreResult.getMembers.length === 0) {
+      fetchMore({
+        variables: {
+          skip: this.state.skip,
+          limit: MEMSLIST_LIMIT
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult || fetchMoreResult.getMembers.length === 0) {
+            return previousResult;
+          }
+          previousResult.getMembers = [
+            ...fetchMoreResult.getMembers,
+            ...previousResult.getMembers
+          ];
+
           return previousResult;
         }
-        previousResult.getMembers = [
-          ...fetchMoreResult.getMembers,
-          ...previousResult.getMembers
-        ];
-
-        return previousResult;
-      }
-    });
+      });
+    }
   };
 
   handleInvite = invite => {
     const { targetType, close, t, ReactGA } = this.props;
-
     if (targetType === "event") {
       invite()
         .then(({ data }) => {

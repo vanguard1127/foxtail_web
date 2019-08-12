@@ -20,6 +20,7 @@ class Black extends PureComponent {
       <Modal
         close={close}
         description={t("getmore")}
+        className="black"
         okSpan={
           <CreateSubBtn
             close={close}

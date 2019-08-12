@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-
 import { withTranslation } from "react-i18next";
 import { withRouter } from "react-router-dom";
 import { Query, withApollo } from "react-apollo";
 import dayjs from "dayjs";
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks
+} from "body-scroll-lock";
 import { SEARCH_EVENTS } from "../../queries";
 import { SEARCHEVENT_LIMIT } from "../../docs/consts";
 import { Waypoint } from "react-waypoint";
@@ -35,6 +39,11 @@ class SearchEvents extends Component {
     hasMore: true
   };
 
+  constructor(props) {
+    super(props);
+    this.targetElement = React.createRef();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state !== nextState ||
@@ -52,6 +61,7 @@ class SearchEvents extends Component {
   }
   componentWillUnmount() {
     this.clearSearchResults();
+    clearAllBodyScrollLocks();
     this.mounted = false;
   }
 
@@ -180,6 +190,12 @@ class SearchEvents extends Component {
     deleteFromCache({ cache, query: "searchEvents" });
   };
 
+  toggleScroll(enabled) {
+    enabled
+      ? disableBodyScroll(this.targetElement)
+      : enableBodyScroll(this.targetElement);
+  }
+
   render() {
     const {
       event,
@@ -233,6 +249,7 @@ class SearchEvents extends Component {
                 lang={lang}
                 history={history}
                 ReactGA={ReactGA}
+                toggleScroll={this.toggleScroll}
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
@@ -288,7 +305,7 @@ class SearchEvents extends Component {
                           className="not-found"
                           style={{ display: "block" }}
                         >
-                          <div className="container">
+                          <div className="container" ref={this.targetElement}>
                             {/* <div className="col-md-12">
                               <span className="lblHeader">
                                 {t("upcomingevent")}

@@ -44,9 +44,13 @@ class Select extends PureComponent {
   }
 
   handleClickOutside = event => {
-    if (!this.selectContainerRef.contains(event.target)) {
-      if (this.mounted) {
-        this.setState({ menuOpen: false });
+    if (this.state.menuOpen) {
+      if (!this.selectContainerRef.contains(event.target)) {
+        if (this.mounted) {
+          this.setState({ menuOpen: false }, () => {
+            if (this.props.onClose) this.props.onClose();
+          });
+        }
       }
     }
   };

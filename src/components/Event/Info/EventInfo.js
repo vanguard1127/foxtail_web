@@ -32,7 +32,8 @@ class EventInfo extends Component {
       dayjs,
       distanceMetric,
       lang,
-      ReactGA
+      ReactGA,
+      toggleScroll
     } = this.props;
 
     const {
@@ -130,6 +131,7 @@ class EventInfo extends Component {
                 refetch={refetch}
                 lang={lang}
                 ReactGA={ReactGA}
+                toggleScroll={toggleScroll}
               />
               <div className="join-event">
                 <span onClick={() => openDelete()}>{t("canevent")}</span>

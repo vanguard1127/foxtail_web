@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -20,9 +21,33 @@ import { withTranslation } from "react-i18next";
 import LinkIcon from "@material-ui/icons/Link";
 
 class Share extends Component {
+  referUrl = "";
   state = {
     copied: false
   };
+
+  async componentDidMount() {
+    const { userID, profile, event } = this.props;
+    let url;
+    if (profile) {
+      url = `${process.env.REACT_APP_CLIENT_URL}?refer=${userID}&mem=${profile.id}`;
+    } else if (event) {
+      url = `${process.env.REACT_APP_CLIENT_URL}?refer=${userID}&eve=${event.id}`;
+    } else {
+      url = `${process.env.REACT_APP_CLIENT_URL}?refer=${userID}`;
+    }
+
+    this.referUrl = await axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/lnk`, {
+        url
+      })
+      .then(function(response) {
+        return response.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.t !== nextProps.t ||
@@ -39,15 +64,7 @@ class Share extends Component {
   };
 
   render() {
-    const {
-      userID,
-      profile,
-      event,
-      close,
-      t,
-      ErrorBoundary,
-      tReady
-    } = this.props;
+    const { profile, event, close, t, ErrorBoundary, tReady } = this.props;
     const { copied } = this.state;
 
     if (!tReady) {
@@ -57,14 +74,10 @@ class Share extends Component {
         </Modal>
       );
     }
-    let shareUrl = "";
+
     let title = "";
     const body = (profile, event, t) => {
       if (profile) {
-        shareUrl =
-          process.env.NODE_ENV === "production"
-            ? "https://foxtailapp.com?refer=" + userID + "&mem=" + profile.id
-            : "http://localhost:3000?refer=" + userID + "&mem=" + profile.id;
         title = t("intrstmsg") + ":";
         return (
           <div>
@@ -77,17 +90,9 @@ class Share extends Component {
           </div>
         );
       } else if (event) {
-        shareUrl =
-          process.env.NODE_ENV === "production"
-            ? "https://foxtailapp.com?refer=" + userID + "&eve=" + event.id
-            : "http://localhost:3000?refer=" + userID + "&eve=" + event.id;
         title = t("invitation") + " " + event.eventname;
         return <div>{t("shareevent")}?</div>;
       } else {
-        shareUrl =
-          process.env.NODE_ENV === "production"
-            ? "https://foxtailapp.com?refer=" + userID
-            : "http://localhost:3000?refer=" + userID;
         title = t(
           "Check out Foxtail. It's Sexy, Safe, Fun Dating. And it's FREE:"
         );
@@ -119,14 +124,14 @@ class Share extends Component {
                 width: "100%"
               }}
             >
-              <FacebookShareButton url={shareUrl} quote={title}>
+              <FacebookShareButton url={this.referUrl} quote={title}>
                 <FacebookIcon size={32} round />
               </FacebookShareButton>
-              <TwitterShareButton url={shareUrl} title={title}>
+              <TwitterShareButton url={this.referUrl} title={title}>
                 <TwitterIcon size={32} round />
               </TwitterShareButton>
               <RedditShareButton
-                url={shareUrl}
+                url={this.referUrl}
                 title={title}
                 windowWidth={660}
                 windowHeight={460}
@@ -134,14 +139,14 @@ class Share extends Component {
                 <RedditIcon size={32} round />
               </RedditShareButton>
               <TumblrShareButton
-                url={shareUrl}
+                url={this.referUrl}
                 title={title}
                 windowWidth={660}
                 windowHeight={460}
               >
                 <TumblrIcon size={32} round />
               </TumblrShareButton>
-              <CopyToClipboard text={shareUrl}>
+              <CopyToClipboard text={this.referUrl}>
                 <Tooltip
                   title={
                     copied
@@ -166,9 +171,9 @@ class Share extends Component {
                 </Tooltip>
               </CopyToClipboard>
               <EmailShareButton
-                url={shareUrl}
+                url={this.referUrl}
                 subject={title}
-                body={title + "." + t("checkout") + ":" + shareUrl}
+                body={title + "." + t("checkout") + ":" + this.referUrl}
               >
                 <EmailIcon size={32} round />
               </EmailShareButton>

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-
-import Avatar from "react-avatar";
 import { NOTICELIST_LIMIT } from "../../docs/consts";
 import { Waypoint } from "react-waypoint";
 import { preventContextMenu } from "../../utils/image";
@@ -110,14 +108,16 @@ class NoticesList extends Component {
 
         switch (type) {
           case "chat":
-            this.props.history.push({
+            console.log("called");
+            this.props.history.replace({
               pathname: "/inbox",
               state: { chatID: targetID }
             });
-
             break;
           case "event":
-            this.props.history.push("/event/" + targetID);
+            //TODO: MAke this work like Chat above to stop using window.load
+            //this.props.history.replace(`/event/${targetID}`);
+            window.location.replace("/event/" + targetID);
             break;
           default:
             break;

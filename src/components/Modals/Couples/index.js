@@ -81,7 +81,7 @@ class Couples extends Component {
       ErrorHandler: { ErrorBoundary }
     } = this.props;
     return (
-      <Modal header={t("joinme")} close={close}>
+      <Modal header={t("joinme")} close={close} className="couples">
         <section className="couple-popup-content">
           <div className="container">
             <div className="col-md-12">

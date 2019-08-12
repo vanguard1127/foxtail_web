@@ -7,7 +7,6 @@ import SetLocationModal from "../Modals/SetLocation";
 import DistanceSlider from "../common/DistanceSlider";
 import AgeRange from "../common/AgeRange";
 import getCityCountry from "../../utils/getCityCountry";
-import { SEARCHPROS_LIMIT } from "../../docs/consts";
 
 class SearchCriteria extends PureComponent {
   state = {
@@ -123,7 +122,7 @@ class SearchCriteria extends PureComponent {
   };
 
   render() {
-    const { locModalVisible } = this.state;
+    const { locModalVisible, interestedIn } = this.state;
     const {
       t,
       loading,
@@ -132,7 +131,7 @@ class SearchCriteria extends PureComponent {
       distance,
       distanceMetric,
       ageRange,
-      interestedIn,
+
       city
     } = this.props;
 
@@ -250,9 +249,14 @@ class SearchCriteria extends PureComponent {
                           <Dropdown
                             type={"interestedIn"}
                             onChange={el =>
+                              this.setState({
+                                interestedIn: el.map(e => e.value)
+                              })
+                            }
+                            onClose={() =>
                               this.setValue({
                                 name: "interestedIn",
-                                value: el.map(e => e.value),
+                                value: interestedIn,
                                 updateSettings
                               })
                             }

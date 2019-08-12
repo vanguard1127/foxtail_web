@@ -150,7 +150,7 @@
   "Chat room closed.": "Chat room closed.",
   "Chat no longer available.": "Chat no longer available.",
   "Chat not found.": "Chat not found.",
-  "Unauthorized to chat here.": "Unauthorized to chat here.",
+  "Chat is no longer available.": "Chat is no longer available.",
   "Can't remove the owner!": "Can't remove the owner!",
   "Event no longer available.": "Event no longer available.",
   "Event not found.": "Event not found.",
@@ -228,5 +228,6 @@
   "ID Invalid.": "ID Invalid.",
   "Gender has been updated.": "Gender has been updated.",
   "Username has been updated.": "Username has been updated.",
-  "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox.": "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox."
+  "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox.": "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox.",
+  "Profile no longer exists": "Profile no longer exists"
 }

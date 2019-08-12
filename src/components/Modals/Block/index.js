@@ -182,6 +182,7 @@ class BlockModal extends Component {
         header={title}
         close={close}
         description={t("selreason")}
+        className="report"
         okSpan={
           <Mutation
             mutation={FLAG_ITEM}

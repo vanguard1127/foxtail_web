@@ -12,9 +12,15 @@ class EditEventBtn extends PureComponent {
 
   togglePopup = () => {
     if (this.mounted) {
-      this.setState({
-        showPopup: !this.state.showPopup
-      });
+      const { showPopup } = this.state;
+      this.setState(
+        {
+          showPopup: !showPopup
+        },
+        () => {
+          this.props.toggleScroll(!showPopup);
+        }
+      );
     }
   };
   render() {

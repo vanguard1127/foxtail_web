@@ -118,6 +118,7 @@ class PhotoVerify extends PureComponent {
         header={header}
         close={close}
         description={t("verpolicy")}
+        className="verifications"
         okSpan={
           photos.length !== 0 ? (
             <Mutation

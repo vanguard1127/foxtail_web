@@ -14,25 +14,36 @@ class LanguageControl extends PureComponent {
   };
 
   setLang = lang => {
-    i18n.changeLanguage(lang);
-    this.setState({ selectedLang: lang, menuOpen: false });
+    if (this.mounted) {
+      i18n.changeLanguage(lang);
+      this.setState({ selectedLang: lang, menuOpen: false });
+    }
   };
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
+    this.mounted = true;
   }
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.handleClickOutside);
+    this.mounted = false;
   }
 
   handleClickOutside = event => {
     if (
       this.wrapperRef &&
       !this.wrapperRef.current.contains(event.target) &&
-      this.state.menuOpen
+      this.state.menuOpen &&
+      this.mounted
     ) {
       this.setState({ menuOpen: false });
+    }
+  };
+
+  toggleMenuOpen = () => {
+    if (this.mounted) {
+      this.setState({ menuOpen: !this.state.menuOpen });
     }
   };
 
@@ -44,10 +55,7 @@ class LanguageControl extends PureComponent {
 
     return (
       <span ref={this.wrapperRef}>
-        <div
-          className="language-choose"
-          onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}
-        >
+        <div className="language-choose" onClick={this.toggleMenuOpen}>
           <i className={`flag ${convertLang}`} />
         </div>
         <div

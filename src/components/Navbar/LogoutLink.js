@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { ApolloConsumer } from "react-apollo";
-import { withRouter } from "react-router-dom";
+import { withApollo } from "react-apollo";
 import axios from "axios";
 class Logout extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -9,7 +8,7 @@ class Logout extends Component {
     }
     return false;
   }
-  handleLogout = (client, history) => {
+  handleLogout = () => {
     axios.get(
       process.env.NODE_ENV === "production"
         ? "https://prod.foxtailapi.com/offline?token=" +
@@ -21,24 +20,14 @@ class Logout extends Component {
     sessionStorage.clear();
 
     //Causes console error but currently best option.
-    client.resetStore();
+    this.props.client.resetStore();
 
     window.location.replace("/");
   };
 
   render() {
-    const { history, t } = this.props;
-    return (
-      <ApolloConsumer>
-        {client => {
-          return (
-            <div onClick={() => this.handleLogout(client, history)}>
-              {t("common:Logout")}
-            </div>
-          );
-        }}
-      </ApolloConsumer>
-    );
+    const { t } = this.props;
+    return <div onClick={this.handleLogout}>{t("common:Logout")}</div>;
   }
 }
-export default withRouter(Logout);
+export default withApollo(Logout);

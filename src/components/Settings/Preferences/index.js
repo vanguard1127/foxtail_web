@@ -6,16 +6,21 @@ import AgeRange from "../../common/AgeRange";
 import AddressSearch from "../../common/AddressSearch";
 import DistanceMetricSwitch from "./DistanceMetricSwitch";
 class Preferences extends Component {
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.distanceMetric !== nextProps.distanceMetric ||
       this.props.city !== nextProps.city ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.state.interestedIn !== nextState.interestedIn
     ) {
       return true;
     }
     return false;
   }
+
+  state = {
+    interestedIn: this.props.interestedIn
+  };
 
   handleRemoveLocLock = async () => {
     await navigator.geolocation.getCurrentPosition(
@@ -29,12 +34,12 @@ class Preferences extends Component {
       }
     );
   };
+
   render() {
     const {
       distance,
       distanceMetric,
       ageRange,
-      interestedIn,
       city,
       setValue,
       setLocationValues,
@@ -43,6 +48,7 @@ class Preferences extends Component {
       isBlackMember,
       lang
     } = this.props;
+    const { interestedIn } = this.state;
 
     return (
       <ErrorBoundary>
@@ -99,11 +105,16 @@ class Preferences extends Component {
               <Dropdown
                 type={"interestedIn"}
                 onChange={el =>
-                  setValue({
-                    name: "interestedIn",
-                    value: el.map(e => e.value)
+                  this.setState({
+                    interestedIn: el.map(e => e.value)
                   })
                 }
+                onClose={el => {
+                  setValue({
+                    name: "interestedIn",
+                    value: interestedIn
+                  });
+                }}
                 value={interestedIn}
                 placeholder={t("common:Interested") + ":"}
                 lang={lang}

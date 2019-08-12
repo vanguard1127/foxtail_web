@@ -22,16 +22,19 @@ class Navbar extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { session, location } = this.props;
     const { online } = this.state;
-
-    if (
-      session &&
-      (session.currentuser.username !==
-        nextProps.session.currentuser.username ||
+    if (session) {
+      if (nextProps.session === undefined) {
+        return true;
+      }
+      if (
+        session.currentuser.username !==
+          nextProps.session.currentuser.username ||
         session.currentuser.userID !== nextProps.session.currentuser.userID ||
         session.currentuser.profilePic !==
-          nextProps.session.currentuser.profilePic)
-    ) {
-      return true;
+          nextProps.session.currentuser.profilePic
+      ) {
+        return true;
+      }
     }
     if (
       location.pathname !== nextProps.location.pathname ||

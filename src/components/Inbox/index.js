@@ -15,7 +15,6 @@ import {
   READ_CHAT_QUERY
 } from "../../queries";
 import { Mutation, Query } from "react-apollo";
-import { toast } from "react-toastify";
 import ChatWindow from "./ChatWindow/";
 import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
@@ -275,13 +274,21 @@ class InboxPage extends Component {
                   {({ data, loading, error }) => {
                     if (error) {
                       return (
-                        <ErrorHandler.report
-                          error={error}
-                          calledName={"getEvent"}
-                          targetID={chatID}
-                          type="chat"
-                          userID={currentuser.userID}
-                        />
+                        <section className="not-found">
+                          <div className="container">
+                            <div className="col-md-12">
+                              <div className="icon">
+                                <i className="nico x" />
+                              </div>
+                              <span className="head">
+                                Chat No Longer Available
+                              </span>
+                              <span className="description">
+                                This chat is no longer available
+                              </span>
+                            </div>
+                          </div>
+                        </section>
                       );
                     }
 

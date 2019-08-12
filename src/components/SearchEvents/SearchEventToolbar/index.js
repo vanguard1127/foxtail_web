@@ -22,7 +22,8 @@ class SearchEventToolbar extends Component {
       distanceMetric,
       lang,
       history,
-      ReactGA
+      ReactGA,
+      toggleScroll
     } = this.props;
     return (
       <div className="header">
@@ -42,6 +43,7 @@ class SearchEventToolbar extends Component {
               lang={lang}
               history={history}
               ReactGA={ReactGA}
+              toggleScroll={toggleScroll}
             />
           </div>
         </div>

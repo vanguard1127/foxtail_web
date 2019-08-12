@@ -162,6 +162,7 @@ class AcctSettings extends Component {
               schema={schema}
               setValue={value => setValue({ name: setting, value })}
               specialType={setting}
+              className="acctsetting"
             />
           )}
         </div>

@@ -19,6 +19,14 @@
   top: 0;
 }
 
+.layout{
+  height: auto;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 button,aside,div:focus {outline:0;}
 
 /*---- HEADER ----*/
@@ -7317,9 +7325,34 @@ section.login-modal {
   left: 0;
   top: 0;
   z-index: 999;
-  padding: 20% 0;
+  padding:15% 0;
   display: none;
   visibility: hidden;
+}
+
+section.login-modal.create-event {
+  padding: 8% 0;
+  overflow: auto;
+}
+
+section.login-modal.verifications {
+  padding: 6% 0;
+}
+
+section.login-modal.couples {
+  padding: 6% 0;
+}
+
+section.login-modal.black {
+  padding: 9% 0;
+}
+
+section.login-modal.acctsetting {
+  padding: 13% 0;
+}
+
+section.login-modal.report {
+  padding: 16% 0;
 }
 
 section.login-modal.rules {
@@ -7333,7 +7366,6 @@ section.full-screen-modal {
 section.login-modal.show {
   display: inline-block;
   visibility: visible;
-  overflow-y: auto;
 }
 
 section.login-modal .popup {
@@ -8075,6 +8107,10 @@ section.not-found .icon i.nico.message::before {
 }
 section.not-found .icon i.nico.cogs::before {
   content: "\e800";
+}
+
+section.not-found .icon i.nico.x::before {
+  content: "\e804";
 }
 
 section.not-found span.head.nopad {

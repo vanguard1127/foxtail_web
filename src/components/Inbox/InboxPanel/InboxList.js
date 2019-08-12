@@ -32,6 +32,7 @@ class InboxList extends PureComponent {
       } else {
         title = item.fromProfile.profileName;
       }
+      item.text = item.text === "" ? t("newmatch") : item.text;
     }
 
     return (

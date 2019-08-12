@@ -12,10 +12,12 @@ class Menu extends PureComponent {
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
+    this.mounted = true;
   }
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.handleClickOutside);
+    this.mounted = false;
   }
 
   //TODO: ticket 294: menu count wont update if clicked to rigth of notifcstions
@@ -34,6 +36,12 @@ class Menu extends PureComponent {
       if (this.props.closeAction) {
         this.props.closeAction();
       }
+      this.close();
+    }
+  };
+
+  close = () => {
+    if (this.mounted) {
       this.setState({ menuOpen: false });
     }
   };
@@ -51,7 +59,7 @@ class Menu extends PureComponent {
         {menuOpener}
         {menuOpen &&
           cloneElement(this.props.children, {
-            close: () => this.setState({ menuOpen: false }),
+            close: this.close,
             t
           })}
       </div>

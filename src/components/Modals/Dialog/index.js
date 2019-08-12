@@ -63,6 +63,7 @@ class Dialog extends PureComponent {
       successMsg,
       specialType,
       lang,
+      className,
       tReady
     } = this.props;
     const { text, errors } = this.state;
@@ -103,6 +104,7 @@ class Dialog extends PureComponent {
         header={title}
         close={close}
         description={msg}
+        className={className}
         okSpan={
           <span
             className="color"

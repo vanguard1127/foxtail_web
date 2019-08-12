@@ -67,7 +67,7 @@ class Dropdown extends Component {
   };
 
   render() {
-    const { onChange, value, placeholder, type, noClass } = this.props;
+    const { onChange, onClose, value, placeholder, type, noClass } = this.props;
     const { options, isLoading } = this.state;
     let multiple = false;
     if (type === "interestedIn") {
@@ -82,6 +82,7 @@ class Dropdown extends Component {
       return (
         <Select
           onChange={onChange}
+          onClose={onClose}
           multiple={multiple}
           label={placeholder}
           defaultOptionValues={
@@ -97,6 +98,7 @@ class Dropdown extends Component {
       return (
         <Select
           onChange={onChange}
+          onClose={onClose}
           multiple={multiple}
           label={placeholder}
           defaultOptionValue={value}

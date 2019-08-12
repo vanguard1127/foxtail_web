@@ -22,6 +22,7 @@ import LawEnforce from "./components/Information/LawEnforce";
 import Navbar from "./components/Navbar/";
 import * as ErrorHandler from "./components/common/ErrorHandler";
 import withAuth from "./components/HOCs/withAuth";
+import IdleTimer from "./components/HOCs/IdleTimer";
 import Footer from "./components/Footer/";
 import ReCaptcha from "./components/Modals/ReCaptcha";
 import tokenHandler from "./utils/tokenHandler";
@@ -250,16 +251,8 @@ const Wrapper = withRouter(props => {
 
 const Body = withAuth(session => session && session.currentuser)(
   ({ showFooter, session, refetch }) => (
-    <div
-      className="layout"
-      style={{
-        height: "auto",
-        margin: "0",
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh"
-      }}
-    >
+    <div className="layout">
+      <IdleTimer />
       <header>
         <Navbar ErrorHandler={ErrorHandler} session={session} />
       </header>

@@ -46,6 +46,12 @@ class ErrorBoundary extends PureComponent {
     super(props);
     this.state = { error: null };
   }
+  componentDidMount() {
+    this.mounted = true;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
   static getDerivedStateFromError(error) {
     // Update state so the next render will show the fallback UI.
@@ -53,7 +59,9 @@ class ErrorBoundary extends PureComponent {
   }
 
   componentDidCatch(error, errorInfo) {
-    this.setState({ error });
+    if (this.mounted) {
+      this.setState({ error });
+    }
     Sentry.withScope(scope => {
       Object.keys(errorInfo).forEach(key => {
         scope.setExtra(key, errorInfo[key]);

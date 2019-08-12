@@ -30,9 +30,12 @@ class AddressSearch extends Component {
         return;
       }
     }
-    this.setState({
-      address
-    });
+
+    if (this.mounted) {
+      this.setState({
+        address
+      });
+    }
   };
 
   handleRemoveLocLock = async () => {
@@ -43,13 +46,16 @@ class AddressSearch extends Component {
           long: longitude,
           lat: latitude
         });
-        this.setState({ address: citycntry.city }, () =>
-          this.props.setLocationValues({
-            lat: latitude,
-            long: longitude,
-            address: citycntry.city
-          })
-        );
+
+        if (this.mounted) {
+          this.setState({ address: citycntry.city }, () =>
+            this.props.setLocationValues({
+              lat: latitude,
+              long: longitude,
+              address: citycntry.city
+            })
+          );
+        }
       },
       err => {
         alert(this.props.t("common:enablerem"));
@@ -72,7 +78,9 @@ class AddressSearch extends Component {
 
   componentDidUpdate(prev) {
     if (prev.address !== this.props.address) {
-      this.setState({ address: this.props.address });
+      if (this.mounted) {
+        this.setState({ address: this.props.address });
+      }
     }
   }
 

@@ -83,6 +83,7 @@ class SearchProfilesPage extends Component {
   }
 
   setValue = ({ name, value }) => {
+    console.log(name, value);
     this.setState({ [name]: value });
   };
 
