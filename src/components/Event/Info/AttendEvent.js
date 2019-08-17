@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import withAuth from "../../HOCs/withAuth";
 import { Mutation } from "react-apollo";
 import {
   TOGGLE_EVENT_ATTEND,
@@ -143,4 +142,4 @@ class AttendEvent extends Component {
   }
 }
 
-export default withAuth(session => session && session.currentuser)(AttendEvent);
+export default AttendEvent;

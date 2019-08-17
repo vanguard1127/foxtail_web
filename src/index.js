@@ -3,7 +3,7 @@ import ReactGA from "react-ga";
 import { render } from "react-dom";
 import {
   BrowserRouter as Router,
-  Redirect,
+  Link,
   Route,
   Switch,
   withRouter
@@ -220,6 +220,12 @@ const Root = () => (
   </Router>
 );
 
+const NotFoundPage = () => (
+  <div>
+    404 - <Link to="/">Go home</Link>
+  </div>
+);
+
 const Wrapper = withRouter(props => {
   let location = props.location;
   if (location.pathname) {
@@ -340,7 +346,7 @@ const Body = withAuth(session => session && session.currentuser)(
               />
             )}
           />
-          <Redirect to="/" />
+          <Route component={NotFoundPage} />
         </Switch>
       </main>
       {showFooter && <Footer />}

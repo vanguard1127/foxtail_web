@@ -38,21 +38,13 @@ class InboxPage extends Component {
   };
   opening = false;
   shouldComponentUpdate(nextProps, nextState) {
-    let chatIDChange = false;
-    if (
-      this.props.location.state !== undefined &&
-      nextProps.location.state !== undefined
-    ) {
-      chatIDChange =
-        this.props.location.state.chatID !== nextProps.location.state.chatID;
-    }
     if (
       this.state.chat !== nextState.chat ||
       this.state.unSeenCount !== nextState.unSeenCount ||
       this.state.blockModalVisible !== nextState.blockModalVisible ||
       this.state.chatOpen !== nextState.chatOpen ||
       this.state.showModal !== nextState.showModal ||
-      chatIDChange ||
+      this.props.location.state !== nextProps.location.state ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady
     ) {
@@ -224,6 +216,7 @@ class InboxPage extends Component {
 
     let chatID = this.props.location.state && this.props.location.state.chatID;
 
+    console.log("CHATID", chatID);
     const inboxPanel = (
       <Mutation
         mutation={READ_CHAT}

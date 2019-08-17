@@ -33,7 +33,8 @@ class EventInfo extends Component {
       distanceMetric,
       lang,
       ReactGA,
-      toggleScroll
+      toggleScroll,
+      session
     } = this.props;
 
     const {
@@ -120,6 +121,7 @@ class EventInfo extends Component {
               t={t}
               ErrorHandler={ErrorHandler}
               ReactGA={ReactGA}
+              session={session}
             />
           ) : (
             <>

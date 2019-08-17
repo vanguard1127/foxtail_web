@@ -6,9 +6,9 @@
 
 // 1. ENVIRONMENT
 const localserver = "localhost:4444";
-const prodserver = "prod.foxtailapi.com";
+const prodserver = "api.foxtailapp.com";
 const stageserver =
-  "https://internal-foxtail-staging-private-alb-1501692418.us-west-2.elb.amazonaws.com";
+  "https://internal-foxtail-staging-private-alb-1501692418.us-east-1.elb.amazonaws.com";
 
 export const env = {
   local: {

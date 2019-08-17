@@ -23,6 +23,11 @@ class Settings extends Component {
     return false;
   }
   componentDidMount() {
+    this.mounted = true;
+    document.title = this.props.t("common:myaccount");
+  }
+
+  componentDidUpdate() {
     const { session, t, tReady } = this.props;
 
     if (session && !session.currentuser.isProfileOK && tReady) {
@@ -33,9 +38,6 @@ class Settings extends Component {
         });
       }
     }
-
-    this.mounted = true;
-    document.title = t("common:myaccount");
   }
 
   componentWillUnmount() {

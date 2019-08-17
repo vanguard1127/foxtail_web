@@ -5,7 +5,7 @@ import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 
 class EventInfoMobile extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     const { event: eventProps } = this.props;
     const { event: nextEventProps } = nextProps;
 
@@ -33,7 +33,8 @@ class EventInfoMobile extends Component {
       distanceMetric,
       lang,
       refetch,
-      ReactGA
+      ReactGA,
+      session
     } = this.props;
 
     const {
@@ -117,6 +118,7 @@ class EventInfoMobile extends Component {
             t={t}
             ErrorHandler={ErrorHandler}
             ReactGA={ReactGA}
+            session={session}
           />
         ) : (
           <>

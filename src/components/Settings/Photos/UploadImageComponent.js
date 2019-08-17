@@ -93,9 +93,7 @@ class UploadComponent extends PureComponent {
   handleClickProPic = ({ index }) => {
     let img = this.props.photos[index];
     //TODO: use global var here
-    this.props.showCropper(
-      "https://prod-ft-img-bucket.s3.us-west-2.amazonaws.com/" + img.key
-    );
+    this.props.showCropper(process.env.REACT_APP_S3_BUCKET_URL + img.key);
   };
 
   handleClose = () => {

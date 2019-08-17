@@ -108,16 +108,13 @@ class NoticesList extends Component {
 
         switch (type) {
           case "chat":
-            console.log("called");
             this.props.history.replace({
               pathname: "/inbox",
               state: { chatID: targetID }
             });
             break;
           case "event":
-            //TODO: MAke this work like Chat above to stop using window.load
-            //this.props.history.replace(`/event/${targetID}`);
-            window.location.replace("/event/" + targetID);
+            this.props.history.replace(`/event/${targetID}`);
             break;
           default:
             break;

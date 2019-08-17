@@ -1621,6 +1621,9 @@ section.members .card-item .info span.interest ul li {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 section.members .card-item .info span.interest ul li:last-child {

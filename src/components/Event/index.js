@@ -41,7 +41,8 @@ class EventPage extends Component {
     if (
       this.state !== nextState ||
       this.props.t !== nextProps.t ||
-      this.props.tReady !== nextProps.tReady
+      this.props.tReady !== nextProps.tReady ||
+      this.props.match.params !== nextProps.match.params
     ) {
       return true;
     }
@@ -218,6 +219,7 @@ class EventPage extends Component {
                         lang={lang}
                         ReactGA={ReactGA}
                         toggleScroll={this.toggleScroll}
+                        session={session}
                       />
                       <Discussion
                         chatID={chatID}
@@ -246,6 +248,7 @@ class EventPage extends Component {
                         lang={lang}
                         ReactGA={ReactGA}
                         toggleScroll={this.toggleScroll}
+                        session={session}
                       />
                     </div>
                   </div>

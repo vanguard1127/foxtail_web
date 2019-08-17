@@ -139,7 +139,8 @@ class SettingsPage extends Component {
       this.state.vibrateNotify !== nextState.vibrateNotify ||
       this.state.visible !== nextState.visible ||
       this.props.t !== nextProps.t ||
-      this.props.errors !== nextProps.errors
+      this.props.errors !== nextProps.errors ||
+      this.state.errors !== nextState.errors
     ) {
       return true;
     }
@@ -201,6 +202,7 @@ class SettingsPage extends Component {
           publicPhotos = publicPhotos.filter(x => x.id !== file.id);
           this.setState({ showModal: false });
           toast.success(t("photodel"));
+          this.fillInErrors();
         } else {
           publicPhotos = [
             ...publicPhotos,
@@ -235,14 +237,7 @@ class SettingsPage extends Component {
     }
   };
   handleSubmit = updateSettings => {
-    const {
-      ErrorHandler,
-      isCouple,
-      isInitial,
-      refetchUser,
-      t,
-      ReactGA
-    } = this.props;
+    const { ErrorHandler, isCouple, isInitial, t, ReactGA } = this.props;
     this.setErrorHandler("Settings updated...");
 
     if (!this.isPhotoChanged) {
@@ -270,7 +265,6 @@ class SettingsPage extends Component {
           })
           .then(() => {
             this.resetAcctSettingState();
-            refetchUser();
           })
           .catch(res => {
             this.resetAcctSettingState();
@@ -293,7 +287,7 @@ class SettingsPage extends Component {
         })
         .then(() => {
           this.resetAcctSettingState();
-          refetchUser();
+          //  refetchUser();
         })
         .catch(res => {
           this.resetAcctSettingState();
@@ -317,7 +311,10 @@ class SettingsPage extends Component {
             city: citycntry.city,
             country: citycntry.country
           },
-          () => this.handleSubmit(updateSettings)
+          () => {
+            this.handleSubmit(updateSettings);
+            this.props.refetchUser();
+          }
         );
       }
     } else {
@@ -371,6 +368,7 @@ class SettingsPage extends Component {
       this.setState({ profilePic: key, profilePicUrl: url }, () => {
         this.handleSubmit(this.updateSettings);
         this.fillInErrors();
+        this.props.refetchUser();
       });
     }
   };
@@ -550,11 +548,15 @@ class SettingsPage extends Component {
     let desiresErr = desires.length === 0 ? t("onedes") : null;
 
     if (
+      this.isNull(this.state.errors.profilePic) !==
+        this.isNull(profilePicErr) ||
       this.isNull(this.state.errors.about) !== this.isNull(aboutErr) ||
       this.isNull(this.state.errors.desires) !== this.isNull(desiresErr)
     ) {
       await this.handleSubmit(this.updateSettings);
+      await this.props.refetchUser();
     }
+
     this.setState({
       errors: {
         profilePic: profilePicErr,

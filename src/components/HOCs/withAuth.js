@@ -12,7 +12,7 @@ const withAuth = conditionFunc => Component => props => {
 
   return (
     //TODO: See when cache-first works and add here
-    <Query query={GET_CURRENT_USER} fetchPolicy="network-only">
+    <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
       {({ data, loading, refetch }) => {
         if (loading) {
           return <Spinner size="large" />;

@@ -46,10 +46,12 @@ class IdleTimer extends PureComponent {
   }
 
   warn() {
-    toast.warn(
-      "Idle warning: You will be logged out automatically in 1 minute",
-      { autoClose: false }
-    );
+    if (!toast.isActive("warn")) {
+      toast.warn(
+        "Idle warning: You will be logged out automatically in 1 minute",
+        { autoClose: false, toastId: "warn" }
+      );
+    }
   }
 
   logout() {
@@ -68,7 +70,8 @@ class IdleTimer extends PureComponent {
   handleLogout = () => {
     axios.get(
       process.env.NODE_ENV === "production"
-        ? "https://prod.foxtailapi.com/offline?token=" +
+        ? process.env.REACT_APP_PROD_API_URL +
+            "/offline?token=" +
             localStorage.getItem("token")
         : "http://localhost:4444/offline?token=" + localStorage.getItem("token")
     );

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { genderOptions } from "../../docs/options/en";
+import { sexOptions } from "../../docs/options/en";
 import TimeAgo from "../../utils/TimeAgo";
 class ProfileDetails extends Component {
   shouldComponentUpdate(nextProps) {
@@ -52,14 +52,11 @@ class ProfileDetails extends Component {
               <span className="data">
                 {profile.interestedIn.map((intrst, idx, arr) => {
                   if (idx === arr.length - 1) {
-                    return t(
-                      genderOptions.find(el => el.value === intrst).label
-                    );
+                    return t(sexOptions.find(el => el.value === intrst).label);
                   }
 
                   return (
-                    t(genderOptions.find(el => el.value === intrst).label) +
-                    ", "
+                    t(sexOptions.find(el => el.value === intrst).label) + ", "
                   );
                 })}
               </span>
