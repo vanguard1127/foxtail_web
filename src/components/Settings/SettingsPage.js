@@ -200,8 +200,9 @@ class SettingsPage extends Component {
       if (this.mounted) {
         if (isDeleted) {
           publicPhotos = publicPhotos.filter(x => x.id !== file.id);
-          this.setState({ showModal: false }, () => this.fillInErrors());
+          this.setState({ showModal: false });
           toast.success(t("photodel"));
+          this.fillInErrors();
         } else {
           publicPhotos = [
             ...publicPhotos,
@@ -262,7 +263,6 @@ class SettingsPage extends Component {
               }
             }
           })
-          .then(() => this.props.refetchUser())
           .then(() => {
             this.resetAcctSettingState();
           })
@@ -367,8 +367,8 @@ class SettingsPage extends Component {
     if (this.mounted) {
       this.setState({ profilePic: key, profilePicUrl: url }, () => {
         this.handleSubmit(this.updateSettings);
-        this.props.refetchUser();
         this.fillInErrors();
+        this.props.refetchUser();
       });
     }
   };
@@ -526,7 +526,7 @@ class SettingsPage extends Component {
     });
   };
 
-  fillInErrors = () => {
+  fillInErrors = async () => {
     const { about, publicPhotos, profilePic, desires } = this.state;
 
     const { t } = this.props;
@@ -553,10 +553,8 @@ class SettingsPage extends Component {
       this.isNull(this.state.errors.about) !== this.isNull(aboutErr) ||
       this.isNull(this.state.errors.desires) !== this.isNull(desiresErr)
     ) {
-      console.log("SAVED SETTINGS");
-      this.handleSubmit(this.updateSettings);
-      console.log("REFETCH USER?");
-      this.props.refetchUser();
+      await this.handleSubmit(this.updateSettings);
+      await this.props.refetchUser();
     }
 
     this.setState({
@@ -571,10 +569,10 @@ class SettingsPage extends Component {
   isNull = word => {
     return word === null;
   };
-
   RefetchTest = () => {
     this.props.refetchUser();
   };
+
   render() {
     const {
       lat,
