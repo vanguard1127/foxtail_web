@@ -6,7 +6,8 @@ import {
   Link,
   Route,
   Switch,
-  withRouter
+  withRouter,
+  Redirect
 } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import i18n from "./i18n";
@@ -25,6 +26,7 @@ import withAuth from "./components/HOCs/withAuth";
 import IdleTimer from "./components/HOCs/IdleTimer";
 import Footer from "./components/Footer/";
 import ReCaptcha from "./components/Modals/ReCaptcha";
+import ShortLinkRedirect from "./components/Redirect/ShortLinkRedirect";
 import tokenHandler from "./utils/tokenHandler";
 
 import { ApolloProvider } from "react-apollo";
@@ -42,13 +44,11 @@ import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
+import DevTools from "./DevTools";
 
-//TODO: REMOVE THIS IF
-if (process.env.NODE_ENV !== "development") {
-  Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DNS
-  });
-}
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_DNS
+});
 
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -148,10 +148,8 @@ const errorLink = onError(
         } else if (~message.indexOf("authenticated")) {
           tokenHandler({ operation, forward, HTTPSurl, ErrorHandler });
         } else {
-          //TODO: Uncomment
-          //  if (process.env.NODE_ENV === "development") {
-          console.error("ERROR::::", message);
-          // }
+          console.error(message);
+
           Sentry.withScope(scope => {
             scope.setLevel("error");
             scope.setTag("resolver", path);
@@ -228,8 +226,12 @@ const NotFoundPage = () => (
 
 const Wrapper = withRouter(props => {
   let location = props.location;
+
   if (location.pathname) {
-    if (location.pathname === "/") {
+    if (
+      location.pathname === "/" &&
+      (!location.search || location.search.includes("="))
+    ) {
       return <Landing {...props} ReactGA={ReactGA} />;
     } else if (location.pathname === "/tos") {
       return <ToS />;
@@ -245,6 +247,12 @@ const Wrapper = withRouter(props => {
       return <LawEnforce />;
     } else if (location.pathname === "/captcha") {
       return <ReCaptcha />;
+    } else if (location.pathname === "/devtools") {
+      if (process.env.NODE_ENV === "development") {
+        return <DevTools />;
+      }
+    } else if (location.pathname === "/" && location.search) {
+      return <ShortLinkRedirect hash={location.search} />;
     }
     let showFooter =
       location.pathname && location.pathname.match(/^\/inbox/) === null;
@@ -346,7 +354,7 @@ const Body = withAuth(session => session && session.currentuser)(
               />
             )}
           />
-          <Route component={NotFoundPage} />
+          <Redirect to="/" />
         </Switch>
       </main>
       {showFooter && <Footer />}

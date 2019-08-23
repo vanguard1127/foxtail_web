@@ -52,7 +52,7 @@ class RequestEmailVerBtn extends PureComponent {
         {resendVerEMail => {
           return (
             <span
-              className="clickverify-btn"
+              className="clickverify-btn resetemail"
               onClick={() => this.handleClick(resendVerEMail)}
             >
               Resend Email Verification (To chat with members)

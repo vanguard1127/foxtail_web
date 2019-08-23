@@ -154,8 +154,10 @@ class CreateEvent extends Component {
         await this.handleUpload({ signS3 });
       }
       createEvent()
-        .then(async ({ data }) => {
+        .then(({ data }) => {
           toast.success(t("evevtsaved"));
+
+          close();
 
           if (refetch) {
             ReactGA.event({
@@ -170,7 +172,6 @@ class CreateEvent extends Component {
             });
             history.push("/event/" + data.createEvent.id);
           }
-          close();
         })
         .catch(res => {
           ErrorHandler.catchErrors(res.graphQLErrors);

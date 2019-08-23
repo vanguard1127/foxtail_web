@@ -142,7 +142,7 @@ const FAQ = () => {
             <li>
               <p>Can I see the tutorial again?</p>
               <p>
-                Sure. Click here:{" "}
+                Sure. Once logged in. Click here:{" "}
                 <Mutation
                   mutation={SEEN_TOUR}
                   variables={{

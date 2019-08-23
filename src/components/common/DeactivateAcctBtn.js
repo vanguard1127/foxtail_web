@@ -30,7 +30,7 @@ class DeactivateAcctBtn extends PureComponent {
     const { t } = this.props;
     const { showContactModal } = this.state;
     return (
-      <div className="content">
+      <div className="content deactivate">
         <div className="row">
           <Mutation mutation={DELETE_USER}>
             {deleteUser => {
@@ -39,9 +39,9 @@ class DeactivateAcctBtn extends PureComponent {
                   {client => {
                     return (
                       <>
-                        <button onClick={() => this.toggleContactModal()}>
+                        <span onClick={() => this.toggleContactModal()}>
                           {t("common:deactacct")}
-                        </button>
+                        </span>
                         {showContactModal && (
                           <ContactUsModal
                             close={() => this.toggleContactModal()}

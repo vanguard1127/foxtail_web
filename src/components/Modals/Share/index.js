@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -12,6 +11,8 @@ import {
   TumblrIcon,
   EmailIcon
 } from "react-share";
+import { Query } from "react-apollo";
+import { SET_FULL_LINK } from "../../../queries";
 import Tooltip from "../../common/Tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
@@ -26,28 +27,6 @@ class Share extends Component {
     copied: false
   };
 
-  async componentDidMount() {
-    const { userID, profile, event } = this.props;
-    let url;
-    if (profile) {
-      url = `${process.env.REACT_APP_CLIENT_URL}?refer=${userID}&mem=${profile.id}`;
-    } else if (event) {
-      url = `${process.env.REACT_APP_CLIENT_URL}?refer=${userID}&eve=${event.id}`;
-    } else {
-      url = `${process.env.REACT_APP_CLIENT_URL}?refer=${userID}`;
-    }
-
-    this.referUrl = await axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/lnk`, {
-        url
-      })
-      .then(function(response) {
-        return response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.t !== nextProps.t ||
@@ -64,15 +43,28 @@ class Share extends Component {
   };
 
   render() {
-    const { profile, event, close, t, ErrorBoundary, tReady } = this.props;
+    const {
+      userID,
+      profile,
+      event,
+      close,
+      t,
+      ErrorBoundary,
+      tReady
+    } = this.props;
+
+    let url;
+    if (profile) {
+      url = `refer=${userID}&mem=${profile.id}`;
+    } else if (event) {
+      url = `refer=${userID}&eve=${event.id}`;
+    } else {
+      url = `refer=${userID}`;
+    }
     const { copied } = this.state;
 
     if (!tReady) {
-      return (
-        <Modal close={close}>
-          <Spinner />
-        </Modal>
-      );
+      return null;
     }
 
     let title = "";
@@ -107,80 +99,105 @@ class Share extends Component {
     const modalBody = body(profile, event, t);
 
     return (
-      <Modal header={modalBody} close={close}>
-        {" "}
-        <ErrorBoundary>
-          <div
-            style={{
-              justifyContent: "center",
-              display: "flex"
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "10px",
-                width: "100%"
-              }}
-            >
-              <FacebookShareButton url={this.referUrl} quote={title}>
-                <FacebookIcon size={32} round />
-              </FacebookShareButton>
-              <TwitterShareButton url={this.referUrl} title={title}>
-                <TwitterIcon size={32} round />
-              </TwitterShareButton>
-              <RedditShareButton
-                url={this.referUrl}
-                title={title}
-                windowWidth={660}
-                windowHeight={460}
-              >
-                <RedditIcon size={32} round />
-              </RedditShareButton>
-              <TumblrShareButton
-                url={this.referUrl}
-                title={title}
-                windowWidth={660}
-                windowHeight={460}
-              >
-                <TumblrIcon size={32} round />
-              </TumblrShareButton>
-              <CopyToClipboard text={this.referUrl}>
-                <Tooltip
-                  title={
-                    copied
-                      ? t("Copied url to clipboard")
-                      : t("Copy referral url")
-                  }
-                  placement="top"
-                  onClick={() => this.toggleCopied(true)}
-                  onClose={() => this.toggleCopied(false)}
+      <Query
+        query={SET_FULL_LINK}
+        variables={{ url }}
+        fetchPolicy="cache-first"
+      >
+        {({ data, loading, error }) => {
+          if (loading) {
+            return <Spinner />;
+          }
+          if (!data) {
+            return <div>An Error has Occured</div>;
+          }
+
+          let refUrl = `${
+            process.env.NODE_ENV === "development"
+              ? "http:localhost:3000"
+              : process.env.REACT_APP_CLIENT_URL
+          }/${data.setFullLink}`;
+          return (
+            <Modal header={modalBody} close={close}>
+              <ErrorBoundary>
+                <div
+                  style={{
+                    justifyContent: "center",
+                    display: "flex"
+                  }}
                 >
-                  <span
-                    style={{ width: "32px", height: "32px", cursor: "pointer" }}
-                    className="copyIcon"
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      padding: "10px",
+                      width: "100%"
+                    }}
                   >
-                    <svg viewBox="0 0 64 64" width="32" height="32">
-                      <g>
-                        <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
-                        <LinkIcon className="linksvg" />
-                      </g>
-                    </svg>
-                  </span>
-                </Tooltip>
-              </CopyToClipboard>
-              <EmailShareButton
-                url={this.referUrl}
-                subject={title}
-                body={title + "." + t("checkout") + ":" + this.referUrl}
-              >
-                <EmailIcon size={32} round />
-              </EmailShareButton>
-            </div>
-          </div>
-        </ErrorBoundary>
-      </Modal>
+                    <FacebookShareButton url={refUrl} quote={title}>
+                      <FacebookIcon size={32} round />
+                    </FacebookShareButton>
+                    <TwitterShareButton url={refUrl} title={title}>
+                      <TwitterIcon size={32} round />
+                    </TwitterShareButton>
+                    <RedditShareButton
+                      url={refUrl}
+                      title={title}
+                      windowWidth={660}
+                      windowHeight={460}
+                    >
+                      <RedditIcon size={32} round />
+                    </RedditShareButton>
+                    <TumblrShareButton
+                      url={refUrl}
+                      title={title}
+                      windowWidth={660}
+                      windowHeight={460}
+                    >
+                      <TumblrIcon size={32} round />
+                    </TumblrShareButton>
+                    <CopyToClipboard text={refUrl}>
+                      <Tooltip
+                        title={
+                          copied
+                            ? t("Copied url to clipboard")
+                            : t("Copy referral url")
+                        }
+                        placement="top"
+                        onClick={() => this.toggleCopied(true)}
+                        onClose={() => this.toggleCopied(false)}
+                      >
+                        <span
+                          style={{
+                            width: "32px",
+                            height: "32px",
+                            cursor: "pointer"
+                          }}
+                          className="copyIcon"
+                        >
+                          <svg viewBox="0 0 64 64" width="32" height="32">
+                            <g>
+                              <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
+                              <LinkIcon className="linksvg" />
+                            </g>
+                          </svg>
+                        </span>
+                      </Tooltip>
+                    </CopyToClipboard>
+                    <EmailShareButton
+                      url={refUrl}
+                      subject={title}
+                      body={title + "." + t("checkout") + ":" + refUrl}
+                    >
+                      <EmailIcon size={32} round />
+                    </EmailShareButton>
+                  </div>
+                </div>
+              </ErrorBoundary>
+            </Modal>
+          );
+        }}
+      </Query>
     );
   }
 }

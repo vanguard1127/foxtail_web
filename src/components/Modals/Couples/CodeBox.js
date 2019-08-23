@@ -61,7 +61,7 @@ class CodeBox extends PureComponent {
                 <EmailShareButton
                   url={code}
                   subject={t("jointitle") + "."}
-                  body={t("joindets") + "." + code + t("expires")}
+                  body={t("joindets") + " - " + code + " " + t("expires")}
                 >
                   <EmailIcon size={32} round />
                 </EmailShareButton>

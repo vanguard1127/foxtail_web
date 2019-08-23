@@ -204,7 +204,7 @@ class NoticesItem extends Component {
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               {alert.name}
-              {this.props.t("common:" + alert.body) + " " + alert.event}
+              {this.props.t("common:" + alert.body) + " "} {alert.event}
             </DialogContentText>
           </DialogContent>
         )}
@@ -299,8 +299,6 @@ class NoticesItem extends Component {
 
                 const { notifications, alert } = data.getNotifications;
 
-                //TODO: TICKET: 290 find why this is rerendering so much
-                //console.log("WHY AM I HAPPENING MULTIPLE TIMES");
                 return (
                   <span>
                     <Menu

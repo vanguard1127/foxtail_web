@@ -19,10 +19,10 @@ class Signup extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const { mem, eve, ErrorHandler, toast, t } = this.props;
+    const { mem, eve, ErrorHandler, toast, t, tReady } = this.props;
     ErrorHandler.setBreadcrumb("Signup loaded");
     if (mem || eve) {
-      toast.info(t("common:pleaselogin"));
+      toast.info(tReady ? t("common:pleaselogin") : "Please login first");
     }
   }
 

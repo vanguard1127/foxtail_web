@@ -848,7 +848,6 @@ export const GET_CURRENT_USER = gql`
       isEmailOK
       tours
       announcement
-      maintanence
       distanceMetric
       coupleProfileName
       location {
@@ -971,5 +970,17 @@ export const GET_PROFILE = gql`
       likedByMe
       msgdByMe
     }
+  }
+`;
+
+export const GET_FULL_LINK = gql`
+  query($shortenedUrl: String!) {
+    getFullLink(shortenedUrl: $shortenedUrl)
+  }
+`;
+
+export const SET_FULL_LINK = gql`
+  query($url: String!) {
+    setFullLink(url: $url)
   }
 `;

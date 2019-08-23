@@ -23,12 +23,9 @@ class Settings extends Component {
     return false;
   }
   componentDidMount() {
+    const { session, t, tReady } = this.props;
     this.mounted = true;
     document.title = this.props.t("common:myaccount");
-  }
-
-  componentDidUpdate() {
-    const { session, t, tReady } = this.props;
 
     if (session && !session.currentuser.isProfileOK && tReady) {
       if (!toast.isActive("nopro")) {

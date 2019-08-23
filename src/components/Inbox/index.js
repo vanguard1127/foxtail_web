@@ -216,7 +216,6 @@ class InboxPage extends Component {
 
     let chatID = this.props.location.state && this.props.location.state.chatID;
 
-    console.log("CHATID", chatID);
     const inboxPanel = (
       <Mutation
         mutation={READ_CHAT}

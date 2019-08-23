@@ -20,13 +20,6 @@ class Menu extends PureComponent {
     this.mounted = false;
   }
 
-  //TODO: ticket 294: menu count wont update if clicked to rigth of notifcstions
-  // componentDidUpdate() {
-  //   if (this.props.closeAction && this.state.menuOpen === false) {
-  //     this.props.closeAction();
-  //   }
-  // }
-
   handleClickOutside = async event => {
     if (
       this.wrapperRef &&

@@ -57,7 +57,11 @@ class SearchEvents extends Component {
   }
   componentDidMount() {
     this.mounted = true;
-    document.title = this.props.t("searchevents");
+    if (this.props.tReady) {
+      document.title = this.props.t("searchevents");
+    } else {
+      document.title = "Search Events";
+    }
   }
   componentWillUnmount() {
     this.clearSearchResults();
@@ -303,7 +307,12 @@ class SearchEvents extends Component {
                       return (
                         <section
                           className="not-found"
-                          style={{ display: "block" }}
+                          style={{
+                            display: "inline-block",
+                            position: "unset",
+                            top: "unset",
+                            transform: "unset"
+                          }}
                         >
                           <div className="container" ref={this.targetElement}>
                             {/* <div className="col-md-12">

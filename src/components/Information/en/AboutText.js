@@ -5,7 +5,7 @@ const AboutText = () => (
       <div align="center" className="centerscreenX">
         Society stifles sexuality
         <br />
-        Most people have unmet sexual needs
+        Most have unmet sexual needs
         <br />
         Fear keeps us from our desires
         <br />

@@ -81,48 +81,45 @@ class Couples extends Component {
       ErrorHandler: { ErrorBoundary }
     } = this.props;
     return (
-      <Modal header={t("joinme")} close={close} className="couples">
+      <Modal close={close} className="couples">
         <section className="couple-popup-content">
           <div className="container">
             <div className="col-md-12">
-              <div className="row">
-                <div className="page">
-                  <div className="form">
-                    {currSlide === 1 && (
-                      <div className="content">
-                        <ErrorBoundary>
-                          <LinkBox
-                            code={code}
-                            handleTextChange={this.handleTextChange}
-                            next={this.next}
-                            t={t}
-                          />
-                        </ErrorBoundary>{" "}
-                        <ErrorBoundary>
-                          <CodeBox
-                            includeMsgs={includeMsgs}
-                            setValue={setValue}
-                            t={t}
-                          />{" "}
-                        </ErrorBoundary>
-                      </div>
-                    )}
-                    {currSlide === 2 && (
-                      <ErrorBoundary>
-                        {" "}
-                        <IncludeMsgSlide
-                          prev={this.prev}
-                          close={close}
-                          includeMsgs={includeMsgs}
-                          code={code}
-                          setValue={setValue}
-                          handleLink={this.handleLink}
-                          t={t}
-                        />{" "}
-                      </ErrorBoundary>
-                    )}
+              <div className="form">
+                {currSlide === 1 && (
+                  <div className="content">
+                    <div className="couple-cover" />
+                    <ErrorBoundary>
+                      <LinkBox
+                        code={code}
+                        handleTextChange={this.handleTextChange}
+                        next={this.next}
+                        t={t}
+                      />
+                    </ErrorBoundary>{" "}
+                    <ErrorBoundary>
+                      <CodeBox
+                        includeMsgs={includeMsgs}
+                        setValue={setValue}
+                        t={t}
+                      />{" "}
+                    </ErrorBoundary>
                   </div>
-                </div>
+                )}
+                {currSlide === 2 && (
+                  <ErrorBoundary>
+                    {" "}
+                    <IncludeMsgSlide
+                      prev={this.prev}
+                      close={close}
+                      includeMsgs={includeMsgs}
+                      code={code}
+                      setValue={setValue}
+                      handleLink={this.handleLink}
+                      t={t}
+                    />{" "}
+                  </ErrorBoundary>
+                )}
               </div>
             </div>
           </div>

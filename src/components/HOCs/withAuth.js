@@ -8,11 +8,10 @@ import Spinner from "../common/Spinner";
 
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
-  const { location, t } = props;
+  const { location } = props;
 
   return (
-    //TODO: See when cache-first works and add here
-    <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
+    <Query query={GET_CURRENT_USER} fetchPolicy="no-cache">
       {({ data, loading, refetch }) => {
         if (loading) {
           return <Spinner size="large" />;
@@ -21,30 +20,6 @@ const withAuth = conditionFunc => Component => props => {
         if (data) {
           if (data.currentuser === undefined || data.currentuser === null) {
             return <Spinner size="large" />;
-          } else if (data.currentuser.maintanence === true) {
-            return (
-              <section className="not-found">
-                <div className="container">
-                  <div className="col-md-12">
-                    <div className="icon">
-                      <i className="nico cogs" />
-                    </div>
-                    <span className="head">{t("We'll Be Right Back")}</span>
-                    <span className="description">
-                      {t(
-                        "Foxtail is currently being upgraded. Please check back soon!"
-                      )}
-                    </span>
-                    <span className="description">
-                      {t("Sorry for any inconveience.")}
-                    </span>
-                    <div>
-                      <span className="logo"></span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            );
           } else if (data.currentuser.captchaReq === true) {
             return <ReCaptcha />;
           }
@@ -90,6 +65,7 @@ const withAuth = conditionFunc => Component => props => {
         }
 
         if (conditionFunc(data)) {
+          console.log("PRO", data.currentuser.isProfileOK);
           if (
             !data.currentuser.isProfileOK &&
             ~window.location.href.indexOf("/settings") === 0
@@ -133,8 +109,7 @@ const withAuth = conditionFunc => Component => props => {
             }
           }
         }
-        //TODO: See of twe need to call withAuth so much
-        //console.log(":SESISN", data);
+
         return <Component {...props} session={data} refetch={refetch} />;
       }}
     </Query>

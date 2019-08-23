@@ -4726,6 +4726,17 @@ section.settings .page.mtop {
   margin-top: 15px;
 }
 
+section.settings .deactivate{
+  display: flex !important;
+  justify-content: center;
+  color: #9e9e9e;
+  margin-top: 25px;
+}
+
+section.settings .deactivate span{
+  cursor: pointer;
+}
+
 /*---- FORM ELEMENTS ----*/
 
 input.location-search-input {
@@ -5481,7 +5492,7 @@ section.meet-filter .range-con {
 
 .page .form .content .verification-box span.clickverify-btn,
 .page .form .content .verification-box a.clickverify-btn {
-  height: 40px;
+  /* height: 40px; */
   line-height: 40px;
   text-align: center;
   color: #fff !important;
@@ -5500,6 +5511,14 @@ section.meet-filter .range-con {
 .page .form .content .verification-box span.clickverify-btn:hover,
 .page .form .content .verification-box a.clickverify-btn:hover {
   background-color: #00be4f;
+}
+
+.page .form .content .verification-box span.resetemail {
+  background-color: #00a9ff;
+}
+
+.page .form .content .verification-box span.resetemail:hover {
+  background-color: #1f71e0;
 }
 
 /*---- DESIRES SELECTED */
@@ -5937,6 +5956,20 @@ section.desires-popup .modal-popup .m-body .desires-list-con ul li {
   section.profile .data-info .functions .btn{
     border: 1px solid #dfe1e5;
   }
+  section.profile .data-info .functions .btn {
+    background-color: #fff;
+}
+section.profile .data-info .functions .btn::before {
+  color: #cf003c;
+
+}
+section.profile .data-info .functions .btn:hover {
+  background-color: #cf003c;
+}
+section.profile .data-info .functions .btn:hover::before {
+color: #fff;
+
+}
 }
 
 section.desires-popup .modal-popup .m-body .desires-list-con ul li input {
@@ -7906,11 +7939,19 @@ section.settings textarea.bio {
   height: 211px;
   display: inline-block;
   float: left;
-  margin-bottom: 15px;
   background-image: url("../img/elements/blackmember-cover.png");
   background-size: 100%;
   background-repeat: no-repeat;
   margin-bottom: 15px;
+}
+
+.couple-cover {
+  width: 100%;
+  height: 170px;
+  display: inline-block;
+  background-image: url("../img/elements/couple-cover.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 h3.black-head {

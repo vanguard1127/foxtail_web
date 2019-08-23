@@ -4,16 +4,17 @@ import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
 import Spinner from "../../common/Spinner";
 import axios from "axios";
-//TODO: BEST WAY TO HANDLE URLS BY ENVIRONMENT
+
 function onChange(value) {
-  axios
-    .post(
-      process.env.NODE_ENV === "production"
-        ? "https://foxtailapp.com/allowIp"
-        : "http://localhost:4444/allowIp",
-      { capToken: value }
-    )
-    .then(go());
+  axios.post("http://localhost:4444/allowIp", { capToken: value }).then(go());
+  // axios
+  //   .post(
+  //     process.env.NODE_ENV === "production"
+  //       ? process.env.REACT_APP_PROD_API_URL + "/allowIp"
+  //       : "http://localhost:4444/allowIp",
+  //     { capToken: value }
+  //   )
+  //   .then(go());
 }
 
 const go = () => {
@@ -31,6 +32,12 @@ const ReCaptcha = ({ t, tReady }) => {
       </Modal>
     );
   }
+  //TODO: UNdo the chnges for therbuttin
+  console.log(
+    process.env.NODE_ENV,
+    process.env.NODE_ENV === "production",
+    process.env.REACT_APP_PROD_API_URL + "/allowIp"
+  );
   return (
     <Modal
       header={"Are you Human?"}
@@ -43,6 +50,8 @@ const ReCaptcha = ({ t, tReady }) => {
           sitekey={process.env.REACT_APP_GOOGLE_CLIENT_KEY}
           onChange={value => onChange(value)}
         />
+
+        <button onClick={value => onChange(value)}>FIX</button>
         <br />
       </div>
     </Modal>
