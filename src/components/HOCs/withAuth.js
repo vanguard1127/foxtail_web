@@ -11,7 +11,7 @@ const withAuth = conditionFunc => Component => props => {
   const { location } = props;
 
   return (
-    <Query query={GET_CURRENT_USER} fetchPolicy="no-cache">
+    <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
       {({ data, loading, refetch }) => {
         if (loading) {
           return <Spinner size="large" />;
@@ -65,7 +65,7 @@ const withAuth = conditionFunc => Component => props => {
         }
 
         if (conditionFunc(data)) {
-          console.log("PRO", data.currentuser.isProfileOK);
+          console.log("Is Profile OK (HOC):", data.currentuser.isProfileOK);
           if (
             !data.currentuser.isProfileOK &&
             ~window.location.href.indexOf("/settings") === 0

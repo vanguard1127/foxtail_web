@@ -33,11 +33,6 @@ const ReCaptcha = ({ t, tReady }) => {
     );
   }
   //TODO: UNdo the chnges for therbuttin
-  console.log(
-    process.env.NODE_ENV,
-    process.env.NODE_ENV === "production",
-    process.env.REACT_APP_PROD_API_URL + "/allowIp"
-  );
   return (
     <Modal
       header={"Are you Human?"}

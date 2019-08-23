@@ -200,9 +200,8 @@ class SettingsPage extends Component {
       if (this.mounted) {
         if (isDeleted) {
           publicPhotos = publicPhotos.filter(x => x.id !== file.id);
-          this.setState({ showModal: false });
+          this.setState({ showModal: false }, () => this.fillInErrors());
           toast.success(t("photodel"));
-          this.fillInErrors();
         } else {
           publicPhotos = [
             ...publicPhotos,
@@ -263,6 +262,7 @@ class SettingsPage extends Component {
               }
             }
           })
+          .then(() => this.props.refetchUser())
           .then(() => {
             this.resetAcctSettingState();
           })
@@ -367,8 +367,8 @@ class SettingsPage extends Component {
     if (this.mounted) {
       this.setState({ profilePic: key, profilePicUrl: url }, () => {
         this.handleSubmit(this.updateSettings);
-        this.fillInErrors();
         this.props.refetchUser();
+        this.fillInErrors();
       });
     }
   };
@@ -526,7 +526,7 @@ class SettingsPage extends Component {
     });
   };
 
-  fillInErrors = async () => {
+  fillInErrors = () => {
     const { about, publicPhotos, profilePic, desires } = this.state;
 
     const { t } = this.props;
@@ -553,8 +553,10 @@ class SettingsPage extends Component {
       this.isNull(this.state.errors.about) !== this.isNull(aboutErr) ||
       this.isNull(this.state.errors.desires) !== this.isNull(desiresErr)
     ) {
-      await this.handleSubmit(this.updateSettings);
-      await this.props.refetchUser();
+      console.log("SAVED SETTINGS");
+      this.handleSubmit(this.updateSettings);
+      console.log("REFETCH USER?");
+      this.props.refetchUser();
     }
 
     this.setState({
@@ -568,6 +570,10 @@ class SettingsPage extends Component {
 
   isNull = word => {
     return word === null;
+  };
+
+  RefetchTest = () => {
+    this.props.refetchUser();
   };
   render() {
     const {
@@ -675,6 +681,7 @@ class SettingsPage extends Component {
                   <div className="row">
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
+                        <button onClick={this.RefetchTest}>TEST REF</button>
                         <ProfilePic
                           profilePic={profilePicUrl}
                           ErrorBoundary={ErrorHandler.ErrorBoundary}
