@@ -4,6 +4,7 @@ import milesToKilometers from "../../../utils/distanceMetric";
 class ProfileInfoBox extends PureComponent {
   render() {
     const { users, online, distance, t, dayjs, distanceMetric } = this.props;
+
     return (
       <>
         <span className={online ? "name online" : "name"}>

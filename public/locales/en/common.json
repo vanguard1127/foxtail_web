@@ -231,5 +231,6 @@
   "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox.": "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox.",
   "Profile no longer exists": "Profile no longer exists",
   "Reset email has been sent to you within the last 5 minutes. Please check your spam.": "Reset email has been sent to you within the last 5 minutes. Please check your spam.",
-  "Please enter a valid url": "Please enter a valid url"
+  "Please enter a valid url": "Please enter a valid url",
+  "Error occurred please try again.": "Error occurred please try again."
 }

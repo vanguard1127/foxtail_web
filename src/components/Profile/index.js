@@ -139,14 +139,16 @@ class ProfilePage extends Component {
       .then(({ data }) => {
         switch (data.likeProfile) {
           case "like":
-            // toast.success(t("common:Liked") + profile.profileName + "!");
+            toast.success(t("common:Liked") + " " + profile.profileName + "!");
             ReactGA.event({
               category: "Profile",
               action: "Like"
             });
             break;
           case "unlike":
-            // toast.success(t("common:UnLiked") + profile.profileName + "!");
+            toast.success(
+              t("common:UnLiked") + " " + profile.profileName + "!"
+            );
             ReactGA.event({
               category: "Profile",
               action: "UnLike"

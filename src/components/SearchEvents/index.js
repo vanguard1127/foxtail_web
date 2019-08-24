@@ -216,7 +216,6 @@ class SearchEvents extends Component {
       ErrorHandler,
       session,
       refetch,
-      locationErr,
       history,
       ReactGA,
       tReady
@@ -281,6 +280,7 @@ class SearchEvents extends Component {
                   fetchPolicy="cache-first"
                 >
                   {({ data, loading, error, fetchMore }) => {
+                    console.log("IN QUERTY", lat);
                     if (loading) {
                       return (
                         <Spinner
@@ -356,7 +356,23 @@ class SearchEvents extends Component {
                   }}
                 </Query>
               ) : (
-                locationErr
+                <section className="not-found" style={{ display: "block" }}>
+                  <div className="container">
+                    <div className="col-md-12">
+                      <div className="icon">
+                        <i className="nico location" />
+                      </div>
+                      <span className="head">
+                        {t("Location not available.")}
+                      </span>
+                      <span className="description">
+                        {t(
+                          "Please enable location services on your device to see this page."
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </section>
               )}
             </ErrorHandler.ErrorBoundary>
           </section>

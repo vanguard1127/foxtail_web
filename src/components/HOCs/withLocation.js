@@ -71,7 +71,9 @@ const withLocation = PassedComponent =>
 
         if (citycntry === null) {
           const { toast } = require("react-toastify");
-          toast.error(i18next.t("locerror"));
+          if (!toast.isActive("locerror")) {
+            toast.error(i18next.t("common:locerror"), { toastId: "locerror" });
+          }
         } else {
           if (this.mounted) {
             this.setState({

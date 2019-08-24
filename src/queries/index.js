@@ -557,6 +557,7 @@ export const SEARCH_PROFILES = gql`
         desires
         profileName
         profilePic
+        distance
         users {
           id
           username

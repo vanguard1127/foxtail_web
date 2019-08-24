@@ -236,7 +236,7 @@ class SettingsPage extends Component {
       });
     }
   };
-  handleSubmit = updateSettings => {
+  handleSubmit = (updateSettings, doRefetch) => {
     const { ErrorHandler, isCouple, isInitial, t, ReactGA } = this.props;
     this.setErrorHandler("Settings updated...");
 
@@ -265,6 +265,9 @@ class SettingsPage extends Component {
           })
           .then(() => {
             this.resetAcctSettingState();
+            if (doRefetch) {
+              this.props.refetchUser();
+            }
           })
           .catch(res => {
             this.resetAcctSettingState();
@@ -287,7 +290,9 @@ class SettingsPage extends Component {
         })
         .then(() => {
           this.resetAcctSettingState();
-          //  refetchUser();
+          if (doRefetch) {
+            this.props.refetchUser();
+          }
         })
         .catch(res => {
           this.resetAcctSettingState();
@@ -312,8 +317,7 @@ class SettingsPage extends Component {
             country: citycntry.country
           },
           () => {
-            this.handleSubmit(updateSettings);
-            this.props.refetchUser();
+            this.handleSubmit(updateSettings, true);
           }
         );
       }
@@ -366,9 +370,8 @@ class SettingsPage extends Component {
   setProfilePic = ({ key, url }) => {
     if (this.mounted) {
       this.setState({ profilePic: key, profilePicUrl: url }, () => {
-        this.handleSubmit(this.updateSettings);
-        this.fillInErrors();
-        this.props.refetchUser();
+        this.fillInErrors(true);
+        this.handleSubmit(this.updateSettings, true);
       });
     }
   };
@@ -526,7 +529,7 @@ class SettingsPage extends Component {
     });
   };
 
-  fillInErrors = async () => {
+  fillInErrors = async skipSave => {
     const { about, publicPhotos, profilePic, desires } = this.state;
 
     const { t } = this.props;
@@ -553,8 +556,9 @@ class SettingsPage extends Component {
       this.isNull(this.state.errors.about) !== this.isNull(aboutErr) ||
       this.isNull(this.state.errors.desires) !== this.isNull(desiresErr)
     ) {
-      await this.handleSubmit(this.updateSettings);
-      await this.props.refetchUser();
+      if (!skipSave) {
+        await this.handleSubmit(this.updateSettings, true);
+      }
     }
 
     this.setState({
@@ -568,9 +572,6 @@ class SettingsPage extends Component {
 
   isNull = word => {
     return word === null;
-  };
-  RefetchTest = () => {
-    this.props.refetchUser();
   };
 
   render() {
@@ -679,7 +680,6 @@ class SettingsPage extends Component {
                   <div className="row">
                     <div className="col-md-12 col-lg-3">
                       <div className="sidebar">
-                        <button onClick={this.RefetchTest}>TEST REF</button>
                         <ProfilePic
                           profilePic={profilePicUrl}
                           ErrorBoundary={ErrorHandler.ErrorBoundary}

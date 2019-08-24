@@ -387,6 +387,7 @@ class ProfilesContainer extends Component {
                         dayjs={dayjs}
                         likedProfiles={likedProfiles}
                         msgdProfiles={msgdProfiles}
+                        distanceMetric={distanceMetric}
                       />
                     )}
                     {result.profiles.length !== 0 && (

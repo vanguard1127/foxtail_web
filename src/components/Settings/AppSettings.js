@@ -33,7 +33,7 @@ class AppSettings extends Component {
       ErrorBoundary,
       isBlackMember
     } = this.props;
-
+    //TODO: Finish black check message
     return (
       <ErrorBoundary>
         <div className="content">
@@ -159,6 +159,7 @@ class AppSettings extends Component {
                             value: !showOnline ? true : false
                           });
                         }}
+                        onClick={e => !isBlackMember && console.log("FFDDFFD")}
                         disabled={!isBlackMember}
                       />
                       <label htmlFor="hide_online_status" />

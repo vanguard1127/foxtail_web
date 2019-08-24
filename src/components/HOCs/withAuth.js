@@ -65,7 +65,6 @@ const withAuth = conditionFunc => Component => props => {
         }
 
         if (conditionFunc(data)) {
-          console.log("Is Profile OK:", data.currentuser.isProfileOK);
           if (
             !data.currentuser.isProfileOK &&
             ~window.location.href.indexOf("/settings") === 0

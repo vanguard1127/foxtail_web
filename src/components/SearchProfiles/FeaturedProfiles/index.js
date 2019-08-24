@@ -43,7 +43,8 @@ class FeaturedDiv extends Component {
       history,
       dayjs,
       likedProfiles,
-      msgdProfiles
+      msgdProfiles,
+      distanceMetric
     } = this.props;
 
     return (
@@ -98,6 +99,7 @@ class FeaturedDiv extends Component {
                       history={history}
                       liked={likedProfiles.includes(profile.id)}
                       msgd={msgdProfiles.includes(profile.id)}
+                      distanceMetric={distanceMetric}
                     />
                   );
                 })}

@@ -21,7 +21,8 @@ class FeaturedCard extends Component {
       t,
       dayjs,
       liked,
-      msgd
+      msgd,
+      distanceMetric
     } = this.props;
 
     const stdCheck = profile.users.every(
@@ -44,7 +45,12 @@ class FeaturedCard extends Component {
       <div className={"item " + badge}>
         <div className="info">
           <span onClick={() => history.push("/member/" + profile.id)}>
-            <ProfileInfoDiv profile={profile} t={t} dayjs={dayjs} />
+            <ProfileInfoDiv
+              profile={profile}
+              t={t}
+              dayjs={dayjs}
+              distanceMetric={distanceMetric}
+            />
             <ProfilePic profilePic={profile.profilePic} />
           </span>
         </div>

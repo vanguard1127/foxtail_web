@@ -1,6 +1,7 @@
 {
   "Verifications": "Verifications",
   "vertitle": "Verified members get more responses",
+  "ManageBlackSub": "Manage Subscription",
   "photoverification": "Photo Verification",
   "photovermsg": "Show members you are who you say you are",
   "sendver": "Send Verification",
@@ -57,5 +58,8 @@
   "usrupd": "Change Username",
   "usrupddes": "You may change your username every 30 days.",
   "updgen": "Change Gender",
-  "updgendes": "You may only change your gender once!"
+  "updgendes": "You may only change your gender once!",
+  "deletepic": "Delete Photo",
+  "updatepro": "Set Profile Photo",
+  "viewpic": "Preview Photo"
 }
