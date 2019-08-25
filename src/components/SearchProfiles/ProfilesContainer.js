@@ -8,6 +8,7 @@ import FeaturedProfiles from "./FeaturedProfiles/";
 import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
+import DailyLimitModal from "../Modals/DailyLimit";
 import ShareModal from "../Modals/Share";
 import { toast } from "react-toastify";
 import { SEARCHPROS_LIMIT } from "../../docs/consts";
@@ -490,31 +491,11 @@ class ProfilesContainer extends Component {
                       </Modal>
                     )}
                     {maxLikeDlgVisible && (
-                      <Modal
-                        header={"Daily Like Limit Reached"}
-                        close={() => this.setMaxLikeDlgVisible()}
-                        okSpan={
-                          <span
-                            className="color"
-                            onClick={async () =>
-                              this.props.history.push({
-                                state: { showBlkMdl: true },
-                                pathname: "/settings"
-                              })
-                            }
-                          >
-                            UPGRADE TO BLACK
-                          </span>
-                        }
-                      >
-                        <span
-                          className="description"
-                          style={{ fontSize: "20px", paddingBottom: "35px" }}
-                        >
-                          Daily like limit reached. Please come back tomorrow.
-                          Or become a Black Member and have unlimited likes
-                        </span>
-                      </Modal>
+                      <DailyLimitModal
+                        close={this.setMaxLikeDlgVisible}
+                        t={t}
+                        history={this.props.history}
+                      />
                     )}
                   </>
                 );

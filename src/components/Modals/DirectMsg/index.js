@@ -38,7 +38,7 @@ class DirectMsg extends Component {
 
   handleSubmit = (e, sendMessage) => {
     e.preventDefault();
-    const { t, close, setMsgd, ReactGA, profile, ErrorHandler } = this.props;
+    const { t, close, setMsgd, ReactGA, ErrorHandler } = this.props;
     ErrorHandler.setBreadcrumb("send direct message");
     this.setState({ sending: true }, () => {
       sendMessage()
@@ -52,7 +52,7 @@ class DirectMsg extends Component {
               action: "Send Direct Msg"
             });
             if (setMsgd) {
-              setMsgd(profile.id);
+              setMsgd();
             } else {
               close();
             }

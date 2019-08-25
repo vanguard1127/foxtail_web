@@ -16,10 +16,8 @@ import ProfileDetails from "./ProfileDetails";
 import PhotoSlider from "./PhotoSlider";
 import BlockModal from "../Modals/Block";
 import ShareModal from "../Modals/Share";
-import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
 import { flagOptions } from "../../docs/options";
-import deleteFromCache from "../../utils/deleteFromCache";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
@@ -27,8 +25,8 @@ class ProfilePage extends Component {
   state = {
     shareModalVisible: false,
     blockModalVisible: false,
-    msgModalVisible: false,
     profile: null,
+    matched: false,
     matchDlgVisible: false,
     chatID: null
   };
@@ -38,8 +36,8 @@ class ProfilePage extends Component {
       this.state.blockModalVisible !== nextState.blockModalVisible ||
       this.state.chatID !== nextState.chatID ||
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
-      this.state.msgModalVisible !== nextState.msgModalVisible ||
       this.state.profile !== nextState.profile ||
+      this.state.matched !== nextState.matched ||
       this.state.shareModalVisible !== nextState.shareModalVisible ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady
@@ -59,7 +57,8 @@ class ProfilePage extends Component {
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
     this.props.ErrorHandler.setBreadcrumb("Match Dialog Toggled:");
     if (this.mounted) {
-      if (profile) this.setState({ profile, matchDlgVisible, chatID });
+      if (profile)
+        this.setState({ profile, matchDlgVisible, chatID, matched: true });
       else this.setState({ matchDlgVisible });
     }
   };
@@ -75,29 +74,6 @@ class ProfilePage extends Component {
   setProfile = profile => {
     if (this.mounted) {
       this.setState({ profile });
-    }
-  };
-
-  setMsgModalVisible = (msgModalVisible, profile) => {
-    this.props.ErrorHandler.setBreadcrumb(
-      "Message Modal Opened:" + msgModalVisible
-    );
-
-    if (!this.props.session.currentuser.blackMember.active) {
-      if (!toast.isActive("directerr")) {
-        toast.info(this.props.t("common:directerr"), {
-          position: toast.POSITION.TOP_CENTER,
-          toastId: "directerr"
-        });
-      }
-      return;
-    }
-    if (this.mounted) {
-      if (profile) {
-        this.setState({ profile, msgModalVisible });
-      } else {
-        this.setState({ msgModalVisible });
-      }
     }
   };
 
@@ -131,7 +107,7 @@ class ProfilePage extends Component {
     this.props.history.push("/members");
   };
 
-  handleLike = (profile, likeProfile, refetch) => {
+  handleLike = (profile, likeProfile) => {
     const { ErrorHandler, t, ReactGA } = this.props;
     ErrorHandler.setBreadcrumb("Like Profile:" + likeProfile);
 
@@ -162,27 +138,21 @@ class ProfilePage extends Component {
             });
             break;
         }
-        refetch();
+        //  refetch();
       })
       .catch(res => {
         ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
-  setMessaged = (profileID, refetch) => {
-    this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
-    if (this.mounted) {
-      this.setState({ msgModalVisible: false });
-      refetch();
-    }
-  };
+
   render() {
     const { id } = this.props.match.params;
     const {
       blockModalVisible,
       shareModalVisible,
-      msgModalVisible,
       matchDlgVisible,
-      chatID
+      chatID,
+      matched
     } = this.state;
     const { t, ErrorHandler, session, ReactGA, tReady } = this.props;
 
@@ -267,9 +237,19 @@ class ProfilePage extends Component {
                               }
                               t={t}
                               liked={profile.likedByMe}
-                              msgd={profile.msgdByMe}
-                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              msgd={profile.msgdByMe || matched}
+                              ErrorHandler={ErrorHandler}
                               isSelf={session.currentuser.profileID === id}
+                              toast={toast}
+                              ReactGA={ReactGA}
+                              isBlackMember={
+                                this.props.session.currentuser.blackMember
+                                  .active
+                              }
+                              history={this.props.history}
+                              likesToday={
+                                this.props.session.currentuser.likesToday
+                              }
                             />
                             <DesiresSection
                               desires={desires}
@@ -349,15 +329,7 @@ class ProfilePage extends Component {
                         ErrorBoundary={ErrorHandler.ErrorBoundary}
                       />
                     )}
-                    {profile && msgModalVisible && (
-                      <DirectMsgModal
-                        profile={profile}
-                        close={() => this.setMsgModalVisible(false)}
-                        ErrorHandler={ErrorHandler}
-                        setMsgd={pid => this.setMessaged(pid, refetch)}
-                        ReactGA={ReactGA}
-                      />
-                    )}
+
                     {profile && chatID && matchDlgVisible && (
                       <Modal
                         header={t("common:match")}

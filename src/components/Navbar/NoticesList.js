@@ -158,6 +158,8 @@ class NoticesList extends Component {
           </span>
         </div>
       );
+    } else if (!notif.fromProfile) {
+      return null;
     } else {
       return (
         <div
@@ -174,7 +176,11 @@ class NoticesList extends Component {
           <span>
             <span className="avatar">
               <img
-                src={notif.fromProfile ? notif.fromProfile.profilePic : ""}
+                src={
+                  notif.fromProfile
+                    ? notif.fromProfile.profilePic
+                    : "../assets/img/no-profile.png"
+                }
                 onContextMenu={preventContextMenu}
                 className="avatar"
                 alt="avatar"
