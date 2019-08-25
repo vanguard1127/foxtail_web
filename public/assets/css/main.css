@@ -3036,6 +3036,18 @@ section.profile .data-info ul li span.data {
   line-height: 19px;
   letter-spacing: -0.15px;
   display: flex;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 350px;
+}
+
+section.profile .data-info ul li span.data.lookfor {
+ display: inline-block;
+}
+
+
+section.profile .data-info ul li span.data.gender {
   justify-content: space-evenly;
 }
 
@@ -3144,26 +3156,29 @@ section.profile .photos-slider .slider-content .item {
   cursor: pointer;
 }
 
-section.profile .photos-slider .slider-content .item a {
+section.profile .photos-slider .slider-content .item div {
   width: 100%;
   height: 100%;
   display: inline-block;
   float: left;
   left: 0;
   top: 0;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 100%;
 }
 
-section.profile .photos-slider .slider-content .item a::before {
+section.profile .photos-slider .slider-content .item div::before {
   content: "";
   transition: 0.3s all;
 }
 
-section.profile .photos-slider .slider-content .item a:hover::before {
+section.profile .photos-slider .slider-content .item div:hover::before {
   content: "\e807";
   font-family: "foxtail-icon";
   width: 100%;
   height: 100%;
-  display: inline-block;
+  display: flex;
   float: left;
   position: absolute;
   background: rgba(0, 0, 0, 0.54);
@@ -3173,6 +3188,8 @@ section.profile .photos-slider .slider-content .item a:hover::before {
   color: #fff;
   z-index: 999;
   font-size: 40px;
+  justify-content: center;
+  flex-direction: column;
 }
 
 section.profile .photos-slider .slider-content .item img {
@@ -3182,6 +3199,7 @@ section.profile .photos-slider .slider-content .item img {
   float: left;
   background-size: 100%;
   background-repeat: no-repeat;
+  position: absolute;
 }
 
 section.profile .photos-slider.private .slider-content .item img.blur {

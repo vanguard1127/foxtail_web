@@ -28,6 +28,7 @@ import Footer from "./components/Footer/";
 import ReCaptcha from "./components/Modals/ReCaptcha";
 import ShortLinkRedirect from "./components/Redirect/ShortLinkRedirect";
 import tokenHandler from "./utils/tokenHandler";
+import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
 
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";

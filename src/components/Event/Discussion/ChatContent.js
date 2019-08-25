@@ -70,6 +70,7 @@ class ChatContent extends PureComponent {
         fetch-policy="cache-and-network"
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
+          console.log("RENDERING");
           if (loading) {
             return <div>{t("Loading")}</div>;
           }
@@ -85,7 +86,7 @@ class ChatContent extends PureComponent {
           }
 
           let messages = [];
-
+          //*****data doesnt update */
           if (
             data.getComments &&
             data.getComments !== null &&
@@ -93,7 +94,7 @@ class ChatContent extends PureComponent {
           ) {
             messages = data.getComments.messages || [];
           }
-          console.log("Rendered data", data);
+
           if (!this.unsubscribe) {
             this.unsubscribe = subscribeToMore({
               document: NEW_MESSAGE_SUB,

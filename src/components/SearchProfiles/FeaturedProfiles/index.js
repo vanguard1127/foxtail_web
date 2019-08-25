@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import OwlCarousel from "react-owl-carousel";
-import $ from "jquery";
-import "lightgallery";
 import FeaturedCard from "./FeaturedCard";
 import arraysEqual from "../../../utils/arraysEqual";
 
@@ -23,17 +21,6 @@ class FeaturedDiv extends Component {
     return false;
   }
 
-  onLightGallery = node => {
-    this.lightGallery = node;
-    $(node).lightGallery(configLightGallery);
-  };
-
-  componentWillUnmount() {
-    try {
-      $(this.lightGallery).lightGallery("destroy");
-    } catch (e) {}
-  }
-
   render() {
     const {
       featuredProfiles,
@@ -51,7 +38,7 @@ class FeaturedDiv extends Component {
       <section className="featured-profiles">
         <div className="container">
           <div className="col-md-12">
-            <div className="row" ref={this.onLightGallery}>
+            <div className="row">
               <span className="head">{t("featmems")}</span>
               <OwlCarousel
                 key={`carousel_${featuredProfiles.length +

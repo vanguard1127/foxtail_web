@@ -2,15 +2,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import OwlCarousel from "react-owl-carousel";
-import $ from "jquery";
-import "lightgallery";
 import { GET_MY_EVENTS } from "../../queries";
 import EventCard from "./EventCard/";
 
-const configLightGallery = {
-  selector: "a",
-  width: "100%"
-};
 class MyEvents extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.t !== nextProps.t) {
@@ -35,19 +29,6 @@ class MyEvents extends Component {
       }
     });
   };
-
-  onLightGallery = node => {
-    this.lightGallery = node;
-    $(node).lightGallery(configLightGallery);
-  };
-
-  componentWillUnmount() {
-    try {
-      $(this.lightGallery).lightGallery("destroy");
-    } catch (e) {
-      this.props.ErrorHandler.catchErrors(e);
-    }
-  }
 
   render() {
     const { t, ErrorHandler, dayjs, distanceMetric, lang } = this.props;

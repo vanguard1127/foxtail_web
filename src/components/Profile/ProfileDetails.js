@@ -29,7 +29,13 @@ class ProfileDetails extends Component {
     } else {
       distance = profile.distance + " " + t(distanceUnits);
     }
+    const lookingFor = profile.interestedIn.map((intrst, idx, arr) => {
+      if (idx === arr.length - 1) {
+        return t(sexOptions.find(el => el.value === intrst).label);
+      }
 
+      return t(sexOptions.find(el => el.value === intrst).label) + ", ";
+    });
     return (
       <ErrorBoundary>
         <div className="data-info">
@@ -38,7 +44,7 @@ class ProfileDetails extends Component {
               <span className="head">
                 {users[1] ? t("common:Genders") : t("common:Gender")}:
               </span>
-              <span className="data">
+              <span className="data gender">
                 <span className={"sex " + users[0].gender} />
                 {users[1] && <span className={"sex " + users[1].gender} />}
               </span>
@@ -49,16 +55,8 @@ class ProfileDetails extends Component {
             </li>
             <li>
               <span className="head">{t("lookfor")}:</span>
-              <span className="data">
-                {profile.interestedIn.map((intrst, idx, arr) => {
-                  if (idx === arr.length - 1) {
-                    return t(sexOptions.find(el => el.value === intrst).label);
-                  }
-
-                  return (
-                    t(sexOptions.find(el => el.value === intrst).label) + ", "
-                  );
-                })}
+              <span className="data lookfor" title={lookingFor}>
+                {lookingFor}
               </span>
             </li>
             <li>
