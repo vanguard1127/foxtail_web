@@ -3,7 +3,7 @@ export const preventContextMenu = e => {
   e.preventDefault();
   alert(
     i18n.t(
-      "common:Right-click disabled: Saving images on Foxtail will result in your account being banned."
+      "common:Right-click disabled - Saving images on Foxtail will result in your account being banned."
     )
   );
 };

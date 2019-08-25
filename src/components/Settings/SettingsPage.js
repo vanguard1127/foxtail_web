@@ -822,6 +822,7 @@ class SettingsPage extends Component {
                                 noSave: true
                               })
                             }
+                            toast={toast}
                             visible={visible}
                             lang={lang}
                             emailNotify={emailNotify}

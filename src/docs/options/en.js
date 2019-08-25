@@ -136,10 +136,10 @@ export const miOptions = [
 ];
 
 export const kiOptions = [
-  { label: "5 Kilometers", value: "5" },
-  { label: "10 Kilometers", value: "10" },
-  { label: "20 Kilometers", value: "20" },
-  { label: "50 Kilometers", value: "50" }
+  { label: "8 Kilometers", value: "5" },
+  { label: "16 Kilometers", value: "10" },
+  { label: "32 Kilometers", value: "20" },
+  { label: "80 Kilometers", value: "50" }
 ];
 
 export const langOptions = [

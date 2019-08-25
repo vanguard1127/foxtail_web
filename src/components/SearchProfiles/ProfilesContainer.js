@@ -21,6 +21,7 @@ class ProfilesContainer extends Component {
     msgModalVisible: false,
     profile: null,
     matchDlgVisible: false,
+    maxLikeDlgVisible: false,
     shareModalVisible: false,
     chatID: null,
     likedProfiles: [],
@@ -35,6 +36,7 @@ class ProfilesContainer extends Component {
       this.props.ageRange !== nextProps.ageRange ||
       this.props.interestedIn !== nextProps.interestedIn ||
       this.props.distanceMetric !== nextProps.distanceMetric ||
+      this.props.likesToday !== nextProps.likesToday ||
       this.props.isBlackMember !== nextProps.isBlackMember ||
       this.state.skip !== nextState.skip ||
       this.state.loading !== nextState.loading ||
@@ -42,6 +44,7 @@ class ProfilesContainer extends Component {
       this.state.msgModalVisible !== nextState.msgModalVisible ||
       this.state.profile !== nextState.profile ||
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
+      this.state.maxLikeDlgVisible !== nextState.maxLikeDlgVisible ||
       this.state.chatID !== nextState.chatID ||
       !arraysEqual(this.state.likedProfiles, nextState.likedProfiles) ||
       !arraysEqual(this.state.msgdProfiles, nextState.msgdProfiles) ||
@@ -64,6 +67,14 @@ class ProfilesContainer extends Component {
     const { cache } = this.props.client;
     deleteFromCache({ cache, query: "searchProfiles" });
     deleteFromCache({ cache, query: "getInbox" });
+  };
+
+  setMaxLikeDlgVisible = () => {
+    this.props.ErrorHandler.setBreadcrumb("Max Like Dialog Toggled:");
+
+    if (this.mounted) {
+      this.setState({ maxLikeDlgVisible: !this.state.maxLikeDlgVisible });
+    }
   };
 
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
@@ -112,7 +123,12 @@ class ProfilesContainer extends Component {
   };
 
   handleLike = (likeProfile, profile, featured) => {
-    this.props.ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
+    const { ErrorHandler, t, ReactGA, likesToday } = this.props;
+    ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
+    if (likesToday > 24) {
+      this.setMaxLikeDlgVisible();
+      return;
+    }
     let { likedProfiles } = this.state;
     if (likedProfiles.includes(profile.id)) {
       likedProfiles = likedProfiles.filter(
@@ -129,7 +145,6 @@ class ProfilesContainer extends Component {
     }
 
     if (this.mounted) {
-      const { ErrorHandler, t, ReactGA } = this.props;
       this.setState({ profile, likedProfiles }, () => {
         likeProfile()
           .then(({ data }) => {
@@ -269,7 +284,8 @@ class ProfilesContainer extends Component {
       loading,
       likedProfiles,
       msgdProfiles,
-      shareModalVisible
+      shareModalVisible,
+      maxLikeDlgVisible
     } = this.state;
     if (this.props.loading && loading) {
       return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
@@ -470,6 +486,33 @@ class ProfilesContainer extends Component {
                             profile.profileName +
                             " " +
                             t("common:likeach")}
+                        </span>
+                      </Modal>
+                    )}
+                    {maxLikeDlgVisible && (
+                      <Modal
+                        header={"Daily Like Limit Reached"}
+                        close={() => this.setMaxLikeDlgVisible()}
+                        okSpan={
+                          <span
+                            className="color"
+                            onClick={async () =>
+                              this.props.history.push({
+                                state: { showBlkMdl: true },
+                                pathname: "/settings"
+                              })
+                            }
+                          >
+                            UPGRADE TO BLACK
+                          </span>
+                        }
+                      >
+                        <span
+                          className="description"
+                          style={{ fontSize: "20px", paddingBottom: "35px" }}
+                        >
+                          Daily like limit reached. Please come back tomorrow.
+                          Or become a Black Member and have unlimited likes
                         </span>
                       </Modal>
                     )}

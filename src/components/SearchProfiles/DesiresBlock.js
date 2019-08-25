@@ -18,9 +18,12 @@ class DesiresBlock extends Component {
               {desires.reduce(function(result, desire) {
                 if (result.length < 2) {
                   if (desireOptions.find(el => el.value === desire)) {
+                    const desireLbl = t(
+                      desireOptions.find(el => el.value === desire).label
+                    );
                     result.push(
-                      <li key={desire}>
-                        {t(desireOptions.find(el => el.value === desire).label)}
+                      <li key={desire} title={desireLbl}>
+                        {desireLbl}
                       </li>
                     );
                     if (result.length > 1 && desires.length > 2) {

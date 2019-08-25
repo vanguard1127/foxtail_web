@@ -280,7 +280,6 @@ class SearchEvents extends Component {
                   fetchPolicy="cache-first"
                 >
                   {({ data, loading, error, fetchMore }) => {
-                    console.log("IN QUERTY", lat);
                     if (loading) {
                       return (
                         <Spinner

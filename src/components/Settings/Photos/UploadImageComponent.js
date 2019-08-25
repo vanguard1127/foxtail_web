@@ -5,7 +5,6 @@ import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import ViewIcon from "@material-ui/icons/RemoveRedEye";
 import StarIcon from "@material-ui/icons/Grade";
-import Dialog from "@material-ui/core/Dialog";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";

@@ -93,7 +93,7 @@ class ChatContent extends PureComponent {
           ) {
             messages = data.getComments.messages || [];
           }
-
+          console.log("Rendered data", data);
           if (!this.unsubscribe) {
             this.unsubscribe = subscribeToMore({
               document: NEW_MESSAGE_SUB,
@@ -104,25 +104,21 @@ class ChatContent extends PureComponent {
                 const { newMessageSubscribe } = subscriptionData.data;
 
                 if (!newMessageSubscribe) {
+                  return prev;
+                }
+                if (prev.getComments) {
+                  prev.getComments.messages = [
+                    newMessageSubscribe,
+                    ...prev.getComments.messages
+                  ];
+                } else {
                   prev.getComments = {
-                    messages: [],
+                    messages: [newMessageSubscribe],
                     __typename: "ChatType"
                   };
-                  return prev;
-                } else {
-                  if (prev.getComments) {
-                    prev.getComments.messages = [
-                      newMessageSubscribe,
-                      ...prev.getComments.messages
-                    ];
-                  } else {
-                    prev.getComments = {
-                      messages: [newMessageSubscribe],
-                      __typename: "ChatType"
-                    };
-                  }
                 }
-                return prev.getComments ? prev.getComments : { data: prev };
+                console.log("Update sent", prev);
+                return prev;
               }
             });
           }

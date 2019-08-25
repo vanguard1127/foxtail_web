@@ -6,6 +6,7 @@ import i18n from "../../i18n";
 const setLang = lang => {
   i18n.changeLanguage(lang);
 };
+
 class AppSettings extends Component {
   shouldComponentUpdate(nextProps) {
     if (
@@ -21,6 +22,15 @@ class AppSettings extends Component {
     }
     return false;
   }
+  warnBlk = () => {
+    console.log("CALLED");
+    const { toast } = this.props;
+    if (!toast.isActive("warnblk")) {
+      toast.info("This feature is only available for Black members", {
+        toastId: "warnblk"
+      });
+    }
+  };
   render() {
     const {
       setValue,
@@ -148,7 +158,10 @@ class AppSettings extends Component {
                     {t("hideonline")}:
                   </div>
                   <div className="sw-btn">
-                    <div className="switch">
+                    <div
+                      className="switch"
+                      onClick={e => !isBlackMember && this.warnBlk()}
+                    >
                       <input
                         type="checkbox"
                         id="hide_online_status"
@@ -159,7 +172,6 @@ class AppSettings extends Component {
                             value: !showOnline ? true : false
                           });
                         }}
-                        onClick={e => !isBlackMember && console.log("FFDDFFD")}
                         disabled={!isBlackMember}
                       />
                       <label htmlFor="hide_online_status" />
@@ -178,7 +190,10 @@ class AppSettings extends Component {
                     {t("onlyshow")}:
                   </div>
                   <div className="sw-btn">
-                    <div className="switch">
+                    <div
+                      className="switch"
+                      onClick={e => !isBlackMember && this.warnBlk()}
+                    >
                       <input
                         type="checkbox"
                         id="ilikeds"
