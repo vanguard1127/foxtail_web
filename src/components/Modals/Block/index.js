@@ -73,15 +73,14 @@ class BlockModal extends Component {
             action: "Block"
           });
           toast.success(t("chatreported"));
-          close();
         } else if (this.state.type === flagOptions.Event) {
           ReactGA.event({
             category: "Event",
             action: "Block"
           });
           toast.success(t("evereported"));
-          close();
         }
+        close();
       })
       .catch(res => {
         ErrorHandler.catchErrors(res.graphQLErrors);

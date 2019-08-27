@@ -23,7 +23,6 @@ class AppSettings extends Component {
     return false;
   }
   warnBlk = () => {
-    console.log("CALLED");
     const { toast } = this.props;
     if (!toast.isActive("warnblk")) {
       toast.info("This feature is only available for Black members", {
@@ -43,7 +42,7 @@ class AppSettings extends Component {
       ErrorBoundary,
       isBlackMember
     } = this.props;
-    //TODO: Finish black check message
+
     return (
       <ErrorBoundary>
         <div className="content">

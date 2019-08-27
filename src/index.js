@@ -45,7 +45,6 @@ import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
-import DevTools from "./DevTools";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
@@ -219,12 +218,6 @@ const Root = () => (
   </Router>
 );
 
-const NotFoundPage = () => (
-  <div>
-    404 - <Link to="/">Go home</Link>
-  </div>
-);
-
 const Wrapper = withRouter(props => {
   let location = props.location;
 
@@ -250,7 +243,14 @@ const Wrapper = withRouter(props => {
       return <ReCaptcha />;
     } else if (location.pathname === "/devtools") {
       if (process.env.NODE_ENV === "development") {
-        return <DevTools />;
+        import("./DevTools")
+          .then(DevTools => {
+            return <DevTools />;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        return;
       }
     } else if (location.pathname === "/" && location.search) {
       return <ShortLinkRedirect hash={location.search} />;

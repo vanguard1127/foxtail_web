@@ -70,23 +70,43 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "startLocal": "cross-env REACT_APP_LOCAL_SERVER=true && npm start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "build:dev": "webpack",
+    "build:prod": "webpack -p --env production",
+    "dev-server": "webpack-dev-server",
+    "test": "jest --config=jest.config.json",
+    "start": "node src/index.js",
+    "heroku-postbuild": "yarn run build:prod",
+    "serve": "live-server build/",
+    "startold": "react-scripts start",
+    "buildold": "react-scripts build",
+    "testold": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "cd C:/Users/cecil/Documents/FoxtailRepo/FT_Graph_Draft && npm start",
     "deploy": "aws s3 sync build/ s3://foxtail-app",
     "precommit": "lint-staged",
     "flow": "flow"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.5.5",
     "@svgr/webpack": "^4.3.2",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "cross-env": "^5.2.0",
+    "css-loader": "^3.2.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
+    "file-loader": "^4.2.0",
+    "json-loader": "^0.5.7",
+    "live-server": "^1.2.1",
+    "node-sass": "^4.12.0",
     "prettier": "^1.18.2",
-    "react-axe": "^3.2.0"
+    "react-axe": "^3.2.0",
+    "sass-loader": "^7.3.1",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
@@ -94,10 +114,17 @@
       "git add"
     ]
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "last 1 ie version"
+    ]
+  }
 }

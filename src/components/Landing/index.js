@@ -147,7 +147,7 @@ class Landing extends PureComponent {
                       >
                         {({ data, loading, error }) => {
                           if (loading) {
-                            return <div>Loading stats...</div>;
+                            return null;
                           } else if (error) {
                             console.error(error);
                             return null;

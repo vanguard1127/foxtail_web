@@ -8,7 +8,8 @@ class ChatContent extends PureComponent {
   unsubscribe = null;
   state = {
     cursor: null,
-    hasMoreItems: true
+    hasMoreItems: true,
+    messages: []
   };
 
   componentWillUnmount() {
@@ -51,6 +52,7 @@ class ChatContent extends PureComponent {
           ...previousResult.getComments.messages,
           ...fetchMoreResult.getComments.messages
         ];
+        this.setState({ messages: previousResult.getComments.messages });
 
         return previousResult.getComments
           ? previousResult.getComments
@@ -70,7 +72,6 @@ class ChatContent extends PureComponent {
         fetch-policy="cache-and-network"
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
-          console.log("RENDERING");
           if (loading) {
             return <div>{t("Loading")}</div>;
           }
@@ -94,7 +95,10 @@ class ChatContent extends PureComponent {
           ) {
             messages = data.getComments.messages || [];
           }
-
+          //NEED TO FORCE RERENDER OF SUBSCRIPTION
+          if (this.state.messages === []) {
+            this.setState({ messages });
+          }
           if (!this.unsubscribe) {
             this.unsubscribe = subscribeToMore({
               document: NEW_MESSAGE_SUB,
@@ -118,7 +122,8 @@ class ChatContent extends PureComponent {
                     __typename: "ChatType"
                   };
                 }
-                console.log("Update sent", prev);
+
+                this.setState({ messages: prev.getComments.messages });
                 return prev;
               }
             });

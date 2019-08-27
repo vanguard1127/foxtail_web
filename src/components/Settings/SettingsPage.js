@@ -252,7 +252,8 @@ class SettingsPage extends Component {
               if (isCouple && isInitial && !this.state.flashCpl) {
                 if (!toast.isActive("clickcpl")) {
                   toast(t("clickcpl"), {
-                    toastId: "clickcpl"
+                    toastId: "clickcpl",
+                    autoClose: false
                   });
                 }
                 if (this.mounted) this.setState({ flashCpl: true });
@@ -271,6 +272,9 @@ class SettingsPage extends Component {
           })
           .catch(res => {
             this.resetAcctSettingState();
+            if (doRefetch) {
+              this.props.refetchUser();
+            }
             ErrorHandler.catchErrors(res.graphQLErrors);
           });
       }
@@ -342,7 +346,7 @@ class SettingsPage extends Component {
     }
   };
 
-  setValue = ({ name, value, updateSettings, noSave }) => {
+  setValue = ({ name, value, updateSettings, noSave, doRefetch }) => {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
         if (noSave === true) {
@@ -357,7 +361,7 @@ class SettingsPage extends Component {
           return;
         }
 
-        this.handleSubmit(updateSettings);
+        this.handleSubmit(updateSettings, doRefetch);
       });
     }
   };
@@ -867,7 +871,8 @@ class SettingsPage extends Component {
                               this.setValue({
                                 name,
                                 value,
-                                updateSettings
+                                updateSettings,
+                                doRefetch: true
                               })
                             }
                             t={t}

@@ -6,17 +6,16 @@ import Spinner from "../../common/Spinner";
 import axios from "axios";
 
 function onChange(value) {
-  axios.post("http://localhost:4444/allowIp", { capToken: value }).then(go());
-  // axios
-  //   .post(
-  //     process.env.NODE_ENV === "production"
-  //       ? process.env.REACT_APP_PROD_API_URL + "/allowIp"
-  //       : "http://localhost:4444/allowIp",
-  //     { capToken: value }
-  //   )
-  //   .then(go());
+  axios
+    .post(
+      process.env.NODE_ENV === "production"
+        ? process.env.REACT_APP_PROD_API_URL + "/allowIp"
+        : "http://localhost:4444/allowIp",
+      { capToken: value }
+    )
+    .then(go());
 }
-
+//TODO:Remove test belwoe befoe done
 const go = () => {
   if (window.location.pathname === "/captcha") {
     window.location.replace("/");
@@ -32,7 +31,6 @@ const ReCaptcha = ({ t, tReady }) => {
       </Modal>
     );
   }
-  //TODO: UNdo the chnges for therbuttin
 
   return (
     <Modal
@@ -47,7 +45,7 @@ const ReCaptcha = ({ t, tReady }) => {
           onChange={value => onChange(value)}
         />
 
-        <button onClick={value => onChange(value)}>FIX</button>
+        <button onClick={value => onChange("SSS")}>FIX</button>
         <br />
       </div>
     </Modal>

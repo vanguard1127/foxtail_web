@@ -112,7 +112,7 @@ class EventPage extends Component {
     }
   };
 
-  closeBlockModal = () => this.setBlockModalVisible(false);
+  closeBlockModal = () => this.setBlockModalVisible(false, null);
 
   render() {
     const { id } = this.props.match.params;
@@ -268,6 +268,7 @@ class EventPage extends Component {
                   id={id}
                   close={this.closeBlockModal}
                   ErrorHandler={ErrorHandler}
+                  ReactGA={ReactGA}
                 />
               )}
               {id && showDelete && (

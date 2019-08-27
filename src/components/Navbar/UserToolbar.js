@@ -5,7 +5,7 @@ import NoticesItem from "./NoticesItem";
 import InboxItem from "./InboxItem";
 import MyAccountItem from "./MyAccountItem";
 import * as ErrorHandler from "../common/ErrorHandler";
-var slapAudio = new Audio(require("../../docs/slap.wav"));
+var msgAudio = new Audio(require("../../docs/msg.mp3"));
 
 class UserToolbar extends Component {
   unsubscribe = null;
@@ -54,7 +54,7 @@ class UserToolbar extends Component {
                   if (!newNoticeSubscribe) {
                     return prev;
                   }
-                  slapAudio.play();
+                  msgAudio.play();
 
                   return (prev.getCounts.noticesCount += 1);
                 }
@@ -76,7 +76,7 @@ class UserToolbar extends Component {
                   if (!newInboxMsgSubscribe) {
                     return prev;
                   }
-                  slapAudio.play();
+                  msgAudio.play();
 
                   if (
                     sessionStorage.getItem("page") === "inbox" &&
