@@ -53,8 +53,8 @@ Sentry.init({
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-//let { httpurl, HTTPSurl, wsurl } = env.production;
-let { httpurl, HTTPSurl, wsurl } = env.local;
+let { httpurl, HTTPSurl, wsurl } = env.production;
+//let { httpurl, HTTPSurl, wsurl } = env.local;
 //let { httpurl, HTTPSurl, wsurl } = env.stage;
 
 const wsLink = new WebSocketLink({
