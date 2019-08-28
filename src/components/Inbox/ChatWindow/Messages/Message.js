@@ -3,7 +3,6 @@ import { preventContextMenu } from "../../../../utils/image";
 
 const Message = React.forwardRef(
   ({ message, currentUserID, t, dayjs, lang }, ref) => {
-    console.log(message);
     const messageText =
       message.type === "msg"
         ? message.text

@@ -60,36 +60,34 @@ class ChatPanel extends PureComponent {
   };
 
   updateChat = cache => {
-    const { chatID, cursor, limit, currentuser } = this.props;
-    const { text } = this.state;
-
-    let { getMessages } = cache.readQuery({
-      query: GET_MESSAGES,
-      variables: { chatID, cursor, limit }
-    });
-
-    getMessages.messages.unshift({
-      createdAt: Date.now(),
-      fromUser: {
-        username: currentuser.username,
-        id: currentuser.userID,
-        profile: { id: currentuser.profileID, __typename: "ProfileType" },
-        __typename: "UserType"
-      },
-      id: Date.now(),
-      profilePic: currentuser.profilePic,
-      text,
-      type: "msg",
-      __typename: "MessageType"
-    });
-
-    cache.writeQuery({
-      query: GET_MESSAGES,
-      variables: { chatID, cursor, limit },
-      data: {
-        getMessages
-      }
-    });
+    //TODO: Is this useful to update inbox item?
+    // const { chatID, cursor, limit, currentuser } = this.props;
+    // const { text } = this.state;
+    // let { getMessages } = cache.readQuery({
+    //   query: GET_MESSAGES,
+    //   variables: { chatID, cursor, limit }
+    // });
+    // getMessages.messages.unshift({
+    //   createdAt: Date.now(),
+    //   fromUser: {
+    //     username: currentuser.username,
+    //     id: currentuser.userID,
+    //     profile: { id: currentuser.profileID, __typename: "ProfileType" },
+    //     __typename: "UserType"
+    //   },
+    //   id: Date.now(),
+    //   profilePic: currentuser.profilePic,
+    //   text,
+    //   type: "msg",
+    //   __typename: "MessageType"
+    // });
+    // cache.writeQuery({
+    //   query: GET_MESSAGES,
+    //   variables: { chatID, cursor, limit },
+    //   data: {
+    //     getMessages
+    //   }
+    // });
   };
 
   render() {
@@ -103,7 +101,7 @@ class ChatPanel extends PureComponent {
           chatID,
           text
         }}
-        update={this.updateChat}
+        // update={this.updateChat}
       >
         {sendMessage => (
           <form onSubmit={e => this.submitMessage(e, sendMessage)}>

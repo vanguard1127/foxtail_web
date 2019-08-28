@@ -49,9 +49,7 @@ class PhotoSlider extends Component {
   }
 
   handleClickOpen = img => {
-    console.log("DSsds");
     if (this.mounted) {
-      console.log("FO");
       this.setState({
         selectedImg: img,
         previewVisible: true

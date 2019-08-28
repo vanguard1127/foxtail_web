@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import InboxSearchTextBox from "./InboxSearchTextBox";
-import { GET_INBOX, NEW_INBOX_SUB } from "../../../queries";
+import { GET_INBOX } from "../../../queries";
 import { Query } from "react-apollo";
 import Spinner from "../../common/Spinner";
 import InboxList from "./InboxList";
-import { Waypoint } from "react-waypoint";
 import { INBOXLIST_LIMIT } from "../../../docs/consts";
 
 class InboxPanel extends Component {
@@ -36,50 +35,6 @@ class InboxPanel extends Component {
     }
   };
 
-  handleEnd = ({ previousPosition, fetchMore }) => {
-    const { skip } = this.state;
-
-    if (previousPosition === Waypoint.below) {
-      if (this.mounted) {
-        this.setState(
-          state => ({ skip: skip + INBOXLIST_LIMIT, loading: true }),
-          () => this.fetchData(fetchMore)
-        );
-      }
-    }
-  };
-
-  fetchData = fetchMore => {
-    if (this.mounted) {
-      this.setState({ loading: true }, () =>
-        fetchMore({
-          variables: {
-            skip: this.state.skip,
-            limit: INBOXLIST_LIMIT
-          },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (this.mounted) {
-              this.setState({ loading: false });
-            }
-
-            if (
-              !fetchMoreResult ||
-              !fetchMoreResult.getInbox ||
-              !fetchMoreResult.getInbox.length === 0
-            ) {
-              return previousResult;
-            }
-            previousResult.getInbox = [
-              ...previousResult.getInbox,
-              ...fetchMoreResult.getInbox
-            ];
-            return previousResult;
-          }
-        })
-      );
-    }
-  };
-
   render() {
     const { readChat, currentuser, t, ErrorHandler, chatOpen } = this.props;
     const { searchTerm, skip } = this.state;
@@ -107,56 +62,15 @@ class InboxPanel extends Component {
             );
           }
 
-          if (!this.unsubscribe) {
-            this.unsubscribe = subscribeToMore({
-              document: NEW_INBOX_SUB,
-              updateQuery: (prev, { subscriptionData }) => {
-                let { newInboxMsgSubscribe } = subscriptionData.data;
+          let messages = data.getInbox || [];
 
-                if (!newInboxMsgSubscribe) {
-                  return prev;
-                }
-
-                if (prev.getInbox) {
-                  const chatIndex = prev.getInbox.findIndex(
-                    el => el.chatID === newInboxMsgSubscribe.chatID
-                  );
-
-                  if (
-                    sessionStorage.getItem("page") === "inbox" &&
-                    sessionStorage.getItem("pid") ===
-                      newInboxMsgSubscribe.chatID
-                  ) {
-                    newInboxMsgSubscribe.unSeenCount = 0;
-                  }
-
-                  if (chatIndex > -1) {
-                    prev.getInbox[chatIndex] = newInboxMsgSubscribe;
-                  } else {
-                    prev.getInbox = [newInboxMsgSubscribe, ...prev.getInbox];
-                  }
-                }
-                return prev.getInbox;
-              }
-            });
-          }
-          let messages = data.getInbox;
-
-          if (error || !messages) {
+          if (error) {
             return (
               <ErrorHandler.report
                 error={error}
                 calledName={"getInbox"}
                 userID={currentuser.userID}
               />
-            );
-          }
-
-          if (searchTerm !== "") {
-            messages = messages.filter(msg =>
-              msg.participants[0].profileName
-                .toLocaleLowerCase()
-                .startsWith(searchTerm.toLocaleLowerCase())
             );
           }
 
@@ -172,11 +86,12 @@ class InboxPanel extends Component {
                 <InboxList
                   t={t}
                   messages={messages}
+                  subscribeToMore={subscribeToMore}
+                  fetchMore={fetchMore}
                   readChat={readChat}
                   currentuser={currentuser}
-                  handleEnd={previousPosition =>
-                    this.handleEnd({ previousPosition, fetchMore })
-                  }
+                  searchTerm={searchTerm}
+                  limit={INBOXLIST_LIMIT}
                 />
               </div>
             </div>

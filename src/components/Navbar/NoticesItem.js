@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import { withRouter, NavLink } from "react-router-dom";
-import NoticesList from "./NoticesList";
-import Menu from "../common/Menu";
+import { withRouter } from "react-router-dom";
+import NoticesMenu from "./NoticesMenu";
 import { NOTICELIST_LIMIT } from "../../docs/consts";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
-  NEW_NOTICE_SUB,
   GET_COUNTS
 } from "../../queries";
 import { Query, Mutation, withApollo } from "react-apollo";
@@ -22,19 +15,16 @@ const intialState = {
   notificationIDs: [],
   count: 0,
   skip: 0,
-  visible: false,
-  alertVisible: true,
-  userAlert: null
+  visible: false
 };
 
 class NoticesItem extends Component {
-  unsubscribe = null;
   state = {
-    ...intialState,
-    hasMore: true
+    ...intialState
   };
 
   shouldComponentUpdate(nextProps, nextState) {
+    return true;
     if (
       this.state.read !== nextState.read ||
       this.state.seen !== nextState.seen ||
@@ -42,9 +32,6 @@ class NoticesItem extends Component {
       this.state.count !== nextState.count ||
       this.state.skip !== nextState.skip ||
       this.state.visible !== nextState.visible ||
-      this.state.alertVisible !== nextState.alertVisible ||
-      this.state.userAlert !== nextState.userAlert ||
-      this.state.hasMore !== nextState.hasMore ||
       this.props.count !== nextProps.count ||
       this.props.t !== nextProps.t
     ) {
@@ -63,18 +50,6 @@ class NoticesItem extends Component {
   clearState = () => {
     if (this.mounted) {
       this.setState({ ...intialState });
-    }
-  };
-
-  noMoreItems = () => {
-    if (this.mounted) {
-      this.setState({ hasMore: false });
-    }
-  };
-
-  handleVisibleChange = flag => {
-    if (this.mounted) {
-      this.setState({ visible: flag });
     }
   };
 
@@ -121,113 +96,8 @@ class NoticesItem extends Component {
     });
   };
 
-  readNotices = (notificationIDs, updateNotifications) => {
-    if (this.mounted) {
-      this.setState({ notificationIDs, read: true }, () => {
-        updateNotifications()
-          .then(({ data }) => {
-            this.clearState();
-          })
-          .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-          });
-      });
-    }
-  };
-
-  seeNotices = (notifications, updateNotifications) => {
-    //   console.log("seen");
-    if (this.mounted) {
-      const unseenIDs = notifications.reduce((res, el) => {
-        if (!el.seen) {
-          res.push(el.id);
-        }
-        return res;
-      }, []);
-
-      this.setState({ notificationIDs: unseenIDs, seen: true }, () => {
-        updateNotifications()
-          .then(({ data }) => {
-            this.props.countRefetch();
-            this.clearState();
-          })
-          .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-          });
-      });
-    }
-  };
-
-  handleCloseAlert = (notificationID, updateNotifications, refetch) => {
-    if (this.mounted) {
-      this.setState(
-        {
-          notificationIDs: [notificationID],
-          read: true,
-          alertVisible: false,
-          userAlert: null
-        },
-        () => {
-          updateNotifications()
-            .then(({ data }) => {
-              refetch();
-            })
-            .catch(res => {
-              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-            });
-        }
-      );
-    }
-  };
-
-  showAlert = alert => {
-    if (this.mounted) {
-      this.setState({ userAlert: alert, alertVisible: true });
-    }
-  };
-
-  handleDialog = ({ alert, updateNotifications, refetch, alertVisible }) => {
-    return (
-      <Dialog
-        onClose={() =>
-          this.handleCloseAlert(alert.id, updateNotifications, refetch)
-        }
-        aria-labelledby="Image"
-        open={alertVisible}
-      >
-        {alert.text && (
-          <DialogTitle id="alert-dialog-title">
-            {this.props.t(alert.text)}
-          </DialogTitle>
-        )}
-        {alert.body && (
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              {alert.name}
-              {this.props.t("common:" + alert.body) + " "} {alert.event}
-            </DialogContentText>
-          </DialogContent>
-        )}
-        {alert.link && (
-          <DialogActions>
-            <NavLink to={alert.link} color="primary" autoFocus>
-              {this.props.t("Go")}
-            </NavLink>
-          </DialogActions>
-        )}
-      </Dialog>
-    );
-  };
   render() {
-    const {
-      read,
-      seen,
-      notificationIDs,
-      skip,
-      alertVisible,
-      userAlert,
-      hasMore
-    } = this.state;
+    const { read, seen, notificationIDs, skip } = this.state;
     const { t, count, history, ErrorHandler } = this.props;
     return (
       <Mutation
@@ -240,6 +110,9 @@ class NoticesItem extends Component {
         update={this.updateRead}
       >
         {(updateNotifications, { loading }) => {
+          if (loading) {
+            return null;
+          }
           return (
             <Query
               query={GET_NOTIFICATIONS}
@@ -278,80 +151,19 @@ class NoticesItem extends Component {
                   return <div>{t("nonots")} :)</div>;
                 }
 
-                if (!this.unsubscribe) {
-                  this.unsubscribe = subscribeToMore({
-                    document: NEW_NOTICE_SUB,
-                    updateQuery: (prev, { subscriptionData }) => {
-                      const { newNoticeSubscribe } = subscriptionData.data;
-
-                      if (!newNoticeSubscribe) {
-                        return prev;
-                      }
-                      prev.getNotifications.notifications = [
-                        newNoticeSubscribe,
-                        ...prev.getNotifications.notifications
-                      ];
-
-                      return prev;
-                    }
-                  });
-                }
-
-                const { notifications, alert } = data.getNotifications;
-
                 return (
                   <span>
-                    <Menu
-                      activeStyle="notification active"
-                      notActiveStyle={
-                        count > 0 ? "notification active" : "notification"
-                      }
-                      menuOpener={
-                        <span
-                          className="icon alert"
-                          onClick={() =>
-                            this.seeNotices(notifications, updateNotifications)
-                          }
-                        >
-                          {count > 0 && <span className="count">{count}</span>}
-                        </span>
-                      }
-                      closeAction={() =>
-                        this.seeNotices(notifications, updateNotifications)
-                      }
-                    >
-                      <NoticesList
-                        notifications={notifications}
-                        history={history}
-                        fetchMore={fetchMore}
-                        close={() =>
-                          this.seeNotices(notifications, updateNotifications)
-                        }
-                        t={t}
-                        visible={this.state.visible}
-                        readNotices={e =>
-                          this.readNotices(e, updateNotifications)
-                        }
-                        showAlert={this.showAlert}
-                        ErrorHandler={ErrorHandler}
-                        noMoreItems={this.noMoreItems}
-                        hasMore={hasMore}
-                      />
-                    </Menu>
-                    {alert &&
-                      this.handleDialog({
-                        alert,
-                        updateNotifications,
-                        refetch,
-                        alertVisible
-                      })}{" "}
-                    {userAlert &&
-                      this.handleDialog({
-                        alert: userAlert,
-                        updateNotifications,
-                        refetch,
-                        alertVisible
-                      })}
+                    <NoticesMenu
+                      visible={this.state.visible}
+                      datanotifications={data.getNotifications}
+                      history={history}
+                      fetchMore={fetchMore}
+                      subscribeToMore={subscribeToMore}
+                      updateNotifications={updateNotifications}
+                      ErrorHandler={ErrorHandler}
+                      count={count}
+                      t={t}
+                    />
                   </span>
                 );
               }}

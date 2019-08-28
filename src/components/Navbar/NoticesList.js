@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { NOTICELIST_LIMIT } from "../../docs/consts";
+import { NEW_NOTICE_SUB } from "../../queries";
 import { Waypoint } from "react-waypoint";
-import { preventContextMenu } from "../../utils/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import getLang from "../../utils/getLang";
+import Notice from "./Notice";
+import Alert from "./Alert";
 const lang = getLang();
 require("dayjs/locale/" + lang);
 dayjs.extend(relativeTime);
@@ -16,17 +17,21 @@ const intialState = {
   notificationIDs: [],
   skip: 0,
   visible: false,
-  loading: false
+  loading: false,
+  alertVisible: false,
+  userAlert: null
 };
 
 class NoticesList extends Component {
   state = {
     ...intialState,
-    hasMore: this.props.hasMore
+    hasMore: true,
+    userNotifications: this.props.datanotifications
   };
 
   componentDidMount() {
     this.mounted = true;
+    this.subscribeToNewNotices();
   }
 
   componentWillUnmount() {
@@ -34,12 +39,17 @@ class NoticesList extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    return true;
     if (
       this.state.skip !== nextState.skip ||
       this.state.visible !== nextState.visible ||
       this.props.notifications !== nextProps.notifications ||
       this.state.loading !== nextState.loading ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.count !== nextProps.count ||
+      this.state.alertVisible !== nextState.alertVisible ||
+      this.state.hasMore !== nextState.hasMore ||
+      this.state.userAlert !== nextState.userAlert
     ) {
       return true;
     }
@@ -52,25 +62,36 @@ class NoticesList extends Component {
     }
   };
 
-  handleEnd = ({ previousPosition, fetchMore }) => {
-    //if totoal reach skip and show no more sign
+  noMoreItems = () => {
+    if (this.mounted) {
+      this.setState({ hasMore: false });
+    }
+  };
+
+  handleVisibleChange = flag => {
+    if (this.mounted) {
+      this.setState({ visible: flag });
+    }
+  };
+
+  handleEnd = ({ previousPosition }) => {
+    //if total reached skip and show no more sign
     if (this.state.hasMore) {
       const { skip } = this.state;
       if (previousPosition === Waypoint.below) {
         if (this.mounted) {
-          this.setState(
-            state => ({ skip: skip + NOTICELIST_LIMIT, loading: true }),
-            () => this.fetchData(fetchMore)
+          this.setState({ skip: skip + NOTICELIST_LIMIT, loading: true }, () =>
+            this.fetchData()
           );
         }
       }
     }
   };
 
-  fetchData = fetchMore => {
+  fetchData = () => {
     if (this.mounted) {
       this.setState({ loading: true }, () =>
-        fetchMore({
+        this.props.fetchMore({
           variables: {
             skip: this.state.skip,
             limit: NOTICELIST_LIMIT
@@ -93,6 +114,7 @@ class NoticesList extends Component {
               ...previousResult.getNotifications.notifications,
               ...fetchMoreResult.getNotifications.notifications
             ];
+            this.setState({ userNotifications: previousResult });
             return previousResult;
           }
         })
@@ -100,121 +122,109 @@ class NoticesList extends Component {
     }
   };
 
-  readAndGo = ({ notifications, targetID, type }) => {
+  markReadAndGo = ({ notificationsIDs, targetID, type }) => {
     try {
-      const { close } = this.props;
-      if (notifications.length > 0) {
-        this.props.readNotices(notifications);
+      this.readNotices(notificationsIDs);
 
-        switch (type) {
-          case "chat":
-            this.props.history.replace({
-              pathname: "/inbox",
-              state: { chatID: targetID }
-            });
-            break;
-          case "event":
-            this.props.history.replace(`/event/${targetID}`);
-            break;
-          default:
-            break;
-        }
-        close();
+      switch (type) {
+        case "chat":
+          this.props.history.replace({
+            pathname: "/inbox",
+            state: { chatID: targetID }
+          });
+          break;
+        case "event":
+          this.props.history.replace(`/event/${targetID}`);
+          break;
+        default:
+          break;
       }
     } catch (e) {
-      const ErrorHandler = require("../common/ErrorHandler");
-      ErrorHandler.catchErrors(e); /* Error handling */
+      this.props.ErrorHandler.catchErrors(e); /* Error handling */
     }
   };
 
-  handleNotice = ({ notif, t }) => {
-    if (notif.type === "alert") {
-      return (
-        <div
-          className={notif.read ? "item read" : "item unread"}
-          key={notif.id}
-          onClick={() => this.props.showAlert(notif)}
-        >
-          <span>
-            <span className="avatar">
-              <img
-                src={"../assets/img/no-profile.png"}
-                alt=""
-                onContextMenu={preventContextMenu}
-              />
-            </span>
-            <div>
-              <span className="text">
-                {notif.name && notif.name + " "}
-                {t(notif.text)}
-                {notif.event && " " + notif.event}
-              </span>
-              <span className="when">
-                {dayjs(notif.date)
-                  .locale(lang)
-                  .fromNow()}
-              </span>
-            </div>
-          </span>
-        </div>
-      );
-    } else if (!notif.fromProfile) {
-      return null;
-    } else {
-      return (
-        <div
-          className={notif.read ? "item read" : "item unread"}
-          key={notif.id}
-          onClick={() =>
-            this.readAndGo({
-              notifications: [notif.id],
-              targetID: notif.targetID,
-              type: notif.type
-            })
-          }
-        >
-          <span>
-            <span className="avatar">
-              <img
-                src={
-                  notif.fromProfile
-                    ? notif.fromProfile.profilePic
-                    : "../assets/img/no-profile.png"
-                }
-                onContextMenu={preventContextMenu}
-                className="avatar"
-                alt="avatar"
-              />
-            </span>
-            <div>
-              <span className="text">
-                <b>
-                  {notif.fromProfile ? notif.fromProfile.profileName : ""}
-                  {notif.name}{" "}
-                </b>
-                {t(notif.text)}
-                {notif.event && " " + notif.event}
-              </span>
-              <span className="when">
-                {dayjs(notif.date)
-                  .locale(lang)
-                  .fromNow()}
-              </span>
-            </div>
-          </span>
-        </div>
-      );
+  handleNotice = ({ notice }) => (
+    <Notice
+      key={notice.id}
+      notice={notice}
+      t={this.props.t}
+      dayjs={dayjs}
+      lang={lang}
+      setAlert={this.setAlert}
+    />
+  );
+
+  setAlert = ({ alert }) => {
+    if (this.mounted) {
+      console.log("ALERT:", alert);
+
+      this.setState({ userAlert: alert, alertVisible: true });
+      console.log("after");
     }
   };
+
+  handleCloseAlert = notificationID => {
+    if (this.mounted) {
+      this.readNotices([notificationID]);
+      this.setState({
+        alertVisible: false,
+        userAlert: null
+      });
+    }
+  };
+
+  readNotices = notificationIDs => {
+    console.log("READ NOTICES");
+    if (this.mounted) {
+      this.setState({ notificationIDs, read: true }, () => {
+        this.props
+          .updateNotifications()
+          .then(({ data }) => {
+            this.clearState();
+          })
+          .catch(res => {
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          });
+      });
+    }
+  };
+
+  subscribeToNewNotices = () =>
+    this.props.subscribeToMore({
+      document: NEW_NOTICE_SUB,
+      updateQuery: (prev, { subscriptionData }) => {
+        const { newNoticeSubscribe } = subscriptionData.data;
+
+        if (!newNoticeSubscribe) {
+          return prev;
+        }
+        prev.getNotifications.notifications = [
+          newNoticeSubscribe,
+          ...prev.getNotifications.notifications
+        ];
+        this.setState({ userNotifications: prev });
+        return prev;
+      }
+    });
 
   render() {
-    const { t, notifications, fetchMore } = this.props;
+    const { t } = this.props;
+    const { alertVisible, userNotifications } = this.state;
+    const { notifications, alert } = userNotifications;
 
     return (
       <div className="toggle toggleNotifications">
+        {alertVisible && (
+          <Alert
+            alert={alert}
+            close={() => this.handleCloseAlert(alert.id)}
+            t={t}
+          />
+        )}
         <div className="notification open">
           {notifications.length > 0 ? (
-            notifications.map(notif => this.handleNotice({ notif, t }))
+            notifications.map(notice => this.handleNotice({ notice }))
           ) : (
             <div className="item" key="na">
               <span className="text">{t("nonotif")}</span>
@@ -231,7 +241,7 @@ class NoticesList extends Component {
           >
             <Waypoint
               onEnter={({ previousPosition }) => {
-                this.handleEnd({ previousPosition, fetchMore });
+                this.handleEnd({ previousPosition });
               }}
             />
           </div>
@@ -252,4 +262,4 @@ class NoticesList extends Component {
   }
 }
 
-export default withRouter(NoticesList);
+export default NoticesList;

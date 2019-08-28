@@ -1,75 +1,17 @@
 import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
-import { GET_COMMENTS, NEW_MESSAGE_SUB } from "../../../queries";
-import { Waypoint } from "react-waypoint";
+import { GET_COMMENTS } from "../../../queries";
 import Messages from "./Messages/";
 
 class ChatContent extends PureComponent {
-  unsubscribe = null;
-  state = {
-    cursor: null,
-    hasMoreItems: true,
-    messages: []
-  };
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  handleEnd = ({ previousPosition, currentPosition, fetchMore, cursor }) => {
-    if (this.state.hasMoreItems) {
-      if (previousPosition === Waypoint.below) {
-        this.fetchData(fetchMore, cursor);
-      }
-      if (
-        previousPosition === undefined &&
-        currentPosition === Waypoint.inside
-      ) {
-        this.setState({ hasMoreItems: false });
-      }
-    }
-  };
-
-  fetchData = async (fetchMore, cursor) => {
-    this.props.ErrorHandler.setBreadcrumb("Fetch more comments");
-
-    const { chatID, limit } = this.props;
-    fetchMore({
-      variables: {
-        chatID,
-        limit,
-        cursor
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (
-          !fetchMoreResult ||
-          fetchMoreResult.getComments.messages.length < limit
-        ) {
-          this.setState({ hasMoreItems: false });
-        }
-
-        previousResult.getComments.messages = [
-          ...previousResult.getComments.messages,
-          ...fetchMoreResult.getComments.messages
-        ];
-        this.setState({ messages: previousResult.getComments.messages });
-
-        return previousResult.getComments
-          ? previousResult.getComments
-          : { data: previousResult };
-      }
-    });
-  };
-
   render() {
     const { chatID, history, t, ErrorHandler, dayjs, limit, lang } = this.props;
 
-    const { cursor, hasMoreItems } = this.state;
     return (
       <Query
         query={GET_COMMENTS}
-        variables={{ chatID, limit, cursor }}
-        fetch-policy="cache-and-network"
+        variables={{ chatID, limit }}
+        fetch-policy="cache-first"
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
@@ -95,53 +37,20 @@ class ChatContent extends PureComponent {
           ) {
             messages = data.getComments.messages || [];
           }
-          //NEED TO FORCE RERENDER OF SUBSCRIPTION
-          if (this.state.messages === []) {
-            this.setState({ messages });
-          }
-          if (!this.unsubscribe) {
-            this.unsubscribe = subscribeToMore({
-              document: NEW_MESSAGE_SUB,
-              variables: {
-                chatID: chatID
-              },
-              updateQuery: (prev, { subscriptionData }) => {
-                const { newMessageSubscribe } = subscriptionData.data;
-
-                if (!newMessageSubscribe) {
-                  return prev;
-                }
-                if (prev.getComments) {
-                  prev.getComments.messages = [
-                    newMessageSubscribe,
-                    ...prev.getComments.messages
-                  ];
-                } else {
-                  prev.getComments = {
-                    messages: [newMessageSubscribe],
-                    __typename: "ChatType"
-                  };
-                }
-
-                this.setState({ messages: prev.getComments.messages });
-                return prev;
-              }
-            });
-          }
 
           return (
             <Messages
-              loading={hasMoreItems}
+              subscribeToMore={subscribeToMore}
               chatID={chatID}
               ref={this.Messages}
               history={history}
               messages={messages}
-              handleEnd={this.handleEnd}
               fetchMore={fetchMore}
               limit={limit}
               dayjs={dayjs}
               t={t}
               lang={lang}
+              ErrorHandler={ErrorHandler}
             />
           );
         }}

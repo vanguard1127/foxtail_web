@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import Message from "./Message.js";
+import { NEW_MESSAGE_SUB } from "../../../../queries";
 import { Waypoint } from "react-waypoint";
 
 class MessageList extends Component {
-  shouldComponentUpdate(nextProps) {
+  state = {
+    hasMoreItems: true,
+    messages: this.props.messages
+  };
+  shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.props.messages.length !== nextProps.messages.length ||
+      this.state.messages.length !== nextState.messages.length ||
+      this.state.hasMoreItems !== nextState.hasMoreItems ||
+      this.props.chatID !== nextProps.chatID ||
       this.props.loading !== nextProps.loading ||
       this.props.t !== nextProps.t
     ) {
@@ -14,18 +21,89 @@ class MessageList extends Component {
     return false;
   }
 
-  render() {
-    const {
-      messages,
-      history,
-      dayjs,
-      handleEnd,
-      fetchMore,
-      loading,
-      t,
-      lang
-    } = this.props;
+  componentDidMount() {
+    this.subscribeToNewMsgs();
+  }
+  subscribeToNewMsgs = () => {
+    const { subscribeToMore, chatID } = this.props;
 
+    subscribeToMore({
+      document: NEW_MESSAGE_SUB,
+      variables: {
+        chatID: chatID
+      },
+      updateQuery: (prev, { subscriptionData }) => {
+        const { newMessageSubscribe } = subscriptionData.data;
+
+        if (!newMessageSubscribe) {
+          return prev;
+        }
+        if (prev.getComments) {
+          prev.getComments.messages = [
+            newMessageSubscribe,
+            ...prev.getComments.messages
+          ];
+        } else {
+          prev.getComments = {
+            messages: [newMessageSubscribe],
+            __typename: "ChatType"
+          };
+        }
+
+        this.setState({ messages: prev.getComments.messages });
+        return prev;
+      }
+    });
+  };
+
+  handleEnd = ({ previousPosition, currentPosition, cursor }) => {
+    if (this.state.hasMoreItems) {
+      if (previousPosition === Waypoint.below) {
+        this.fetchData(cursor);
+      } else if (
+        previousPosition === undefined &&
+        currentPosition === Waypoint.inside
+      ) {
+        this.setState({ hasMoreItems: false });
+      }
+    }
+  };
+
+  fetchData = async cursor => {
+    const { fetchMore, ErrorHandler } = this.props;
+    ErrorHandler.setBreadcrumb("Fetch more comments");
+
+    const { chatID, limit } = this.props;
+    fetchMore({
+      variables: {
+        chatID,
+        limit,
+        cursor
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (
+          !fetchMoreResult ||
+          fetchMoreResult.getComments.messages.length < limit
+        ) {
+          this.setState({ hasMoreItems: false });
+        }
+
+        previousResult.getComments.messages = [
+          ...previousResult.getComments.messages,
+          ...fetchMoreResult.getComments.messages
+        ];
+        this.setState({ messages: previousResult.getComments.messages });
+
+        return previousResult.getComments
+          ? previousResult.getComments
+          : { data: previousResult };
+      }
+    });
+  };
+
+  render() {
+    const { history, dayjs, loading, t, lang } = this.props;
+    const { messages } = this.state;
     if (messages.length === 0) {
       return (
         <div className="item" style={{ textAlign: "center" }}>
@@ -55,10 +133,9 @@ class MessageList extends Component {
         >
           <Waypoint
             onEnter={({ previousPosition, currentPosition }) =>
-              handleEnd({
+              this.handleEnd({
                 previousPosition,
                 currentPosition,
-                fetchMore,
                 cursor: messages && messages[messages.length - 1].createdAt
               })
             }

@@ -1,107 +1,10 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Waypoint } from "react-waypoint";
 import Message from "./Message.js";
+import { NEW_MESSAGE_SUB } from "../../../../queries";
 import _ from "lodash";
+import DateItem from "./DateItem";
 
-class DateItem extends Component {
-  isUserInside = true;
-  state = {
-    position: "inside"
-  };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.props.stickZIndex !== nextProps.stickZIndex ||
-      this.props.children !== nextProps.children ||
-      this.state.position !== nextState.position ||
-      this.props.hasMoreItems !== nextProps.hasMoreItems
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-    // When Waypoint mountsit only calls waypoints on screen. But the parent needs
-    // to know everyone's position. So we asume position = above if waypoint did called
-    if (!this.state.position) {
-      if (this.mounted) {
-        this.setState({
-          position: "above"
-        });
-      }
-      if (this.props.onAbove) this.props.onAbove();
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-  onEnter = ({ previousPosition, currentPosition }) => {
-    if (this.props.hasMoreItems) {
-      if (currentPosition === Waypoint.inside) {
-        if (this.mounted) {
-          this.setState({
-            position: "inside"
-          });
-        }
-        if (this.props.onInside) this.props.onInside();
-      }
-    }
-  };
-  onLeave = ({ previousPosition, currentPosition }) => {
-    if (this.props.hasMoreItems) {
-      if (currentPosition === Waypoint.above) {
-        if (this.mounted) {
-          this.setState({
-            position: "above"
-          });
-        }
-        if (this.props.onAbove) this.props.onAbove();
-      }
-    }
-  };
-  renderDate({ style = {}, children }) {
-    return (
-      <div
-        style={{
-          margin: "0 -20px 0 -20px",
-          background: "#ffffff70",
-          padding: "20px 0",
-          textAlign: "center",
-          marginBottom: "10px",
-          ...style
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-  render() {
-    const { stickZIndex, showDate, children } = this.props;
-
-    const stickStyles = {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: stickZIndex || 10,
-      backgroundColor: "#add8e6",
-      padding: "20px 37px 20px 20px",
-      margin: "0 17px 0 0"
-    };
-
-    return (
-      <Fragment>
-        <Waypoint bottom="100%" onEnter={this.onEnter} onLeave={this.onLeave} />
-        {this.renderDate({ style: {}, children })}
-        {showDate ? this.renderDate({ style: stickStyles, children }) : null}
-      </Fragment>
-    );
-  }
-}
 class MessageList extends Component {
   constructor(props) {
     super(props);
@@ -113,19 +16,20 @@ class MessageList extends Component {
     previousClientHeight: null,
     previousScrollHeight: null,
     previousScrollTop: 0,
-    dateWaypoints: []
+    dateWaypoints: [],
+    messages: this.props.messages
   };
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.props.messages !== nextProps.messages ||
+      this.state.messages.length !== nextState.messages.length ||
       this.state.restoreScroll !== nextState.restoreScroll ||
       this.state.hasMoreItems !== nextState.hasMoreItems ||
       this.state.previousClientHeight !== nextState.previousClientHeight ||
       this.state.previousScrollHeight !== nextState.previousScrollHeight ||
       this.state.previousScrollTop !== nextState.previousScrollTop ||
       this.state.dateWaypoints.length !== nextState.dateWaypoints.length ||
-      this.props.messages.length !== nextProps.messages.length
+      this.props.chatID !== nextProps.chatID
     ) {
       return true;
     }
@@ -135,12 +39,13 @@ class MessageList extends Component {
   componentDidMount() {
     this.mounted = true;
     this.scrollToBottom();
+    this.subscribeToMessages();
   }
 
   componentWillUnmount() {
     this.mounted = false;
   }
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.messages !== this.props.messages) {
       if (this.isUserInside) {
         this.scrollToBottom();
@@ -148,19 +53,18 @@ class MessageList extends Component {
     }
   }
 
-  scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  handleEndScrollUp = ({ previousPosition, currentPosition, cursor }) => {
+    if (this.state.hasMoreItems) {
+      if (previousPosition === Waypoint.above) {
+        this.fetchDataForScrollUp(cursor);
+      }
+    }
   };
 
-  fetchMore = () => {
-    const { chatID, limit, messages, fetchMore } = this.props;
-    // Wait for restoreScroll to take place, then do the call.
-
-    // If not,things are going to play over each other.
+  fetchDataForScrollUp = async cursor => {
+    this.props.ErrorHandler.setBreadcrumb("fetch more messages");
+    const { chatID, limit, fetchMore } = this.props;
     if (!this.state.hasMoreItems || this.state.restoreScroll) return;
-    const cursor =
-      messages.length > 0 ? messages[messages.length - 1].createdAt : null;
-
     fetchMore({
       variables: {
         chatID,
@@ -170,7 +74,7 @@ class MessageList extends Component {
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (
           !fetchMoreResult ||
-          fetchMoreResult.getMessages.messages < this.props.limit
+          fetchMoreResult.getMessages.messages.length < limit
         ) {
           this.setState({ hasMoreItems: false });
         }
@@ -184,9 +88,46 @@ class MessageList extends Component {
           previousResult.getMessages = fetchMoreResult.getMessages;
         }
 
+        this.setState({ messages: previousResult.getMessages.messages });
         return previousResult;
       }
     });
+  };
+
+  subscribeToMessages = () => {
+    const { chatID, subscribeToMore } = this.props;
+    subscribeToMore({
+      document: NEW_MESSAGE_SUB,
+      variables: {
+        chatID: chatID
+      },
+      updateQuery: (prev, { subscriptionData }) => {
+        const { newMessageSubscribe } = subscriptionData.data;
+
+        if (!newMessageSubscribe) {
+          return prev;
+        }
+        if (prev.getMessages) {
+          prev.getMessages.messages = [
+            newMessageSubscribe,
+            ...prev.getMessages.messages
+          ];
+        } else {
+          prev.getMessages = {
+            messages: [newMessageSubscribe],
+            __typename: "ChatType"
+          };
+        }
+
+        this.setState({ messages: prev.getMessages.messages });
+
+        return prev;
+      }
+    });
+  };
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   };
 
   onDateWaypointPostion = (i, position) => {
@@ -204,17 +145,9 @@ class MessageList extends Component {
   };
 
   render() {
-    const {
-      messages,
-      hasMoreItems,
-      children,
-      currentUserID,
-      handleEndScrollUp,
-      fetchMore,
-      t,
-      dayjs,
-      lang
-    } = this.props;
+    const { children, currentUserID, t, dayjs, lang } = this.props;
+
+    const { messages } = this.state;
 
     const messageElements = _.flatten(
       _.chain(messages)
@@ -226,9 +159,9 @@ class MessageList extends Component {
         )
         .map((messages, date) => ({ date, messages })) //using ES6 shorthand to generate the objects
         .reverse() // Reverse so latest date is on the bottom
-        .map((item, index, groupList) => {
+        .map((item, index) => {
           const messageElements = item.messages
-            .map((message, j, messageList) => {
+            .map(message => {
               let props = {
                 key: message.id,
                 message,
@@ -285,10 +218,9 @@ class MessageList extends Component {
               onInside={() => {
                 this.onDateWaypointPostion(index, "inside");
               }}
-              // showDate={lastAboveDateWaypointIndex === index}
               // Keys won't collied because DateItems's dates are days appart from each other
               key={`messageDate-${item.date}`}
-              hasMoreItems={hasMoreItems}
+              hasMoreItems={this.hasMoreItems}
             >
               {item.date}
             </DateItem>
@@ -318,11 +250,11 @@ class MessageList extends Component {
             }}
           >
             <Waypoint
-              onEnter={({ previousPosition }) => {
+              onEnter={({ previousPosition, currentPosition }) => {
                 if (messages.length > 0) {
-                  handleEndScrollUp({
+                  this.handleEndScrollUp({
                     previousPosition,
-                    fetchMore,
+                    currentPosition,
                     cursor: messages[messages.length - 1].createdAt
                   });
                 }
