@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Query } from "react-apollo";
+import { GET_NOTIFICATIONS } from "../../queries";
 import { NOTICELIST_LIMIT } from "../../docs/consts";
 import { NEW_NOTICE_SUB } from "../../queries";
 import { Waypoint } from "react-waypoint";
@@ -6,7 +8,6 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import getLang from "../../utils/getLang";
 import Notice from "./Notice";
-import Alert from "./Alert";
 const lang = getLang();
 require("dayjs/locale/" + lang);
 dayjs.extend(relativeTime);
@@ -17,21 +18,19 @@ const intialState = {
   notificationIDs: [],
   skip: 0,
   visible: false,
-  loading: false,
-  alertVisible: false,
-  userAlert: null
+  loading: false
 };
 
 class NoticesList extends Component {
+  unsubscribe = null;
+  fetchMore = null;
   state = {
     ...intialState,
-    hasMore: true,
-    userNotifications: this.props.datanotifications
+    hasMore: true
   };
 
   componentDidMount() {
     this.mounted = true;
-    this.subscribeToNewNotices();
   }
 
   componentWillUnmount() {
@@ -39,7 +38,6 @@ class NoticesList extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return true;
     if (
       this.state.skip !== nextState.skip ||
       this.state.visible !== nextState.visible ||
@@ -47,9 +45,7 @@ class NoticesList extends Component {
       this.state.loading !== nextState.loading ||
       this.props.t !== nextProps.t ||
       this.props.count !== nextProps.count ||
-      this.state.alertVisible !== nextState.alertVisible ||
-      this.state.hasMore !== nextState.hasMore ||
-      this.state.userAlert !== nextState.userAlert
+      this.state.hasMore !== nextState.hasMore
     ) {
       return true;
     }
@@ -91,7 +87,7 @@ class NoticesList extends Component {
   fetchData = () => {
     if (this.mounted) {
       this.setState({ loading: true }, () =>
-        this.props.fetchMore({
+        this.fetchMore({
           variables: {
             skip: this.state.skip,
             limit: NOTICELIST_LIMIT
@@ -124,7 +120,7 @@ class NoticesList extends Component {
 
   markReadAndGo = ({ notificationsIDs, targetID, type }) => {
     try {
-      this.readNotices(notificationsIDs);
+      this.props.readNotices(notificationsIDs);
 
       switch (type) {
         case "chat":
@@ -151,113 +147,105 @@ class NoticesList extends Component {
       t={this.props.t}
       dayjs={dayjs}
       lang={lang}
-      setAlert={this.setAlert}
+      setAlert={this.props.setAlert}
     />
   );
 
-  setAlert = ({ alert }) => {
-    if (this.mounted) {
-      console.log("ALERT:", alert);
-
-      this.setState({ userAlert: alert, alertVisible: true });
-      console.log("after");
-    }
-  };
-
-  handleCloseAlert = notificationID => {
-    if (this.mounted) {
-      this.readNotices([notificationID]);
-      this.setState({
-        alertVisible: false,
-        userAlert: null
-      });
-    }
-  };
-
-  readNotices = notificationIDs => {
-    console.log("READ NOTICES");
-    if (this.mounted) {
-      this.setState({ notificationIDs, read: true }, () => {
-        this.props
-          .updateNotifications()
-          .then(({ data }) => {
-            this.clearState();
-          })
-          .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-          });
-      });
-    }
-  };
-
-  subscribeToNewNotices = () =>
-    this.props.subscribeToMore({
-      document: NEW_NOTICE_SUB,
-      updateQuery: (prev, { subscriptionData }) => {
-        const { newNoticeSubscribe } = subscriptionData.data;
-
-        if (!newNoticeSubscribe) {
-          return prev;
-        }
-        prev.getNotifications.notifications = [
-          newNoticeSubscribe,
-          ...prev.getNotifications.notifications
-        ];
-        this.setState({ userNotifications: prev });
-        return prev;
-      }
-    });
-
   render() {
-    const { t } = this.props;
-    const { alertVisible, userNotifications } = this.state;
-    const { notifications, alert } = userNotifications;
-
+    const { t, limit, skip, ErrorHandler } = this.props;
     return (
-      <div className="toggle toggleNotifications">
-        {alertVisible && (
-          <Alert
-            alert={alert}
-            close={() => this.handleCloseAlert(alert.id)}
-            t={t}
-          />
-        )}
-        <div className="notification open">
-          {notifications.length > 0 ? (
-            notifications.map(notice => this.handleNotice({ notice }))
-          ) : (
-            <div className="item" key="na">
-              <span className="text">{t("nonotif")}</span>
-            </div>
-          )}
+      <Query
+        query={GET_NOTIFICATIONS}
+        variables={{ limit, skip }}
+        fetchPolicy="cache-and-network"
+      >
+        {({ data, loading, error, subscribeToMore, fetchMore }) => {
+          if (
+            loading ||
+            !data ||
+            !data.getNotifications ||
+            !data.getNotifications.notifications
+          ) {
+            return null;
+          } else if (error) {
+            return (
+              <ErrorHandler.report
+                error={error}
+                calledName={"getNotifications"}
+              />
+            );
+          } else if (!data.getNotifications.notifications.length === 0) {
+            return <div>{t("nonots")} :)</div>;
+          }
+          const notifications = data.getNotifications.notifications;
 
-          <div
-            key="way"
-            style={{
-              width: "100%",
-              display: "block",
-              float: "left"
-            }}
-          >
-            <Waypoint
-              onEnter={({ previousPosition }) => {
-                this.handleEnd({ previousPosition });
-              }}
-            />
-          </div>
-          {notifications.length > 0 ? (
-            <div className="item" style={{ textAlign: "center" }} key="na">
-              {this.state.loading ? (
-                <span className="text">{t("Loading")}</span>
-              ) : (
-                <span className="text">{t("nonotif")}</span>
-              )}
+          if (!this.unsubscribe) {
+            this.unsubscribe = subscribeToMore({
+              document: NEW_NOTICE_SUB,
+              updateQuery: (prev, { subscriptionData }) => {
+                const { newNoticeSubscribe } = subscriptionData.data;
+
+                if (!newNoticeSubscribe) {
+                  return prev;
+                }
+                prev.getNotifications.notifications = [
+                  newNoticeSubscribe,
+                  ...prev.getNotifications.notifications
+                ];
+                this.setState({ userNotifications: prev });
+                return prev;
+              }
+            });
+          }
+
+          if (!fetchMore) {
+            this.fetchMore = fetchMore;
+          }
+          return (
+            <div className="toggle toggleNotifications">
+              <div className="notification open">
+                {notifications.length > 0 ? (
+                  notifications.map(notice => this.handleNotice({ notice }))
+                ) : (
+                  <div className="item" key="na">
+                    <span className="text">{t("nonotif")}</span>
+                  </div>
+                )}
+
+                <div
+                  key="way"
+                  style={{
+                    width: "100%",
+                    display: "block",
+                    float: "left"
+                  }}
+                >
+                  <Waypoint
+                    onEnter={({ previousPosition }) => {
+                      this.handleEnd({ previousPosition });
+                    }}
+                  />
+                </div>
+                {notifications.length > 0 ? (
+                  <div
+                    className="item"
+                    style={{ textAlign: "center" }}
+                    key="na"
+                  >
+                    {this.state.loading ? (
+                      <span className="text">{t("Loading")}</span>
+                    ) : (
+                      <span className="text">{t("nonotif")}</span>
+                    )}
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
+          );
+        }}
+      </Query>
     );
   }
 }

@@ -106,7 +106,7 @@ class UserToolbar extends Component {
               <ErrorHandler.ErrorBoundary>
                 <NoticesItem
                   count={noticesCount}
-                  countRefetch={refetch}
+                  recount={refetch}
                   ErrorHandler={ErrorHandler}
                   t={t}
                 />

@@ -7,7 +7,6 @@ import InboxList from "./InboxList";
 import { INBOXLIST_LIMIT } from "../../../docs/consts";
 
 class InboxPanel extends Component {
-  unsubscribe = null;
   state = { searchTerm: "", skip: 0 };
 
   shouldComponentUpdate(nextProps, nextState) {

@@ -193,7 +193,7 @@ const errorLink = onError(
             }
           );
 
-          window.location.replace("/");
+          window.location.replace("/404");
         }
       }
     }
@@ -241,6 +241,12 @@ const Wrapper = withRouter(props => {
       return <LawEnforce />;
     } else if (location.pathname === "/captcha") {
       return <ReCaptcha />;
+    } else if (location.pathname === "/404") {
+      return (
+        <div>
+          We're experiencing some technical difficulties. Please come back later
+        </div>
+      );
     } else if (location.pathname === "/devtools") {
       if (process.env.NODE_ENV === "development") {
         import("./DevTools")

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import NoticesMenu from "./NoticesMenu";
 import { NOTICELIST_LIMIT } from "../../docs/consts";
+import Alert from "./Alert";
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
@@ -15,25 +16,27 @@ const intialState = {
   notificationIDs: [],
   count: 0,
   skip: 0,
-  visible: false
+  alertVisible: false,
+  alert: null
 };
 
 class NoticesItem extends Component {
   state = {
     ...intialState
   };
+  updateNotifications = null;
 
   shouldComponentUpdate(nextProps, nextState) {
-    return true;
     if (
       this.state.read !== nextState.read ||
       this.state.seen !== nextState.seen ||
       this.state.notificationIDs.length !== nextState.notificationIDs.length ||
       this.state.count !== nextState.count ||
       this.state.skip !== nextState.skip ||
-      this.state.visible !== nextState.visible ||
       this.props.count !== nextProps.count ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.state.alertVisible !== nextState.alertVisible ||
+      this.state.alert !== nextState.alert
     ) {
       return true;
     }
@@ -50,6 +53,36 @@ class NoticesItem extends Component {
   clearState = () => {
     if (this.mounted) {
       this.setState({ ...intialState });
+    }
+  };
+
+  setAlert = ({ alert }) => {
+    if (this.mounted) {
+      this.setState({ alert, alertVisible: true });
+    }
+  };
+
+  handleCloseAlert = notificationID => {
+    if (this.mounted) {
+      this.readNotices([notificationID]);
+      this.setState({
+        alertVisible: false,
+        alert: null
+      });
+    }
+  };
+
+  readNotices = notificationIDs => {
+    if (this.mounted) {
+      this.setState({ notificationIDs, read: true }, () => {
+        this.updateNotifications()
+          .then(({ data }) => {
+            this.clearState();
+          })
+          .catch(res => {
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          });
+      });
     }
   };
 
@@ -97,8 +130,15 @@ class NoticesItem extends Component {
   };
 
   render() {
-    const { read, seen, notificationIDs, skip } = this.state;
-    const { t, count, history, ErrorHandler } = this.props;
+    const {
+      read,
+      seen,
+      notificationIDs,
+      skip,
+      alert,
+      alertVisible
+    } = this.state;
+    const { t, count, history, ErrorHandler, recount } = this.props;
     return (
       <Mutation
         mutation={UPDATE_NOTIFICATIONS}
@@ -111,63 +151,38 @@ class NoticesItem extends Component {
       >
         {(updateNotifications, { loading }) => {
           if (loading) {
-            return null;
+            return (
+              <span>
+                <div className="notification">
+                  <span className="icon alert" />
+                </div>
+              </span>
+            );
           }
+          this.updateNotifications = updateNotifications;
           return (
-            <Query
-              query={GET_NOTIFICATIONS}
-              variables={{ limit: NOTICELIST_LIMIT, skip }}
-              fetchPolicy="network-only"
-            >
-              {({
-                data,
-                loading,
-                error,
-                subscribeToMore,
-                fetchMore,
-                refetch
-              }) => {
-                if (
-                  loading ||
-                  !data ||
-                  !data.getNotifications ||
-                  !data.getNotifications.notifications
-                ) {
-                  return (
-                    <span>
-                      <div className="notification">
-                        <span className="icon alert" />
-                      </div>{" "}
-                    </span>
-                  );
-                } else if (error) {
-                  return (
-                    <ErrorHandler.report
-                      error={error}
-                      calledName={"getNotifications"}
-                    />
-                  );
-                } else if (!data.getNotifications.notifications.length === 0) {
-                  return <div>{t("nonots")} :)</div>;
-                }
-
-                return (
-                  <span>
-                    <NoticesMenu
-                      visible={this.state.visible}
-                      datanotifications={data.getNotifications}
-                      history={history}
-                      fetchMore={fetchMore}
-                      subscribeToMore={subscribeToMore}
-                      updateNotifications={updateNotifications}
-                      ErrorHandler={ErrorHandler}
-                      count={count}
-                      t={t}
-                    />
-                  </span>
-                );
-              }}
-            </Query>
+            <span>
+              {alertVisible && (
+                <Alert
+                  alert={alert}
+                  close={() => this.handleCloseAlert(alert.id)}
+                  t={t}
+                  visible={alertVisible}
+                />
+              )}
+              <NoticesMenu
+                history={history}
+                updateNotifications={updateNotifications}
+                ErrorHandler={ErrorHandler}
+                count={count}
+                t={t}
+                setAlert={this.setAlert}
+                readNotices={this.readNotices}
+                limit={NOTICELIST_LIMIT}
+                skip={skip}
+                recount={recount}
+              />
+            </span>
           );
         }}
       </Mutation>
