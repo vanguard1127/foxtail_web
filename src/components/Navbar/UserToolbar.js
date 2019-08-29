@@ -113,7 +113,11 @@ class UserToolbar extends Component {
               </ErrorHandler.ErrorBoundary>
               <ErrorHandler.ErrorBoundary>
                 <div className="user hidden-mobile">
-                  <MyAccountItem currentuser={currentuser} setRef={setRef} />
+                  <MyAccountItem
+                    currentuser={currentuser}
+                    setRef={setRef}
+                    t={t}
+                  />
                 </div>
               </ErrorHandler.ErrorBoundary>
             </div>

@@ -1,6 +1,6 @@
-import React, { PureComponent, cloneElement } from "react";
+import React, { Component, cloneElement } from "react";
 import { withTranslation } from "react-i18next";
-class Menu extends PureComponent {
+class Menu extends Component {
   constructor(props) {
     super(props);
     this.wrapperRef = React.createRef();
@@ -9,6 +9,13 @@ class Menu extends PureComponent {
   state = {
     menuOpen: false
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.menuOpen !== nextState.menuOpen) {
+      return true;
+    }
+    return false;
+  }
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
@@ -40,9 +47,8 @@ class Menu extends PureComponent {
   };
 
   render() {
-    const { menuOpener, activeStyle, notActiveStyle, t } = this.props;
+    const { menuOpener, activeStyle, notActiveStyle } = this.props;
     const { menuOpen } = this.state;
-
     return (
       <div
         className={!menuOpen ? notActiveStyle : activeStyle}
@@ -50,11 +56,7 @@ class Menu extends PureComponent {
         ref={this.wrapperRef}
       >
         {menuOpener}
-        {menuOpen &&
-          cloneElement(this.props.children, {
-            close: this.close,
-            t
-          })}
+        {menuOpen && cloneElement(this.props.children)}
       </div>
     );
   }

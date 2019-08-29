@@ -62,6 +62,13 @@ class NoticesItem extends Component {
     }
   };
 
+  skipForward = () => {
+    if (this.mounted) {
+      this.setState({ skip: this.state.skip + NOTICELIST_LIMIT });
+    }
+    return this.state.skip;
+  };
+
   handleCloseAlert = notificationID => {
     if (this.mounted) {
       this.readNotices([notificationID]);
@@ -181,6 +188,7 @@ class NoticesItem extends Component {
                 limit={NOTICELIST_LIMIT}
                 skip={skip}
                 recount={recount}
+                skipForward={this.skipForward}
               />
             </span>
           );

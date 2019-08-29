@@ -9,7 +9,7 @@ class MyAccountItem extends Component {
     return false;
   }
   render() {
-    const { currentuser, setRef } = this.props;
+    const { currentuser, setRef, t } = this.props;
     if (currentuser === undefined) {
       return null;
     }
@@ -32,6 +32,7 @@ class MyAccountItem extends Component {
         <MyAccountMenu
           isCouple={currentuser.coupleProfileName !== null ? true : false}
           isBlack={currentuser.blackMember.active ? true : false}
+          t={t}
         />
       </Menu>
     );
