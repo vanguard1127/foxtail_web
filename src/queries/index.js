@@ -748,19 +748,6 @@ export const GET_NOTIFICATIONS = gql`
           profileName
         }
       }
-      alert {
-        id
-        seen
-        read
-        type
-        text
-        targetID
-        date
-        title
-        body
-        name
-        event
-      }
       total
     }
   }
@@ -813,6 +800,11 @@ export const GET_COUNTS = gql`
     getCounts {
       msgsCount
       noticesCount
+      alert {
+        id
+        type
+        text
+      }
     }
   }
 `;

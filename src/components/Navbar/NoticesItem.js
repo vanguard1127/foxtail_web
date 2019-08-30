@@ -8,7 +8,7 @@ import {
   UPDATE_NOTIFICATIONS,
   GET_COUNTS
 } from "../../queries";
-import { Query, Mutation, withApollo } from "react-apollo";
+import { Mutation, withApollo } from "react-apollo";
 
 const intialState = {
   read: null,

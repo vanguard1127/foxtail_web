@@ -3,23 +3,31 @@ import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from "../../queries";
 import { Query } from "react-apollo";
 import NoticesItem from "./NoticesItem";
 import InboxItem from "./InboxItem";
+import Alert from "./Alert";
 import MyAccountItem from "./MyAccountItem";
 import * as ErrorHandler from "../common/ErrorHandler";
 var msgAudio = new Audio(require("../../docs/msg.mp3"));
 
 class UserToolbar extends Component {
   unsubscribe = null;
+  state = { alertVisible: true };
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.currentuser !== nextProps.currentuser ||
       this.props.href !== nextProps.href ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.state.alertVisible !== nextState.alertVisible
     ) {
       return true;
     }
     return false;
   }
+
+  handleCloseAlert = () => {
+    this.setState({ alertVisible: false, alert: null });
+  };
   render() {
+    const { alertVisible } = this.state;
     const { currentuser, href, t, setRef } = this.props;
     return (
       <Query query={GET_COUNTS} fetchPolicy="cache-first">
@@ -43,7 +51,7 @@ class UserToolbar extends Component {
               />
             );
           }
-          let { msgsCount, noticesCount } = data.getCounts;
+          let { msgsCount, noticesCount, alert } = data.getCounts;
 
           if (!this.unsubscribe) {
             this.unsubscribe = [
@@ -94,6 +102,14 @@ class UserToolbar extends Component {
 
           return (
             <div className="function">
+              {alertVisible && alert && (
+                <Alert
+                  alert={alert}
+                  close={this.handleCloseAlert}
+                  t={t}
+                  visible={true}
+                />
+              )}
               <ErrorHandler.ErrorBoundary>
                 <InboxItem
                   count={msgsCount}
