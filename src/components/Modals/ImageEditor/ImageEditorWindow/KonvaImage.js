@@ -19,17 +19,8 @@ class KonvaImage extends PureComponent {
     };
   }
 
-  handleDragStart = e => {
-    const shapeName = e.target.attrs.name;
-    if (this.state.selectedShapeName !== shapeName) {
-      if (this.mounted) {
-        this.setState({ selectedShapeName: shapeName });
-      }
-    }
-  };
-
   render() {
-    const { name, x, y, width, height, rotation } = this.props;
+    const { name, x, y, width, height, rotation, onTouchStart } = this.props;
 
     return (
       <Image
@@ -41,6 +32,7 @@ class KonvaImage extends PureComponent {
         rotation={rotation}
         draggable
         image={this.state.image}
+        onTouchStart={onTouchStart}
       />
     );
   }

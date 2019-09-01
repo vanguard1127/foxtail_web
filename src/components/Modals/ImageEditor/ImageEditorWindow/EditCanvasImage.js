@@ -12,6 +12,9 @@ import FaceIcon from "@material-ui/icons/Face";
 import CloseIcon from "@material-ui/icons/Close";
 import { Button } from "@material-ui/core";
 
+function getDistance(p1, p2) {
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+}
 class EditCanvasImage extends PureComponent {
   constructor(props) {
     super(props);
@@ -45,6 +48,9 @@ class EditCanvasImage extends PureComponent {
     this.mounted = false;
     window.removeEventListener("resize", this.checkSize);
   }
+
+  lastDist = 0;
+  startScale = 1;
 
   checkSize = () => {
     const { imageHeight, imageWidth, x_pos, y_pos, scale } = this.state;
@@ -214,6 +220,15 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
+  handleTouchStart = e => {
+    const shapeName = e.target.attrs.name;
+    if (this.state.selectedShapeName !== shapeName) {
+      if (this.mounted) {
+        this.setState({ selectedShapeName: shapeName });
+      }
+    }
+  };
+
   handleStickerClick = (id, name, src) => {
     const { rotation } = this.state;
 
@@ -316,6 +331,37 @@ class EditCanvasImage extends PureComponent {
               width={width}
               height={window.innerHeight - 56} // here we've reduced height as topbar will take 56px top
               onClick={this.handleStageClick}
+              onTouchMove={res => {
+                var touch1 = res.evt.touches[0];
+                var touch2 = res.evt.touches[1];
+
+                if (touch1 && touch2) {
+                  var dist = getDistance(
+                    {
+                      x: touch1.clientX,
+                      y: touch1.clientY
+                    },
+                    {
+                      x: touch2.clientX,
+                      y: touch2.clientY
+                    }
+                  );
+
+                  if (!this.lastDist) {
+                    this.lastDist = dist;
+                  }
+
+                  var scale = (this.stageRef.scaleX() * dist) / this.lastDist;
+
+                  this.stageRef.scaleX(scale);
+                  this.stageRef.scaleY(scale);
+                  this.stageRef.draw();
+                  this.lastDist = dist;
+                }
+              }}
+              onTouchEnd={() => {
+                this.lastDist = 0;
+              }}
               ref={node => {
                 this.stageRef = node;
               }}
@@ -390,6 +436,7 @@ class EditCanvasImage extends PureComponent {
                           src={img.src}
                           key={img.id + idx}
                           onDragStart={this.handleDragStart}
+                          onTouchStart={this.handleTouchStart}
                           width={100}
                           height={100}
                           name={img.name}

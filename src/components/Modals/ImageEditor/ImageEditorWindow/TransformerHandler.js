@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import { Transformer } from 'react-konva';
+import React, { PureComponent } from "react";
+import { Transformer } from "react-konva";
 
 class TransformerHandler extends PureComponent {
   componentDidMount() {
@@ -13,7 +13,7 @@ class TransformerHandler extends PureComponent {
   checkNode() {
     const stage = this.transformer.getStage();
     const { selectedShapeName } = this.props;
-    const selectedNode = stage.findOne('.' + selectedShapeName);
+    const selectedNode = stage.findOne("." + selectedShapeName);
     if (selectedNode) {
       this.transformer.attachTo(selectedNode);
     } else {

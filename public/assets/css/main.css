@@ -9913,3 +9913,25 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   text-align: -webkit-center;
 }
 
+background: linear-gradient(334deg, #2ea586, #6e37b9);
+background-size: 400% 400%;
+
+-webkit-animation: CycleC 30s ease infinite;
+-moz-animation: CycleC 30s ease infinite;
+animation: CycleC 30s ease infinite;
+
+@-webkit-keyframes CycleC {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes CycleC {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes CycleC {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}

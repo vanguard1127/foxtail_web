@@ -72,6 +72,7 @@
   "scripts": {
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
+    "deploytest": "npm run buildold && cd build && surge --domain foxtail.surge.sh",
     "dev-server": "webpack-dev-server",
     "test": "jest --config=jest.config.json",
     "start": "node src/index.js",
