@@ -98,7 +98,11 @@ class ProfileCard extends Component {
 
     return (
       <ErrorHandler.ErrorBoundary>
-        <div className="avatar-content">
+        <div
+          className={
+            isSelf || msgd ? "avatar-content no-btns" : "avatar-content"
+          }
+        >
           <div className={"avatar-card " + badge}>
             <ProfilePic profilePic={profilePic} />
             {!isSelf && (

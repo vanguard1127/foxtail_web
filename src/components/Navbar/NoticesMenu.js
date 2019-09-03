@@ -45,12 +45,20 @@ class NoticesMenu extends Component {
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (
-              loading ||
+              !loading ||
               !data ||
               !data.getNotifications ||
               !data.getNotifications.notifications
             ) {
-              return null;
+              return (
+                <div className="toggle toggleNotifications">
+                  <div className="notification open">
+                    <div className="item" key="na">
+                      <span className="text">{t("Loading")}...</span>
+                    </div>
+                  </div>
+                </div>
+              );
             } else if (error) {
               return (
                 <ErrorHandler.report

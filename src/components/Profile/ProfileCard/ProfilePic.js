@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { preventContextMenu } from "../../../utils/image";
 
 class ProfilePic extends Component {
   shouldComponentUpdate() {
@@ -16,7 +15,6 @@ class ProfilePic extends Component {
               : process.env.PUBLIC_URL + "/assets/img/no-profile.png"
           }
           alt=""
-          onContextMenu={preventContextMenu}
         />
       </div>
     );

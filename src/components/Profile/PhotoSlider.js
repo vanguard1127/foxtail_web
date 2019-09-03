@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import OwlCarousel from "react-owl-carousel";
-import { preventContextMenu } from "../../utils/image";
 import { toast } from "react-toastify";
 import Lightbox from "react-image-lightbox";
 
@@ -22,22 +21,6 @@ class PhotoSlider extends Component {
   componentWillUnmount() {
     this.mounted = false;
   }
-
-  componentWillMount() {
-    document.addEventListener("contextmenu", this.handleContextMenu);
-  }
-
-  handleContextMenu = event => {
-    event.preventDefault();
-    //const { target } = event;
-    // const { classList, offsetParent } = target;
-    // if (
-    //   classList.contains("lg-image") ||
-    //   (offsetParent && offsetParent.classList.contains("lg-thumb"))
-    // ) {
-    preventContextMenu(event);
-    //  }
-  };
 
   warnPrivate() {
     if (!toast.isActive("privwarning")) {
@@ -108,11 +91,7 @@ class PhotoSlider extends Component {
             }}
           >
             {photos.map(photo => (
-              <div
-                className="item"
-                key={Math.random()}
-                onContextMenu={preventContextMenu}
-              >
+              <div className="item" key={Math.random()}>
                 {photo.url !== "private" ? (
                   <div onClick={() => this.handleClickOpen(photo.url)}>
                     <img src={photo.url} alt="" />

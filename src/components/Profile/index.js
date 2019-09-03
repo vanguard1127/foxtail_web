@@ -8,6 +8,7 @@ import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import DesiresSection from "./DesiresSection";
 import ProfileCard from "./ProfileCard/";
+import { preventContextMenu } from "../../utils/image";
 import Tour from "./Tour";
 import ProfileInfo from "./ProfileInfo";
 import ProfileBio from "./ProfileBio";
@@ -46,13 +47,27 @@ class ProfilePage extends Component {
     }
     return false;
   }
-
+  componentWillMount() {
+    document.addEventListener("contextmenu", this.handleContextMenu);
+  }
   componentDidMount() {
     this.mounted = true;
   }
   componentWillUnmount() {
     this.mounted = false;
   }
+
+  handleContextMenu = event => {
+    event.preventDefault();
+    //const { target } = event;
+    // const { classList, offsetParent } = target;
+    // if (
+    //   classList.contains("lg-image") ||
+    //   (offsetParent && offsetParent.classList.contains("lg-thumb"))
+    // ) {
+    preventContextMenu(event);
+    //  }
+  };
 
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
     this.props.ErrorHandler.setBreadcrumb("Match Dialog Toggled:");
