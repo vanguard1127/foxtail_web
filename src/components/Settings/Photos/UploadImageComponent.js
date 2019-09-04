@@ -116,10 +116,24 @@ class UploadComponent extends PureComponent {
           return (
             <div key={file.uid || file.id}>
               <div className="loader">
-                <CircularProgress
-                  style={{ display: this.state.loader }}
-                  className={classes.progress}
-                />
+                <div className="loading">
+                  <CircularProgress
+                    style={{ display: this.state.loader }}
+                    className={classes.progress}
+                  />
+                </div>
+                <div title={t("deletepic")} className="delete box">
+                  <DeleteIcon
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "40px",
+                      color: "#999"
+                    }}
+                    onClick={() => {
+                      this.deleteFile(index);
+                    }}
+                  />
+                </div>
               </div>
               <div
                 className="imgContainer"

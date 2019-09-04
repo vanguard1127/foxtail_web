@@ -91,9 +91,23 @@
 .imgContainer:hover .btns {
   opacity: 1;
 }
-.loader {
+.loader div.loading {
   padding: 0px 20px 0px 20px;
 }
+.loader:hover div.loading {
+  display: none;
+}
+
+.loader div.delete {
+  display: none;
+}
+
+.loader:hover div.delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .validat {
   display: block;
   color: red;

@@ -511,6 +511,26 @@ class EditCanvasImage extends PureComponent {
                     name={`${Date.now()}str2`}
                     src="test_mask_2.png"
                   />
+                  <Sticker
+                    id="3"
+                    name={`${Date.now()}str3`}
+                    src="test_mask_3.png"
+                  />
+                  <Sticker
+                    id="4"
+                    name={`${Date.now()}str4`}
+                    src="test_mask_4.png"
+                  />{" "}
+                  <Sticker
+                    id="5"
+                    name={`${Date.now()}str5`}
+                    src="test_mask_5.png"
+                  />{" "}
+                  <Sticker
+                    id="6"
+                    name={`${Date.now()}str6`}
+                    src="test_mask_6.png"
+                  />
                   <div className="edit-canvas-stickers-div-close-button-div">
                     <IconButton
                       style={{ padding: "unset", outline: "none" }}
