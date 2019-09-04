@@ -710,14 +710,14 @@ header .mobile-menu {
   position: absolute;
   top: 23px;
   float: left;
-  z-index: 999;
+  z-index: 1111;
 }
 
 header .mobile-toggle {
   width: 100%;
   height: 100vh;
   position: fixed;
-  z-index: 998;
+  z-index: 1010;
   left: 0;
   top: 0;
   display: none;

@@ -15,17 +15,13 @@ class EditCanvasImage extends PureComponent {
       height: 0,
       x_pos: 0,
       y_pos: 0,
-      selectedShapeName: "",
-      hideTransformer: false,
-      konvaImageList: [],
       rotation: 0,
       uploading: false,
       scale: 1,
       imageWidth: 0,
       imageHeight: 0,
       init_x: 0,
-      init_y: 0,
-      isShowStickers: false
+      init_y: 0
     };
     this.pixelRatio = 1;
   }
@@ -133,13 +129,6 @@ class EditCanvasImage extends PureComponent {
       });
   };
 
-  _crop() {
-    // image in dataUrl
-    // console.log(this.cropper.getCroppedCanvas());
-    // console.log(this.cropper.getContainerData());
-    // console.log(this.cropper);
-  }
-
   handleScalePlus = () => {
     if (this.mounted) {
       if (this.state.scale <= 3) {
@@ -223,7 +212,6 @@ class EditCanvasImage extends PureComponent {
               // Cropper.js options
               aspectRatio={1}
               guides={false}
-              crop={this._crop.bind(this)}
             />
           </div>
 
