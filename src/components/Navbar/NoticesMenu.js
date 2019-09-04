@@ -45,7 +45,7 @@ class NoticesMenu extends Component {
         >
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (
-              !loading ||
+              loading ||
               !data ||
               !data.getNotifications ||
               !data.getNotifications.notifications

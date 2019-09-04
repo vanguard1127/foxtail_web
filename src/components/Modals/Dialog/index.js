@@ -68,11 +68,7 @@ class Dialog extends PureComponent {
     } = this.props;
     const { text, errors } = this.state;
     if (!tReady) {
-      return (
-        <Modal close={close}>
-          <Spinner />
-        </Modal>
-      );
+      return null;
     }
     let inputField;
     if (specialType === "gender") {

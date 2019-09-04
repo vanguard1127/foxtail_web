@@ -152,11 +152,7 @@ class BlockModal extends Component {
     } = this.props;
 
     if (!tReady) {
-      return (
-        <Modal close={close}>
-          <Spinner />
-        </Modal>
-      );
+      return null;
     }
 
     const { other, reason, type } = this.state;

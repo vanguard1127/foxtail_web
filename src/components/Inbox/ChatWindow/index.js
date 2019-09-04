@@ -45,8 +45,11 @@ class ChatWindow extends PureComponent {
       isOwner,
       leaveDialog,
       lang,
+      subscribeToMore,
+      fetchMore,
       ReactGA
     } = this.props;
+
     if (currentChat !== null) {
       sessionStorage.setItem("pid", currentChat.id);
     } else {
@@ -79,6 +82,9 @@ class ChatWindow extends PureComponent {
               limit={INBOXMSG_LIMIT}
               dayjs={dayjs}
               lang={lang}
+              messages={currentChat.messages}
+              fetchMore={fetchMore}
+              subscribeToMore={subscribeToMore}
             />
             <ChatPanel
               chatID={currentChat.id}

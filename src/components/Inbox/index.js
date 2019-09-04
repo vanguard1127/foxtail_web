@@ -12,7 +12,7 @@ import {
   READ_CHAT,
   GET_INBOX,
   REMOVE_SELF,
-  READ_CHAT_QUERY
+  GET_MESSAGES
 } from "../../queries";
 import { Mutation, Query } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
@@ -20,7 +20,7 @@ import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
-import { INBOXLIST_LIMIT } from "../../docs/consts";
+import { INBOXLIST_LIMIT, CHATMSGS_LIMIT } from "../../docs/consts";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
@@ -239,6 +239,7 @@ class InboxPage extends Component {
         }}
       </Mutation>
     );
+
     return (
       <>
         <ErrorHandler.ErrorBoundary>
@@ -262,8 +263,12 @@ class InboxPage extends Component {
                 />
               )}
               {chatID && (
-                <Query query={READ_CHAT_QUERY} variables={{ chatID }}>
-                  {({ data, loading, error }) => {
+                <Query
+                  query={GET_MESSAGES}
+                  variables={{ chatID, limit: CHATMSGS_LIMIT, cursor: null }}
+                  fetchPolicy="network-only"
+                >
+                  {({ data, loading, error, subscribeToMore, fetchMore }) => {
                     if (error) {
                       return (
                         <section className="not-found">
@@ -278,6 +283,15 @@ class InboxPage extends Component {
                               <span className="description">
                                 This chat is no longer available
                               </span>
+                              <span style={{ display: "none" }}>
+                                <ErrorHandler.report
+                                  error={error}
+                                  calledName={"getMessages"}
+                                  userID={currentuser.userID}
+                                  targetID={chatID}
+                                  type="chat"
+                                />
+                              </span>
                             </div>
                           </div>
                         </section>
@@ -288,11 +302,11 @@ class InboxPage extends Component {
                       return (
                         <Spinner message={t("common:Loading")} size="large" />
                       );
-                    } else if (!data || !data.readChatQuery) {
+                    } else if (!data || !data.getMessages) {
                       return <div className="col-md-7">{t("nomsgs")}</div>;
                     }
 
-                    const { readChatQuery: chat } = data;
+                    const { getMessages: chat } = data;
 
                     return (
                       <>
@@ -320,6 +334,8 @@ class InboxPage extends Component {
                               btnText
                             });
                           }}
+                          fetchMore={fetchMore}
+                          subscribeToMore={subscribeToMore}
                         />
                         <Mutation
                           mutation={REMOVE_SELF}

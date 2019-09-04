@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-
+import { NEW_INBOX_SUB } from "../../queries";
 class InboxItem extends Component {
-  shouldComponentUpdate(nextProps) {
+  state = { count: this.props.count };
+  shouldComponentUpdate(nextProps, nextState) {
     if (
+      this.state.count !== nextState.count ||
       this.props.count !== nextProps.count ||
       this.props.active !== nextProps.active ||
       this.props.t !== nextProps.t
@@ -12,8 +14,51 @@ class InboxItem extends Component {
     }
     return false;
   }
+  componentDidMount() {
+    this.mounted = true;
+    if (this.props.subscribeToMore) {
+      this.subscribeToMsgs();
+    }
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+  subscribeToMsgs = () => {
+    this.props.subscribeToMore({
+      document: NEW_INBOX_SUB,
+      updateQuery: (prev, { subscriptionData }) => {
+        const { newInboxMsgSubscribe } = subscriptionData.data;
+
+        if (
+          newInboxMsgSubscribe === null ||
+          (newInboxMsgSubscribe.fromUser &&
+            newInboxMsgSubscribe.fromUser.id === this.props.userID)
+        ) {
+          return;
+        }
+
+        //if chat itself is open dont add
+        if (!newInboxMsgSubscribe) {
+          return prev;
+        }
+        this.props.msgAudio.play();
+
+        if (
+          sessionStorage.getItem("page") === "inbox" &&
+          sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
+        ) {
+          return;
+        }
+        if (this.mounted) {
+          this.setState({ count: this.state.count + 1 });
+        }
+        return;
+      }
+    });
+  };
   render() {
-    const { count, active, t } = this.props;
+    const { active, t } = this.props;
+    const { count } = this.state;
     let iconstyle = "inbox hidden-mobile";
     if (count > 0) {
       iconstyle += " new";

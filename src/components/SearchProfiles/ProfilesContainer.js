@@ -156,7 +156,11 @@ class ProfilesContainer extends Component {
                   action: "Liked"
                 });
                 toast.success(
-                  t("common:Liked") + " " + profile.profileName + "!"
+                  t("common:Liked") + " " + profile.profileName + "!",
+                  {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                  }
                 );
                 break;
               case "unlike":
@@ -165,7 +169,11 @@ class ProfilesContainer extends Component {
                   action: "UnLiked"
                 });
                 toast.success(
-                  t("common:UnLiked") + " " + profile.profileName + "!"
+                  t("common:UnLiked") + " " + profile.profileName + "!",
+                  {
+                    autoClose: 1500,
+                    hideProgressBar: true
+                  }
                 );
                 break;
               default:

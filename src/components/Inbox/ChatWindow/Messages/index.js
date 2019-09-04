@@ -29,7 +29,8 @@ class MessageList extends Component {
       this.state.previousScrollHeight !== nextState.previousScrollHeight ||
       this.state.previousScrollTop !== nextState.previousScrollTop ||
       this.state.dateWaypoints.length !== nextState.dateWaypoints.length ||
-      this.props.chatID !== nextProps.chatID
+      this.props.chatID !== nextProps.chatID ||
+      this.props.messages !== nextProps.messages
     ) {
       return true;
     }
@@ -39,7 +40,9 @@ class MessageList extends Component {
   componentDidMount() {
     this.mounted = true;
     this.scrollToBottom();
-    this.subscribeToMessages();
+    if (this.subscribeToMore) {
+      this.subscribeToMessages();
+    }
   }
 
   componentWillUnmount() {

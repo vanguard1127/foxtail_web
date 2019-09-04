@@ -3039,7 +3039,7 @@ section.profile .data-info ul li span.data {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 350px;
+  max-width: 330px;
 }
 
 section.profile .data-info ul li span.data.lookfor {

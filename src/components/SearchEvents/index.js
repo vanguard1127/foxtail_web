@@ -36,7 +36,8 @@ class SearchEvents extends Component {
     maxDistance: 50,
     location: this.props.location.city,
     all: true,
-    hasMore: true
+    hasMore: true,
+    elapse: false
   };
 
   constructor(props) {
@@ -49,7 +50,8 @@ class SearchEvents extends Component {
       this.state !== nextState ||
       this.props.location.lat !== nextProps.location.lat ||
       this.props.t !== nextProps.t ||
-      this.props.tReady !== nextProps.tReady
+      this.props.tReady !== nextProps.tReady ||
+      this.state.elapse !== nextState.elapse
     ) {
       return true;
     }
@@ -62,10 +64,14 @@ class SearchEvents extends Component {
     } else {
       document.title = "Search Events";
     }
+    if (!this.props.location.lat) {
+      this.timer = setInterval(() => this.tick(), 3000);
+    }
   }
   componentWillUnmount() {
     this.clearSearchResults();
     clearAllBodyScrollLocks();
+    clearInterval(this.timer);
     this.mounted = false;
   }
 
@@ -78,6 +84,14 @@ class SearchEvents extends Component {
         lat: nextProps.location.lat,
         long: nextProps.location.long,
         location: nextProps.location.city
+      });
+    }
+  }
+
+  tick() {
+    if (!this.state.elapse) {
+      this.setState({
+        elapse: true
       });
     }
   }
@@ -209,7 +223,8 @@ class SearchEvents extends Component {
       long,
       maxDistance,
       location,
-      hasMore
+      hasMore,
+      elapse
     } = this.state;
     const {
       t,
@@ -220,7 +235,7 @@ class SearchEvents extends Component {
       ReactGA,
       tReady
     } = this.props;
-    if (!tReady || !session) {
+    if (!tReady || !session || (!lat && !elapse)) {
       return <Spinner />;
     }
     const distanceMetric = session.currentuser.distanceMetric;

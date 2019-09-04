@@ -581,30 +581,6 @@ export const SEARCH_PROFILES = gql`
   }
 `;
 
-export const READ_CHAT_QUERY = gql`
-  query($chatID: ID!) {
-    readChatQuery(chatID: $chatID) {
-      id
-      updatedAt
-      ownerProfile {
-        id
-      }
-      participants {
-        id
-        profilePic
-        profileName
-        updatedAt
-        online
-        showOnline
-        users {
-          username
-          id
-        }
-      }
-    }
-  }
-`;
-
 export const GET_EVENT = gql`
   query($id: ID!) {
     event(id: $id) {
@@ -756,6 +732,23 @@ export const GET_NOTIFICATIONS = gql`
 export const GET_MESSAGES = gql`
   query($chatID: ID!, $limit: Int!, $cursor: String) {
     getMessages(chatID: $chatID, limit: $limit, cursor: $cursor) {
+      id
+      updatedAt
+      ownerProfile {
+        id
+      }
+      participants {
+        id
+        profilePic
+        profileName
+        updatedAt
+        online
+        showOnline
+        users {
+          username
+          id
+        }
+      }
       messages {
         id
         text

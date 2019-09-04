@@ -18,7 +18,7 @@ const withLocation = PassedComponent =>
     };
 
     findLocation = (setLocation, setLocModalVisible, caller) => {
-      if (!navigator.geolocation) {
+      if (!navigator || !navigator.geolocation) {
         alert(i18next.t("geonotlocated"));
         const session = this.props.session;
         if (session && session.location) {
@@ -32,26 +32,31 @@ const withLocation = PassedComponent =>
         this.showConfirm(setLocModalVisible, caller);
       }
       //Location needs to be enabled or set
-      navigator.geolocation.getCurrentPosition(setLocation, err => {
-        const session = this.props.session;
-        if (session) {
-          const user = session.currentuser;
-          if (
-            user &&
-            user.location.crds &&
-            user.location.crds.lat !== null &&
-            user.location.crds.long !== null
-          ) {
-            return this.setLocation({
-              coords: {
-                longitude: user.location.crds.long,
-                latitude: user.location.crds.lat
-              }
-            });
+      else {
+        navigator.geolocation.getCurrentPosition(setLocation, err => {
+          if (err) {
+            this.showConfirm(setLocModalVisible, caller);
           }
-        }
-        this.showConfirm(setLocModalVisible, caller);
-      });
+          const session = this.props.session;
+          if (session) {
+            const user = session.currentuser;
+            if (
+              user &&
+              user.location.crds &&
+              user.location.crds.lat !== null &&
+              user.location.crds.long !== null
+            ) {
+              return this.setLocation({
+                coords: {
+                  longitude: user.location.crds.long,
+                  latitude: user.location.crds.lat
+                }
+              });
+            }
+          }
+          this.showConfirm(setLocModalVisible, caller);
+        });
+      }
     };
 
     setLocModalVisible = visible => {

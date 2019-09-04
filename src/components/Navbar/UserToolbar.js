@@ -42,6 +42,7 @@ class UserToolbar extends Component {
               </div>
             );
           }
+
           if (error) {
             return (
               <ErrorHandler.report
@@ -51,54 +52,8 @@ class UserToolbar extends Component {
               />
             );
           }
+
           let { msgsCount, noticesCount, alert } = data.getCounts;
-
-          if (!this.unsubscribe) {
-            this.unsubscribe = [
-              subscribeToMore({
-                document: NEW_NOTICE_SUB,
-                updateQuery: (prev, { subscriptionData }) => {
-                  const { newNoticeSubscribe } = subscriptionData.data;
-                  if (!newNoticeSubscribe) {
-                    return prev;
-                  }
-                  msgAudio.play();
-
-                  return (prev.getCounts.noticesCount += 1);
-                }
-              }),
-              subscribeToMore({
-                document: NEW_INBOX_SUB,
-                updateQuery: (prev, { subscriptionData }) => {
-                  const { newInboxMsgSubscribe } = subscriptionData.data;
-
-                  if (
-                    newInboxMsgSubscribe === null ||
-                    (newInboxMsgSubscribe.fromUser &&
-                      newInboxMsgSubscribe.fromUser.id === currentuser.userID)
-                  ) {
-                    return;
-                  }
-
-                  //if chat itself is open dont add
-                  if (!newInboxMsgSubscribe) {
-                    return prev;
-                  }
-                  msgAudio.play();
-
-                  if (
-                    sessionStorage.getItem("page") === "inbox" &&
-                    sessionStorage.getItem("pid") ===
-                      newInboxMsgSubscribe.chatID
-                  ) {
-                    return;
-                  }
-
-                  return (prev.getCounts.msgsCount += 1);
-                }
-              })
-            ];
-          }
 
           return (
             <div className="function">
@@ -117,14 +72,19 @@ class UserToolbar extends Component {
                   t={t}
                   data-name="inbox"
                   ref={setRef}
+                  msgAudio={msgAudio}
+                  subscribeToMore={subscribeToMore}
+                  userID={currentuser.userID}
                 />
               </ErrorHandler.ErrorBoundary>
               <ErrorHandler.ErrorBoundary>
                 <NoticesItem
-                  count={noticesCount}
+                  subscribeToMore={subscribeToMore}
                   recount={refetch}
                   ErrorHandler={ErrorHandler}
                   t={t}
+                  msgAudio={msgAudio}
+                  count={noticesCount}
                 />
               </ErrorHandler.ErrorBoundary>
               <ErrorHandler.ErrorBoundary>

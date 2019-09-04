@@ -106,7 +106,7 @@ class Share extends Component {
       >
         {({ data, loading, error }) => {
           if (loading) {
-            return <Spinner />;
+            return null;
           }
           if (!data) {
             return <div>An Error has Occured</div>;

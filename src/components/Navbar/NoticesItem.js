@@ -6,7 +6,8 @@ import Alert from "./Alert";
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
-  GET_COUNTS
+  GET_COUNTS,
+  NEW_NOTICE_SUB
 } from "../../queries";
 import { Mutation, withApollo } from "react-apollo";
 
@@ -14,7 +15,6 @@ const intialState = {
   read: null,
   seen: null,
   notificationIDs: [],
-  count: 0,
   skip: 0,
   alertVisible: false,
   alert: null
@@ -22,7 +22,8 @@ const intialState = {
 
 class NoticesItem extends Component {
   state = {
-    ...intialState
+    ...intialState,
+    count: this.props.count
   };
   updateNotifications = null;
 
@@ -30,10 +31,10 @@ class NoticesItem extends Component {
     if (
       this.state.read !== nextState.read ||
       this.state.seen !== nextState.seen ||
+      this.props.count !== nextProps.count ||
       this.state.notificationIDs.length !== nextState.notificationIDs.length ||
       this.state.count !== nextState.count ||
       this.state.skip !== nextState.skip ||
-      this.props.count !== nextProps.count ||
       this.props.t !== nextProps.t ||
       this.state.alertVisible !== nextState.alertVisible ||
       this.state.alert !== nextState.alert
@@ -45,6 +46,7 @@ class NoticesItem extends Component {
 
   componentDidMount() {
     this.mounted = true;
+    this.subscribeToNotifs();
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -136,6 +138,23 @@ class NoticesItem extends Component {
     });
   };
 
+  subscribeToNotifs = () => {
+    this.props.subscribeToMore({
+      document: NEW_NOTICE_SUB,
+      updateQuery: (prev, { subscriptionData }) => {
+        const { newNoticeSubscribe } = subscriptionData.data;
+        if (!newNoticeSubscribe) {
+          return prev;
+        }
+        this.props.msgAudio.play();
+        if (this.mounted) {
+          this.setState({ count: this.state.count + 1 });
+        }
+        return;
+      }
+    });
+  };
+
   render() {
     const {
       read,
@@ -143,9 +162,11 @@ class NoticesItem extends Component {
       notificationIDs,
       skip,
       alert,
-      alertVisible
+      alertVisible,
+      count
     } = this.state;
-    const { t, count, history, ErrorHandler, recount } = this.props;
+
+    const { t, history, ErrorHandler, recount } = this.props;
     return (
       <Mutation
         mutation={UPDATE_NOTIFICATIONS}

@@ -11,7 +11,10 @@ class Menu extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.menuOpen !== nextState.menuOpen) {
+    if (
+      this.state.menuOpen !== nextState.menuOpen ||
+      this.props.menuOpener !== nextProps.menuOpener
+    ) {
       return true;
     }
     return false;
