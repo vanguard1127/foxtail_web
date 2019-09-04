@@ -1,8 +1,9 @@
 {
-  "presets": ["@babel/env", "@babel/react"],
+  "presets": ["@babel/env"],
   "plugins": [
     "transform-class-properties",
     "@babel/plugin-proposal-object-rest-spread",
-    "emotion"
+    "emotion",
+    "dynamic-import-node"
   ]
 }
