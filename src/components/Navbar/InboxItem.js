@@ -32,7 +32,8 @@ class InboxItem extends Component {
         if (
           newInboxMsgSubscribe === null ||
           (newInboxMsgSubscribe.fromUser &&
-            newInboxMsgSubscribe.fromUser.id === this.props.userID)
+            newInboxMsgSubscribe.fromUser.id === this.props.userID &&
+            newInboxMsgSubscribe.text !== "New Match!")
         ) {
           return;
         }
@@ -41,7 +42,6 @@ class InboxItem extends Component {
         if (!newInboxMsgSubscribe) {
           return prev;
         }
-        this.props.msgAudio.play();
 
         if (
           sessionStorage.getItem("page") === "inbox" &&
@@ -50,6 +50,9 @@ class InboxItem extends Component {
           return;
         }
         if (this.mounted) {
+          if (newInboxMsgSubscribe.fromUser.id !== this.props.userID) {
+            this.props.msgAudio.play();
+          }
           this.setState({ count: this.state.count + 1 });
         }
         return;

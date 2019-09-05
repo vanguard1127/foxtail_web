@@ -192,22 +192,6 @@ class ProfilesContainer extends Component {
     }
   };
 
-  updateCount = cache => {
-    if (this.featuredSelected) {
-      const { getCounts } = cache.readQuery({
-        query: GET_COUNTS
-      });
-      getCounts.msgsCount = getCounts.msgsCount + 1;
-
-      cache.writeQuery({
-        query: GET_COUNTS,
-        data: {
-          getCounts
-        }
-      });
-    }
-  };
-
   fetchData = async fetchMore => {
     this.props.ErrorHandler.setBreadcrumb("Fetch more profiles");
     const { long, lat, distance, ageRange, interestedIn } = this.props;
@@ -393,7 +377,6 @@ class ProfilesContainer extends Component {
               variables={{
                 toProfileID: profile && profile.id
               }}
-              update={this.updateCount}
             >
               {likeProfile => {
                 return (

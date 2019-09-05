@@ -9,7 +9,6 @@ import * as ErrorHandler from "../common/ErrorHandler";
 var msgAudio = new Audio(require("../../docs/msg.mp3"));
 
 class UserToolbar extends Component {
-  unsubscribe = null;
   state = { alertVisible: true };
   shouldComponentUpdate(nextProps, nextState) {
     if (

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Mutation, withApollo } from "react-apollo";
 import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { SEND_MESSAGE, GET_COUNTS } from "../../../queries";
+import { SEND_MESSAGE } from "../../../queries";
 import Modal from "../../common/Modal";
 import deleteFromCache from "../../../utils/deleteFromCache";
 import Spinner from "../../common/Spinner";
@@ -66,20 +66,6 @@ class DirectMsg extends Component {
     });
   };
 
-  updateCount = cache => {
-    const { getCounts } = cache.readQuery({
-      query: GET_COUNTS
-    });
-    getCounts.msgsCount = getCounts.msgsCount + 1;
-
-    cache.writeQuery({
-      query: GET_COUNTS,
-      data: {
-        getCounts
-      }
-    });
-  };
-
   render() {
     const {
       close,
@@ -121,7 +107,6 @@ class DirectMsg extends Component {
                 invitedProfile: profile.id,
                 instant: true
               }}
-              update={this.updateCount}
             >
               {(sendMessage, { loading, error }) => {
                 return (
