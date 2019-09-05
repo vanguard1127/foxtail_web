@@ -71,7 +71,6 @@ class ProfileCard extends Component {
   render() {
     const {
       profile,
-      showMsgModal,
       t,
       ErrorHandler,
       isSelf,
@@ -109,7 +108,7 @@ class ProfileCard extends Component {
               <ProfileActions
                 profileID={id}
                 likeProfile={this.toggleLiked}
-                showMsgModal={showMsgModal}
+                showMsgModal={() => this.setMsgModalVisible(true)}
                 t={t}
                 liked={liked}
                 msgd={msgd}

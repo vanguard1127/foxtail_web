@@ -251,9 +251,6 @@ class ProfilePage extends Component {
                           <div className="col-md-3">
                             <ProfileCard
                               profile={profile}
-                              showMsgModal={() =>
-                                this.setMsgModalVisible(true, profile)
-                              }
                               likeProfile={() =>
                                 this.handleLike(profile, likeProfile, refetch)
                               }
