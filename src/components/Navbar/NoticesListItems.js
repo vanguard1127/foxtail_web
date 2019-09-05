@@ -69,10 +69,7 @@ class NoticesListItems extends Component {
             if (this.mounted) {
               this.setState({ loading: false });
             }
-            console.log(
-              "FETCH:",
-              fetchMoreResult.getNotifications.notifications
-            );
+
             if (
               !fetchMoreResult ||
               !fetchMoreResult.getNotifications ||
@@ -110,7 +107,7 @@ class NoticesListItems extends Component {
           newNoticeSubscribe,
           ...prev.getNotifications.notifications
         ];
-        console.log(prev.getNotifications.notifications);
+
         this.props.setNotifications({
           notifications: prev.getNotifications.notifications
         });
@@ -121,7 +118,6 @@ class NoticesListItems extends Component {
 
   markReadAndGo = ({ notificationIDs, targetID, type }) => {
     try {
-      console.log(notificationIDs, targetID, type);
       this.props.readNotices(notificationIDs);
 
       switch (type) {

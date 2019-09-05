@@ -1,9 +1,10 @@
+import "react-app-polyfill/ie9";
+import "react-app-polyfill/stable";
 import React from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
 import {
   BrowserRouter as Router,
-  Link,
   Route,
   Switch,
   withRouter,

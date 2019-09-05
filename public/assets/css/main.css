@@ -9615,6 +9615,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   background-size: 100%;
   background-repeat: no-repeat;
   background-image: url(../img/logo/logo-color@2x.png);
+  align-self:center;
 }
 
 .fullscreen a {

@@ -22,7 +22,6 @@ class InboxList extends PureComponent {
         updateQuery: (prev, { subscriptionData }) => {
           if (this.mounted) {
             let { newInboxMsgSubscribe } = subscriptionData.data;
-
             if (!newInboxMsgSubscribe) {
               return prev;
             }
@@ -45,6 +44,8 @@ class InboxList extends PureComponent {
                 prev.getInbox = [newInboxMsgSubscribe, ...prev.getInbox];
               }
             }
+            console.log("LOADED", prev.getInbox);
+            //TODO:Figure out why this not trigger rerender
             this.setState({ messages: prev.getInbox });
             return prev.getInbox;
           }
@@ -171,9 +172,11 @@ class InboxList extends PureComponent {
     if (messages.length === 0) {
       return <span className="no-message">{this.props.t("nomsgsInbox")}</span>;
     }
+    console.log("To render list:", messages);
     return (
-      <Fragment>
+      <>
         {messages.map((message, i) => {
+          console.log("msg", message);
           var timeAgo = TimeAgo(message.createdAt);
           let isCurrentChat = false;
           if (this.state.chatID === message.chatID) {
@@ -181,10 +184,9 @@ class InboxList extends PureComponent {
           } else if (!this.state.chatID) {
             isCurrentChat = i === 0;
           }
-
           return this.renderItem(message, timeAgo, isCurrentChat);
         })}
-      </Fragment>
+      </>
     );
   };
 
@@ -192,6 +194,7 @@ class InboxList extends PureComponent {
   render() {
     const { searchTerm } = this.props;
     let { messages } = this.state;
+    console.log("rendered:", messages);
     if (searchTerm !== "") {
       messages = messages.filter(msg =>
         msg.participants[0].profileName
@@ -199,6 +202,7 @@ class InboxList extends PureComponent {
           .startsWith(searchTerm.toLocaleLowerCase())
       );
     }
+
     return (
       <div className="conversations">
         {this.renderMsgList({ messages })}

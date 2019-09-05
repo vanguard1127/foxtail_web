@@ -40,7 +40,7 @@ class MessageList extends Component {
   componentDidMount() {
     this.mounted = true;
     this.scrollToBottom();
-    if (this.subscribeToMore) {
+    if (this.props.subscribeToMore) {
       this.subscribeToMessages();
     }
   }
@@ -110,6 +110,7 @@ class MessageList extends Component {
         if (!newMessageSubscribe) {
           return prev;
         }
+
         if (prev.getMessages) {
           prev.getMessages.messages = [
             newMessageSubscribe,

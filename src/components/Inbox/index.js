@@ -154,6 +154,7 @@ class InboxPage extends Component {
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS
     });
+
     getCounts.msgsCount = getCounts.msgsCount - unSeenCount;
 
     cache.writeQuery({
@@ -266,7 +267,7 @@ class InboxPage extends Component {
                 <Query
                   query={GET_MESSAGES}
                   variables={{ chatID, limit: CHATMSGS_LIMIT, cursor: null }}
-                  fetchPolicy="network-only"
+                  fetchPolicy="cache-and-network"
                 >
                   {({ data, loading, error, subscribeToMore, fetchMore }) => {
                     if (error) {

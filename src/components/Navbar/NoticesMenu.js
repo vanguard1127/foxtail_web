@@ -69,7 +69,6 @@ class NoticesMenu extends Component {
             } else if (!data.getNotifications.notifications.length === 0) {
               return <div>{t("nonots")} :)</div>;
             }
-            console.log("data.getNotifications", data.getNotifications);
 
             return (
               <NoticesList

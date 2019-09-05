@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { GET_COUNTS, NEW_NOTICE_SUB, NEW_INBOX_SUB } from "../../queries";
+import { GET_COUNTS } from "../../queries";
 import { Query } from "react-apollo";
 import NoticesItem from "./NoticesItem";
 import InboxItem from "./InboxItem";

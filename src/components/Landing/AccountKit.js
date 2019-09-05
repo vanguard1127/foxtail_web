@@ -31,14 +31,11 @@ function initializeAccountKit(props, callback) {
 
 class AccountKit extends React.PureComponent {
   state = {
-    initialized: !!window.AccountKit,
-    mounted: false
+    initialized: !!window.AccountKit
   };
 
   componentDidMount() {
-    this.setState({
-      mounted: true
-    });
+    this.mounted = true;
     if (!this.state.initialized) {
       delete window.AccountKit;
       delete window.AccountKit_OnInteractive;
@@ -80,9 +77,7 @@ class AccountKit extends React.PureComponent {
 
   componentWillUnmount() {
     if (document.getElementById("account-kit")) {
-      this.setState({
-        mounted: false
-      });
+      this.mounted = false;
       delete window.AccountKit_OnInteractive;
       delete window.AccountKit;
       document.head.removeChild(document.getElementById("account-kit"));
@@ -90,7 +85,7 @@ class AccountKit extends React.PureComponent {
   }
 
   onLoad = () => {
-    if (this.state.mounted) {
+    if (this.mounted) {
       this.setState({
         initialized: true
       });
@@ -126,7 +121,7 @@ class AccountKit extends React.PureComponent {
   };
 
   render() {
-    if (!this.state.mounted) {
+    if (!this.mounted) {
       return null;
     }
     return <div onClick={this.signIn}>{this.props.children}</div>;
