@@ -52,7 +52,7 @@ class EventInfoMobile extends Component {
       <div className="event-info-content hid-desktop">
         <div className="event-image">
           <span>
-            <img src={image || "/assets/img/events/1001@2x.png"} alt="" />
+            <img src={image || "/assets/img/events/no-image.png"} alt="" />
           </span>
         </div>
         <ul>
