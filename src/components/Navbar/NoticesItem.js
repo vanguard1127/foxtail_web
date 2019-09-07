@@ -21,6 +21,7 @@ const intialState = {
 };
 
 class NoticesItem extends Component {
+  unsubscribe;
   state = {
     ...intialState,
     count: this.props.count
@@ -50,6 +51,9 @@ class NoticesItem extends Component {
   }
   componentWillUnmount() {
     this.mounted = false;
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   }
 
   clearState = () => {
@@ -139,7 +143,7 @@ class NoticesItem extends Component {
   };
 
   subscribeToNotifs = () => {
-    this.props.subscribeToMore({
+    this.unsubscribe = this.props.subscribeToMore({
       document: NEW_NOTICE_SUB,
       updateQuery: (prev, { subscriptionData }) => {
         const { newNoticeSubscribe } = subscriptionData.data;

@@ -23,6 +23,7 @@ import ToS from "./components/Information/ToS";
 import LawEnforce from "./components/Information/LawEnforce";
 import Navbar from "./components/Navbar/";
 import * as ErrorHandler from "./components/common/ErrorHandler";
+import NotFound from "./components/common/NotFound";
 import withAuth from "./components/HOCs/withAuth";
 import IdleTimer from "./components/HOCs/IdleTimer";
 import Footer from "./components/Footer/";
@@ -194,7 +195,7 @@ const errorLink = onError(
             }
           );
 
-          window.location.replace("/404");
+          window.location.replace("/not-found");
         }
       }
     }
@@ -242,12 +243,8 @@ const Wrapper = withRouter(props => {
       return <LawEnforce />;
     } else if (location.pathname === "/captcha") {
       return <ReCaptcha />;
-    } else if (location.pathname === "/404") {
-      return (
-        <div>
-          We're experiencing some technical difficulties. Please come back later
-        </div>
-      );
+    } else if (location.pathname === "/not-found") {
+      return <NotFound />;
     } else if (location.pathname === "/devtools") {
       if (process.env.NODE_ENV === "development") {
         import("./DevTools")

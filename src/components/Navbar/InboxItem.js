@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { NEW_INBOX_SUB } from "../../queries";
 class InboxItem extends Component {
+  unsubscribe = null;
   state = { count: this.props.count };
   shouldComponentUpdate(nextProps, nextState) {
     if (
@@ -22,9 +23,12 @@ class InboxItem extends Component {
   }
   componentWillUnmount() {
     this.mounted = false;
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   }
   subscribeToMsgs = () => {
-    this.props.subscribeToMore({
+    this.unsubscribe = this.props.subscribeToMore({
       document: NEW_INBOX_SUB,
       updateQuery: (prev, { subscriptionData }) => {
         const { newInboxMsgSubscribe } = subscriptionData.data;

@@ -5,6 +5,7 @@ import TimeAgo from "../../../utils/TimeAgo";
 import { preventContextMenu } from "../../../utils/image";
 
 class InboxList extends PureComponent {
+  unsubscribe;
   state = { chatID: null, messages: this.props.messages };
   componentDidMount() {
     this.mounted = true;
@@ -13,11 +14,14 @@ class InboxList extends PureComponent {
 
   componentWillUnmount() {
     this.mounted = false;
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   }
 
   subscribeInboxMsgs = () => {
     if (this.mounted) {
-      this.props.subscribeToMore({
+      this.unsubscribe = this.props.subscribeToMore({
         document: NEW_INBOX_SUB,
         updateQuery: (prev, { subscriptionData }) => {
           if (this.mounted) {
@@ -44,7 +48,7 @@ class InboxList extends PureComponent {
                 prev.getInbox = [newInboxMsgSubscribe, ...prev.getInbox];
               }
             }
-            console.log("LOADED", prev.getInbox);
+
             //TODO:Figure out why this not trigger rerender
             this.setState({ messages: prev.getInbox });
             return prev.getInbox;
@@ -172,11 +176,10 @@ class InboxList extends PureComponent {
     if (messages.length === 0) {
       return <span className="no-message">{this.props.t("nomsgsInbox")}</span>;
     }
-    console.log("To render list:", messages);
+
     return (
       <>
         {messages.map((message, i) => {
-          console.log("msg", message);
           var timeAgo = TimeAgo(message.createdAt);
           let isCurrentChat = false;
           if (this.state.chatID === message.chatID) {
@@ -194,7 +197,7 @@ class InboxList extends PureComponent {
   render() {
     const { searchTerm } = this.props;
     let { messages } = this.state;
-    console.log("rendered:", messages);
+
     if (searchTerm !== "") {
       messages = messages.filter(msg =>
         msg.participants[0].profileName

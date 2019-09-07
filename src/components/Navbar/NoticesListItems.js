@@ -68,24 +68,24 @@ class NoticesListItems extends Component {
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (this.mounted) {
               this.setState({ loading: false });
-            }
 
-            if (
-              !fetchMoreResult ||
-              !fetchMoreResult.getNotifications ||
-              fetchMoreResult.getNotifications.notifications.length === 0
-            ) {
-              this.setState({ hasMore: false });
-              this.props.noMoreItems();
-              return;
+              if (
+                !fetchMoreResult ||
+                !fetchMoreResult.getNotifications ||
+                fetchMoreResult.getNotifications.notifications.length === 0
+              ) {
+                this.setState({ hasMore: false });
+                this.props.noMoreItems();
+                return;
+              }
+              previousResult.getNotifications.notifications = [
+                ...previousResult.getNotifications.notifications,
+                ...fetchMoreResult.getNotifications.notifications
+              ];
+              this.props.setNotifications({
+                notifications: previousResult.getNotifications.notifications
+              });
             }
-            previousResult.getNotifications.notifications = [
-              ...previousResult.getNotifications.notifications,
-              ...fetchMoreResult.getNotifications.notifications
-            ];
-            this.props.setNotifications({
-              notifications: previousResult.getNotifications.notifications
-            });
             return previousResult;
           }
         });
@@ -94,8 +94,7 @@ class NoticesListItems extends Component {
   };
 
   subscribeToInbox = () =>
-    this.mounted &&
-    this.props.subscribeToMore({
+    (this.unsubscribe = this.props.subscribeToMore({
       document: NEW_NOTICE_SUB,
       updateQuery: (prev, { subscriptionData }) => {
         const { newNoticeSubscribe } = subscriptionData.data;
@@ -108,13 +107,15 @@ class NoticesListItems extends Component {
           ...prev.getNotifications.notifications
         ];
 
-        this.props.setNotifications({
-          notifications: prev.getNotifications.notifications
-        });
+        if (this.mounted) {
+          this.props.setNotifications({
+            notifications: prev.getNotifications.notifications
+          });
+        }
 
         return prev;
       }
-    });
+    }));
 
   markReadAndGo = ({ notificationIDs, targetID, type }) => {
     try {

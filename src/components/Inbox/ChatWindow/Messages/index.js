@@ -6,6 +6,7 @@ import _ from "lodash";
 import DateItem from "./DateItem";
 
 class MessageList extends Component {
+  unsubscribe;
   constructor(props) {
     super(props);
     this.messagesEnd = React.createRef();
@@ -47,6 +48,9 @@ class MessageList extends Component {
 
   componentWillUnmount() {
     this.mounted = false;
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   }
   componentDidUpdate(prevProps) {
     if (prevProps.messages !== this.props.messages) {
@@ -68,38 +72,40 @@ class MessageList extends Component {
     this.props.ErrorHandler.setBreadcrumb("fetch more messages");
     const { chatID, limit, fetchMore } = this.props;
     if (!this.state.hasMoreItems || this.state.restoreScroll) return;
-    fetchMore({
-      variables: {
-        chatID,
-        limit,
-        cursor
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (
-          !fetchMoreResult ||
-          fetchMoreResult.getMessages.messages.length < limit
-        ) {
-          this.setState({ hasMoreItems: false });
-        }
+    if (this.mounted) {
+      fetchMore({
+        variables: {
+          chatID,
+          limit,
+          cursor
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (
+            !fetchMoreResult ||
+            fetchMoreResult.getMessages.messages.length < limit
+          ) {
+            this.setState({ hasMoreItems: false });
+          }
 
-        if (previousResult.getMessages) {
-          previousResult.getMessages.messages = [
-            ...previousResult.getMessages.messages,
-            ...fetchMoreResult.getMessages.messages
-          ];
-        } else {
-          previousResult.getMessages = fetchMoreResult.getMessages;
-        }
+          if (previousResult.getMessages) {
+            previousResult.getMessages.messages = [
+              ...previousResult.getMessages.messages,
+              ...fetchMoreResult.getMessages.messages
+            ];
+          } else {
+            previousResult.getMessages = fetchMoreResult.getMessages;
+          }
 
-        this.setState({ messages: previousResult.getMessages.messages });
-        return previousResult;
-      }
-    });
+          this.setState({ messages: previousResult.getMessages.messages });
+          return previousResult;
+        }
+      });
+    }
   };
 
   subscribeToMessages = () => {
     const { chatID, subscribeToMore } = this.props;
-    subscribeToMore({
+    this.unsubscribe = subscribeToMore({
       document: NEW_MESSAGE_SUB,
       variables: {
         chatID: chatID
@@ -122,8 +128,9 @@ class MessageList extends Component {
             __typename: "ChatType"
           };
         }
-
-        this.setState({ messages: prev.getMessages.messages });
+        if (this.mounted) {
+          this.setState({ messages: prev.getMessages.messages });
+        }
 
         return prev;
       }

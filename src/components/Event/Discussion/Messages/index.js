@@ -4,6 +4,7 @@ import { NEW_MESSAGE_SUB } from "../../../../queries";
 import { Waypoint } from "react-waypoint";
 
 class MessageList extends Component {
+  unsubscribe;
   state = {
     hasMoreItems: true,
     messages: this.props.messages
@@ -22,12 +23,19 @@ class MessageList extends Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     this.subscribeToNewMsgs();
+  }
+  componentWillUnmount() {
+    this.mounted = false;
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   }
   subscribeToNewMsgs = () => {
     const { subscribeToMore, chatID } = this.props;
 
-    subscribeToMore({
+    this.unsubscribe = subscribeToMore({
       document: NEW_MESSAGE_SUB,
       variables: {
         chatID: chatID
@@ -49,8 +57,9 @@ class MessageList extends Component {
             __typename: "ChatType"
           };
         }
-
-        this.setState({ messages: prev.getComments.messages });
+        if (this.mounted) {
+          this.setState({ messages: prev.getComments.messages });
+        }
         return prev;
       }
     });
@@ -64,7 +73,9 @@ class MessageList extends Component {
         previousPosition === undefined &&
         currentPosition === Waypoint.inside
       ) {
-        this.setState({ hasMoreItems: false });
+        if (this.mounted) {
+          this.setState({ hasMoreItems: false });
+        }
       }
     }
   };
@@ -72,33 +83,34 @@ class MessageList extends Component {
   fetchData = async cursor => {
     const { fetchMore, ErrorHandler } = this.props;
     ErrorHandler.setBreadcrumb("Fetch more comments");
+    if (this.mounted) {
+      const { chatID, limit } = this.props;
+      fetchMore({
+        variables: {
+          chatID,
+          limit,
+          cursor
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (
+            !fetchMoreResult ||
+            fetchMoreResult.getComments.messages.length < limit
+          ) {
+            this.setState({ hasMoreItems: false });
+          }
 
-    const { chatID, limit } = this.props;
-    fetchMore({
-      variables: {
-        chatID,
-        limit,
-        cursor
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (
-          !fetchMoreResult ||
-          fetchMoreResult.getComments.messages.length < limit
-        ) {
-          this.setState({ hasMoreItems: false });
+          previousResult.getComments.messages = [
+            ...previousResult.getComments.messages,
+            ...fetchMoreResult.getComments.messages
+          ];
+          this.setState({ messages: previousResult.getComments.messages });
+
+          return previousResult.getComments
+            ? previousResult.getComments
+            : { data: previousResult };
         }
-
-        previousResult.getComments.messages = [
-          ...previousResult.getComments.messages,
-          ...fetchMoreResult.getComments.messages
-        ];
-        this.setState({ messages: previousResult.getComments.messages });
-
-        return previousResult.getComments
-          ? previousResult.getComments
-          : { data: previousResult };
-      }
-    });
+      });
+    }
   };
 
   render() {
