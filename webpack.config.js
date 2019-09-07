@@ -1,13 +1,14 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = env => {
   const isProduction = env === "production";
-
   return {
-    entry: "./src/index.js",
+    mode: "production",
+    entry: { main: "./src/index.js" },
     output: {
-      path: path.join(__dirname, "public"),
-      filename: "bundle.js"
+      path: path.resolve(__dirname, "build"),
+      filename: "main.js"
     },
     module: {
       rules: [
@@ -42,8 +43,11 @@ module.exports = env => {
     },
     devtool: isProduction ? "source-map" : "cheap-module-eval-source-map",
     devServer: {
+      port: 1234,
       contentBase: path.join(__dirname, "public"),
-      historyApiFallback: true
-    }
+      historyApiFallback: true,
+      hot: true
+    },
+    plugins: [new webpack.HotModuleReplacementPlugin()]
   };
 };

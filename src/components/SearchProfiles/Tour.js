@@ -716,7 +716,7 @@ class Tour extends PureComponent {
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-12">
+                      <div className="col-md-12" style={{ flex: 1 }}>
                         <div className="more-content-btn">
                           <a href="#">{t("morepros")}</a>
                         </div>

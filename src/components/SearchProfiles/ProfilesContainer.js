@@ -422,14 +422,16 @@ class ProfilesContainer extends Component {
                       />
                     )}
 
-                    <ScrollUpButton />
-                    <div className="col-md-12">
-                      <div className="more-content-btn">
-                        {this.state.loading ? (
-                          <span>{t("common:Loading")}</span>
-                        ) : (
-                          <span>{t("nopros")}</span>
-                        )}
+                    <div className="container">
+                      <ScrollUpButton />
+                      <div className="col-md-12" style={{ flex: 1 }}>
+                        <div className="more-content-btn">
+                          {this.state.loading ? (
+                            <span>{t("common:Loading")}</span>
+                          ) : (
+                            <span>{t("nopros")}</span>
+                          )}
+                        </div>
                       </div>
                     </div>
                     {profile && msgModalVisible && (
