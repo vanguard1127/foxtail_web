@@ -11,10 +11,10 @@ import IconButton from "@material-ui/core/IconButton";
 import FaceIcon from "@material-ui/icons/Face";
 import CloseIcon from "@material-ui/icons/Close";
 import { Button } from "@material-ui/core";
+// For mobile
+let lastDist;
+let point;
 
-function getDistance(p1, p2) {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
-}
 class EditCanvasImage extends PureComponent {
   constructor(props) {
     super(props);
@@ -314,6 +314,16 @@ class EditCanvasImage extends PureComponent {
       </div>
     );
 
+    function getDistance(p1, p2) {
+      return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+    }
+
+    function clientPointerRelativeToStage(clientX, clientY, stage) {
+      return {
+        x: clientX - this.stageRef.getContent().offsetLeft,
+        y: clientY - this.stageRef.getContent().offsetTop
+      };
+    }
     return (
       <div className="edit-canvas-image-div">
         <div className="edit-canvas-image-wrapper">
@@ -332,35 +342,52 @@ class EditCanvasImage extends PureComponent {
               height={window.innerHeight - 56} // here we've reduced height as topbar will take 56px top
               onClick={this.handleStageClick}
               onTouchMove={res => {
-                var touch1 = res.evt.touches[0];
-                var touch2 = res.evt.touches[1];
+                const evt = res.evt;
+                const stage = res.target;
+                const t1 = evt.touches[0];
+                const t2 = evt.touches[1];
 
-                if (touch1 && touch2) {
-                  var dist = getDistance(
-                    {
-                      x: touch1.clientX,
-                      y: touch1.clientY
-                    },
-                    {
-                      x: touch2.clientX,
-                      y: touch2.clientY
-                    }
+                if (t1 && t2) {
+                  evt.preventDefault();
+                  evt.stopPropagation();
+                  const oldScale = stage.scaleX();
+
+                  const dist = getDistance(
+                    { x: t1.clientX, y: t1.clientY },
+                    { x: t2.clientX, y: t2.clientY }
                   );
+                  if (!lastDist) lastDist = dist;
+                  const delta = dist - lastDist;
 
-                  if (!this.lastDist) {
-                    this.lastDist = dist;
-                  }
+                  const px = (t1.clientX + t2.clientX) / 2;
+                  const py = (t1.clientY + t2.clientY) / 2;
+                  const pointer =
+                    point || clientPointerRelativeToStage(px, py, stage);
+                  if (!point) point = pointer;
 
-                  var scale = (this.stageRef.scaleX() * dist) / this.lastDist;
+                  const startPos = {
+                    x: pointer.x / oldScale - stage.x() / oldScale,
+                    y: pointer.y / oldScale - stage.y() / oldScale
+                  };
 
-                  this.stageRef.scaleX(scale);
-                  this.stageRef.scaleY(scale);
-                  this.stageRef.draw();
-                  this.lastDist = dist;
+                  const scaleBy = 1.01 + Math.abs(delta) / 100;
+                  const newScale =
+                    delta < 0 ? oldScale / scaleBy : oldScale * scaleBy;
+                  stage.scale({ x: newScale, y: newScale });
+
+                  const newPosition = {
+                    x: (pointer.x / newScale - startPos.x) * newScale,
+                    y: (pointer.y / newScale - startPos.y) * newScale
+                  };
+
+                  stage.position(newPosition);
+                  stage.batchDraw();
+                  lastDist = dist;
                 }
               }}
               onTouchEnd={() => {
                 this.lastDist = 0;
+                point = undefined;
               }}
               ref={node => {
                 this.stageRef = node;

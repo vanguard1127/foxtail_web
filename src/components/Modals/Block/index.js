@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import { BLOCK_PROFILE, FLAG_ITEM, SEARCH_PROFILES } from "../../../queries";
+import { BLOCK_PROFILE, FLAG_ITEM } from "../../../queries";
 import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
 import Modal from "../../common/Modal";
-import Spinner from "../../common/Spinner";
 import { flagOptions } from "../../../docs/options";
 
 class BlockModal extends Component {
