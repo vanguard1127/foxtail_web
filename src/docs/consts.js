@@ -6,9 +6,7 @@
 
 // 1. ENVIRONMENT
 const localserver = "localhost:4444";
-const prodserver =
-  "production-ecs-cluster-alb-1851734625.us-east-1.elb.amazonaws.com";
-//const prodserver = "api.foxtailapp.com";
+const prodserver = "api.foxtailapp.com";
 const stageserver =
   "https://internal-foxtail-staging-private-alb-1501692418.us-east-1.elb.amazonaws.com";
 

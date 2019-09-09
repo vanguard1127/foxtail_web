@@ -192,7 +192,7 @@ const errorLink = onError(
               toastId: "networkError"
             }
           );
-          alert(networkError);
+          console.error(networkError);
           window.location.replace("/not-found");
         }
       }
