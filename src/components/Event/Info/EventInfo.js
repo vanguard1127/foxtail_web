@@ -3,6 +3,8 @@ import { formatedMilesToKm } from "../../../utils/distanceMetric";
 import { desireOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
+const NoEventImg = require("../../../assets/img/events/no-image.png");
+
 class EventInfo extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { event: eventProps } = this.props;
@@ -54,7 +56,7 @@ class EventInfo extends Component {
         <div className="event-info-content hid-mobile">
           <div className="event-image">
             <span>
-              <img src={image || "/assets/img/events/no-image.png"} alt="" />
+              <img src={image || NoEventImg} alt="" />
             </span>
           </div>
           <ul>

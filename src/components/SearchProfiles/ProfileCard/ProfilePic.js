@@ -1,14 +1,11 @@
 import React, { PureComponent } from "react";
-
+const NoProfileImg = require("../../../../src/assets/img/no-profile.png");
 class ProfilePic extends PureComponent {
   render() {
     const { profilePic } = this.props;
     return (
       <div className="image">
-        <img
-          src={profilePic !== "" ? profilePic : "assets/img/no-profile.png"}
-          alt=""
-        />
+        <img src={profilePic !== "" ? profilePic : NoProfileImg} alt="" />
       </div>
     );
   }

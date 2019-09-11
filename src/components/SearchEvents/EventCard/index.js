@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import milesToKilometers from "../../../utils/distanceMetric";
 import EventDate from "../../common/Event/EventDate";
 import EventCreator from "./EventCreator";
+const NoEventImg = require("../../../assets/img/events/no-image.png");
 
 class EventCard extends Component {
   shouldComponentUpdate(nextProps) {
@@ -47,7 +48,7 @@ class EventCard extends Component {
                 src={
                   image !== "" && image !== undefined && image !== null
                     ? image
-                    : "/assets/img/events/no-image.png"
+                    : NoEventImg
                 }
                 alt=""
               />

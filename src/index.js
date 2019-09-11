@@ -1,3 +1,7 @@
+import "react-app-polyfill/stable";
+import "./docs/manifest.json";
+import "./assets/favicon.ico";
+import "./assets/css/main.css";
 import React from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
@@ -365,6 +369,16 @@ const Body = withAuth(session => session && session.currentuser)(
     </div>
   )
 );
+
+// import(/*webpackChunkName: 'root' */ Root).then(({ default: Root }) =>
+//   render(
+//     <ApolloProvider client={client}>
+//       <Root />
+//     </ApolloProvider>,
+//     document.getElementById("root")
+//   )
+// );
+
 render(
   <ApolloProvider client={client}>
     <Root />

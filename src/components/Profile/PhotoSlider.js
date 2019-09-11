@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import OwlCarousel from "react-owl-carousel";
 import { toast } from "react-toastify";
 import Lightbox from "react-image-lightbox";
+const NoPictureImg = require("../../assets/img/no-picture.png");
 
 class PhotoSlider extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -47,6 +48,7 @@ class PhotoSlider extends Component {
   render() {
     const { isPublic, photos, t, ErrorHandler } = this.props;
     const { previewVisible, selectedImg } = this.state;
+
     return (
       <ErrorHandler.ErrorBoundary>
         <div
@@ -98,11 +100,7 @@ class PhotoSlider extends Component {
                   </div>
                 ) : (
                   <span onClick={this.warnPrivate.bind(this)}>
-                    <img
-                      className="blur"
-                      src={"../assets/img/no-picture.png"}
-                      alt=""
-                    />
+                    <img className="blur" src={NoPictureImg} alt="" />
                   </span>
                 )}
               </div>

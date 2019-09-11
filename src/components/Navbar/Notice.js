@@ -1,5 +1,7 @@
 import React from "react";
 import { preventContextMenu } from "../../utils/image";
+const NoProfileImg = require("../../assets/img/no-profile.png");
+
 const Notice = ({ notice, t, dayjs, lang, setAlert, markReadAndGo }) => {
   if (notice.type === "alert") {
     return (
@@ -10,11 +12,7 @@ const Notice = ({ notice, t, dayjs, lang, setAlert, markReadAndGo }) => {
       >
         <span>
           <span className="avatar">
-            <img
-              src={"../assets/img/no-profile.png"}
-              alt=""
-              onContextMenu={preventContextMenu}
-            />
+            <img src={NoProfileImg} alt="" onContextMenu={preventContextMenu} />
           </span>
           <div>
             <span className="text">
@@ -52,7 +50,7 @@ const Notice = ({ notice, t, dayjs, lang, setAlert, markReadAndGo }) => {
               src={
                 notice.fromProfile
                   ? notice.fromProfile.profilePic
-                  : "../assets/img/no-profile.png"
+                  : NoProfileImg
               }
               onContextMenu={preventContextMenu}
               className="avatar"

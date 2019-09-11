@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
 import { preventContextMenu } from "../../../utils/image";
+const NoProfileImg = require("../../../assets/img/no-profile.png");
+
 class EventCreator extends PureComponent {
   render() {
     const { ownerProfile, createdAt, history, t, dayjs, lang } = this.props;
@@ -15,7 +17,7 @@ class EventCreator extends PureComponent {
               src={
                 ownerProfile.profilePic !== ""
                   ? ownerProfile.profilePic
-                  : "/assets/img/no-profile.png"
+                  : NoProfileImg
               }
               alt=""
               onContextMenu={preventContextMenu}

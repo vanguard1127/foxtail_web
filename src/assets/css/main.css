@@ -1,6 +1,8 @@
 @import url("../css/reset.css");
 @import url("../css/grid.css");
 @import url("../css/fonts.css");
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500');
 
 /*---- GLOBAL ----*/
 .hidden-mobile {
@@ -3039,9 +3041,17 @@ section.profile .data-info ul li span.data {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 330px;
 }
-
+@media (min-width:1200px){
+  section.profile .data-info ul li span.data {
+    max-width:350px;
+  }
+}
+@media (min-width:768px) and (max-width:1200px){
+  section.profile .data-info ul li span.data {
+    max-width:100px;
+  }
+}
 section.profile .data-info ul li span.data.lookfor {
  display: inline-block;
 }
@@ -7382,7 +7392,7 @@ section.login-modal {
   left: 0;
   top: 0;
   z-index: 999;
-  padding:15% 0;
+  /* padding:15% 0; */
   display: none;
   visibility: hidden;
 }
@@ -7409,7 +7419,7 @@ section.login-modal.acctsetting {
 }
 
 section.login-modal.report {
-  padding: 16% 0;
+  /* padding: 16% 0; */
 }
 
 section.login-modal.rules {
@@ -7421,10 +7431,17 @@ section.full-screen-modal {
 }
 
 section.login-modal.show {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* display: inline-block; */
   visibility: visible;
 }
+@media (max-width:768px){
+  section.login-modal.show{
 
+  }
+}
 section.login-modal .popup {
   width: 100%;
   background-color: #fff;

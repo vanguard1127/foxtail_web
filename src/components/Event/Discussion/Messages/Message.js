@@ -1,5 +1,5 @@
 import React from "react";
-
+const NoProfileImg = require("../../../../assets/img/no-profile.png");
 const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
   const messageText = message.text;
 
@@ -10,11 +10,7 @@ const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
           onClick={() => history.push("/member/" + message.fromUser.profile.id)}
         >
           <img
-            src={
-              message.profilePic !== ""
-                ? message.profilePic
-                : "/assets/img/no-profile.png"
-            }
+            src={message.profilePic !== "" ? message.profilePic : NoProfileImg}
             alt=""
           />
         </span>

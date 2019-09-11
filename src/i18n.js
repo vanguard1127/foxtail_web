@@ -25,6 +25,7 @@ i18n
     react: {
       useSuspense: false,
       wait: true
-    }
+    },
+    loadPath: "./assets/locales/{{lng}}/{{ns}}.json"
   });
 export default i18n;

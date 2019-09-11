@@ -6,7 +6,7 @@ import InboxItem from "./InboxItem";
 import Alert from "./Alert";
 import MyAccountItem from "./MyAccountItem";
 import * as ErrorHandler from "../common/ErrorHandler";
-var msgAudio = new Audio(require("../../docs/msg.mp3"));
+var msgAudio = new Audio(require("../../assets/audio/msg.mp3"));
 
 class UserToolbar extends Component {
   state = { alertVisible: true };

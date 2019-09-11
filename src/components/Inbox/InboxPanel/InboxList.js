@@ -1,8 +1,9 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import { Waypoint } from "react-waypoint";
 import { NEW_INBOX_SUB } from "../../../queries";
 import TimeAgo from "../../../utils/TimeAgo";
 import { preventContextMenu } from "../../../utils/image";
+const NoProfileImg = require("../../../assets/img/no-profile.png");
 
 class InboxList extends PureComponent {
   unsubscribe;
@@ -110,7 +111,7 @@ class InboxList extends PureComponent {
     let title;
     if (item.type === "alert" || item.type === "left") {
       title = "Foxtail";
-      item.profilePic = "../assets/img/no-profile.png";
+      item.profilePic = NoProfileImg;
     } else {
       if (item.fromUser) {
         if (
@@ -146,11 +147,7 @@ class InboxList extends PureComponent {
         >
           <span className="img">
             <img
-              src={
-                item.profilePic !== ""
-                  ? item.profilePic
-                  : "../assets/img/no-profile.png"
-              }
+              src={item.profilePic !== "" ? item.profilePic : NoProfileImg}
               alt=""
               onContextMenu={preventContextMenu}
             />
