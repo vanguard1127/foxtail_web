@@ -1,7 +1,7 @@
 export default [
   { img: "", tinyImg: "", message: "", btnText: "", link: "" },
   {
-    img: "black.jpg",
+    img: "black.png",
     message: "Upgrade to Foxtail Black and get more of what you love.",
     btnText: "Get More",
     link: "blk",

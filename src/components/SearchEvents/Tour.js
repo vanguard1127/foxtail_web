@@ -44,6 +44,7 @@ class Tour extends PureComponent {
   render() {
     const { t, tReady } = this.props;
     const { isTourOpen } = this.state;
+
     if (!tReady) {
       return <Spinner />;
     }
@@ -155,7 +156,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -164,7 +169,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1001@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1001@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -180,37 +188,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -245,7 +277,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -254,7 +290,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1001@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1001@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -270,37 +309,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -349,7 +412,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -358,7 +425,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1001@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1001@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -374,37 +444,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -439,7 +533,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -448,7 +546,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1001@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1001@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -464,37 +565,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -529,7 +654,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -538,7 +667,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1003@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1003@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -554,37 +686,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -619,7 +775,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -628,7 +788,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1004@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1004@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -644,37 +807,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -709,7 +896,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -718,7 +909,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1001@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1001@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -734,37 +928,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -799,7 +1017,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -808,7 +1030,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1001@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1001@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -824,37 +1049,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -889,7 +1138,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -898,7 +1151,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1003@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1003@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -914,37 +1170,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
@@ -979,7 +1259,11 @@ class Tour extends PureComponent {
                                 <a href="#user">
                                   <span className="avatar">
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </span>
@@ -988,7 +1272,10 @@ class Tour extends PureComponent {
                               </div>
                               <a href="#link">
                                 <img
-                                  src="assets/img/events/1004@2x.png"
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1004@2x.png"
+                                  }
                                   alt=""
                                 />
                               </a>
@@ -1004,37 +1291,61 @@ class Tour extends PureComponent {
                                 <ul>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1001@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1002@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1003@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1004@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1005@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>
                                   <li>
                                     <img
-                                      src="assets/img/usr/avatar/1006@2x.png"
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
                                       alt=""
                                     />
                                   </li>

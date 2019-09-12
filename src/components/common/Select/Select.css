@@ -14,18 +14,15 @@
   user-select: none;
 }
 
-.arrow {
-  position: relative;
-}
-.arrow::after {
+.select-container::before {
   content: "\F004";
   font-family: "foxtail-icon";
   color: #f50043;
   position: absolute;
-  right: 0;
+  right: 34px;
   font-size: 14px;
   z-index: 99999;
-  bottom: 7px;
+  bottom: 31px;
 }
 
 .select-container label {

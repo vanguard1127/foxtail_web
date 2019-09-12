@@ -49,6 +49,7 @@ import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
+require("dotenv").config();
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
@@ -56,7 +57,7 @@ Sentry.init({
 
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
-//test6
+
 let { httpurl, HTTPSurl, wsurl } = env.production;
 //let { httpurl, HTTPSurl, wsurl } = env.local;
 //let { httpurl, HTTPSurl, wsurl } = env.stage;
@@ -232,17 +233,17 @@ const Wrapper = withRouter(props => {
     ) {
       return <Landing {...props} ReactGA={ReactGA} />;
     } else if (location.pathname === "/tos") {
-      return <ToS />;
+      return <ToS history={props.history} />;
     } else if (location.pathname === "/about") {
-      return <About />;
+      return <About history={props.history} />;
     } else if (location.pathname === "/faq") {
-      return <FAQ />;
+      return <FAQ history={props.history} />;
     } else if (location.pathname === "/privacy") {
-      return <Privacy />;
+      return <Privacy history={props.history} />;
     } else if (location.pathname === "/antispam") {
-      return <AntiSpam />;
+      return <AntiSpam history={props.history} />;
     } else if (location.pathname === "/lawenforcement") {
-      return <LawEnforce />;
+      return <LawEnforce history={props.history} />;
     } else if (location.pathname === "/captcha") {
       return <ReCaptcha />;
     } else if (location.pathname === "/not-found") {

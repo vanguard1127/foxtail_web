@@ -83,7 +83,7 @@ class Settings extends Component {
             !session ||
             !session.currentuser
           ) {
-            document.title = t("common:Loading");
+            document.title = t("common:Loading") + "...";
             return (
               <div
                 style={{

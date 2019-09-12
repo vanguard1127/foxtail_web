@@ -228,7 +228,7 @@ class ProfilePage extends Component {
                   );
                 }
                 if (loading) {
-                  document.title = t("common:Loading");
+                  document.title = t("common:Loading") + "...";
                   return <Spinner message={t("common:Loading")} size="large" />;
                 } else if (!data || !data.profile) {
                   return <div>{t("notexist")}</div>;

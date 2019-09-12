@@ -97,7 +97,10 @@ class ProfileTour extends PureComponent {
                         <span className="avatar">
                           <a href="#">
                             <img
-                              src="../assets/img/usr/medium-avatar/1003.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1003.png"
+                              }
                               alt=""
                             />
                           </a>
@@ -155,85 +158,127 @@ class ProfileTour extends PureComponent {
                         <ul>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1001.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1001.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1002.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1002.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1003.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1003.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1004.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1004.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1005.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1005.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1006.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1006.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1003.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1003.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1004.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1004.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1005.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1005.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1006.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1006.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1003.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1003.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1004.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1004.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1005.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1005.png"
+                              }
                               alt=""
                             />
                           </li>
                           <li>
                             <img
-                              src="../assets/img/usr/medium-avatar/1006.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1006.png"
+                              }
                               alt=""
                             />
                           </li>
@@ -251,7 +296,13 @@ class ProfileTour extends PureComponent {
                   >
                     <div className="event-image">
                       <span>
-                        <img src="../assets/img/events/1001.png" alt="" />
+                        <img
+                          src={
+                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            "events/1001.png"
+                          }
+                          alt=""
+                        />
                       </span>
                     </div>
                     <ul>
@@ -304,7 +355,10 @@ class ProfileTour extends PureComponent {
                         <span className="avatar">
                           <a href="#">
                             <img
-                              src="../assets/img/usr/medium-avatar/1001.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1001.png"
+                              }
                               alt=""
                             />
                           </a>
@@ -326,7 +380,10 @@ class ProfileTour extends PureComponent {
                         <span className="avatar">
                           <a href="#">
                             <img
-                              src="../assets/img/usr/medium-avatar/1002.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1002.png"
+                              }
                               alt=""
                             />
                           </a>
@@ -349,7 +406,10 @@ class ProfileTour extends PureComponent {
                         <span className="avatar">
                           <a href="#">
                             <img
-                              src="../assets/img/usr/medium-avatar/1003.png"
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/medium-avatar/1003.png"
+                              }
                               alt=""
                             />
                           </a>
@@ -378,7 +438,13 @@ class ProfileTour extends PureComponent {
                   >
                     <div className="event-image">
                       <span>
-                        <img src="../assets/img/events/1001.png" alt="" />
+                        <img
+                          src={
+                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            "events/1001.png"
+                          }
+                          alt=""
+                        />
                       </span>
                     </div>
                     <ul>

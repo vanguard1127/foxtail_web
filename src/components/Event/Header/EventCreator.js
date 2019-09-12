@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { preventContextMenu } from "../../../utils/image";
-const NoProfileImg = require("../../../assets/img/no-profile.png");
+const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
 
 class EventCreator extends PureComponent {
   render() {

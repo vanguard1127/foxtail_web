@@ -145,7 +145,7 @@ class EventPage extends Component {
       >
         {({ data, loading, error, refetch }) => {
           if (error) {
-            document.title = t("common:Event");
+            document.title = t("common:Error Occurred");
             return (
               <ErrorHandler.report
                 error={error}
@@ -158,7 +158,7 @@ class EventPage extends Component {
           }
 
           if (loading) {
-            document.title = t("common:Loading");
+            document.title = t("common:Loading") + "...";
             return <Spinner />;
           } else if (!data || !data.event) {
             return <div>{t("noevent")}.</div>;

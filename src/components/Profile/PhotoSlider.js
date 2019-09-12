@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import OwlCarousel from "react-owl-carousel";
 import { toast } from "react-toastify";
 import Lightbox from "react-image-lightbox";
-const NoPictureImg = require("../../assets/img/no-picture.png");
+const NoPictureImg = require("../../assets/img/elements/no-picture.png");
 
 class PhotoSlider extends Component {
   shouldComponentUpdate(nextProps, nextState) {

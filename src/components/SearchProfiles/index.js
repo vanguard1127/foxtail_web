@@ -15,7 +15,6 @@ class SearchProfiles extends Component {
   }
   render() {
     const { t, ErrorHandler, ReactGA, tReady, refetch, session } = this.props;
-    document.title = t("common:Search Profiles");
     if (!tReady) {
       return <Spinner />;
     }

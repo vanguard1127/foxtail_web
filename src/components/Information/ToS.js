@@ -3,7 +3,7 @@ import Spinner from "../common/Spinner";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 const ToSText = lazy(() => import("./" + lang + "/ToSText"));
-const ToS = () => (
+const ToS = ({ history }) => (
   <Suspense
     fallback={
       <div
@@ -18,6 +18,7 @@ const ToS = () => (
       </div>
     }
   >
+    <span className="back-to-home" onClick={() => history.push("/")} />
     <ToSText />
   </Suspense>
 );

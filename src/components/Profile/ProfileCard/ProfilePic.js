@@ -12,7 +12,7 @@ class ProfilePic extends Component {
           src={
             profilePic !== ""
               ? profilePic
-              : process.env.PUBLIC_URL + "/assets/img/no-profile.png"
+              : process.env.PUBLIC_URL + "/assets/img/elements/no-profile.png"
           }
           alt=""
         />

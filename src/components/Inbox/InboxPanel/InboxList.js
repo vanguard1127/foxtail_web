@@ -3,7 +3,7 @@ import { Waypoint } from "react-waypoint";
 import { NEW_INBOX_SUB } from "../../../queries";
 import TimeAgo from "../../../utils/TimeAgo";
 import { preventContextMenu } from "../../../utils/image";
-const NoProfileImg = require("../../../assets/img/no-profile.png");
+const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
 
 class InboxList extends PureComponent {
   unsubscribe;

@@ -100,7 +100,6 @@ class NavbarAuth extends PureComponent {
     href = href[3];
     const { session, t, history } = this.props;
     const { mobileMenu } = this.state;
-
     return (
       <div className="container">
         <div className="col-md-12">
@@ -169,33 +168,38 @@ class NavbarAuth extends PureComponent {
                       {t("common:myaccount")}
                     </span>
                   </li>
-                  <li>
-                    <span
-                      onClick={() => {
-                        history.push({
-                          pathname: "/settings",
-                          state: { showBlkMdl: true }
-                        });
-                        this.toggleMobileMenu();
-                      }}
-                      className="highlightTxt"
-                    >
-                      {t("common:becomeblk")}
-                    </span>
-                  </li>
-                  <li>
-                    <span
-                      onClick={() => {
-                        history.push({
-                          pathname: "/settings",
-                          state: { showCplMdl: true }
-                        });
-                        this.toggleMobileMenu();
-                      }}
-                    >
-                      {t("common:addcoup")}
-                    </span>
-                  </li>
+                  {history.location.pathname !== "/settings" && (
+                    <>
+                      {" "}
+                      <li>
+                        <span
+                          onClick={() => {
+                            history.push({
+                              pathname: "/settings",
+                              state: { showBlkMdl: true }
+                            });
+                            this.toggleMobileMenu();
+                          }}
+                          className="highlightTxt"
+                        >
+                          {t("common:becomeblk")}
+                        </span>
+                      </li>
+                      <li>
+                        <span
+                          onClick={() => {
+                            history.push({
+                              pathname: "/settings",
+                              state: { showCplMdl: true }
+                            });
+                            this.toggleMobileMenu();
+                          }}
+                        >
+                          {t("common:addcoup")}
+                        </span>
+                      </li>
+                    </>
+                  )}
                   <li>
                     <span>
                       <Logout t={t} />

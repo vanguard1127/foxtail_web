@@ -31,7 +31,12 @@ const Ad = ({
       <div className="inbox-ads">
         <div className="content">
           <div className="ad-con">
-            <img src={img} alt="" width="100%" height="100%" />
+            <img
+              src={process.env.REACT_APP_S3_AD_BUCKET_URL + img}
+              alt=""
+              width="100%"
+              height="100%"
+            />
           </div>
           <div className="detail-con">
             <span className="head">{title}</span>

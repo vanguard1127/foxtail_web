@@ -1,5 +1,6 @@
 import React from "react";
 import { preventContextMenu } from "../../../../utils/image";
+const NoProfileImg = require("../../../../assets/img/elements/no-profile.png");
 
 const Message = React.forwardRef(
   ({ message, currentUserID, t, dayjs, lang }, ref) => {
@@ -19,11 +20,7 @@ const Message = React.forwardRef(
       >
         <div className="avatar">
           <img
-            src={
-              message.profilePic !== ""
-                ? message.profilePic
-                : "assets/img/usr/avatar/1001@2x.png"
-            }
+            src={message.profilePic !== "" ? message.profilePic : NoProfileImg}
             alt=""
             onContextMenu={preventContextMenu}
           />

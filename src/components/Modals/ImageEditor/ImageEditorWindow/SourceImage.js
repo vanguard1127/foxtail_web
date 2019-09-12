@@ -6,7 +6,7 @@ class SourceImage extends PureComponent {
     image: null,
     isDragging: false
   };
-  stageRef = null;
+
   componentDidMount() {
     this.image = new window.Image();
     this.image.src = URL.createObjectURL(this.props.sourceImageObject);

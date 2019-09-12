@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -11,6 +12,9 @@ module.exports = {
     path: path.resolve(__dirname, "./build")
   },
   mode: "production",
+  node: {
+    fs: "empty"
+  },
   module: {
     rules: [
       {
@@ -24,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
-        exclude: "/src/assets/favicon.ico",
+        exclude: ["/src/assets/favicon.ico", "/src/assets/static"],
         use: ["file-loader"]
       },
       {
@@ -64,6 +68,7 @@ module.exports = {
     new CopyPlugin([
       { from: "src/assets/locales", to: "locales", toType: "dir" }
     ]),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new Dotenv({ path: "./.env" })
   ]
 };

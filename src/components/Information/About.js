@@ -3,7 +3,7 @@ import Spinner from "../common/Spinner";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 const AboutText = lazy(() => import("./" + lang + "/AboutText"));
-const About = () => (
+const About = ({ history }) => (
   <Suspense
     fallback={
       <div
@@ -18,6 +18,7 @@ const About = () => (
       </div>
     }
   >
+    <span className="back-to-home" onClick={() => history.push("/")} />
     <AboutText />
   </Suspense>
 );

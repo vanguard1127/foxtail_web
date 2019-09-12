@@ -137,7 +137,10 @@ class ProfileTour extends PureComponent {
                     <span onClick={toggleOn} className="inbox-item">
                       <span className="img">
                         <img
-                          src="../assets/img/usr/medium-avatar/1001.png"
+                          src={
+                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            "usr/medium-avatar/1001.png"
+                          }
                           alt=""
                         />
                       </span>
@@ -153,7 +156,10 @@ class ProfileTour extends PureComponent {
                     <span onClick={toggleOn} className="inbox-item">
                       <span className="img">
                         <img
-                          src="../assets/img/usr/medium-avatar/1002.png"
+                          src={
+                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            "usr/medium-avatar/1002.png"
+                          }
                           alt=""
                         />
                       </span>
@@ -169,7 +175,10 @@ class ProfileTour extends PureComponent {
                     <span onClick={toggleOn} className="inbox-item">
                       <span className="img">
                         <img
-                          src="../assets/img/usr/medium-avatar/1003.png"
+                          src={
+                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            "usr/medium-avatar/1003.png"
+                          }
                           alt=""
                         />
                       </span>
@@ -187,7 +196,10 @@ class ProfileTour extends PureComponent {
                     <span onClick={toggleOn} className="inbox-item">
                       <span className="img">
                         <img
-                          src="../assets/img/usr/medium-avatar/1004.png"
+                          src={
+                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            "usr/medium-avatar/1004.png"
+                          }
                           alt=""
                         />
                       </span>
@@ -211,7 +223,10 @@ class ProfileTour extends PureComponent {
                     <div className="avatar">
                       <a href="#">
                         <img
-                          src="../assets/img/usr/medium-avatar/1001.png"
+                          src={
+                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            "usr/medium-avatar/1001.png"
+                          }
                           alt=""
                         />
                       </a>
@@ -243,7 +258,10 @@ class ProfileTour extends PureComponent {
                   <div className="msg-item">
                     <div className="avatar">
                       <img
-                        src="../assets/img/usr/medium-avatar/1001.png"
+                        src={
+                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          "usr/medium-avatar/1001.png"
+                        }
                         alt=""
                       />
                     </div>
@@ -256,7 +274,10 @@ class ProfileTour extends PureComponent {
                   <div className="msg-item">
                     <div className="avatar">
                       <img
-                        src="../assets/img/usr/medium-avatar/1001.png"
+                        src={
+                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          "usr/medium-avatar/1001.png"
+                        }
                         alt=""
                       />
                     </div>
@@ -266,7 +287,10 @@ class ProfileTour extends PureComponent {
                   <div className="msg-item response">
                     <div className="avatar">
                       <img
-                        src="../assets/img/usr/medium-avatar/1001.png"
+                        src={
+                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          "usr/medium-avatar/1001.png"
+                        }
                         alt=""
                       />
                     </div>
@@ -276,7 +300,10 @@ class ProfileTour extends PureComponent {
                   <div className="msg-item">
                     <div className="avatar">
                       <img
-                        src="../assets/img/usr/medium-avatar/1001.png"
+                        src={
+                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          "usr/medium-avatar/1001.png"
+                        }
                         alt=""
                       />
                     </div>
@@ -288,7 +315,10 @@ class ProfileTour extends PureComponent {
                   <div className="msg-item response">
                     <div className="avatar">
                       <img
-                        src="../assets/img/usr/medium-avatar/1001.png"
+                        src={
+                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          "usr/medium-avatar/1001.png"
+                        }
                         alt=""
                       />
                     </div>

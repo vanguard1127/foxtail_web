@@ -3,7 +3,7 @@ import Spinner from "../common/Spinner";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 const LawEnforceText = lazy(() => import("./" + lang + "/LawEnforceText"));
-const LawEnforce = () => (
+const LawEnforce = ({ history }) => (
   <Suspense
     fallback={
       <div
@@ -18,6 +18,7 @@ const LawEnforce = () => (
       </div>
     }
   >
+    <span className="back-to-home" onClick={() => history.push("/")} />
     <LawEnforceText />
   </Suspense>
 );

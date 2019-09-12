@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ScrollUpButton from "react-scroll-up-button";
-import { SEARCH_PROFILES, LIKE_PROFILE, GET_COUNTS } from "../../queries";
+import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import { Query, Mutation, withApollo } from "react-apollo";
 import MemberProfiles from "./MemberProfiles/";
 import { Waypoint } from "react-waypoint";
@@ -325,6 +325,7 @@ class ProfilesContainer extends Component {
           }
 
           if (loading) {
+            document.title = t("common:Loading") + "...";
             return <Spinner page="searchProfiles" title={t("allmems")} />;
           } else if (
             data === undefined ||
@@ -369,6 +370,7 @@ class ProfilesContainer extends Component {
             );
           }
 
+          document.title = t("common:Search Profiles");
           const result = data.searchProfiles;
 
           return (

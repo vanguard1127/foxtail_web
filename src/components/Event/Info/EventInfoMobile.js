@@ -3,7 +3,7 @@ import { formatedMilesToKm } from "../../../utils/distanceMetric";
 import { desireOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
-const NoEventImg = require("../../../assets/img/events/no-image.png");
+const NoEventImg = require("../../../assets/img/elements/no-eve-image.png");
 
 class EventInfoMobile extends Component {
   shouldComponentUpdate(nextProps) {

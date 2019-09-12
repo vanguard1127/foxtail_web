@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-const NoProfileImg = require("../../../../src/assets/img/no-profile.png");
+const NoProfileImg = require("../../../../src/assets/img/elements/no-profile.png");
 class ProfilePic extends PureComponent {
   render() {
     const { profilePic } = this.props;

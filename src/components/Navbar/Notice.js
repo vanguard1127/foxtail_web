@@ -1,6 +1,6 @@
 import React from "react";
 import { preventContextMenu } from "../../utils/image";
-const NoProfileImg = require("../../assets/img/no-profile.png");
+const NoProfileImg = require("../../assets/img/elements/no-profile.png");
 
 const Notice = ({ notice, t, dayjs, lang, setAlert, markReadAndGo }) => {
   if (notice.type === "alert") {

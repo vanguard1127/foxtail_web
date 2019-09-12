@@ -3,7 +3,7 @@ import Spinner from "../common/Spinner";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 const PrivacyText = lazy(() => import("./" + lang + "/PrivacyText"));
-const Privacy = () => (
+const Privacy = ({ history }) => (
   <Suspense
     fallback={
       <div
@@ -18,6 +18,7 @@ const Privacy = () => (
       </div>
     }
   >
+    <span className="back-to-home" onClick={() => history.push("/")} />
     <PrivacyText />
   </Suspense>
 );

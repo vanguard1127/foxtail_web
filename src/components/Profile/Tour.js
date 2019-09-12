@@ -81,7 +81,10 @@ class ProfileTour extends PureComponent {
                     <div className="avatar-card">
                       <div className="avatar">
                         <img
-                          src="/assets/img/usr/big-avatar/1003@2x.png"
+                          src={
+                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            "usr/big-avatar/1003@2x.png"
+                          }
                           alt=""
                         />
                       </div>
@@ -177,33 +180,45 @@ class ProfileTour extends PureComponent {
                         }}
                       >
                         <div className="item" key={Math.random()}>
-                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
+                          <a href={"#link"}>
                             <img
-                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/big-avatar/1003@2x.png"
+                              }
                               alt=""
                             />
                           </a>
                         </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
+                          <a href={"#link"}>
                             <img
-                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/big-avatar/1003@2x.png"
+                              }
                               alt=""
                             />
                           </a>
                         </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
+                          <a href={"#link"}>
                             <img
-                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/big-avatar/1003@2x.png"
+                              }
                               alt=""
                             />
                           </a>
                         </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
+                          <a href={"#link"}>
                             <img
-                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/big-avatar/1003@2x.png"
+                              }
                               alt=""
                             />
                           </a>
@@ -247,33 +262,45 @@ class ProfileTour extends PureComponent {
                         }}
                       >
                         <div className="item" key={Math.random()}>
-                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
+                          <a href={"#link"}>
                             <img
-                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/big-avatar/1003@2x.png"
+                              }
                               alt=""
                             />
                           </a>
                         </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
+                          <a href={"#link"}>
                             <img
-                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/big-avatar/1003@2x.png"
+                              }
                               alt=""
                             />
                           </a>
                         </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
+                          <a href={"#link"}>
                             <img
-                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/big-avatar/1003@2x.png"
+                              }
                               alt=""
                             />
                           </a>
                         </div>{" "}
                         <div className="item" key={Math.random()}>
-                          <a href={"/assets/img/usr/big-avatar/1003@2x.png"}>
+                          <a href={"#link"}>
                             <img
-                              src={"/assets/img/usr/big-avatar/1003@2x.png"}
+                              src={
+                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                "usr/big-avatar/1003@2x.png"
+                              }
                               alt=""
                             />
                           </a>

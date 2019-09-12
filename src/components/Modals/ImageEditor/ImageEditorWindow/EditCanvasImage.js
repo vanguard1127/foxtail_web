@@ -11,32 +11,28 @@ import IconButton from "@material-ui/core/IconButton";
 import FaceIcon from "@material-ui/icons/Face";
 import CloseIcon from "@material-ui/icons/Close";
 import { Button } from "@material-ui/core";
-// For mobile
-let lastDist;
-let point;
 
 class EditCanvasImage extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      width: 0,
-      height: 0,
-      x_pos: 0,
-      y_pos: 0,
-      selectedShapeName: "",
-      hideTransformer: false,
-      konvaImageList: [],
-      rotation: 0,
-      uploading: false,
-      scale: 1,
-      imageWidth: 0,
-      imageHeight: 0,
-      init_x: 0,
-      init_y: 0,
-      isShowStickers: false
-    };
-    this.pixelRatio = 1;
-  }
+  lastDist = 0;
+  startScale = 1;
+  pixelRatio = 1;
+  state = {
+    width: 0,
+    height: 0,
+    x_pos: 0,
+    y_pos: 0,
+    selectedShapeName: "",
+    hideTransformer: false,
+    konvaImageList: [],
+    rotation: 0,
+    uploading: false,
+    scale: 1,
+    imageWidth: 0,
+    imageHeight: 0,
+    init_x: 0,
+    init_y: 0,
+    isShowStickers: false
+  };
 
   componentDidMount() {
     this.mounted = true;
@@ -48,9 +44,6 @@ class EditCanvasImage extends PureComponent {
     this.mounted = false;
     window.removeEventListener("resize", this.checkSize);
   }
-
-  lastDist = 0;
-  startScale = 1;
 
   checkSize = () => {
     const { imageHeight, imageWidth, x_pos, y_pos, scale } = this.state;
@@ -284,6 +277,18 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
+  setScale = scale => {
+    if (this.mounted) {
+      if (scale < 3 && scale > 1) {
+        this.setState({
+          scale
+        });
+      }
+    }
+  };
+  getDistance = (p1, p2) => {
+    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+  };
   render() {
     const {
       konvaImageList,
@@ -314,16 +319,6 @@ class EditCanvasImage extends PureComponent {
       </div>
     );
 
-    function getDistance(p1, p2) {
-      return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
-    }
-
-    function clientPointerRelativeToStage(clientX, clientY, stage) {
-      return {
-        x: clientX - this.stageRef.getContent().offsetLeft,
-        y: clientY - this.stageRef.getContent().offsetTop
-      };
-    }
     return (
       <div className="edit-canvas-image-div">
         <div className="edit-canvas-image-wrapper">
@@ -341,57 +336,6 @@ class EditCanvasImage extends PureComponent {
               width={width}
               height={window.innerHeight - 56} // here we've reduced height as topbar will take 56px top
               onClick={this.handleStageClick}
-              onTouchMove={res => {
-                const evt = res.evt;
-                const stage = res.target;
-                const t1 = evt.touches[0];
-                const t2 = evt.touches[1];
-
-                if (t1 && t2) {
-                  evt.preventDefault();
-                  evt.stopPropagation();
-                  const oldScale = stage.scaleX();
-
-                  const dist = getDistance(
-                    { x: t1.clientX, y: t1.clientY },
-                    { x: t2.clientX, y: t2.clientY }
-                  );
-                  if (!lastDist) lastDist = dist;
-                  const delta = dist - lastDist;
-
-                  const px = (t1.clientX + t2.clientX) / 2;
-                  const py = (t1.clientY + t2.clientY) / 2;
-                  const pointer =
-                    point || clientPointerRelativeToStage(px, py, stage);
-                  if (!point) point = pointer;
-
-                  const startPos = {
-                    x: pointer.x / oldScale - stage.x() / oldScale,
-                    y: pointer.y / oldScale - stage.y() / oldScale
-                  };
-
-                  const scaleBy = 1.01 + Math.abs(delta) / 100;
-                  const newScale =
-                    delta < 0 ? oldScale / scaleBy : oldScale * scaleBy;
-                  stage.scale({ x: newScale, y: newScale });
-
-                  const newPosition = {
-                    x: (pointer.x / newScale - startPos.x) * newScale,
-                    y: (pointer.y / newScale - startPos.y) * newScale
-                  };
-
-                  stage.position(newPosition);
-                  stage.batchDraw();
-                  lastDist = dist;
-                }
-              }}
-              onTouchEnd={() => {
-                this.lastDist = 0;
-                point = undefined;
-              }}
-              ref={node => {
-                this.stageRef = node;
-              }}
             >
               <Layer>
                 <Group
@@ -442,6 +386,39 @@ class EditCanvasImage extends PureComponent {
                       y
                     };
                   }}
+                  // onTouchMove={res => {
+                  //   const stage = res.currentTarget;
+                  //   var touch1 = res.evt.touches[0];
+                  //   var touch2 = res.evt.touches[1];
+
+                  //   if (touch1 && touch2) {
+                  //     var dist = this.getDistance(
+                  //       {
+                  //         x: touch1.clientX,
+                  //         y: touch1.clientY
+                  //       },
+                  //       {
+                  //         x: touch2.clientX,
+                  //         y: touch2.clientY
+                  //       }
+                  //     );
+
+                  //     if (!this.lastDist) {
+                  //       this.lastDist = dist;
+                  //     }
+
+                  //     console.log("scale state:", this.state.scale);
+
+                  //     var scale = (stage.scaleX() * dist) / this.lastDist;
+                  //     this.setScale(scale);
+                  //     console.log("calculated scale:", scale);
+
+                  //     this.lastDist = dist;
+                  //   }
+                  // }}
+                  // onTouchEnd={() => {
+                  //   this.lastDist = 0;
+                  // }}
                 >
                   {this.props.imageObject && (
                     <SourceImage

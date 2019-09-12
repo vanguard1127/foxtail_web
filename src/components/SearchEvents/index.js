@@ -296,6 +296,7 @@ class SearchEvents extends Component {
                 >
                   {({ data, loading, error, fetchMore }) => {
                     if (loading) {
+                      document.title = t("common:Loading") + "...";
                       return (
                         <Spinner
                           page="searchEvents"
@@ -350,6 +351,7 @@ class SearchEvents extends Component {
                       );
                     }
 
+                    document.title = this.props.t("searchevents");
                     return (
                       <EventsList
                         events={data.searchEvents}
