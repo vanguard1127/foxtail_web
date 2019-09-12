@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import NoticesMenu from "./NoticesMenu";
-import { NOTICELIST_LIMIT } from "../../docs/consts";
 import Alert from "./Alert";
 import {
   GET_NOTIFICATIONS,
@@ -70,7 +69,9 @@ class NoticesItem extends Component {
 
   skipForward = () => {
     if (this.mounted) {
-      this.setState({ skip: this.state.skip + NOTICELIST_LIMIT });
+      this.setState({
+        skip: this.state.skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)
+      });
     }
     return this.state.skip;
   };
@@ -106,7 +107,10 @@ class NoticesItem extends Component {
       getNotifications: { notifications }
     } = cache.readQuery({
       query: GET_NOTIFICATIONS,
-      variables: { limit: NOTICELIST_LIMIT, skip }
+      variables: {
+        limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT),
+        skip
+      }
     });
 
     if (read) {
@@ -135,7 +139,7 @@ class NoticesItem extends Component {
 
     cache.writeQuery({
       query: GET_NOTIFICATIONS,
-      variables: { limit: NOTICELIST_LIMIT },
+      variables: { limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT) },
       data: {
         getNotifications: { ...getNotifications, notifications }
       }
@@ -210,7 +214,7 @@ class NoticesItem extends Component {
                 t={t}
                 setAlert={this.setAlert}
                 readNotices={this.readNotices}
-                limit={NOTICELIST_LIMIT}
+                limit={parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)}
                 skip={skip}
                 recount={recount}
                 skipForward={this.skipForward}

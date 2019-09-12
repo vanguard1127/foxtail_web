@@ -7,12 +7,7 @@ import axios from "axios";
 
 function onChange(value) {
   axios
-    .post(
-      process.env.NODE_ENV === "production"
-        ? process.env.REACT_APP_PROD_API_URL + "/allowIp"
-        : "http://localhost:4444/allowIp",
-      { capToken: value }
-    )
+    .post(process.env.REACT_APP_HTTPS_URL + "/allowIp", { capToken: value })
     .then(go());
 }
 //TODO:Remove test belwoe befoe done

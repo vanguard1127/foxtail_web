@@ -10,11 +10,9 @@ class Logout extends Component {
   }
   handleLogout = () => {
     axios.get(
-      process.env.NODE_ENV === "production"
-        ? process.env.REACT_APP_PROD_API_URL +
-            "/offline?token=" +
-            localStorage.getItem("token")
-        : "http://localhost:4444/offline?token=" + localStorage.getItem("token")
+      process.env.REACT_APP_HTTPS_URL +
+        "/offline?token=" +
+        localStorage.getItem("token")
     );
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");

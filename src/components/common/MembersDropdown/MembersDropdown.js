@@ -7,7 +7,6 @@ import {
 import { Query } from "react-apollo";
 import MembersList from "./MembersList";
 
-import { MEMSLIST_LIMIT } from "../../../docs/consts";
 class MembersDropdown extends PureComponent {
   constructor(props) {
     super(props);
@@ -50,7 +49,7 @@ class MembersDropdown extends PureComponent {
         <Query
           query={GET_FRIENDS}
           variables={{
-            limit: MEMSLIST_LIMIT,
+            limit: parseInt(process.env.REACT_APP_MEMSLIST_LIMIT),
             chatID: targetID,
             isEvent: targetType === "event"
           }}

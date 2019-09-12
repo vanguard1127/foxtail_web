@@ -20,7 +20,6 @@ import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
-import { INBOXLIST_LIMIT, CHATMSGS_LIMIT } from "../../docs/consts";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
@@ -136,12 +135,18 @@ class InboxPage extends Component {
 
     const { getInbox } = cache.readQuery({
       query: GET_INBOX,
-      variables: { skip: 0, limit: INBOXLIST_LIMIT }
+      variables: {
+        skip: 0,
+        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+      }
     });
     const updatedInbox = getInbox.filter(x => x.chatID !== chatID);
     cache.writeQuery({
       query: GET_INBOX,
-      variables: { skip: 0, limit: INBOXLIST_LIMIT },
+      variables: {
+        skip: 0,
+        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+      },
       data: {
         getInbox: updatedInbox
       }
@@ -166,7 +171,10 @@ class InboxPage extends Component {
 
     const { getInbox } = cache.readQuery({
       query: GET_INBOX,
-      variables: { skip: 0, limit: INBOXLIST_LIMIT }
+      variables: {
+        skip: 0,
+        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+      }
     });
 
     const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
@@ -176,7 +184,10 @@ class InboxPage extends Component {
 
       cache.writeQuery({
         query: GET_INBOX,
-        variables: { skip: 0, limit: INBOXLIST_LIMIT },
+        variables: {
+          skip: 0,
+          limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+        },
         data: {
           getInbox
         }
@@ -266,7 +277,11 @@ class InboxPage extends Component {
               {chatID && (
                 <Query
                   query={GET_MESSAGES}
-                  variables={{ chatID, limit: CHATMSGS_LIMIT, cursor: null }}
+                  variables={{
+                    chatID,
+                    limit: parseInt(process.env.REACT_APP_CHATMSGS_LIMIT),
+                    cursor: null
+                  }}
                   fetchPolicy="cache-and-network"
                 >
                   {({ data, loading, error, subscribeToMore, fetchMore }) => {

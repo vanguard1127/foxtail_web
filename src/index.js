@@ -1,7 +1,8 @@
-import "react-app-polyfill/stable";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import "./assets/css/main.css";
 import "./docs/manifest.json";
 import "./assets/favicon.ico";
-import "./assets/css/main.css";
 import React from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
@@ -13,9 +14,17 @@ import {
   Redirect
 } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import i18n from "./i18n";
+import { ApolloProvider } from "react-apollo";
+import ApolloClient from "apollo-client";
+import { WebSocketLink } from "apollo-link-ws";
+import { HttpLink } from "apollo-link-http";
+import { onError } from "apollo-link-error";
+import { ApolloLink, split } from "apollo-link";
+import { getMainDefinition } from "apollo-utilities";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { withClientState } from "apollo-link-state";
 import * as Sentry from "@sentry/browser";
-import { env } from "./docs/consts";
+import i18n from "./i18n";
 import Landing from "./components/Landing";
 import About from "./components/Information/About";
 import FAQ from "./components/Information/FAQ";
@@ -32,24 +41,13 @@ import Footer from "./components/Footer/";
 import ReCaptcha from "./components/Modals/ReCaptcha";
 import ShortLinkRedirect from "./components/Redirect/ShortLinkRedirect";
 import tokenHandler from "./utils/tokenHandler";
-import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
-
-import { ApolloProvider } from "react-apollo";
-import ApolloClient from "apollo-client";
-import { WebSocketLink } from "apollo-link-ws";
-import { HttpLink } from "apollo-link-http";
-import { onError } from "apollo-link-error";
-import { ApolloLink, split } from "apollo-link";
-import { getMainDefinition } from "apollo-utilities";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { withClientState } from "apollo-link-state";
 import ProfileSearch from "./components/SearchProfiles/";
 import Settings from "./components/Settings/";
 import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
-require("dotenv").config();
+import "react-image-lightbox/style.css";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
@@ -58,9 +56,9 @@ Sentry.init({
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-let { httpurl, HTTPSurl, wsurl } = env.production;
-//let { httpurl, HTTPSurl, wsurl } = env.local;
-//let { httpurl, HTTPSurl, wsurl } = env.stage;
+const httpurl = process.env.REACT_APP_HTTP_URL;
+const HTTPSurl = process.env.REACT_APP_HTTPS_URL;
+const wsurl = process.env.REACT_APP_WS_URL;
 
 const wsLink = new WebSocketLink({
   uri: wsurl,

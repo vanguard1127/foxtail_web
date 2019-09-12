@@ -112,11 +112,7 @@ class Share extends Component {
             return <div>An Error has Occured</div>;
           }
 
-          let refUrl = `${
-            process.env.NODE_ENV === "development"
-              ? "http:localhost:3000"
-              : process.env.REACT_APP_CLIENT_URL
-          }/${data.setFullLink}`;
+          let refUrl = `${process.env.REACT_APP_CLIENT_URL}/${data.setFullLink}`;
           return (
             <Modal header={modalBody} close={close}>
               <ErrorBoundary>

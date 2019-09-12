@@ -3,14 +3,13 @@ import ChatHeader from "./ChatHeader";
 import AdManager from "../../common/Ad";
 import ChatContent from "./ChatContent";
 import ChatPanel from "./ChatPanel";
-import { INBOXMSG_LIMIT } from "../../../docs/consts";
 
 class ChatWindow extends PureComponent {
   state = {
     loading: false,
     cursor: null,
     hasMoreItems: true,
-    limit: INBOXMSG_LIMIT
+    limit: parseInt(process.env.REACT_APP_INBOXMSG_LIMIT)
   };
 
   setValue = ({ name, value }) => {
@@ -79,7 +78,7 @@ class ChatWindow extends PureComponent {
               loading={false}
               cursor={null}
               hasMoreItems={true}
-              limit={INBOXMSG_LIMIT}
+              limit={parseInt(process.env.REACT_APP_INBOXMSG_LIMIT)}
               dayjs={dayjs}
               lang={lang}
               messages={currentChat.messages}
@@ -92,7 +91,7 @@ class ChatWindow extends PureComponent {
               ErrorHandler={ErrorHandler}
               currentuser={currentuser}
               cursor={null}
-              limit={INBOXMSG_LIMIT}
+              limit={parseInt(process.env.REACT_APP_INBOXMSG_LIMIT)}
             />
           </div>
         ) : (

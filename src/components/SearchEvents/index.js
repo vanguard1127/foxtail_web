@@ -9,7 +9,6 @@ import {
   clearAllBodyScrollLocks
 } from "body-scroll-lock";
 import { SEARCH_EVENTS } from "../../queries";
-import { SEARCHEVENT_LIMIT } from "../../docs/consts";
 import { Waypoint } from "react-waypoint";
 import ShareModal from "../Modals/Share";
 import MyEvents from "./MyEvents";
@@ -161,13 +160,14 @@ class SearchEvents extends Component {
     if (this.mounted) {
       fetchMore({
         variables: {
-          limit: SEARCHEVENT_LIMIT,
+          limit: parseInt(process.env.REACT_APP_SEARCHEVENT_LIMIT),
           skip: this.state.skip
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
           if (
             !fetchMoreResult ||
-            fetchMoreResult.searchEvents.length < SEARCHEVENT_LIMIT
+            fetchMoreResult.searchEvents.length <
+              parseInt(process.env.REACT_APP_SEARCHEVENT_LIMIT)
           ) {
             this.setState({
               hasMore: false
@@ -189,8 +189,13 @@ class SearchEvents extends Component {
     if (this.state.hasMore) {
       if (previousPosition === Waypoint.below) {
         if (this.mounted) {
-          this.setState({ skip: this.state.skip + SEARCHEVENT_LIMIT }, () =>
-            this.fetchData(fetchMore)
+          this.setState(
+            {
+              skip:
+                this.state.skip +
+                parseInt(process.env.REACT_APP_SEARCHEVENT_LIMIT)
+            },
+            () => this.fetchData(fetchMore)
           );
         }
       }
@@ -289,7 +294,7 @@ class SearchEvents extends Component {
                     long,
                     maxDistance,
                     all,
-                    limit: SEARCHEVENT_LIMIT,
+                    limit: parseInt(process.env.REACT_APP_SEARCHEVENT_LIMIT),
                     skip: 0
                   }}
                   fetchPolicy="cache-first"

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Select from "./Select";
-import { availableLangs } from "../../docs/consts";
 
 class Dropdown extends Component {
   state = {
@@ -37,7 +36,9 @@ class Dropdown extends Component {
 
   fetchData = langSel => {
     let lang = langSel;
-
+    const availableLangs = process.env.REACT_APP_AVAIL_LANGUAGES_LIST.split(
+      ","
+    );
     if (availableLangs.indexOf(lang) < 0) {
       lang = "en";
     }

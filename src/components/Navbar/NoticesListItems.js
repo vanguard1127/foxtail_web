@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { NOTICELIST_LIMIT } from "../../docs/consts";
 import { NEW_NOTICE_SUB } from "../../queries";
 import { Waypoint } from "react-waypoint";
 import dayjs from "dayjs";
@@ -63,7 +62,7 @@ class NoticesListItems extends Component {
         this.props.fetchMore({
           variables: {
             skip,
-            limit: NOTICELIST_LIMIT
+            limit: process.env.REACT_APP_NOTICELIST_LIMIT
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (this.mounted) {

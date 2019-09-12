@@ -4,7 +4,6 @@ import { GET_INBOX } from "../../../queries";
 import { Query } from "react-apollo";
 import Spinner from "../../common/Spinner";
 import InboxList from "./InboxList";
-import { INBOXLIST_LIMIT } from "../../../docs/consts";
 
 class InboxPanel extends Component {
   state = { searchTerm: "", skip: 0 };
@@ -41,7 +40,10 @@ class InboxPanel extends Component {
     return (
       <Query
         query={GET_INBOX}
-        variables={{ skip, limit: INBOXLIST_LIMIT }}
+        variables={{
+          skip,
+          limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+        }}
         fetchPolicy="cache-first"
       >
         {({ data, loading, error, subscribeToMore, fetchMore, refetch }) => {
@@ -90,7 +92,7 @@ class InboxPanel extends Component {
                   readChat={readChat}
                   currentuser={currentuser}
                   searchTerm={searchTerm}
-                  limit={INBOXLIST_LIMIT}
+                  limit={parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)}
                 />
               </div>
             </div>

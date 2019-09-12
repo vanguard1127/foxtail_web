@@ -11,7 +11,6 @@ import Spinner from "../common/Spinner";
 import DailyLimitModal from "../Modals/DailyLimit";
 import ShareModal from "../Modals/Share";
 import { toast } from "react-toastify";
-import { SEARCHPROS_LIMIT } from "../../docs/consts";
 import deleteFromCache from "../../utils/deleteFromCache";
 import arraysEqual from "../../utils/arraysEqual";
 
@@ -206,7 +205,7 @@ class ProfilesContainer extends Component {
             ageRange,
             interestedIn,
             skip: skip,
-            limit: SEARCHPROS_LIMIT
+            limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT)
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             this.setState({
@@ -236,7 +235,10 @@ class ProfilesContainer extends Component {
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         this.setState(
-          state => ({ skip: this.state.skip + SEARCHPROS_LIMIT }),
+          state => ({
+            skip:
+              this.state.skip + parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT)
+          }),
           () => this.fetchData(fetchMore)
         );
       }
@@ -293,7 +295,7 @@ class ProfilesContainer extends Component {
           distance,
           ageRange,
           interestedIn,
-          limit: SEARCHPROS_LIMIT,
+          limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT),
           skip: 0
         }}
         fetchPolicy="cache-first"

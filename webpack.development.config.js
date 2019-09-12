@@ -68,6 +68,6 @@ module.exports = {
       { from: "src/assets/locales", to: "locales", toType: "dir" }
     ]),
     new CleanWebpackPlugin(),
-    new Dotenv({ path: "./.env" })
+    new Dotenv({ path: "./.env.local", defaults: true })
   ]
 };

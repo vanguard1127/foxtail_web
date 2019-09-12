@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ChatPanel from "./ChatPanel";
 import ChatContent from "./ChatContent";
-import { EVENTDISC_LIMIT } from "../../../docs/consts";
 class EventDiscussion extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.t !== nextProps.t) {
@@ -29,7 +28,7 @@ class EventDiscussion extends Component {
             t={t}
             ErrorHandler={ErrorHandler}
             currentuser={currentuser}
-            limit={EVENTDISC_LIMIT}
+            limit={parseInt(process.env.REACT_APP_EVENTDISC_LIMIT)}
             ReactGA={ReactGA}
           />
           <ChatContent
@@ -38,7 +37,7 @@ class EventDiscussion extends Component {
             t={t}
             ErrorHandler={ErrorHandler}
             dayjs={dayjs}
-            limit={EVENTDISC_LIMIT}
+            limit={parseInt(process.env.REACT_APP_EVENTDISC_LIMIT)}
             lang={lang}
           />
         </div>
