@@ -6,6 +6,7 @@
     "start": "node src/index.js",
     "build": "webpack --config webpack.production.config.js --progress",
     "dev": "webpack-dev-server --config webpack.development.config.js --hot",
+    "local": "webpack-dev-server --config webpack.local.config.js --hot",
     "deploytest": "npm run build && cd build && surge --domain foxtail.surge.sh",
     "lint": "eslint .",
     "test": "jest --config=jest.config.json",

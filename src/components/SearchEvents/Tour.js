@@ -171,7 +171,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1001@2x.png"
+                                    "events/1004@2x.png"
                                   }
                                   alt=""
                                 />
@@ -179,7 +179,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Naked Yoga on the Beach</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -300,7 +300,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Brunch Munch</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -427,7 +427,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1001@2x.png"
+                                    "events/1006@2x.png"
                                   }
                                   alt=""
                                 />
@@ -435,7 +435,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Sexy Hot Tub Party!</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -556,7 +556,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Midnight @ My House</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -677,7 +677,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Group Play - Game Night</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -798,7 +798,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Private Ladies Night</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -911,7 +911,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1001@2x.png"
+                                    "events/1002@2x.png"
                                   }
                                   alt=""
                                 />
@@ -919,128 +919,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
-                              </div>
-                              <span className="distance">
-                                9.2 {t("miaway")}
-                              </span>
-                              <div className="goings">
-                                <ul>
-                                  <li>
-                                    <img
-                                      src={
-                                        process.env
-                                          .REACT_APP_S3_TOUR_BUCKET_URL +
-                                        "usr/avatar/1001@2x.png"
-                                      }
-                                      alt=""
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src={
-                                        process.env
-                                          .REACT_APP_S3_TOUR_BUCKET_URL +
-                                        "usr/avatar/1002@2x.png"
-                                      }
-                                      alt=""
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src={
-                                        process.env
-                                          .REACT_APP_S3_TOUR_BUCKET_URL +
-                                        "usr/avatar/1003@2x.png"
-                                      }
-                                      alt=""
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src={
-                                        process.env
-                                          .REACT_APP_S3_TOUR_BUCKET_URL +
-                                        "usr/avatar/1004@2x.png"
-                                      }
-                                      alt=""
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src={
-                                        process.env
-                                          .REACT_APP_S3_TOUR_BUCKET_URL +
-                                        "usr/avatar/1005@2x.png"
-                                      }
-                                      alt=""
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src={
-                                        process.env
-                                          .REACT_APP_S3_TOUR_BUCKET_URL +
-                                        "usr/avatar/1006@2x.png"
-                                      }
-                                      alt=""
-                                    />
-                                  </li>
-                                </ul>
-                                <span className="stats">
-                                  <b>32 {t("people")}</b> {t("going")}
-                                </span>
-                              </div>
-                              <div
-                                className="functions"
-                                onClick={() => this.closeTour(seenTour, true)}
-                              >
-                                <div className="btn go-detail">
-                                  <a href="#">{t("eventdetail")}</a>
-                                </div>
-                                <div className="btn share">
-                                  <a href="#" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-md-12 col-lg-6">
-                          <div className="card-item">
-                            <div className="thumbnail">
-                              <div className="date">
-                                <span>19</span>
-                                <span>Dec</span>
-                                <span>20:00</span>
-                              </div>
-                              <div className="created">
-                                <a href="#user">
-                                  <span className="avatar">
-                                    <img
-                                      src={
-                                        process.env
-                                          .REACT_APP_S3_TOUR_BUCKET_URL +
-                                        "usr/avatar/1002@2x.png"
-                                      }
-                                      alt=""
-                                    />
-                                  </span>
-                                  <span className="name">Barbara Blair</span>
-                                </a>
-                              </div>
-                              <a href="#link">
-                                <img
-                                  src={
-                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1001@2x.png"
-                                  }
-                                  alt=""
-                                />
-                              </a>
-                            </div>
-                            <div className="content">
-                              <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Swapping Friends Meetup</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -1161,7 +1040,128 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Couples Dating Chat</a>
+                              </div>
+                              <span className="distance">
+                                9.2 {t("miaway")}
+                              </span>
+                              <div className="goings">
+                                <ul>
+                                  <li>
+                                    <img
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1001@2x.png"
+                                      }
+                                      alt=""
+                                    />
+                                  </li>
+                                  <li>
+                                    <img
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
+                                      alt=""
+                                    />
+                                  </li>
+                                  <li>
+                                    <img
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1003@2x.png"
+                                      }
+                                      alt=""
+                                    />
+                                  </li>
+                                  <li>
+                                    <img
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1004@2x.png"
+                                      }
+                                      alt=""
+                                    />
+                                  </li>
+                                  <li>
+                                    <img
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1005@2x.png"
+                                      }
+                                      alt=""
+                                    />
+                                  </li>
+                                  <li>
+                                    <img
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1006@2x.png"
+                                      }
+                                      alt=""
+                                    />
+                                  </li>
+                                </ul>
+                                <span className="stats">
+                                  <b>32 {t("people")}</b> {t("going")}
+                                </span>
+                              </div>
+                              <div
+                                className="functions"
+                                onClick={() => this.closeTour(seenTour, true)}
+                              >
+                                <div className="btn go-detail">
+                                  <a href="#">{t("eventdetail")}</a>
+                                </div>
+                                <div className="btn share">
+                                  <a href="#" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-12 col-lg-6">
+                          <div className="card-item">
+                            <div className="thumbnail">
+                              <div className="date">
+                                <span>19</span>
+                                <span>Dec</span>
+                                <span>20:00</span>
+                              </div>
+                              <div className="created">
+                                <a href="#user">
+                                  <span className="avatar">
+                                    <img
+                                      src={
+                                        process.env
+                                          .REACT_APP_S3_TOUR_BUCKET_URL +
+                                        "usr/avatar/1002@2x.png"
+                                      }
+                                      alt=""
+                                    />
+                                  </span>
+                                  <span className="name">Barbara Blair</span>
+                                </a>
+                              </div>
+                              <a href="#link">
+                                <img
+                                  src={
+                                    process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                    "events/1003@2x.png"
+                                  }
+                                  alt=""
+                                />
+                              </a>
+                            </div>
+                            <div className="content">
+                              <div className="event-name">
+                                <a href="#">BDSM Forum</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -1282,7 +1282,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Date Night In The East Village!</a>
+                                <a href="#">Shibari 101</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}

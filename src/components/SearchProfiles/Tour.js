@@ -261,12 +261,12 @@ class Tour extends PureComponent {
                           <a href="#">
                             <div className="data">
                               <span className="name online">
-                                Eearl & Christina
+                                Earl & Christina
                               </span>
                               <span className="detail">
                                 <ul>
-                                  <li className="gender f">24</li>
-                                  <li className="gender m">32</li>
+                                  <li className="gender m">24</li>
+                                  <li className="gender f">32</li>
                                   <li>- 4.2 mil</li>
                                 </ul>
                               </span>
@@ -282,7 +282,7 @@ class Tour extends PureComponent {
                               <img
                                 src={
                                   process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                  "usr/big-avatar/1002@2x.png"
+                                  "usr/big-avatar/1006@2x.png"
                                 }
                                 alt=""
                               />
@@ -302,10 +302,10 @@ class Tour extends PureComponent {
                         <div className="info">
                           <a href="#">
                             <div className="data">
-                              <span className="name online">Barbara</span>
+                              <span className="name online">Barry</span>
                               <span className="detail">
                                 <ul>
-                                  <li className="gender f">32</li>
+                                  <li className="gender m">32</li>
                                   <li>- 4.9 mil</li>
                                 </ul>
                               </span>
@@ -319,7 +319,7 @@ class Tour extends PureComponent {
                               <img
                                 src={
                                   process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                  "usr/big-avatar/1003@2x.png"
+                                  "usr/big-avatar/1005@2x.png"
                                 }
                                 alt=""
                               />
@@ -404,12 +404,11 @@ class Tour extends PureComponent {
                           </div>
                           <div className="info">
                             <span className="name online">
-                              <a href="#">Barbara & Edward</a>
+                              <a href="#">Adriana</a>
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">24</li>
-                                <li className="gender m">32</li>
+                                <li className="gender f">32</li>
                                 <li>- 8.4 mil</li>
                               </ul>
                             </span>
@@ -438,7 +437,7 @@ class Tour extends PureComponent {
                               <img
                                 src={
                                   process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                  "usr/medium-avatar/1002@2x.png"
+                                  "usr/medium-avatar/1010@2x.png"
                                 }
                                 alt=""
                               />
@@ -446,11 +445,11 @@ class Tour extends PureComponent {
                           </div>
                           <div className="info">
                             <span className="name online">
-                              <a href="#">Margaret</a>
+                              <a href="#">Malcolm</a>
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">24</li>
+                                <li className="gender m">24</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>
@@ -478,7 +477,7 @@ class Tour extends PureComponent {
                               <img
                                 src={
                                   process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                  "usr/medium-avatar/1003@2x.png"
+                                  "usr/medium-avatar/1011@2x.png"
                                 }
                                 alt=""
                               />
@@ -486,11 +485,12 @@ class Tour extends PureComponent {
                           </div>
                           <div className="info">
                             <span className="name online">
-                              <a href="#">Heather</a>
+                              <a href="#">Heather & Alex</a>
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">32</li>
+                                <li className="gender f">42</li>
+                                <li className="gender f">39</li>
                                 <li>- 9.9 mil</li>
                               </ul>
                             </span>
@@ -529,7 +529,7 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">27</li>
+                                <li className="gender t">27</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>
@@ -680,7 +680,7 @@ class Tour extends PureComponent {
                               <img
                                 src={
                                   process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                  "usr/medium-avatar/1008@2x.png"
+                                  "usr/medium-avatar/1012@2x.png"
                                 }
                                 alt=""
                               />
@@ -688,11 +688,12 @@ class Tour extends PureComponent {
                           </div>
                           <div className="info">
                             <span className="name online">
-                              <a href="#">Robin</a>
+                              <a href="#">Rob & Paul</a>
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">22</li>
+                                <li className="gender m">22</li>
+                                <li className="gender m">24</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>

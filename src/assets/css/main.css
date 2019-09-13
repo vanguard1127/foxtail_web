@@ -1586,6 +1586,11 @@ section.members .card-item .info span.detail ul li.gender.m::before {
   font-size: 12px;
 }
 
+section.members .card-item .info span.detail ul li.gender.t::before {
+  content: "\f224";
+  font-size: 12px;
+}
+
 section.members .card-item .info span.interest {
   width: 100%;
   display: block;
@@ -3975,9 +3980,8 @@ section.event-detail .header .info span.event-description {
 
 section.event-detail .header .info .created {
   float: left;
-  width: 320px;
   display: block;
-  margin-top: 17px;
+  /* margin-top: 17px; */
   cursor: pointer;
 }
 
@@ -4032,12 +4036,12 @@ section.event-detail .header .info .created .detail span:nth-child(2) {
 }
 
 section.event-detail .header .info .share-event {
-  float: right;
-  width: 160px;
-  padding-top: 27px;
-  display: none;
-  visibility: hidden;
-  right: 106px;
+  /* float: right; */
+  /* width: 160px; */
+  /* padding-top: 27px; */
+  /* display: none; */
+  /* visibility: hidden; */
+  /* right: 106px; */
   position: relative;
 }
 
@@ -4051,13 +4055,30 @@ section.event-detail .header .info .share-event span.title {
   line-height: 35px;
 }
 
+@media (max-width:768px){
+  .info .event-user{
+    display: flex;
+    align-items: center;
+
+    justify-content: center;
+    margin-top:17px;
+
+  }
+  section.event-detail .header .info .event-tool .report-con{
+    display: none;
+  }
+  section.event-detail .header .info .share-event span.title{
+    display: none;
+  }
+  section.event-detail .header .info .report-con span.rep-text{
+    display: none;
+  }
+}
 section.event-detail .header .info .report-con {
-  position: absolute;
-  right: 15px;
-  bottom: 12px;
+  padding-left:10px;
 }
 
-section.event-detail .header .info .report-con span.rep-text {
+.info .report-con span.rep-text {
   font-size: 14px;
   letter-spacing: -0.3px;
   color: #fff;
@@ -4171,6 +4192,7 @@ section.event-detail .header .info .share-event ul li.twitter:hover::before {
 section.event-detail .header .info .share-event ul li.mail:hover::before {
   color: #cf003c;
 }
+
 
 section.event-detail .about-event-content {
   width: 100%;
@@ -6132,19 +6154,20 @@ section.couple-popup-content .create-profile {
   float: left;
   margin-top: 15px;
   border-top: 1px solid #e6e6e6;
-  padding-top: 24px;
   position: relative;
+  text-align: center;
 }
 
 section.couple-popup-content .create-profile::before {
   content: "OR";
-  position: absolute;
+  position: relative;
   top: -12px;
   width: 100%;
   text-align: center;
   color: #c1c1c1;
   font-weight: 700;
   z-index: 10;
+
 }
 
 section.couple-popup-content .create-profile::after {
@@ -7407,7 +7430,7 @@ section.login-modal.verifications {
 }
 
 section.login-modal.couples {
-  padding: 6% 0;
+  /* padding: 6% 0; */
 }
 
 section.login-modal.black {
@@ -7419,7 +7442,7 @@ section.login-modal.acctsetting {
 }
 
 section.login-modal.report {
-  /* padding: 16% 0; */
+  padding: 16% 0;
 }
 
 section.login-modal.rules {
@@ -7434,7 +7457,12 @@ section.login-modal.show {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* display: inline-block; */
+  visibility: visible;
+}
+section.login-modal.show .couples {
+  display: flex;
+  justify-content: center;
+
   visibility: visible;
 }
 @media (max-width:768px){
@@ -7443,7 +7471,7 @@ section.login-modal.show {
   }
 }
 section.login-modal .popup {
-  width: 100%;
+  /* width: 100%; */
   background-color: #fff;
   box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
   border-radius: 4px;
@@ -8999,7 +9027,7 @@ section.not-found span.description {
   }
 
   section.event-detail .header .info .share-event {
-    display: inline-block;
+    display: flex;
     visibility: visible;
   }
 
@@ -9582,6 +9610,100 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 
 
 }
+@media only screen and (min-width:768px){
+  .event-tool-mobile{
+    display: none;
+  }
+}
+@media (max-width:768px){
+  .event-tool-mobile{
+    width:100%;
+    padding:5px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .event-tool-mobile .share-event ul li {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    float: left;
+    border: 1px solid #c40148;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 1px;
+    transition: 0.3s all;
+    color: #c40148;
+    position: relative;
+    margin-right: 10px;
+  }
+
+  .event-tool-mobile .share-event ul li:last-child {
+    margin-right: 0;
+  }
+
+  .event-tool-mobile .share-event ul li span {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    float: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    z-index: 999;
+  }
+
+  .event-tool-mobile .share-event ul li::before {
+    content: "";
+    font-family: "foxtail-icon";
+    width: 100%;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .event-tool-mobile .share-event ul li.share::before {
+    content: "\e809";
+    font-size: 15px;
+  }
+
+  .event-tool-mobile .share-event ul li.add::before {
+    content: "\f234";
+  }
+
+  .event-tool-mobile .share-event ul li:hover {
+    background-color: #c40148;
+    color: #fff;
+  }
+
+  .event-tool-mobile .share-event ul li.facebook:hover::before {
+    color: #1c52bf;
+  }
+
+  .event-tool-mobile .share-event ul li.twitter:hover::before {
+    color: #4ba0eb;
+  }
+
+  .event-tool-mobile .share-event ul li.mail:hover::before {
+    color: #cf003c;
+  }
+  .event-tool-mobile.share-event span.title {
+    display: none;
+  }
+  .event-tool-mobile .share-event ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .event-tool-mobile ul li.report::before {
+    content: "\e808";
+    padding-left: 2px;
+  }
+  .event-tool-mobile .share-event{
+    display: flex;
+  }
+}
 
 .userInfoHeader::before {
   font-size: 19px;
@@ -9951,7 +10073,23 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   text-align: center;
   text-align: -webkit-center;
 }
+@media (min-width:768px){
+  .info .event-user{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top:17px;
+  }
+}
 
+.event-tool{
+  display: flex;
+}
+@media (max-width:768px){
+  .event-tool{
+    display: none;
+  }
+}
 background: linear-gradient(334deg, #2ea586, #6e37b9);
 background-size: 400% 400%;
 

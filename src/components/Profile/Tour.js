@@ -83,7 +83,7 @@ class ProfileTour extends PureComponent {
                         <img
                           src={
                             process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                            "usr/big-avatar/1003@2x.png"
+                            "usr/big-avatar/1011@2x.png"
                           }
                           alt=""
                         />
@@ -105,8 +105,8 @@ class ProfileTour extends PureComponent {
                 <div className="col-md-9">
                   <div className="user-info online">
                     <div>
-                      <span> Meg,</span>
-                      <span> 31,</span>
+                      <span> Adriana, </span>
+                      <span> 32, </span>
                       <span>Bisexual</span>
                     </div>
                   </div>
@@ -136,7 +136,10 @@ class ProfileTour extends PureComponent {
                   </div>
                   <div className="user-bio">
                     <div className="profile-head">User Bio</div>
-                    <p>New member</p>
+                    <p>
+                      New here just looking to meet couples and singles. We can
+                      see where it goes ;)
+                    </p>
                   </div>
                   <div className="mobile desires" data-tut="desiresM">
                     <div className="profile-head">Desires</div>
@@ -146,166 +149,35 @@ class ProfileTour extends PureComponent {
                     </ul>
                   </div>
                   <div className={"photos-slider public"}>
-                    <div className="profile-head">{t("Public")} (4)</div>
+                    <div className="profile-head">{t("Public")} (1)</div>
                     <div id="lightgallery" ref={this.onLightGallery}>
-                      <OwlCarousel
-                        className="owl-carousel slider-content"
-                        autoplay
-                        nav
-                        margin={30}
-                        dots={false}
-                        navText={[
-                          '<i class="icon-left-open">',
-                          '<i class="icon-right-open">'
-                        ]}
-                        lazyLoad
-                        autoplayTimeout={5000}
-                        autoplayHoverPause={false}
-                        responsive={{
-                          0: {
-                            items: 2,
-                            margin: 15
-                          },
-                          768: {
-                            items: 3,
-                            margin: 15
-                          },
-                          992: {
-                            items: 4,
-                            margin: 15
-                          },
-                          1200: {
-                            items: 6
-                          }
-                        }}
-                      >
-                        <div className="item" key={Math.random()}>
-                          <a href={"#link"}>
-                            <img
-                              src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                "usr/big-avatar/1003@2x.png"
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>{" "}
-                        <div className="item" key={Math.random()}>
-                          <a href={"#link"}>
-                            <img
-                              src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                "usr/big-avatar/1003@2x.png"
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>{" "}
-                        <div className="item" key={Math.random()}>
-                          <a href={"#link"}>
-                            <img
-                              src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                "usr/big-avatar/1003@2x.png"
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>{" "}
-                        <div className="item" key={Math.random()}>
-                          <a href={"#link"}>
-                            <img
-                              src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                "usr/big-avatar/1003@2x.png"
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>
-                      </OwlCarousel>
+                      <div className="item" key={Math.random()}>
+                        <a href={"#link"}>
+                          <img
+                            src={
+                              process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                              "usr/medium-avatar/1001.png"
+                            }
+                            alt=""
+                          />
+                        </a>
+                      </div>
                     </div>
                   </div>
                   <div className={"photos-slider private"}>
-                    <div className="profile-head">{t("Private")} (4)</div>
+                    <div className="profile-head">{t("Private")} (1)</div>
                     <div id="lightgallery" ref={this.onLightGallery}>
-                      <OwlCarousel
-                        className="owl-carousel slider-content"
-                        autoplay
-                        nav
-                        margin={30}
-                        loop={true}
-                        dots={false}
-                        navText={[
-                          '<i class="icon-left-open">',
-                          '<i class="icon-right-open">'
-                        ]}
-                        lazyLoad
-                        autoplayTimeout={5000}
-                        autoplayHoverPause={false}
-                        responsive={{
-                          0: {
-                            items: 2,
-                            margin: 15
-                          },
-                          768: {
-                            items: 3,
-                            margin: 15
-                          },
-                          992: {
-                            items: 4,
-                            margin: 15
-                          },
-                          1200: {
-                            items: 6
-                          }
-                        }}
-                      >
-                        <div className="item" key={Math.random()}>
-                          <a href={"#link"}>
-                            <img
-                              src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                "usr/big-avatar/1003@2x.png"
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>{" "}
-                        <div className="item" key={Math.random()}>
-                          <a href={"#link"}>
-                            <img
-                              src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                "usr/big-avatar/1003@2x.png"
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>{" "}
-                        <div className="item" key={Math.random()}>
-                          <a href={"#link"}>
-                            <img
-                              src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                "usr/big-avatar/1003@2x.png"
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>{" "}
-                        <div className="item" key={Math.random()}>
-                          <a href={"#link"}>
-                            <img
-                              src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                "usr/big-avatar/1003@2x.png"
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>
-                      </OwlCarousel>
+                      <div className="item" key={Math.random()}>
+                        <a href={"#link"}>
+                          <img
+                            src={
+                              process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                              "usr/blur-avatar/1002.png"
+                            }
+                            alt=""
+                          />
+                        </a>
+                      </div>{" "}
                     </div>
                   </div>
                 </div>
