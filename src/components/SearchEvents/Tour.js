@@ -171,7 +171,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1004@2x.png"
+                                    "events/1006@2x.png"
                                   }
                                   alt=""
                                 />
@@ -415,19 +415,19 @@ class Tour extends PureComponent {
                                       src={
                                         process.env
                                           .REACT_APP_S3_TOUR_BUCKET_URL +
-                                        "usr/avatar/1002@2x.png"
+                                        "usr/avatar/1003@2x.png"
                                       }
                                       alt=""
                                     />
                                   </span>
-                                  <span className="name">Barbara Blair</span>
+                                  <span className="name">Barbara Cleiv</span>
                                 </a>
                               </div>
                               <a href="#link">
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1006@2x.png"
+                                    "events/1001@2x.png"
                                   }
                                   alt=""
                                 />
@@ -435,7 +435,9 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Sexy Hot Tub Party!</a>
+                                <a href="#">
+                                  New Year Date Night @ Elixir Saloon!
+                                </a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -548,7 +550,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1001@2x.png"
+                                    "events/1002@2x.png"
                                   }
                                   alt=""
                                 />
@@ -669,7 +671,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1003@2x.png"
+                                    "events/1005@2x.png"
                                   }
                                   alt=""
                                 />
@@ -677,7 +679,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Group Play - Game Night</a>
+                                <a href="#">Sexy Hot Tub Party!</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -790,7 +792,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1004@2x.png"
+                                    "events/1007@2x.png"
                                   }
                                   alt=""
                                 />
@@ -1040,7 +1042,7 @@ class Tour extends PureComponent {
                             </div>
                             <div className="content">
                               <div className="event-name">
-                                <a href="#">Couples Dating Chat</a>
+                                <a href="#">Group Play - Game Night</a>
                               </div>
                               <span className="distance">
                                 9.2 {t("miaway")}
@@ -1153,7 +1155,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1003@2x.png"
+                                    "events/1009@2x.png"
                                   }
                                   alt=""
                                 />
@@ -1274,7 +1276,7 @@ class Tour extends PureComponent {
                                 <img
                                   src={
                                     process.env.REACT_APP_S3_TOUR_BUCKET_URL +
-                                    "events/1004@2x.png"
+                                    "events/1008@2x.png"
                                   }
                                   alt=""
                                 />
