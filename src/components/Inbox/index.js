@@ -244,6 +244,7 @@ class InboxPage extends Component {
                 unSeenCount={unSeenCount}
                 currentuser={currentuser}
                 ErrorHandler={ErrorHandler}
+                chatOpen={chatOpen}
                 t={t}
               />
             </ErrorHandler.ErrorBoundary>
