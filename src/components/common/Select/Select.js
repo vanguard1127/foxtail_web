@@ -132,12 +132,16 @@ class Select extends PureComponent {
           <label>{label}</label>
           {multiple && (
             <div className="multiple-options">
-              {selectedOptions.map((d, idx, arr) => {
-                if (idx === arr.length - 1) {
-                  return <span key={Math.random()}>{t(d.label)}</span>;
-                }
-                return <span key={Math.random()}>{t(d.label) + ","}</span>;
-              })}
+              {selectedOptions.length > 0 ? (
+                selectedOptions.map((d, idx, arr) => {
+                  if (idx === arr.length - 1) {
+                    return <span key={Math.random()}>{t(d.label)}</span>;
+                  }
+                  return <span key={Math.random()}>{t(d.label) + ","}</span>;
+                })
+              ) : (
+                <span key={Math.random()}>{""}</span>
+              )}
             </div>
           )}
           {multiple && optionCounter > 0 && (

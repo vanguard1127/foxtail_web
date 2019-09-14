@@ -218,7 +218,7 @@ class BlockModal extends Component {
       >
         <ErrorBoundary>
           <>
-            <div className="select-container">
+            <div className="select-outline">
               <label>{t("reasonlbl")}</label>
               {blockMenu}
               <div

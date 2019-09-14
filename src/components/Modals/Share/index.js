@@ -16,7 +16,6 @@ import { SET_FULL_LINK } from "../../../queries";
 import Tooltip from "../../common/Tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
-import Spinner from "../../common/Spinner";
 import { withTranslation } from "react-i18next";
 
 import LinkIcon from "@material-ui/icons/Link";

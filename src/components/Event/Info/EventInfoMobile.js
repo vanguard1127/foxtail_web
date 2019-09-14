@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { formatedMilesToKm } from "../../../utils/distanceMetric";
 import { desireOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
+import EventShare from "../Header/EventShare";
 import EditEventBtn from "./EditEventBtn";
 const NoEventImg = require("../../../assets/img/elements/no-eve-image.png");
 
@@ -35,7 +36,9 @@ class EventInfoMobile extends Component {
       lang,
       refetch,
       ReactGA,
-      session
+      session,
+      showBlockModal,
+      showShareModal
     } = this.props;
 
     const {
@@ -137,6 +140,14 @@ class EventInfoMobile extends Component {
             </div>
           </>
         )}
+        <EventShare
+          id={id}
+          t={t}
+          showShareModal={showShareModal}
+          showBlockModal={showBlockModal}
+          ErrorHandler={ErrorHandler}
+          ReactGA={ReactGA}
+        />
       </div>
     );
   }

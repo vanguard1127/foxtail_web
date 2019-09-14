@@ -9,7 +9,8 @@ module.exports = {
   entry: { main: "./src/index.js" },
   output: {
     filename: "bundle.[contenthash].js",
-    path: path.resolve(__dirname, "./build")
+    path: path.resolve(__dirname, "./build"),
+    publicPath: "/"
   },
   mode: "production",
   node: {

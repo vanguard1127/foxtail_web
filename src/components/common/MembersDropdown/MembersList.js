@@ -204,7 +204,7 @@ class MembersList extends PureComponent {
                 onChange={this.handleChange}
                 value={el.id}
               />
-              <label htmlFor={el.id}>
+              <label htmlFor={el.id} className="label">
                 <span />
               </label>
             </div>

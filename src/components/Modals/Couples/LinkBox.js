@@ -6,9 +6,6 @@ class LinkBox extends PureComponent {
 
     return (
       <div className="receive-code">
-        <div>
-          <span className="second">{t("cplProfileDesc")}</span>
-        </div>
         <br />
         <div className="couple-head">
           <div>
