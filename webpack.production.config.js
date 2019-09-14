@@ -9,7 +9,8 @@ module.exports = {
   entry: { main: "./src/index.js" },
   output: {
     filename: "bundle.[contenthash].js",
-    path: path.resolve(__dirname, "./build")
+    path: path.resolve(__dirname, "./build"),
+    publicPath: "/"
   },
   mode: "production",
   node: {
@@ -69,6 +70,6 @@ module.exports = {
       { from: "src/assets/locales", to: "locales", toType: "dir" }
     ]),
     new CleanWebpackPlugin(),
-    new Dotenv({ path: "./.env.prod" })
+    new Dotenv({ path: "./.env.prod", defaults: true })
   ]
 };

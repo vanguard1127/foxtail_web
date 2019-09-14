@@ -25,7 +25,7 @@ class ProfileDetails extends Component {
     if (profile.distance === null) {
       distance = t("na");
     } else if (profile.distance < 1) {
-      distance = "< 1" + " " + t(distanceUnits);
+      distance = "< 1 " + t(distanceUnits);
     } else {
       distance = profile.distance + " " + t(distanceUnits);
     }

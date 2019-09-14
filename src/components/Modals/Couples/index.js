@@ -89,6 +89,7 @@ class Couples extends Component {
                 {currSlide === 1 && (
                   <div className="content">
                     <div className="couple-cover" />
+                    <span className="description">{t("cplProfileDesc")}</span>
                     <ErrorBoundary>
                       <LinkBox
                         code={code}
@@ -96,7 +97,8 @@ class Couples extends Component {
                         next={this.next}
                         t={t}
                       />
-                    </ErrorBoundary>{" "}
+                    </ErrorBoundary>
+
                     <ErrorBoundary>
                       <CodeBox
                         includeMsgs={includeMsgs}

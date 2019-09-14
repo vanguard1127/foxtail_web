@@ -7,7 +7,7 @@ const getCityCountry = async ({ long, lat }) => {
     lat +
     "," +
     long +
-    "&key=AIzaSyDnhLDPrsj8UPJILV7owGD3aKo_fCyllFY";
+    "&key=AIzaSyCKiVeyO8oCD0wG2nzEforQyOZtlLVbyiw";
 
   const resp = await axios.get(url);
   if (resp.data.status !== "ZERO_RESULTS") {

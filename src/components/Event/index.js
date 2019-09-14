@@ -208,6 +208,12 @@ class EventPage extends Component {
                         event={event}
                         t={t}
                         ErrorHandler={ErrorHandler}
+                        showShareModal={() =>
+                          this.setShareModalVisible(true, event)
+                        }
+                        showBlockModal={() =>
+                          this.setBlockModalVisible(true, event)
+                        }
                         isOwner={
                           event.ownerProfile.id ===
                           session.currentuser.profileID

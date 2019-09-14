@@ -24,7 +24,10 @@ class Modal extends Component {
   }
 
   handleClickOutside = event => {
-    if (this.wrapperRef && this.wrapperRef.current === event.target) {
+    if (
+      (this.wrapperRef && this.wrapperRef.current === event.target) ||
+      event.target.className === "container"
+    ) {
       if (this.props.close) {
         this.props.close();
       }

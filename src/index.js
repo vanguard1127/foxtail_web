@@ -196,7 +196,7 @@ const errorLink = onError(
             }
           );
           console.error(networkError);
-          window.location.replace("/not-found");
+          window.location.replace("/uh-oh");
         }
       }
     }
@@ -244,7 +244,7 @@ const Wrapper = withRouter(props => {
       return <LawEnforce history={props.history} />;
     } else if (location.pathname === "/captcha") {
       return <ReCaptcha />;
-    } else if (location.pathname === "/not-found") {
+    } else if (location.pathname === "/uh-oh") {
       return <NotFound />;
     } else if (location.pathname === "/devtools") {
       if (process.env.NODE_ENV === "development") {
