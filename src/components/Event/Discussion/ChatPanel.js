@@ -55,7 +55,6 @@ class ChatPanel extends PureComponent {
               value={text}
               onChange={e => this.setText(e)}
               placeholder={t("nowyoucan") + "..."}
-              autoFocus
             />
             <button
               onClick={e => this.submitMessage(e, postComment)}

@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import Messages from "./Messages/";
 
 class ChatContent extends PureComponent {
+  container;
   render() {
     const {
       chatID,
@@ -20,11 +21,13 @@ class ChatContent extends PureComponent {
       <div
         className="content"
         style={{ display: "flex", flexDirection: " column-reverse" }}
+        ref={node => {
+          this.container = node;
+        }}
       >
         <Messages
           chatID={chatID}
           currentUserID={currentUserID}
-          ref={this.Messages}
           t={t}
           messages={messages}
           fetchMore={fetchMore}
@@ -33,6 +36,7 @@ class ChatContent extends PureComponent {
           lang={lang}
           ErrorHandler={ErrorHandler}
           limit={limit}
+          container={this.container}
         />
       </div>
     );

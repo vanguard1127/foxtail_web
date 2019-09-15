@@ -32,7 +32,6 @@ class InboxItem extends Component {
       document: NEW_INBOX_SUB,
       updateQuery: (prev, { subscriptionData }) => {
         const { newInboxMsgSubscribe } = subscriptionData.data;
-
         if (
           newInboxMsgSubscribe === null ||
           (newInboxMsgSubscribe.fromUser &&
@@ -41,12 +40,10 @@ class InboxItem extends Component {
         ) {
           return;
         }
-
         //if chat itself is open dont add
         if (!newInboxMsgSubscribe) {
           return prev;
         }
-
         if (
           sessionStorage.getItem("page") === "inbox" &&
           sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID

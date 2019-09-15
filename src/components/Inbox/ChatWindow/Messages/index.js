@@ -72,35 +72,28 @@ class MessageList extends Component {
     this.props.ErrorHandler.setBreadcrumb("fetch more messages");
     const { chatID, limit, fetchMore } = this.props;
     if (!this.state.hasMoreItems || this.state.restoreScroll) return;
-    if (this.mounted) {
-      fetchMore({
-        variables: {
-          chatID,
-          limit,
-          cursor
-        },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (
-            !fetchMoreResult ||
-            fetchMoreResult.getMessages.messages.length < limit
-          ) {
-            this.setState({ hasMoreItems: false });
-          }
 
-          if (previousResult.getMessages) {
-            previousResult.getMessages.messages = [
-              ...previousResult.getMessages.messages,
-              ...fetchMoreResult.getMessages.messages
-            ];
-          } else {
-            previousResult.getMessages = fetchMoreResult.getMessages;
-          }
-
-          this.setState({ messages: previousResult.getMessages.messages });
-          return previousResult;
+    fetchMore({
+      variables: {
+        chatID,
+        limit,
+        cursor
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          this.setState({ hasMoreItems: false });
+        } else {
+          previousResult.getMessages.messages = [
+            ...previousResult.getMessages.messages,
+            ...fetchMoreResult.getMessages.messages
+          ];
         }
-      });
-    }
+        if (this.mounted) {
+          this.setState({ messages: previousResult.getMessages.messages });
+        }
+        return previousResult;
+      }
+    });
   };
 
   subscribeToMessages = () => {
@@ -254,24 +247,20 @@ class MessageList extends Component {
             overflow: "hidden"
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: "30%"
+          <Waypoint
+            onEnter={({ previousPosition, currentPosition }) => {
+              if (messages.length > 0) {
+                this.handleEndScrollUp({
+                  previousPosition,
+                  currentPosition,
+                  cursor: messages[messages.length - 1].createdAt
+                });
+              }
             }}
-          >
-            <Waypoint
-              onEnter={({ previousPosition, currentPosition }) => {
-                if (messages.length > 0) {
-                  this.handleEndScrollUp({
-                    previousPosition,
-                    currentPosition,
-                    cursor: messages[messages.length - 1].createdAt
-                  });
-                }
-              }}
-            />
-          </div>
+            scrollableAncestor={this.props.container}
+            bottomOffset="20%"
+            key="top"
+          />
           {messageElements}{" "}
           <div
             style={{
@@ -280,6 +269,7 @@ class MessageList extends Component {
             }}
           >
             <Waypoint
+              key="bottom"
               onPositionChange={({ currentPosition }) => {
                 if (messages.length > 0) {
                   if (currentPosition === Waypoint.inside) {

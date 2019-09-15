@@ -47,6 +47,7 @@ export const NEW_INBOX_SUB = gql`
         id
       }
       unSeenCount
+      type
     }
   }
 `;
@@ -621,7 +622,6 @@ export const GET_INBOX = gql`
   query($limit: Int!, $skip: Int!) {
     getInbox(limit: $limit, skip: $skip) {
       id
-      chatID
       text
       fromUser {
         username
@@ -631,9 +631,15 @@ export const GET_INBOX = gql`
         profileName
         id
       }
-      profilePic
       createdAt
+      profilePic
+      chatID
       participants {
+        profileName
+        profilePic
+        id
+      }
+      invited {
         profileName
         profilePic
         id

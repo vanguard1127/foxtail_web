@@ -283,7 +283,7 @@ class InboxPage extends Component {
                     limit: parseInt(process.env.REACT_APP_CHATMSGS_LIMIT),
                     cursor: null
                   }}
-                  fetchPolicy="cache-and-network"
+                  fetchPolicy="cache-first"
                 >
                   {({ data, loading, error, subscribeToMore, fetchMore }) => {
                     if (error) {
