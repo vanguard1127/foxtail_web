@@ -8555,11 +8555,6 @@ section.not-found span.description {
     border-right: 1px solid #eaeaea;
   }
 
-  header .function .inbox span.icon {
-    display: none;
-    visibility: hidden;
-  }
-
   header .function .user span.username {
     display: none;
     visibility: hidden;

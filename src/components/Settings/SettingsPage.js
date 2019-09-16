@@ -508,7 +508,7 @@ class SettingsPage extends Component {
           "Content-Type": file.type
         }
       };
-      console.log("File", signedRequest);
+
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status !== 200) {
         toast.error(this.props.t("uplerr"));

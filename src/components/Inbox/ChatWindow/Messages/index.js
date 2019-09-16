@@ -52,15 +52,14 @@ class MessageList extends Component {
       this.unsubscribe();
     }
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.messages !== this.props.messages) {
-      if (this.isUserInside) {
-        this.scrollToBottom();
-      }
+  componentDidUpdate() {
+    if (this.topWaypoint._previousPosition === Waypoint.inside) {
+      const { messages } = this.state;
+      this.fetchDataForScrollUp(messages[messages.length - 1].createdAt);
     }
   }
 
-  handleEndScrollUp = ({ previousPosition, currentPosition, cursor }) => {
+  handleEndScrollUp = ({ previousPosition, cursor }) => {
     if (this.state.hasMoreItems) {
       if (previousPosition === Waypoint.above) {
         this.fetchDataForScrollUp(cursor);
@@ -117,15 +116,18 @@ class MessageList extends Component {
           ];
         } else {
           prev.getMessages = {
-            messages: [newMessageSubscribe],
-            __typename: "ChatType"
+            messages: [newMessageSubscribe]
           };
         }
+
         if (this.mounted) {
           this.setState({ messages: prev.getMessages.messages });
+          if (this.isUserInside) {
+            this.scrollToBottom();
+          }
         }
 
-        return prev;
+        return;
       }
     });
   };
@@ -236,6 +238,23 @@ class MessageList extends Component {
 
     return (
       <div>
+        {" "}
+        <Waypoint
+          onEnter={({ previousPosition }) => {
+            if (messages.length > 0) {
+              this.handleEndScrollUp({
+                previousPosition,
+                cursor: messages[messages.length - 1].createdAt
+              });
+            }
+          }}
+          topOffset="-20%"
+          key="top"
+          fireOnRapidScroll={true}
+          ref={node => {
+            this.topWaypoint = node;
+          }}
+        />
         {/** Parent for abs position elements because scroll does weird things for abs items */}
         <div
           style={{
@@ -247,20 +266,6 @@ class MessageList extends Component {
             overflow: "hidden"
           }}
         >
-          <Waypoint
-            onEnter={({ previousPosition, currentPosition }) => {
-              if (messages.length > 0) {
-                this.handleEndScrollUp({
-                  previousPosition,
-                  currentPosition,
-                  cursor: messages[messages.length - 1].createdAt
-                });
-              }
-            }}
-            scrollableAncestor={this.props.container}
-            bottomOffset="20%"
-            key="top"
-          />
           {messageElements}{" "}
           <div
             style={{

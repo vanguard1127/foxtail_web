@@ -34,7 +34,14 @@ class InboxPanel extends Component {
   };
 
   render() {
-    const { readChat, currentuser, t, ErrorHandler, chatOpen } = this.props;
+    const {
+      readChat,
+      currentuser,
+      t,
+      ErrorHandler,
+      chatOpen,
+      chatID
+    } = this.props;
     const { searchTerm, skip } = this.state;
 
     return (
@@ -51,18 +58,13 @@ class InboxPanel extends Component {
             return (
               <div className="col-md-4 col-lg-3 col-xl-3">
                 <div className="left">
-                  <InboxSearchTextBox
-                    t={t}
-                    handleSearchTextChange={e =>
-                      this.handleSearchTextChange(refetch, e)
-                    }
-                  />
+                  <InboxSearchTextBox t={t} handleSearchTextChange={null} />
                   <Spinner page="inbox" title={t("allmems")} />
                 </div>
               </div>
             );
           }
-
+          //unSeenCount is reset to 1 here. Even though API sent 0
           let messages = data.getInbox || [];
 
           if (error) {
@@ -92,6 +94,7 @@ class InboxPanel extends Component {
                   currentuser={currentuser}
                   searchTerm={searchTerm}
                   limit={parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)}
+                  chatID={chatID}
                 />
               </div>
             </div>

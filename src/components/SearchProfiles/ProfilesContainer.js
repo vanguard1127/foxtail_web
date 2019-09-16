@@ -122,6 +122,11 @@ class ProfilesContainer extends Component {
     this.setState({ shareModalVisible: !this.state.shareModalVisible });
   };
 
+  clearInboxResults = () => {
+    const { cache } = this.props.client;
+    deleteFromCache({ cache, query: "getInbox" });
+  };
+
   handleLike = (likeProfile, profile, featured) => {
     const { ErrorHandler, t, ReactGA, likesToday } = this.props;
     ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
@@ -176,6 +181,7 @@ class ProfilesContainer extends Component {
                 );
                 break;
               default:
+                this.clearInboxResults();
                 ReactGA.event({
                   category: "Search Profiles",
                   action: "Matched"

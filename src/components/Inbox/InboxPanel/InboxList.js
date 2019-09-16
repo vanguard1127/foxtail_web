@@ -20,6 +20,12 @@ class InboxList extends PureComponent {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.messages !== nextProps) {
+      this.setState({ messages: nextProps.messages });
+    }
+  }
+
   handleEnd = previousPosition => {
     const { skip } = this.state;
     const { limit } = this.props;
@@ -54,7 +60,7 @@ class InboxList extends PureComponent {
               return previousResult;
             }
             previousResult.getInbox = [
-              ...previousResult.getInbox,
+              previousResult,
               ...fetchMoreResult.getInbox
             ];
 
@@ -121,7 +127,7 @@ class InboxList extends PureComponent {
                 ? item.text + " " + t("leftchat")
                 : item.text}
             </span>
-            {item.unSeenCount !== 0 && item.unSeenCount !== null && (
+            {item.unSeenCount !== 0 && (
               <span className="notif">{item.unSeenCount}</span>
             )}
           </div>
@@ -139,13 +145,8 @@ class InboxList extends PureComponent {
       <>
         {messages.map((message, i) => {
           var timeAgo = TimeAgo(message.createdAt);
-          let isCurrentChat = false;
-          if (this.state.chatID === message.chatID) {
-            isCurrentChat = true;
-          } else if (!this.state.chatID) {
-            isCurrentChat = i === 0;
-          }
-          return this.renderItem(message, timeAgo, isCurrentChat);
+
+          return this.renderItem(message, timeAgo);
         })}
       </>
     );
@@ -157,34 +158,36 @@ class InboxList extends PureComponent {
         document: NEW_INBOX_SUB,
         updateQuery: (prev, { subscriptionData }) => {
           if (this.mounted) {
-            let { newInboxMsgSubscribe } = subscriptionData.data;
+            const { newInboxMsgSubscribe } = subscriptionData.data;
             if (!newInboxMsgSubscribe) {
               return prev;
             }
 
-            if (prev.getInbox) {
-              const chatIndex = prev.getInbox.findIndex(
+            let previousResult = Array.from(prev.getInbox);
+
+            if (previousResult) {
+              const chatIndex = previousResult.findIndex(
                 el => el.chatID === newInboxMsgSubscribe.chatID
               );
+
+              if (chatIndex > -1) {
+                previousResult[chatIndex] = newInboxMsgSubscribe;
+              } else {
+                previousResult = [newInboxMsgSubscribe, ...previousResult];
+              }
 
               if (
                 sessionStorage.getItem("page") === "inbox" &&
                 sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
               ) {
-                newInboxMsgSubscribe.unSeenCount = 0;
-              }
-
-              if (chatIndex > -1) {
-                prev.getInbox[chatIndex] = newInboxMsgSubscribe;
-              } else {
-                prev.getInbox = [newInboxMsgSubscribe, ...prev.getInbox];
+                previousResult[chatIndex].unSeenCount = 0;
               }
             }
 
             this.setState({
-              messages: [...prev.getInbox]
+              messages: [...previousResult]
             });
-            return prev.getInbox;
+            return previousResult;
           }
         }
       });
@@ -194,6 +197,7 @@ class InboxList extends PureComponent {
   //Variables by text
   render() {
     const { searchTerm } = this.props;
+
     let { messages } = this.state;
 
     if (searchTerm !== "") {

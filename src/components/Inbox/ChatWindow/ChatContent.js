@@ -20,9 +20,9 @@ class ChatContent extends PureComponent {
     return (
       <div
         className="content"
-        style={{ display: "flex", flexDirection: " column-reverse" }}
-        ref={node => {
-          this.container = node;
+        style={{
+          display: "flex",
+          flexDirection: " column-reverse"
         }}
       >
         <Messages
@@ -36,7 +36,6 @@ class ChatContent extends PureComponent {
           lang={lang}
           ErrorHandler={ErrorHandler}
           limit={limit}
-          container={this.container}
         />
       </div>
     );

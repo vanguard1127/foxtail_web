@@ -14,19 +14,19 @@ import {
   REMOVE_SELF,
   GET_MESSAGES
 } from "../../queries";
-import { Mutation, Query } from "react-apollo";
+import { Mutation, Query, withApollo } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
 import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
 import getLang from "../../utils/getLang";
+import deleteFromCache from "../../utils/deleteFromCache";
 const lang = getLang();
 require("dayjs/locale/" + lang);
 
 class InboxPage extends Component {
   state = {
-    chat: null,
     unSeenCount: 0,
     blockModalVisible: false,
     showModal: false,
@@ -38,7 +38,6 @@ class InboxPage extends Component {
   opening = false;
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.state.chat !== nextState.chat ||
       this.state.unSeenCount !== nextState.unSeenCount ||
       this.state.blockModalVisible !== nextState.blockModalVisible ||
       this.state.chatOpen !== nextState.chatOpen ||
@@ -82,11 +81,19 @@ class InboxPage extends Component {
   };
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
+    if (
+      this.props.location.state &&
+      this.props.location.state.chatID &&
+      chatID === this.props.location.state.chatID
+    ) {
+      return;
+    }
     if (!this.opening) {
       this.opening = true;
       ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
       if (this.mounted) {
-        this.props.history.replace({ state: { chatID } });
+        const { cache } = this.props.client;
+        deleteFromCache({ cache, query: "getMessages" });
         this.setState({ unSeenCount, chatOpen: true }, () => {
           readChat()
             .then(() => {
@@ -101,6 +108,7 @@ class InboxPage extends Component {
               this.opening = false;
             });
         });
+        this.props.history.replace({ state: { chatID } });
       }
     }
   };
@@ -141,14 +149,15 @@ class InboxPage extends Component {
       }
     });
     const updatedInbox = getInbox.filter(x => x.chatID !== chatID);
+
     cache.writeQuery({
       query: GET_INBOX,
       variables: {
-        skip: 0,
-        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
+        skip: 0
       },
       data: {
-        getInbox: updatedInbox
+        getInbox: [...updatedInbox]
       }
     });
   };
@@ -172,24 +181,25 @@ class InboxPage extends Component {
     const { getInbox } = cache.readQuery({
       query: GET_INBOX,
       variables: {
-        skip: 0,
-        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
+        skip: 0
       }
     });
+    let newData = Array.from(getInbox);
 
-    const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
+    const chatIndex = newData.findIndex(chat => chat.chatID === chatID);
 
     if (chatIndex > -1) {
-      getInbox[chatIndex].unSeenCount = 0;
+      newData[chatIndex].unSeenCount = 0;
 
       cache.writeQuery({
         query: GET_INBOX,
         variables: {
-          skip: 0,
-          limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+          limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
+          skip: 0
         },
         data: {
-          getInbox
+          getInbox: [...newData]
         }
       });
     }
@@ -202,8 +212,7 @@ class InboxPage extends Component {
       msg,
       btnText,
       title,
-      chatOpen,
-      unSeenCount
+      chatOpen
     } = this.state;
 
     const { t, ReactGA, session, history, tReady } = this.props;
@@ -241,10 +250,10 @@ class InboxPage extends Component {
                 readChat={(id, unSeenCount) =>
                   this.handleChatClick(id, unSeenCount, readChat)
                 }
-                unSeenCount={unSeenCount}
                 currentuser={currentuser}
                 ErrorHandler={ErrorHandler}
                 chatOpen={chatOpen}
+                chatID={chatID}
                 t={t}
               />
             </ErrorHandler.ErrorBoundary>
@@ -285,7 +294,14 @@ class InboxPage extends Component {
                   }}
                   fetchPolicy="cache-first"
                 >
-                  {({ data, loading, error, subscribeToMore, fetchMore }) => {
+                  {({
+                    data,
+                    loading,
+                    error,
+                    subscribeToMore,
+                    fetchMore,
+                    refetch
+                  }) => {
                     if (error) {
                       return (
                         <section className="not-found">
@@ -320,9 +336,11 @@ class InboxPage extends Component {
                         <Spinner message={t("common:Loading")} size="large" />
                       );
                     } else if (!data || !data.getMessages) {
-                      return <div className="col-md-7">{t("nomsgs")}</div>;
+                      refetch();
+                      return (
+                        <Spinner message={t("common:Loading")} size="large" />
+                      );
                     }
-
                     const { getMessages: chat } = data;
 
                     return (
@@ -432,4 +450,4 @@ class InboxPage extends Component {
   }
 }
 
-export default withTranslation("inbox")(InboxPage);
+export default withApollo(withTranslation("inbox")(InboxPage));
