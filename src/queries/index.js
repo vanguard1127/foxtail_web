@@ -142,7 +142,7 @@ export const RESET_CHAT = gql`
 `;
 
 export const READ_CHAT = gql`
-  mutation($chatID: ID!) {
+  mutation($chatID: ID) {
     readChat(chatID: $chatID)
   }
 `;

@@ -154,6 +154,7 @@ class SettingsPage extends Component {
     window.addEventListener("beforeunload", () => {
       this.handleSubmit(this.updateSettings);
     });
+    //TODO: See if we still need this
     window.addEventListener("unload", this.logData, false);
 
     this.mounted = true;
@@ -984,6 +985,7 @@ class SettingsPage extends Component {
               {showSharePopup && (
                 <ShareModal
                   userID={currentuser.userID}
+                  profileID={currentuser.profileID}
                   visible={showSharePopup}
                   close={this.toggleSharePopup}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}

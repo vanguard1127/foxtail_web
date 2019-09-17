@@ -22,9 +22,13 @@ class InboxPanel extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener("beforeunload", () => {
+      this.markChatRead(this.readChat);
+    });
     this.mounted = true;
   }
   componentWillUnmount() {
+    this.markChatRead(this.readChat);
     this.mounted = false;
   }
 
@@ -36,7 +40,7 @@ class InboxPanel extends Component {
   };
 
   handleChatClick = (chatID, unSeenCount, readChat) => {
-    if (chatID === this.props.chatID) {
+    if (chatID === this.props.chatID || !chatID) {
       return;
     }
     if (!this.opening) {
@@ -65,18 +69,36 @@ class InboxPanel extends Component {
     }
   };
 
+  markChatRead = readChat => {
+    if (this.props.chatID) {
+      readChat()
+        .then(() => {
+          this.props.ReactGA.event({
+            category: "Chat",
+            action: "Read"
+          });
+          this.opening = false;
+        })
+        .catch(res => {
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          this.opening = false;
+        });
+    }
+  };
+
   updateCount = cache => {
     const { unSeenCount, chatID } = this.state;
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS
     });
+    let newCounts = { ...getCounts };
 
-    getCounts.msgsCount = getCounts.msgsCount - unSeenCount;
+    newCounts.msgsCount = newCounts.msgsCount - unSeenCount;
 
     cache.writeQuery({
       query: GET_COUNTS,
       data: {
-        getCounts
+        getCounts: { ...newCounts }
       }
     });
 
@@ -160,10 +182,11 @@ class InboxPanel extends Component {
                 />
                 <Mutation
                   mutation={READ_CHAT}
-                  variables={{ chatID }}
+                  variables={{ chatID: chatID ? chatID : null }}
                   update={this.updateCount}
                 >
                   {readChat => {
+                    this.readChat = readChat;
                     return (
                       <InboxList
                         t={t}

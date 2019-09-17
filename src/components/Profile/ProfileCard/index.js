@@ -61,6 +61,7 @@ class ProfileCard extends Component {
       this.setState({ msgModalVisible });
     }
   };
+
   setMessaged = profileID => {
     this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
     if (this.mounted) {
@@ -76,9 +77,11 @@ class ProfileCard extends Component {
       isSelf,
       ReactGA,
       msgd,
-      history
+      history,
+      showShareModal
     } = this.props;
     const { profilePic, id, users } = profile;
+
     const { liked, msgModalVisible, maxLikeDlgVisible } = this.state;
 
     let badge = "";
@@ -104,7 +107,7 @@ class ProfileCard extends Component {
         >
           <div className={"avatar-card " + badge}>
             <ProfilePic profilePic={profilePic} />
-            {!isSelf && (
+            {!isSelf ? (
               <ProfileActions
                 profileID={id}
                 likeProfile={this.toggleLiked}
@@ -113,6 +116,12 @@ class ProfileCard extends Component {
                 liked={liked}
                 msgd={msgd}
               />
+            ) : (
+              <div className="functions">
+                <div className="btn share" onClick={showShareModal}>
+                  Share My Profile!
+                </div>
+              </div>
             )}
           </div>
         </div>

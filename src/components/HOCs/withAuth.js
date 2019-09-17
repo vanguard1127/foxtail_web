@@ -11,9 +11,13 @@ const withAuth = conditionFunc => Component => props => {
 
   return (
     <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
-      {({ data, loading, refetch }) => {
+      {({ data, loading, refetch, error }) => {
         if (loading) {
           return null;
+        }
+
+        if (error) {
+          return <Component {...props} session={data} refetch={refetch} />;
         }
 
         if (location) {

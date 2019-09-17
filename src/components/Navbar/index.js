@@ -2,9 +2,12 @@ import React, { Fragment, Component, PureComponent } from "react";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
+import { GET_COUNTS } from "../../queries";
+import { Query } from "react-apollo";
 import axios from "axios";
 import Spinner from "../common/Spinner";
 import Logout from "./LogoutLink";
+import * as ErrorHandler from "../common/ErrorHandler";
 
 import UserToolbar from "./UserToolbar";
 
@@ -96,154 +99,190 @@ class NavbarAuth extends PureComponent {
     const { session, t, history } = this.props;
     const { mobileMenu } = this.state;
     return (
-      <div className="container">
-        <div className="col-md-12">
-          <div className="row no-gutters">
-            <div className="mobile">
-              <div className="mobile-menu">
-                <div
-                  className={
-                    mobileMenu === true
-                      ? "hamburger hamburger--spring is-active"
-                      : "hamburger hamburger--spring"
-                  }
-                >
-                  <span
-                    className="hamburger-box"
-                    onClick={() => this.toggleMobileMenu()}
-                  >
-                    <span className="hamburger-inner" />
-                  </span>
-                </div>
-              </div>
-              <div
-                className={
-                  mobileMenu === true ? "mobile-toggle show" : "mobile-toggle"
-                }
-              >
-                <ul>
-                  <li>
-                    <span
+      <Query query={GET_COUNTS} fetchPolicy="cache-first">
+        {({ data, loading, error, refetch, subscribeToMore }) => {
+          if (loading || !data) {
+            return <div className="function">Loading...</div>;
+          }
+
+          if (error) {
+            return (
+              <ErrorHandler.report
+                error={error}
+                calledName={"getCounts"}
+                userID={session.currentuser.userID}
+              />
+            );
+          }
+
+          return (
+            <div className="container">
+              <div className="col-md-12">
+                <div className="row no-gutters">
+                  <div className="mobile">
+                    <div className="mobile-menu">
+                      <div
+                        className={
+                          mobileMenu === true
+                            ? "hamburger hamburger--spring is-active"
+                            : "hamburger hamburger--spring"
+                        }
+                      >
+                        <span
+                          className="hamburger-box"
+                          onClick={() => this.toggleMobileMenu()}
+                        >
+                          <span className="hamburger-inner" />
+                          {data.getCounts.msgsCount && !mobileMenu && (
+                            <span className="count">
+                              {data.getCounts.msgsCount}
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      className={
+                        mobileMenu === true
+                          ? "mobile-toggle show"
+                          : "mobile-toggle"
+                      }
+                    >
+                      <ul>
+                        <li>
+                          <span
+                            onClick={() => {
+                              history.push("/members");
+                              this.toggleMobileMenu();
+                            }}
+                          >
+                            {t("meetmembers")}
+                          </span>
+                        </li>
+                        <li>
+                          {" "}
+                          <span
+                            onClick={() => {
+                              history.push("/events");
+                              this.toggleMobileMenu();
+                            }}
+                          >
+                            {t("goevents")}
+                          </span>
+                        </li>
+                        <li>
+                          <span
+                            onClick={() => {
+                              history.push("/inbox");
+                              this.toggleMobileMenu();
+                            }}
+                          >
+                            <div className="inbox">
+                              {t("common:Inbox")}
+                              <span className="count">
+                                {data.getCounts.msgsCount}
+                              </span>
+                            </div>
+                          </span>
+                        </li>
+                        <li>
+                          <span
+                            onClick={() => {
+                              history.push("/settings");
+                              this.toggleMobileMenu();
+                            }}
+                          >
+                            {t("common:myaccount")}
+                          </span>
+                        </li>
+                        {history.location.pathname !== "/settings" && (
+                          <>
+                            {" "}
+                            <li>
+                              <span
+                                onClick={() => {
+                                  history.push({
+                                    pathname: "/settings",
+                                    state: { showBlkMdl: true }
+                                  });
+                                  this.toggleMobileMenu();
+                                }}
+                                className="highlightTxt"
+                              >
+                                {t("common:becomeblk")}
+                              </span>
+                            </li>
+                            <li>
+                              <span
+                                onClick={() => {
+                                  history.push({
+                                    pathname: "/settings",
+                                    state: { showCplMdl: true }
+                                  });
+                                  this.toggleMobileMenu();
+                                }}
+                              >
+                                {t("common:addcoup")}
+                              </span>
+                            </li>
+                          </>
+                        )}
+                        <li>
+                          <span>
+                            <Logout t={t} />
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="col-md-5 hidden-mobile">
+                    <ul className="menu">
+                      <li className={href === "members" ? "active" : ""}>
+                        <NavLink to="/members">
+                          <span role="heading" aria-level="1">
+                            {t("meetmembers")}
+                          </span>
+                        </NavLink>
+                      </li>
+                      <li className={href === "events" ? "active" : ""}>
+                        <NavLink to="/events">
+                          {" "}
+                          <span role="heading" aria-level="1">
+                            {t("goevents")}
+                          </span>
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-12">
+                    <div
                       onClick={() => {
                         history.push("/members");
-                        this.toggleMobileMenu();
                       }}
+                      className={mobileMenu === true ? "logo white" : "logo"}
                     >
-                      {t("meetmembers")}
-                    </span>
-                  </li>
-                  <li>
-                    {" "}
-                    <span
-                      onClick={() => {
-                        history.push("/events");
-                        this.toggleMobileMenu();
-                      }}
-                    >
-                      {t("goevents")}
-                    </span>
-                  </li>
-                  <li>
-                    <span
-                      onClick={() => {
-                        history.push("/inbox");
-                        this.toggleMobileMenu();
-                      }}
-                    >
-                      {t("common:Inbox")}
-                    </span>
-                  </li>
-                  <li>
-                    <span
-                      onClick={() => {
-                        history.push("/settings");
-                        this.toggleMobileMenu();
-                      }}
-                    >
-                      {t("common:myaccount")}
-                    </span>
-                  </li>
-                  {history.location.pathname !== "/settings" && (
-                    <>
-                      {" "}
-                      <li>
-                        <span
-                          onClick={() => {
-                            history.push({
-                              pathname: "/settings",
-                              state: { showBlkMdl: true }
-                            });
-                            this.toggleMobileMenu();
-                          }}
-                          className="highlightTxt"
-                        >
-                          {t("common:becomeblk")}
-                        </span>
-                      </li>
-                      <li>
-                        <span
-                          onClick={() => {
-                            history.push({
-                              pathname: "/settings",
-                              state: { showCplMdl: true }
-                            });
-                            this.toggleMobileMenu();
-                          }}
-                        >
-                          {t("common:addcoup")}
-                        </span>
-                      </li>
-                    </>
-                  )}
-                  <li>
-                    <span>
-                      <Logout t={t} />
-                    </span>
-                  </li>
-                </ul>
+                      <span />
+                    </div>
+                  </div>
+                  <div className="col-md-5 flexible">
+                    {session && session.currentuser && (
+                      <UserToolbar
+                        currentuser={session.currentuser}
+                        href={href}
+                        t={t}
+                        ErrorHandler={ErrorHandler}
+                        subscribeToMore={subscribeToMore}
+                        refetch={refetch}
+                        counts={data.getCounts}
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col-md-5 hidden-mobile">
-              <ul className="menu">
-                <li className={href === "members" ? "active" : ""}>
-                  <NavLink to="/members">
-                    <span role="heading" aria-level="1">
-                      {t("meetmembers")}
-                    </span>
-                  </NavLink>
-                </li>
-                <li className={href === "events" ? "active" : ""}>
-                  <NavLink to="/events">
-                    {" "}
-                    <span role="heading" aria-level="1">
-                      {t("goevents")}
-                    </span>
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-            <div className="col-md-2 col-12">
-              <div
-                onClick={() => {
-                  history.push("/members");
-                }}
-                className={mobileMenu === true ? "logo white" : "logo"}
-              >
-                <span />
-              </div>
-            </div>
-            <div className="col-md-5 flexible">
-              {session && session.currentuser && (
-                <UserToolbar
-                  currentuser={session.currentuser}
-                  href={href}
-                  t={t}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+          );
+        }}
+      </Query>
     );
   }
 }

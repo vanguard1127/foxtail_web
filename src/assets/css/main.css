@@ -49,12 +49,11 @@ header {
 }
 
 header .logo {
-  width: 80px;
-  height: 51px;
+  width: 100px;
+  height: 60px;
   margin: 0 auto;
   position: relative;
-  top: 12px;
-  z-index: 999;
+  top: -5px;
 }
 
 header .logo span {
@@ -64,13 +63,13 @@ header .logo span {
   float: left;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/logo/logo-color@2x.png");
+  background-image: url("../img/logo/logo-color.svg");
   cursor: pointer;
 }
 
 header.landing .logo span,
 header .logo.white span {
-  background-image: url("../img/logo/logo-white@2x.png");
+  background-image: url("../img/logo/logo-white.svg");
   pointer-events: none;
   cursor: default;
 }
@@ -738,6 +737,29 @@ header .mobile-toggle {
 header .mobile-toggle.show {
   display: inline-block;
   visibility: visible;
+}
+
+header .mobile-toggle div.inbox {
+  width: fit-content;
+}
+
+header .mobile-toggle .count {
+  width: 15px;
+  height: 15px;
+  position: relative;
+  top: -8px;
+  border-radius: 100px;
+  background: #ffcb02;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.22);
+  display: inline-block;
+  visibility: visible;
+  float: right;
+  text-align: center;
+  line-height: 15px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+  padding: 0 !important;
 }
 
 header .mobile-toggle ul {
@@ -1779,9 +1801,8 @@ footer .brand {
 }
 
 footer .brand .logo {
-  width: 80px;
-  height: 51px;
-  margin: 15px 0 0 0;
+  width: 100px;
+  height: 60px;
   overflow: hidden;
   float: left;
 }
@@ -1793,7 +1814,7 @@ footer .brand .logo span {
   float: left;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/logo/logo-white@2x.png");
+  background-image: url("../img/logo/logo-white.svg");
 }
 
 footer .brand .medias {
@@ -2885,6 +2906,16 @@ section.profile .avatar-card .functions .btn.heart.unheart::before {
   content: "\e812";
 }
 
+section.profile .avatar-card .functions .btn.share {
+  color: #d7004a;
+  cursor: pointer;
+  border: 1px solid #d7004a;
+}
+section.profile .avatar-card .functions .btn.share:hover {
+  color: #fff;
+  cursor: pointer;  background-color: #d7004a;
+}
+
 section.profile .desires {
   width: 100%;
   float: left;
@@ -3492,7 +3523,7 @@ section.not-found span.logo {
 
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/logo/logo-color@2x.png");
+  background-image: url("../img/logo/logo-color.svg");
   /* z-index: 999; */
 }
 
@@ -6593,14 +6624,14 @@ header.landing {
 }
 
 header.landing .logo {
-  width: 113px;
-  height: 60px;
+  width: 117px;
+  height: 72px;
   top: 0;
   margin: 0 auto;
 }
 
 header.landing .logo a {
-  background-image: url("../img/logo/logo-white@2x.png");
+  background-image: url("../img/logo/logo-white.svg");
 }
 
 header.landing a.login-btn {
@@ -7443,11 +7474,7 @@ section.login-modal.show {
   /* display: inline-block; */
   visibility: visible;
 }
-@media (max-width:768px){
-  section.login-modal.show{
 
-  }
-}
 section.login-modal .popup {
   width: 100%;
   background-color: #fff;
@@ -9140,6 +9167,13 @@ section.not-found span.description {
   .inbox-ads .ad-con {
     height: 300px;
   }
+
+  header.landing .logo {
+    width: 200px;
+    height: 120px;
+  }
+
+
   header ul.menu li {
     margin-right: 40px;
   }
@@ -9641,7 +9675,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   height: 10%;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url(../img/logo/logo-color@2x.png);
+  background-image: url(../img/logo/logo-color.svg);
   align-self:center;
 }
 
@@ -9993,6 +10027,11 @@ animation: CycleC 30s ease infinite;
   }
 }
 @media (max-width:768px){
+
+  header .logo {
+    z-index: 999;
+}
+
   .event-tool-mobile{
     width:100%;
     padding:5px;

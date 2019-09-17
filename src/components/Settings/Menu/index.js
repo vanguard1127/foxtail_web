@@ -57,6 +57,9 @@ class Menu extends Component {
             <li className="active">
               <span onClick={shareModalToggle}>{t("common:sharefox")}</span>
             </li>
+            <li className="active">
+              <span onClick={shareModalToggle}>{t("common:shareme")}</span>
+            </li>
           </ul>
         </div>
       </ErrorBoundary>

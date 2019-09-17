@@ -3,10 +3,8 @@ import { NavLink } from "react-router-dom";
 import { NEW_INBOX_SUB } from "../../queries";
 class InboxItem extends Component {
   unsubscribe = null;
-  state = { count: this.props.count };
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.state.count !== nextState.count ||
       this.props.count !== nextProps.count ||
       this.props.active !== nextProps.active ||
       this.props.t !== nextProps.t
@@ -32,6 +30,7 @@ class InboxItem extends Component {
       document: NEW_INBOX_SUB,
       updateQuery: (prev, { subscriptionData }) => {
         const { newInboxMsgSubscribe } = subscriptionData.data;
+
         if (
           newInboxMsgSubscribe === null ||
           (newInboxMsgSubscribe.fromUser &&
@@ -44,6 +43,9 @@ class InboxItem extends Component {
         if (!newInboxMsgSubscribe) {
           return prev;
         }
+
+        const newCount = { ...prev.getCounts };
+
         if (
           sessionStorage.getItem("page") === "inbox" &&
           sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
@@ -54,15 +56,15 @@ class InboxItem extends Component {
           if (newInboxMsgSubscribe.fromUser.id !== this.props.userID) {
             this.props.msgAudio.play();
           }
-          this.setState({ count: this.state.count + 1 });
+          newCount.msgsCount += 1;
         }
-        return;
+        return { getCounts: newCount };
       }
     });
   };
   render() {
-    const { active, t } = this.props;
-    const { count } = this.state;
+    const { active, t, count } = this.props;
+
     let iconstyle = "inbox hidden-mobile";
     if (count > 0) {
       iconstyle += " new";

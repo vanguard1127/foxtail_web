@@ -45,6 +45,7 @@ class Share extends Component {
     const {
       userID,
       profile,
+      profileID,
       event,
       close,
       t,
@@ -57,6 +58,8 @@ class Share extends Component {
       url = `refer=${userID}&mem=${profile.id}`;
     } else if (event) {
       url = `refer=${userID}&eve=${event.id}`;
+    } else if (profileID) {
+      url = `refer=${userID}&mem=${profileID}`;
     } else {
       url = `refer=${userID}`;
     }
@@ -83,6 +86,9 @@ class Share extends Component {
       } else if (event) {
         title = t("invitation") + " " + event.eventname;
         return <div>{t("shareevent")}?</div>;
+      } else if (profileID) {
+        title = "Check out my profile on Foxtail!";
+        return <div>Share your Profile</div>;
       } else {
         title = t(
           "Check out Foxtail. It's Sexy, Safe, Fun Dating. And it's FREE:"

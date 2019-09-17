@@ -8,7 +8,7 @@ class ProfilesDiv extends Component {
     if (
       this.props.profiles !== nextProps.profiles ||
       !isArrayStringsEqual(this.props.likedProfiles, nextProps.likedProfiles) ||
-      this.props.msgdProfiles !== nextProps.msgdProfiles ||
+      !isArrayStringsEqual(this.props.msgdProfiles, nextProps.msgdProfiles) ||
       this.props.t !== nextProps.t
     ) {
       return true;

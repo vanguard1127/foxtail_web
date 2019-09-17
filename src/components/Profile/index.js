@@ -269,6 +269,9 @@ class ProfilePage extends Component {
                               likesToday={
                                 this.props.session.currentuser.likesToday
                               }
+                              showShareModal={() =>
+                                this.setShareModalVisible(true, profile)
+                              }
                             />
                             <DesiresSection
                               desires={desires}
