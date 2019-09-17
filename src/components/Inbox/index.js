@@ -7,13 +7,7 @@ import Header from "./Header";
 import ChatInfo from "./ChatInfo";
 import BlockModal from "../Modals/Block";
 import Spinner from "../common/Spinner";
-import {
-  GET_COUNTS,
-  READ_CHAT,
-  GET_INBOX,
-  REMOVE_SELF,
-  GET_MESSAGES
-} from "../../queries";
+import { GET_INBOX, REMOVE_SELF, GET_MESSAGES } from "../../queries";
 import { Mutation, Query, withApollo } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
 import Tour from "./Tour";
@@ -21,7 +15,6 @@ import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
 import getLang from "../../utils/getLang";
-import deleteFromCache from "../../utils/deleteFromCache";
 const lang = getLang();
 require("dayjs/locale/" + lang);
 
@@ -80,39 +73,6 @@ class InboxPage extends Component {
     this.setState({ title, msg, btnText }, () => this.toggleDialog());
   };
 
-  handleChatClick = (chatID, unSeenCount, readChat) => {
-    if (
-      this.props.location.state &&
-      this.props.location.state.chatID &&
-      chatID === this.props.location.state.chatID
-    ) {
-      return;
-    }
-    if (!this.opening) {
-      this.opening = true;
-      ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
-      if (this.mounted) {
-        const { cache } = this.props.client;
-        deleteFromCache({ cache, query: "getMessages" });
-        this.setState({ unSeenCount, chatOpen: true }, () => {
-          readChat()
-            .then(() => {
-              this.props.ReactGA.event({
-                category: "Chat",
-                action: "Read"
-              });
-              this.opening = false;
-            })
-            .catch(res => {
-              ErrorHandler.catchErrors(res.graphQLErrors);
-              this.opening = false;
-            });
-        });
-        this.props.history.replace({ state: { chatID } });
-      }
-    }
-  };
-
   closeChat = () => {
     this.props.history.replace({ state: {} });
     this.setState({ chatOpen: false });
@@ -162,49 +122,6 @@ class InboxPage extends Component {
     });
   };
 
-  updateCount = cache => {
-    const { unSeenCount } = this.state;
-    const { chatID } = this.props.location.state;
-    const { getCounts } = cache.readQuery({
-      query: GET_COUNTS
-    });
-
-    getCounts.msgsCount = getCounts.msgsCount - unSeenCount;
-
-    cache.writeQuery({
-      query: GET_COUNTS,
-      data: {
-        getCounts
-      }
-    });
-
-    const { getInbox } = cache.readQuery({
-      query: GET_INBOX,
-      variables: {
-        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
-        skip: 0
-      }
-    });
-    let newData = Array.from(getInbox);
-
-    const chatIndex = newData.findIndex(chat => chat.chatID === chatID);
-
-    if (chatIndex > -1) {
-      newData[chatIndex].unSeenCount = 0;
-
-      cache.writeQuery({
-        query: GET_INBOX,
-        variables: {
-          limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
-          skip: 0
-        },
-        data: {
-          getInbox: [...newData]
-        }
-      });
-    }
-  };
-
   render() {
     let {
       blockModalVisible,
@@ -237,31 +154,6 @@ class InboxPage extends Component {
 
     let chatID = this.props.location.state && this.props.location.state.chatID;
 
-    const inboxPanel = (
-      <Mutation
-        mutation={READ_CHAT}
-        variables={{ chatID }}
-        update={this.updateCount}
-      >
-        {readChat => {
-          return (
-            <ErrorHandler.ErrorBoundary>
-              <InboxPanel
-                readChat={(id, unSeenCount) =>
-                  this.handleChatClick(id, unSeenCount, readChat)
-                }
-                currentuser={currentuser}
-                ErrorHandler={ErrorHandler}
-                chatOpen={chatOpen}
-                chatID={chatID}
-                t={t}
-              />
-            </ErrorHandler.ErrorBoundary>
-          );
-        }}
-      </Mutation>
-    );
-
     return (
       <>
         <ErrorHandler.ErrorBoundary>
@@ -269,7 +161,17 @@ class InboxPage extends Component {
         </ErrorHandler.ErrorBoundary>
         <section className="inbox">
           <div className="row no-gutters chat-window-wrapper">
-            {inboxPanel}
+            <ErrorHandler.ErrorBoundary>
+              <InboxPanel
+                currentuser={currentuser}
+                ErrorHandler={ErrorHandler}
+                chatOpen={chatOpen}
+                chatID={chatID}
+                t={t}
+                history={this.props.history}
+                client={this.props.client}
+              />
+            </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
               {!chatID && (
                 <ChatWindow

@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Waypoint } from "react-waypoint";
-import { NEW_INBOX_SUB } from "../../../queries";
+import { NEW_INBOX_SUB, GET_INBOX } from "../../../queries";
 import TimeAgo from "../../../utils/TimeAgo";
 import { preventContextMenu } from "../../../utils/image";
 const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
@@ -184,10 +184,39 @@ class InboxList extends PureComponent {
               }
             }
 
+            //update the cache - causes issue when getting subs
+            const { cache } = this.props.client;
+            const { getInbox } = cache.readQuery({
+              query: GET_INBOX,
+              variables: {
+                limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
+                skip: 0
+              }
+            });
+            let newData = Array.from(getInbox);
+
+            const chatIndex = newData.findIndex(
+              chat => chat.chatID === newInboxMsgSubscribe.chatID
+            );
+
+            if (chatIndex > -1) {
+              newData[chatIndex] = newInboxMsgSubscribe;
+              cache.writeQuery({
+                query: GET_INBOX,
+                variables: {
+                  limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
+                  skip: 0
+                },
+                data: {
+                  getInbox: [...newData]
+                }
+              });
+            }
+
             this.setState({
               messages: [...previousResult]
             });
-            return previousResult;
+            return [...previousResult];
           }
         }
       });
