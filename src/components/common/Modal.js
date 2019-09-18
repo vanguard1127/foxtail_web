@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Spring } from "react-spring/renderprops";
 
 class Modal extends Component {
   constructor(props) {
@@ -24,10 +25,7 @@ class Modal extends Component {
   }
 
   handleClickOutside = event => {
-    if (
-      (this.wrapperRef && this.wrapperRef.current === event.target) ||
-      event.target.className === "container"
-    ) {
+    if ((this.wrapperRef && this.wrapperRef.current === event.target) || event.target.className === "container") {
       if (this.props.close) {
         this.props.close();
       }
@@ -35,91 +33,75 @@ class Modal extends Component {
   };
 
   render() {
-    const {
-      close,
-      header,
-      children,
-      description,
-      okSpan,
-      cancelSpan,
-      fullWidth,
-      fullScreen,
-      className
-    } = this.props;
+    const { close, header, children, description, okSpan, cancelSpan, fullWidth, fullScreen, className } = this.props;
 
     return (
-      <section
-        className={`login-modal show ${fullScreen ? "full-screen-modal" : ""}${
-          className ? className : ""
-        }`}
-        ref={this.wrapperRef}
-      >
-        {fullScreen ? (
-          <div className="container" style={{ width: "100%", height: "100vh" }}>
-            <div>
-              <div
-                className="popup"
-                style={{ height: "100vh", padding: "unset" }}
-              >
-                {/* <span className="head">{header}</span> */}
-                {/* <a
+      <Spring from={{ opacity: 0.4 }} to={{ opacity: 1 }}>
+        {props => (
+          <section
+            style={props}
+            className={`login-modal show ${fullScreen ? "full-screen-modal" : ""}${className ? className : ""}`}
+            ref={this.wrapperRef}
+          >
+            {fullScreen ? (
+              <div className="container" style={{ width: "100%", height: "100vh" }}>
+                <div>
+                  <div className="popup" style={{ height: "100vh", padding: "unset" }}>
+                    {/* <span className="head">{header}</span> */}
+                    {/* <a
                   className="close close-fullscreen-popup"
                   onClick={() => close()}
                 /> */}
-                <form>
-                  <div className="form-content">
-                    {children}
-                    {description && (
-                      <span className="description">{description}</span>
-                    )}
-                    {okSpan && <div className="submit">{okSpan}</div>}
-                    {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                    <form>
+                      <div className="form-content">
+                        {children}
+                        {description && <span className="description">{description}</span>}
+                        {okSpan && <div className="submit">{okSpan}</div>}
+                        {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                      </div>
+                    </form>
                   </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="container">
-            {fullWidth ? (
-              <div>
-                <div className="popup">
-                  {/* <span className="head">{header}</span> */}
-                  <a className="close" onClick={() => close()} />
-                  <form>
-                    <div className="form-content">
-                      {children}
-                      {description && (
-                        <span className="description">{description}</span>
-                      )}
-                      {okSpan && <div className="submit">{okSpan}</div>}
-                      {cancelSpan && <div className="submit">{cancelSpan}</div>}
-                    </div>
-                  </form>
                 </div>
               </div>
             ) : (
-              <div className="offset-md-3 col-md-6">
-                <div className="popup">
-                  <span className="head">{header}</span>
-                  {close && <a className="close" onClick={() => close()} />}
-
-                  <form>
-                    <div className="form-content">
-                      {children}
-                      {description && (
-                        <span className="description">{description}</span>
-                      )}
-                      {okSpan && <div className="submit">{okSpan}</div>}
-                      {cancelSpan && <div className="submit">{cancelSpan}</div>}
+              <div className="container">
+                {fullWidth ? (
+                  <div>
+                    <div className="popup">
+                      {/* <span className="head">{header}</span> */}
+                      <a className="close" onClick={() => close()} />
+                      <form>
+                        <div className="form-content">
+                          {children}
+                          {description && <span className="description">{description}</span>}
+                          {okSpan && <div className="submit">{okSpan}</div>}
+                          {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                        </div>
+                      </form>
                     </div>
-                  </form>
-                </div>
+                  </div>
+                ) : (
+                  <div className="offset-md-3 col-md-6">
+                    <div className="popup">
+                      <span className="head">{header}</span>
+                      {close && <a className="close" onClick={() => close()} />}
+
+                      <form>
+                        <div className="form-content">
+                          {children}
+                          {description && <span className="description">{description}</span>}
+                          {okSpan && <div className="submit">{okSpan}</div>}
+                          {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
-          </div>
+          </section>
         )}
-      </section>
+      </Spring>
     );
   }
 }
