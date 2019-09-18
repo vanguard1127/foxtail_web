@@ -27,5 +27,3 @@ yarn-error.log*
 .editorconfig
 *.iml
 *.xml
-
-DevTools.js
