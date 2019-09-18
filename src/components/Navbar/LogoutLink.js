@@ -9,11 +9,7 @@ class Logout extends Component {
     return false;
   }
   handleLogout = () => {
-    axios.get(
-      process.env.REACT_APP_HTTPS_URL +
-        "/offline?token=" +
-        localStorage.getItem("token")
-    );
+    axios.get(process.env.REACT_APP_HTTPS_URL + "/offline?token=" + localStorage.getItem("token"));
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     sessionStorage.clear();
@@ -21,7 +17,7 @@ class Logout extends Component {
     //Causes console error but currently best option.
     this.props.client.resetStore();
 
-    window.location.replace("/");
+    // window.location.replace("/");
   };
 
   render() {
