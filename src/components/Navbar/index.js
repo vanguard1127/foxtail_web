@@ -2,6 +2,7 @@ import React, { Fragment, Component, PureComponent } from "react";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { GET_COUNTS } from "../../queries";
 import { Query } from "react-apollo";
 import axios from "axios";
@@ -102,7 +103,11 @@ class NavbarAuth extends PureComponent {
       <Query query={GET_COUNTS} fetchPolicy="cache-first">
         {({ data, loading, error, refetch, subscribeToMore }) => {
           if (loading || !data) {
-            return <div className="function">Loading...</div>;
+            return (
+              <div className="function">
+                <CircularProgress />
+              </div>
+            );
           }
 
           if (error) {

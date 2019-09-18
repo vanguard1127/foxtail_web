@@ -1,74 +1,25 @@
 import React, { PureComponent } from "react";
 import { Waypoint } from "react-waypoint";
-import { NEW_INBOX_SUB, GET_INBOX } from "../../../queries";
 import TimeAgo from "../../../utils/TimeAgo";
 import { preventContextMenu } from "../../../utils/image";
 const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
 
 class InboxList extends PureComponent {
   unsubscribe;
-  state = { chatID: null, messages: this.props.messages };
+  state = { chatID: null };
   componentDidMount() {
     this.mounted = true;
-    this.subscribeInboxMsgs();
   }
 
   componentWillUnmount() {
     this.mounted = false;
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.messages !== nextProps) {
-      this.setState({ messages: nextProps.messages });
-    }
   }
 
   handleEnd = previousPosition => {
-    const { skip } = this.state;
-    const { limit } = this.props;
-
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
-        this.setState({ skip: skip + limit, loading: true }, () =>
-          this.fetchData()
-        );
+        this.props.fetchData();
       }
-    }
-  };
-
-  fetchData = () => {
-    if (this.mounted) {
-      this.setState({ loading: true }, () =>
-        this.props.fetchMore({
-          variables: {
-            skip: this.state.skip,
-            limit: this.props.limit
-          },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (this.mounted) {
-              this.setState({ loading: false });
-            }
-
-            if (
-              !fetchMoreResult ||
-              !fetchMoreResult.getInbox ||
-              !fetchMoreResult.getInbox.length === 0
-            ) {
-              return previousResult;
-            }
-            previousResult.getInbox = [
-              previousResult,
-              ...fetchMoreResult.getInbox
-            ];
-
-            this.setState({ messages: previousResult });
-            return previousResult;
-          }
-        })
-      );
     }
   };
 
@@ -122,7 +73,7 @@ class InboxList extends PureComponent {
           <div className="data">
             <span className="name">{title}</span>
             <span className="time">{timeAgo}</span>
-            <span className="msg">
+            <span className={item.type !== "new" ? "msg" : "msg new"}>
               {item.type === "left"
                 ? item.text + " " + t("leftchat")
                 : item.text}
@@ -152,82 +103,9 @@ class InboxList extends PureComponent {
     );
   };
 
-  subscribeInboxMsgs = () => {
-    if (this.mounted) {
-      this.unsubscribe = this.props.subscribeToMore({
-        document: NEW_INBOX_SUB,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (this.mounted) {
-            const { newInboxMsgSubscribe } = subscriptionData.data;
-            if (!newInboxMsgSubscribe) {
-              return prev;
-            }
-
-            let previousResult = Array.from(prev.getInbox);
-
-            if (previousResult) {
-              const chatIndex = previousResult.findIndex(
-                el => el.chatID === newInboxMsgSubscribe.chatID
-              );
-
-              if (chatIndex > -1) {
-                previousResult[chatIndex] = newInboxMsgSubscribe;
-              } else {
-                previousResult = [newInboxMsgSubscribe, ...previousResult];
-              }
-
-              if (
-                sessionStorage.getItem("page") === "inbox" &&
-                sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
-              ) {
-                previousResult[chatIndex].unSeenCount = 0;
-              }
-            }
-
-            //update the cache - causes issue when getting subs
-            const { cache } = this.props.client;
-            const { getInbox } = cache.readQuery({
-              query: GET_INBOX,
-              variables: {
-                limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
-                skip: 0
-              }
-            });
-            let newData = Array.from(getInbox);
-
-            const chatIndex = newData.findIndex(
-              chat => chat.chatID === newInboxMsgSubscribe.chatID
-            );
-
-            if (chatIndex > -1) {
-              newData[chatIndex] = newInboxMsgSubscribe;
-              cache.writeQuery({
-                query: GET_INBOX,
-                variables: {
-                  limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
-                  skip: 0
-                },
-                data: {
-                  getInbox: [...newData]
-                }
-              });
-            }
-
-            this.setState({
-              messages: [...previousResult]
-            });
-            return [...previousResult];
-          }
-        }
-      });
-    }
-  };
-
   //Variables by text
   render() {
-    const { searchTerm } = this.props;
-
-    let { messages } = this.state;
+    let { searchTerm, messages } = this.props;
 
     if (searchTerm !== "") {
       messages = messages.filter(msg =>

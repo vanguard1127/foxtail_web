@@ -1,12 +1,18 @@
 import React, { Component } from "react";
 import InboxSearchTextBox from "./InboxSearchTextBox";
-import { READ_CHAT, GET_INBOX, GET_COUNTS } from "../../../queries";
+import {
+  READ_CHAT,
+  GET_INBOX,
+  GET_COUNTS,
+  NEW_INBOX_SUB
+} from "../../../queries";
 import { Query, Mutation, withApollo } from "react-apollo";
 import Spinner from "../../common/Spinner";
 import InboxList from "./InboxList";
 import deleteFromCache from "../../../utils/deleteFromCache";
-
+const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 class InboxPanel extends Component {
+  unsubscribe = null;
   state = { searchTerm: "", skip: 0, unSeenCount: 0 };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -29,6 +35,7 @@ class InboxPanel extends Component {
   }
   componentWillUnmount() {
     this.markChatRead(this.readChat);
+    this.unsubscribe();
     this.mounted = false;
   }
 
@@ -105,7 +112,7 @@ class InboxPanel extends Component {
     const { getInbox } = cache.readQuery({
       query: GET_INBOX,
       variables: {
-        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
+        limit,
         skip: 0
       }
     });
@@ -118,7 +125,7 @@ class InboxPanel extends Component {
       cache.writeQuery({
         query: GET_INBOX,
         variables: {
-          limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
+          limit,
           skip: 0
         },
         data: {
@@ -128,15 +135,46 @@ class InboxPanel extends Component {
     }
   };
 
+  fetchData = fetchMore => {
+    if (this.mounted) {
+      const { skip } = this.state;
+      this.setState(
+        {
+          skip: skip + limit,
+          loading: true
+        },
+        () =>
+          fetchMore({
+            variables: {
+              skip: this.state.skip,
+              limit: limit
+            },
+            updateQuery: (previousResult, { fetchMoreResult }) => {
+              if (this.mounted) {
+                this.setState({ loading: false });
+              }
+
+              if (
+                !fetchMoreResult ||
+                !fetchMoreResult.getInbox ||
+                !fetchMoreResult.getInbox.length === 0
+              ) {
+                return previousResult;
+              }
+              previousResult.getInbox = [
+                ...previousResult.getInbox,
+                ...fetchMoreResult.getInbox
+              ];
+
+              return previousResult;
+            }
+          })
+      );
+    }
+  };
+
   render() {
-    const {
-      currentuser,
-      t,
-      ErrorHandler,
-      chatOpen,
-      chatID,
-      client
-    } = this.props;
+    const { currentuser, t, ErrorHandler, chatOpen, chatID } = this.props;
     const { searchTerm, skip } = this.state;
 
     return (
@@ -144,7 +182,7 @@ class InboxPanel extends Component {
         query={GET_INBOX}
         variables={{
           skip,
-          limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+          limit
         }}
         fetchPolicy="cache-first"
       >
@@ -158,6 +196,42 @@ class InboxPanel extends Component {
                 </div>
               </div>
             );
+          }
+
+          if (!this.unsubscribe) {
+            this.unsubscribe = subscribeToMore({
+              document: NEW_INBOX_SUB,
+              updateQuery: (prev, { subscriptionData }) => {
+                const { newInboxMsgSubscribe } = subscriptionData.data;
+                if (!newInboxMsgSubscribe) {
+                  return prev;
+                }
+
+                let previousResult = Array.from(prev.getInbox);
+
+                if (previousResult) {
+                  const chatIndex = previousResult.findIndex(
+                    el => el.chatID === newInboxMsgSubscribe.chatID
+                  );
+
+                  if (chatIndex > -1) {
+                    previousResult[chatIndex] = newInboxMsgSubscribe;
+                  } else {
+                    previousResult = [newInboxMsgSubscribe, ...previousResult];
+                  }
+
+                  if (
+                    sessionStorage.getItem("page") === "inbox" &&
+                    sessionStorage.getItem("pid") ===
+                      newInboxMsgSubscribe.chatID
+                  ) {
+                    previousResult[chatIndex].unSeenCount = 0;
+                  }
+                }
+
+                return { getInbox: [...previousResult] };
+              }
+            });
           }
 
           let messages = data.getInbox || [];
@@ -191,16 +265,12 @@ class InboxPanel extends Component {
                       <InboxList
                         t={t}
                         messages={messages}
-                        subscribeToMore={subscribeToMore}
-                        fetchMore={fetchMore}
+                        fetchData={() => this.fetchData(fetchMore)}
                         readChat={(id, unSeenCount) =>
                           this.handleChatClick(id, unSeenCount, readChat)
                         }
                         currentuser={currentuser}
                         searchTerm={searchTerm}
-                        limit={parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)}
-                        chatID={chatID}
-                        client={client}
                       />
                     );
                   }}

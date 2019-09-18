@@ -2198,6 +2198,11 @@ section.inbox .left .conversations .item .data span.msg {
   line-height: 16px;
 }
 
+section.inbox .left .conversations .item .data span.msg.new {
+  color: #e3004f;
+}
+
+
 section.inbox .left .conversations .item .data span.notif {
   float: right;
   width: 16px;
