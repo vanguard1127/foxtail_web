@@ -14,11 +14,13 @@ import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
+import deleteFromCache from "../../utils/deleteFromCache";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
 
 class InboxPage extends Component {
+  readChat;
   state = {
     unSeenCount: 0,
     blockModalVisible: false,
@@ -26,15 +28,16 @@ class InboxPage extends Component {
     msg: "",
     btnText: "",
     title: "",
-    chatOpen: false
+    chatOpen: false,
+    chatID: this.props.location.state ? this.props.location.state.chatID : null
   };
-  opening = false;
+
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.state.unSeenCount !== nextState.unSeenCount ||
       this.state.blockModalVisible !== nextState.blockModalVisible ||
       this.state.chatOpen !== nextState.chatOpen ||
       this.state.showModal !== nextState.showModal ||
+      this.state.chatID !== nextState.chatID ||
       this.props.location.state !== nextProps.location.state ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady
@@ -45,7 +48,6 @@ class InboxPage extends Component {
   }
   componentDidMount() {
     this.mounted = true;
-
     document.title = this.props.t("common:Inbox");
     sessionStorage.setItem("page", "inbox");
   }
@@ -75,12 +77,12 @@ class InboxPage extends Component {
 
   closeChat = () => {
     this.props.history.replace({ state: {} });
-    this.setState({ chatOpen: false });
+    this.setState({ chatOpen: false, chatID: null });
   };
 
   handleRemoveSelf = removeSelf => {
-    const { refetch, location, history, t } = this.props;
-    const { chatID } = location.state;
+    const { refetch, history, t } = this.props;
+    const { chatID } = this.state;
     ErrorHandler.setBreadcrumb("Remove Self from Chat:" + chatID);
     removeSelf()
       .then(({ data }) => {
@@ -99,7 +101,7 @@ class InboxPage extends Component {
   };
 
   updateMail = cache => {
-    const { chatID } = this.props.location.state;
+    const { chatID } = this.state;
 
     const { getInbox } = cache.readQuery({
       query: GET_INBOX,
@@ -122,6 +124,16 @@ class InboxPage extends Component {
     });
   };
 
+  handleChatClick = (chatID, unSeenCount) => {
+    const { ErrorHandler } = this.props;
+    ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
+    if (this.mounted) {
+      const { cache } = this.props.client;
+      deleteFromCache({ cache, query: "getMessages" });
+      this.setState({ unSeenCount, chatID, chatOpen: true });
+    }
+  };
+
   render() {
     let {
       blockModalVisible,
@@ -129,7 +141,8 @@ class InboxPage extends Component {
       msg,
       btnText,
       title,
-      chatOpen
+      chatOpen,
+      chatID
     } = this.state;
 
     const { t, ReactGA, session, history, tReady } = this.props;
@@ -152,24 +165,23 @@ class InboxPage extends Component {
       );
     }
 
-    let chatID = this.props.location.state && this.props.location.state.chatID;
-
     return (
       <>
         <ErrorHandler.ErrorBoundary>
           <Header t={t} chatOpen={chatOpen} closeChat={this.closeChat} />
         </ErrorHandler.ErrorBoundary>
-        <section className="inbox">
+        <section className={!chatOpen ? "inbox" : "inbox hide-mobile"}>
           <div className="row no-gutters chat-window-wrapper">
             <ErrorHandler.ErrorBoundary>
               <InboxPanel
                 currentuser={currentuser}
                 ErrorHandler={ErrorHandler}
-                chatOpen={chatOpen}
-                chatID={chatID}
                 t={t}
                 history={this.props.history}
                 client={this.props.client}
+                readChat={(id, unSeenCount) =>
+                  this.handleChatClick(id, unSeenCount)
+                }
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
@@ -273,6 +285,7 @@ class InboxPage extends Component {
                           }}
                           fetchMore={fetchMore}
                           subscribeToMore={subscribeToMore}
+                          cache={this.props.client.cache}
                         />
                         <Mutation
                           mutation={REMOVE_SELF}

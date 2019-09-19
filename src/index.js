@@ -223,13 +223,18 @@ const Root = () => (
 
 const Wrapper = withRouter(props => {
   let location = props.location;
-
   if (location.pathname) {
     if (
       location.pathname === "/" &&
       (!location.search || location.search.includes("="))
     ) {
-      return <Landing {...props} ReactGA={ReactGA} />;
+      return (
+        <Landing
+          {...props}
+          ReactGA={ReactGA}
+          noCheck={location.state && location.state.noCheck}
+        />
+      );
     } else if (location.pathname === "/tos") {
       return <ToS history={props.history} />;
     } else if (location.pathname === "/about") {

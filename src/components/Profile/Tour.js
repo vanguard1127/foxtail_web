@@ -4,7 +4,6 @@ import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
 import { withRouter } from "react-router-dom";
-import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 class ProfileTour extends PureComponent {

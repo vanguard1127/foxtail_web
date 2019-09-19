@@ -127,12 +127,14 @@ class NoticesItem extends Component {
         query: GET_COUNTS
       });
 
-      getCounts.noticesCount = getCounts.noticesCount - notificationIDs.length;
+      let newCounts = { ...getCounts };
+
+      newCounts.noticesCount = newCounts.noticesCount - notificationIDs.length;
 
       cache.writeQuery({
         query: GET_COUNTS,
         data: {
-          getCounts
+          getCounts: { ...newCounts }
         }
       });
     }

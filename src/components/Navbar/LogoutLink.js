@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withApollo } from "react-apollo";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 class Logout extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -21,7 +22,7 @@ class Logout extends Component {
     //Causes console error but currently best option.
     this.props.client.resetStore();
 
-    window.location.replace("/");
+    this.props.history.push("/", { noCheck: true });
   };
 
   render() {
@@ -29,4 +30,4 @@ class Logout extends Component {
     return <div onClick={this.handleLogout}>{t("common:Logout")}</div>;
   }
 }
-export default withApollo(Logout);
+export default withRouter(withApollo(Logout));

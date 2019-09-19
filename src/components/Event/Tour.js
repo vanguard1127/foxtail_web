@@ -5,7 +5,7 @@ import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
-class ProfileTour extends PureComponent {
+class EventTour extends PureComponent {
   state = {
     isTourOpen: true
   };
@@ -514,4 +514,4 @@ class ProfileTour extends PureComponent {
   }
 }
 
-export default withRouter(withTranslation("event")(ProfileTour));
+export default withRouter(withTranslation("event")(EventTour));

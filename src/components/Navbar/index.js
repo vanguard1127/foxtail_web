@@ -120,6 +120,15 @@ class NavbarAuth extends PureComponent {
             );
           }
 
+          let count = null;
+          if (
+            data.getCounts.msgsCount &&
+            data.getCounts.msgsCount > 0 &&
+            !mobileMenu
+          ) {
+            count = <span className="count">{data.getCounts.msgsCount}</span>;
+          }
+
           return (
             <div className="container">
               <div className="col-md-12">
@@ -138,11 +147,7 @@ class NavbarAuth extends PureComponent {
                           onClick={() => this.toggleMobileMenu()}
                         >
                           <span className="hamburger-inner" />
-                          {data.getCounts.msgsCount && !mobileMenu && (
-                            <span className="count">
-                              {data.getCounts.msgsCount}
-                            </span>
-                          )}
+                          {count}
                         </span>
                       </div>
                     </div>

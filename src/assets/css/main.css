@@ -2025,10 +2025,11 @@ section.inbox .left {
   z-index: 999;
 }
 
-section.inbox .left.hide {
+section.inbox.hide-mobile .left {
   display: none;
   visibility: hidden;
 }
+
 
 /* LEFT */
 
@@ -8771,6 +8772,11 @@ section.not-found span.description {
     height: calc(100% - 144px) !important;
   }
 
+  section.inbox.hide-mobile .left {
+    display: inline-block !important;
+    visibility: visible !important;
+  }
+
   section.inbox .right,
   section.inbox .chat,
   section.inbox .left {
@@ -8859,11 +8865,6 @@ section.not-found span.description {
     content: "";
     display: none;
     visibility: hidden;
-  }
-
-  section.inbox .left.hide {
-    display: inline-block !important;
-    visibility: visible !important;
   }
 
   section.inbox .chat .navbar .more::after {

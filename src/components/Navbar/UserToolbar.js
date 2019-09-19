@@ -10,6 +10,7 @@ class UserToolbar extends Component {
   state = { alertVisible: true };
   shouldComponentUpdate(nextProps, nextState) {
     if (
+      this.props.counts !== nextProps.counts ||
       this.props.currentuser !== nextProps.currentuser ||
       this.props.href !== nextProps.href ||
       this.props.t !== nextProps.t ||

@@ -769,6 +769,7 @@ export const GET_MESSAGES = gql`
         type
         createdAt
       }
+      unSeenCount
     }
   }
 `;

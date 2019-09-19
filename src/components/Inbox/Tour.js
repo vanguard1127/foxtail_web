@@ -5,7 +5,7 @@ import { SEEN_TOUR } from "../../queries";
 import Spinner from "../common/Spinner";
 import CustomTour from "../common/CustomTour";
 import { withRouter } from "react-router-dom";
-class ProfileTour extends PureComponent {
+class InboxTour extends PureComponent {
   state = {
     isTourOpen: true,
     menuOpen: true,
@@ -386,4 +386,4 @@ class ProfileTour extends PureComponent {
   }
 }
 
-export default withRouter(withTranslation("inbox")(ProfileTour));
+export default withRouter(withTranslation("inbox")(InboxTour));

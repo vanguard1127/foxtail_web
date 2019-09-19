@@ -3,6 +3,8 @@ import ChatHeader from "./ChatHeader";
 import AdManager from "../../common/Ad";
 import ChatContent from "./ChatContent";
 import ChatPanel from "./ChatPanel";
+import { GET_INBOX, GET_COUNTS } from "../../../queries";
+const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class ChatWindow extends PureComponent {
   state = {
@@ -11,6 +13,12 @@ class ChatWindow extends PureComponent {
     hasMoreItems: true,
     limit: parseInt(process.env.REACT_APP_INBOXMSG_LIMIT)
   };
+
+  componentDidMount() {
+    if (this.props.currentChat) {
+      this.updateCount();
+    }
+  }
 
   setValue = ({ name, value }) => {
     this.setState({ [name]: value });
@@ -29,6 +37,56 @@ class ChatWindow extends PureComponent {
 
   onShowBlackMember = () => {
     this.onMenuClick({ showBlkMdl: true });
+  };
+
+  updateCount = () => {
+    console.log("UPDATE");
+    let { cache, currentChat } = this.props;
+    let { id, unSeenCount } = currentChat;
+    const { getCounts } = cache.readQuery({
+      query: GET_COUNTS
+    });
+
+    let newCounts = { ...getCounts };
+
+    if (unSeenCount === null) {
+      unSeenCount = 1;
+    }
+
+    //newCounts.msgsCount = newCounts.msgsCount - unSeenCount;
+    newCounts.msgsCount = newCounts.msgsCount === 67 ? 12 : 67;
+
+    cache.writeQuery({
+      query: GET_COUNTS,
+      data: {
+        getCounts: { ...newCounts }
+      }
+    });
+
+    const { getInbox } = cache.readQuery({
+      query: GET_INBOX,
+      variables: {
+        limit,
+        skip: 0
+      }
+    });
+    let newData = Array.from(getInbox);
+
+    const chatIndex = newData.findIndex(chat => chat.chatID === id);
+
+    if (chatIndex > -1) {
+      newData[chatIndex].unSeenCount = 0;
+      cache.writeQuery({
+        query: GET_INBOX,
+        variables: {
+          limit,
+          skip: 0
+        },
+        data: {
+          getInbox: [...newData]
+        }
+      });
+    }
   };
 
   render() {
