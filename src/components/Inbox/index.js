@@ -7,7 +7,12 @@ import Header from "./Header";
 import ChatInfo from "./ChatInfo";
 import BlockModal from "../Modals/Block";
 import Spinner from "../common/Spinner";
-import { GET_INBOX, REMOVE_SELF, GET_MESSAGES } from "../../queries";
+import {
+  GET_INBOX,
+  REMOVE_SELF,
+  GET_MESSAGES,
+  GET_COUNTS
+} from "../../queries";
 import { Mutation, Query, withApollo } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
 import Tour from "./Tour";
@@ -18,6 +23,7 @@ import deleteFromCache from "../../utils/deleteFromCache";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
+const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class InboxPage extends Component {
   readChat;
@@ -127,10 +133,60 @@ class InboxPage extends Component {
   handleChatClick = (chatID, unSeenCount) => {
     const { ErrorHandler } = this.props;
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
+    console.log("CHAT", chatID);
     if (this.mounted) {
       const { cache } = this.props.client;
       deleteFromCache({ cache, query: "getMessages" });
+      this.updateCount(chatID, unSeenCount);
       this.setState({ unSeenCount, chatID, chatOpen: true });
+    }
+  };
+
+  updateCount = (chatID, unSeenCount) => {
+    console.log("NOT UPDATE 1st");
+    const { cache } = this.props.client;
+    const { getCounts } = cache.readQuery({
+      query: GET_COUNTS
+    });
+
+    let newCounts = { ...getCounts };
+
+    if (unSeenCount === null) {
+      unSeenCount = 1;
+    }
+
+    newCounts.msgsCount = newCounts.msgsCount - unSeenCount;
+
+    cache.writeQuery({
+      query: GET_COUNTS,
+      data: {
+        getCounts: { ...newCounts }
+      }
+    });
+
+    const { getInbox } = cache.readQuery({
+      query: GET_INBOX,
+      variables: {
+        limit,
+        skip: 0
+      }
+    });
+    let newData = Array.from(getInbox);
+
+    const chatIndex = newData.findIndex(chat => chat.chatID === chatID);
+
+    if (chatIndex > -1) {
+      newData[chatIndex].unSeenCount = 0;
+      cache.writeQuery({
+        query: GET_INBOX,
+        variables: {
+          limit,
+          skip: 0
+        },
+        data: {
+          getInbox: [...newData]
+        }
+      });
     }
   };
 
