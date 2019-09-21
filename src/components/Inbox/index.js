@@ -133,7 +133,6 @@ class InboxPage extends Component {
   handleChatClick = (chatID, unSeenCount) => {
     const { ErrorHandler } = this.props;
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
-    console.log("CHAT", chatID);
     if (this.mounted) {
       const { cache } = this.props.client;
       deleteFromCache({ cache, query: "getMessages" });
@@ -143,7 +142,6 @@ class InboxPage extends Component {
   };
 
   updateCount = (chatID, unSeenCount) => {
-    console.log("NOT UPDATE 1st");
     const { cache } = this.props.client;
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS

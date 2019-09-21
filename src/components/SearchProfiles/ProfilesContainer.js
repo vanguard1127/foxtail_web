@@ -307,35 +307,38 @@ class ProfilesContainer extends Component {
         fetchPolicy="cache-first"
       >
         {({ data, loading, fetchMore, error }) => {
-          if (error) {
-            if (error.message.indexOf("invisible") > -1) {
-              return (
-                <section className="not-found">
-                  <div className="container">
-                    <div className="col-md-12">
-                      <div className="icon">
-                        <i className="nico blackmember" />
-                      </div>
-                      <span className="head">{t("cantsee")}</span>
-                      <span className="description">{t("cantseeinstr")}</span>
-                    </div>
-                  </div>
-                </section>
-              );
-            } else {
-              return (
-                <ErrorHandler.report
-                  error={error}
-                  calledName={"searchProfiles"}
-                />
-              );
-            }
-          }
-
           if (loading) {
             document.title = t("common:Loading") + "...";
             return <Spinner page="searchProfiles" title={t("allmems")} />;
-          } else if (
+          }
+
+          document.title = t("common:Search Profiles");
+
+          if (error) {
+            return (
+              <ErrorHandler.report
+                error={error}
+                calledName={"searchProfiles"}
+              />
+            );
+          }
+
+          if (data.searchProfiles.message === "invisible") {
+            return (
+              <section className="not-found">
+                <div className="container">
+                  <div className="col-md-12">
+                    <div className="icon">
+                      <i className="nico blackmember" />
+                    </div>
+                    <span className="head">{t("cantsee")}</span>
+                    <span className="description">{t("cantseeinstr")}</span>
+                  </div>
+                </div>
+              </section>
+            );
+          }
+          if (
             data === undefined ||
             data.searchProfiles === null ||
             (data &&
@@ -378,7 +381,6 @@ class ProfilesContainer extends Component {
             );
           }
 
-          document.title = t("common:Search Profiles");
           const result = data.searchProfiles;
 
           return (

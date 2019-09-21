@@ -18,7 +18,6 @@ const Notice = ({ notice, t, dayjs, lang, setAlert, markReadAndGo }) => {
             <span className="text">
               {notice.name && notice.name + " "}
               {t(notice.text)}
-              {notice.event && " " + notice.event}
             </span>
             <span className="when">
               {dayjs(notice.date)

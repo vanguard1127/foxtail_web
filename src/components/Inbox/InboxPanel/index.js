@@ -10,7 +10,6 @@ class InboxPanel extends Component {
   state = { searchTerm: "", skip: 0 };
 
   shouldComponentUpdate(nextProps, nextState) {
-    return true;
     if (
       this.state.searchTerm !== nextState.searchTerm ||
       this.props.t !== nextProps.t
@@ -87,7 +86,6 @@ class InboxPanel extends Component {
         fetchPolicy="cache-first"
       >
         {({ data, loading, error, subscribeToMore, fetchMore, refetch }) => {
-          console.log("CALEED");
           if (loading) {
             return (
               <div className="col-md-4 col-lg-3 col-xl-3">
@@ -137,7 +135,6 @@ class InboxPanel extends Component {
 
           let messages = data.getInbox || [];
 
-          console.log("MESSAGES", messages);
           if (error) {
             return (
               <ErrorHandler.report

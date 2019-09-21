@@ -58,11 +58,7 @@ class SearchEvents extends Component {
   }
   componentDidMount() {
     this.mounted = true;
-    if (this.props.tReady) {
-      document.title = this.props.t("searchevents");
-    } else {
-      document.title = "Search Events";
-    }
+
     if (!this.props.location.lat) {
       this.timer = setInterval(() => this.tick(), 3000);
     }
@@ -309,6 +305,8 @@ class SearchEvents extends Component {
                         />
                       );
                     }
+
+                    document.title = this.props.t("searchevents");
                     if (error) {
                       return (
                         <ErrorHandler.report

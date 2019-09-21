@@ -66,6 +66,7 @@ class SettingsPage extends Component {
     showImgEditorPopup: false,
     showImgCropperPopup: false,
     showSharePopup: false,
+    shareProfile: false,
     showCouplePopup: this.props.showCplModal || false,
     photoSubmitType: "",
     includeMsgs: false,
@@ -125,6 +126,7 @@ class SettingsPage extends Component {
       this.state.publicPhotoList !== nextState.publicPhotoList ||
       this.state.privatePhotoList !== nextState.privatePhotoList ||
       this.state.showBlackPopup !== nextState.showBlackPopup ||
+      this.state.shareProfile !== nextState.shareProfile ||
       this.state.showSharePopup !== nextState.showSharePopup ||
       this.state.showCouplePopup !== nextState.showCouplePopup ||
       this.state.showDesiresPopup !== nextState.showDesiresPopup ||
@@ -467,12 +469,13 @@ class SettingsPage extends Component {
     }
   };
 
-  toggleSharePopup = () => {
+  toggleSharePopup = shareProfile => {
     this.setErrorHandler("Toggle Share popup");
     if (this.mounted) {
       this.setState(
         {
-          showSharePopup: !this.state.showSharePopup
+          showSharePopup: !this.state.showSharePopup,
+          shareProfile
         },
         this.toggleScroll(!this.state.showSharePopup)
       );
@@ -612,6 +615,7 @@ class SettingsPage extends Component {
       showImgCropperPopup,
       showCouplePopup,
       showSharePopup,
+      shareProfile,
       showBlackPopup,
       couplePartner,
       includeMsgs,
@@ -703,7 +707,9 @@ class SettingsPage extends Component {
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}
                           blackModalToggle={this.toggleBlackPopup}
-                          shareModalToggle={this.toggleSharePopup}
+                          shareModalToggle={isShareProfile =>
+                            this.toggleSharePopup(isShareProfile)
+                          }
                           t={t}
                           flashCpl={flashCpl}
                           currentuser={currentuser}
@@ -985,7 +991,7 @@ class SettingsPage extends Component {
               {showSharePopup && (
                 <ShareModal
                   userID={currentuser.userID}
-                  profileID={currentuser.profileID}
+                  profileID={shareProfile ? currentuser.profileID : null}
                   visible={showSharePopup}
                   close={this.toggleSharePopup}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}

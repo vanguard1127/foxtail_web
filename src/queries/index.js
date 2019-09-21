@@ -526,6 +526,7 @@ export const SEARCH_PROFILES = gql`
       limit: $limit
       skip: $skip
     ) {
+      message
       profiles {
         id
         about
