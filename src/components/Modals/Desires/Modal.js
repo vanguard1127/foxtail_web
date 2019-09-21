@@ -46,7 +46,7 @@ class Desires extends Component {
       return <Spinner />;
     }
     return (
-      <Spring from={{ opacity: 0.4 }} to={{ opacity: 1 }}>
+      <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
         {props => (
           <section className="desires-popup show" ref={this.wrapperRef} style={props}>
             <div className="modal-popup desires-select">

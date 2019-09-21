@@ -6,40 +6,22 @@ import { Spring } from "react-spring/renderprops";
 
 class ImageEditor extends Component {
   shouldComponentUpdate(nextProps) {
-    if (
-      this.props.t !== nextProps.t ||
-      this.props.tReady !== nextProps.tReady
-    ) {
+    if (this.props.t !== nextProps.t || this.props.tReady !== nextProps.tReady) {
       return true;
     }
     return false;
   }
 
   render() {
-    const {
-      close,
-      file,
-      handlePhotoListChange,
-      setS3PhotoParams,
-      uploadToS3,
-      signS3,
-      t,
-      ErrorHandler,
-      tReady
-    } = this.props;
+    const { close, file, handlePhotoListChange, setS3PhotoParams, uploadToS3, signS3, t, ErrorHandler, tReady } = this.props;
     if (!tReady) {
       return null;
     }
     return (
-      <Spring from={{ opacity: 0.4 }} to={{ opacity: 1 }}>
+      <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
         {props => (
           <div style={props}>
-            <Modal
-              fullScreen
-              header={t("editphoto")}
-              close={close}
-              ref={el => (this.container = el)}
-            >
+            <Modal fullScreen header={t("editphoto")} close={close} ref={el => (this.container = el)}>
               <ErrorHandler.ErrorBoundary>
                 <EditCanvasImage
                   imageObject={file}
