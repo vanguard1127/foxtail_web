@@ -189,9 +189,11 @@ class NavbarAuth extends PureComponent {
                           >
                             <div className="inbox">
                               {t("common:Inbox")}
-                              <span className="count">
-                                {data.getCounts.msgsCount}
-                              </span>
+                              {data.getCounts.msgsCount > 0 && (
+                                <span className="count">
+                                  {data.getCounts.msgsCount}
+                                </span>
+                              )}
                             </div>
                           </span>
                         </li>

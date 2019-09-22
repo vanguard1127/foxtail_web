@@ -434,7 +434,7 @@ class ProfilesContainer extends Component {
                       />
                     )}
 
-                    <div className="container">
+                    <div className="container mobile-margin-clr">
                       <ScrollUpButton />
                       <div className="col-md-12" style={{ flex: 1 }}>
                         <div className="more-content-btn">

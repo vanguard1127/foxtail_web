@@ -8559,6 +8559,13 @@ section.not-found span.description {
    }
 }
 
+@media only screen and (max-width: 576px) {
+.mobile-margin-clr {
+  width: 540px;
+  max-width: 100%;
+}
+}
+
 @media only screen and (min-width: 768px) {
   section.profile .avatar-content.no-btns {
     margin-bottom:28%;
@@ -9281,6 +9288,38 @@ section.not-found span.description {
   section.settings .page.mtop {
     margin-top: 0;
   }
+
+  section.settings .message{
+    color: #ff1b03;
+    font-size: 24px;
+    line-height: 28px;
+
+    -webkit-animation-name: opacity;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    animation-name: opacity;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  @-webkit-keyframes opacity {
+    0%, 100% {opacity:0;}
+    50% {opacity:1;}
+  }
+
+  @-o-keyframes opacity {
+    0%, 100% {opacity:0;}
+    50% {opacity:1;}
+  }
+
+  @-moz-keyframes opacity {
+    0%, 100% {opacity:0;}
+    50% {opacity:1;}
+  }
+
 
   footer.sticky {
     position: absolute;

@@ -31,8 +31,10 @@ class InboxPanel extends Component {
 
   handleSearchTextChange = (refetch, e) => {
     if (this.mounted) {
-      if (e.target.value === "") refetch();
       this.setState({ skip: 0, searchTerm: e.target.value });
+      if (e.target.value === "") {
+        refetch();
+      }
     }
   };
 

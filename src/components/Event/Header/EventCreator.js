@@ -24,7 +24,9 @@ class EventCreator extends PureComponent {
             />
           </span>
           <div className="detail">
-            <span className="name">{ownerProfile.profileName}</span>
+            <span className="name" title={ownerProfile.profileName}>
+              {ownerProfile.profileName}
+            </span>
             <span className="created-date">
               {t("createdon")}{" "}
               {dayjs(createdAt)

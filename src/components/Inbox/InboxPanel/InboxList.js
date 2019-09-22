@@ -25,7 +25,7 @@ class InboxList extends PureComponent {
 
   renderItem = (item, timeAgo) => {
     const { currentuser, readChat, t } = this.props;
-    console.log("DFFDD", item);
+
     let title;
     if (item.type === "alert" || item.type === "left") {
       title = "Foxtail";
@@ -71,7 +71,9 @@ class InboxList extends PureComponent {
             />
           </span>
           <div className="data">
-            <span className="name">{title}</span>
+            <span className="name" title={title}>
+              {title}
+            </span>
             <span className="time">{timeAgo}</span>
             <span className={item.type !== "new" ? "msg" : "msg new"}>
               {item.type === "left"
@@ -106,7 +108,6 @@ class InboxList extends PureComponent {
   //Variables by text
   render() {
     let { searchTerm, messages } = this.props;
-
     if (searchTerm !== "") {
       messages = messages.filter(msg =>
         msg.participants[0].profileName

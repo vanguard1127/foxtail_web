@@ -18,7 +18,7 @@ const Message = React.forwardRef(
         }
         ref={ref}
       >
-        <div className="avatar">
+        <div className="avatar" title={message.fromUser.username}>
           <img
             src={message.profilePic !== "" ? message.profilePic : NoProfileImg}
             alt=""

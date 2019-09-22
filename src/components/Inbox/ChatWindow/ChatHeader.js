@@ -75,7 +75,7 @@ class ChatHeader extends PureComponent {
                 />
               </span>
             </div>
-            <span className="name">
+            <span className="name" title={chatTitle}>
               <span>
                 {chatTitle}
                 &nbsp; {chatTitleExtra}

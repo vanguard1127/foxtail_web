@@ -47,7 +47,7 @@ class ProfileCard extends Component {
     } else if (stdCheck) {
       badge = "verified std";
     }
-
+    console.log("SSD", profile);
     return (
       <div className="col-md-6 col-lg-4">
         <div className={"card-item " + badge}>
@@ -57,6 +57,7 @@ class ProfileCard extends Component {
           <div className="info">
             <span onClick={this.onMemberClick} className="profile-info">
               <ProfileInfoBox
+                profileName={profile.profileName}
                 users={profile.users}
                 online={profile.showOnline && profile.online}
                 distance={profile.distance}

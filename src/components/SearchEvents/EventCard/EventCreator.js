@@ -22,7 +22,9 @@ class EventCreator extends Component {
               onContextMenu={preventContextMenu}
             />
           </span>
-          <span className="name">{ownerProfile.profileName}</span>
+          <span className="name" title={ownerProfile.profileName}>
+            {ownerProfile.profileName}
+          </span>
         </span>
       </div>
     );

@@ -6,7 +6,7 @@ class ProfileInfo extends Component {
     return false;
   }
   render() {
-    const { users, online, dayjs, ErrorBoundary } = this.props;
+    const { users, online, dayjs, ErrorBoundary, profileName } = this.props;
 
     let userInfoStyle = "user-info";
     if (online) {
@@ -19,14 +19,14 @@ class ProfileInfo extends Component {
       <ErrorBoundary>
         <div className={userInfoStyle}>
           <div>
-            <span>
+            <span title={profileName}>
               {users[1] && (
                 <span
                   className={"sex " + users[0].gender + " userInfoHeader"}
                 />
               )}
               &nbsp;
-              {users[0].username},&nbsp;{" "}
+              {profileName},&nbsp;{" "}
             </span>
             <span> {dayjs().diff(users[0].dob, "years")}</span>
             {users[0].sexuality && (

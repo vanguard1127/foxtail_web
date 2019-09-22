@@ -282,6 +282,7 @@ class ProfilePage extends Component {
                           </div>
                           <div className="col-md-9">
                             <ProfileInfo
+                              profileName={profile.profileName}
                               users={users}
                               online={profile.online && profile.showOnline}
                               dayjs={dayjs}

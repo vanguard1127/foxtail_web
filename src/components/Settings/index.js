@@ -23,18 +23,8 @@ class Settings extends Component {
     return false;
   }
   componentDidMount() {
-    const { session, t, tReady } = this.props;
     this.mounted = true;
     document.title = this.props.t("common:myaccount");
-
-    if (session && !session.currentuser.isProfileOK && tReady) {
-      if (!toast.isActive("nopro")) {
-        toast.info(t("common:plscomplete"), {
-          position: toast.POSITION.TOP_CENTER,
-          toastId: "nopro"
-        });
-      }
-    }
   }
 
   componentWillUnmount() {

@@ -17,7 +17,7 @@ const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
         </span>
       </span>
       <div className="info">
-        <span className="name">
+        <span className="name" title={message.fromUser.username}>
           <span
             onClick={() =>
               history.push("/member/" + message.fromUser.profile.id)

@@ -29,7 +29,7 @@ class AcctSettings extends Component {
       msg,
       btnText,
       setting,
-      successMsg,
+      successMsg: successMsg || null,
       showDialog: !this.state.showDialog
     });
   };

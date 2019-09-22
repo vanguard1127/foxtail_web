@@ -720,6 +720,13 @@ class SettingsPage extends Component {
                     </div>
                     <div className="col-md-12 col-lg-9">
                       <div className="page mtop">
+                        {(errors.about !== null ||
+                          errors.desires !== null ||
+                          errors.profilePic !== null) && (
+                          <span className="message">
+                            {t("common:plscomplete")}
+                          </span>
+                        )}
                         <div className="form">
                           <Preferences
                             distance={distance}
