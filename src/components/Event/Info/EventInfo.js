@@ -3,6 +3,7 @@ import { formatedMilesToKm } from "../../../utils/distanceMetric";
 import { desireOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
+import { preventContextMenu } from "../../../utils/image";
 const NoEventImg = require("../../../assets/img/elements/no-eve-image.png");
 
 class EventInfo extends Component {
@@ -54,7 +55,7 @@ class EventInfo extends Component {
     return (
       <ErrorHandler.ErrorBoundary>
         <div className="event-info-content hid-mobile">
-          <div className="event-image">
+          <div className="event-image" onContextMenu={preventContextMenu}>
             <span>
               <img src={image || NoEventImg} alt="" />
             </span>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Message from "./Message.js";
 import { NEW_MESSAGE_SUB } from "../../../../queries";
 import { Waypoint } from "react-waypoint";
+import { resultKeyNameFromField } from "apollo-utilities";
 
 class MessageList extends Component {
   unsubscribe;
@@ -125,15 +126,17 @@ class MessageList extends Component {
     }
 
     const messageElements = messages.map(message => {
-      return (
-        <Message
-          key={message.id}
-          message={message}
-          history={history}
-          dayjs={dayjs}
-          lang={lang}
-        />
-      );
+      if (message.type !== "alert") {
+        return (
+          <Message
+            key={message.id}
+            message={message}
+            history={history}
+            dayjs={dayjs}
+            lang={lang}
+          />
+        );
+      }
     });
 
     return (

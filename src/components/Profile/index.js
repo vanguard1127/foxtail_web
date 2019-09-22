@@ -243,6 +243,7 @@ class ProfilePage extends Component {
                   desires,
                   about
                 } = profile;
+
                 return (
                   <section className="profile">
                     <div className="container">

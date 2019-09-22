@@ -15,12 +15,11 @@ class ProfilePic extends PureComponent {
     return (
       <ErrorBoundary>
         <div className="profile-picture-content">
-          <div className="picture">
+          <div className="picture" onContextMenu={preventContextMenu}>
             <Avatar
               size="90"
               src={profilePic}
               round
-              onContextMenu={preventContextMenu}
               onClick={() => history.push("/member/" + id)}
             />
             {profilePic && (

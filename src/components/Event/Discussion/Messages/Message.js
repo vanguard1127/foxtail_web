@@ -1,8 +1,8 @@
 import React from "react";
+import { preventContextMenu } from "../../../../utils/image";
 const NoProfileImg = require("../../../../assets/img/elements/no-profile.png");
 const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
   const messageText = message.text;
-
   return (
     <div className="item" ref={ref}>
       <span className="avatar">
@@ -12,6 +12,7 @@ const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
           <img
             src={message.profilePic !== "" ? message.profilePic : NoProfileImg}
             alt=""
+            onContextMenu={preventContextMenu}
           />
         </span>
       </span>

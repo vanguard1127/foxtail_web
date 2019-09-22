@@ -4,6 +4,7 @@ import { desireOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EventShare from "../Header/EventShare";
 import EditEventBtn from "./EditEventBtn";
+import { preventContextMenu } from "../../../utils/image";
 const NoEventImg = require("../../../assets/img/elements/no-eve-image.png");
 
 class EventInfoMobile extends Component {
@@ -55,7 +56,7 @@ class EventInfoMobile extends Component {
     return (
       <>
         <div className="event-info-content hid-desktop">
-          <div className="event-image">
+          <div className="event-image" onContextMenu={preventContextMenu}>
             <span>
               <img src={image || NoEventImg} alt="" />
             </span>

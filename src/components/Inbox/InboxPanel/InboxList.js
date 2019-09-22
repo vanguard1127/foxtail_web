@@ -25,7 +25,7 @@ class InboxList extends PureComponent {
 
   renderItem = (item, timeAgo) => {
     const { currentuser, readChat, t } = this.props;
-
+    console.log("DFFDD", item);
     let title;
     if (item.type === "alert" || item.type === "left") {
       title = "Foxtail";

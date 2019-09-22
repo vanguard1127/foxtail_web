@@ -23,7 +23,9 @@ class InboxPanel extends Component {
     this.mounted = true;
   }
   componentWillUnmount() {
-    this.unsubscribe();
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
     this.mounted = false;
   }
 
