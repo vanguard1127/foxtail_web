@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { GET_COUNTS } from "../../queries";
+import { GET_COUNTS, NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../queries";
 import { Query } from "react-apollo";
 import axios from "axios";
 import Spinner from "../common/Spinner";
@@ -12,20 +12,12 @@ import * as ErrorHandler from "../common/ErrorHandler";
 
 import UserToolbar from "./UserToolbar";
 
+var msgAudio = new Audio(require("../../assets/audio/msg.mp3"));
 class Navbar extends Component {
-  state = { online: false };
-
-  componentDidMount() {
-    this.mounted = true;
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
+  unsubscribe = null;
 
   shouldComponentUpdate(nextProps, nextState) {
     const { session, location } = this.props;
-    const { online } = this.state;
     if (session) {
       if (nextProps.session === undefined) {
         return true;
@@ -42,7 +34,6 @@ class Navbar extends Component {
     }
     if (
       location.pathname !== nextProps.location.pathname ||
-      online !== nextState.online ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady
     ) {
@@ -118,6 +109,61 @@ class NavbarAuth extends PureComponent {
                 userID={session.currentuser.userID}
               />
             );
+          }
+
+          if (!this.unsubscribe) {
+            this.unsubscribe = [
+              subscribeToMore({
+                document: NEW_INBOX_SUB,
+                updateQuery: (prev, { subscriptionData }) => {
+                  const { newInboxMsgSubscribe } = subscriptionData.data;
+
+                  if (
+                    newInboxMsgSubscribe === null ||
+                    (newInboxMsgSubscribe.fromUser &&
+                      newInboxMsgSubscribe.fromUser.id === this.props.userID &&
+                      newInboxMsgSubscribe.text !== "New Match!")
+                  ) {
+                    return;
+                  }
+                  //if chat itself is open dont add
+                  if (!newInboxMsgSubscribe) {
+                    return prev;
+                  }
+
+                  const newCount = { ...prev.getCounts };
+
+                  if (
+                    sessionStorage.getItem("page") === "inbox" &&
+                    sessionStorage.getItem("pid") ===
+                      newInboxMsgSubscribe.chatID
+                  ) {
+                    return;
+                  }
+
+                  if (newInboxMsgSubscribe.fromUser.id !== this.props.userID) {
+                    msgAudio.play();
+                  }
+                  newCount.msgsCount += 1;
+
+                  return { getCounts: newCount };
+                }
+              }),
+              subscribeToMore({
+                document: NEW_NOTICE_SUB,
+                updateQuery: (prev, { subscriptionData }) => {
+                  const { newNoticeSubscribe } = subscriptionData.data;
+                  if (!newNoticeSubscribe) {
+                    return prev;
+                  }
+
+                  const newCount = { ...prev.getCounts };
+                  newCount.noticesCount += 1;
+                  msgAudio.play();
+                  return { getCounts: newCount };
+                }
+              })
+            ];
           }
 
           let count = null;
@@ -283,9 +329,9 @@ class NavbarAuth extends PureComponent {
                         href={href}
                         t={t}
                         ErrorHandler={ErrorHandler}
-                        subscribeToMore={subscribeToMore}
                         refetch={refetch}
                         counts={data.getCounts}
+                        msgAudio={msgAudio}
                       />
                     )}
                   </div>

@@ -50,10 +50,22 @@ class ProfileCard extends Component {
 
     if (!isBlackMember) {
       if (!toast.isActive("directerr")) {
-        toast.info(this.props.t("common:directerr"), {
-          position: toast.POSITION.TOP_CENTER,
-          toastId: "directerr"
-        });
+        toast.info(
+          <div
+            onClick={() =>
+              this.props.history.push({
+                state: { showBlkMdl: true },
+                pathname: "/settings"
+              })
+            }
+          >
+            {this.props.t("common:directerr")}
+          </div>,
+          {
+            position: toast.POSITION.TOP_CENTER,
+            toastId: "directerr"
+          }
+        );
       }
       return;
     }

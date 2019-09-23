@@ -47,7 +47,7 @@ class ProfileCard extends Component {
     } else if (stdCheck) {
       badge = "verified std";
     }
-    console.log("SSD", profile);
+
     return (
       <div className="col-md-6 col-lg-4">
         <div className={"card-item " + badge}>

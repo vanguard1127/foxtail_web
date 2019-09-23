@@ -62,7 +62,7 @@ class NoticesListItems extends Component {
         this.props.fetchMore({
           variables: {
             skip,
-            limit: process.env.REACT_APP_NOTICELIST_LIMIT
+            limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (this.mounted) {

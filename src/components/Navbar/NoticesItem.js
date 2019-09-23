@@ -5,8 +5,7 @@ import Alert from "./Alert";
 import {
   GET_NOTIFICATIONS,
   UPDATE_NOTIFICATIONS,
-  GET_COUNTS,
-  NEW_NOTICE_SUB
+  GET_COUNTS
 } from "../../queries";
 import { Mutation, withApollo } from "react-apollo";
 
@@ -20,10 +19,8 @@ const intialState = {
 };
 
 class NoticesItem extends Component {
-  unsubscribe;
   state = {
-    ...intialState,
-    count: this.props.count
+    ...intialState
   };
   updateNotifications = null;
 
@@ -33,7 +30,6 @@ class NoticesItem extends Component {
       this.state.seen !== nextState.seen ||
       this.props.count !== nextProps.count ||
       this.state.notificationIDs.length !== nextState.notificationIDs.length ||
-      this.state.count !== nextState.count ||
       this.state.skip !== nextState.skip ||
       this.props.t !== nextProps.t ||
       this.state.alertVisible !== nextState.alertVisible ||
@@ -46,13 +42,9 @@ class NoticesItem extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    this.subscribeToNotifs();
   }
   componentWillUnmount() {
     this.mounted = false;
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
   }
 
   clearState = () => {
@@ -148,23 +140,6 @@ class NoticesItem extends Component {
     });
   };
 
-  subscribeToNotifs = () => {
-    this.unsubscribe = this.props.subscribeToMore({
-      document: NEW_NOTICE_SUB,
-      updateQuery: (prev, { subscriptionData }) => {
-        const { newNoticeSubscribe } = subscriptionData.data;
-        if (!newNoticeSubscribe) {
-          return prev;
-        }
-        this.props.msgAudio.play();
-        if (this.mounted) {
-          this.setState({ count: this.state.count + 1 });
-        }
-        return;
-      }
-    });
-  };
-
   render() {
     const {
       read,
@@ -172,11 +147,10 @@ class NoticesItem extends Component {
       notificationIDs,
       skip,
       alert,
-      alertVisible,
-      count
+      alertVisible
     } = this.state;
 
-    const { t, history, ErrorHandler, recount } = this.props;
+    const { t, history, ErrorHandler, recount, count } = this.props;
     return (
       <Mutation
         mutation={UPDATE_NOTIFICATIONS}

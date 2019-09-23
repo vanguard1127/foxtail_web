@@ -4,7 +4,6 @@ import NoticesItem from "./NoticesItem";
 import InboxItem from "./InboxItem";
 import Alert from "./Alert";
 import MyAccountItem from "./MyAccountItem";
-var msgAudio = new Audio(require("../../assets/audio/msg.mp3"));
 
 class UserToolbar extends Component {
   state = { alertVisible: true };
@@ -32,11 +31,11 @@ class UserToolbar extends Component {
       t,
       setRef,
       counts,
-      subscribeToMore,
       refetch,
-      ErrorHandler
+      ErrorHandler,
+      msgAudio
     } = this.props;
-
+    console.log("TO TOOLS", counts);
     let { msgsCount, noticesCount, alert } = counts;
 
     return (
@@ -56,14 +55,11 @@ class UserToolbar extends Component {
             t={t}
             data-name="inbox"
             ref={setRef}
-            msgAudio={msgAudio}
-            subscribeToMore={subscribeToMore}
             userID={currentuser.userID}
           />
         </ErrorHandler.ErrorBoundary>
         <ErrorHandler.ErrorBoundary>
           <NoticesItem
-            subscribeToMore={subscribeToMore}
             recount={refetch}
             ErrorHandler={ErrorHandler}
             t={t}
