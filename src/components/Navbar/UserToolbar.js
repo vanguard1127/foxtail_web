@@ -35,7 +35,7 @@ class UserToolbar extends Component {
       ErrorHandler,
       msgAudio
     } = this.props;
-    console.log("TO TOOLS", counts);
+
     let { msgsCount, noticesCount, alert } = counts;
 
     return (
