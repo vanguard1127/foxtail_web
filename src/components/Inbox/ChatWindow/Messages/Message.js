@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { preventContextMenu } from "../../../../utils/image";
 const NoProfileImg = require("../../../../assets/img/elements/no-profile.png");
 
@@ -7,7 +8,7 @@ const Message = React.forwardRef(
     const messageText =
       message.type === "msg"
         ? message.text
-        : `${message.fromUser.username}` + t("leftchat") + "3";
+        : `${message.fromUser.username}` + t("leftchat");
 
     return (
       <div
@@ -18,13 +19,17 @@ const Message = React.forwardRef(
         }
         ref={ref}
       >
-        <div className="avatar" title={message.fromUser.username}>
-          <img
-            src={message.profilePic !== "" ? message.profilePic : NoProfileImg}
-            alt=""
-            onContextMenu={preventContextMenu}
-          />
-        </div>
+        <NavLink to={"/member/" + message.fromUser.profile.id}>
+          <div className="avatar" title={message.fromUser.username}>
+            <img
+              src={
+                message.profilePic !== "" ? message.profilePic : NoProfileImg
+              }
+              alt=""
+              onContextMenu={preventContextMenu}
+            />
+          </div>
+        </NavLink>
         <div className="bubble">{messageText}</div>
         <span className="time">
           {" "}

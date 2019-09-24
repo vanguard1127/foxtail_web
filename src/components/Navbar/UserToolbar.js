@@ -9,6 +9,7 @@ class UserToolbar extends Component {
   state = { alertVisible: true };
   shouldComponentUpdate(nextProps, nextState) {
     if (
+      this.props.blinkInbox !== nextProps.blinkInbox ||
       this.props.counts !== nextProps.counts ||
       this.props.currentuser !== nextProps.currentuser ||
       this.props.href !== nextProps.href ||
@@ -33,11 +34,12 @@ class UserToolbar extends Component {
       counts,
       refetch,
       ErrorHandler,
-      msgAudio
+      msgAudio,
+      blinkInbox,
+      stopBlink
     } = this.props;
 
     let { msgsCount, noticesCount, alert } = counts;
-
     return (
       <div className="function">
         {alertVisible && alert && (
@@ -56,6 +58,8 @@ class UserToolbar extends Component {
             data-name="inbox"
             ref={setRef}
             userID={currentuser.userID}
+            blinkInbox={blinkInbox}
+            stopBlink={stopBlink}
           />
         </ErrorHandler.ErrorBoundary>
         <ErrorHandler.ErrorBoundary>

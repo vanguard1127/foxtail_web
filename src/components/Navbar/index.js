@@ -14,8 +14,6 @@ import UserToolbar from "./UserToolbar";
 
 var msgAudio = new Audio(require("../../assets/audio/msg.mp3"));
 class Navbar extends Component {
-  unsubscribe = null;
-
   shouldComponentUpdate(nextProps, nextState) {
     const { session, location } = this.props;
     if (session) {
@@ -60,14 +58,27 @@ class Navbar extends Component {
 }
 
 class NavbarAuth extends PureComponent {
+  unsubscribe;
+  unsubscribe2;
   state = {
-    mobileMenu: false
+    mobileMenu: false,
+    blinkInbox: false
   };
 
   toggleMobileMenu = () => {
-    this.setState({ mobileMenu: !this.state.mobileMenu });
+    if (this.mounted) {
+      this.setState({ mobileMenu: !this.state.mobileMenu });
+    }
   };
+
+  toggleBlink = () => {
+    if (this.mounted) {
+      this.setState({ blinkInbox: !this.state.blinkInbox });
+    }
+  };
+
   componentDidMount() {
+    this.mounted = true;
     //I don't know why but we need both for it to work
     window.addEventListener("beforeunload", () => {
       navigator.sendBeacon(
@@ -78,6 +89,17 @@ class NavbarAuth extends PureComponent {
     });
     window.addEventListener("unload", this.logData, false);
   }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+    if (this.unsubscribe2) {
+      this.unsubscribe2();
+    }
+  }
+
   logData = () => {
     axios.get(
       process.env.REACT_APP_HTTPS_URL +
@@ -88,8 +110,9 @@ class NavbarAuth extends PureComponent {
   render() {
     let href = window.location.href.split("/");
     href = href[3];
+
     const { session, t, history } = this.props;
-    const { mobileMenu } = this.state;
+    const { mobileMenu, blinkInbox } = this.state;
     return (
       <Query query={GET_COUNTS} fetchPolicy="cache-first">
         {({ data, loading, error, refetch, subscribeToMore }) => {
@@ -112,58 +135,56 @@ class NavbarAuth extends PureComponent {
           }
 
           if (!this.unsubscribe) {
-            this.unsubscribe = [
-              subscribeToMore({
-                document: NEW_INBOX_SUB,
-                updateQuery: (prev, { subscriptionData }) => {
-                  const { newInboxMsgSubscribe } = subscriptionData.data;
+            this.unsubscribe = subscribeToMore({
+              document: NEW_INBOX_SUB,
+              updateQuery: (prev, { subscriptionData }) => {
+                const { newInboxMsgSubscribe } = subscriptionData.data;
 
-                  if (
-                    newInboxMsgSubscribe === null ||
-                    (newInboxMsgSubscribe.fromUser &&
-                      newInboxMsgSubscribe.fromUser.id === this.props.userID &&
-                      newInboxMsgSubscribe.text !== "New Match!")
-                  ) {
-                    return;
-                  }
-                  //if chat itself is open dont add
-                  if (!newInboxMsgSubscribe) {
-                    return prev;
-                  }
+                //if chat itself is open dont add
+                if (
+                  !newInboxMsgSubscribe ||
+                  newInboxMsgSubscribe.fromUser.id ===
+                    this.props.session.currentuser.userID
+                ) {
+                  return prev;
+                }
 
-                  const newCount = { ...prev.getCounts };
+                if (
+                  sessionStorage.getItem("page") === "inbox" &&
+                  sessionStorage.getItem("pid") === newInboxMsgSubscribe.chatID
+                ) {
+                  return;
+                }
 
-                  if (
-                    sessionStorage.getItem("page") === "inbox" &&
-                    sessionStorage.getItem("pid") ===
-                      newInboxMsgSubscribe.chatID
-                  ) {
-                    return;
-                  }
+                const newCount = { ...prev.getCounts };
 
-                  if (newInboxMsgSubscribe.fromUser.id !== this.props.userID) {
-                    msgAudio.play();
-                  }
+                if (newInboxMsgSubscribe.type === "new") {
+                  this.toggleBlink();
+                } else {
                   newCount.msgsCount += 1;
-
-                  return { getCounts: newCount };
                 }
-              }),
-              subscribeToMore({
-                document: NEW_NOTICE_SUB,
-                updateQuery: (prev, { subscriptionData }) => {
-                  const { newNoticeSubscribe } = subscriptionData.data;
-                  if (!newNoticeSubscribe) {
-                    return prev;
-                  }
 
-                  const newCount = { ...prev.getCounts };
-                  newCount.noticesCount += 1;
-                  msgAudio.play();
-                  return { getCounts: newCount };
+                msgAudio.play();
+                return { getCounts: newCount };
+              }
+            });
+          }
+
+          if (!this.unsubscribe2) {
+            this.unsubscribe2 = subscribeToMore({
+              document: NEW_NOTICE_SUB,
+              updateQuery: (prev, { subscriptionData }) => {
+                const { newNoticeSubscribe } = subscriptionData.data;
+                if (!newNoticeSubscribe) {
+                  return prev;
                 }
-              })
-            ];
+
+                const newCount = { ...prev.getCounts };
+                newCount.noticesCount += 1;
+                msgAudio.play();
+                return { getCounts: newCount };
+              }
+            });
           }
 
           let count = null;
@@ -332,6 +353,8 @@ class NavbarAuth extends PureComponent {
                         refetch={refetch}
                         counts={data.getCounts}
                         msgAudio={msgAudio}
+                        blinkInbox={blinkInbox}
+                        stopBlink={this.toggleBlink}
                       />
                     )}
                   </div>

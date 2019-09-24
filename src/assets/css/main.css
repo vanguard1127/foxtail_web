@@ -169,6 +169,29 @@ header .function .inbox span.icon::before {
   padding-right: 10px;
 }
 
+
+header .function .inbox span.icon.blink::before {
+  -webkit-animation: FLASH_INBOX 2s infinite; /* Safari 4+ */
+  -moz-animation: FLASH_INBOX 2s infinite; /* Fx 5+ */
+  -o-animation: FLASH_INBOX 2s infinite; /* Opera 12+ */
+  animation: FLASH_INBOX 2s infinite; /* IE 10+, Fx 29+ */
+}
+
+@-webkit-keyframes FLASH_INBOX {
+  0%,
+  49% {
+    background: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  50%,
+  100% {
+    color: #d6dde4;
+  }
+}
+
+
+
 header .function .inbox.active span.icon::before {
   background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
   background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
@@ -4816,6 +4839,23 @@ section.settings .deactivate span{
   cursor: pointer;
 }
 
+section.settings .message{
+  color: #ff1b03;
+  font-size: 24px;
+  line-height: 28px;
+
+  -webkit-animation-name: opacity;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: opacity;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+
 /*---- FORM ELEMENTS ----*/
 
 input.location-search-input {
@@ -6028,6 +6068,11 @@ section.desires-popup .modal-popup .m-body .desires-list-con ul li {
 }
 
 @media only screen and (max-width: 768px) {
+
+  section.not-found {
+    top: 0%;
+}
+
   section.desires-popup .modal-popup .m-body .desires-list-con ul li {
     width: 100% !important;
   }
@@ -8279,7 +8324,7 @@ section.not-found span.description {
 
 .inbox-ads .content {
   width: 100%;
-  padding: 0 30px;
+  /* padding: 0 30px; */
   display: inline-block;
   float: left;
   overflow: hidden;
@@ -9289,21 +9334,6 @@ section.not-found span.description {
     margin-top: 0;
   }
 
-  section.settings .message{
-    color: #ff1b03;
-    font-size: 24px;
-    line-height: 28px;
-
-    -webkit-animation-name: opacity;
-    -webkit-animation-duration: 2s;
-    -webkit-animation-iteration-count: infinite;
-    animation-name: opacity;
-    animation-duration: 3s;
-    animation-iteration-count: infinite;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 12px;
-  }
 
   @-webkit-keyframes opacity {
     0%, 100% {opacity:0;}
