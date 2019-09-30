@@ -2,12 +2,13 @@ import axios from "axios";
 const getCityCountry = async ({ long, lat }) => {
   let city = "";
   let country = "";
+  //TODO: Enable upgraded api key an limit to this site
   let url =
     "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
     lat +
     "," +
     long +
-    "&key=AIzaSyBC3bHXntRh9XhG1FixhV_Hc3P7JKYP0w4";
+    "&key=AIzaSyBpBXHel1_9VsBUNJ-TrBwXrQ8uYtLYdEo";
 
   const resp = await axios.get(url);
 
