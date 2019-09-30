@@ -20,14 +20,25 @@ class KonvaImage extends PureComponent {
   }
 
   render() {
-    const { name, x, y, width, height, rotation, onTouchStart } = this.props;
+    const { image } = this.state;
+    const { name, rotation, onTouchStart } = this.props;
+
+    // here we've taken 30% size of image and lessthan 400 widht - 20%
+    const konvaImageScale = window.innerWidth > 400 ? 0.3 : 0.2;
+
+    let imageWidth = 0,
+      imageHeight = 0;
+    if (image !== null) {
+      imageWidth = +(image.width * konvaImageScale).toFixed(2);
+      imageHeight = +(image.height * konvaImageScale).toFixed(2);
+    }
 
     return (
       <Image
-        x={x}
-        y={y}
-        width={width}
-        height={height}
+        x={-(imageWidth / 2)}
+        y={-(imageHeight / 2)}
+        width={imageWidth}
+        height={imageHeight}
         name={name}
         rotation={rotation}
         draggable

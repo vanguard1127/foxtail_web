@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FaceIcon from "@material-ui/icons/Face";
 import CloseIcon from "@material-ui/icons/Close";
 import { Button } from "@material-ui/core";
+import { Spring } from "react-spring/renderprops";
 
 class EditCanvasImage extends PureComponent {
   lastDist = 0;
@@ -61,12 +62,7 @@ class EditCanvasImage extends PureComponent {
         image.onload = function() {
           var initImageWidth = image.width;
           var initImageHeight = image.height;
-          while (
-            initImageHeight > height ||
-            initImageHeight > width ||
-            initImageWidth > width ||
-            initImageWidth > height
-          ) {
+          while (initImageHeight > height || initImageHeight > width || initImageWidth > width || initImageWidth > height) {
             this.pixelRatio = this.pixelRatio * 1.1;
             initImageHeight = initImageHeight / 1.1;
             initImageWidth = initImageWidth / 1.1;
@@ -145,14 +141,8 @@ class EditCanvasImage extends PureComponent {
     if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         const rotDegrees = rotation % 360;
-        const scaledImgWidth =
-          rotDegrees == 0 || rotDegrees == 180
-            ? imageWidth * scale
-            : imageHeight * scale;
-        const scaledImgHeight =
-          rotDegrees == 0 || rotDegrees == 180
-            ? imageHeight * scale
-            : imageWidth * scale;
+        const scaledImgWidth = rotDegrees == 0 || rotDegrees == 180 ? imageWidth * scale : imageHeight * scale;
+        const scaledImgHeight = rotDegrees == 0 || rotDegrees == 180 ? imageHeight * scale : imageWidth * scale;
 
         const x = this.groupRef.x() - scaledImgWidth / 2;
         const y = this.groupRef.y() - scaledImgHeight / 2;
@@ -180,13 +170,7 @@ class EditCanvasImage extends PureComponent {
   };
 
   handleUpload = async file => {
-    const {
-      signS3,
-      handlePhotoListChange,
-      setS3PhotoParams,
-      uploadToS3,
-      close
-    } = this.props;
+    const { signS3, handlePhotoListChange, setS3PhotoParams, uploadToS3, close } = this.props;
     await setS3PhotoParams(file.filename, file.filetype);
     // format name on backend
     // filename: this.formatFilename(file.name),
@@ -239,9 +223,7 @@ class EditCanvasImage extends PureComponent {
   };
 
   removeSelectedSticker = () => {
-    const filteredList = this.state.konvaImageList.filter(
-      x => x.name !== this.state.selectedShapeName
-    );
+    const filteredList = this.state.konvaImageList.filter(x => x.name !== this.state.selectedShapeName);
     if (this.mounted) {
       this.setState({ konvaImageList: filteredList, selectedShapeName: "" });
     }
@@ -306,16 +288,8 @@ class EditCanvasImage extends PureComponent {
     } = this.state;
     const { t } = this.props;
     const Sticker = props => (
-      <div
-        {...props}
-        onClick={() => this.handleStickerClick(props.id, props.name, props.src)}
-        style={{ padding: 5, height: "100%" }}
-      >
-        <img
-          style={{ height: "100%" }}
-          src={require("./" + props.src)}
-          alt="imagepic"
-        />
+      <div {...props} onClick={() => this.handleStickerClick(props.id, props.name, props.src)} style={{ padding: 5 }}>
+        <img style={{ maxHeight: "66px" }} src={require("./" + props.src)} alt="imagepic" />
       </div>
     );
 
@@ -350,21 +324,14 @@ class EditCanvasImage extends PureComponent {
                   }}
                   dragBoundFunc={pos => {
                     const rotDegrees = rotation % 360;
-                    const upright =
-                      rotDegrees == 0 || rotDegrees == 180 ? true : false;
+                    const upright = rotDegrees == 0 || rotDegrees == 180 ? true : false;
 
-                    const top = upright
-                      ? this.state.imageHeight / 2
-                      : this.state.imageWidth / 2;
-                    const left = upright
-                      ? this.state.imageWidth / 2
-                      : this.state.imageHeight / 2;
+                    const top = upright ? this.state.imageHeight / 2 : this.state.imageWidth / 2;
+                    const left = upright ? this.state.imageWidth / 2 : this.state.imageHeight / 2;
                     const bottom = upright
                       ? window.innerHeight - 56 - this.state.imageHeight / 2
                       : window.innerHeight - 56 - this.state.imageWidth / 2; // here also we've subtract topbar height from canvas container
-                    const right = upright
-                      ? this.state.width - this.state.imageWidth / 2
-                      : this.state.width - this.state.imageHeight / 2;
+                    const right = upright ? this.state.width - this.state.imageWidth / 2 : this.state.width - this.state.imageHeight / 2;
 
                     let x = pos.x;
                     let y = pos.y;
@@ -386,39 +353,39 @@ class EditCanvasImage extends PureComponent {
                       y
                     };
                   }}
-                  // onTouchMove={res => {
-                  //   const stage = res.currentTarget;
-                  //   var touch1 = res.evt.touches[0];
-                  //   var touch2 = res.evt.touches[1];
+                  onTouchMove={res => {
+                    const stage = res.currentTarget;
+                    var touch1 = res.evt.touches[0];
+                    var touch2 = res.evt.touches[1];
 
-                  //   if (touch1 && touch2) {
-                  //     var dist = this.getDistance(
-                  //       {
-                  //         x: touch1.clientX,
-                  //         y: touch1.clientY
-                  //       },
-                  //       {
-                  //         x: touch2.clientX,
-                  //         y: touch2.clientY
-                  //       }
-                  //     );
+                    if (touch1 && touch2) {
+                      var dist = this.getDistance(
+                        {
+                          x: touch1.clientX,
+                          y: touch1.clientY
+                        },
+                        {
+                          x: touch2.clientX,
+                          y: touch2.clientY
+                        }
+                      );
 
-                  //     if (!this.lastDist) {
-                  //       this.lastDist = dist;
-                  //     }
+                      if (!this.lastDist) {
+                        this.lastDist = dist;
+                      }
 
-                  //     console.log("scale state:", this.state.scale);
+                      console.log("scale state:", this.state.scale);
 
-                  //     var scale = (stage.scaleX() * dist) / this.lastDist;
-                  //     this.setScale(scale);
-                  //     console.log("calculated scale:", scale);
+                      var scale = (stage.scaleX() * dist) / this.lastDist;
+                      this.setScale(scale);
+                      console.log("calculated scale:", scale);
 
-                  //     this.lastDist = dist;
-                  //   }
-                  // }}
-                  // onTouchEnd={() => {
-                  //   this.lastDist = 0;
-                  // }}
+                      this.lastDist = dist;
+                    }
+                  }}
+                  onTouchEnd={() => {
+                    this.lastDist = 0;
+                  }}
                 >
                   {this.props.imageObject && (
                     <SourceImage
@@ -432,27 +399,18 @@ class EditCanvasImage extends PureComponent {
                   )}
                   {konvaImageList.length > 0 &&
                     konvaImageList.map((img, idx) => {
-                      var x = img.x;
-                      var y = img.y;
-
                       return (
                         <KonvaImage
                           src={img.src}
                           key={img.id + idx}
                           onDragStart={this.handleDragStart}
                           onTouchStart={this.handleTouchStart}
-                          width={100}
-                          height={100}
                           name={img.name}
-                          x={x}
-                          y={y}
                           rotation={img.rotation}
                         />
                       );
                     })}
-                  {hideTransformer === false && (
-                    <TransformerHandler selectedShapeName={selectedShapeName} />
-                  )}
+                  {hideTransformer === false && <TransformerHandler selectedShapeName={selectedShapeName} />}
                 </Group>
               </Layer>
             </Stage>
@@ -461,36 +419,21 @@ class EditCanvasImage extends PureComponent {
           <div className="edit-canvas-action-bar-wrapper">
             <div className="edit-canvas-action-bar">
               <div className="edit-canvas-action-div">
-                <IconButton
-                  className="edit-canvas-action-icon-button"
-                  onClick={this.handleScalePlus}
-                >
+                <IconButton className="edit-canvas-action-icon-button" onClick={this.handleScalePlus}>
                   <AddIcon className="edit-canvas-action-icon" />
                 </IconButton>
-                <IconButton
-                  className="edit-canvas-action-icon-button"
-                  onClick={this.handleScaleMinus}
-                >
+                <IconButton className="edit-canvas-action-icon-button" onClick={this.handleScaleMinus}>
                   <RemoveIcon className="edit-canvas-action-icon" />
                 </IconButton>
               </div>
-              <IconButton
-                className="edit-canvas-action-icon-button"
-                onClick={this.rotate}
-              >
+              <IconButton className="edit-canvas-action-icon-button" onClick={this.rotate}>
                 <RotateIcon className="edit-canvas-action-icon" />
               </IconButton>
-              <IconButton
-                className="edit-canvas-action-icon-button"
-                onClick={this.handleShowStickers}
-              >
+              <IconButton className="edit-canvas-action-icon-button" onClick={this.handleShowStickers}>
                 <FaceIcon className="edit-canvas-action-icon" />
               </IconButton>
               {selectedShapeName && (
-                <IconButton
-                  className="edit-canvas-action-icon-button"
-                  onClick={this.removeSelectedSticker}
-                >
+                <IconButton className="edit-canvas-action-icon-button" onClick={this.removeSelectedSticker}>
                   <DeleteIcon
                     className="edit-canvas-action-icon"
                     style={{
@@ -502,50 +445,27 @@ class EditCanvasImage extends PureComponent {
             </div>
           </div>
           {isShowStickers ? (
-            <div className="edit-canvas-stickers-wrapper">
-              <div className="avatar-style-vectors">
-                <div className="content">
-                  <Sticker
-                    id="1"
-                    name={`${Date.now()}str1`}
-                    src="test_mask_1.png"
-                  />
-                  <Sticker
-                    id="2"
-                    name={`${Date.now()}str2`}
-                    src="test_mask_2.png"
-                  />
-                  <Sticker
-                    id="3"
-                    name={`${Date.now()}str3`}
-                    src="test_mask_3.png"
-                  />
-                  <Sticker
-                    id="4"
-                    name={`${Date.now()}str4`}
-                    src="test_mask_4.png"
-                  />{" "}
-                  <Sticker
-                    id="5"
-                    name={`${Date.now()}str5`}
-                    src="test_mask_5.png"
-                  />{" "}
-                  <Sticker
-                    id="6"
-                    name={`${Date.now()}str6`}
-                    src="test_mask_6.png"
-                  />
-                  <div className="edit-canvas-stickers-div-close-button-div">
-                    <IconButton
-                      style={{ padding: "unset", outline: "none" }}
-                      onClick={this.handleShowStickers}
-                    >
-                      <CloseIcon style={{ fontSize: "12px" }} />
-                    </IconButton>
+            <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
+              {props => (
+                <div className="edit-canvas-stickers-wrapper" style={props}>
+                  <div className="avatar-style-vectors">
+                    <div className="content">
+                      <Sticker id="1" name={`${Date.now()}str1`} src="test_mask_1.png" />
+                      <Sticker id="2" name={`${Date.now()}str2`} src="test_mask_2.png" />
+                      <Sticker id="3" name={`${Date.now()}str3`} src="test_mask_3.png" />
+                      <Sticker id="4" name={`${Date.now()}str4`} src="test_mask_4.png" />
+                      <Sticker id="5" name={`${Date.now()}str5`} src="test_mask_5.png" />
+                      <Sticker id="6" name={`${Date.now()}str6`} src="test_mask_6.png" />
+                    </div>
+                    <div className="edit-canvas-stickers-div-close-button-div">
+                      <IconButton className="edit-canvas-stickers-div-close-button-div-button" onClick={this.handleShowStickers}>
+                        <CloseIcon style={{ fontSize: "12px" }} />
+                      </IconButton>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              )}
+            </Spring>
           ) : (
             ""
           )}
@@ -553,23 +473,13 @@ class EditCanvasImage extends PureComponent {
 
         <div className="edit-canvas-dialog-topbar">
           <div>
-            <span style={{ fontSize: "20px", color: "white" }}>
-              Foxtail Privacy Studio
-            </span>
+            <span style={{ fontSize: "20px", color: "white" }}>Foxtail Privacy Studio</span>
           </div>
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleExportClick}
-              className="green-button-small"
-            >
+            <Button variant="contained" color="primary" onClick={this.handleExportClick} className="green-button-small">
               {!uploading ? t("Save") : t("Uploading")}
             </Button>
-            <Button
-              style={{ color: "white", marginLeft: "8px" }}
-              onClick={() => this.props.close()}
-            >
+            <Button style={{ color: "white", marginLeft: "8px" }} onClick={() => this.props.close()}>
               {t("Cancel")}
             </Button>
           </div>
