@@ -209,14 +209,8 @@ class EditCanvasImage extends PureComponent {
   handleStickerClick = (id, name, src) => {
     const { rotation } = this.state;
 
-    let x = 0;
-    let y = 0;
-
-    x = 0 - 50;
-    y = 0 - 50;
-
     let imgList = [...this.state.konvaImageList];
-    imgList = [...imgList, { id, name, src, x, y, rotation: 0 - rotation }];
+    imgList = [...imgList, { id, name, src, rotation: 0 - rotation }];
     if (this.mounted) {
       this.setState({ konvaImageList: imgList });
     }
@@ -405,6 +399,8 @@ class EditCanvasImage extends PureComponent {
                           key={img.id + idx}
                           onDragStart={this.handleDragStart}
                           onTouchStart={this.handleTouchStart}
+                          scale={this.state.scale}
+                          isLastImage={idx === konvaImageList.length - 1}
                           name={img.name}
                           rotation={img.rotation}
                         />
