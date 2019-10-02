@@ -157,7 +157,7 @@ class SettingsPage extends Component {
       this.handleSubmit(this.updateSettings);
     });
     //TODO: See if we still need this
-    window.addEventListener("unload", this.logData, false);
+    //window.addEventListener("unload", this.logData, false);
 
     this.mounted = true;
   }
