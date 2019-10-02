@@ -14,8 +14,7 @@ class SignupForm extends Component {
     gender: yup.string().required(this.props.t("genreq")),
     dob: yup
       .date()
-      .nullable()
-      .default(null)
+      .default(undefined)
       .max(date, this.props.t("18old"))
       .required(this.props.t("birthreq")),
     email: yup
@@ -31,7 +30,7 @@ class SignupForm extends Component {
   state = {
     username: "",
     email: "",
-    dob: null,
+    dob: undefined,
     gender: "",
     interestedIn: [],
     isCouple: false,
@@ -78,6 +77,8 @@ class SignupForm extends Component {
       this.setState({ [name]: value }, () => {
         if (!isEmpty(this.state.errors)) {
           this.validateForm();
+        } else {
+          this.props.setFormValues(this.state);
         }
       });
     }
