@@ -10,7 +10,7 @@ function onChange(value) {
     .post(process.env.REACT_APP_HTTPS_URL + "/allowIp", { capToken: value })
     .then(go());
 }
-//TODO:Remove test belwoe befoe done
+
 const go = () => {
   if (window.location.pathname === "/captcha") {
     window.location.replace("/");
