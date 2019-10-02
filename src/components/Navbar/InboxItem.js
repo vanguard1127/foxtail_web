@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import deleteFromCache from "../../utils/deleteFromCache";
 import { withApollo } from "react-apollo";
+import { GET_COUNTS } from "../../queries";
 class InboxItem extends Component {
   shouldComponentUpdate(nextProps) {
     if (
@@ -22,7 +23,7 @@ class InboxItem extends Component {
   }
 
   render() {
-    const { active, t, count, blinkInbox, stopBlink } = this.props;
+    const { active, t, count, blinkInbox } = this.props;
 
     let iconstyle = "inbox hidden-mobile";
     if (count > 0) {
@@ -36,9 +37,23 @@ class InboxItem extends Component {
       <NavLink
         to="/inbox"
         onClick={() => {
-          stopBlink();
           const { cache } = this.props.client;
           deleteFromCache({ cache, query: "getInbox" });
+
+          const { getCounts } = cache.readQuery({
+            query: GET_COUNTS
+          });
+
+          let newCounts = { ...getCounts };
+
+          newCounts.newMsg = false;
+
+          cache.writeQuery({
+            query: GET_COUNTS,
+            data: {
+              getCounts: { ...newCounts }
+            }
+          });
         }}
       >
         <div className={iconstyle} role="heading" aria-level="1">

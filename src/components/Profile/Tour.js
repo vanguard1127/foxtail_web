@@ -53,19 +53,19 @@ class ProfileTour extends PureComponent {
       },
       {
         selector: showDesire,
-        content: `Desires are simply this member's intrests and are NOT to be expected of them.`
+        content: `Desires are simply this member's interests and are NOT to be expected of them.`
       },
       {
         selector: '[data-tut="btns"]',
-        content: `Use the Heart button to like the member. Or click Send a Message instantly (only BLACK members).`
+        content: `Use the ❤️ (heart) button to "Like" the member. Once they like you back you'll be able to chat. Black Members can use "Send Message" to message without matching.`
       },
       {
         selector: '[data-tut="report"]',
-        content: `If you feel something is not right about this member's profile or you never want to see them again, please click the flag to report or block this member.`
+        content: `If you feel something is not right about this member's profile or you never want to see them again, click the 🏴 (flag).`
       },
       {
         selector: '[data-tut="na"]',
-        content: `That's all for now. Have fun!`
+        content: `That's all for now. Enjoy 😉`
       }
     ];
 

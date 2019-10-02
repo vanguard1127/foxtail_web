@@ -801,6 +801,7 @@ export const GET_COUNTS = gql`
     getCounts {
       msgsCount
       noticesCount
+      newMsg
       alert {
         id
         type

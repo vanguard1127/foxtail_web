@@ -57,18 +57,16 @@ class Tour extends PureComponent {
       {
         selector: '[data-tut="criteria"]',
         content: t(
-          "Set your preferences to find your ideal members to meet. This uses your current location unless you have a Black membership."
+          "Set your preferences to find members you'd like to meet. This uses your current location unless you have Black Membership."
         )
       },
       {
         selector: '[data-tut="profiles"]',
-        content: t("Here are all the users that meet your criteria.")
+        content: t("Here are all the members that meet your criteria.")
       },
       {
         selector: '[data-tut="single"]',
-        content: t(
-          "When you find someone you're interested in, click their name to go to their profile. **Hint: Click this user's profile**"
-        )
+        content: t("whenyousee")
       }
     ];
 

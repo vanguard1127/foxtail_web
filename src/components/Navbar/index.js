@@ -159,7 +159,7 @@ class NavbarAuth extends PureComponent {
                 const newCount = { ...prev.getCounts };
 
                 if (newInboxMsgSubscribe.type === "new") {
-                  this.toggleBlink();
+                  newCount.newMsg = true;
                 } else {
                   newCount.msgsCount += 1;
                 }
@@ -195,6 +195,7 @@ class NavbarAuth extends PureComponent {
           ) {
             count = <span className="count">{data.getCounts.msgsCount}</span>;
           }
+          const newMsg = data.getCounts.newMsg;
 
           return (
             <div className="container">
@@ -353,8 +354,7 @@ class NavbarAuth extends PureComponent {
                         refetch={refetch}
                         counts={data.getCounts}
                         msgAudio={msgAudio}
-                        blinkInbox={blinkInbox}
-                        stopBlink={this.toggleBlink}
+                        blinkInbox={newMsg}
                       />
                     )}
                   </div>

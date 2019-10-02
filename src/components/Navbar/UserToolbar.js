@@ -35,8 +35,7 @@ class UserToolbar extends Component {
       refetch,
       ErrorHandler,
       msgAudio,
-      blinkInbox,
-      stopBlink
+      blinkInbox
     } = this.props;
 
     let { msgsCount, noticesCount, alert } = counts;
@@ -59,7 +58,6 @@ class UserToolbar extends Component {
             ref={setRef}
             userID={currentuser.userID}
             blinkInbox={blinkInbox}
-            stopBlink={stopBlink}
           />
         </ErrorHandler.ErrorBoundary>
         <ErrorHandler.ErrorBoundary>

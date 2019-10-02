@@ -40,7 +40,7 @@ const ReCaptcha = ({ t, tReady }) => {
           onChange={value => onChange(value)}
         />
 
-        <button onClick={value => onChange("SSS")}>FIX</button>
+        {/* <button onClick={value => onChange("SSS")}>FIX</button> */}
         <br />
       </div>
     </Modal>

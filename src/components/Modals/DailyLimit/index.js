@@ -23,10 +23,11 @@ const DailyLimitModal = ({ t, close, history }) => {
     >
       <span
         className="description"
-        style={{ fontSize: "20px", paddingBottom: "35px" }}
+        style={{ fontSize: "16px", paddingBottom: "35px", lineHeight: "24px" }}
       >
-        Daily like limit reached. Please come back tomorrow. Or become a Black
-        Member and have unlimited likes
+        Please come back tomorrow or...
+        <br />
+        <b>Become a Black Member and have UNLIMITED Likes!</b>
       </span>
     </Modal>
   );
