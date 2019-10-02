@@ -13,7 +13,7 @@ const AboutText = () => (
         <br />
         Like-minded people within reach
         <br />
-        Feed your sexuality
+        Stray Together
         <br />
         <div className="aboutlogo">
           <span />
