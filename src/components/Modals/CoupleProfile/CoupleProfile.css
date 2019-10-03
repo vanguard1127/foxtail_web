@@ -1,0 +1,140 @@
+.couple-profile {
+  display: block;
+  height: 550px;
+  width: 850px;
+  background-image: -webkit-linear-gradient(0, #6f1996, #d81932);
+  border-radius: 4px;
+}
+.couple-profile .profile-top {
+  display: block;
+  align-items: center;
+  height: 165px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.couple-profile h3 p span a {
+  font-family: "Roboto", sans-serif;
+}
+.couple-profile h3.title {
+  padding-top: 38px;
+  color: white;
+  font-size: 25pt;
+  font-weight: bold;
+}
+.couple-profile h4.title-small {
+  color: #00d157;
+  font-size: 18pt;
+  padding-top: 5px;
+}
+.couple-profile .profile-bottom {
+  height: 385px;
+  display: flex;
+  width: 850px;
+}
+.couple-profile .layer-left {
+  float: left;
+  width: 50%;
+  text-align: center;
+}
+.couple-profile p.content {
+  padding-top: 35px;
+  color: #ffffff;
+  font-size: 12pt;
+}
+.couple-profile .layer-right {
+  width: 50%;
+  padding-left: 10px;
+}
+.couple-profile h4.question-first,
+h4.question-second {
+  font-size: 19pt;
+  color: white;
+}
+.couple-profile p.require,
+p.require-code {
+  font-size: 13pt;
+  color: white;
+  margin-bottom: 10px;
+}
+.couple-profile input[type="text"] {
+  height: 40px;
+  width: 228px;
+  border-radius: 5px;
+  border: none;
+}
+.couple-profile input[type="submit"] {
+  height: 40px;
+  width: 100px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 25px;
+  background-color: #00d157;
+  color: white;
+  font-size: 12pt;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 2px;
+}
+.couple-profile .layer-right hr {
+  margin-top: 30px;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 2px solid #590091;
+  width: 85%;
+}
+.couple-profile h4.question-second {
+  margin-top: 25px;
+}
+.couple-profile p.require-code {
+  margin-bottom: 14px !important;
+}
+.couple-profile .Couple-code {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.couple-profile .content-code {
+  height: 55px;
+  width: 252px;
+  background: white;
+  color: #590091;
+  font-size: 17pt;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-right: 30px;
+}
+
+@media screen and (max-width: 990px) {
+  .couple-profile {
+    width: 100%;
+    height: auto;
+    padding: 24px;
+  }
+  .couple-profile .profile-top {
+    height: auto;
+  }
+  .couple-profile .profile-bottom {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+  }
+  .couple-profile .layer-left {
+    width: 100%;
+  }
+  .couple-profile .layer-right {
+    width: 100%;
+    text-align: center;
+  }
+  .couple-profile .layer-right hr {
+    margin: 30px auto;
+    display: block;
+  }
+  .couple-profile input[type="submit"] {
+    margin-left: 10px;
+  }
+}

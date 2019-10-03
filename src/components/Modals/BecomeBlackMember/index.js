@@ -1,11 +1,12 @@
 import React, { PureComponent } from "react";
 import Modal from "../../common/Modal";
+import "./BecomeBlackMember.css";
 import BecomeBlackMemberImage from "../../../assets/img/elements/become-black-member.png";
 
 class BecomeBlackMember extends PureComponent {
   render() {
     return (
-      <Modal close={() => {}} fullWidth className="couples" noBorder>
+      <Modal close={this.props.close} fullWidth className="couples" noBorder>
         <div className="upgrade" style={{ backgroundImage: `url(${BecomeBlackMemberImage})` }}>
           <div className="backgound-opacity"></div>
           <div className="upgrade-content">

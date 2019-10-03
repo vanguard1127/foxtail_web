@@ -1,11 +1,12 @@
 import React, { PureComponent } from "react";
 import Modal from "../../common/Modal";
+import "./CoupleProfile.css";
 import CoupleProfileImage from "../../../assets/img/elements/couple-profile.png";
 
 class CoupleProfile extends PureComponent {
   render() {
     return (
-      <Modal close={() => {}} fullWidth className="couples" noBorder>
+      <Modal close={this.props.close} fullWidth className="couples" noBorder>
         <div className="couple-profile">
           <div className="profile-top">
             <h3 className="title">Couple profile</h3>

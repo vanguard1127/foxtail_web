@@ -81,7 +81,7 @@ class Modal extends Component {
                     </div>
                   </div>
                 ) : (
-                  <div className="offset-md-3 col-md-6">
+                  <div className="col-md-6">
                     <div className="popup">
                       <span className="head">{header}</span>
                       {close && <a className="close" onClick={() => close()} />}

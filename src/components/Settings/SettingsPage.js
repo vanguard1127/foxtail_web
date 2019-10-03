@@ -17,14 +17,14 @@ import MyProfile from "./MyProfile/";
 import DesiresModal from "../Modals/Desires/Modal";
 import ShareModal from "../Modals/Share";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
-import CoupleModal from "../Modals/Couples";
-import BlackModal from "../Modals/Black";
+// import CoupleModal from "../Modals/Couples";
+// import BlackModal from "../Modals/Black";
 import getCityCountry from "../../utils/getCityCountry";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import Modal from "../common/Modal";
 import { toast } from "react-toastify";
-// import CoupleProfile from "../Modals/CoupleProfile";
-// import BecomeBlackMember from "../Modals/BecomeBlackMember";
+import CoupleProfileModal from "../Modals/CoupleProfile";
+import BecomeBlackMemberModal from "../Modals/BecomeBlackMember";
 
 class SettingsPage extends Component {
   constructor(props) {
@@ -927,7 +927,7 @@ class SettingsPage extends Component {
               )}
               {showPhotoVerPopup && <SubmitPhotoModal close={this.togglePhotoVerPopup} type={photoSubmitType} ErrorHandler={ErrorHandler} />}
               {showCouplePopup && (
-                <CoupleModal
+                <CoupleProfileModal
                   close={this.toggleCouplesPopup}
                   setValue={({ name, value }) => this.setValue({ name, value, updateSettings })}
                   username={couplePartner}
@@ -937,7 +937,7 @@ class SettingsPage extends Component {
                 />
               )}
               {showBlackPopup && (
-                <BlackModal
+                <BecomeBlackMemberModal
                   close={this.toggleBlackPopup}
                   userID={currentuser.userID}
                   ErrorHandler={ErrorHandler}
@@ -955,8 +955,6 @@ class SettingsPage extends Component {
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
-              {/* <CoupleProfile /> */}
-              {/* <BecomeBlackMember /> */}
             </section>
           );
         }}
