@@ -25,6 +25,8 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 import * as Sentry from "@sentry/browser";
 import i18n from "./i18n";
+import DevTools from "./DevTools";
+
 import Landing from "./components/Landing";
 import About from "./components/Information/About";
 import FAQ from "./components/Information/FAQ";
@@ -253,14 +255,7 @@ const Wrapper = withRouter(props => {
       return <NotFound />;
     } else if (location.pathname === "/devtools") {
       if (process.env.NODE_ENV === "development") {
-        import("./DevTools")
-          .then(DevTools => {
-            return <DevTools />;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-        return;
+        return <DevTools />;
       }
     } else if (location.pathname === "/" && location.search) {
       return <ShortLinkRedirect hash={location.search} />;
