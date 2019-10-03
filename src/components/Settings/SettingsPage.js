@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { Mutation, withApollo } from "react-apollo";
 import axios from "axios";
-import {
-  disableBodyScroll,
-  enableBodyScroll,
-  clearAllBodyScrollLocks
-} from "body-scroll-lock";
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
 import ImageEditor from "../Modals/ImageEditor";
 import ImageCropper from "../Modals/ImageCropper";
@@ -21,12 +17,14 @@ import MyProfile from "./MyProfile/";
 import DesiresModal from "../Modals/Desires/Modal";
 import ShareModal from "../Modals/Share";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
-import CoupleModal from "../Modals/Couples";
-import BlackModal from "../Modals/Black";
+// import CoupleModal from "../Modals/Couples";
+// import BlackModal from "../Modals/Black";
 import getCityCountry from "../../utils/getCityCountry";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import Modal from "../common/Modal";
 import { toast } from "react-toastify";
+import CoupleProfileModal from "../Modals/CoupleProfile";
+import BecomeBlackMemberModal from "../Modals/BecomeBlackMember";
 
 class SettingsPage extends Component {
   constructor(props) {
@@ -337,14 +335,9 @@ class SettingsPage extends Component {
     const { desires } = this.state;
     if (this.mounted) {
       if (checked) {
-        this.setState({ desires: [...desires, value] }, () =>
-          this.fillInErrors()
-        );
+        this.setState({ desires: [...desires, value] }, () => this.fillInErrors());
       } else {
-        this.setState(
-          { desires: desires.filter(desire => desire !== value) },
-          () => this.fillInErrors()
-        );
+        this.setState({ desires: desires.filter(desire => desire !== value) }, () => this.fillInErrors());
       }
     }
   };
@@ -353,12 +346,7 @@ class SettingsPage extends Component {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
         if (noSave === true) {
-          if (
-            name === "about" ||
-            name === "publicPhotos" ||
-            name === "profilePic" ||
-            name === "desires"
-          ) {
+          if (name === "about" || name === "publicPhotos" || name === "profilePic" || name === "desires") {
             this.fillInErrors();
           }
           return;
@@ -384,9 +372,7 @@ class SettingsPage extends Component {
   };
 
   toggleScroll(enabled) {
-    enabled
-      ? disableBodyScroll(this.targetElement)
-      : enableBodyScroll(this.targetElement);
+    enabled ? disableBodyScroll(this.targetElement) : enableBodyScroll(this.targetElement);
   }
 
   toggleDesiresPopup = () => {
@@ -560,8 +546,7 @@ class SettingsPage extends Component {
     let desiresErr = desires.length === 0 ? t("onedes") : null;
 
     if (
-      this.isNull(this.state.errors.profilePic) !==
-        this.isNull(profilePicErr) ||
+      this.isNull(this.state.errors.profilePic) !== this.isNull(profilePicErr) ||
       this.isNull(this.state.errors.about) !== this.isNull(aboutErr) ||
       this.isNull(this.state.errors.desires) !== this.isNull(desiresErr)
     ) {
@@ -637,15 +622,7 @@ class SettingsPage extends Component {
       errors
     } = this.state;
 
-    const {
-      t,
-      ErrorHandler,
-      currentuser,
-      refetchUser,
-      dayjs,
-      history,
-      ReactGA
-    } = this.props;
+    const { t, ErrorHandler, currentuser, refetchUser, dayjs, history, ReactGA } = this.props;
 
     return (
       <Mutation
@@ -707,9 +684,7 @@ class SettingsPage extends Component {
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}
                           blackModalToggle={this.toggleBlackPopup}
-                          shareModalToggle={isShareProfile =>
-                            this.toggleSharePopup(isShareProfile)
-                          }
+                          shareModalToggle={isShareProfile => this.toggleSharePopup(isShareProfile)}
                           t={t}
                           flashCpl={flashCpl}
                           currentuser={currentuser}
@@ -720,12 +695,8 @@ class SettingsPage extends Component {
                     </div>
                     <div className="col-md-12 col-lg-9">
                       <div className="page mtop">
-                        {(errors.about !== null ||
-                          errors.desires !== null ||
-                          errors.profilePic !== null) && (
-                          <span className="message">
-                            {t("common:plscomplete")}
-                          </span>
+                        {(errors.about !== null || errors.desires !== null || errors.profilePic !== null) && (
+                          <span className="message">{t("common:plscomplete")}</span>
                         )}
                         <div className="form">
                           <Preferences
@@ -786,11 +757,7 @@ class SettingsPage extends Component {
                             ErrorBoundary={ErrorHandler.ErrorBoundary}
                             toggleScroll={this.toggleScroll}
                           />
-                          {errors.profilePic && (
-                            <label className="errorLbl">
-                              {errors.profilePic}
-                            </label>
-                          )}
+                          {errors.profilePic && <label className="errorLbl">{errors.profilePic}</label>}
                           <Photos
                             isPrivate={true}
                             showEditor={this.toggleImgEditorPopup}
@@ -851,11 +818,7 @@ class SettingsPage extends Component {
                             ErrorBoundary={ErrorHandler.ErrorBoundary}
                             isBlackMember={currentuser.blackMember.active}
                           />
-                          <Verifications
-                            openPhotoVerPopup={this.openPhotoVerPopup}
-                            t={t}
-                            ErrorBoundary={ErrorHandler.ErrorBoundary}
-                          />
+                          <Verifications openPhotoVerPopup={this.openPhotoVerPopup} t={t} ErrorBoundary={ErrorHandler.ErrorBoundary} />
                           {showModal && (
                             <Modal
                               header={title}
@@ -896,11 +859,7 @@ class SettingsPage extends Component {
                             isEmailOK={currentuser.isEmailOK}
                             ReactGA={ReactGA}
                           />
-                          <DeactivateAcctBtn
-                            t={t}
-                            ErrorHandler={ErrorHandler}
-                            history={history}
-                          />
+                          <DeactivateAcctBtn t={t} ErrorHandler={ErrorHandler} history={history} />
                         </div>
                       </div>
                     </div>
@@ -966,19 +925,11 @@ class SettingsPage extends Component {
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />
               )}
-              {showPhotoVerPopup && (
-                <SubmitPhotoModal
-                  close={this.togglePhotoVerPopup}
-                  type={photoSubmitType}
-                  ErrorHandler={ErrorHandler}
-                />
-              )}
+              {showPhotoVerPopup && <SubmitPhotoModal close={this.togglePhotoVerPopup} type={photoSubmitType} ErrorHandler={ErrorHandler} />}
               {showCouplePopup && (
-                <CoupleModal
+                <CoupleProfileModal
                   close={this.toggleCouplesPopup}
-                  setValue={({ name, value }) =>
-                    this.setValue({ name, value, updateSettings })
-                  }
+                  setValue={({ name, value }) => this.setValue({ name, value, updateSettings })}
                   username={couplePartner}
                   includeMsgs={includeMsgs}
                   ErrorHandler={ErrorHandler}
@@ -986,7 +937,7 @@ class SettingsPage extends Component {
                 />
               )}
               {showBlackPopup && (
-                <BlackModal
+                <BecomeBlackMemberModal
                   close={this.toggleBlackPopup}
                   userID={currentuser.userID}
                   ErrorHandler={ErrorHandler}
