@@ -125,6 +125,7 @@ header ul.menu li.active a::before {
   background-image: linear-gradient(to left, #f70016 7%, #5f00a4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: inline;
 }
 
 
