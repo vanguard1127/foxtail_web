@@ -81,6 +81,7 @@ p.require-code {
   border: 0;
   border-top: 2px solid #590091;
   width: 85%;
+  display: inline-flex;
 }
 .couple-profile h4.question-second {
   margin-top: 25px;
@@ -132,7 +133,7 @@ p.require-code {
   }
   .couple-profile .layer-right hr {
     margin: 30px auto;
-    display: block;
+    display: inline-flex;
   }
   .couple-profile input[type="submit"] {
     margin-left: 10px;
