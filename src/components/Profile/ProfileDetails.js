@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { sexOptions } from "../../docs/options/en";
 import TimeAgo from "../../utils/TimeAgo";
+import Tooltip from "../common/Tooltip";
 class ProfileDetails extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.t !== nextProps.t) {
@@ -55,9 +56,9 @@ class ProfileDetails extends Component {
             </li>
             <li>
               <span className="head">{t("lookfor")}:</span>
-              <span className="data lookfor" title={lookingFor}>
-                {lookingFor}
-              </span>
+              <Tooltip title={lookingFor} placement="bottom">
+                <span className="data lookfor">{lookingFor}</span>
+              </Tooltip>
             </li>
             <li>
               <span className="head">{t("lstlogin")}:</span>

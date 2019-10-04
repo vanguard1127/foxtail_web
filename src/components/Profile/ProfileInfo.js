@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { sexualityOptions } from "../../docs/options/en";
+import Tooltip from "../common/Tooltip";
 
 class ProfileInfo extends Component {
   shouldComponentUpdate() {
@@ -19,16 +20,20 @@ class ProfileInfo extends Component {
       <ErrorBoundary>
         <div className={userInfoStyle}>
           <div>
-            <span title={profileName}>
-              {users[1] && (
-                <span
-                  className={"sex " + users[0].gender + " userInfoHeader"}
-                />
-              )}
-              &nbsp;
-              {profileName},&nbsp;{" "}
-            </span>
+            <Tooltip title={profileName} placement="bottom">
+              <span className="name">
+                {users[1] && (
+                  <span
+                    className={"sex " + users[0].gender + " userInfoHeader"}
+                  />
+                )}
+                &nbsp;
+                {profileName},&nbsp;{" "}
+              </span>
+            </Tooltip>
+
             <span> {dayjs().diff(users[0].dob, "years")}</span>
+
             {users[0].sexuality && (
               <span>
                 ,&nbsp;
@@ -39,6 +44,7 @@ class ProfileInfo extends Component {
               </span>
             )}
           </div>
+
           {users[1] && (
             <div>
               <span>
@@ -50,7 +56,9 @@ class ProfileInfo extends Component {
                 )}
                 &nbsp; {users[1].username},&nbsp;{" "}
               </span>
+
               <span> {dayjs().diff(users[1].dob, "years")}</span>
+
               {users[1].sexuality && (
                 <span>
                   ,&nbsp;

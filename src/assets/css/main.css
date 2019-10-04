@@ -3061,7 +3061,16 @@ section.profile .user-info > div span {
   line-height: 40px;
   color: #464648;
   letter-spacing: -0.31px;
+  flex-shrink:0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+section.profile .user-info > div span.name{
+  flex-shrink:2;
+}
+
 
 section.profile .data-info {
   width: 100%;
@@ -8984,7 +8993,6 @@ section.not-found span.description {
 
   section.profile .user-info > div {
     float: left;
-    display: block;
     justify-content: inherit;
     align-items: inherit;
   }
@@ -8993,6 +9001,14 @@ section.not-found span.description {
     color: #fff;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     font-size: 38px;
+    flex-shrink:0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  section.profile .user-info > div span.name{
+    flex-shrink:2;
   }
 
   section.profile .user-info.couple::after {
