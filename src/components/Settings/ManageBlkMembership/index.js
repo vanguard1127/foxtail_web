@@ -33,9 +33,11 @@ class ManageBlackSub extends Component {
               <div className="col-md-12">
                 {t("common:creditend")} {currentuser.ccLast4}{" "}
                 {t("common:renewdate")}:{" "}
-                {dayjs(currentuser.blackMember.renewalDate)
-                  .locale(lang)
-                  .format("MMMM DD YYYY")}
+                {currentuser.blackMember.renewalDate
+                  ? dayjs(currentuser.blackMember.renewalDate)
+                      .locale(lang)
+                      .format("MMMM DD YYYY")
+                  : "Lifetime :)"}
               </div>
             )}
             {!currentuser.ccLast4 && (
