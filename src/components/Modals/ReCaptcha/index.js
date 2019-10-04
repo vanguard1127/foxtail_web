@@ -39,8 +39,6 @@ const ReCaptcha = ({ t, tReady }) => {
           sitekey={process.env.REACT_APP_GOOGLE_CLIENT_KEY}
           onChange={value => onChange(value)}
         />
-
-        {/* <button onClick={value => onChange("SSS")}>FIX</button> */}
         <br />
       </div>
     </Modal>
