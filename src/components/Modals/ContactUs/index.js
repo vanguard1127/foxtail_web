@@ -128,11 +128,7 @@ class ContactUs extends Component {
     } = this.state;
 
     if (!tReady) {
-      return (
-        <Modal close={close}>
-          <Spinner />
-        </Modal>
-      );
+      return null;
     }
     return (
       <Modal

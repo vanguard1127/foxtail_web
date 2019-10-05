@@ -90,8 +90,9 @@
   align-items: center;
   font-weight: bold;
   margin: auto;
+  cursor: pointer;
 }
-.upgrade h5.text-gradient {
+.upgrade span.text-gradient {
   background: linear-gradient(to right, #6f1996 0%, #d81932 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

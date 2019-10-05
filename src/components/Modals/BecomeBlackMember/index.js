@@ -1,13 +1,22 @@
 import React, { PureComponent } from "react";
+import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
+import CreateSubBtn from "./CreateSubBtn";
 import "./BecomeBlackMember.css";
 import BecomeBlackMemberImage from "../../../assets/img/elements/become-black-member.png";
 
 class BecomeBlackMember extends PureComponent {
   render() {
+    const { close, t, ErrorHandler, notifyClient, lang, tReady } = this.props;
+    if (!tReady) {
+      return null;
+    }
     return (
       <Modal close={this.props.close} fullWidth className="couples" noBorder>
-        <div className="upgrade" style={{ backgroundImage: `url(${BecomeBlackMemberImage})` }}>
+        <div
+          className="upgrade"
+          style={{ backgroundImage: `url(${BecomeBlackMemberImage})` }}
+        >
           <div className="backgound-opacity"></div>
           <div className="upgrade-content">
             <div className="top-content">
@@ -17,13 +26,16 @@ class BecomeBlackMember extends PureComponent {
             <h4 className="title-small">BLACK Member privledges include:</h4>
             <ul className="list-left">
               <li>
-                <i className="fas fa-angle-right"></i> Direct Chat to Users (no match needed)
+                <i className="fas fa-angle-right"></i> Direct Chat to Users (no
+                match needed)
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Change Location of your profile
+                <i className="fas fa-angle-right"></i> Change Location of your
+                profile
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Only Be Seen By Members You Like
+                <i className="fas fa-angle-right"></i> Only Be Seen By Members
+                You Like
               </li>
             </ul>
             <ul className="list-right">
@@ -38,13 +50,16 @@ class BecomeBlackMember extends PureComponent {
               </li>
             </ul>
             <p className="get-more">
-              Get more of what you love <i className="fas fa-heart" style={{ color: "#db0016" }}></i>
+              Get more of what you love{" "}
+              <i className="fas fa-heart" style={{ color: "#db0016" }}></i>
             </p>
-            <a href="" className="btn-link">
-              <div className="btn-upgrade">
-                <h5 className="text-gradient">Upgrade to Black Membership</h5>
-              </div>
-            </a>
+            <CreateSubBtn
+              close={close}
+              t={t}
+              ErrorHandler={ErrorHandler}
+              notifyClient={notifyClient}
+              lang={lang}
+            />
           </div>
         </div>
       </Modal>
@@ -52,4 +67,4 @@ class BecomeBlackMember extends PureComponent {
   }
 }
 
-export default BecomeBlackMember;
+export default withTranslation("modals")(BecomeBlackMember);

@@ -5,7 +5,7 @@ import RotateIcon from "@material-ui/icons/RotateRight";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import IconButton from "@material-ui/core/IconButton";
-import { Button } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 class EditCanvasImage extends PureComponent {
   constructor(props) {
