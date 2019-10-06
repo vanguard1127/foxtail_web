@@ -105,6 +105,7 @@ class Landing extends PureComponent {
                   <div className="logo">
                     <span />
                   </div>
+                  <span className="subtitle">{t("subtitle")}</span>
                 </div>
                 <div className="offset-md-3 col-md-5">
                   <div className="content">
@@ -136,8 +137,14 @@ class Landing extends PureComponent {
                   <div className="col-lg-7 col-md-12">
                     <div className="left">
                       <div className="welcome-text">
-                        <h1>{t("title")}</h1>
-                        <span className="title">{t("subtitle")}</span>
+                        <h1>
+                          <span>
+                            {t("free")}
+                            <span className="divider">|</span>
+                            {t("secure")}
+                            <span className="divider">|</span>18+ Fun
+                          </span>
+                        </h1>
                       </div>
 
                       <Query
@@ -146,12 +153,10 @@ class Landing extends PureComponent {
                         errorPolicy="ignore"
                       >
                         {({ data, loading, error }) => {
-                          if (loading) {
+                          if (loading || !data) {
                             return null;
                           } else if (error) {
                             console.error(error);
-                            return null;
-                          } else if (!data) {
                             return null;
                           }
                           let malesNum = 0,

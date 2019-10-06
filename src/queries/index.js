@@ -647,6 +647,7 @@ export const GET_INBOX = gql`
       }
       unSeenCount
       type
+      blackMember
     }
   }
 `;

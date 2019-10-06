@@ -5,7 +5,6 @@ import {
   EmailShareButton
 } from "react-share";
 import Modal from "../common/Modal";
-import Spinner from "../common/Spinner";
 import ContactUsModal from "../Modals/ContactUs";
 
 import { withTranslation } from "react-i18next";
@@ -37,7 +36,7 @@ class Footer extends Component {
     const shareUrl = "www.fotxtailapp.com";
     const title = "Foxtail - Free dating for alternative relationships";
     if (!tReady) {
-      return <Spinner />;
+      return null;
     }
     return (
       <footer>

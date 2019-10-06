@@ -222,6 +222,9 @@ class SignupForm extends Component {
             lang={lang}
           />
           <div className="terms">
+            This site uses your Phone Number to Authenticate your account ONLY
+          </div>
+          <div className="terms">
             {t("signupMsg")}
             <span onClick={() => history.push("/tos")}>{t("terms")}</span> &
             <span onClick={() => history.push("/privacy")}>{t("privacy")}</span>
