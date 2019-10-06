@@ -209,7 +209,7 @@ class Landing extends PureComponent {
                                         separator=","
                                       />
                                     </span>
-                                    <span>{t("Couple Profiles")}</span>
+                                    <span>{t("Couple's Profile")}</span>
                                   </li>
                                 </ul>
                               </ErrorHandler.ErrorBoundary>

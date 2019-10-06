@@ -110,14 +110,14 @@ class CoupleProfile extends PureComponent {
         <Modal close={close} fullWidth className="couples" noBorder>
           <div className="couple-profile">
             <div className="profile-top">
-              <h3 className="title">Couple profile</h3>
+              <h3 className="title">Couple's Profile</h3>
               <h4 className="title-small">Stray Together</h4>
             </div>
             <div className="profile-bottom">
               <div className="layer-left">
                 <img src={CoupleProfileImage} alt="" />
                 <p className="content">
-                  Couple Profile's are profiles shared by 2 people.
+                  Couple's Profiles are profiles shared by 2 people.
                   <br />
                   All communications are accessible by both members.
                 </p>
@@ -146,7 +146,7 @@ class CoupleProfile extends PureComponent {
                 </div>
                 <hr className="line" />
                 <h4 className="question-second">
-                  Want to create a Couple Profile?
+                  Want to create a Couple's Profile?
                 </h4>
                 <p className="require-code">
                   Send this Couple's Code to your pantner
