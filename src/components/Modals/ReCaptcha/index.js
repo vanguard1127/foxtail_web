@@ -2,7 +2,6 @@ import React from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
-import Spinner from "../../common/Spinner";
 import axios from "axios";
 
 function onChange(value) {
@@ -20,11 +19,7 @@ const go = () => {
 };
 const ReCaptcha = ({ t, tReady }) => {
   if (!tReady) {
-    return (
-      <Modal>
-        <Spinner />
-      </Modal>
-    );
+    return null;
   }
 
   return (

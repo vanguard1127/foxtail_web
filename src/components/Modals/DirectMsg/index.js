@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { SEND_MESSAGE } from "../../../queries";
 import Modal from "../../common/Modal";
 import deleteFromCache from "../../../utils/deleteFromCache";
-import Spinner from "../../common/Spinner";
 
 class DirectMsg extends Component {
   state = { text: "", sending: false };
@@ -76,11 +75,7 @@ class DirectMsg extends Component {
     } = this.props;
 
     if (!tReady) {
-      return (
-        <Modal close={close}>
-          <Spinner />
-        </Modal>
-      );
+      return null;
     }
     const { text, sending } = this.state;
     return (

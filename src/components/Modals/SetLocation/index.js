@@ -5,7 +5,6 @@ import AddressSearch from "../../common/AddressSearch";
 import { ErrorBoundary, catchErrors } from "../../common/ErrorHandler";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
-import Spinner from "../../common/Spinner";
 import { toast } from "react-toastify";
 
 class SetLocationModal extends Component {
@@ -78,11 +77,7 @@ class SetLocationModal extends Component {
     const { address, lat, long } = this.state;
 
     if (!tReady) {
-      return (
-        <Modal close={close}>
-          <Spinner />
-        </Modal>
-      );
+      return null;
     }
     return (
       <Mutation

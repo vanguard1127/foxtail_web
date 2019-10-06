@@ -7151,7 +7151,7 @@ section.landing .register-form form .form-content .dropdown::before {
   position: absolute !important;
   left: 15px;
   top: 15px;
-  z-index: 999999;
+  /* z-index: 999999; */
 }
 
 section.landing .register-form form .form-content .dropdown::after {

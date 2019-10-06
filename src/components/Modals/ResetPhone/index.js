@@ -27,18 +27,7 @@ class ResetPhone extends PureComponent {
     const { close, t, ErrorHandler, token, history, lang, tReady } = this.props;
     const { code, text } = this.state;
     if (!tReady) {
-      return (
-        <section className="login-modal show">
-          <div className="container">
-            <div className="offset-md-3 col-md-6">
-              <div className="popup">
-                <a className="close" onClick={() => close()} />
-                <Spinner />{" "}
-              </div>
-            </div>
-          </div>
-        </section>
-      );
+      return null;
     }
     if (!token) {
       return (

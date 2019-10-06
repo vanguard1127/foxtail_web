@@ -14,7 +14,7 @@ import UserToolbar from "./UserToolbar";
 
 var msgAudio = new Audio(require("../../assets/audio/msg.mp3"));
 class Navbar extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     const { session, location } = this.props;
     if (session) {
       if (nextProps.session === undefined) {
@@ -112,7 +112,7 @@ class NavbarAuth extends PureComponent {
     href = href[3];
 
     const { session, t, history } = this.props;
-    const { mobileMenu, blinkInbox } = this.state;
+    const { mobileMenu } = this.state;
     return (
       <Query query={GET_COUNTS} fetchPolicy="cache-first">
         {({ data, loading, error, refetch, subscribeToMore }) => {
