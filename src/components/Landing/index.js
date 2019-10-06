@@ -141,10 +141,11 @@ class Landing extends PureComponent {
                           <span>
                             {t("free")}
                             <span className="divider">|</span>
-                            {t("secure")}
+                            {t("private")}
                             <span className="divider">|</span>18+ Fun
                           </span>
                         </h1>
+                        <span className="mobilesubtitle">{t("subtitle")}</span>
                       </div>
 
                       <Query
@@ -209,7 +210,7 @@ class Landing extends PureComponent {
                                         separator=","
                                       />
                                     </span>
-                                    <span>{t("Couple's Profile")}</span>
+                                    <span>{t("Couple's Profiles")}</span>
                                   </li>
                                 </ul>
                               </ErrorHandler.ErrorBoundary>

@@ -6857,7 +6857,7 @@ section.landing .left {
 section.landing .left .welcome-text {
   width: 100%;
   display: block;
-  float: left;
+  /* float: left; */
   text-align: center;
 }
 
@@ -6887,11 +6887,19 @@ section.landing .left .welcome-text h1 span.divider {
 }
 
 header.landing .subtitle {
+  display: none;
   color: #fff;
   margin-top: 18px;
   float: right;
   font-size: 26px;
   margin-right: 64px;
+  font-family: "Kaushan Script";
+}
+
+section.landing .left .welcome-text span.mobilesubtitle{
+  display: block;
+  color: #fff;
+  font-size: 26px;
   font-family: "Kaushan Script";
 }
 
@@ -9248,6 +9256,13 @@ section.not-found span.description {
 }
 
 @media only screen and (min-width: 992px) {
+  header.landing .subtitle {
+    display: block;
+  }
+  section.landing .left .welcome-text span.mobilesubtitle{
+    display: none;
+  }
+
   section.profile .avatar-content.no-btns {
     margin-bottom:0%;
      }
