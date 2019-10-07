@@ -17,15 +17,15 @@ const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
         </span>
       </span>
       <div className="info">
-        <span className="name" title={message.fromUser.username}>
+        <span className={message.blackMember?"name blk":"name"} title={message.fromUser.username}>
           <span
             onClick={() =>
               history.push("/member/" + message.fromUser.profile.id)
             }
           >
-            {" "}
             {message.fromUser.username}
           </span>
+
         </span>
         <span className="date">
           {" "}

@@ -52,7 +52,6 @@ class Share extends Component {
     } = this.props;
 
     let url;
-    console.log("PRO", profile, "pofglf", profileID);
     if (profile) {
       url = `refer=${userID}&mem=${profile.id}`;
     } else if (event) {

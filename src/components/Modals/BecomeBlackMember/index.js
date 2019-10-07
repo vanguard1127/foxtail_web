@@ -37,16 +37,22 @@ class BecomeBlackMember extends PureComponent {
                 <i className="fas fa-angle-right"></i> Only Be Seen By Members
                 You Like
               </li>
+              <li>
+                <i className="fas fa-angle-right"></i> Exclusive icon next to your chats and comments.
+              </li>
             </ul>
             <ul className="list-right">
               <li>
                 <i className="fas fa-angle-right"></i> Hide your online status
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Show highter in reults
+                <i className="fas fa-angle-right"></i> Show higher in results
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Infinite Photos!
+                <i className="fas fa-angle-right"></i> Infinite Photos
+              </li>
+              <li>
+                <i className="fas fa-angle-right"></i> More coming soon!
               </li>
             </ul>
             <p className="get-more">

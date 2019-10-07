@@ -792,6 +792,7 @@ export const GET_COMMENTS = gql`
         profilePic
         type
         createdAt
+        blackMember
       }
     }
   }
