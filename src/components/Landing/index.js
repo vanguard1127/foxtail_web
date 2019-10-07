@@ -9,6 +9,7 @@ import { withApollo, Query } from "react-apollo";
 import { CONFIRM_EMAIL, GET_DEMO_COUNTS } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
 import ContactUsModal from "../Modals/ContactUs";
+import Spinner from "../common/Spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { withTranslation } from "react-i18next";
@@ -33,13 +34,23 @@ class Landing extends PureComponent {
   };
 
   render() {
-    const { t, client, location, history, session, ReactGA } = this.props;
+    const {
+      t,
+      client,
+      location,
+      history,
+      session,
+      ReactGA,
+      tReady
+    } = this.props;
     const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
     let refer = null;
     let aff = null;
     let mem = null;
     let eve = null;
-
+    if (!tReady) {
+      return <Spinner />;
+    }
     if (location) {
       const params = new URLSearchParams(location.search);
       refer = params.get("refer");

@@ -1,11 +1,9 @@
 import React from "react";
 const Privacy = () => (
-  <div className="fullscreen">
-    <div style={{ margin: "0 20vh 20vh 20vh" }}>
-      <h1>Privacy Policy</h1>
-
+  <div>
+    <div>
       <p>
-        Privacy Policy for www.Foxtailapp.com
+        Privacy Policy for www.foxtailapp.com
         <br />
         Last Updated: May 10, 2019
       </p>

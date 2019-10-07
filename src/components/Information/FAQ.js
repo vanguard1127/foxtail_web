@@ -4,23 +4,63 @@ import getLang from "../../utils/getLang";
 const lang = getLang();
 const FAQText = lazy(() => import("./" + lang + "/FAQText"));
 const FAQ = ({ history }) => (
-  <Suspense
-    fallback={
-      <div
+  <div>
+    <div>
+      <span className="back-to-home" onClick={() => history.push("/")} />
+      <h1
         style={{
-          minHeight: "74vh",
+          justifyContent: "center",
           display: "flex",
-          alignItems: "center",
-          height: "100vh"
+          flex: 1
         }}
       >
-        <Spinner message={"..."} size="large" />
+        FAQs
+      </h1>
+    </div>{" "}
+    <div
+      style={{
+        display: "flex",
+        flex: 20
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flex: 1
+        }}
+      />{" "}
+      <div
+        style={{
+          display: "flex",
+          flex: 10,
+          marginTop: "20px"
+        }}
+      >
+        <Suspense
+          fallback={
+            <div
+              style={{
+                minHeight: "74vh",
+                display: "flex",
+                alignItems: "center",
+                height: "100vh"
+              }}
+            >
+              <Spinner message={"..."} size="large" />
+            </div>
+          }
+        >
+          <FAQText />
+        </Suspense>
       </div>
-    }
-  >
-    <span className="back-to-home" onClick={() => history.push("/")} />
-    <FAQText />
-  </Suspense>
+      <div
+        style={{
+          display: "flex",
+          flex: 1
+        }}
+      />
+    </div>
+  </div>
 );
 
 export default FAQ;

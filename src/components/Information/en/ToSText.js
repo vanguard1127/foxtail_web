@@ -1,10 +1,8 @@
 import React from "react";
 
 const ToS = () => (
-  <div className="fullscreen">
-    <div style={{ margin: "0 20vh 20vh 20vh" }}>
-      <h1>Term and Conditions</h1>
-
+  <div>
+    <div>
       <p>
         Foxtail - LOV Corporation
         <br />

@@ -4,23 +4,52 @@ import getLang from "../../utils/getLang";
 const lang = getLang();
 const AboutText = lazy(() => import("./" + lang + "/AboutText"));
 const About = ({ history }) => (
-  <Suspense
-    fallback={
+  <div>
+    <span className="back-to-home" onClick={() => history.push("/")} />
+
+    <div
+      style={{
+        display: "flex",
+        flex: 20
+      }}
+    >
       <div
         style={{
-          minHeight: "74vh",
           display: "flex",
-          alignItems: "center",
-          height: "100vh"
+          flex: 1
+        }}
+      />{" "}
+      <div
+        style={{
+          display: "flex",
+          flex: 10
         }}
       >
-        <Spinner message={"..."} size="large" />
+        <Suspense
+          fallback={
+            <div
+              style={{
+                minHeight: "74vh",
+                display: "flex",
+                alignItems: "center",
+                height: "100vh"
+              }}
+            >
+              <Spinner message={"..."} size="large" />
+            </div>
+          }
+        >
+          <AboutText />
+        </Suspense>
       </div>
-    }
-  >
-    <span className="back-to-home" onClick={() => history.push("/")} />
-    <AboutText />
-  </Suspense>
+      <div
+        style={{
+          display: "flex",
+          flex: 1
+        }}
+      />
+    </div>
+  </div>
 );
 
 export default About;

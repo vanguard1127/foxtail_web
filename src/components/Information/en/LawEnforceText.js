@@ -1,7 +1,7 @@
 import React from "react";
 const LawEnforce = () => (
-  <div className="fullscreen">
-    <div style={{ margin: "0 20vh 20vh 20vh" }}>
+  <div>
+    <div>
       <strong>
         <u>LAW ENFORCEMENT REQUEST &amp; SUBPOENA COMPLIANCE POLICY</u>
       </strong>

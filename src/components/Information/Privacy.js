@@ -4,23 +4,63 @@ import getLang from "../../utils/getLang";
 const lang = getLang();
 const PrivacyText = lazy(() => import("./" + lang + "/PrivacyText"));
 const Privacy = ({ history }) => (
-  <Suspense
-    fallback={
-      <div
+  <div>
+    <div>
+      <span className="back-to-home" onClick={() => history.push("/")} />
+      <h1
         style={{
-          minHeight: "74vh",
+          justifyContent: "center",
           display: "flex",
-          alignItems: "center",
-          height: "100vh"
+          flex: 1
         }}
       >
-        <Spinner message={"..."} size="large" />
+        Privacy Policy
+      </h1>
+    </div>{" "}
+    <div
+      style={{
+        display: "flex",
+        flex: 20
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flex: 1
+        }}
+      />{" "}
+      <div
+        style={{
+          display: "flex",
+          flex: 10,
+          marginTop: "20px"
+        }}
+      >
+        <Suspense
+          fallback={
+            <div
+              style={{
+                minHeight: "74vh",
+                display: "flex",
+                alignItems: "center",
+                height: "100vh"
+              }}
+            >
+              <Spinner message={"..."} size="large" />
+            </div>
+          }
+        >
+          <PrivacyText />
+        </Suspense>
       </div>
-    }
-  >
-    <span className="back-to-home" onClick={() => history.push("/")} />
-    <PrivacyText />
-  </Suspense>
+      <div
+        style={{
+          display: "flex",
+          flex: 1
+        }}
+      />
+    </div>
+  </div>
 );
 
 export default Privacy;
