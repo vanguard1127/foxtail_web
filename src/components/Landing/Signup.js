@@ -102,6 +102,40 @@ class Signup extends PureComponent {
     }
   };
 
+
+  //TODO:DELETE THIS PRE LAUNCH
+  handleLogin = login => {
+    //if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+    if (this.mounted) {
+      login()
+        .then(async ({ data }) => {
+          if (data.login === null) {
+            alert(this.props.t("phoneexist"));
+            return;
+          }
+
+          localStorage.setItem(
+            "token",
+            data.login.find(token => token.access === "auth").token
+          );
+          localStorage.setItem(
+            "refreshToken",
+            data.login.find(token => token.access === "refresh").token
+          );
+
+          this.props.history.push("/members");
+        })
+        .catch(res => {
+          const errors = res.graphQLErrors.map(error => {
+            return error.message;
+          });
+
+          return errors;
+        });
+    }
+    // }
+  };
+
   render() {
     const {
       t,
@@ -159,6 +193,63 @@ class Signup extends PureComponent {
                 history={history}
                 lang={lang}
               />
+               <div className="form terms">
+                Test Users:
+                <Mutation mutation={LOGIN} variables={{ phone }}>
+                  {(login, { loading, error }) => {
+                    return (
+                      <>
+                        <span
+                          onClick={() => {
+                            this.setState({ phone: "1" }, () => {
+                              this.handleLogin(login);
+                            });
+                          }}
+                        >
+                          1
+                        </span>{" "}
+                        <span
+                          onClick={() => {
+                            this.setState({ phone: "2" }, () => {
+                              this.handleLogin(login);
+                            });
+                          }}
+                        >
+                          2
+                        </span>{" "}
+                        <span
+                          href={null}
+                          onClick={() => {
+                            this.setState({ phone: "3" }, () => {
+                              this.handleLogin(login);
+                            });
+                          }}
+                        >
+                          3
+                        </span>{" "}
+                        <span
+                          onClick={() => {
+                            this.setState({ phone: "4" }, () =>
+                              this.handleLogin(login)
+                            );
+                          }}
+                        >
+                          4
+                        </span>
+                        <span
+                          onClick={() => {
+                            this.setState({ phone: "5" }, () => {
+                              this.handleLogin(login);
+                            });
+                          }}
+                        >
+                          5
+                        </span>
+                      </>
+                    );
+                  }}
+                </Mutation>
+              </div>
             </div>
           );
         }}
