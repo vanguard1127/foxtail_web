@@ -79,7 +79,7 @@ class Dialog extends PureComponent {
           onChange={e => {
             this.setValue(e.value);
           }}
-          placeholder={t("common:Gender") + ":"}
+          placeholder={t("common:Sex") + ":"}
           lang={lang}
         />
       );

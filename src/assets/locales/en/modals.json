@@ -73,7 +73,7 @@
   "Save": "Save",
   "compmsg": "*You can only do this once since you do not have location services enabled.",
   "compsecmsg": "To change your location in the future, you must either enable location services or signup for Black membership.",
-  "intrstmsg": "Someone thinks you would be interested in a member of Foxtail. Here's their profile",
+  "whatdoyou": "What do you think about",
   "meetques": "Know someone that would like to meet",
   "invitation": "You have been invited to",
   "shareevent": "Share this Event",
@@ -108,6 +108,7 @@
   "dec240": "Description must be less than 240 characters",
   "addreq": "Address is required!",
   "evevtsaved": "Event Saved!",
+  "savingeve": "Saving Event",
   "fixreq": "Please fix the required fields on both pages",
   "removelinkto": "Want to remove your link to",
   "onlychatres": "*Only chats you've responded to",
@@ -122,5 +123,6 @@
   "upgradeblk": "Upgrade to Black Membership",
   "blkmemsubheader": "Monthly membership. Cancel anytime.",
   "blkmemheader": "Black Membership",
-  "infinite": "Infinite Photos!"
+  "infinite": "Infinite Photos!",
+  "checkoutfox": "Check out Foxtail \n\nFree | Private | 18+ Fun\n\n"
 }

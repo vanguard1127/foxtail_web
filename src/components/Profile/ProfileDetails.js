@@ -43,7 +43,7 @@ class ProfileDetails extends Component {
           <ul>
             <li>
               <span className="head">
-                {users[1] ? t("common:Genders") : t("common:Gender")}:
+                {users[1] ? t("common:Sexes") : t("common:Sex")}:
               </span>
               <span className="data gender">
                 <span className={"sex " + users[0].gender} />

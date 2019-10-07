@@ -10,7 +10,6 @@ import DesiresSelector from "../../Modals/Desires/Selector";
 import AddressSearch from "../../common/AddressSearch";
 import DatePicker from "../../common/DatePicker";
 import Modal from "../../common/Modal";
-import Spinner from "../../common/Spinner";
 import isEmpty from "../../../utils/isEmpty";
 import { toast } from "react-toastify";
 import Dropdown from "../../common/Dropdown";
@@ -150,12 +149,21 @@ class CreateEvent extends Component {
   handleSubmit = async ({ createEvent, signS3 }) => {
     const { t, ErrorHandler, refetch, close, history, ReactGA } = this.props;
     if (await this.validateForm()) {
+      if (!toast.isActive("savingeve")) {
+        toast(t("savingeve"), {
+          toastId: "savingeve"
+        });
+      }
       if (this.state.image !== "") {
         await this.handleUpload({ signS3 });
       }
       createEvent()
         .then(({ data }) => {
-          toast.success(t("evevtsaved"));
+          toast.update("savingeve", {
+            render: t("evevtsaved"),
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000
+          });
 
           close();
 
@@ -292,11 +300,7 @@ class CreateEvent extends Component {
       isImageAlt
     } = this.state;
     if (!tReady) {
-      return (
-        <Modal close={close}>
-          <Spinner />
-        </Modal>
-      );
+      return null;
     }
     return (
       <section>

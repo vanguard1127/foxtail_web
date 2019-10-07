@@ -135,7 +135,7 @@ class AcctSettings extends Component {
                     });
                   }}
                 >
-                  Change Gender
+                  Change Sex
                 </span>
               </div>
             </div>

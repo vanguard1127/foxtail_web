@@ -30,6 +30,10 @@
   min-height: 100vh;
 }
 
+textarea{
+  white-space: pre-wrap;
+}
+
 button,aside,div:focus {outline:0;}
 
 /*---- HEADER ----*/
@@ -4277,6 +4281,7 @@ section.event-detail .about-event-content {
     0 13px 16px 0 rgba(66, 81, 110, 0.04);
   border-radius: 1px;
   margin-top: 20px;
+  white-space: pre-wrap;
 }
 
 section.event-detail .about-event-content p {
@@ -4697,6 +4702,7 @@ section.event-detail .discuss-content .messages .item .info span.msg {
   line-height: 22px;
   letter-spacing: -0.2px;
   padding-top: 15px;
+  white-space: pre-wrap;
 }
 
 /*---- SETTINGS PAGE ----*/
@@ -4877,7 +4883,7 @@ section.settings .message{
   animation-iteration-count: infinite;
   display: flex;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 25px;
 }
 
 
@@ -8181,7 +8187,7 @@ ul.black-member li::before {
   display: -ms-flex;
   display: -o-flex;
   display: flex;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .scroll-more-down {

@@ -200,9 +200,8 @@ class CoupleProfile extends PureComponent {
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               {!toLink &&
-                "Couples Code has been copied to your clipboard. Share this with your partner to create a Couples Profile."}
-              <br />
-              <br />
+               <>Couples Code has been copied to your clipboard. Share this with your partner to create a Couples Profile.<br/><br/></>}
+
               {t("includemsg")}
             </DialogContentText>
           </DialogContent>

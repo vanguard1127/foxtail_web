@@ -4,11 +4,9 @@ import {
   TwitterShareButton,
   RedditShareButton,
   EmailShareButton,
-  TumblrShareButton,
   FacebookIcon,
   TwitterIcon,
   RedditIcon,
-  TumblrIcon,
   EmailIcon
 } from "react-share";
 import { Query } from "react-apollo";
@@ -54,6 +52,7 @@ class Share extends Component {
     } = this.props;
 
     let url;
+    console.log("PRO", profile, "pofglf", profileID);
     if (profile) {
       url = `refer=${userID}&mem=${profile.id}`;
     } else if (event) {
@@ -70,29 +69,24 @@ class Share extends Component {
     }
 
     let title = "";
-    const body = (profile, event, t) => {
+    let body = "";
+    const mdlbody = (profile, event, t) => {
       if (profile) {
-        title = t("intrstmsg") + ":";
-        return (
-          <div>
-            {t("meetques")}{" "}
-            {profile.users.map((user, index) => {
-              if (index === 0) return user.username;
-              else return +" & " + user.username;
-            })}
-            ?
-          </div>
-        );
+        const name = profile.users.map((user, index) => {
+          if (index === 0) return user.username;
+          else return +" & " + user.username;
+        });
+        body = t("whatdoyou") + " " + name + "?" + "\n" + "\n";
+        return <div>{t("meetques") + " " + name}?</div>;
       } else if (event) {
         title = t("invitation") + " " + event.eventname;
+        body = t("invitation") + " " + event.eventname + ":\n" + "\n";
         return <div>{t("shareevent")}?</div>;
       } else if (profileID) {
-        title = "Check out my profile on Foxtail!";
+        body = "Check out my profile on Foxtail!" + "\n" + "\n";
         return <div>Share your Profile</div>;
       } else {
-        title = t(
-          "Check out Foxtail. It's Sexy, Safe, Fun Dating. And it's FREE:"
-        );
+        body = t("checkoutfox");
         return (
           <div>
             {t("Share Foxtail")} <br />
@@ -101,7 +95,7 @@ class Share extends Component {
         );
       }
     };
-    const modalBody = body(profile, event, t);
+    const modalBody = mdlbody(profile, event, t);
 
     return (
       <Query
@@ -135,28 +129,19 @@ class Share extends Component {
                       width: "100%"
                     }}
                   >
-                    <FacebookShareButton url={refUrl} quote={title}>
+                    <FacebookShareButton url={refUrl} quote={body}>
                       <FacebookIcon size={32} round />
                     </FacebookShareButton>
-                    <TwitterShareButton url={refUrl} title={title}>
+                    <TwitterShareButton url={refUrl} title={body}>
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
                     <RedditShareButton
-                      url={refUrl}
-                      title={title}
+                      url={body + refUrl}
                       windowWidth={660}
                       windowHeight={460}
                     >
                       <RedditIcon size={32} round />
                     </RedditShareButton>
-                    <TumblrShareButton
-                      url={refUrl}
-                      title={title}
-                      windowWidth={660}
-                      windowHeight={460}
-                    >
-                      <TumblrIcon size={32} round />
-                    </TumblrShareButton>
                     <CopyToClipboard text={refUrl}>
                       <Tooltip
                         title={
@@ -185,11 +170,7 @@ class Share extends Component {
                         </span>
                       </Tooltip>
                     </CopyToClipboard>
-                    <EmailShareButton
-                      url={refUrl}
-                      subject={title}
-                      body={title + "." + t("checkout") + ":" + refUrl}
-                    >
+                    <EmailShareButton url={refUrl} subject={title} body={body}>
                       <EmailIcon size={32} round />
                     </EmailShareButton>
                   </div>

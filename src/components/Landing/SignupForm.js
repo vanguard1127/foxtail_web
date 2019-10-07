@@ -175,7 +175,7 @@ class SignupForm extends Component {
                 value: e.value
               });
             }}
-            placeholder={t("common:Gender") + ":"}
+            placeholder={t("common:Sex") + ":"}
             lang={lang}
           />
           {this.InputFeedback(errors.gender)}

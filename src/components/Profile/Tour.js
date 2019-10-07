@@ -112,7 +112,7 @@ class ProfileTour extends PureComponent {
                   <div className="data-info">
                     <ul>
                       <li>
-                        <span className="head">Gender:</span>
+                        <span className="head">Sex:</span>
                         <span className="data">Female</span>
                       </li>
                       <li>

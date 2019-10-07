@@ -12,6 +12,7 @@ import FaceIcon from "@material-ui/icons/Face";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import { Spring } from "react-spring/renderprops";
+import { toast } from "react-toastify";
 
 class EditCanvasImage extends PureComponent {
   lastDist = 0;
@@ -145,8 +146,14 @@ class EditCanvasImage extends PureComponent {
 
   handleExportClick = () => {
     const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
+    const { t } = this.props;
     if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
+        if (!toast.isActive("upload")) {
+          toast.success(t("common:upload"), {
+            toastId: "upload"
+          });
+        }
         const rotDegrees = rotation % 360;
         const scaledImgWidth =
           rotDegrees == 0 || rotDegrees == 180
@@ -200,6 +207,7 @@ class EditCanvasImage extends PureComponent {
         await uploadToS3(file.filebody, signedRequest);
 
         await handlePhotoListChange({ file, key, url });
+        toast.dismiss();
         close();
       })
       .catch(res => {

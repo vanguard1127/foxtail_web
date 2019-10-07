@@ -247,13 +247,7 @@ class SettingsPage extends Component {
     const { ErrorHandler, t, ReactGA } = this.props;
     const { isCouple, isInitial } = this.state;
     this.setErrorHandler("Settings updated...");
-    console.log(
-      "isCpuotl",
-      isCouple,
-      "isInitial",
-      isInitial,
-      this.state.flashCpl
-    );
+
     if (!this.isPhotoChanged) {
       if (this.mounted) {
         this.setState({
