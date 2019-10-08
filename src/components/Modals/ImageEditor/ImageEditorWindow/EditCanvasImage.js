@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import Konva from "konva";
 import { Layer, Stage, Group } from "react-konva";
 import TransformerHandler from "./TransformerHandler";
 import SourceImage from "./SourceImage";
@@ -13,7 +14,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import { Spring } from "react-spring/renderprops";
 import { toast } from "react-toastify";
-
+Konva.captureTouchEventsEnabled = true;
 class EditCanvasImage extends PureComponent {
   lastDist = 0;
   startScale = 1;
