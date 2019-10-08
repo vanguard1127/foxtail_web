@@ -36,6 +36,9 @@ textarea{
 
 button,aside,div:focus {outline:0;}
 
+img{
+  pointer-events: none !important;
+}
 /*---- HEADER ----*/
 
 /* LOGO */

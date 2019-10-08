@@ -9,8 +9,10 @@ import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
   const { location, noCheck } = props;
 
-  if (noCheck && location.pathname === "/") {
-    return <Component {...props} />;
+  if (location.pathname === "/") {
+    if (noCheck || location.search) {
+      return <Component {...props} />;
+    }
   }
   return (
     <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">

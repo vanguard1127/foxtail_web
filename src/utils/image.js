@@ -1,5 +1,6 @@
 import i18n from "i18next";
 export const preventContextMenu = e => {
+  console.log("FOR");
   e.preventDefault();
   alert(
     i18n.t(

@@ -51,6 +51,7 @@ class Landing extends PureComponent {
     if (!tReady) {
       return <Spinner />;
     }
+
     if (location) {
       const params = new URLSearchParams(location.search);
       refer = params.get("refer");

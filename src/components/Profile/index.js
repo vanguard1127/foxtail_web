@@ -47,27 +47,14 @@ class ProfilePage extends Component {
     }
     return false;
   }
-  componentWillMount() {
-    document.addEventListener("contextmenu", this.handleContextMenu);
-  }
+
   componentDidMount() {
     this.mounted = true;
+    window.scrollTo(0, 0);
   }
   componentWillUnmount() {
     this.mounted = false;
   }
-
-  handleContextMenu = event => {
-    event.preventDefault();
-    //const { target } = event;
-    // const { classList, offsetParent } = target;
-    // if (
-    //   classList.contains("lg-image") ||
-    //   (offsetParent && offsetParent.classList.contains("lg-thumb"))
-    // ) {
-    preventContextMenu(event);
-    //  }
-  };
 
   setMatchDlgVisible = (matchDlgVisible, profile, chatID) => {
     this.props.ErrorHandler.setBreadcrumb("Match Dialog Toggled:");
@@ -273,6 +260,7 @@ class ProfilePage extends Component {
                               showShareModal={() =>
                                 this.setShareModalVisible(true, profile)
                               }
+                              preventContextMenu={preventContextMenu}
                             />
                             <DesiresSection
                               desires={desires}
@@ -320,6 +308,7 @@ class ProfilePage extends Component {
                                 photos={publicPhotos}
                                 t={t}
                                 ErrorHandler={ErrorHandler}
+                                preventContextMenu={preventContextMenu}
                               />
                             )}
                             {privatePhotos.length > 0 && (
@@ -328,6 +317,7 @@ class ProfilePage extends Component {
                                 photos={privatePhotos}
                                 t={t}
                                 ErrorHandler={ErrorHandler}
+                                preventContextMenu={preventContextMenu}
                               />
                             )}
                           </div>
