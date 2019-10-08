@@ -399,6 +399,9 @@ class EditCanvasImage extends PureComponent {
                       y
                     };
                   }}
+                  onTouchStart={e => {
+                    e.target.setPointerCapture(e.pointerId);
+                  }}
                   onTouchMove={res => {
                     res.evt.preventDefault();
                     const stage = res.currentTarget;

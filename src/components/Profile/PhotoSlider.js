@@ -122,11 +122,7 @@ class PhotoSlider extends Component {
             ))}
           </OwlCarousel>
           {previewVisible && (
-            <Lightbox
-              mainSrc={selectedImg}
-              onCloseRequest={this.handleClose}
-              discourageDownloads={true}
-            />
+            <Lightbox mainSrc={selectedImg} onCloseRequest={this.handleClose} />
           )}
         </div>
       </ErrorHandler.ErrorBoundary>
