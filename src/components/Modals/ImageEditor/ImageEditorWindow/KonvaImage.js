@@ -7,11 +7,12 @@ class KonvaImage extends PureComponent {
     this.state = {
       image: null,
       selectedShapeName: "",
-      isLastImage: props.isLastImage
+      isNew: props.isNew
     };
   }
 
   componentDidMount() {
+    console.log("asdfasdf");
     const importImage = require("./" + this.props.src);
     const image = new window.Image();
     // here we've taken 30% size of image and lessthan 400 widht - 20%
@@ -22,10 +23,8 @@ class KonvaImage extends PureComponent {
     image.onload = () => {
       this.setState({
         image: image,
-        imageWidth: this.props.isLastImage
-          ? +((image.width / this.props.scale) * konvaImageScale).toFixed(2)
-          : +(image.width * konvaImageScale).toFixed(2),
-        imageHeight: this.props.isLastImage
+        imageWidth: this.props.isNew ? +((image.width / this.props.scale) * konvaImageScale).toFixed(2) : +(image.width * konvaImageScale).toFixed(2),
+        imageHeight: this.props.isNew
           ? +((image.height / this.props.scale) * konvaImageScale).toFixed(2)
           : +(image.height * konvaImageScale).toFixed(2)
       });
@@ -33,9 +32,11 @@ class KonvaImage extends PureComponent {
   }
 
   render() {
-    const { name, rotation, onTouchStart } = this.props;
+    const { name, rotation, onTouchStart, isDeleted } = this.props;
 
-    return (
+    return isDeleted ? (
+      <React.Fragment />
+    ) : (
       <Image
         x={-(this.state.imageWidth / 2)}
         y={-(this.state.imageHeight / 2)}
