@@ -162,7 +162,12 @@ class CoupleProfile extends PureComponent {
             <DialogContentText id="alert-dialog-description">
               {!toLink && (
                 <>
+<<<<<<< HEAD
+                  Couples Code has been copied to your clipboard. Share this
+                  with your partner to create a Couples Profile.
+=======
                   Couples Code has been copied to your clipboard. Share this with your partner to create a Couples Profile.
+>>>>>>> 760d0388979214e00c7a91d12170d03769eec280
                   <br />
                   <br />
                 </>
@@ -195,6 +200,7 @@ class CoupleProfile extends PureComponent {
                   >
                     Include
                   </Button>
+                  {"  "}
                   <Button
                     variant="contained"
                     color="secondary"

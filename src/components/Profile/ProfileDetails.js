@@ -56,7 +56,7 @@ class ProfileDetails extends Component {
             </li>
             <li>
               <span className="head">{t("lookfor")}:</span>
-              <Tooltip title={lookingFor} placement="bottom">
+              <Tooltip title={lookingFor} placement="top">
                 <span className="data lookfor">{lookingFor}</span>
               </Tooltip>
             </li>

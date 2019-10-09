@@ -6,7 +6,7 @@ import axios from "axios";
 import { Mutation } from "react-apollo";
 import { SIGNS3, CREATE_EVENT } from "../../../queries";
 import PhotoUpload from "../../common/PhotoUpload";
-import DesiresModal from "../../Modals/Desires/Modal";
+import DesiresModal from "../Desires/Modal";
 import DesiresSelector from "../../Modals/Desires/Selector";
 import AddressSearch from "../../common/AddressSearch";
 import DatePicker from "../../common/DatePicker";
@@ -326,7 +326,6 @@ class CreateEvent extends Component {
                               })
                             }
                             value={eventname || ""}
-                            autoFocus
                           />
                           <label title={t("evename")} htmlFor="eventname" />
                         </div>

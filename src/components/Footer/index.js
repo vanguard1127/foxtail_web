@@ -34,7 +34,7 @@ class Footer extends Component {
     const { t, tReady } = this.props;
     const { showRulesModal, showContactModal } = this.state;
     const shareUrl = "www.fotxtailapp.com";
-    const title = "Foxtail - Free dating for alternative relationships";
+    const title = "Foxtail - Free | Secure | 18+ Fun";
     if (!tReady) {
       return null;
     }
@@ -63,7 +63,7 @@ class Footer extends Component {
                     </TwitterShareButton>
                   </li>
                   <li className="mail">
-                    <EmailShareButton url={shareUrl} subject={title}>
+                    <EmailShareButton url={shareUrl} body={title}>
                       <span aria-label="email share">
                         <i />
                       </span>
