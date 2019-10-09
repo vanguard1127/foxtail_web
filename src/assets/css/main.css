@@ -7649,6 +7649,13 @@ section.login-modal .popup form .form-content {
   float: left;
 }
 
+section.login-modal .popup form .form-content-scrollable {
+  max-height: 80vh;
+  max-width: 94vw;
+  overflow: auto;
+  border-radius: 4px;
+}
+
 section.login-modal .popup form .form-content .input {
   width: 100%;
   display: block;

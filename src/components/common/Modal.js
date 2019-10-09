@@ -71,7 +71,7 @@ class Modal extends Component {
                       {/* <span className="head">{header}</span> */}
                       <a className="close" onClick={() => close()} />
                       <form>
-                        <div className="form-content">
+                        <div className="form-content form-content-scrollable">
                           {children}
                           {description && <span className="description">{description}</span>}
                           {okSpan && <div className="submit">{okSpan}</div>}
@@ -82,7 +82,7 @@ class Modal extends Component {
                   </div>
                 ) : (
                   <div className="col-md-6">
-                    <div className="popup">
+                    <div className="popup" style={{ maxHeight: "80vh", overflow: "auto" }}>
                       <span className="head">{header}</span>
                       {close && <a className="close" onClick={() => close()} />}
                       <form>
