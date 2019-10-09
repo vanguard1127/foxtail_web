@@ -7,12 +7,10 @@ import ReCaptcha from "../Modals/ReCaptcha";
 
 import { GET_CURRENT_USER } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
-  const { location, noCheck } = props;
+  const { location } = props;
 
-  if (location.pathname === "/") {
-    if (noCheck || location.search) {
-      return <Component {...props} />;
-    }
+  if (location.pathname === "/" && location.search) {
+    return <Component {...props} />;
   }
   return (
     <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
@@ -22,6 +20,10 @@ const withAuth = conditionFunc => Component => props => {
         }
 
         if (error) {
+          if (location.state && location.state.noCheck) {
+            return <Component {...props} />;
+          }
+
           return (
             <Redirect
               to={{

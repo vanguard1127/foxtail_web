@@ -230,13 +230,7 @@ const Wrapper = withRouter(props => {
       location.pathname === "/" &&
       (!location.search || location.search.includes("="))
     ) {
-      return (
-        <Landing
-          {...props}
-          ReactGA={ReactGA}
-          noCheck={location.state && location.state.noCheck}
-        />
-      );
+      return <Landing {...props} ReactGA={ReactGA} />;
     } else if (location.pathname === "/tos") {
       return <ToS history={props.history} />;
     } else if (location.pathname === "/about") {

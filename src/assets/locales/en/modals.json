@@ -105,6 +105,8 @@
   "dec500": "Description must be less than 500 characters",
   "decreq": "Description is required!",
   "evetypereq": "Event Type is required!",
+  "evestartreq": "Event Start Time is required!",
+  "eveendreq": "Event End Time is required!",
   "dec240": "Description must be less than 240 characters",
   "addreq": "Address is required!",
   "evevtsaved": "Event Saved!",

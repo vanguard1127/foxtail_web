@@ -160,9 +160,6 @@ class SettingsPage extends Component {
     window.addEventListener("beforeunload", () => {
       this.handleSubmit(this.updateSettings);
     });
-    //TODO: See if we still need this
-    //window.addEventListener("unload", this.logData, false);
-
     this.mounted = true;
   }
 

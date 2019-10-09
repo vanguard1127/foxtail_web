@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import * as yup from "yup";
+import dayjs from "dayjs";
 import axios from "axios";
 import { Mutation } from "react-apollo";
 import { SIGNS3, CREATE_EVENT } from "../../../queries";
@@ -115,6 +116,7 @@ class CreateEvent extends Component {
       return true;
     } catch (e) {
       let errors = {};
+      console.log(e);
       e.inner.forEach(err => (errors[err.path] = err.message));
       this.setState({ errors });
       return false;
@@ -148,13 +150,15 @@ class CreateEvent extends Component {
 
   handleSubmit = async ({ createEvent, signS3 }) => {
     const { t, ErrorHandler, refetch, close, history, ReactGA } = this.props;
+    console.log("SFDF", this.state.image);
     if (await this.validateForm()) {
       if (!toast.isActive("savingeve")) {
         toast(t("savingeve"), {
           toastId: "savingeve"
         });
       }
-      if (this.state.image !== "") {
+      if (this.state.image && this.state.image.name !== undefined) {
+        console.log("Uploa", this.state.image.name);
         await this.handleUpload({ signS3 });
       }
       createEvent()
@@ -188,12 +192,10 @@ class CreateEvent extends Component {
   };
 
   handleUpload = async ({ signS3 }) => {
-    const { image } = this.state;
-    if (image === "") {
+    const { image: file } = this.state;
+    if (file === "") {
       return;
     }
-
-    const file = image;
 
     await this.setS3PhotoParams(file.name, file.type);
 
@@ -302,6 +304,7 @@ class CreateEvent extends Component {
     if (!tReady) {
       return null;
     }
+    console.log("FFDFD", errors);
     return (
       <section>
         <Modal
@@ -465,7 +468,7 @@ class CreateEvent extends Component {
                             minDate: new Date()
                           }}
                           onChange={e => {
-                            if (endTime && e > endTime) {
+                            if (endTime && dayjs(e).isAfter(dayjs(endTime))) {
                               if (!toast.isActive("startTime")) {
                                 toast.info(
                                   "Start time may not be after ending time",
@@ -477,6 +480,7 @@ class CreateEvent extends Component {
                               }
                               return;
                             }
+
                             this.setValue({
                               name: "startTime",
                               value: e
@@ -492,7 +496,10 @@ class CreateEvent extends Component {
                           value={endTime}
                           p={{ minDate: new Date(startTime) || new Date() }}
                           onChange={e => {
-                            if (startTime && startTime > e) {
+                            if (
+                              startTime &&
+                              dayjs(startTime).isAfter(dayjs(e))
+                            ) {
                               if (!toast.isActive("endTime")) {
                                 toast.info(
                                   "End time may not be before starting time",
@@ -504,6 +511,7 @@ class CreateEvent extends Component {
                               }
                               return;
                             }
+
                             this.setValue({
                               name: "endTime",
                               value: e

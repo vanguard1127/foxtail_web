@@ -3,7 +3,6 @@ import { Mutation } from "react-apollo";
 import { LOGIN } from "./queries";
 class DevTools extends Component {
   state = { phone: "" };
-  //TODO:DELETE THIS PRE LAUNCH
   handleLogin = login => {
     login()
       .then(async ({ data }) => {

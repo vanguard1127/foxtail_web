@@ -37,7 +37,7 @@ class ProfileCard extends Component {
   };
 
   toggleLiked = () => {
-    if (!this.state.liked && this.props.likesToday > 24) {
+    if (!this.state.liked && this.props.likesSent > 24) {
       this.setMaxLikeDlgVisible();
       return;
     }

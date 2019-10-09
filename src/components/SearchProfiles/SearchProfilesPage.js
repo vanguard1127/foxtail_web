@@ -146,7 +146,7 @@ class SearchProfilesPage extends Component {
             long={long}
             distance={distance}
             distanceMetric={session.currentuser.distanceMetric}
-            likesToday={session.currentuser.likesToday}
+            likesSent={session.currentuser.likesSent}
             ageRange={ageRange}
             interestedIn={interestedIn}
             ErrorHandler={ErrorHandler}

@@ -36,7 +36,7 @@ class ProfilesContainer extends Component {
       this.props.ageRange !== nextProps.ageRange ||
       this.props.interestedIn !== nextProps.interestedIn ||
       this.props.distanceMetric !== nextProps.distanceMetric ||
-      this.props.likesToday !== nextProps.likesToday ||
+      this.props.likesSent !== nextProps.likesSent ||
       this.props.isBlackMember !== nextProps.isBlackMember ||
       this.state.skip !== nextState.skip ||
       this.state.loading !== nextState.loading ||
@@ -140,9 +140,9 @@ class ProfilesContainer extends Component {
   };
 
   handleLike = (likeProfile, profile, featured) => {
-    const { ErrorHandler, t, ReactGA, likesToday } = this.props;
+    const { ErrorHandler, t, ReactGA, likesSent } = this.props;
     ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
-    if (likesToday > 24) {
+    if (likesSent > 24) {
       this.setMaxLikeDlgVisible();
       return;
     }

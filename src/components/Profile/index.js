@@ -51,6 +51,7 @@ class ProfilePage extends Component {
   componentDidMount() {
     this.mounted = true;
     window.scrollTo(0, 0);
+    document.addEventListener("contextmenu", preventContextMenu);
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -254,8 +255,8 @@ class ProfilePage extends Component {
                                   .active
                               }
                               history={this.props.history}
-                              likesToday={
-                                this.props.session.currentuser.likesToday
+                              likesSent={
+                                this.props.session.currentuser.likesSent
                               }
                               showShareModal={() =>
                                 this.setShareModalVisible(true, profile)

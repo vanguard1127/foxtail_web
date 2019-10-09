@@ -856,7 +856,7 @@ export const GET_CURRENT_USER = gql`
       }
       active
       captchaReq
-      likesToday
+      likesSent
     }
   }
 `;

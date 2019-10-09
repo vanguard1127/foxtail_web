@@ -43,6 +43,7 @@ class IdleTimer extends PureComponent {
   }
 
   resetTimeout() {
+    toast.dismiss("warn");
     this.clearTimeout();
     this.setTimeout();
   }
@@ -50,7 +51,8 @@ class IdleTimer extends PureComponent {
   warn() {
     if (!toast.isActive("warn")) {
       toast("Idle warning: You will be logged out automatically in 1 minute", {
-        toastId: "warn"
+        toastId: "warn",
+        autoClose: false
       });
     }
   }
