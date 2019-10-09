@@ -73,7 +73,7 @@ class Desires extends Component {
                           desire.label.toLowerCase().startsWith(searchText)
                         )
                         .map(option => (
-                          <li key={option.value}>
+                          <li key={option.value} title={t(option.label)}>
                             <div className="select-checkbox">
                               <input
                                 type="checkbox"
