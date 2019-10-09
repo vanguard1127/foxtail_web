@@ -20,7 +20,7 @@ class ProfileInfo extends Component {
       <ErrorBoundary>
         <div className={userInfoStyle}>
           <div>
-            <Tooltip title={profileName} placement="bottom">
+            <Tooltip title={profileName} placement="top">
               <span className="name">
                 {users[1] && (
                   <span

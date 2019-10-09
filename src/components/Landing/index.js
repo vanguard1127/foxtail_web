@@ -194,16 +194,6 @@ class Landing extends PureComponent {
                                 <ul>
                                   <li>
                                     <span className="counter">
-                                      <CountUp
-                                        end={malesNum}
-                                        duration={1.75}
-                                        separator=","
-                                      />
-                                    </span>
-                                    <span>{t("Male Members")}</span>
-                                  </li>
-                                  <li>
-                                    <span className="counter">
                                       {" "}
                                       <CountUp
                                         end={femalesNum}
@@ -213,6 +203,17 @@ class Landing extends PureComponent {
                                     </span>
                                     <span>{t("Female Members")}</span>
                                   </li>
+                                  <li>
+                                    <span className="counter">
+                                      <CountUp
+                                        end={malesNum}
+                                        duration={1.75}
+                                        separator=","
+                                      />
+                                    </span>
+                                    <span>{t("Male Members")}</span>
+                                  </li>
+
                                   <li>
                                     <span className="counter">
                                       {" "}
