@@ -14,6 +14,7 @@ import Modal from "../../common/Modal";
 import isEmpty from "../../../utils/isEmpty";
 import { toast } from "react-toastify";
 import Dropdown from "../../common/Dropdown";
+import Tooltip from "../../common/Tooltip";
 
 class CreateEvent extends Component {
   schema = yup.object().shape({
@@ -76,9 +77,7 @@ class CreateEvent extends Component {
     showInfo: true,
     showDesiresPopup: false,
     isImageAlt: false,
-    removeCurrentImage: this.props.updateEventProps
-      ? !!this.props.updateEventProps.image
-      : false,
+    removeCurrentImage: this.props.updateEventProps ? !!this.props.updateEventProps.image : false,
     setOlderImage: false,
     ...this.props.updateEventProps
   };
@@ -307,12 +306,7 @@ class CreateEvent extends Component {
     console.log("FFDFD", errors);
     return (
       <section>
-        <Modal
-          header={eventID ? t("updateeve") : t("createeve")}
-          close={close}
-          disableOffClick
-          className="create-event"
-        >
+        <Modal header={eventID ? t("updateeve") : t("createeve")} close={close} disableOffClick className="create-event">
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
               <div className="page">
@@ -369,14 +363,11 @@ class CreateEvent extends Component {
                         </div>
                         {this.InputFeedback(errors.description)}
                       </div>
-                      <div className="item">
-                        <DesiresSelector
-                          desires={desires}
-                          togglePopup={this.toggleDesiresPopup}
-                          ErrorBoundary={ErrorHandler.ErrorBoundary}
-                          t={t}
-                        />
-                      </div>
+                      <Tooltip placement="top" title="Sample tooltip">
+                        <div className="item">
+                          <DesiresSelector desires={desires} togglePopup={this.toggleDesiresPopup} ErrorBoundary={ErrorHandler.ErrorBoundary} t={t} />
+                        </div>
+                      </Tooltip>
                       <div className="item">
                         <Dropdown
                           value={type}
@@ -418,10 +409,7 @@ class CreateEvent extends Component {
                               }}
                             />
                             {eventID && setOlderImage && (
-                              <div
-                                style={{ padding: "4px", textAlign: "right" }}
-                                onClick={this.handleClickOnResetImage}
-                              >
+                              <div style={{ padding: "4px", textAlign: "right" }} onClick={this.handleClickOnResetImage}>
                                 Set older Image
                               </div>
                             )}
@@ -430,9 +418,7 @@ class CreateEvent extends Component {
                       </div>
                       <div className="item">
                         <div className="button mtop">
-                          <button onClick={() => this.togglePage()}>
-                            {t("common:Next")}
-                          </button>
+                          <button onClick={() => this.togglePage()}>{t("common:Next")}</button>
                         </div>
                       </div>
                     </div>
@@ -469,13 +455,10 @@ class CreateEvent extends Component {
                           onChange={e => {
                             if (endTime && dayjs(e).isAfter(dayjs(endTime))) {
                               if (!toast.isActive("startTime")) {
-                                toast.info(
-                                  "Start time may not be after ending time",
-                                  {
-                                    position: toast.POSITION.TOP_CENTER,
-                                    toastId: "startTime"
-                                  }
-                                );
+                                toast.info("Start time may not be after ending time", {
+                                  position: toast.POSITION.TOP_CENTER,
+                                  toastId: "startTime"
+                                });
                               }
                               return;
                             }
@@ -495,18 +478,12 @@ class CreateEvent extends Component {
                           value={endTime}
                           p={{ minDate: new Date(startTime) || new Date() }}
                           onChange={e => {
-                            if (
-                              startTime &&
-                              dayjs(startTime).isAfter(dayjs(e))
-                            ) {
+                            if (startTime && dayjs(startTime).isAfter(dayjs(e))) {
                               if (!toast.isActive("endTime")) {
-                                toast.info(
-                                  "End time may not be before starting time",
-                                  {
-                                    position: toast.POSITION.TOP_CENTER,
-                                    toastId: "endTime"
-                                  }
-                                );
+                                toast.info("End time may not be before starting time", {
+                                  position: toast.POSITION.TOP_CENTER,
+                                  toastId: "endTime"
+                                });
                               }
                               return;
                             }
@@ -534,10 +511,7 @@ class CreateEvent extends Component {
                       <div className="item">
                         <div className="submit">
                           {" "}
-                          <Mutation
-                            mutation={SIGNS3}
-                            variables={{ filename, filetype }}
-                          >
+                          <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
                             {signS3 => {
                               return (
                                 <Mutation
@@ -570,9 +544,7 @@ class CreateEvent extends Component {
                                           })
                                         }
                                       >
-                                        {eventID
-                                          ? t("common:updateevent")
-                                          : t("common:createevent")}
+                                        {eventID ? t("common:updateevent") : t("common:createevent")}
                                       </span>
                                     );
                                   }}
@@ -580,10 +552,7 @@ class CreateEvent extends Component {
                               );
                             }}
                           </Mutation>
-                          <span
-                            className="border"
-                            onClick={() => this.togglePage()}
-                          >
+                          <span className="border" onClick={() => this.togglePage()}>
                             {t("Back")}
                           </span>
                         </div>

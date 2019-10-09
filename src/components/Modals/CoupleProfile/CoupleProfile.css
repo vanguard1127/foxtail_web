@@ -45,6 +45,7 @@
   width: 50%;
   padding-left: 10px;
 }
+
 .couple-profile h4.question-first,
 h4.question-second {
   font-size: 19pt;
@@ -56,25 +57,40 @@ p.require-code {
   color: white;
   margin-bottom: 10px;
 }
+
+.couple-profile .layer-right .code-input-wrapper {
+  display: flex;
+  /* flex-direction: column; */
+  width: 85%;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .couple-profile input[type="text"] {
   height: 40px;
-  width: 228px;
+  width: 74%;
   border-radius: 5px;
   border: none;
   text-align: center;
 }
+
 .couple-profile span.submitCpl {
   height: 40px;
-  width: 100px;
+  width: 20%;
   border: none;
   border-radius: 5px;
-  margin-left: 25px;
+  /* margin-left: 25px; */
   background-color: #00d157;
   color: white;
   font-size: 12pt;
   font-weight: bold;
   font-family: "Roboto", sans-serif;
   margin-bottom: 2px;
+  /* margin-top: 16px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 .couple-profile .layer-right hr {
   margin-top: 30px;
@@ -136,6 +152,17 @@ p.require-code {
   .couple-profile .layer-right hr {
     margin: 30px auto;
     display: inline-flex;
+  }
+  .couple-profile .layer-right .code-input-wrapper {
+    flex-direction: column;
+    width: 98%;
+  }
+  .couple-profile input[type="text"] {
+    width: 100%;
+  }
+  .couple-profile span.submitCpl {
+    width: 100%;
+    margin-top: 24px;
   }
   .couple-profile input[type="submit"] {
     margin-left: 10px;
