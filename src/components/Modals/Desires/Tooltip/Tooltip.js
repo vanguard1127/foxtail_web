@@ -3,7 +3,7 @@ import "./Tooltip.css";
 
 class Tooltip extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.placement !== nextProps.placement) {
+    if (this.props.placement !== nextProps.placement || this.props.children !== nextProps.children) {
       return true;
     }
     return false;
