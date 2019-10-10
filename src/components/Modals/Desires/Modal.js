@@ -4,6 +4,7 @@ import { desireOptions } from "../../../docs/options";
 import Spinner from "../../common/Spinner";
 import SearchBox from "./SearchBox";
 import { Spring } from "react-spring/renderprops";
+import Tooltip from "../../common/Tooltip/Tooltip";
 
 class Desires extends Component {
   state = { searchText: "" };
@@ -48,11 +49,7 @@ class Desires extends Component {
     return (
       <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
         {props => (
-          <section
-            className="desires-popup show"
-            ref={this.wrapperRef}
-            style={props}
-          >
+          <section className="desires-popup show" ref={this.wrapperRef} style={props}>
             <div className="modal-popup desires-select">
               <ErrorBoundary>
                 <div className="m-head">
@@ -61,28 +58,19 @@ class Desires extends Component {
                   <span className="close" onClick={close} />
                 </div>
                 <div className="m-body desires">
-                  <SearchBox
-                    value={searchText}
-                    onChange={this.setValue}
-                    t={t}
-                  />
+                  <SearchBox value={searchText} onChange={this.setValue} t={t} />
                   <div className="desires-list-con">
                     <ul>
                       {desireOptions
-                        .filter(desire =>
-                          desire.label.toLowerCase().startsWith(searchText)
-                        )
-                        .map(option => (
+                        .filter(desire => desire.label.toLowerCase().startsWith(searchText))
+                        .map((option, index) => (
                           <li key={option.value} title={t(option.label)}>
-                            <div className="select-checkbox">
+                            <Tooltip key={option.value} title={t(option.label)} placement={"top"}>
+                              {/* <div className="select-checkbox"> */}
                               <input
                                 type="checkbox"
                                 id={option.value}
-                                checked={
-                                  desires.indexOf(option.value) > -1
-                                    ? true
-                                    : false
-                                }
+                                checked={desires.indexOf(option.value) > -1 ? true : false}
                                 onChange={e =>
                                   onChange({
                                     checked: e.target.checked,
@@ -94,7 +82,8 @@ class Desires extends Component {
                                 <span />
                                 <b>{t(option.label)}</b>
                               </label>
-                            </div>
+                              {/* </div> */}
+                            </Tooltip>
                           </li>
                         ))}
                     </ul>

@@ -12,10 +12,7 @@ class SearchProfiles extends Component {
     shareModalVisible: false
   };
   shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.props.tReady !== nextProps.tReady ||
-      this.state.shareModalVisible !== nextState.shareModalVisible
-    ) {
+    if (this.props.tReady !== nextProps.tReady || this.state.shareModalVisible !== nextState.shareModalVisible) {
       return true;
     }
     return false;
@@ -41,12 +38,7 @@ class SearchProfiles extends Component {
       <Query query={GET_SEARCH_SETTINGS} fetchPolicy="cache-and-network">
         {({ data, loading, error, refetch: { refetchSettings } }) => {
           if (error) {
-            return (
-              <ErrorHandler.report
-                error={error}
-                calledName={"getSearchSettings"}
-              />
-            );
+            return <ErrorHandler.report error={error} calledName={"getSearchSettings"} />;
           }
           if (!data || !data.getSettings || loading) {
             return null;

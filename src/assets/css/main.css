@@ -7607,6 +7607,11 @@ section.login-modal .popup.full{
  overflow: auto;
  width:auto;
 }
+
+section.login-modal .popup.max {
+  max-width: 520px;
+}
+
 section.login-modal.couples .popup.full,section.login-modal.black .popup.full{
   padding: 0px;
  }

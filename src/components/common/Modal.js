@@ -25,10 +25,7 @@ class Modal extends Component {
   }
 
   handleClickOutside = event => {
-    if (
-      (this.wrapperRef && this.wrapperRef.current === event.target) ||
-      event.target.className === "container"
-    ) {
+    if ((this.wrapperRef && this.wrapperRef.current === event.target) || event.target.className === "container") {
       if (this.props.close) {
         this.props.close();
       }
@@ -36,40 +33,20 @@ class Modal extends Component {
   };
 
   render() {
-    const {
-      close,
-      header,
-      children,
-      description,
-      okSpan,
-      cancelSpan,
-      fullWidth,
-      fullScreen,
-      className,
-      noBorder,
-      noHeader
-    } = this.props;
+    const { close, header, children, description, okSpan, cancelSpan, fullWidth, fullScreen, className, noBorder, noHeader, maxWidth } = this.props;
 
     return (
       <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
         {props => (
           <section
             style={props}
-            className={`login-modal show ${
-              fullScreen ? "full-screen-modal" : ""
-            }${className ? className : ""}`}
+            className={`login-modal show ${fullScreen ? "full-screen-modal" : ""}${className ? className : ""}`}
             ref={this.wrapperRef}
           >
             {fullScreen ? (
-              <div
-                className="container"
-                style={{ width: "100%", height: "100vh" }}
-              >
+              <div className="container" style={{ width: "100%", height: "100vh" }}>
                 <div>
-                  <div
-                    className="popup"
-                    style={{ height: "100vh", padding: "unset" }}
-                  >
+                  <div className="popup" style={{ height: "100vh", padding: "unset" }}>
                     {/* <span className="head">{header}</span> */}
                     {/* <a
                   className="close close-fullscreen-popup"
@@ -78,13 +55,9 @@ class Modal extends Component {
                     <form>
                       <div className="form-content">
                         {children}
-                        {description && (
-                          <span className="description">{description}</span>
-                        )}
+                        {description && <span className="description">{description}</span>}
                         {okSpan && <div className="submit">{okSpan}</div>}
-                        {cancelSpan && (
-                          <div className="submit">{cancelSpan}</div>
-                        )}
+                        {cancelSpan && <div className="submit">{cancelSpan}</div>}
                       </div>
                     </form>
                   </div>
@@ -93,19 +66,15 @@ class Modal extends Component {
             ) : (
               <div className={fullWidth ? "" : "popup-container"}>
                 <div className={fullWidth ? "col-md-12" : "col-md-6"}>
-                  <div className={fullWidth ? "popup full" : "popup"}>
+                  <div className={`${fullWidth ? "popup full" : "popup"} ${maxWidth ? "max" : ""}`}>
                     {!noHeader && <span className="head">{header}</span>}
                     {close && <a className="close" onClick={() => close()} />}
                     <form>
                       <div className="form-content">
                         {children}
-                        {description && (
-                          <span className="description">{description}</span>
-                        )}
+                        {description && <span className="description">{description}</span>}
                         {okSpan && <div className="submit">{okSpan}</div>}
-                        {cancelSpan && (
-                          <div className="submit">{cancelSpan}</div>
-                        )}
+                        {cancelSpan && <div className="submit">{cancelSpan}</div>}
                       </div>
                     </form>
                   </div>

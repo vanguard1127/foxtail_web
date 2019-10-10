@@ -10,18 +10,9 @@ class ProfileDetails extends Component {
     return false;
   }
   render() {
-    const {
-      users,
-      profile,
-      showShareModal,
-      showBlockModal,
-      t,
-      ErrorBoundary,
-      distanceMetric
-    } = this.props;
+    const { users, profile, showShareModal, showBlockModal, t, ErrorBoundary, distanceMetric } = this.props;
     let distance;
-    let distanceUnits =
-      distanceMetric === "mi" ? "common:miaway" : "common:kmaway";
+    let distanceUnits = distanceMetric === "mi" ? "common:miaway" : "common:kmaway";
 
     if (profile.distance === null) {
       distance = t("na");
@@ -42,9 +33,7 @@ class ProfileDetails extends Component {
         <div className="data-info">
           <ul>
             <li>
-              <span className="head">
-                {users[1] ? t("common:Sexes") : t("common:Sex")}:
-              </span>
+              <span className="head">{users[1] ? t("common:Sexes") : t("common:Sex")}:</span>
               <span className="data gender">
                 <span className={"sex " + users[0].gender} />
                 {users[1] && <span className={"sex " + users[1].gender} />}
@@ -64,11 +53,7 @@ class ProfileDetails extends Component {
               <span className="head">{t("lstlogin")}:</span>
               <span className="data">
                 {" "}
-                {profile.showOnline
-                  ? profile.online
-                    ? t("common:Online")
-                    : TimeAgo(profile.updatedAt)
-                  : t("common:NA")}
+                {profile.showOnline ? (profile.online ? t("common:Online") : TimeAgo(profile.updatedAt)) : t("common:NA")}
               </span>
             </li>
           </ul>

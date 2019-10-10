@@ -3,10 +3,7 @@ import { desireOptions } from "../../../docs/options";
 
 class Selector extends Component {
   shouldComponentUpdate(nextProps) {
-    if (
-      this.props.desires !== nextProps.desires ||
-      this.props.t !== nextProps.t
-    ) {
+    if (this.props.desires !== nextProps.desires || this.props.t !== nextProps.t) {
       return true;
     }
     return false;
@@ -16,10 +13,7 @@ class Selector extends Component {
 
     return (
       <span>
-        <div
-          className="select_desires desires_select_popup"
-          onClick={togglePopup}
-        >
+        <div className="select_desires desires_select_popup" onClick={togglePopup}>
           <span className="label">{t("common:seldesires")}:</span>
           <ErrorBoundary>
             <ul>
@@ -29,9 +23,7 @@ class Selector extends Component {
                 return result;
               }, [])}
             </ul>
-            {desires.length > 0 && (
-              <span className="counter">{`(${desires.length})`}</span>
-            )}
+            {desires.length > 0 && <span className="counter">{`(${desires.length})`}</span>}
           </ErrorBoundary>
         </div>
       </span>

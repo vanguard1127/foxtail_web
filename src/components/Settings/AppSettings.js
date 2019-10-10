@@ -31,17 +31,7 @@ class AppSettings extends Component {
     }
   };
   render() {
-    const {
-      setValue,
-      visible,
-      lang,
-      emailNotify,
-      showOnline,
-      likedOnly,
-      t,
-      ErrorBoundary,
-      isBlackMember
-    } = this.props;
+    const { setValue, visible, lang, emailNotify, showOnline, likedOnly, t, ErrorBoundary, isBlackMember } = this.props;
 
     return (
       <ErrorBoundary>
@@ -56,22 +46,10 @@ class AppSettings extends Component {
                       <div>Settings</div>
                       <div>
                         <ul>
-                          <li>
-                            Show My Profile: Makes your profile visible to other
-                            members
-                          </li>
-                          <li>
-                            Receive E-mails: Recieve notification emails such as
-                            new messages, event reminders, etc.
-                          </li>
-                          <li>
-                            Show Online Status (Black only): Show/Hide your
-                            online status from members
-                          </li>
-                          <li>
-                            Visible to Liked Only (Black only): Only show your
-                            profile to those you've liked
-                          </li>
+                          <li>Show My Profile: Makes your profile visible to other members</li>
+                          <li>Receive E-mails: Recieve notification emails such as new messages, event reminders, etc.</li>
+                          <li>Show Online Status (Black only): Show/Hide your online status from members</li>
+                          <li>Visible to Liked Only (Black only): Only show your profile to those you've liked</li>
                         </ul>
                       </div>
                     </div>
@@ -157,10 +135,7 @@ class AppSettings extends Component {
                     {t("hideonline")}:
                   </div>
                   <div className="sw-btn">
-                    <div
-                      className="switch"
-                      onClick={e => !isBlackMember && this.warnBlk()}
-                    >
+                    <div className="switch" onClick={e => !isBlackMember && this.warnBlk()}>
                       <input
                         type="checkbox"
                         id="hide_online_status"
@@ -189,10 +164,7 @@ class AppSettings extends Component {
                     {t("onlyshow")}:
                   </div>
                   <div className="sw-btn">
-                    <div
-                      className="switch"
-                      onClick={e => !isBlackMember && this.warnBlk()}
-                    >
+                    <div className="switch" onClick={e => !isBlackMember && this.warnBlk()}>
                       <input
                         type="checkbox"
                         id="ilikeds"

@@ -25,11 +25,7 @@ class Share extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.props.t !== nextProps.t ||
-      this.state.copied !== nextState.copied ||
-      this.props.tReady !== nextProps.tReady
-    ) {
+    if (this.props.t !== nextProps.t || this.state.copied !== nextState.copied || this.props.tReady !== nextProps.tReady) {
       return true;
     }
     return false;
@@ -40,16 +36,7 @@ class Share extends Component {
   };
 
   render() {
-    const {
-      userID,
-      profile,
-      profileID,
-      event,
-      close,
-      t,
-      ErrorBoundary,
-      tReady
-    } = this.props;
+    const { userID, profile, profileID, event, close, t, ErrorBoundary, tReady } = this.props;
 
     let url;
     if (profile) {
@@ -97,11 +84,7 @@ class Share extends Component {
     const modalBody = mdlbody(profile, event, t);
 
     return (
-      <Query
-        query={SET_FULL_LINK}
-        variables={{ url }}
-        fetchPolicy="cache-first"
-      >
+      <Query query={SET_FULL_LINK} variables={{ url }} fetchPolicy="cache-first">
         {({ data, loading, error }) => {
           if (loading) {
             return null;
@@ -134,20 +117,12 @@ class Share extends Component {
                     <TwitterShareButton url={refUrl} title={body}>
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
-                    <RedditShareButton
-                      url={body + refUrl}
-                      windowWidth={660}
-                      windowHeight={460}
-                    >
+                    <RedditShareButton url={body + refUrl} windowWidth={660} windowHeight={460}>
                       <RedditIcon size={32} round />
                     </RedditShareButton>
                     <CopyToClipboard text={refUrl}>
                       <Tooltip
-                        title={
-                          copied
-                            ? t("Copied url to clipboard")
-                            : t("Copy referral url")
-                        }
+                        title={copied ? t("Copied url to clipboard") : t("Copy referral url")}
                         placement="top"
                         onClick={() => this.toggleCopied(true)}
                         onClose={() => this.toggleCopied(false)}
@@ -162,8 +137,7 @@ class Share extends Component {
                         >
                           <svg viewBox="0 0 64 64" width="32" height="32">
                             <g>
-                              <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
-                              <LinkIcon className="linksvg" />
+                              <circle cx="32" cy="32" r="31" fill="#FF8749" /> <LinkIcon className="linksvg" />
                             </g>
                           </svg>
                         </span>

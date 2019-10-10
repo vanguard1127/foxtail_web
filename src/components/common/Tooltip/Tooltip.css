@@ -1,12 +1,14 @@
 .tooltip {
+  width: 100%;
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black;
+  /* border-bottom: 1px dotted black; */
 }
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  width: auto;
+  max-width: 300px;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -19,6 +21,11 @@
   margin-left: -60px;
   opacity: 0;
   transition: opacity 0.3s;
+  font-size: 14px;
+  padding: 8px !important;
+  line-height: 1;
+  border: 0 !important;
+  min-height: 28px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -37,14 +44,14 @@
 }
 
 .tooltip .tooltiptext-top {
-  width: 120px;
+  width: auto;
   bottom: 100%;
   left: 50%;
   margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
 }
 
 .tooltip .tooltiptext-bottom {
-  width: 120px;
+  max-width: 300px;
   top: 100%;
   left: 50%;
   margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
