@@ -129,45 +129,27 @@ class EditCanvasImage extends PureComponent {
       });
   };
 
-  handleScalePlus = () => {
+  handleScale = isZoom => {
     if (this.mounted) {
-      if (this.state.scale <= 3) {
-        let scale = this.state.scale + 0.1;
-        this.setState(
-          {
-            scale: scale > 3 ? 3 : scale
-          },
-          () => {
-            const containerData = this.cropper.getContainerData();
-
-            this.cropper.zoomTo(this.state.scale, {
-              x: containerData.width / 2,
-              y: containerData.height / 2
-            });
-          }
-        );
+      let scale;
+      if (isZoom) {
+        scale = this.state.scale + this.state.scale * 0.1;
+      } else {
+        scale = this.state.scale - this.state.scale * 0.1;
       }
-    }
-  };
+      this.setState(
+        {
+          scale
+        },
+        () => {
+          const containerData = this.cropper.getContainerData();
 
-  handleScaleMinus = () => {
-    if (this.mounted) {
-      if (this.state.scale >= 1) {
-        let scale = this.state.scale - 0.1;
-        this.setState(
-          {
-            scale: scale < 1 ? 1 : scale
-          },
-          () => {
-            const containerData = this.cropper.getContainerData();
-
-            this.cropper.zoomTo(this.state.scale, {
-              x: containerData.width / 2,
-              y: containerData.height / 2
-            });
-          }
-        );
-      }
+          this.cropper.zoomTo(this.state.scale, {
+            x: containerData.width / 2,
+            y: containerData.height / 2
+          });
+        }
+      );
     }
   };
 
@@ -220,13 +202,13 @@ class EditCanvasImage extends PureComponent {
               <div className="edit-canvas-action-div">
                 <IconButton
                   className="edit-canvas-action-icon-button"
-                  onClick={this.handleScalePlus}
+                  onClick={() => this.handleScale(true)}
                 >
                   <AddIcon className="edit-canvas-action-icon" />
                 </IconButton>
                 <IconButton
                   className="edit-canvas-action-icon-button"
-                  onClick={this.handleScaleMinus}
+                  onClick={() => this.handleScale(false)}
                 >
                   <RemoveIcon className="edit-canvas-action-icon" />
                 </IconButton>

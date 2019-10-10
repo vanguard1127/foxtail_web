@@ -4910,7 +4910,9 @@ section.settings .message{
   margin-bottom: 25px;
 }
 
-
+section.settings .select-container .option-counter {
+  right: 55px;
+}
 /*---- FORM ELEMENTS ----*/
 
 input.location-search-input {
@@ -8069,7 +8071,8 @@ section.settings .rc-slider-handle {
 
 .select-container .option-counter {
   position: absolute;
-  right: 55px;
+  background-color: #fff;
+  right: 44px;
   top: 23px;
 }
 

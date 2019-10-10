@@ -140,12 +140,7 @@ export const kiOptions = [
   { label: "80 Kilometers", value: "50" }
 ];
 
-export const langOptions = [
-  { label: "English", value: "en" },
-  { label: "Spanish", value: "es" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" }
-];
+export const langOptions = [{ label: "English", value: "en" }];
 
 export const sexualityOptions = [
   { label: "Heterosexual", value: "he" },

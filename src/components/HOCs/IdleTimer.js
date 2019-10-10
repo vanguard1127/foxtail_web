@@ -43,8 +43,12 @@ class IdleTimer extends PureComponent {
   }
 
   resetTimeout() {
-    toast.dismiss("warn");
-    this.clearTimeout();
+    if (this.warnTimeout) {
+      if (toast.isActive("warn")) {
+        toast.dismiss("warn");
+      }
+      this.clearTimeout();
+    }
     this.setTimeout();
   }
 
