@@ -25,6 +25,10 @@
   bottom: 31px;
 }
 
+.create-event .select-container::before {
+  right: 20px;
+}
+
 .select-container label {
   font-size: 13px;
   line-height: 17px;
