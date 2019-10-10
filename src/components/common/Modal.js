@@ -64,20 +64,18 @@ class Modal extends Component {
                 </div>
               </div>
             ) : (
-              <div className={fullWidth ? "" : "popup-container"}>
-                <div className={fullWidth ? "col-md-12" : "col-md-6"}>
-                  <div className={`${fullWidth ? "popup full" : "popup"} ${maxWidth ? "max" : ""}`}>
-                    {!noHeader && <span className="head">{header}</span>}
-                    {close && <a className="close" onClick={() => close()} />}
-                    <form>
-                      <div className="form-content">
-                        {children}
-                        {description && <span className="description">{description}</span>}
-                        {okSpan && <div className="submit">{okSpan}</div>}
-                        {cancelSpan && <div className="submit">{cancelSpan}</div>}
-                      </div>
-                    </form>
-                  </div>
+              <div className={fullWidth ? "" : "col-md-6"} style={fullWidth ? {} : { maxWidth: "520px" }}>
+                <div className={`${fullWidth ? "popup full" : "popup"} ${maxWidth ? "max" : ""}`}>
+                  {!noHeader && <span className="head">{header}</span>}
+                  {close && <a className="close" onClick={() => close()} />}
+                  <form>
+                    <div className="form-content">
+                      {children}
+                      {description && <span className="description">{description}</span>}
+                      {okSpan && <div className="submit">{okSpan}</div>}
+                      {cancelSpan && <div className="submit">{cancelSpan}</div>}
+                    </div>
+                  </form>
                 </div>
               </div>
             )}
