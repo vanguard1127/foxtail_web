@@ -7610,8 +7610,12 @@ section.login-modal .popup.full{
  width:auto;
 }
 
-section.login-modal .popup.max {
+section.login-modal .popup.max-width {
   max-width: 520px;
+}
+
+section.login-modal .popup.max-height {
+  max-height: 80vh;
 }
 
 section.login-modal.couples .popup.full,section.login-modal.black .popup.full{

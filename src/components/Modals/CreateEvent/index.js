@@ -303,7 +303,7 @@ class CreateEvent extends Component {
 
     return (
       <section>
-        <Modal header={eventID ? t("updateeve") : t("createeve")} close={close} disableOffClick className="create-event" fullWidth maxWidth>
+        <Modal header={eventID ? t("updateeve") : t("createeve")} close={close} disableOffClick className="create-event" fullWidth maxWidth maxHeight>
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
               <div className="page">

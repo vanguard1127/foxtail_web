@@ -33,7 +33,21 @@ class Modal extends Component {
   };
 
   render() {
-    const { close, header, children, description, okSpan, cancelSpan, fullWidth, fullScreen, className, noBorder, noHeader, maxWidth } = this.props;
+    const {
+      close,
+      header,
+      children,
+      description,
+      okSpan,
+      cancelSpan,
+      fullWidth,
+      fullScreen,
+      className,
+      noBorder,
+      noHeader,
+      maxWidth,
+      maxHeight
+    } = this.props;
 
     return (
       <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
@@ -65,7 +79,7 @@ class Modal extends Component {
               </div>
             ) : (
               <div className={fullWidth ? "" : "col-md-6"} style={fullWidth ? {} : { maxWidth: "520px" }}>
-                <div className={`${fullWidth ? "popup full" : "popup"} ${maxWidth ? "max" : ""}`}>
+                <div className={`${fullWidth ? "popup full" : "popup"} ${maxWidth ? "max-width" : ""} ${maxHeight ? "max-height" : ""}`}>
                   {!noHeader && <span className="head">{header}</span>}
                   {close && <a className="close" onClick={() => close()} />}
                   <form>
