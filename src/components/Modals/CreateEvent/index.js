@@ -310,7 +310,7 @@ class CreateEvent extends Component {
           close={close}
           disableOffClick
           className="create-event"
-          fullWidth={true}
+          fullWidth
         >
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">

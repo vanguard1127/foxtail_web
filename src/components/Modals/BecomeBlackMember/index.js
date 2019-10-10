@@ -12,7 +12,13 @@ class BecomeBlackMember extends PureComponent {
       return null;
     }
     return (
-      <Modal close={this.props.close} fullWidth className="couples" noBorder>
+      <Modal
+        close={this.props.close}
+        fullWidth
+        className="black"
+        noBorder
+        noHeader
+      >
         <div
           className="upgrade"
           style={{ backgroundImage: `url(${BecomeBlackMemberImage})` }}

@@ -7555,14 +7555,6 @@ section.login-modal.verifications {
   padding: 6% 0;
 }
 
-section.login-modal.couples {
-  padding: 6% 0;
-}
-
-section.login-modal.black {
-  padding: 9% 0;
-}
-
 section.login-modal.acctsetting {
   padding: 13% 0;
 }
@@ -7607,9 +7599,12 @@ section.login-modal .popup {
 
 section.login-modal .popup.full{
  overflow: auto;
- padding: 0px;
  width:auto;
 }
+section.login-modal.couples .popup.full,section.login-modal.black .popup.full{
+  padding: 0px;
+ }
+
 
 section.login-modal .popup a.close::before {
   content: "\e804";
@@ -10217,7 +10212,7 @@ animation: CycleC 30s ease infinite;
 @media (max-width:768px){
 
   header .logo {
-    z-index: 999;
+    z-index: 1;
 }
 
   .event-tool-mobile{

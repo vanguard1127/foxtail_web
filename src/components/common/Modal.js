@@ -46,7 +46,8 @@ class Modal extends Component {
       fullWidth,
       fullScreen,
       className,
-      noBorder
+      noBorder,
+      noHeader
     } = this.props;
 
     return (
@@ -90,10 +91,10 @@ class Modal extends Component {
                 </div>
               </div>
             ) : (
-              <div className={!fullWidth && "popup-container"}>
+              <div className={fullWidth ? "" : "popup-container"}>
                 <div className={fullWidth ? "col-md-12" : "col-md-6"}>
                   <div className={fullWidth ? "popup full" : "popup"}>
-                    {!fullWidth && <span className="head">{header}</span>}
+                    {!noHeader && <span className="head">{header}</span>}
                     {close && <a className="close" onClick={() => close()} />}
                     <form>
                       <div className="form-content">

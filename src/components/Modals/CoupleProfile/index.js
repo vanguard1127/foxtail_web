@@ -107,7 +107,7 @@ class CoupleProfile extends PureComponent {
 
     return (
       <>
-        <Modal close={close} fullWidth className="couples" noBorder>
+        <Modal close={close} fullWidth className="couples" noBorder noHeader>
           <div className="couple-profile">
             <div className="vanish-scroll" style={{ backgroundColor: "#fff" }}>
               {t("scroll")}
@@ -124,7 +124,7 @@ class CoupleProfile extends PureComponent {
                   <br />
                   All communications are accessible by both members.
                 </p>
-                <hr class="line" />
+                <hr className="line" />
               </div>
               <div className="layer-right">
                 <h4 className="question-first">
