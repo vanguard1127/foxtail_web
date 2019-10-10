@@ -12,7 +12,6 @@ class KonvaImage extends PureComponent {
   }
 
   componentDidMount() {
-    console.log("asdfasdf");
     const importImage = require("./" + this.props.src);
     const image = new window.Image();
     // here we've taken 30% size of image and lessthan 400 widht - 20%
@@ -23,7 +22,9 @@ class KonvaImage extends PureComponent {
     image.onload = () => {
       this.setState({
         image: image,
-        imageWidth: this.props.isNew ? +((image.width / this.props.scale) * konvaImageScale).toFixed(2) : +(image.width * konvaImageScale).toFixed(2),
+        imageWidth: this.props.isNew
+          ? +((image.width / this.props.scale) * konvaImageScale).toFixed(2)
+          : +(image.width * konvaImageScale).toFixed(2),
         imageHeight: this.props.isNew
           ? +((image.height / this.props.scale) * konvaImageScale).toFixed(2)
           : +(image.height * konvaImageScale).toFixed(2)

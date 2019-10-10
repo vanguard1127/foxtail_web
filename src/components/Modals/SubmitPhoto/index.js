@@ -156,9 +156,17 @@ class PhotoVerify extends PureComponent {
         <ErrorBoundary>
           <div className="m-body">
             <div className="verify-account">
-              <div className="example-image">
-                <img src="assets/img/elements/example-verify.png" alt="" />
-              </div>
+              {type === "verify" && (
+                <div className="example-image">
+                  <img
+                    src={
+                      process.env.REACT_APP_S3_AD_BUCKET_URL +
+                      "selfie-peace.jpg"
+                    }
+                    alt=""
+                  />
+                </div>
+              )}
               <span className="instructions">
                 {body}
                 <br />

@@ -7590,9 +7590,8 @@ section.login-modal.show {
 section.login-modal .popup-container{
   display: flex;
   justify-content: center;
+  min-width: 60vw;
  }
-
-
 
 section.login-modal .popup {
   width: 100%;
@@ -7799,6 +7798,11 @@ section.login-modal .popup form .form-content .dropdown label {
   padding: 0;
   margin: 0;
   z-index: 9999;
+}
+
+section.login-modal .popup form .form-content .dropdown span {
+  top: 9px;
+  position: relative;
 }
 
 section.login-modal
@@ -8689,6 +8693,11 @@ section.not-found span.description {
 }
 
 @media only screen and (min-width: 768px) {
+
+  section.login-modal .popup-container{
+    min-width: 90vw;
+   }
+
   section.profile .avatar-content.no-btns {
     margin-bottom:28%;
      }
@@ -9294,6 +9303,10 @@ section.not-found span.description {
 }
 
 @media only screen and (min-width: 992px) {
+  section.login-modal .popup-container{
+    min-width: 70vw;
+   }
+
   header.landing .subtitle {
     display: block;
   }

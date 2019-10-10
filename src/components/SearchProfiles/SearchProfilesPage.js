@@ -105,7 +105,8 @@ class SearchProfilesPage extends Component {
       client,
       history,
       locationErr,
-      ReactGA
+      ReactGA,
+      toggleShareModal
     } = this.props;
 
     const {
@@ -157,6 +158,7 @@ class SearchProfilesPage extends Component {
             refetchUser={refetch}
             userID={session.currentuser.userID}
             ReactGA={ReactGA}
+            toggleShareModal={toggleShareModal}
           />
         </Context.Provider>
       );

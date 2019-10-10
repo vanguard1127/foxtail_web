@@ -9,7 +9,6 @@ import DirectMsgModal from "../Modals/DirectMsg";
 import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
 import DailyLimitModal from "../Modals/DailyLimit";
-import ShareModal from "../Modals/Share";
 import { toast } from "react-toastify";
 import deleteFromCache from "../../utils/deleteFromCache";
 import arraysEqual from "../../utils/arraysEqual";
@@ -22,7 +21,6 @@ class ProfilesContainer extends Component {
     profile: null,
     matchDlgVisible: false,
     maxLikeDlgVisible: false,
-    shareModalVisible: false,
     chatID: null,
     likedProfiles: [],
     msgdProfiles: []
@@ -40,7 +38,6 @@ class ProfilesContainer extends Component {
       this.props.isBlackMember !== nextProps.isBlackMember ||
       this.state.skip !== nextState.skip ||
       this.state.loading !== nextState.loading ||
-      this.state.shareModalVisible !== nextState.shareModalVisible ||
       this.state.msgModalVisible !== nextState.msgModalVisible ||
       this.state.profile !== nextState.profile ||
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
@@ -121,17 +118,6 @@ class ProfilesContainer extends Component {
       if (profile) this.setState({ profile, msgModalVisible });
       else this.setState({ msgModalVisible });
     }
-  };
-
-  toggleShareModal = () => {
-    this.props.ErrorHandler.setBreadcrumb("Share Modal Toggled:");
-    if (!this.state.shareModalVisible) {
-      this.props.ReactGA.event({
-        category: "Search Profiles",
-        action: "Share Modal"
-      });
-    }
-    this.setState({ shareModalVisible: !this.state.shareModalVisible });
   };
 
   clearInboxResults = () => {
@@ -285,7 +271,7 @@ class ProfilesContainer extends Component {
       interestedIn,
       dayjs,
       distanceMetric,
-      userID,
+      toggleShareModal,
       ReactGA
     } = this.props;
 
@@ -297,7 +283,6 @@ class ProfilesContainer extends Component {
       loading,
       likedProfiles,
       msgdProfiles,
-      shareModalVisible,
       maxLikeDlgVisible
     } = this.state;
     if (this.props.loading && loading) {
@@ -375,20 +360,12 @@ class ProfilesContainer extends Component {
                         margin: "auto",
                         display: "table"
                       }}
-                      onClick={this.toggleShareModal}
+                      onClick={toggleShareModal}
                     >
                       {t("Invite Your Friends")}
                     </span>
                   </div>
                 </div>
-                {shareModalVisible && (
-                  <ShareModal
-                    userID={userID}
-                    visible={shareModalVisible}
-                    close={this.toggleShareModal}
-                    ErrorBoundary={ErrorHandler.ErrorBoundary}
-                  />
-                )}
               </section>
             );
           }

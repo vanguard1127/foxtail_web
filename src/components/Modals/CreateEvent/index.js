@@ -150,7 +150,6 @@ class CreateEvent extends Component {
 
   handleSubmit = async ({ createEvent, signS3 }) => {
     const { t, ErrorHandler, refetch, close, history, ReactGA } = this.props;
-    console.log("SFDF", this.state.image);
     if (await this.validateForm()) {
       if (!toast.isActive("savingeve")) {
         toast(t("savingeve"), {
@@ -158,7 +157,6 @@ class CreateEvent extends Component {
         });
       }
       if (this.state.image && this.state.image.name !== undefined) {
-        console.log("Uploa", this.state.image.name);
         await this.handleUpload({ signS3 });
       }
       createEvent()
@@ -304,7 +302,7 @@ class CreateEvent extends Component {
     if (!tReady) {
       return null;
     }
-    console.log("FFDFD", errors);
+
     return (
       <section>
         <Modal
