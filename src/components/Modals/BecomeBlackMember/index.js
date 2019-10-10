@@ -20,6 +20,12 @@ class BecomeBlackMember extends PureComponent {
           <div className="backgound-opacity"></div>
           <div className="upgrade-content">
             <div className="top-content">
+              <div
+                className="vanish-scroll"
+                style={{ backgroundColor: "#fff" }}
+              >
+                {t("scroll")}
+              </div>
               <h3 className="title-large">become a black member</h3>
               <hr />
             </div>
@@ -38,7 +44,8 @@ class BecomeBlackMember extends PureComponent {
                 You Like
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Exclusive icon next to your chats and comments.
+                <i className="fas fa-angle-right"></i> Exclusive icon next to
+                your chats and comments.
               </li>
             </ul>
             <ul className="list-right">

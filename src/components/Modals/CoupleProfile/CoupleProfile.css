@@ -12,6 +12,40 @@
   text-align: center;
   text-transform: uppercase;
 }
+.couple-profile .vanish-scroll {
+  display: none;
+  text-align: center;
+  border-top: 1px solid #e7e7e7;
+  padding: 15px 0 15px 0;
+  width: 83%;
+  float: left;
+  color: #5b5b65;
+  font-size: 14px;
+  position: absolute;
+  animation-name: myAnimation;
+  animation-duration: 3000ms;
+  animation-fill-mode: forwards;
+  background-color: "#fff";
+  top: 10px;
+  text-transform: uppercase;
+}
+
+@keyframes myAnimation {
+  0% {
+    opacity: 1;
+    transform: rotateX(90deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+  100% {
+    display: none;
+    opacity: 0;
+    transform: rotateX(90deg);
+  }
+}
+
 .couple-profile h3 p span a {
   font-family: "Roboto", sans-serif;
 }
@@ -92,7 +126,7 @@ p.require-code {
   align-items: center;
   cursor: pointer;
 }
-.couple-profile .layer-right hr {
+.couple-profile hr {
   margin-top: 30px;
   margin-bottom: 1rem;
   border: 0;
@@ -100,6 +134,11 @@ p.require-code {
   width: 85%;
   display: inline-flex;
 }
+
+.couple-profile .layer-left hr {
+  display: none;
+}
+
 .couple-profile h4.question-second {
   margin-top: 25px;
 }
@@ -149,8 +188,15 @@ p.require-code {
     width: 100%;
     text-align: center;
   }
-  .couple-profile .layer-right hr {
+  .couple-profile hr {
     margin: 30px auto;
+    display: inline-flex;
+  }
+  .couple-profile .vanish-scroll {
+    display: block;
+  }
+
+  .couple-profile .layer-left hr {
     display: inline-flex;
   }
   .couple-profile .layer-right .code-input-wrapper {

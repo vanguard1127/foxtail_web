@@ -112,7 +112,43 @@
   padding-bottom: 50px;
 }
 
+.upgrade .vanish-scroll {
+  display: none;
+  text-align: center;
+  border-top: 1px solid #e7e7e7;
+  padding: 15px 0 15px 0;
+  float: left;
+  color: #5b5b65;
+  font-size: 14px;
+  position: absolute;
+  background-color: "#fff";
+  text-transform: uppercase;
+  animation-name: myAnimation;
+  animation-duration: 3000ms;
+  animation-fill-mode: forwards;
+  width: 100%;
+}
+
+@keyframes myAnimation {
+  0% {
+    opacity: 1;
+    transform: rotateX(90deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+  100% {
+    display: none;
+    opacity: 0;
+    transform: rotateX(90deg);
+  }
+}
+
 @media screen and (max-width: 850px) {
+  .upgrade .vanish-scroll {
+    display: block;
+  }
   .upgrade {
     width: 100%;
     background-size: cover;
