@@ -2000,6 +2000,12 @@ section.breadcrumb span {
   float: left;
 }
 
+section.breadcrumb span.link {
+  text-decoration: underline;
+  display: contents;
+  cursor: pointer;
+}
+
 section.breadcrumb span.head {
   color: #fff;
   font-weight: 700;

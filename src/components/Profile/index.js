@@ -219,7 +219,19 @@ class ProfilePage extends Component {
                   document.title = t("common:Loading") + "...";
                   return <Spinner message={t("common:Loading")} size="large" />;
                 } else if (!data || !data.profile) {
-                  return <div>{t("notexist")}</div>;
+                  return (
+                    <section className="not-found">
+                      <div className="container">
+                        <div className="col-md-12">
+                          <div className="icon">
+                            <i className="nico x" />
+                          </div>
+                          <span className="head">Profile Not Available</span>
+                          <span className="description">{t("notexist")}</span>
+                        </div>
+                      </div>
+                    </section>
+                  );
                 }
                 const profile = data.profile;
                 document.title = profile.profileName;

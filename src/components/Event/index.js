@@ -161,7 +161,19 @@ class EventPage extends Component {
             document.title = t("common:Loading") + "...";
             return <Spinner />;
           } else if (!data || !data.event) {
-            return <div>{t("noevent")}.</div>;
+            return (
+              <section className="not-found">
+                <div className="container">
+                  <div className="col-md-12">
+                    <div className="icon">
+                      <i className="nico x" />
+                    </div>
+                    <span className="head">Event Not Available</span>
+                    <span className="description">{t("noevent")}</span>
+                  </div>
+                </div>
+              </section>
+            );
           }
 
           const { event } = data;

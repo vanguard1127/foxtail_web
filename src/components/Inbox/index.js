@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import dayjs from "dayjs";
 
 import { withTranslation } from "react-i18next";
+import RulesModal from "../Modals/Rules";
 import InboxPanel from "./InboxPanel/";
 import Header from "./Header";
 import ChatInfo from "./ChatInfo";
@@ -35,11 +36,13 @@ class InboxPage extends Component {
     btnText: "",
     title: "",
     chatOpen: false,
-    chatID: this.props.location.state ? this.props.location.state.chatID : null
+    chatID: this.props.location.state ? this.props.location.state.chatID : null,
+    showRulesModal: false
   };
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
+      this.state.showRulesModal !== nextState.showRulesModal ||
       this.state.blockModalVisible !== nextState.blockModalVisible ||
       this.state.chatOpen !== nextState.chatOpen ||
       this.state.showModal !== nextState.showModal ||
@@ -141,6 +144,10 @@ class InboxPage extends Component {
     }
   };
 
+  toggleRuleModal = () => {
+    this.setState({ showRulesModal: !this.state.showRulesModal });
+  };
+
   updateCount = (chatID, unSeenCount) => {
     const { cache } = this.props.client;
     const { getCounts } = cache.readQuery({
@@ -196,7 +203,8 @@ class InboxPage extends Component {
       btnText,
       title,
       chatOpen,
-      chatID
+      chatID,
+      showRulesModal
     } = this.state;
 
     const { t, ReactGA, session, history, tReady } = this.props;
@@ -222,7 +230,12 @@ class InboxPage extends Component {
     return (
       <>
         <ErrorHandler.ErrorBoundary>
-          <Header t={t} chatOpen={chatOpen} closeChat={this.closeChat} />
+          <Header
+            t={t}
+            chatOpen={chatOpen}
+            closeChat={this.closeChat}
+            toggleRuleModal={this.toggleRuleModal}
+          />
         </ErrorHandler.ErrorBoundary>
         <section className={!chatOpen ? "inbox" : "inbox hide-mobile"}>
           <div className="row no-gutters chat-window-wrapper">
@@ -404,6 +417,7 @@ class InboxPage extends Component {
               )}
             </ErrorHandler.ErrorBoundary>
           </div>
+          {showRulesModal && <RulesModal close={this.toggleRuleModal} t={t} />}
           {blockModalVisible && (
             <BlockModal
               type={flagOptions.Chat}
