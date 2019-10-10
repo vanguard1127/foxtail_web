@@ -181,9 +181,7 @@ class Landing extends PureComponent {
                             femalesNum = data.getDemoCounts.femalesNum;
                             couplesNum = data.getDemoCounts.couplesNum;
                           }
-                          if (malesNum === 0) {
-                            return null;
-                          }
+
                           return (
                             <div className="stats">
                               <div className="head">
