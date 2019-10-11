@@ -10408,4 +10408,5 @@ animation: CycleC 30s ease infinite;
 
 .photo-editor{
   background-color:transparent !important;
+  max-height: 100vh;
 }
