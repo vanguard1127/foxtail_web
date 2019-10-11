@@ -1,7 +1,12 @@
 import React, { PureComponent } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { withTranslation } from "react-i18next";
-import { LINK_PROFILE, GET_SETTINGS, GENERATE_CODE, UNLINK_PROFILE } from "../../../queries";
+import {
+  LINK_PROFILE,
+  GET_SETTINGS,
+  GENERATE_CODE,
+  UNLINK_PROFILE
+} from "../../../queries";
 import { Mutation, Query } from "react-apollo";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -76,7 +81,10 @@ class CoupleProfile extends PureComponent {
               close={close}
               description={t("coupdeact")}
               okSpan={
-                <span className="color" onClick={() => this.handleUnLink(unlinkProfile, close)}>
+                <span
+                  className="color"
+                  onClick={() => this.handleUnLink(unlinkProfile, close)}
+                >
                   Yes
                 </span>
               }
@@ -99,7 +107,7 @@ class CoupleProfile extends PureComponent {
 
     return (
       <>
-        <Modal close={close} fullWidth className="couples" noBorder noHeader>
+        <Modal close={close} fullWidth className="couples" noHeader>
           <div className="couple-profile">
             <div className="vanish-scroll" style={{ backgroundColor: "#fff" }}>
               {t("scroll")}
@@ -119,17 +127,34 @@ class CoupleProfile extends PureComponent {
                 <hr className="line" />
               </div>
               <div className="layer-right">
-                <h4 className="question-first">Did you recieve a Couple's Code?</h4>
-                <p className="require">Add your Couple's Code here and click Submit!</p>
+                <h4 className="question-first">
+                  Did you recieve a Couple's Code?
+                </h4>
+                <p className="require">
+                  Add your Couple's Code here and click Submit!
+                </p>
                 <div className="code-input-wrapper">
-                  <input type="text" required id="couples_code" onChange={e => this.handleTextChange(e.target.value)} value={code} />
-                  <span className="submitCpl" onClick={() => this.toggleDlg(true)}>
+                  <input
+                    type="text"
+                    required
+                    id="couples_code"
+                    onChange={e => this.handleTextChange(e.target.value)}
+                    value={code}
+                  />
+                  <span
+                    className="submitCpl"
+                    onClick={() => this.toggleDlg(true)}
+                  >
                     Submit
                   </span>
                 </div>
                 <hr className="line" />
-                <h4 className="question-second">Want to create a Couple's Profile?</h4>
-                <p className="require-code">Send this Couple's Code to your pantner</p>
+                <h4 className="question-second">
+                  Want to create a Couple's Profile?
+                </h4>
+                <p className="require-code">
+                  Send this Couple's Code to your pantner
+                </p>
                 <Query query={GENERATE_CODE} fetchPolicy="cache-first">
                   {({ data, loading, error }) => {
                     if (loading) {
@@ -140,7 +165,12 @@ class CoupleProfile extends PureComponent {
                       );
                     }
                     if (error) {
-                      return <ErrorHandler.report error={error} calledName={"codeBox"} />;
+                      return (
+                        <ErrorHandler.report
+                          error={error}
+                          calledName={"codeBox"}
+                        />
+                      );
                     }
                     if (!data.generateCode) {
                       return <div>{t("common:error")}</div>;
@@ -148,7 +178,10 @@ class CoupleProfile extends PureComponent {
                     const cplCode = data.generateCode;
                     return (
                       <CopyToClipboard text={cplCode}>
-                        <div className="Couple-code" onClick={() => this.toggleDlg(false)}>
+                        <div
+                          className="Couple-code"
+                          onClick={() => this.toggleDlg(false)}
+                        >
                           <div className="content-code">{cplCode}</div>
                         </div>
                       </CopyToClipboard>
@@ -159,14 +192,21 @@ class CoupleProfile extends PureComponent {
             </div>
           </div>
         </Modal>
-        <Dialog onClose={this.toggleDlg} aria-labelledby="Image" open={cfmDlgOpen}>
-          <DialogTitle id="alert-dialog-title">Include Messages and Events</DialogTitle>
+        <Dialog
+          onClose={this.toggleDlg}
+          aria-labelledby="Image"
+          open={cfmDlgOpen}
+        >
+          <DialogTitle id="alert-dialog-title">
+            Include Messages and Events
+          </DialogTitle>
 
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               {!toLink && (
                 <>
-                  Couples Code has been copied to your clipboard. Share this with your partner to create a Couples Profile.
+                  Couples Code has been copied to your clipboard. Share this
+                  with your partner to create a Couples Profile.
                   <br />
                   <br />
                 </>

@@ -97,10 +97,10 @@
   padding: 6px 15px;
   font-size: 14px;
 }
-.select-list li.checked {
+.select-list.multiple li.checked {
   color: #f50043;
 }
-.select-list li.checked::before {
+.select-list.multiple li.checked::before {
   content: "\e803";
   font-family: "foxtail-icon";
   position: relative;
@@ -117,7 +117,7 @@
   margin-right: 10px;
   margin-top: 0px;
 }
-.select-list li:not(.checked)::before {
+.select-list.multiple li:not(.checked)::before {
   content: "";
   position: relative;
   width: 20px;

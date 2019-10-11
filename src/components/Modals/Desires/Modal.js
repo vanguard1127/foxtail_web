@@ -59,15 +59,19 @@ class Desires extends Component {
               <div className="desires-list-con">
                 <ul>
                   {desireOptions
-                    .filter(desire => desire.label.toLowerCase().startsWith(searchText))
+                    .filter(desire =>
+                      desire.label.toLowerCase().startsWith(searchText)
+                    )
                     .map((option, index) => (
-                      <li key={option.value} title={t(option.label)}>
+                      <li key={option.value}>
                         <Tooltip title={t(option.label)} placement={"top"}>
                           {/* <div className="select-checkbox"> */}
                           <input
                             type="checkbox"
                             id={option.value}
-                            checked={desires.indexOf(option.value) > -1 ? true : false}
+                            checked={
+                              desires.indexOf(option.value) > -1 ? true : false
+                            }
                             onChange={e =>
                               onChange({
                                 checked: e.target.checked,
