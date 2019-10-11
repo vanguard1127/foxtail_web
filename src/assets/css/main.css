@@ -5,6 +5,16 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500');
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script:400,500');
 
+html{
+  height: 100%;
+}
+
+body{
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
 /*---- GLOBAL ----*/
 .hidden-mobile {
   display: none;
@@ -5769,6 +5779,13 @@ section.meet-filter .range-con {
 }
 
 /*---- POPUP CONTENTS ----*/
+.popup{
+  position: fixed!important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
 section.popup-content {
   width: 100%;
@@ -9941,7 +9958,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   align-items: baseline;
   margin: 10px 0 10px 0;
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
 }
 

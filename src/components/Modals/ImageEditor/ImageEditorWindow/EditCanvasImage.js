@@ -53,7 +53,7 @@ class EditCanvasImage extends PureComponent {
     const { imageHeight, imageWidth, x_pos, y_pos, scale } = this.state;
     const width = this.container.offsetWidth;
     const height = window.innerHeight - 56; // here also we've subtract topbar height
-
+    window.scrollTo(0,1);
     this.setState({ width, height });
     if (imageWidth == 0 || imageHeight == 0) {
       const reader = new FileReader();
@@ -325,7 +325,7 @@ class EditCanvasImage extends PureComponent {
             <Stage
               style={{ backgroundColor: "#0e0d0dc7" }}
               width={width}
-              height={window.innerHeight - 56} // here we've reduced height as topbar will take 56px top
+              height={this.state.height} // here we've reduced height as topbar will take 56px top
               onClick={this.handleStageClick}
             >
               <Layer>
@@ -346,8 +346,8 @@ class EditCanvasImage extends PureComponent {
                     const top = upright ? this.state.imageHeight / 2 : this.state.imageWidth / 2;
                     const left = upright ? this.state.imageWidth / 2 : this.state.imageHeight / 2;
                     const bottom = upright
-                      ? window.innerHeight - 56 - this.state.imageHeight / 2
-                      : window.innerHeight - 56 - this.state.imageWidth / 2; // here also we've subtract topbar height from canvas container
+                      ? this.state.height- this.state.imageHeight / 2
+                      : this.state.height - this.state.imageWidth / 2; // here also we've subtract topbar height from canvas container
                     const right = upright ? this.state.width - this.state.imageWidth / 2 : this.state.width - this.state.imageHeight / 2;
 
                     let x = pos.x;
