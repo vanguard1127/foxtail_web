@@ -155,12 +155,12 @@ const errorLink = onError(
         } else {
           console.error(message);
 
-          Sentry.withScope(scope => {
-            scope.setLevel("error");
-            scope.setTag("resolver", path);
-            scope.setFingerprint([window.location.pathname]);
-            Sentry.captureException(message);
-          });
+          // Sentry.withScope(scope => {
+          //   scope.setLevel("error");
+          //   scope.setTag("resolver", path);
+          //   scope.setFingerprint([window.location.pathname]);
+          //   Sentry.captureException(message);
+          // });
           if (!toast.isActive("err")) {
             toast.error(
               <span>
@@ -358,7 +358,7 @@ const Body = withAuth(session => session && session.currentuser)(
         </Switch>
       </main>
       {showFooter && <Footer />}
-      <ToastContainer position="top-center" />
+      <ToastContainer position="top-center" hideProgressBar={false} />
     </div>
   )
 );

@@ -121,17 +121,19 @@ class Landing extends PureComponent {
                 </div>
                 <div className="offset-md-3 col-md-5">
                   <div className="content">
+                    <span className="mobilesubtitle">{t("subtitle")}</span>
+                    <span className="login">
+                      <ErrorHandler.ErrorBoundary>
+                        <LoginButton
+                          t={t}
+                          history={history}
+                          ErrorHandler={ErrorHandler}
+                          lang={lang}
+                          ReactGA={ReactGA}
+                        />
+                      </ErrorHandler.ErrorBoundary>
+                    </span>
                     <ErrorHandler.ErrorBoundary>
-                      <LoginButton
-                        t={t}
-                        history={history}
-                        ErrorHandler={ErrorHandler}
-                        lang={lang}
-                        ReactGA={ReactGA}
-                      />
-                    </ErrorHandler.ErrorBoundary>
-                    <ErrorHandler.ErrorBoundary>
-                      {" "}
                       <LanguageControl lang={lang} />
                     </ErrorHandler.ErrorBoundary>
                   </div>
@@ -157,9 +159,18 @@ class Landing extends PureComponent {
                             <span className="divider">|</span>18+ Fun
                           </span>
                         </h1>
-                        <span className="mobilesubtitle">{t("subtitle")}</span>
                       </div>
-
+                      <div className="mobile-login">
+                        <ErrorHandler.ErrorBoundary>
+                          <LoginButton
+                            t={t}
+                            history={history}
+                            ErrorHandler={ErrorHandler}
+                            lang={lang}
+                            ReactGA={ReactGA}
+                          />
+                        </ErrorHandler.ErrorBoundary>
+                      </div>
                       <Query
                         query={GET_DEMO_COUNTS}
                         fetchPolicy="cache-first"
@@ -358,7 +369,7 @@ class Landing extends PureComponent {
             okText={t("common:Send")}
           />
         )}
-        <ToastContainer position="top-center" />
+        <ToastContainer position="top-center" hideProgressBar={false} />
       </>
     );
   }

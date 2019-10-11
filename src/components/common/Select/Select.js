@@ -96,15 +96,13 @@ class Select extends PureComponent {
     const optionCounter = selectedOptions ? selectedOptions.length : 0;
 
     const SelectList = () => (
-      <div className="select-list">
+      <div className={multiple ? "select-list multiple" : "select-list"}>
         <ul>
           {options.map((d, i) => {
             let checked = false;
             if (multiple) {
               checked =
                 selectedOptions.find(x => x.value == d.value) != undefined;
-            } else {
-              checked = selectedOption && selectedOption.value == d.value;
             }
             return (
               <li

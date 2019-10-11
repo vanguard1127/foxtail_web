@@ -6742,7 +6742,18 @@ header.landing .logo a {
   background-image: url("../img/logo/logo-white.svg");
 }
 
-header.landing a.login-btn {
+section.landing .mobile-login {
+display: block;
+}
+
+
+header.landing .login {
+  display: none;
+  }
+
+
+header.landing a.login-btn,
+section.landing a.login-btn {
   height: 40px;
   line-height: 40px;
   text-align: center;
@@ -6760,7 +6771,8 @@ header.landing a.login-btn {
   float: left;
 }
 
-header.landing a.login-btn:hover {
+header.landing a.login-btn:hover,
+section.landing a.login-btn:hover {
   background-color: #ffff;
   color: #b40132 !important;
   box-shadow: 0 50px 91px 0 rgba(0, 0, 0, 0.1);
@@ -6921,18 +6933,17 @@ section.landing .left .welcome-text h1 span.divider {
 header.landing .subtitle {
   display: none;
   color: #fff;
-  margin-top: 18px;
   float: right;
   font-size: 26px;
-  margin-right: 64px;
   font-family: "Kaushan Script";
 }
 
-section.landing .left .welcome-text span.mobilesubtitle{
-  display: block;
+header.landing .content span.mobilesubtitle{
+  display: flex;
   color: #fff;
   font-size: 26px;
   font-family: "Kaushan Script";
+  justify-content: center;
 }
 
 section.landing .left .stats {
@@ -8711,6 +8722,21 @@ section.not-found span.description {
     min-width: 90vw;
    }
 
+   header.landing .subtitle {
+     display: block;
+    position: absolute;
+    margin: 14px 0 0 20px;
+  }
+  header.landing .content span.mobilesubtitle{
+    display: none;
+  }
+  section.landing .mobile-login {
+    display: none;
+    }
+    header.landing .login {
+      display: unset;
+      }
+
   section.profile .avatar-content.no-btns {
     margin-bottom:28%;
      }
@@ -9265,7 +9291,7 @@ section.not-found span.description {
     margin: 0;
   }
   section.landing .left {
-    top: 160px;
+    top: 175px;
   }
 
   section.landing .register-form {
@@ -9305,7 +9331,8 @@ section.not-found span.description {
     width: auto;
   }
 
-  header.landing a.login-btn {
+  header.landing a.login-btn,
+  section.landing a.login-btn{
     width: auto;
   }
 
@@ -9319,14 +9346,11 @@ section.not-found span.description {
   section.login-modal .popup-container{
     min-width: 70vw;
    }
-
-  header.landing .subtitle {
+   header.landing .subtitle {
     display: block;
-  }
-  section.landing .left .welcome-text span.mobilesubtitle{
-    display: none;
-  }
-
+    position: relative;
+    margin: 18px 64px 0 0;
+ }
   section.profile .avatar-content.no-btns {
     margin-bottom:0%;
      }
@@ -9473,7 +9497,8 @@ section.not-found span.description {
     bottom: 0;
   }
 
-  header.landing a.login-btn {
+  header.landing a.login-btn,
+  section.landing a.login-btn {
     width: auto;
   }
 
@@ -9806,8 +9831,6 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   .sex::before {
     color: #464648;
   }
-
-
 }
 
 .userInfoHeader::before {
@@ -10377,4 +10400,12 @@ animation: CycleC 30s ease infinite;
  font-style: italic;
  color: #f70016;
  padding-bottom: 15px;
+}
+
+.cropper-bg{
+  width:100vw !important;
+}
+
+.photo-editor{
+  background-color:transparent !important;
 }
