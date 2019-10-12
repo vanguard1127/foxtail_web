@@ -25,6 +25,7 @@ class Select extends PureComponent {
 
   componentWillMount() {
     document.addEventListener("mousedown", this.handleClickOutside, false);
+    document.addEventListener("touchstart", this.handleClickOutside, false);
   }
 
   componentDidMount() {
@@ -41,11 +42,12 @@ class Select extends PureComponent {
   componentWillUnmount() {
     this.mounted = false;
     document.removeEventListener("mousedown", this.handleClickOutside, false);
+    document.removeEventListener("touchstart", this.handleClickOutside, false);
   }
 
   handleClickOutside = event => {
     if (this.state.menuOpen) {
-      if (!this.selectContainerRef.contains(event.target)) {
+      if (!this.selectContainerRef.contains(event.target)) {      
         if (this.mounted) {
           this.setState({ menuOpen: false }, () => {
             if (this.props.onClose) this.props.onClose();

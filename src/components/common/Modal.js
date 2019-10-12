@@ -15,12 +15,14 @@ class Modal extends Component {
   componentDidMount() {
     if (!this.props.disableOffClick) {
       document.addEventListener("mousedown", this.handleClickOutside);
+      document.addEventListener("tocuhdown", this.handleClickOutside);
     }
   }
 
   componentWillUnmount() {
     if (!this.props.disableOffClick) {
       document.removeEventListener("mousedown", this.handleClickOutside);
+      document.removeEventListener("touchstart", this.handleClickOutside);
     }
   }
 
@@ -55,6 +57,7 @@ class Modal extends Component {
     return (
       <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
         {props => (
+          <div className="popup-wrapper">
           <section
             style={props}
             className={`login-modal show ${
@@ -118,6 +121,7 @@ class Modal extends Component {
               </div>
             )}
           </section>
+          </div>
         )}
       </Spring>
     );
