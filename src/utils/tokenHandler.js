@@ -1,11 +1,11 @@
-const refreshToken = ({ operation, forward, HTTPSurl, ErrorHandler }) => {
+const refreshToken = ({ operation, forward }) => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) {
     return;
   }
   const axios = require("axios");
   axios
-    .post(HTTPSurl + "/refresh", {
+    .post(process.env.REACT_APP_HTTPS_URL + "/refresh", {
       refreshToken
     })
     .then(function(response) {

@@ -59,8 +59,8 @@ class EventPage extends Component {
 
   toggleScroll(enabled) {
     enabled
-      ? disableBodyScroll(this.targetElement)
-      : enableBodyScroll(this.targetElement);
+      ? disableBodyScroll(this.targetElement.current)
+      : enableBodyScroll(this.targetElement.current);
   }
 
   toggleDeleteDialog = () => {

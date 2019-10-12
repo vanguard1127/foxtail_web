@@ -151,16 +151,17 @@ const errorLink = onError(
             });
           }
         } else if (~message.indexOf("authenticated")) {
-          tokenHandler({ operation, forward, HTTPSurl, ErrorHandler });
+          tokenHandler({ operation, forward });
         } else {
           console.error(message);
-
-          Sentry.withScope(scope => {
-            scope.setLevel("error");
-            scope.setTag("resolver", path);
-            scope.setFingerprint([window.location.pathname]);
-            Sentry.captureException(message);
-          });
+          if (process.env.NODE_ENV === "development") {
+            Sentry.withScope(scope => {
+              scope.setLevel("error");
+              scope.setTag("resolver", path);
+              scope.setFingerprint([window.location.pathname]);
+              Sentry.captureException(message);
+            });
+          }
           if (!toast.isActive("err")) {
             toast.error(
               <span>
@@ -223,7 +224,11 @@ const Root = () => (
   </Router>
 );
 
+
 const Wrapper = withRouter(props => {
+  setTimeout(() => {
+    window.scrollTo(0, 1);
+  }, 1000)
   let location = props.location;
   if (location.pathname) {
     if (
@@ -358,7 +363,7 @@ const Body = withAuth(session => session && session.currentuser)(
         </Switch>
       </main>
       {showFooter && <Footer />}
-      <ToastContainer position="top-center" />
+      <ToastContainer position="top-center" hideProgressBar={true} />
     </div>
   )
 );
@@ -371,6 +376,12 @@ const Body = withAuth(session => session && session.currentuser)(
 //     document.getElementById("root")
 //   )
 // );
+
+window.onresize = function() {
+  document.body.height = window.innerHeight;
+  console.log(window.innerHeight)
+}
+window.onresize(); // called to initially set the height.
 
 render(
   <ApolloProvider client={client}>
