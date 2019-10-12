@@ -369,7 +369,7 @@ class Landing extends PureComponent {
             okText={t("common:Send")}
           />
         )}
-        <ToastContainer position="top-center" hideProgressBar={false} />
+        <ToastContainer position="top-center" hideProgressBar={true} />
       </>
     );
   }

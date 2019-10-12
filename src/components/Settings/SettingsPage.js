@@ -730,134 +730,188 @@ class SettingsPage extends Component {
                           </span>
                         )}
                         <div className="form">
-                          <Preferences
-                            distance={distance}
-                            distanceMetric={distanceMetric}
-                            ageRange={ageRange}
-                            interestedIn={interestedIn}
-                            city={city}
-                            isBlackMember={currentuser.blackMember.active}
-                            setValue={({ name, value }) =>
-                              this.setValue({
-                                name,
-                                value,
-                                updateSettings
-                              })
-                            }
-                            setLocationValues={({ lat, long, city }) =>
-                              this.setLocationValues({
-                                lat,
-                                long,
-                                city,
-                                updateSettings
-                              })
-                            }
-                            t={t}
-                            ErrorBoundary={ErrorHandler.ErrorBoundary}
-                            lang={lang}
-                          />
-                          <Photos
-                            isPrivate={false}
-                            showEditor={this.toggleImgEditorPopup}
-                            showCropper={this.toggleImgCropperPopup}
-                            photos={publicPhotos}
-                            setProfilePic={({ key, url }) =>
-                              this.setProfilePic({
-                                key,
-                                url,
-                                updateSettings
-                              })
-                            }
-                            isBlackMember={currentuser.blackMember.active}
-                            deleteImg={({ file, key }) =>
-                              this.setDialogContent({
-                                title: t("delpho"),
-                                msg: t("remoundone"),
-                                btnText: t("common:Delete"),
-                                okAction: () =>
-                                  this.handlePhotoListChange({
-                                    file,
-                                    key,
-                                    isPrivate: false,
-                                    isDeleted: true,
-                                    updateSettings
-                                  })
-                              })
-                            }
-                            t={t}
-                            ErrorBoundary={ErrorHandler.ErrorBoundary}
-                            toggleScroll={this.toggleScroll}
-                          />
-                          {errors.profilePic && (
-                            <label className="errorLbl">
-                              {errors.profilePic}
-                            </label>
+                          <div className="page-section mtop">
+                            <Preferences
+                              distance={distance}
+                              distanceMetric={distanceMetric}
+                              ageRange={ageRange}
+                              interestedIn={interestedIn}
+                              city={city}
+                              isBlackMember={currentuser.blackMember.active}
+                              setValue={({ name, value }) =>
+                                this.setValue({
+                                  name,
+                                  value,
+                                  updateSettings
+                                })
+                              }
+                              setLocationValues={({ lat, long, city }) =>
+                                this.setLocationValues({
+                                  lat,
+                                  long,
+                                  city,
+                                  updateSettings
+                                })
+                              }
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              lang={lang}
+                            />
+                          </div>
+
+                          <div className="page-section mtop">
+                            <Photos
+                              isPrivate={false}
+                              showEditor={this.toggleImgEditorPopup}
+                              showCropper={this.toggleImgCropperPopup}
+                              photos={publicPhotos}
+                              setProfilePic={({ key, url }) =>
+                                this.setProfilePic({
+                                  key,
+                                  url,
+                                  updateSettings
+                                })
+                              }
+                              isBlackMember={currentuser.blackMember.active}
+                              deleteImg={({ file, key }) =>
+                                this.setDialogContent({
+                                  title: t("delpho"),
+                                  msg: t("remoundone"),
+                                  btnText: t("common:Delete"),
+                                  okAction: () =>
+                                    this.handlePhotoListChange({
+                                      file,
+                                      key,
+                                      isPrivate: false,
+                                      isDeleted: true,
+                                      updateSettings
+                                    })
+                                })
+                              }
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              toggleScroll={this.toggleScroll}
+                            />
+                            {errors.profilePic && (
+                              <label className="errorLbl">
+                                {errors.profilePic}
+                              </label>
+                            )}
+                          </div>
+                          <div className="page-section mtop">
+                            <Photos
+                              isPrivate={true}
+                              showEditor={this.toggleImgEditorPopup}
+                              photos={privatePhotos}
+                              isBlackMember={currentuser.blackMember.active}
+                              deleteImg={({ file, key }) =>
+                                this.setDialogContent({
+                                  title: t("delpho"),
+                                  msg: t("remoundone"),
+                                  btnText: t("common:Delete"),
+                                  okAction: () =>
+                                    this.handlePhotoListChange({
+                                      file,
+                                      key,
+                                      isPrivate: true,
+                                      isDeleted: true,
+                                      updateSettings
+                                    })
+                                })
+                              }
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            />
+                          </div>
+
+                          <div className="page-section mtop">
+                            <MyProfile
+                              desires={desires}
+                              about={about}
+                              togglePopup={this.toggleDesiresPopup}
+                              setValue={({ name, value, noSave }) =>
+                                this.setValue({
+                                  name,
+                                  value,
+                                  updateSettings,
+                                  noSave
+                                })
+                              }
+                              t={t}
+                              errors={errors}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              lang={lang}
+                              sexuality={sexuality}
+                            />
+                          </div>
+                          <div className="page-section mtop">
+                            <AppSettings
+                              setValue={({ name, value }) =>
+                                this.setValue({
+                                  name,
+                                  value,
+                                  updateSettings,
+                                  noSave: true
+                                })
+                              }
+                              toast={toast}
+                              visible={visible}
+                              lang={lang}
+                              emailNotify={emailNotify}
+                              showOnline={showOnline}
+                              likedOnly={likedOnly}
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              isBlackMember={currentuser.blackMember.active}
+                            />
+                          </div>
+                          {currentuser.blackMember.active && (
+                            <div className="page-section mtop">
+                              <ManageBlkMembership
+                                ErrorHandler={ErrorHandler}
+                                currentuser={currentuser}
+                                refetchUser={refetchUser}
+                                t={t}
+                                dayjs={dayjs}
+                                notifyClient={this.notifyClient}
+                                setDialogContent={this.setDialogContent}
+                                lang={lang}
+                                ReactGA={ReactGA}
+                              />
+                            </div>
                           )}
-                          <Photos
-                            isPrivate={true}
-                            showEditor={this.toggleImgEditorPopup}
-                            photos={privatePhotos}
-                            isBlackMember={currentuser.blackMember.active}
-                            deleteImg={({ file, key }) =>
-                              this.setDialogContent({
-                                title: t("delpho"),
-                                msg: t("remoundone"),
-                                btnText: t("common:Delete"),
-                                okAction: () =>
-                                  this.handlePhotoListChange({
-                                    file,
-                                    key,
-                                    isPrivate: true,
-                                    isDeleted: true,
-                                    updateSettings
+                          <div className="page-section mtop">
+                            <Verifications
+                              openPhotoVerPopup={this.openPhotoVerPopup}
+                              t={t}
+                              ErrorBoundary={ErrorHandler.ErrorBoundary}
+                            />
+                          </div>
+
+                          <div className="page-section mtop">
+                            <>
+                              <AcctSettings
+                                setValue={({ name, value }) =>
+                                  this.setValue({
+                                    name,
+                                    value,
+                                    updateSettings,
+                                    doRefetch: true
                                   })
-                              })
-                            }
-                            t={t}
-                            ErrorBoundary={ErrorHandler.ErrorBoundary}
-                          />
-                          <MyProfile
-                            desires={desires}
-                            about={about}
-                            togglePopup={this.toggleDesiresPopup}
-                            setValue={({ name, value, noSave }) =>
-                              this.setValue({
-                                name,
-                                value,
-                                updateSettings,
-                                noSave
-                              })
-                            }
-                            t={t}
-                            errors={errors}
-                            ErrorBoundary={ErrorHandler.ErrorBoundary}
-                            lang={lang}
-                            sexuality={sexuality}
-                          />
-                          <AppSettings
-                            setValue={({ name, value }) =>
-                              this.setValue({
-                                name,
-                                value,
-                                updateSettings,
-                                noSave: true
-                              })
-                            }
-                            toast={toast}
-                            visible={visible}
-                            lang={lang}
-                            emailNotify={emailNotify}
-                            showOnline={showOnline}
-                            likedOnly={likedOnly}
-                            t={t}
-                            ErrorBoundary={ErrorHandler.ErrorBoundary}
-                            isBlackMember={currentuser.blackMember.active}
-                          />
-                          <Verifications
-                            openPhotoVerPopup={this.openPhotoVerPopup}
-                            t={t}
-                            ErrorBoundary={ErrorHandler.ErrorBoundary}
-                          />
+                                }
+                                t={t}
+                                ErrorHandler={ErrorHandler}
+                                lang={lang}
+                                isEmailOK={currentuser.isEmailOK}
+                                ReactGA={ReactGA}
+                              />
+                              <DeactivateAcctBtn
+                                t={t}
+                                ErrorHandler={ErrorHandler}
+                                history={history}
+                              />
+                            </>
+                          </div>
                           {showModal && (
                             <Modal
                               header={title}
@@ -870,39 +924,6 @@ class SettingsPage extends Component {
                               }
                             />
                           )}
-                          {currentuser.blackMember.active && (
-                            <ManageBlkMembership
-                              ErrorHandler={ErrorHandler}
-                              currentuser={currentuser}
-                              refetchUser={refetchUser}
-                              t={t}
-                              dayjs={dayjs}
-                              notifyClient={this.notifyClient}
-                              setDialogContent={this.setDialogContent}
-                              lang={lang}
-                              ReactGA={ReactGA}
-                            />
-                          )}
-                          <AcctSettings
-                            setValue={({ name, value }) =>
-                              this.setValue({
-                                name,
-                                value,
-                                updateSettings,
-                                doRefetch: true
-                              })
-                            }
-                            t={t}
-                            ErrorHandler={ErrorHandler}
-                            lang={lang}
-                            isEmailOK={currentuser.isEmailOK}
-                            ReactGA={ReactGA}
-                          />
-                          <DeactivateAcctBtn
-                            t={t}
-                            ErrorHandler={ErrorHandler}
-                            history={history}
-                          />
                         </div>
                       </div>
                     </div>

@@ -4872,14 +4872,20 @@ section.settings .page {
   width: 100%;
   display: block;
   float: left;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  position: relative;
+}
+
+section.settings .page-section {
+  width: 100%;
+  display: block;
+  float: left;
   background: #ffffff;
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
     0 13px 16px 0 rgba(66, 81, 110, 0.04);
   padding: 30px;
   position: relative;
-}
-
-section.settings .page.mtop {
   margin-top: 15px;
 }
 
@@ -4907,6 +4913,7 @@ section.settings .message{
   animation-iteration-count: infinite;
   display: flex;
   justify-content: center;
+  margin-top: 25px;
   margin-bottom: 25px;
 }
 
@@ -4952,10 +4959,6 @@ input.location-search-input {
   width: 100%;
   display: block;
   float: left;
-}
-
-.page .form .content.mtop {
-  margin-top: 15px;
 }
 
 .page .content span.heading {
@@ -9471,7 +9474,7 @@ section.not-found span.description {
     visibility: hidden;
   }
 
-  section.settings .page.mtop {
+  section.settings .page-section.mtop:nth-child(1) {
     margin-top: 0;
   }
 
