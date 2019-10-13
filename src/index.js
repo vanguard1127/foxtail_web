@@ -50,6 +50,7 @@ import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
+import { preventContextMenu } from "./utils/image";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
@@ -378,9 +379,12 @@ const Body = withAuth(session => session && session.currentuser)(
 
 window.onresize = function() {
   document.body.height = window.innerHeight;
-  console.log(window.innerHeight)
+ 
 }
 window.onresize(); // called to initially set the height.
+
+//prevent context menu
+document.addEventListener("contextmenu", preventContextMenu);
 
 render(
   <ApolloProvider client={client}>

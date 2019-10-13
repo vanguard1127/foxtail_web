@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Waypoint } from "react-waypoint";
 import TimeAgo from "../../../utils/TimeAgo";
-import { preventContextMenu } from "../../../utils/image";
+
 const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
 
 class InboxList extends PureComponent {
@@ -66,7 +66,7 @@ class InboxList extends PureComponent {
             <img
               src={item.profilePic !== "" ? item.profilePic : NoProfileImg}
               alt=""
-              onContextMenu={preventContextMenu}
+              
             />
           </span>
           <div className="data">

@@ -5,7 +5,7 @@ class ProfilePic extends Component {
     return false;
   }
   render() {
-    const { profilePic, preventContextMenu } = this.props;
+    const { profilePic } = this.props;
     return (
       <div className="avatar">
         <img
@@ -15,7 +15,7 @@ class ProfilePic extends Component {
               : process.env.PUBLIC_URL + "/assets/img/elements/no-profile.png"
           }
           alt=""
-          onContextMenu={preventContextMenu}
+          
         />
       </div>
     );

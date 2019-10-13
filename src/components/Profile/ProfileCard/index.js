@@ -91,7 +91,6 @@ class ProfileCard extends Component {
       msgd,
       history,
       showShareModal,
-      preventContextMenu
     } = this.props;
     const { profilePic, id, users } = profile;
 
@@ -121,7 +120,6 @@ class ProfileCard extends Component {
           <div className={"avatar-card " + badge}>
             <ProfilePic
               profilePic={profilePic}
-              preventContextMenu={preventContextMenu}
             />
             {!isSelf ? (
               <ProfileActions

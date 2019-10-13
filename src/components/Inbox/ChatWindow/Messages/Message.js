@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { preventContextMenu } from "../../../../utils/image";
+
 const NoProfileImg = require("../../../../assets/img/elements/no-profile.png");
 
 const Message = React.forwardRef(
@@ -26,7 +26,7 @@ const Message = React.forwardRef(
                 message.profilePic !== "" ? message.profilePic : NoProfileImg
               }
               alt=""
-              onContextMenu={preventContextMenu}
+              
             />
           </div>
         </NavLink>

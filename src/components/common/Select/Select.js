@@ -15,6 +15,7 @@ class Select extends PureComponent {
 
   constructor(props) {
     super(props);
+    this.scrollPosition=0;
   }
 
   state = {
@@ -26,6 +27,22 @@ class Select extends PureComponent {
   componentWillMount() {
     document.addEventListener("mousedown", this.handleClickOutside, false);
     document.addEventListener("touchstart", this.handleClickOutside, false);
+  }
+
+
+  componentWillUpdate(prevProps, prevState) {
+    if(this.listContainerRef){
+       this.scrollPosition=  this.listContainerRef.scrollTop;
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // If we have a snapshot value, we've just added new items.
+    // Adjust scroll so these new items don't push the old ones out of view.
+    // (snapshot here is the value returned from getSnapshotBeforeUpdate)
+    if(this.listContainerRef){
+      this.listContainerRef.scrollTop = this.scrollPosition;
+    }
   }
 
   componentDidMount() {
@@ -99,7 +116,9 @@ class Select extends PureComponent {
 
     const SelectList = () => (
       <div className={multiple ? "select-list multiple" : "select-list"}>
-        <ul>
+        <ul  ref={listContainerRef =>
+            (this.listContainerRef = listContainerRef)
+          }>
           {options.map((d, i) => {
             let checked = false;
             if (multiple) {

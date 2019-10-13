@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Lightbox from "react-image-lightbox";
-import { preventContextMenu } from "../../../utils/image";
+
 
 const styles = theme => ({
   addIcon: {
@@ -115,7 +115,7 @@ class UploadComponent extends PureComponent {
       <div className="header-container">
         {photos.map((file, index) => {
           return (
-            <div key={file.uid || file.id} onContextMenu={preventContextMenu}>
+            <div key={file.uid || file.id} >
               <div className="loader">
                 <div className="loading">
                   <CircularProgress
