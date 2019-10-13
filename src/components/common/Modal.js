@@ -58,28 +58,55 @@ class Modal extends Component {
       <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
         {props => (
           <div className="popup-wrapper">
-          <section
-            style={props}
-            className={`login-modal show ${
-              fullScreen ? "full-screen-modal " : " "
-            }${className ? className : ""}`}
-            ref={this.wrapperRef}
-          >
-            {fullScreen ? (
-              <div
-                className="container"
-                style={{ width: "100%", height: "100vh" }}
-              >
-                <div>
-                  <div
-                    className={`popup ${popupClass ? popupClass : ""}`}
-                    style={{ height: "100vh", padding: "unset" }}
-                  >
-                    {/* <span className="head">{header}</span> */}
-                    {/* <a
+            <section
+              style={props}
+              className={`login-modal show ${
+                fullScreen ? "full-screen-modal " : " "
+              }${className ? className : ""}`}
+              ref={this.wrapperRef}
+            >
+              {fullScreen ? (
+                <div
+                  className="container"
+                  style={{ width: "100%", height: "100vh" }}
+                >
+                  <div>
+                    <div
+                      className={`popup ${popupClass ? popupClass : ""}`}
+                      style={{ height: "100vh", padding: "unset" }}
+                    >
+                      {/* <span className="head">{header}</span> */}
+                      {/* <a
                   className="close close-fullscreen-popup"
                   onClick={() => close()}
                 /> */}
+                      <form>
+                        <div className="form-content">
+                          {children}
+                          {description && (
+                            <span className="description">{description}</span>
+                          )}
+                          {okSpan && <div className="submit">{okSpan}</div>}
+                          {cancelSpan && (
+                            <div className="submit">{cancelSpan}</div>
+                          )}
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className={fullWidth ? "" : "col-md-6"}
+                  style={fullWidth ? {} : { maxWidth: "520px" }}
+                >
+                  <div
+                    className={`${fullWidth ? "popup full" : "popup"} ${
+                      maxWidth ? "max-width" : ""
+                    } ${maxHeight ? "max-height" : ""}`}
+                  >
+                    {!noHeader && <span className="head">{header}</span>}
+                    {close && <a className="close" onClick={() => close()} />}
                     <form>
                       <div className="form-content">
                         {children}
@@ -94,33 +121,8 @@ class Modal extends Component {
                     </form>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div
-                className={fullWidth ? "" : "col-md-6"}
-                style={fullWidth ? {} : { maxWidth: "520px" }}
-              >
-                <div
-                  className={`${fullWidth ? "popup full" : "popup"} ${
-                    maxWidth ? "max-width" : ""
-                  } ${maxHeight ? "max-height" : ""}`}
-                >
-                  {!noHeader && <span className="head">{header}</span>}
-                  {close && <a className="close" onClick={() => close()} />}
-                  <form>
-                    <div className="form-content">
-                      {children}
-                      {description && (
-                        <span className="description">{description}</span>
-                      )}
-                      {okSpan && <div className="submit">{okSpan}</div>}
-                      {cancelSpan && <div className="submit">{cancelSpan}</div>}
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
-          </section>
+              )}
+            </section>
           </div>
         )}
       </Spring>

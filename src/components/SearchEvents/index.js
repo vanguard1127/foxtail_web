@@ -211,8 +211,8 @@ class SearchEvents extends Component {
 
   toggleScroll(enabled) {
     enabled
-      ? disableBodyScroll(this.targetElement.current)
-      : enableBodyScroll(this.targetElement.current);
+      ? disableBodyScroll(this.targetElement)
+      : enableBodyScroll(this.targetElement);
   }
 
   render() {
