@@ -25,6 +25,7 @@ class Select extends PureComponent {
 
   componentWillMount() {
     document.addEventListener("mousedown", this.handleClickOutside, false);
+    document.addEventListener("touchstart", this.handleClickOutside, false);
   }
 
   componentDidMount() {
@@ -33,6 +34,7 @@ class Select extends PureComponent {
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.handleClickOutside, false);
+    document.removeEventListener("touchstart", this.handleClickOutside, false);
   }
 
   handleClickOutside = event => {

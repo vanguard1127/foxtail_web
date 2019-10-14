@@ -41,12 +41,14 @@ class EditCanvasImage extends PureComponent {
     this.checkSize();
     window.addEventListener("resize", this.checkSize);
     document.addEventListener("mousedown", this.handleClick);
+    document.addEventListener("touchstart", this.handleClick);
   }
 
   componentWillUnmount() {
     this.mounted = false;
     window.removeEventListener("resize", this.checkSize);
     document.removeEventListener("mousedown", this.handleClick);
+    document.removeEventListener("touchstart", this.handleClick);
   }
 
   checkSize = () => {
