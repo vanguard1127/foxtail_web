@@ -9592,6 +9592,8 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   background: #717171;
   align-items: center;
   padding: 0 24px;
+  position: fixed;
+  top: 0;
 }
 
 .linksvg {
