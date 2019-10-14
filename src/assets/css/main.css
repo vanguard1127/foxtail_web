@@ -5792,6 +5792,8 @@ section.desires-popup .modal-popup {
   position: relative;
   background-color: #fff;
   border-radius: 2px;
+  max-height: 80%;
+  min-height: 400px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -5872,6 +5874,10 @@ section.desires-popup .modal-popup .m-body {
 
 section.desires-popup .modal-popup .m-body.desires {
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
 }
 
 section.desires-popup .modal-popup .m-body .desires-list-con {
