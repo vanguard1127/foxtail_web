@@ -100,11 +100,7 @@ class Modal extends Component {
                   className={fullWidth ? "" : "col-md-6"}
                   style={fullWidth ? {} : { maxWidth: "520px" }}
                 >
-                  <div
-                    className={`${fullWidth ? "popup full" : "popup"} ${
-                      maxWidth ? "max-width" : ""
-                    } ${maxHeight ? "max-height" : ""}`}
-                  >
+                  <div className={`${fullWidth ? "popup full" : "popup"}`}>
                     {!noHeader && <span className="head">{header}</span>}
                     {close && <a className="close" onClick={() => close()} />}
                     <form>
