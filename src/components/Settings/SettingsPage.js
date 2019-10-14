@@ -386,9 +386,11 @@ class SettingsPage extends Component {
   };
 
   toggleScroll(enabled) {
+    if(this.targetElement){
     enabled
       ? disableBodyScroll(this.targetElement.current)
       : enableBodyScroll(this.targetElement.current);
+    }
   }
 
   toggleDesiresPopup = () => {

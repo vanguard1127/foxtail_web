@@ -463,6 +463,7 @@ class CreateEvent extends Component {
                             maxDate: new Date(endTime) || null,
                             minDate: new Date()
                           }}
+                          withPortal
                           onChange={e => {
                             if (endTime && dayjs(e).isAfter(dayjs(endTime))) {
                               if (!toast.isActive("startTime")) {

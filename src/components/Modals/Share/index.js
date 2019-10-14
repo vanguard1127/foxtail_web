@@ -120,6 +120,7 @@ class Share extends Component {
                     <RedditShareButton url={body + refUrl} windowWidth={660} windowHeight={460}>
                       <RedditIcon size={32} round />
                     </RedditShareButton>
+                    <div className="SocialMediaShareButton ">
                     <CopyToClipboard text={refUrl}>
                       <Tooltip
                         title={copied ? t("Copied url to clipboard") : t("Copy referral url")}
@@ -143,6 +144,7 @@ class Share extends Component {
                         </span>
                       </Tooltip>
                     </CopyToClipboard>
+                    </div>
                     <EmailShareButton url={refUrl} subject={title} body={body}>
                       <EmailIcon size={32} round />
                     </EmailShareButton>

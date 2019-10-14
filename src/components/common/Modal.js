@@ -97,7 +97,7 @@ class Modal extends Component {
                 </div>
               ) : (
                 <div
-                  className={fullWidth ? "" : "col-md-6"}
+                  className={fullWidth ? "" : ""}
                   style={fullWidth ? {} : { maxWidth: "520px" }}
                 >
                   <div className={`${fullWidth ? "popup full" : "popup"}`}>

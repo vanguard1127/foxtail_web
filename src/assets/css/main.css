@@ -751,7 +751,11 @@ header .mobile-menu {
   position: absolute;
   top: 23px;
   float: left;
-  z-index: 1111;
+  z-index: 1;
+}
+
+.menu-shown header .mobile-menu{
+  z-index: 11111;
 }
 
 header .mobile-toggle {
@@ -5584,7 +5588,7 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 5;
 }
 
 section.popup-content {
@@ -6181,6 +6185,10 @@ section.couple-popup-content .modal-popup {
 section.couple-popup-content .modal-popup .page {
   box-shadow: none !important;
   padding: 0 0 30px 0 !important;
+}
+
+.SocialMediaShareButton {
+  margin-left: 5px;
 }
 
 section.couple-popup-content .create-profile .SocialMediaShareButton {
@@ -7255,6 +7263,8 @@ section.login-modal {
   /* padding:15% 0; */
   display: none;
   visibility: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 section.login-modal.verifications {
@@ -7274,7 +7284,13 @@ section.login-modal.rules {
 }
 
 section.full-screen-modal {
-  padding: unset;
+  padding: unset!important;
+  max-width: unset!important;
+}
+
+
+section.login-modal.full-screen-modal .popup .form-content{
+  margin: 0;
 }
 
 section.login-modal.show {
@@ -7297,10 +7313,12 @@ section.login-modal .popup {
   background-color: #fff;
   box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
   border-radius: 4px;
-  padding: 25px 30px 30px 30px;
-  display: block;
+  padding: 25px 0 30px ;
+  display: flex;
+  flex-direction: column;
   float: left;
   position: relative;
+  max-width: 90vw;
 }
 
 section.login-modal .popup.full {
@@ -7315,11 +7333,16 @@ section.login-modal .popup.max-width {
 section.login-modal .popup.max-height {
   max-height: 80vh;
 }
-
 section.login-modal.couples .popup.full,
 section.login-modal.black .popup.full {
-  padding: 0px;
+  padding: 0;
 }
+section.login-modal.couples .popup.full .form-content,
+section.login-modal.black .popup.full .form-content {
+  padding: 0px;
+  margin: 0;
+}
+
 
 section.login-modal .popup a.close::before {
   content: "\e804";
@@ -7343,7 +7366,7 @@ section.login-modal .popup a.close:hover::before {
 }
 
 section.login-modal .popup span.head {
-  width: 100%;
+  /*width: 100%;*/
   display: block;
   float: left;
   font-size: 25px;
@@ -7355,7 +7378,8 @@ section.login-modal .popup span.head {
   padding-bottom: 15px;
   border-bottom: 1px solid #dcdfe4;
   text-align: center;
-  /* margin-bottom: 25px; */
+  margin: 0 30px;
+  margin-bottom: 25px;
 }
 
 section.login-modal .popup form {
@@ -7364,12 +7388,13 @@ section.login-modal .popup form {
   float: left;
   padding: 0;
   margin: 0;
+  overflow-y: auto;
 }
 
 section.login-modal .popup form .form-content {
-  width: 100%;
+  /*width: 100%;
   display: block;
-  float: left;
+  float: left;*/
 }
 
 section.login-modal .popup form .form-content .input {
@@ -7715,6 +7740,7 @@ section.settings .rc-slider-handle {
   left: 0 !important;
 }
 
+section.login-modal .popup form::-webkit-scrollbar,
 .select-list ul::-webkit-scrollbar {
   width: 9px !important;
   height: 10px !important;
@@ -7723,12 +7749,12 @@ section.settings .rc-slider-handle {
   overflow: hidden !important;
   border-radius: 0 3px 3px 0 !important;
 }
-
+section.login-modal .popup form::-webkit-scrollbar-thumb,
 .select-list ul::-webkit-scrollbar-thumb {
   background: #ececec !important;
   border: none !important;
 }
-
+section.login-modal .popup form::-webkit-scrollbar-corner,
 .select-list ul::-webkit-scrollbar-corner {
   background: inherit !important;
 }
@@ -7805,6 +7831,7 @@ section.desires-popup .modal-popup .m-body .search input {
   font-size: 14px;
   border-radius: 2px;
 }
+
 
 section.settings .profile-bio-textarea {
   border: 1px solid #e3e3e3;
@@ -7922,6 +7949,10 @@ ul.black-member li::before {
   color: #5b5b65;
   font-size: 14px;
 }
+section.login-modal .popup form .form-content{
+  margin: 0 30px;
+}
+
 section.login-modal .popup form .form-content .example-image {
   width: 100%;
   display: block !important;
@@ -7931,6 +7962,7 @@ section.login-modal .popup form .form-content .example-image {
   margin: 0;
   justify-content: initial;
 }
+
 
 section.login-modal .popup form .form-content .example-image img {
   width: 100%;
@@ -8412,6 +8444,7 @@ section.not-found span.description {
   header .mobile-menu {
     display: none;
     visibility: hidden;
+    z-index: 1;
   }
 
   header .toggle {
@@ -9309,6 +9342,7 @@ img {
 .tooltip {
   position: relative;
   display: inline-block;
+  z-index: 99999999999;
 }
 
 .tooltip .tooltiptext {
@@ -9328,10 +9362,12 @@ img {
   z-index: 1;
   padding: 10px 20px !important;
   line-height: 2;
+  z-index: 99999999999;
 }
 
 .tooltip .tooltiptext div {
   width: max-content;
+  z-index: 99999999999;
 }
 
 .greenButton {
@@ -9527,6 +9563,41 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   margin-top: 56px;
   position: relative;
   width: 100%;
+  
+}
+
+.edit-canvas-image-wrapper > div{
+  display: auto!important;
+}
+
+.edit-photo-modal .popup form{
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.edit-photo-modal .popup form::-webkit-scrollbar{
+  width: initial!important;
+  height: initial!important;
+  border: initial!important;
+  background-color: initial!important;
+  overflow: initial!important;
+  border-radius: initial!important;
+}
+
+section.login-modal.edit-photo-modal .popup form::-webkit-scrollbar-thumb {
+  background: initial!important;
+  border: initial!important;
+}
+
+section.login-modal.edit-photo-modal .popup form::-webkit-scrollbar-corner {
+  background: initial!important;
+}
+
+section.login-modal.edit-photo-modal .popup{
+  max-width: initial!important;
 }
 
 .edit-canvas-image-div {
@@ -10032,5 +10103,17 @@ animation: CycleC 30s ease infinite;
 
   section.desires-popup .modal-popup .m-body .search {
     padding: 0 32px 0 32px;
+  }
+}
+
+.react-datepicker__navigation{
+  top:5px!important;
+}
+
+@media (max-width: 400px), (max-height: 550px){
+
+  .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name{
+    width: 1.5rem!important;
+    line-height: 1.5rem!important;
   }
 }

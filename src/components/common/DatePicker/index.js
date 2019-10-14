@@ -55,6 +55,7 @@ export default class CustomDatePicker extends Component {
             dropdownMode="select"
             maxDate={date}
             locale="en"
+            withPortal
           />
         </div>
       );
@@ -74,6 +75,7 @@ export default class CustomDatePicker extends Component {
             dateFormat="MMMM d, yyyy h:mm aa"
             timeCaption="time"
             {...p}
+            withPortal
           />
         </div>
       );
