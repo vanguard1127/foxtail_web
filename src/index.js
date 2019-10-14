@@ -224,11 +224,10 @@ const Root = () => (
   </Router>
 );
 
-
 const Wrapper = withRouter(props => {
   setTimeout(() => {
     window.scrollTo(0, 1);
-  }, 1000)
+  }, 1000);
   let location = props.location;
   if (location.pathname) {
     if (
@@ -379,8 +378,8 @@ const Body = withAuth(session => session && session.currentuser)(
 
 window.onresize = function() {
   document.body.height = window.innerHeight;
-  console.log(window.innerHeight)
-}
+  console.log(window.innerHeight);
+};
 window.onresize(); // called to initially set the height.
 
 render(

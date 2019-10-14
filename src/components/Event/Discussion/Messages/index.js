@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Message from "./Message.js";
 import { NEW_MESSAGE_SUB } from "../../../../queries";
 import { Waypoint } from "react-waypoint";
-import { resultKeyNameFromField } from "apollo-utilities";
 
 class MessageList extends Component {
   unsubscribe;
@@ -42,26 +41,18 @@ class MessageList extends Component {
         chatID: chatID
       },
       updateQuery: (prev, { subscriptionData }) => {
+        console.log("Prev sub", prev);
         const { newMessageSubscribe } = subscriptionData.data;
 
         if (!newMessageSubscribe) {
           return prev;
         }
-        if (prev.getComments) {
-          prev.getComments.messages = [
-            newMessageSubscribe,
-            ...prev.getComments.messages
-          ];
-        } else {
-          prev.getComments = {
-            messages: [newMessageSubscribe],
-            __typename: "ChatType"
-          };
-        }
+        const newComments = [newMessageSubscribe, ...this.state.messages];
+
         if (this.mounted) {
-          this.setState({ messages: prev.getComments.messages });
+          this.setState({ messages: newComments });
         }
-        return prev;
+        return;
       }
     });
   };
@@ -100,15 +91,14 @@ class MessageList extends Component {
             this.setState({ hasMoreItems: false });
           }
 
-          previousResult.getComments.messages = [
-            ...previousResult.getComments.messages,
+          const newComments = [
+            ...this.state.messages,
             ...fetchMoreResult.getComments.messages
           ];
-          this.setState({ messages: previousResult.getComments.messages });
 
-          return previousResult.getComments
-            ? previousResult.getComments
-            : { data: previousResult };
+          this.setState({ messages: newComments });
+
+          return;
         }
       });
     }
