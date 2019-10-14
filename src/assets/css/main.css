@@ -7210,6 +7210,7 @@ footer.landing .links ul {
 
 footer.landing .links ul li {
   display: inline-block;
+  width: auto;
   color: #9298a4;
   font-size: 14px;
   transition: 0.3s all;
