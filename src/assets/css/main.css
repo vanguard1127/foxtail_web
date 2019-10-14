@@ -7251,11 +7251,6 @@ section.login-modal {
   visibility: hidden;
 }
 
-section.login-modal.create-event {
-  padding: 8% 0;
-  overflow: auto;
-}
-
 section.login-modal.verifications {
   padding: 6% 0;
 }
@@ -10007,8 +10002,8 @@ animation: CycleC 30s ease infinite;
 }
 
 @supports (-webkit-overflow-scrolling: touch) {
-  /* CSS specific to iOS devices */ 
-  
+  /* CSS specific to iOS devices */
+
   ::-webkit-scrollbar {
     width: unset!important;
     height: unset!important;
