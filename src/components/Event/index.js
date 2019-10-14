@@ -168,7 +168,7 @@ class EventPage extends Component {
                     <div className="icon">
                       <i className="nico x" />
                     </div>
-                    <span className="head">Event Not Available</span>
+                    <span className="head">{t("eventnot")}</span>
                     <span className="description">{t("noevent")}</span>
                   </div>
                 </div>

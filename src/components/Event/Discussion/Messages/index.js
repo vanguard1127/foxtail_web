@@ -41,7 +41,6 @@ class MessageList extends Component {
         chatID: chatID
       },
       updateQuery: (prev, { subscriptionData }) => {
-        console.log("Prev sub", prev);
         const { newMessageSubscribe } = subscriptionData.data;
 
         if (!newMessageSubscribe) {

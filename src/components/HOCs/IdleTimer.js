@@ -2,6 +2,7 @@ import { PureComponent } from "react";
 import { withApollo } from "react-apollo";
 import axios from "axios";
 import { toast } from "react-toastify";
+import i18next from "i18next";
 
 class IdleTimer extends PureComponent {
   constructor(props) {
@@ -54,10 +55,15 @@ class IdleTimer extends PureComponent {
 
   warn() {
     if (!toast.isActive("warn")) {
-      toast("Idle warning: You will be logged out automatically in 1 minute", {
-        toastId: "warn",
-        autoClose: false
-      });
+      toast(
+        i18next.t(
+          "common:Idle warning: You will be logged out automatically in 1 minute"
+        ),
+        {
+          toastId: "warn",
+          autoClose: false
+        }
+      );
     }
   }
 

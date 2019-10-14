@@ -26,44 +26,48 @@ class BecomeBlackMember extends PureComponent {
               >
                 {t("scroll")}
               </div>
-              <h3 className="title-large">become a black member</h3>
+              <h3 className="title-large">{t("common:become")}</h3>
               <hr />
             </div>
-            <h4 className="title-small">BLACK Member privledges include:</h4>
+            <h4 className="title-small">{t("blkinclude")}</h4>
             <ul className="list-left">
               <li>
-                <i className="fas fa-angle-right"></i> Direct Chat to Users (no
-                match needed)
+                <i className="fas fa-angle-right"></i>
+                {t("direct")}
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Change Location of your
-                profile
+                <i className="fas fa-angle-right"></i>
+                {t("changeloc")}
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Only Be Seen By Members
-                You Like
+                <i className="fas fa-angle-right"></i>
+                {t("onlyliked")}
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Exclusive icon next to
-                your chats and comments.
+                <i className="fas fa-angle-right"></i>
+                {t("excicon")}
               </li>
             </ul>
             <ul className="list-right">
               <li>
-                <i className="fas fa-angle-right"></i> Hide your online status
+                <i className="fas fa-angle-right"></i>
+                {t("hidestat")}
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Show higher in results
+                <i className="fas fa-angle-right"></i>
+                {t("higher")}
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> Infinite Photos
+                <i className="fas fa-angle-right"></i>
+                {t("infinite")}
               </li>
               <li>
-                <i className="fas fa-angle-right"></i> More coming soon!
+                <i className="fas fa-angle-right"></i>
+                {t("morecoming")}
               </li>
             </ul>
             <p className="get-more">
-              Get more of what you love{" "}
+              {t("getmore")}{" "}
               <i className="fas fa-heart" style={{ color: "#db0016" }}></i>
             </p>
             <CreateSubBtn

@@ -156,7 +156,7 @@ class Landing extends PureComponent {
                             {t("free")}
                             <span className="divider">|</span>
                             {t("private")}
-                            <span className="divider">|</span>18+ Fun
+                            <span className="divider">|</span>18+ {t("fun")}
                           </span>
                         </h1>
                       </div>
