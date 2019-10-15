@@ -5588,7 +5588,8 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 5;
+  z-index: 100;
+  -webkit-overflow-scrolling: touch;
 }
 
 section.popup-content {
@@ -8624,6 +8625,7 @@ section.not-found span.description {
   section.inbox .left {
     position: absolute;
     height: calc(100vh - 144px) !important;
+    z-index:1;
   }
 
   section.inbox .left .conversations {
@@ -9858,14 +9860,14 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   text-align: center;
   text-align: -webkit-center;
 }
-
+/*
 background: linear-gradient(334deg, #2ea586, #6e37b9);
 background-size: 400% 400%;
 
 -webkit-animation: CycleC 30s ease infinite;
 -moz-animation: CycleC 30s ease infinite;
 animation: CycleC 30s ease infinite;
-
+*/
 @-webkit-keyframes CycleC {
   0% {
     background-position: 0% 50%;
@@ -10010,12 +10012,12 @@ animation: CycleC 30s ease infinite;
 .rulesCon {
   margin: 25px;
   overflow: auto;
-  max-height: 58vh;
+  /*max-height: 58vh;*/
   border-bottom: 1px solid #dcdfe4;
 }
 @media (max-height: 633px) {
   .rulesCon {
-    max-height: 54vh;
+    /*max-height: 54vh;*/
   }
 }
 .rulesCon h2 {
@@ -10080,31 +10082,6 @@ animation: CycleC 30s ease infinite;
   display: inline-block;
 }
 
-@supports (-webkit-overflow-scrolling: touch) {
-  /* CSS specific to iOS devices */
-
-  ::-webkit-scrollbar {
-    width: unset!important;
-    height: unset!important;
-    border: unset!important;
-    background-color: unset!important;
-    overflow: unset!important;
-    border-radius: unset!important;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background: unset!important;
-    border: unset!important;
-  }
-
-  *::-webkit-scrollbar-corner {
-    background: unset!important;
-  }
-
-  section.desires-popup .modal-popup .m-body .search {
-    padding: 0 32px 0 32px;
-  }
-}
 
 .react-datepicker__navigation{
   top:5px!important;
@@ -10115,5 +10092,35 @@ animation: CycleC 30s ease infinite;
   .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name{
     width: 1.5rem!important;
     line-height: 1.5rem!important;
+  }
+}
+
+
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+
+  section.login-modal .popup form::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    width: unset!important;
+    height: unset!important;
+    border: unset!important;
+    background-color: unset!important;
+    overflow: unset!important;
+    border-radius: unset!important;
+  }
+
+  section.login-modal .popup form::-webkit-scrollbar-thumb,
+  *::-webkit-scrollbar-thumb {
+    background: unset!important;
+    border: unset!important;
+  }
+
+  section.login-modal .popup form::-webkit-scrollbar-corner,
+  *::-webkit-scrollbar-corner {
+    background: unset!important;
+  }
+
+  section.desires-popup .modal-popup .m-body .search {
+    padding: 0 32px 0 32px;
   }
 }
