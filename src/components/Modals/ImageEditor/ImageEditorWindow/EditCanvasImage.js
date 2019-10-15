@@ -317,10 +317,10 @@ class EditCanvasImage extends PureComponent {
       <div className="edit-canvas-image-div">
         <div className="edit-canvas-image-wrapper">
           <div
-            style={{
+            /*style={{
               display: "flex",
               justifyContent: "center"
-            }}
+            }}*/
             ref={node => {
               this.container = node;
             }}

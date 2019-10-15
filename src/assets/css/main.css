@@ -5588,7 +5588,7 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1000;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -6189,7 +6189,7 @@ section.couple-popup-content .modal-popup .page {
 }
 
 .SocialMediaShareButton {
-  margin-left: 5px;
+  margin-left: 25px;
 }
 
 section.couple-popup-content .create-profile .SocialMediaShareButton {
@@ -9563,9 +9563,12 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 
 .edit-canvas-image-wrapper {
   margin-top: 56px;
-  position: relative;
+  position: fixed;
   width: 100%;
-  
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .edit-canvas-image-wrapper > div{
