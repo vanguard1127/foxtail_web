@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import TimeAgo from "../../../utils/TimeAgo";
+import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 import ChatActions from "./ChatActions";
 import { NavLink } from "react-router-dom";
 
@@ -69,9 +70,8 @@ class ChatHeader extends PureComponent {
             <div className="avatar">
               <span>
                 <img
-                  src={chatProfilePic}
+                  src={chatProfilePic ? chatProfilePic : NoProfileImg}
                   alt=""
-                  
                 />
               </span>
             </div>

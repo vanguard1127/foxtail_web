@@ -2,8 +2,6 @@ import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import dayjs from "dayjs";
-
-import { toast } from "react-toastify";
 import { Query } from "react-apollo";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";

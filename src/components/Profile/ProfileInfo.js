@@ -20,20 +20,25 @@ class ProfileInfo extends Component {
       <ErrorBoundary>
         <div className={userInfoStyle}>
           <div>
+            {" "}
             <Tooltip title={profileName} placement="top">
               <span className="name">
-                {users[1] && <span className={"sex " + users[0].gender + " userInfoHeader"} />}
-                &nbsp;
-                {profileName},&nbsp;{" "}
+                {users[1] && (
+                  <span
+                    className={"sex " + users[0].gender + " userInfoHeader"}
+                  />
+                )}
+                &nbsp;{users[0].username},&nbsp;{" "}
               </span>
             </Tooltip>
-
             <span> {dayjs().diff(users[0].dob, "years")}</span>
-
             {users[0].sexuality && (
               <span>
                 ,&nbsp;
-                {sexualityOptions.find(el => el.value === users[0].sexuality).label}
+                {
+                  sexualityOptions.find(el => el.value === users[0].sexuality)
+                    .label
+                }
               </span>
             )}
           </div>
@@ -42,8 +47,12 @@ class ProfileInfo extends Component {
             <div>
               <span>
                 {" "}
-                {users[1] && <span className={"sex " + users[1].gender + " userInfoHeader"} />}
-                &nbsp; {users[1].username},&nbsp;{" "}
+                {users[1] && (
+                  <span
+                    className={"sex " + users[1].gender + " userInfoHeader"}
+                  />
+                )}
+                &nbsp;{users[1].username},&nbsp;{" "}
               </span>
 
               <span> {dayjs().diff(users[1].dob, "years")}</span>
@@ -51,7 +60,10 @@ class ProfileInfo extends Component {
               {users[1].sexuality && (
                 <span>
                   ,&nbsp;
-                  {sexualityOptions.find(el => el.value === users[1].sexuality).label}
+                  {
+                    sexualityOptions.find(el => el.value === users[1].sexuality)
+                      .label
+                  }
                 </span>
               )}
             </div>

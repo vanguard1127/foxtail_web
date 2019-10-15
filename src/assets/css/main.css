@@ -7531,7 +7531,6 @@ section.login-modal .popup form .form-content .dropdown label {
 }
 
 section.login-modal .popup form .form-content .dropdown span {
-  top: 9px;
   position: relative;
 }
 
@@ -9445,6 +9444,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   font-size: 15px;
   font-family: "foxtail-icon";
   color: #fff;
+  padding: 1px;
 }
 
 @media only screen and (max-width: 768px) {

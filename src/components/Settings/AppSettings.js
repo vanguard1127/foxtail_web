@@ -77,12 +77,14 @@ class AppSettings extends Component {
                   value={lang}
                   type={"lang"}
                   onChange={async e => {
-                    await setLang(e.value);
-                    await setValue({
-                      name: "lang",
-                      value: e.value
-                    });
-                    window.location.reload();
+                    if (e.value !== lang) {
+                      await setLang(e.value);
+                      await setValue({
+                        name: "lang",
+                        value: e.value
+                      });
+                      window.location.reload();
+                    }
                   }}
                   placeholder={t("langlbl")}
                   lang={lang}

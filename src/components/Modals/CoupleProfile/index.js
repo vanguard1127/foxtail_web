@@ -7,6 +7,7 @@ import {
   GENERATE_CODE,
   UNLINK_PROFILE
 } from "../../../queries";
+import { toast } from "react-toastify";
 import { Mutation, Query } from "react-apollo";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -50,6 +51,11 @@ class CoupleProfile extends PureComponent {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
     } else {
+      if (!toast.isActive("sharewith")) {
+        toast(this.props.t("sharewith"), {
+          toastId: "sharewith"
+        });
+      }
       close();
     }
   };
@@ -114,7 +120,7 @@ class CoupleProfile extends PureComponent {
             </div>
             <div className="profile-top">
               <h3 className="title">{t("common:cplpros")}</h3>
-              <h4 className="title-small">{t("common:subtitle")}</h4>
+              <h4 className="title-small">{t("common:stray")}</h4>
             </div>
             <div className="profile-bottom">
               <div className="layer-left">
@@ -195,15 +201,7 @@ class CoupleProfile extends PureComponent {
 
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {!toLink && (
-                <>
-                  {t("sharewith")}
-                  <br />
-                  <br />
-                </>
-              )}
-
-              {t("includemsg")}
+              {t("includemsgdesc")}
             </DialogContentText>
           </DialogContent>
 
@@ -228,7 +226,7 @@ class CoupleProfile extends PureComponent {
                       this.handleLink(linkProfile, close);
                     }}
                   >
-                    {t("Include")}
+                    {t("common:Include")}
                   </Button>
                   {"  "}
                   <Button
@@ -242,7 +240,7 @@ class CoupleProfile extends PureComponent {
                       this.handleLink(linkProfile, close);
                     }}
                   >
-                    {t("NotInclude")}
+                    {t("common:NotInclude")}
                   </Button>
                 </>
               )}

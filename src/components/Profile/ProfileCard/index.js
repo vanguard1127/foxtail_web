@@ -131,7 +131,7 @@ class ProfileCard extends Component {
             ) : (
               <div className="functions">
                 <div className="btn share" onClick={showShareModal}>
-                  {t("shareme")}
+                  {t("common:shareme")}
                 </div>
               </div>
             )}

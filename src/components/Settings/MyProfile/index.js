@@ -78,8 +78,7 @@ class MyProfile extends Component {
                 onChange={async e => {
                   await setValue({
                     name: "sexuality",
-                    value: e.value,
-                    noSave: true
+                    value: e.value
                   });
                 }}
                 placeholder={t("sexlbl")}
