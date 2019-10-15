@@ -10,22 +10,22 @@ date.setFullYear(date.getFullYear() - 18);
 
 class SignupForm extends Component {
   schema = yup.object().shape({
-    interestedIn: yup.array().required(this.props.t("intrstreq")),
-    gender: yup.string().required(this.props.t("genreq")),
+    interestedIn: yup.array().required("intrstreq"),
+    gender: yup.string().required("genreq"),
     dob: yup
       .date()
       .default(undefined)
-      .max(date, this.props.t("18old"))
-      .required(this.props.t("birthreq")),
+      .max(date, "18old")
+      .required("birthreq"),
     email: yup
       .string()
-      .email(this.props.t("invemail"))
-      .required(this.props.t("emailreq")),
+      .email("invemail")
+      .required("emailreq"),
     username: yup
       .string()
-      .required(this.props.t("userreq"))
-      .min(3, this.props.t("usernameLen"))
-      .max(30, this.props.t("usernameLen"))
+      .required("userreq")
+      .min(3, "usernameLen")
+      .max(30, "usernameLen")
   });
   state = {
     username: "",
@@ -137,7 +137,7 @@ class SignupForm extends Component {
               }}
               value={username}
             />
-            {this.InputFeedback(errors.username)}
+            {this.InputFeedback(t(errors.username))}
           </div>
           <div className="input email">
             <input
@@ -152,7 +152,7 @@ class SignupForm extends Component {
               }}
               value={email}
             />
-            {this.InputFeedback(errors.email)}
+            {this.InputFeedback(t(errors.email))}
           </div>
           <DatePicker
             value={dob}
@@ -165,7 +165,7 @@ class SignupForm extends Component {
             t={t}
             type="birthday"
           />
-          {this.InputFeedback(errors.dob)}
+          {this.InputFeedback(t(errors.dob))}
           <Dropdown
             value={gender}
             type={"gender"}
@@ -178,7 +178,7 @@ class SignupForm extends Component {
             placeholder={t("common:Sex") + ":"}
             lang={lang}
           />
-          {this.InputFeedback(errors.gender)}
+          {this.InputFeedback(t(errors.gender))}
 
           <Dropdown
             value={interestedIn}
@@ -192,7 +192,7 @@ class SignupForm extends Component {
             placeholder={t("common:Interested") + ":"}
             lang={lang}
           />
-          {this.InputFeedback(errors.interestedIn)}
+          {this.InputFeedback(t(errors.interestedIn))}
           <div className="couple-choose">
             <div className="select-checkbox">
               <input

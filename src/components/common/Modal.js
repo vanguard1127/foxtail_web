@@ -49,9 +49,7 @@ class Modal extends Component {
       fullScreen,
       className,
       popupClass,
-      noHeader,
-      maxWidth,
-      maxHeight
+      noHeader
     } = this.props;
 
     return (

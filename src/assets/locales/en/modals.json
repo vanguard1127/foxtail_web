@@ -137,5 +137,7 @@
   "setoldimg": "Set older Image",
   "plscomeback": "Please come back tomorrow or",
   "dailylimit": "Daily Like Limit Reached",
-  "becomeblkulm": "Become a Black Member and have UNLIMITED Likes!"
+  "becomeblkulm": "Become a Black Member and have UNLIMITED Likes!",
+  "setstart": "Start time may not be after ending time",
+  "setend": "End time may not be before starting time"
 }
