@@ -9563,7 +9563,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 
 .edit-canvas-image-wrapper {
   margin-top: 56px;
-  position: relative;
+  position: absolute;
   width: 100%;
   
 }
