@@ -7300,6 +7300,7 @@ section.login-modal.show {
   align-items: center;
   /* display: inline-block; */
   visibility: visible;
+  padding: 0 5%;
 }
 
 section.login-modal .popup-container {
@@ -7319,7 +7320,6 @@ section.login-modal .popup {
   flex-direction: column;
   float: left;
   position: relative;
-  max-width: 90vw;
 }
 
 section.login-modal .popup.full {
@@ -9563,8 +9563,8 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 
 .edit-canvas-image-wrapper {
   margin-top: 56px;
-  position: absolute;
-  width: 100%;
+  position: relative;
+  width: 100vw;
   
 }
 
@@ -9615,6 +9615,7 @@ section.login-modal.edit-photo-modal .popup{
   margin: 10px 0 10px 0;
   width: 100%;
   position: fixed;
+  z-index: 9999;
   bottom: 0;
 }
 
@@ -9623,6 +9624,7 @@ section.login-modal.edit-photo-modal .popup{
   background: #5f5f5f;
   display: flex;
   align-items: center;
+
 }
 
 .edit-canvas-action-div {
