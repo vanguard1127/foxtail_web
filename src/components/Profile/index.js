@@ -50,7 +50,6 @@ class ProfilePage extends Component {
   componentDidMount() {
     this.mounted = true;
     window.scrollTo(0, 0);
-   
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -225,7 +224,7 @@ class ProfilePage extends Component {
                           <div className="icon">
                             <i className="nico x" />
                           </div>
-                          <span className="head">Profile Not Available</span>
+                          <span className="head">{t("nopro")}</span>
                           <span className="description">{t("notexist")}</span>
                         </div>
                       </div>

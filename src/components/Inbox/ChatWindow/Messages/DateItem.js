@@ -1,9 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Waypoint } from "react-waypoint";
-import Message from "./Message.js";
-import { NEW_MESSAGE_SUB } from "../../../../queries";
-import _ from "lodash";
-
 class DateItem extends Component {
   isUserInside = true;
   state = {

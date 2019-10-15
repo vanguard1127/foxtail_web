@@ -52,6 +52,9 @@ import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
 
+import * as serviceWorker from './sw';
+
+
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
 });
@@ -59,12 +62,8 @@ Sentry.init({
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-const httpurl = process.env.REACT_APP_HTTP_URL;
-const HTTPSurl = process.env.REACT_APP_HTTPS_URL;
-const wsurl = process.env.REACT_APP_WS_URL;
-
 const wsLink = new WebSocketLink({
-  uri: wsurl,
+  uri: process.env.REACT_APP_WS_URL,
   options: {
     reconnect: true,
     lazy: true,
@@ -76,7 +75,7 @@ const wsLink = new WebSocketLink({
 });
 
 const httpLink = new HttpLink({
-  uri: httpurl
+  uri: process.env.REACT_APP_HTTP_URL
 });
 
 const AuthLink = new ApolloLink((operation, forward) => {
@@ -152,16 +151,17 @@ const errorLink = onError(
             });
           }
         } else if (~message.indexOf("authenticated")) {
-          tokenHandler({ operation, forward, HTTPSurl, ErrorHandler });
+          tokenHandler({ operation, forward });
         } else {
           console.error(message);
-
-          // Sentry.withScope(scope => {
-          //   scope.setLevel("error");
-          //   scope.setTag("resolver", path);
-          //   scope.setFingerprint([window.location.pathname]);
-          //   Sentry.captureException(message);
-          // });
+          if (process.env.NODE_ENV === "development") {
+            Sentry.withScope(scope => {
+              scope.setLevel("error");
+              scope.setTag("resolver", path);
+              scope.setFingerprint([window.location.pathname]);
+              Sentry.captureException(message);
+            });
+          }
           if (!toast.isActive("err")) {
             toast.error(
               <span>
@@ -224,11 +224,10 @@ const Root = () => (
   </Router>
 );
 
-
 const Wrapper = withRouter(props => {
   setTimeout(() => {
     window.scrollTo(0, 1);
-  }, 1000)
+  }, 1000);
   let location = props.location;
   if (location.pathname) {
     if (
@@ -363,7 +362,7 @@ const Body = withAuth(session => session && session.currentuser)(
         </Switch>
       </main>
       {showFooter && <Footer />}
-      <ToastContainer position="top-center" hideProgressBar={false} />
+      <ToastContainer position="top-center" hideProgressBar={true} />
     </div>
   )
 );
@@ -379,8 +378,7 @@ const Body = withAuth(session => session && session.currentuser)(
 
 window.onresize = function() {
   document.body.height = window.innerHeight;
- 
-}
+};
 window.onresize(); // called to initially set the height.
 
 //prevent context menu
@@ -392,3 +390,12 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
+
+if ('serviceWorker' in navigator) {
+  if(process.env.NODE_ENV!=='production'){
+    serviceWorker.unregister();
+  }else{
+    serviceWorker.register();
+  }
+  
+}

@@ -67,7 +67,6 @@ class Desires extends Component {
                     .map((option, index) => (
                       <li key={option.value}>
                         <Tooltip title={t(option.label)} placement={"top"}>
-                          {/* <div className="select-checkbox"> */}
                           <input
                             type="checkbox"
                             id={option.value}
@@ -85,7 +84,6 @@ class Desires extends Component {
                             <span />
                             <b>{t(option.label)}</b>
                           </label>
-                          {/* </div> */}
                         </Tooltip>
                       </li>
                     ))}

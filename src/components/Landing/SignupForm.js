@@ -222,7 +222,9 @@ class SignupForm extends Component {
             lang={lang}
           />
           <div className="terms">
-            This site uses your Phone Number to Authenticate your account ONLY
+            {t(
+              "This site uses your Phone Number to Authenticate your account ONLY"
+            )}
           </div>
           <div className="terms">
             {t("signupMsg")}

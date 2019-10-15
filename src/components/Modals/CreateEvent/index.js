@@ -116,7 +116,7 @@ class CreateEvent extends Component {
       return true;
     } catch (e) {
       let errors = {};
-      console.log(e);
+      console.error(e);
       e.inner.forEach(err => (errors[err.path] = err.message));
       this.setState({ errors });
       return false;
@@ -404,7 +404,7 @@ class CreateEvent extends Component {
                             }}
                             onClick={this.handleClickOnRemoveCurrentImage}
                           >
-                            Remove Current Image
+                            {t("removecurr")}
                           </div>
                         ) : (
                           <Fragment>
@@ -419,7 +419,7 @@ class CreateEvent extends Component {
                                 style={{ padding: "4px", textAlign: "right" }}
                                 onClick={this.handleClickOnResetImage}
                               >
-                                Set older Image
+                                {t("setoldimg")}
                               </div>
                             )}
                           </Fragment>

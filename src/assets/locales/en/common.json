@@ -234,5 +234,13 @@
   "Reset email has been sent to you within the last 5 minutes. Please check your spam.": "Reset email has been sent to you within the last 5 minutes. Please check your spam.",
   "Please enter a valid url": "Please enter a valid url",
   "Error occurred please try again.": "Error occurred please try again.",
-  "Uh-oh...": "Uh-oh..."
+  "Uh-oh...": "Uh-oh...",
+  "Idle warning: You will be logged out automatically in 1 minute": "Idle warning: You will be logged out automatically in 1 minute",
+  "stray": "Stray Together",
+  "cplpros": "Couple's Profiles",
+  "Submit": "Submit",
+  "Include": "Include",
+  "NotInclude": "DO NOT Include",
+  "Profile Picture Selector": "Profile Picture Selector",
+  "Privacy Studio": "Privacy Studio"
 }

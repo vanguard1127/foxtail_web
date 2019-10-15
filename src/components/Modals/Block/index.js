@@ -46,7 +46,7 @@ class BlockModal extends Component {
     const { t, close, goToMain, ErrorHandler, ReactGA } = this.props;
     if (this.state.reason === "") {
       if (!toast.isActive("err")) {
-        toast.error("Please select a reason before reporting.", {
+        toast.error(t("plsreason"), {
           position: toast.POSITION.TOP_CENTER,
           toastId: "err"
         });
@@ -95,7 +95,7 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">Please select a reason</option>
+          <option value="">{t("plsreason")}</option>
           <option value="nopro">{t("nopro")}</option>
           <option value="stolenPic">{t("stolepic")}</option>
           <option value="money">{t("money")}</option>
@@ -114,7 +114,7 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">Please select a reason</option>
+          <option value="">{t("plsreason")}</option>
           <option value="money">{t("money")}</option>
           <option value="nudity">{t("Nudity")}</option>
           <option value="rude">{t("Rude")}</option>
@@ -130,7 +130,7 @@ class BlockModal extends Component {
           style={{ display: "flex", flex: "1", margin: "10px" }}
           onChange={this.handleChange}
         >
-          <option value="">Please select a reason</option>
+          <option value="">{t("plsreason")}</option>
           <option value="illegalEvent">{t("illevent")}</option>
           <option value="racist">{t("Racist")}</option>
           <option value="Spam">{t("Spam")}</option>

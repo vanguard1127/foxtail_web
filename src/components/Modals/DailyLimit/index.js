@@ -5,7 +5,7 @@ import Modal from "../../common/Modal";
 const DailyLimitModal = ({ t, close, history }) => {
   return (
     <Modal
-      header={"Daily Like Limit Reached"}
+      header={t("dailylimit")}
       close={() => close()}
       okSpan={
         <span
@@ -17,7 +17,7 @@ const DailyLimitModal = ({ t, close, history }) => {
             })
           }
         >
-          UPGRADE TO BLACK
+          {t("upgradeblk")}
         </span>
       }
     >
@@ -25,9 +25,9 @@ const DailyLimitModal = ({ t, close, history }) => {
         className="description"
         style={{ fontSize: "16px", paddingBottom: "35px", lineHeight: "24px" }}
       >
-        Please come back tomorrow or...
+        {t("plscomeback")}...
         <br />
-        <b>Become a Black Member and have UNLIMITED Likes!</b>
+        <b>{t("becomeblkulm")}</b>
       </span>
     </Modal>
   );

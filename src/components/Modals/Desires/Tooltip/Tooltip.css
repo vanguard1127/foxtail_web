@@ -1,11 +1,12 @@
-.tooltip {
+.desire-tooltip {
   width: 100%;
   position: relative;
   display: inline-block;
+
   /* border-bottom: 1px dotted black; */
 }
 
-.tooltip .tooltiptext {
+.desire-tooltip .tooltiptext {
   visibility: hidden;
   width: auto;
   max-width: 300px;
@@ -28,29 +29,29 @@
   min-height: 28px;
 }
 
-.tooltip:hover .tooltiptext {
+.desire-tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }
 
-.tooltip .tooltiptext-right {
+.desire-tooltip .tooltiptext-right {
   top: -5px;
   left: 105%;
 }
 
-.tooltip .tooltiptext-left {
+.desire-tooltip .tooltiptext-left {
   top: -5px;
   right: 105%;
 }
 
-.tooltip .tooltiptext-top {
+.desire-tooltip .tooltiptext-top {
   width: auto;
   bottom: 100%;
   left: 50%;
   margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
 }
 
-.tooltip .tooltiptext-bottom {
+.desire-tooltip .tooltiptext-bottom {
   max-width: 300px;
   top: 100%;
   left: 50%;

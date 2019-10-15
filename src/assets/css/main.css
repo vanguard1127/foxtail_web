@@ -6189,7 +6189,7 @@ section.couple-popup-content .modal-popup .page {
 }
 
 .SocialMediaShareButton {
-  margin-left: 25px;
+  margin: 0 15px;
 }
 
 section.couple-popup-content .create-profile .SocialMediaShareButton {
@@ -9563,12 +9563,9 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 
 .edit-canvas-image-wrapper {
   margin-top: 56px;
-  position: fixed;
+  position: relative;
   width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  
 }
 
 .edit-canvas-image-wrapper > div{
@@ -10090,7 +10087,7 @@ animation: CycleC 30s ease infinite;
   top:5px!important;
 }
 
-@media (max-width: 400px), (max-height: 550px){
+@media (max-width: 550px){
 
   .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name{
     width: 1.5rem!important;
@@ -10101,6 +10098,11 @@ animation: CycleC 30s ease infinite;
 
 @supports (-webkit-overflow-scrolling: touch) {
   /* CSS specific to iOS devices */
+
+  .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name{
+    width: 1.5rem!important;
+    line-height: 1.5rem!important;
+  }
 
   section.login-modal .popup form::-webkit-scrollbar,
   *::-webkit-scrollbar {

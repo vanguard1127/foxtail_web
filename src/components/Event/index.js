@@ -58,10 +58,10 @@ class EventPage extends Component {
   }
 
   toggleScroll(enabled) {
-    if(this.targetElement){
-    enabled
-      ? disableBodyScroll(this.targetElement.current)
-      : enableBodyScroll(this.targetElement.current);
+    if (this.targetElement) {
+      enabled
+        ? disableBodyScroll(this.targetElement.current)
+        : enableBodyScroll(this.targetElement.current);
     }
   }
 
@@ -170,7 +170,7 @@ class EventPage extends Component {
                     <div className="icon">
                       <i className="nico x" />
                     </div>
-                    <span className="head">Event Not Available</span>
+                    <span className="head">{t("eventnot")}</span>
                     <span className="description">{t("noevent")}</span>
                   </div>
                 </div>
