@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import TimeAgo from "../../../utils/TimeAgo";
 import ChatActions from "./ChatActions";
 import { NavLink } from "react-router-dom";
-import { preventContextMenu } from "../../../utils/image";
+
 class ChatHeader extends PureComponent {
   state = { open: false };
   toggleMenu = () => {
@@ -71,7 +71,7 @@ class ChatHeader extends PureComponent {
                 <img
                   src={chatProfilePic}
                   alt=""
-                  onContextMenu={preventContextMenu}
+                  
                 />
               </span>
             </div>

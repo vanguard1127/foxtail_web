@@ -1,5 +1,8 @@
 import React, { PureComponent } from "react";
 import { Image } from "react-konva";
+import Konva from "konva";
+
+Konva.captureTouchEventsEnabled = true;
 
 class KonvaImage extends PureComponent {
   constructor(props) {

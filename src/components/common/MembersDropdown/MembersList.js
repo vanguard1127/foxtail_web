@@ -11,7 +11,7 @@ import {
 import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
-import { preventContextMenu } from "../../../utils/image";
+
 
 class MembersList extends PureComponent {
   state = {
@@ -337,7 +337,7 @@ class MembersList extends PureComponent {
       t
     });
     return (
-      <div onContextMenu={preventContextMenu}>
+      <div >
         {" "}
         {membersList}
         <div style={{ height: "2vh", backgroundColor: "#fff" }}>

@@ -51,7 +51,6 @@ class PhotoSlider extends Component {
       photos,
       t,
       ErrorHandler,
-      preventContextMenu
     } = this.props;
     const { previewVisible, selectedImg } = this.state;
 
@@ -105,7 +104,7 @@ class PhotoSlider extends Component {
                     <img
                       src={photo.url}
                       alt=""
-                      onContextMenu={preventContextMenu}
+                      
                     />
                   </div>
                 ) : (
@@ -114,7 +113,7 @@ class PhotoSlider extends Component {
                       className="blur"
                       src={NoPictureImg}
                       alt=""
-                      onContextMenu={preventContextMenu}
+                      
                     />
                   </span>
                 )}

@@ -41,12 +41,14 @@ class EditCanvasImage extends PureComponent {
     this.checkSize();
     window.addEventListener("resize", this.checkSize);
     document.addEventListener("mousedown", this.handleClick);
+    document.addEventListener("touchstart", this.handleClick);
   }
 
   componentWillUnmount() {
     this.mounted = false;
     window.removeEventListener("resize", this.checkSize);
     document.removeEventListener("mousedown", this.handleClick);
+    document.removeEventListener("touchstart", this.handleClick);
   }
 
   checkSize = () => {
@@ -54,6 +56,7 @@ class EditCanvasImage extends PureComponent {
     const width = this.container.offsetWidth;
     const height = window.innerHeight - 56; // here also we've subtract topbar height
     window.scrollTo(0,1);
+    console.log(window.innerHeight);
     this.setState({ width, height });
     if (imageWidth == 0 || imageHeight == 0) {
       const reader = new FileReader();

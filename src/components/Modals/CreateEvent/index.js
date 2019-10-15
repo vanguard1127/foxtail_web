@@ -309,10 +309,6 @@ class CreateEvent extends Component {
           header={eventID ? t("updateeve") : t("createeve")}
           close={close}
           disableOffClick
-          className="create-event"
-          fullWidth
-          maxWidth
-          maxHeight
         >
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
@@ -467,6 +463,7 @@ class CreateEvent extends Component {
                             maxDate: new Date(endTime) || null,
                             minDate: new Date()
                           }}
+                          withPortal
                           onChange={e => {
                             if (endTime && dayjs(e).isAfter(dayjs(endTime))) {
                               if (!toast.isActive("startTime")) {

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { preventContextMenu } from "../../../utils/image";
+
 const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
 
 class EventCreator extends PureComponent {
@@ -20,7 +20,7 @@ class EventCreator extends PureComponent {
                   : NoProfileImg
               }
               alt=""
-              onContextMenu={preventContextMenu}
+              
             />
           </span>
           <div className="detail">
