@@ -113,26 +113,22 @@ class CoupleProfile extends PureComponent {
               {t("scroll")}
             </div>
             <div className="profile-top">
-              <h3 className="title">Couple's Profile</h3>
-              <h4 className="title-small">Stray Together</h4>
+              <h3 className="title">{t("common:cplpros")}</h3>
+              <h4 className="title-small">{t("common:subtitle")}</h4>
             </div>
             <div className="profile-bottom">
               <div className="layer-left">
                 <img src={CoupleProfileImage} alt="" />
                 <p className="content">
-                  Couple's Profiles are profiles shared by 2 people.
+                  {t("cplProfileDesc")}
                   <br />
-                  All communications are accessible by both members.
+                  {t("cplProfileDesc2")}
                 </p>
                 <hr className="line" />
               </div>
               <div className="layer-right">
-                <h4 className="question-first">
-                  Did you recieve a Couple's Code?
-                </h4>
-                <p className="require">
-                  Add your Couple's Code here and click Submit!
-                </p>
+                <h4 className="question-first">{t("coderecv")}</h4>
+                <p className="require">{t("addcode")}</p>
                 <div className="code-input-wrapper">
                   <input
                     type="text"
@@ -145,22 +141,20 @@ class CoupleProfile extends PureComponent {
                     className="submitCpl"
                     onClick={() => this.toggleDlg(true)}
                   >
-                    Submit
+                    {t("Submit")}
                   </span>
                 </div>
                 <hr className="line" />
-                <h4 className="question-second">
-                  Want to create a Couple's Profile?
-                </h4>
-                <p className="require-code">
-                  Send this Couple's Code to your pantner
-                </p>
+                <h4 className="question-second">{t("createcoup")}</h4>
+                <p className="require-code">{t("sendcode")}</p>
                 <Query query={GENERATE_CODE} fetchPolicy="cache-first">
                   {({ data, loading, error }) => {
                     if (loading) {
                       return (
                         <div className="Couple-code">
-                          <div className="content-code">Loading...</div>
+                          <div className="content-code">
+                            {t("common:Loading")}...
+                          </div>
                         </div>
                       );
                     }
@@ -197,16 +191,13 @@ class CoupleProfile extends PureComponent {
           aria-labelledby="Image"
           open={cfmDlgOpen}
         >
-          <DialogTitle id="alert-dialog-title">
-            Include Messages and Events
-          </DialogTitle>
+          <DialogTitle id="alert-dialog-title">{t("includemsg")}</DialogTitle>
 
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               {!toLink && (
                 <>
-                  Couples Code has been copied to your clipboard. Share this
-                  with your partner to create a Couples Profile.
+                  {t("sharewith")}
                   <br />
                   <br />
                 </>
@@ -237,7 +228,7 @@ class CoupleProfile extends PureComponent {
                       this.handleLink(linkProfile, close);
                     }}
                   >
-                    Include
+                    {t("Include")}
                   </Button>
                   {"  "}
                   <Button
@@ -251,7 +242,7 @@ class CoupleProfile extends PureComponent {
                       this.handleLink(linkProfile, close);
                     }}
                   >
-                    DO NOT Include
+                    {t("NotInclude")}
                   </Button>
                 </>
               )}

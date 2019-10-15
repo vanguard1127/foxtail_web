@@ -8,12 +8,13 @@ class ProfilePic extends PureComponent {
       ErrorBoundary,
       history,
       id,
-      removeProfilePic
+      removeProfilePic,
+      t
     } = this.props;
     return (
       <ErrorBoundary>
         <div className="profile-picture-content">
-          <div className="picture" >
+          <div className="picture">
             <Avatar
               size="90"
               src={profilePic}
@@ -22,7 +23,7 @@ class ProfilePic extends PureComponent {
             />
             {profilePic && (
               <div className="deleteProfile" onClick={removeProfilePic}>
-                Remove
+                {t("common:remove")}
               </div>
             )}
           </div>

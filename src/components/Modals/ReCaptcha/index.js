@@ -31,7 +31,7 @@ const ReCaptcha = ({ t, tReady }) => {
     >
       <div>
         <ReCAPTCHA
-          sitekey={process.env.REACT_APP_GOOGLE_CLIENT_KEY}
+          sitekey={"6LdvxqYUAAAAAEnP6CGkMWBUiznH8Ulm6K1Mm4A9"}
           onChange={value => onChange(value)}
         />
         <br />

@@ -3,7 +3,10 @@ import "./Tooltip.css";
 
 class Tooltip extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.placement !== nextProps.placement || this.props.children !== nextProps.children) {
+    if (
+      this.props.placement !== nextProps.placement ||
+      this.props.children !== nextProps.children
+    ) {
       return true;
     }
     return false;
@@ -11,9 +14,11 @@ class Tooltip extends Component {
   render() {
     const { placement, title, children } = this.props;
     return (
-      <div className={`tooltip`}>
+      <div className={`desire-tooltip`}>
         {children}
-        <span className={`tooltiptext ${`tooltiptext-${placement}`}`}>{title}</span>
+        <span className={`tooltiptext ${`tooltiptext-${placement}`}`}>
+          {title}
+        </span>
       </div>
     );
   }

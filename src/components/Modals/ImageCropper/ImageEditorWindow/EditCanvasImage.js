@@ -226,7 +226,7 @@ class EditCanvasImage extends PureComponent {
         <div className="edit-canvas-dialog-topbar">
           <div>
             <span style={{ fontSize: "20px", color: "white" }}>
-              Profile Picture Selector
+              {t("Profile Picture Selector")}
             </span>
           </div>
           <div>

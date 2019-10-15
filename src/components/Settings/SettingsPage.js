@@ -386,6 +386,7 @@ class SettingsPage extends Component {
   };
 
   toggleScroll(enabled) {
+    console.log("TARGET", this.targetElement);
     var iOS =
       !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
     if (!iOS) {
@@ -701,6 +702,7 @@ class SettingsPage extends Component {
                           ErrorBoundary={ErrorHandler.ErrorBoundary}
                           history={history}
                           id={currentuser.profileID}
+                          t={t}
                           removeProfilePic={() =>
                             this.setProfilePic({
                               key: "",

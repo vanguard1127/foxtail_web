@@ -59,12 +59,8 @@ Sentry.init({
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-const httpurl = process.env.REACT_APP_HTTP_URL;
-const HTTPSurl = process.env.REACT_APP_HTTPS_URL;
-const wsurl = process.env.REACT_APP_WS_URL;
-
 const wsLink = new WebSocketLink({
-  uri: wsurl,
+  uri: process.env.REACT_APP_WS_URL,
   options: {
     reconnect: true,
     lazy: true,
@@ -76,7 +72,7 @@ const wsLink = new WebSocketLink({
 });
 
 const httpLink = new HttpLink({
-  uri: httpurl
+  uri: process.env.REACT_APP_HTTP_URL
 });
 
 const AuthLink = new ApolloLink((operation, forward) => {

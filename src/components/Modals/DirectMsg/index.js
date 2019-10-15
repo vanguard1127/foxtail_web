@@ -103,7 +103,7 @@ class DirectMsg extends Component {
                 instant: true
               }}
             >
-              {(sendMessage, { loading, error }) => {
+              {sendMessage => {
                 return (
                   <button
                     className="color"

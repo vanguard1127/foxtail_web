@@ -10,7 +10,6 @@ import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Lightbox from "react-image-lightbox";
 
-
 const styles = theme => ({
   addIcon: {
     fontSize: 45
@@ -57,7 +56,7 @@ class UploadComponent extends PureComponent {
       extFile == "gif"
     ) {
       if (file.size > 4000000) {
-        alert("Only files less than 4 MB please.");
+        alert("only4mb");
       } else {
         this.props.showEditor(file, this.props.isPrivate);
       }
@@ -115,7 +114,7 @@ class UploadComponent extends PureComponent {
       <div className="header-container">
         {photos.map((file, index) => {
           return (
-            <div key={file.uid || file.id} >
+            <div key={file.uid || file.id}>
               <div className="loader">
                 <div className="loading">
                   <CircularProgress
