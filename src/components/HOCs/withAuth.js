@@ -33,18 +33,26 @@ const withAuth = conditionFunc => Component => props => {
                     .then(resp => {
                       if (resp.data.confirmEmail) {
                         if (!toast.isActive("emailVer")) {
-                          toast.success(i18next.t("common:emailconfirmed"), {
-                            position: toast.POSITION.TOP_CENTER,
-                            toastId: "emailVer"
-                          });
+                          toast.success(
+                            i18next.t("common:Email has been confirmed."),
+                            {
+                              position: toast.POSITION.TOP_CENTER,
+                              toastId: "emailVer"
+                            }
+                          );
                         }
                       } else {
                         if (!toast.isActive("errVer")) {
-                          toast.error(i18next.t("common:emailconffail"), {
-                            position: toast.POSITION.TOP_CENTER,
-                            toastId: "errVer",
-                            autoClose: 8000
-                          });
+                          toast.error(
+                            i18next.t(
+                              "common:Email confirmation has been used or is expired, please go to your 'My Account' page to request another."
+                            ),
+                            {
+                              position: toast.POSITION.TOP_CENTER,
+                              toastId: "errVer",
+                              autoClose: 8000
+                            }
+                          );
                         }
                       }
                     });

@@ -45,7 +45,7 @@ class Navbar extends Component {
     if (!tReady) {
       return <Spinner />;
     }
-    console.log("READY TO");
+
     return (
       <Fragment>
         {session && session.currentuser ? (

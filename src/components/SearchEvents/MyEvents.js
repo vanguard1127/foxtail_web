@@ -45,6 +45,7 @@ class MyEvents extends Component {
             return null;
           }
           const myEvents = data.getMyEvents;
+
           return (
             <div className="events-card-content my-events">
               <div className="container">
@@ -61,7 +62,7 @@ class MyEvents extends Component {
                       nav
                       autoplay
                       lazyLoad
-                      loop
+                      loop={myEvents.length > 1}
                       margin={30}
                       navText={[
                         '<i class="icon-left-open">',

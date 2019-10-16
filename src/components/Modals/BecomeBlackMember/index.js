@@ -67,7 +67,7 @@ class BecomeBlackMember extends PureComponent {
               </li>
             </ul>
             <p className="get-more">
-              {t("getmore")}{" "}
+              {t("getmore")}
               <i className="fas fa-heart" style={{ color: "#db0016" }}></i>
             </p>
             <CreateSubBtn
