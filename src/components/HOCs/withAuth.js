@@ -16,27 +16,6 @@ const withAuth = conditionFunc => Component => props => {
           return null;
         }
 
-        if (error) {
-          if (location.pathname === "/" && location.search) {
-            return <Component {...props} />;
-          }
-
-          if (location.state && location.state.noCheck) {
-            return <Component {...props} />;
-          }
-
-          return (
-            <Redirect
-              to={{
-                pathname: "/",
-                state: {
-                  noCheck: true
-                }
-              }}
-            />
-          );
-        }
-
         if (location) {
           if (location.pathname === "/confirmation") {
             return (
@@ -63,6 +42,29 @@ const withAuth = conditionFunc => Component => props => {
               />
             );
           }
+        }
+        if (error) {
+          if (
+            location.pathname === "/" &&
+            (location.search || location.state)
+          ) {
+            return <Component {...props} />;
+          }
+
+          if (location.state && location.state.noCheck) {
+            return <Component {...props} />;
+          }
+
+          return (
+            <Redirect
+              to={{
+                pathname: "/",
+                state: {
+                  noCheck: true
+                }
+              }}
+            />
+          );
         }
 
         if (data && data.currentuser) {
