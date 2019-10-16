@@ -74,6 +74,7 @@
     "react-toastify": "^5.4.0",
     "react-waypoint": "^9.0.2",
     "reactour": "^1.15.3",
+    "serviceworker-webpack-plugin": "^1.0.1",
     "styled-components": "^4.4.0",
     "subscriptions-transport-ws": "^0.9.16",
     "url-parse": "^1.4.7",

@@ -52,6 +52,9 @@ import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
 
+import * as serviceWorker from './sw';
+
+
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
 });
@@ -387,3 +390,12 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
+
+if ('serviceWorker' in navigator) {
+  if(process.env.NODE_ENV!=='production'){
+    serviceWorker.unregister();
+  }else{
+    serviceWorker.register();
+  }
+  
+}

@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -56,18 +57,23 @@ module.exports = {
     }
   },
   plugins: [
+    new ServiceWorkerWebpackPlugin({
+        entry: path.join(__dirname, 'src/sw.js'),
+    }),
     new HtmlWebpackPlugin({
       title: "Foxtail",
       template: "src/page-template.hbs",
       description: "FREE | Private | 18+ Fun",
       filename: "index.html",
-      favicon: "./src/assets/favicon.ico"
+      favicon: "./src/assets/favicon.ico",
+      manifest: "./src/assets/manifest.json",
     }),
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css"
     }),
     new CopyPlugin([
-      { from: "src/assets/locales", to: "locales", toType: "dir" }
+      { from: "src/assets/locales", to: "locales", toType: "dir" },
+      { from: "src/assets/manifest.json", to: "manifest.json" }
     ]),
     new CleanWebpackPlugin(),
     new Dotenv({ path: "./.env.prod", defaults: true })

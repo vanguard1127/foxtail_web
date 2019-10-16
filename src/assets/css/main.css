@@ -4701,20 +4701,13 @@ section.settings .page {
   width: 100%;
   display: block;
   float: left;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  background: #ffffff;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  padding: 30px;
   position: relative;
 }
 
-section.settings .page-section {
-  width: 100%;
-  display: block;
-  float: left;
-  background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
-  padding: 30px;
-  position: relative;
+section.settings .page.mtop {
   margin-top: 15px;
 }
 
@@ -4742,7 +4735,6 @@ section.settings .message {
   animation-iteration-count: infinite;
   display: flex;
   justify-content: center;
-  margin-top: 25px;
   margin-bottom: 25px;
 }
 
@@ -4788,6 +4780,10 @@ input.location-search-input {
   width: 100%;
   display: block;
   float: left;
+}
+
+.page .form .content.mtop {
+  margin-top: 15px;
 }
 
 .page .content span.heading {
@@ -5592,7 +5588,7 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1000;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -6193,7 +6189,7 @@ section.couple-popup-content .modal-popup .page {
 }
 
 .SocialMediaShareButton {
-  margin-left: 5px;
+  margin: 0 15px;
 }
 
 section.couple-popup-content .create-profile .SocialMediaShareButton {
@@ -7304,6 +7300,7 @@ section.login-modal.show {
   align-items: center;
   /* display: inline-block; */
   visibility: visible;
+  padding: 0 5%;
 }
 
 section.login-modal .popup-container {
@@ -7323,7 +7320,6 @@ section.login-modal .popup {
   flex-direction: column;
   float: left;
   position: relative;
-  max-width: 90vw;
 }
 
 section.login-modal .popup.full {
@@ -9101,7 +9097,7 @@ section.not-found span.description {
     visibility: hidden;
   }
 
-  section.settings .page-section.mtop:nth-child(1) {
+  section.settings .page.mtop {
     margin-top: 0;
   }
 
@@ -9568,8 +9564,8 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 .edit-canvas-image-wrapper {
   margin-top: 56px;
   position: relative;
-  width: 100%;
-
+  width: 100vw;
+  
 }
 
 .edit-canvas-image-wrapper > div{
@@ -9619,6 +9615,7 @@ section.login-modal.edit-photo-modal .popup{
   margin: 10px 0 10px 0;
   width: 100%;
   position: fixed;
+  z-index: 9999;
   bottom: 0;
 }
 
@@ -9627,6 +9624,7 @@ section.login-modal.edit-photo-modal .popup{
   background: #5f5f5f;
   display: flex;
   align-items: center;
+
 }
 
 .edit-canvas-action-div {
@@ -10091,7 +10089,7 @@ animation: CycleC 30s ease infinite;
   top:5px!important;
 }
 
-@media (max-width: 400px), (max-height: 550px){
+@media (max-width: 550px){
 
   .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name{
     width: 1.5rem!important;
@@ -10102,6 +10100,11 @@ animation: CycleC 30s ease infinite;
 
 @supports (-webkit-overflow-scrolling: touch) {
   /* CSS specific to iOS devices */
+
+  .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name{
+    width: 1.5rem!important;
+    line-height: 1.5rem!important;
+  }
 
   section.login-modal .popup form::-webkit-scrollbar,
   *::-webkit-scrollbar {

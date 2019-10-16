@@ -386,10 +386,10 @@ class SettingsPage extends Component {
   };
 
   toggleScroll(enabled) {
-    console.log("TARGET", this.targetElement);
+    //console.log("TARGET", this.targetElement);
     var iOS =
       !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-    if (!iOS) {
+    if (!iOS && this.targetElement) {
       enabled
         ? disableBodyScroll(this.targetElement.current)
         : enableBodyScroll(this.targetElement.current);
