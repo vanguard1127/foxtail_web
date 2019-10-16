@@ -5,8 +5,8 @@ import withAuth from "../HOCs/withAuth";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
 import * as ErrorHandler from "../common/ErrorHandler";
 import CountUp from "react-countup";
-import { withApollo, Query } from "react-apollo";
-import { CONFIRM_EMAIL, GET_DEMO_COUNTS } from "../../queries";
+import { Query } from "react-apollo";
+import { GET_DEMO_COUNTS } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
 import ContactUsModal from "../Modals/ContactUs";
 import Spinner from "../common/Spinner";
@@ -34,15 +34,7 @@ class Landing extends PureComponent {
   };
 
   render() {
-    const {
-      t,
-      client,
-      location,
-      history,
-      session,
-      ReactGA,
-      tReady
-    } = this.props;
+    const { t, location, history, session, ReactGA, tReady } = this.props;
     const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
     let refer = null;
     let aff = null;
@@ -51,62 +43,29 @@ class Landing extends PureComponent {
     if (!tReady) {
       return <Spinner />;
     }
-
     if (location) {
       const params = new URLSearchParams(location.search);
       refer = params.get("refer");
       aff = params.get("aff");
       mem = params.get("mem");
       eve = params.get("eve");
-
-      if (location.state) {
-        if (location.state.type === "emailVer") {
-          client
-            .query({
-              query: CONFIRM_EMAIL,
-              variables: { token: location.state.token }
-            })
-            .then(resp => {
-              if (resp.data.confirmEmail) {
-                if (!toast.isActive("emailVer")) {
-                  toast.success(t("emailconfirmed"), {
-                    position: toast.POSITION.TOP_CENTER,
-                    toastId: "emailVer"
-                  });
-
-                  history.replace({ state: {} });
-                }
-              } else {
-                if (!toast.isActive("errVer")) {
-                  toast.error(t("emailconffail"), {
-                    position: toast.POSITION.TOP_CENTER,
-                    toastId: "errVer",
-                    autoClose: 8000
-                  });
-
-                  history.replace({ state: {} });
-                }
-              }
+      if (location.state && location.state.type === "phoneReset") {
+        if (location.state.token) {
+          this.setState({
+            resetPhoneVisible: true,
+            token: location.state.token
+          });
+        } else {
+          if (!toast.isActive("errVer")) {
+            toast.error(t("phonefail"), {
+              position: toast.POSITION.TOP_CENTER,
+              toastId: "errVer"
             });
-        } else if (location.state.type === "phoneReset") {
-          if (location.state.token) {
-            this.setState({
-              resetPhoneVisible: true,
-              token: location.state.token
-            });
-            history.replace({ state: {} });
-          } else {
-            if (!toast.isActive("errVer")) {
-              toast.error(t("phonefail"), {
-                position: toast.POSITION.TOP_CENTER,
-                toastId: "errVer"
-              });
-              history.replace({ state: {} });
-            }
           }
         }
       }
     }
+
     return (
       <>
         <header className="landing">
@@ -354,7 +313,10 @@ class Landing extends PureComponent {
             t={t}
             token={token}
             close={() =>
-              this.setState({ resetPhoneVisible: false, token: null })
+              this.setState(
+                { resetPhoneVisible: false, token: null },
+                history.replace({ state: {} })
+              )
             }
             ErrorHandler={ErrorHandler}
             history={history}
@@ -376,8 +338,6 @@ class Landing extends PureComponent {
   }
 }
 
-export default withApollo(
-  withTranslation("landing")(
-    withAuth(session => session && session.currentuser)(Landing)
-  )
+export default withTranslation("landing")(
+  withAuth(session => session && session.currentuser)(Landing)
 );

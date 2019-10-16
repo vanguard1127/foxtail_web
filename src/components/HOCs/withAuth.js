@@ -4,133 +4,172 @@ import { Query } from "react-apollo";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReCaptcha from "../Modals/ReCaptcha";
+import i18next from "i18next";
 
-import { GET_CURRENT_USER } from "../../queries";
+import { ApolloConsumer } from "react-apollo";
+import { GET_CURRENT_USER, CONFIRM_EMAIL } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
   const { location } = props;
 
   return (
-    <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
-      {({ data, loading, refetch, error }) => {
-        if (loading) {
-          return null;
-        }
+    <ApolloConsumer>
+      {client => {
+        return (
+          <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
+            {({ data, loading, refetch, error }) => {
+              if (loading) {
+                return null;
+              }
 
-        if (location) {
-          if (location.pathname === "/confirmation") {
-            return (
-              <Redirect
-                to={{
-                  pathname: "/",
-                  state: {
-                    type: "emailVer",
-                    token: new URLSearchParams(location.search).get("token")
+              if (location) {
+                if (location.pathname === "/confirmation") {
+                  client
+                    .query({
+                      query: CONFIRM_EMAIL,
+                      variables: {
+                        token: new URLSearchParams(location.search).get("token")
+                      }
+                    })
+                    .then(resp => {
+                      if (resp.data.confirmEmail) {
+                        if (!toast.isActive("emailVer")) {
+                          toast.success(i18next.t("common:emailconfirmed"), {
+                            position: toast.POSITION.TOP_CENTER,
+                            toastId: "emailVer"
+                          });
+                        }
+                      } else {
+                        if (!toast.isActive("errVer")) {
+                          toast.error(i18next.t("common:emailconffail"), {
+                            position: toast.POSITION.TOP_CENTER,
+                            toastId: "errVer",
+                            autoClose: 8000
+                          });
+                        }
+                      }
+                    });
+                } else if (location.pathname === "/phonereset") {
+                  const token = new URLSearchParams(location.search).get(
+                    "token"
+                  );
+
+                  if (token) {
+                    return (
+                      <Redirect
+                        to={{
+                          pathname: "/",
+                          state: {
+                            type: "phoneReset",
+                            token
+                          }
+                        }}
+                        push={true}
+                      />
+                    );
+                  } else {
+                    if (!toast.isActive("errVer")) {
+                      toast.error(i18next.t("phonefail"), {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: "errVer"
+                      });
+                    }
                   }
-                }}
-              />
-            );
-          } else if (location.pathname === "/phonereset") {
-            return (
-              <Redirect
-                to={{
-                  pathname: "/",
-                  state: {
-                    type: "phoneReset",
-                    token: new URLSearchParams(location.search).get("token")
-                  }
-                }}
-              />
-            );
-          }
-        }
-        if (error) {
-          if (
-            location.pathname === "/" &&
-            (location.search || location.state)
-          ) {
-            return <Component {...props} />;
-          }
-
-          if (location.state && location.state.noCheck) {
-            return <Component {...props} />;
-          }
-
-          return (
-            <Redirect
-              to={{
-                pathname: "/",
-                state: {
-                  noCheck: true
                 }
-              }}
-            />
-          );
-        }
+              }
 
-        if (data && data.currentuser) {
-          if (data.currentuser.captchaReq === true) {
-            return <ReCaptcha />;
-          }
+              if (error) {
+                if (
+                  (location.pathname === "/" && location.search) ||
+                  (location.state &&
+                    (location.state.token &&
+                      location.state.type === "phoneReset"))
+                ) {
+                  return <Component {...props} />;
+                }
 
-          //SHOW ANNOUNCE ON LOGIN
-          if (data.currentuser.announcement !== null) {
-            if (!toast.isActive("announce")) {
-              toast.info(data.currentuser.announcement, {
-                position: toast.POSITION.BOTTOM_LEFT,
-                autoClose: false,
-                toastId: "announce"
-              });
-            }
-          }
-          if (conditionFunc(data)) {
-            if (
-              !data.currentuser.isProfileOK &&
-              ~window.location.href.indexOf("/settings") === 0
-            ) {
-              return (
-                <Redirect
-                  to={{
-                    pathname: "/settings"
-                  }}
-                />
-              );
-            } else if (location && location.pathname === "/") {
-              const params = new URLSearchParams(location.search);
+                if (location.state && location.state.noCheck) {
+                  return <Component {...props} />;
+                }
 
-              const mem = params.get("mem");
-              const eve = params.get("eve");
-              if (mem) {
                 return (
                   <Redirect
                     to={{
-                      pathname: "/member/" + mem
-                    }}
-                  />
-                );
-              } else if (eve) {
-                return (
-                  <Redirect
-                    to={{
-                      pathname: "/event/" + eve
-                    }}
-                  />
-                );
-              } else {
-                return (
-                  <Redirect
-                    to={{
-                      pathname: "/members"
+                      pathname: "/",
+                      state: {
+                        noCheck: true
+                      }
                     }}
                   />
                 );
               }
-            }
-          }
-        }
 
-        return <Component {...props} session={data} refetch={refetch} />;
+              if (data && data.currentuser) {
+                if (data.currentuser.captchaReq === true) {
+                  return <ReCaptcha />;
+                }
+
+                //SHOW ANNOUNCE ON LOGIN
+                if (data.currentuser.announcement !== null) {
+                  if (!toast.isActive("announce")) {
+                    toast.info(data.currentuser.announcement, {
+                      position: toast.POSITION.BOTTOM_LEFT,
+                      autoClose: false,
+                      toastId: "announce"
+                    });
+                  }
+                }
+                if (conditionFunc(data)) {
+                  if (
+                    !data.currentuser.isProfileOK &&
+                    ~window.location.href.indexOf("/settings") === 0
+                  ) {
+                    return (
+                      <Redirect
+                        to={{
+                          pathname: "/settings"
+                        }}
+                      />
+                    );
+                  } else if (location && location.pathname === "/") {
+                    const params = new URLSearchParams(location.search);
+
+                    const mem = params.get("mem");
+                    const eve = params.get("eve");
+                    if (mem) {
+                      return (
+                        <Redirect
+                          to={{
+                            pathname: "/member/" + mem
+                          }}
+                        />
+                      );
+                    } else if (eve) {
+                      return (
+                        <Redirect
+                          to={{
+                            pathname: "/event/" + eve
+                          }}
+                        />
+                      );
+                    } else {
+                      return (
+                        <Redirect
+                          to={{
+                            pathname: "/members"
+                          }}
+                        />
+                      );
+                    }
+                  }
+                }
+              }
+
+              return <Component {...props} session={data} refetch={refetch} />;
+            }}
+          </Query>
+        );
       }}
-    </Query>
+    </ApolloConsumer>
   );
 };
 export default withAuth;

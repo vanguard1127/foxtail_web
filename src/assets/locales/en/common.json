@@ -243,5 +243,7 @@
   "Include": "Include",
   "NotInclude": "DO NOT Include",
   "Profile Picture Selector": "Profile Picture Selector",
-  "Privacy Studio": "Privacy Studio"
+  "Privacy Studio": "Privacy Studio",
+  "emailconfirmed": "Email has been confirmed.",
+  "emailconffail": "Email confirmation has been used or is expired, please go to your 'My Account' page to request another."
 }

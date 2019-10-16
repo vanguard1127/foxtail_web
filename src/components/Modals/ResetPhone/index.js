@@ -3,7 +3,6 @@ import { withTranslation } from "react-i18next";
 import EmailPhoneResetBtn from "./EmailPhoneResetBtn";
 import ResetPhoneButton from "./ResetPhoneButton";
 import Select from "./Select";
-import Spinner from "../../common/Spinner";
 import { countryCodeOptions } from "../../../docs/options";
 
 class ResetPhone extends PureComponent {

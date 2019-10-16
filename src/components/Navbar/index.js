@@ -45,6 +45,7 @@ class Navbar extends Component {
     if (!tReady) {
       return <Spinner />;
     }
+    console.log("READY TO");
     return (
       <Fragment>
         {session && session.currentuser ? (
@@ -67,14 +68,13 @@ class NavbarAuth extends PureComponent {
 
   toggleMobileMenu = () => {
     if (this.mounted) {
-      this.setState({ mobileMenu: !this.state.mobileMenu }, ()=>{
-        if(this.state.mobileMenu){
+      this.setState({ mobileMenu: !this.state.mobileMenu }, () => {
+        if (this.state.mobileMenu) {
           document.body.classList.add("menu-shown");
-        }else{
+        } else {
           document.body.classList.remove("menu-shown");
         }
       });
-      
     }
   };
 
