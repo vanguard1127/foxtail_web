@@ -25,7 +25,6 @@ class InboxTour extends PureComponent {
         window.location.reload();
       })
       .catch(res => {
-        console.log("Err", res);
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
     if (this.mounted) {
@@ -40,7 +39,6 @@ class InboxTour extends PureComponent {
   };
 
   toggleMenu = () => {
-    console.log("TEST");
     if (this.mounted) {
       this.setState({ menuOpen: !this.state.menuOpen, goToStep: 0 });
     }

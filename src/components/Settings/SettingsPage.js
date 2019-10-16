@@ -386,7 +386,6 @@ class SettingsPage extends Component {
   };
 
   toggleScroll(enabled) {
-    //console.log("TARGET", this.targetElement);
     var iOS =
       !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
     if (!iOS && this.targetElement) {
