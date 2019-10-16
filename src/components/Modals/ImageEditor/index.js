@@ -53,6 +53,7 @@ class ImageEditor extends Component {
               header={t("editphoto")}
               close={close}
               ref={el => (this.container = el)}
+              className="edit-photo-modal clearfix"
             >
               {editor}
             </Modal>

@@ -1,22 +1,15 @@
 import React, { Component } from "react";
+import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
 class ProfilePic extends Component {
   shouldComponentUpdate() {
     return false;
   }
   render() {
-    const { profilePic, preventContextMenu } = this.props;
+    const { profilePic } = this.props;
     return (
       <div className="avatar">
-        <img
-          src={
-            profilePic !== ""
-              ? profilePic
-              : process.env.PUBLIC_URL + "/assets/img/elements/no-profile.png"
-          }
-          alt=""
-          onContextMenu={preventContextMenu}
-        />
+        <img src={profilePic !== "" ? profilePic : NoProfileImg} alt="" />
       </div>
     );
   }

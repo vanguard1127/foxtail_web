@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import MembersDropdown from "../../common/MembersDropdown/MembersDropdown";
-import { preventContextMenu } from "../../../utils/image";
+
 class GoingBar extends PureComponent {
   state = { remDropOpen: false };
   closeRemDropdown = () => this.setState({ remDropOpen: false });
@@ -19,7 +19,7 @@ class GoingBar extends PureComponent {
       <div className="goings">
         <span className="stats">
           <div className="content" onClick={this.remDropOpen}>
-            <ul onContextMenu={preventContextMenu}>
+            <ul >
               {participants.map(el => (
                 <li key={el.id}>
                   <img src={el.profilePic} alt="" />

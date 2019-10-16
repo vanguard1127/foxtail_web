@@ -751,7 +751,11 @@ header .mobile-menu {
   position: absolute;
   top: 23px;
   float: left;
-  z-index: 1111;
+  z-index: 1;
+}
+
+.menu-shown header .mobile-menu{
+  z-index: 11111;
 }
 
 header .mobile-toggle {
@@ -4697,20 +4701,13 @@ section.settings .page {
   width: 100%;
   display: block;
   float: left;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  background: #ffffff;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  padding: 30px;
   position: relative;
 }
 
-section.settings .page-section {
-  width: 100%;
-  display: block;
-  float: left;
-  background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
-  padding: 30px;
-  position: relative;
+section.settings .page.mtop {
   margin-top: 15px;
 }
 
@@ -4738,7 +4735,6 @@ section.settings .message {
   animation-iteration-count: infinite;
   display: flex;
   justify-content: center;
-  margin-top: 25px;
   margin-bottom: 25px;
 }
 
@@ -4784,6 +4780,10 @@ input.location-search-input {
   width: 100%;
   display: block;
   float: left;
+}
+
+.page .form .content.mtop {
+  margin-top: 15px;
 }
 
 .page .content span.heading {
@@ -5588,7 +5588,8 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 1000;
+  -webkit-overflow-scrolling: touch;
 }
 
 section.popup-content {
@@ -5796,6 +5797,8 @@ section.desires-popup .modal-popup {
   position: relative;
   background-color: #fff;
   border-radius: 2px;
+  max-height: 80%;
+  min-height: 400px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -5876,6 +5879,10 @@ section.desires-popup .modal-popup .m-body {
 
 section.desires-popup .modal-popup .m-body.desires {
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
 }
 
 section.desires-popup .modal-popup .m-body .desires-list-con {
@@ -6179,6 +6186,10 @@ section.couple-popup-content .modal-popup {
 section.couple-popup-content .modal-popup .page {
   box-shadow: none !important;
   padding: 0 0 30px 0 !important;
+}
+
+.SocialMediaShareButton {
+  margin: 0 15px;
 }
 
 section.couple-popup-content .create-profile .SocialMediaShareButton {
@@ -7214,6 +7225,7 @@ footer.landing .links ul {
 
 footer.landing .links ul li {
   display: inline-block;
+  width: auto;
   color: #9298a4;
   font-size: 14px;
   transition: 0.3s all;
@@ -7252,11 +7264,8 @@ section.login-modal {
   /* padding:15% 0; */
   display: none;
   visibility: hidden;
-}
-
-section.login-modal.create-event {
-  padding: 8% 0;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 section.login-modal.verifications {
@@ -7276,7 +7285,13 @@ section.login-modal.rules {
 }
 
 section.full-screen-modal {
-  padding: unset;
+  padding: unset!important;
+  max-width: unset!important;
+}
+
+
+section.login-modal.full-screen-modal .popup .form-content{
+  margin: 0;
 }
 
 section.login-modal.show {
@@ -7285,6 +7300,7 @@ section.login-modal.show {
   align-items: center;
   /* display: inline-block; */
   visibility: visible;
+  padding: 0 5%;
 }
 
 section.login-modal .popup-container {
@@ -7299,8 +7315,9 @@ section.login-modal .popup {
   background-color: #fff;
   box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
   border-radius: 4px;
-  padding: 25px 30px 30px 30px;
-  display: block;
+  padding: 25px 0 30px ;
+  display: flex;
+  flex-direction: column;
   float: left;
   position: relative;
 }
@@ -7317,11 +7334,16 @@ section.login-modal .popup.max-width {
 section.login-modal .popup.max-height {
   max-height: 80vh;
 }
-
 section.login-modal.couples .popup.full,
 section.login-modal.black .popup.full {
-  padding: 0px;
+  padding: 0;
 }
+section.login-modal.couples .popup.full .form-content,
+section.login-modal.black .popup.full .form-content {
+  padding: 0px;
+  margin: 0;
+}
+
 
 section.login-modal .popup a.close::before {
   content: "\e804";
@@ -7345,7 +7367,7 @@ section.login-modal .popup a.close:hover::before {
 }
 
 section.login-modal .popup span.head {
-  width: 100%;
+  /*width: 100%;*/
   display: block;
   float: left;
   font-size: 25px;
@@ -7357,7 +7379,8 @@ section.login-modal .popup span.head {
   padding-bottom: 15px;
   border-bottom: 1px solid #dcdfe4;
   text-align: center;
-  /* margin-bottom: 25px; */
+  margin: 0 30px;
+  margin-bottom: 25px;
 }
 
 section.login-modal .popup form {
@@ -7366,12 +7389,13 @@ section.login-modal .popup form {
   float: left;
   padding: 0;
   margin: 0;
+  overflow-y: auto;
 }
 
 section.login-modal .popup form .form-content {
-  width: 100%;
+  /*width: 100%;
   display: block;
-  float: left;
+  float: left;*/
 }
 
 section.login-modal .popup form .form-content .input {
@@ -7503,7 +7527,6 @@ section.login-modal .popup form .form-content .dropdown label {
 }
 
 section.login-modal .popup form .form-content .dropdown span {
-  top: 9px;
   position: relative;
 }
 
@@ -7717,6 +7740,7 @@ section.settings .rc-slider-handle {
   left: 0 !important;
 }
 
+section.login-modal .popup form::-webkit-scrollbar,
 .select-list ul::-webkit-scrollbar {
   width: 9px !important;
   height: 10px !important;
@@ -7725,12 +7749,12 @@ section.settings .rc-slider-handle {
   overflow: hidden !important;
   border-radius: 0 3px 3px 0 !important;
 }
-
+section.login-modal .popup form::-webkit-scrollbar-thumb,
 .select-list ul::-webkit-scrollbar-thumb {
   background: #ececec !important;
   border: none !important;
 }
-
+section.login-modal .popup form::-webkit-scrollbar-corner,
 .select-list ul::-webkit-scrollbar-corner {
   background: inherit !important;
 }
@@ -7807,6 +7831,7 @@ section.desires-popup .modal-popup .m-body .search input {
   font-size: 14px;
   border-radius: 2px;
 }
+
 
 section.settings .profile-bio-textarea {
   border: 1px solid #e3e3e3;
@@ -7924,6 +7949,10 @@ ul.black-member li::before {
   color: #5b5b65;
   font-size: 14px;
 }
+section.login-modal .popup form .form-content{
+  margin: 0 30px;
+}
+
 section.login-modal .popup form .form-content .example-image {
   width: 100%;
   display: block !important;
@@ -7933,6 +7962,7 @@ section.login-modal .popup form .form-content .example-image {
   margin: 0;
   justify-content: initial;
 }
+
 
 section.login-modal .popup form .form-content .example-image img {
   width: 100%;
@@ -8414,6 +8444,7 @@ section.not-found span.description {
   header .mobile-menu {
     display: none;
     visibility: hidden;
+    z-index: 1;
   }
 
   header .toggle {
@@ -8593,6 +8624,7 @@ section.not-found span.description {
   section.inbox .left {
     position: absolute;
     height: calc(100vh - 144px) !important;
+    z-index:1;
   }
 
   section.inbox .left .conversations {
@@ -9065,7 +9097,7 @@ section.not-found span.description {
     visibility: hidden;
   }
 
-  section.settings .page-section.mtop:nth-child(1) {
+  section.settings .page.mtop {
     margin-top: 0;
   }
 
@@ -9311,6 +9343,7 @@ img {
 .tooltip {
   position: relative;
   display: inline-block;
+  z-index: 99999999999;
 }
 
 .tooltip .tooltiptext {
@@ -9330,10 +9363,12 @@ img {
   z-index: 1;
   padding: 10px 20px !important;
   line-height: 2;
+  z-index: 99999999999;
 }
 
 .tooltip .tooltiptext div {
   width: max-content;
+  z-index: 99999999999;
 }
 
 .greenButton {
@@ -9405,6 +9440,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   font-size: 15px;
   font-family: "foxtail-icon";
   color: #fff;
+  padding: 1px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -9528,7 +9564,42 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
 .edit-canvas-image-wrapper {
   margin-top: 56px;
   position: relative;
-  width: 100%;
+  width: 100vw;
+  
+}
+
+.edit-canvas-image-wrapper > div{
+  display: auto!important;
+}
+
+.edit-photo-modal .popup form{
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.edit-photo-modal .popup form::-webkit-scrollbar{
+  width: initial!important;
+  height: initial!important;
+  border: initial!important;
+  background-color: initial!important;
+  overflow: initial!important;
+  border-radius: initial!important;
+}
+
+section.login-modal.edit-photo-modal .popup form::-webkit-scrollbar-thumb {
+  background: initial!important;
+  border: initial!important;
+}
+
+section.login-modal.edit-photo-modal .popup form::-webkit-scrollbar-corner {
+  background: initial!important;
+}
+
+section.login-modal.edit-photo-modal .popup{
+  max-width: initial!important;
 }
 
 .edit-canvas-image-div {
@@ -9544,6 +9615,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   margin: 10px 0 10px 0;
   width: 100%;
   position: fixed;
+  z-index: 9999;
   bottom: 0;
 }
 
@@ -9552,6 +9624,7 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   background: #5f5f5f;
   display: flex;
   align-items: center;
+
 }
 
 .edit-canvas-action-div {
@@ -9600,6 +9673,8 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   background: #717171;
   align-items: center;
   padding: 0 24px;
+  position: fixed;
+  top: 0;
 }
 
 .linksvg {
@@ -9787,14 +9862,14 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   text-align: center;
   text-align: -webkit-center;
 }
-
+/*
 background: linear-gradient(334deg, #2ea586, #6e37b9);
 background-size: 400% 400%;
 
 -webkit-animation: CycleC 30s ease infinite;
 -moz-animation: CycleC 30s ease infinite;
 animation: CycleC 30s ease infinite;
-
+*/
 @-webkit-keyframes CycleC {
   0% {
     background-position: 0% 50%;
@@ -9939,12 +10014,12 @@ animation: CycleC 30s ease infinite;
 .rulesCon {
   margin: 25px;
   overflow: auto;
-  max-height: 58vh;
+  /*max-height: 58vh;*/
   border-bottom: 1px solid #dcdfe4;
 }
 @media (max-height: 633px) {
   .rulesCon {
-    max-height: 54vh;
+    /*max-height: 54vh;*/
   }
 }
 .rulesCon h2 {
@@ -10004,11 +10079,35 @@ animation: CycleC 30s ease infinite;
   max-height: 100vh;
 }
 
+.single-line{
+  white-space: nowrap;
+  display: inline-block;
+}
+
+
+.react-datepicker__navigation{
+  top:5px!important;
+}
+
+@media (max-width: 550px){
+
+  .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name{
+    width: 1.5rem!important;
+    line-height: 1.5rem!important;
+  }
+}
+
 
 @supports (-webkit-overflow-scrolling: touch) {
   /* CSS specific to iOS devices */
 
-  ::-webkit-scrollbar {
+  .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name{
+    width: 1.5rem!important;
+    line-height: 1.5rem!important;
+  }
+
+  section.login-modal .popup form::-webkit-scrollbar,
+  *::-webkit-scrollbar {
     width: unset!important;
     height: unset!important;
     border: unset!important;
@@ -10017,11 +10116,13 @@ animation: CycleC 30s ease infinite;
     border-radius: unset!important;
   }
 
+  section.login-modal .popup form::-webkit-scrollbar-thumb,
   *::-webkit-scrollbar-thumb {
     background: unset!important;
     border: unset!important;
   }
 
+  section.login-modal .popup form::-webkit-scrollbar-corner,
   *::-webkit-scrollbar-corner {
     background: unset!important;
   }

@@ -11,7 +11,7 @@ class ChatContent extends PureComponent {
       <Query
         query={GET_COMMENTS}
         variables={{ chatID, limit }}
-        fetch-policy="cache-first"
+        fetch-policy="network-only"
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (loading) {
@@ -21,7 +21,7 @@ class ChatContent extends PureComponent {
             return (
               <ErrorHandler.report
                 error={error}
-                calledName={"getCommets"}
+                calledName={"getComments"}
                 id={chatID}
                 type="chat"
               />

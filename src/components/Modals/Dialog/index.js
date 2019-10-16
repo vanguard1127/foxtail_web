@@ -1,8 +1,6 @@
 import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import Spinner from "../../common/Spinner";
-
 import Dropdown from "../../common/Dropdown";
 import Modal from "../../common/Modal";
 class Dialog extends PureComponent {

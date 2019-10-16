@@ -36,7 +36,18 @@ class Preferences extends Component {
   };
 
   render() {
-    const { distance, distanceMetric, ageRange, city, setValue, setLocationValues, t, ErrorBoundary, isBlackMember, lang } = this.props;
+    const {
+      distance,
+      distanceMetric,
+      ageRange,
+      city,
+      setValue,
+      setLocationValues,
+      t,
+      ErrorBoundary,
+      isBlackMember,
+      lang
+    } = this.props;
     const { interestedIn } = this.state;
 
     return (
@@ -46,7 +57,7 @@ class Preferences extends Component {
             <div className="col-md-12">
               <span className="heading">
                 {t("myserchpref")}
-                <Tooltip title="Search Preferences used to search members on the Meet Members page" placement="left-start">
+                <Tooltip title={t("srchpref")} placement="left-start">
                   <span className="tip" />
                 </Tooltip>
               </span>
@@ -80,7 +91,11 @@ class Preferences extends Component {
             </div>
             <div className="col-md-6">
               <div className="item">
-                <DistanceMetricSwitch setValue={setValue} t={t} distanceMetric={distanceMetric} />
+                <DistanceMetricSwitch
+                  setValue={setValue}
+                  t={t}
+                  distanceMetric={distanceMetric}
+                />
               </div>
             </div>
             <div className="col-md-6">

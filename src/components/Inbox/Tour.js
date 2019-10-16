@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 class InboxTour extends PureComponent {
   state = {
     isTourOpen: true,
-    menuOpen: true,
+    menuOpen: window.innerWidth < 1200 ? true : false,
     goToStep: 0
   };
   componentDidMount() {
@@ -22,9 +22,10 @@ class InboxTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        this.props.history.push("/inbox");
+        window.location.reload();
       })
       .catch(res => {
+        console.log("Err", res);
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
     if (this.mounted) {
@@ -39,8 +40,9 @@ class InboxTour extends PureComponent {
   };
 
   toggleMenu = () => {
+    console.log("TEST");
     if (this.mounted) {
-      this.setState({ menuOpen: false, goToStep: 0 });
+      this.setState({ menuOpen: !this.state.menuOpen, goToStep: 0 });
     }
   };
 
@@ -105,7 +107,6 @@ class InboxTour extends PureComponent {
         }
       ];
     }
-    const toggleOn = window.innerWidth < 1200 ? this.toggleMenu() : null;
     return (
       <Fragment>
         <section className="breadcrumb">
@@ -118,11 +119,11 @@ class InboxTour extends PureComponent {
             </div>
           </div>
         </section>
-        <section className="inbox">
+        <section className={menuOpen ? "inbox" : "inbox hide-mobile"}>
           <div className="row no-gutters">
             <div className="col-md-4 col-lg-3 col-xl-3">
               <div
-                className={menuOpen ? "left" : "left hide"}
+                className={"left"}
                 data-tut="list"
                 ref={selectContainerRef =>
                   (this.selectContainerRef = selectContainerRef)
@@ -134,7 +135,7 @@ class InboxTour extends PureComponent {
 
                 <div className="conversations">
                   <div className="item unread" data-tut="item">
-                    <span onClick={toggleOn} className="inbox-item">
+                    <span onClick={this.toggleMenu} className="inbox-item">
                       <span className="img">
                         <img
                           src={
@@ -153,7 +154,7 @@ class InboxTour extends PureComponent {
                     </span>
                   </div>
                   <div className="item unread">
-                    <span onClick={toggleOn} className="inbox-item">
+                    <span onClick={this.toggleMenu} className="inbox-item">
                       <span className="img">
                         <img
                           src={
@@ -172,7 +173,7 @@ class InboxTour extends PureComponent {
                     </span>
                   </div>
                   <div className="item">
-                    <span onClick={toggleOn} className="inbox-item">
+                    <span onClick={this.toggleMenu} className="inbox-item">
                       <span className="img">
                         <img
                           src={
@@ -193,7 +194,7 @@ class InboxTour extends PureComponent {
                     </span>
                   </div>
                   <div className="item">
-                    <span onClick={toggleOn} className="inbox-item">
+                    <span onClick={this.toggleMenu} className="inbox-item">
                       <span className="img">
                         <img
                           src={
@@ -344,7 +345,7 @@ class InboxTour extends PureComponent {
                   <div className="functions">
                     <ul>
                       <li className="members">
-                        <span>{t("participants")}</span>
+                        <span>{t("Participants")}</span>
                       </li>
                       <li className="invite">
                         <span>{t("invitemem")}</span>

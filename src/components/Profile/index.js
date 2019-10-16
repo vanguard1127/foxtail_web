@@ -8,7 +8,6 @@ import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import DesiresSection from "./DesiresSection";
 import ProfileCard from "./ProfileCard/";
-import { preventContextMenu } from "../../utils/image";
 import Tour from "./Tour";
 import ProfileInfo from "./ProfileInfo";
 import ProfileBio from "./ProfileBio";
@@ -51,7 +50,6 @@ class ProfilePage extends Component {
   componentDidMount() {
     this.mounted = true;
     window.scrollTo(0, 0);
-    document.addEventListener("contextmenu", preventContextMenu);
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -226,7 +224,7 @@ class ProfilePage extends Component {
                           <div className="icon">
                             <i className="nico x" />
                           </div>
-                          <span className="head">Profile Not Available</span>
+                          <span className="head">{t("nopro")}</span>
                           <span className="description">{t("notexist")}</span>
                         </div>
                       </div>
@@ -273,7 +271,6 @@ class ProfilePage extends Component {
                               showShareModal={() =>
                                 this.setShareModalVisible(true, profile)
                               }
-                              preventContextMenu={preventContextMenu}
                             />
                             <DesiresSection
                               desires={desires}
@@ -321,7 +318,6 @@ class ProfilePage extends Component {
                                 photos={publicPhotos}
                                 t={t}
                                 ErrorHandler={ErrorHandler}
-                                preventContextMenu={preventContextMenu}
                               />
                             )}
                             {privatePhotos.length > 0 && (
@@ -330,7 +326,6 @@ class ProfilePage extends Component {
                                 photos={privatePhotos}
                                 t={t}
                                 ErrorHandler={ErrorHandler}
-                                preventContextMenu={preventContextMenu}
                               />
                             )}
                           </div>

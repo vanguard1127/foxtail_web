@@ -22,11 +22,13 @@ class LanguageControl extends PureComponent {
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener("touchstart", this.handleClickOutside);
     this.mounted = true;
   }
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("touchstart", this.handleClickOutside);
     this.mounted = false;
   }
 

@@ -90,8 +90,7 @@ class ProfileCard extends Component {
       ReactGA,
       msgd,
       history,
-      showShareModal,
-      preventContextMenu
+      showShareModal
     } = this.props;
     const { profilePic, id, users } = profile;
 
@@ -119,10 +118,7 @@ class ProfileCard extends Component {
           }
         >
           <div className={"avatar-card " + badge}>
-            <ProfilePic
-              profilePic={profilePic}
-              preventContextMenu={preventContextMenu}
-            />
+            <ProfilePic profilePic={profilePic} />
             {!isSelf ? (
               <ProfileActions
                 profileID={id}
@@ -135,7 +131,7 @@ class ProfileCard extends Component {
             ) : (
               <div className="functions">
                 <div className="btn share" onClick={showShareModal}>
-                  Share My Profile!
+                  {t("common:shareme")}
                 </div>
               </div>
             )}

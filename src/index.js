@@ -50,6 +50,10 @@ import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
+import { preventContextMenu } from "./utils/image";
+
+import * as serviceWorker from './sw';
+
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
@@ -58,12 +62,8 @@ Sentry.init({
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-const httpurl = process.env.REACT_APP_HTTP_URL;
-const HTTPSurl = process.env.REACT_APP_HTTPS_URL;
-const wsurl = process.env.REACT_APP_WS_URL;
-
 const wsLink = new WebSocketLink({
-  uri: wsurl,
+  uri: process.env.REACT_APP_WS_URL,
   options: {
     reconnect: true,
     lazy: true,
@@ -75,7 +75,7 @@ const wsLink = new WebSocketLink({
 });
 
 const httpLink = new HttpLink({
-  uri: httpurl
+  uri: process.env.REACT_APP_HTTP_URL
 });
 
 const AuthLink = new ApolloLink((operation, forward) => {
@@ -224,11 +224,10 @@ const Root = () => (
   </Router>
 );
 
-
 const Wrapper = withRouter(props => {
   setTimeout(() => {
     window.scrollTo(0, 1);
-  }, 1000)
+  }, 1000);
   let location = props.location;
   if (location.pathname) {
     if (
@@ -379,9 +378,11 @@ const Body = withAuth(session => session && session.currentuser)(
 
 window.onresize = function() {
   document.body.height = window.innerHeight;
-  console.log(window.innerHeight)
-}
+};
 window.onresize(); // called to initially set the height.
+
+//prevent context menu
+document.addEventListener("contextmenu", preventContextMenu);
 
 render(
   <ApolloProvider client={client}>
@@ -389,3 +390,12 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
+
+if ('serviceWorker' in navigator) {
+  if(process.env.NODE_ENV!=='production'){
+    serviceWorker.unregister();
+  }else{
+    serviceWorker.register();
+  }
+  
+}

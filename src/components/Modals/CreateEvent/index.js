@@ -19,19 +19,19 @@ class CreateEvent extends Component {
   schema = yup.object().shape({
     eventname: yup
       .string()
-      .min(3, this.props.t("eve3char"))
-      .max(120, this.props.t("eve120"))
-      .required(this.props.t("evereq")),
+      .min(3, "eve3char")
+      .max(120, "eve120")
+      .required("evereq"),
     description: yup
       .string()
-      .min(10, this.props.t("dec10char"))
-      .max(500, this.props.t("dec500"))
-      .required(this.props.t("decreq")),
-    type: yup.string().required(this.props.t("evetypereq")),
+      .min(10, "dec10char")
+      .max(500, "dec500")
+      .required("decreq"),
+    type: yup.string().required("evetypereq"),
     address: yup
       .string()
-      .max(240, this.props.t("dec240"))
-      .required(this.props.t("addreq"))
+      .max(240, "dec240")
+      .required("addreq")
   });
   shouldComponentUpdate(nextProps, nextState) {
     if (
@@ -116,7 +116,7 @@ class CreateEvent extends Component {
       return true;
     } catch (e) {
       let errors = {};
-      console.log(e);
+      console.error(e);
       e.inner.forEach(err => (errors[err.path] = err.message));
       this.setState({ errors });
       return false;
@@ -302,17 +302,12 @@ class CreateEvent extends Component {
     if (!tReady) {
       return null;
     }
-
     return (
       <section>
         <Modal
           header={eventID ? t("updateeve") : t("createeve")}
           close={close}
           disableOffClick
-          className="create-event"
-          fullWidth
-          maxWidth
-          maxHeight
         >
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
@@ -336,7 +331,7 @@ class CreateEvent extends Component {
                           />
                           <label title={t("evename")} htmlFor="eventname" />
                         </div>
-                        {this.InputFeedback(errors.eventname)}
+                        {this.InputFeedback(t(errors.eventname))}
                       </div>
                       <div className="item">
                         <div className="input">
@@ -368,7 +363,7 @@ class CreateEvent extends Component {
                             value={description}
                           />
                         </div>
-                        {this.InputFeedback(errors.description)}
+                        {this.InputFeedback(t(errors.description))}
                       </div>
                       <div className="item">
                         <DesiresSelector
@@ -393,7 +388,7 @@ class CreateEvent extends Component {
                           noClass={true}
                         />
                       </div>
-                      {this.InputFeedback(errors.type)}
+                      {this.InputFeedback(t(errors.type))}
                       <div className="item nobottom">
                         {eventID && removeCurrentImage ? (
                           <div
@@ -408,7 +403,7 @@ class CreateEvent extends Component {
                             }}
                             onClick={this.handleClickOnRemoveCurrentImage}
                           >
-                            Remove Current Image
+                            {t("removecurr")}
                           </div>
                         ) : (
                           <Fragment>
@@ -423,7 +418,7 @@ class CreateEvent extends Component {
                                 style={{ padding: "4px", textAlign: "right" }}
                                 onClick={this.handleClickOnResetImage}
                               >
-                                Set older Image
+                                {t("setoldimg")}
                               </div>
                             )}
                           </Fragment>
@@ -459,7 +454,7 @@ class CreateEvent extends Component {
                           ErrorHandler={ErrorHandler}
                         />
                       </div>
-                      {this.InputFeedback(errors.address)}
+                      {this.InputFeedback(t(errors.address))}
                       <div className="item">
                         <DatePicker
                           value={startTime}
@@ -467,16 +462,14 @@ class CreateEvent extends Component {
                             maxDate: new Date(endTime) || null,
                             minDate: new Date()
                           }}
+                          withPortal
                           onChange={e => {
                             if (endTime && dayjs(e).isAfter(dayjs(endTime))) {
                               if (!toast.isActive("startTime")) {
-                                toast.info(
-                                  "Start time may not be after ending time",
-                                  {
-                                    position: toast.POSITION.TOP_CENTER,
-                                    toastId: "startTime"
-                                  }
-                                );
+                                toast.info(t("setstart"), {
+                                  position: toast.POSITION.TOP_CENTER,
+                                  toastId: "startTime"
+                                });
                               }
                               return;
                             }
@@ -501,13 +494,10 @@ class CreateEvent extends Component {
                               dayjs(startTime).isAfter(dayjs(e))
                             ) {
                               if (!toast.isActive("endTime")) {
-                                toast.info(
-                                  "End time may not be before starting time",
-                                  {
-                                    position: toast.POSITION.TOP_CENTER,
-                                    toastId: "endTime"
-                                  }
-                                );
+                                toast.info(t("setend"), {
+                                  position: toast.POSITION.TOP_CENTER,
+                                  toastId: "endTime"
+                                });
                               }
                               return;
                             }

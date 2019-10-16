@@ -61,6 +61,7 @@ class MyEvents extends Component {
                       nav
                       autoplay
                       lazyLoad
+                      loop
                       margin={30}
                       navText={[
                         '<i class="icon-left-open">',

@@ -14,10 +14,12 @@ class Desires extends Component {
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener("touchstart", this.handleClickOutside);
   }
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("touchstart", this.handleClickOutside);
   }
 
   handleClickOutside = event => {
@@ -65,7 +67,6 @@ class Desires extends Component {
                     .map((option, index) => (
                       <li key={option.value}>
                         <Tooltip title={t(option.label)} placement={"top"}>
-                          {/* <div className="select-checkbox"> */}
                           <input
                             type="checkbox"
                             id={option.value}
@@ -83,7 +84,6 @@ class Desires extends Component {
                             <span />
                             <b>{t(option.label)}</b>
                           </label>
-                          {/* </div> */}
                         </Tooltip>
                       </li>
                     ))}

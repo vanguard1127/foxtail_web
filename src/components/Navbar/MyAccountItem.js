@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import MyAccountMenu from "./MyAccountMenu";
 import Menu from "../common/Menu";
-import { preventContextMenu } from "../../utils/image";
 class MyAccountItem extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.currentuser !== nextProps.currentuser) {
@@ -23,7 +22,7 @@ class MyAccountItem extends Component {
               <img
                 src={currentuser.profilePic}
                 alt=""
-                onContextMenu={preventContextMenu}
+                
               />
             </span>
             {currentuser.coupleProfileName ? (

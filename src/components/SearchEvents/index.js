@@ -210,9 +210,11 @@ class SearchEvents extends Component {
   };
 
   toggleScroll(enabled) {
-    enabled
-      ? disableBodyScroll(this.targetElement.current)
-      : enableBodyScroll(this.targetElement.current);
+    if (this.targetElement) {
+      enabled
+        ? disableBodyScroll(this.targetElement.current)
+        : enableBodyScroll(this.targetElement.current);
+    }
   }
 
   render() {
@@ -333,11 +335,6 @@ class SearchEvents extends Component {
                           }}
                         >
                           <div className="container" ref={this.targetElement}>
-                            {/* <div className="col-md-12">
-                              <span className="lblHeader">
-                                {t("upcomingevent")}
-                              </span>
-                            </div> */}
                             <div className="col-md-12">
                               <div className="icon">
                                 <i className="nico event" />

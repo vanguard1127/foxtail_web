@@ -117,11 +117,11 @@ class Landing extends PureComponent {
                   <div className="logo">
                     <span />
                   </div>
-                  <span className="subtitle">{t("subtitle")}</span>
+                  <span className="subtitle">{t("common:stray")}</span>
                 </div>
                 <div className="offset-md-3 col-md-5">
                   <div className="content">
-                    <span className="mobilesubtitle">{t("subtitle")}</span>
+                    <span className="mobilesubtitle">{t("common:stray")}</span>
                     <span className="login">
                       <ErrorHandler.ErrorBoundary>
                         <LoginButton
@@ -152,11 +152,12 @@ class Landing extends PureComponent {
                     <div className="left">
                       <div className="welcome-text">
                         <h1>
-                          <span>
-                            {t("free")}
+                          <span className="landing-header">
+                            <span className="single-line">{t("free")}</span>
                             <span className="divider">|</span>
-                            {t("private")}
-                            <span className="divider">|</span>18+ Fun
+                            <span className="single-line">{t("private")}</span>
+                            <span className="divider">|</span>
+                            <span className="single-line">18+ {t("fun")}</span>
                           </span>
                         </h1>
                       </div>
@@ -232,7 +233,7 @@ class Landing extends PureComponent {
                                         separator=","
                                       />
                                     </span>
-                                    <span>{t("Couple's Profiles")}</span>
+                                    <span>{t("common:cplpros")}</span>
                                   </li>
                                 </ul>
                               </ErrorHandler.ErrorBoundary>
@@ -288,7 +289,7 @@ class Landing extends PureComponent {
                           {t("resetphone")}
                         </span>
                       </li>
-                      <li className="tooltip">
+                      <li className="tooltip" style={{ zIndex: 0 }}>
                         {tooltip && (
                           <span className="tooltiptext">
                             <div>

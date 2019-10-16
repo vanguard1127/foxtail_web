@@ -81,7 +81,7 @@ class AcctSettings extends Component {
                     });
                   }}
                 >
-                  Update Email
+                  {t("updemail")}
                 </span>
               </div>
             </div>
@@ -135,7 +135,7 @@ class AcctSettings extends Component {
                     });
                   }}
                 >
-                  Change Sex
+                  {t("chngsex")}
                 </span>
               </div>
             </div>
