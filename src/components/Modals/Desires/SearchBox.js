@@ -4,6 +4,7 @@ const SearchBox = ({ value, onChange, t }) => {
     <div className="search">
       <input
         type="text"
+        autoFocus
         placeholder={t("searchdesires") + "..."}
         value={value}
         onChange={e =>

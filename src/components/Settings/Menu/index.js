@@ -51,15 +51,28 @@ class Menu extends Component {
               {currentuser.blackMember.active ? (
                 <span style={{ cursor: "default" }}>{t("common:thanks")}.</span>
               ) : (
-                <span onClick={blackModalToggle}>{t("common:becomeblk")}</span>
+                <span onClick={blackModalToggle}>
+                  {t("common:becomeblk")}
+                  <span className="blkIcon"></span>
+                </span>
               )}
             </li>
-            <li className="active">
+            <li
+              className="active"
+              title={t(
+                "Get a free week of Black Membership when someone using your link joins Foxtail."
+              )}
+            >
               <span onClick={() => shareModalToggle(false)}>
-                {t("common:sharefox")}
+                {t("common:sharefox")} ({t("common:+1 week")}{" "}
+                <span className="blkIcon"></span>)
               </span>
             </li>
-            <li className="active">
+            <li
+              title={t(
+                "Get a free week of Black Membership when someone using your link joins Foxtail."
+              )}
+            >
               <span onClick={() => shareModalToggle(true)}>
                 {t("common:shareme")}
               </span>

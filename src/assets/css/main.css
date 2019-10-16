@@ -1833,11 +1833,13 @@ footer .brand .medias ul li i::before {
   height: 100%;
   float: left;
   display: block;
+  right: 3px;
 }
 
 footer .brand .medias ul li.facebook i::before {
   content: "\e816";
   color: #0050b5;
+  right: 0;
 }
 footer .brand .medias ul li.twitter i::before {
   content: "\e819";
@@ -4681,6 +4683,26 @@ section.settings .sidebar .menu ul li span {
   cursor: pointer;
 }
 
+section.settings .sidebar .menu ul li span.blkIcon {
+  padding:0px;
+  margin:0px 0px 0px 4px;
+ width: auto;
+ float:none;
+ letter-spacing: 0px;
+
+}
+section.settings .sidebar .menu ul li span.blkIcon::before {
+  content: "\e823";
+  font-family: "foxtail-icon";
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 14px;
+
+}
+
 section.settings .sidebar .menu ul li:hover {
   color: #f50043;
 }
@@ -4728,7 +4750,7 @@ section.settings .message {
   line-height: 28px;
 
   -webkit-animation-name: opacity;
-  -webkit-animation-duration: 2s;
+  -webkit-animation-duration: 3s;
   -webkit-animation-iteration-count: infinite;
   animation-name: opacity;
   animation-duration: 3s;

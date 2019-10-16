@@ -11,7 +11,12 @@ class EventShare extends PureComponent {
         <div className="share-event">
           <span className="title">{t("share")}:</span>
           <ul>
-            <li className="share">
+            <li
+              className="share"
+              title={t(
+                "Get a free week of Black Membership when someone using your link joins Foxtail."
+              )}
+            >
               <span onClick={() => showShareModal()} />
             </li>
             <li className="add">

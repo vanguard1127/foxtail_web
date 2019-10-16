@@ -19,16 +19,16 @@ class MyAccountItem extends Component {
         menuOpener={
           <div data-name="myaccount" ref={setRef} style={{ display: "flex" }}>
             <span className="avatar">
-              <img
-                src={currentuser.profilePic}
-                alt=""
-                
-              />
+              <img src={currentuser.profilePic} alt="" />
             </span>
             {currentuser.coupleProfileName ? (
-              <span className="username">{currentuser.coupleProfileName}</span>
+              <span className="username" title={currentuser.coupleProfileName}>
+                {currentuser.coupleProfileName}
+              </span>
             ) : (
-              <span className="username">{currentuser.username}</span>
+              <span className="username" title={currentuser.username}>
+                {currentuser.username}
+              </span>
             )}
           </div>
         }
