@@ -55,7 +55,7 @@ class EditCanvasImage extends PureComponent {
     const { imageHeight, imageWidth, x_pos, y_pos, scale } = this.state;
     const width = this.container.offsetWidth;
     const height = window.innerHeight - 56; // here also we've subtract topbar height
-    window.scrollTo(0, 1);
+    //window.scrollTo(0, 1);
 
     this.setState({ width, height });
     if (imageWidth == 0 || imageHeight == 0) {
