@@ -1,5 +1,8 @@
 import i18n from "i18next";
 export const preventContextMenu = e => {
+  if(window.ALLOWCONTEXTMENU){
+    return;
+  }
   e.stopPropagation();
   e.preventDefault();
   alert(
