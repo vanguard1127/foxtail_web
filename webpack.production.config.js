@@ -58,8 +58,8 @@ module.exports = {
   },
   plugins: [
     new ServiceWorkerWebpackPlugin({
-        entry: path.join(__dirname, 'src/sw.js'),
-    }),
+      entry: path.join(__dirname, 'src/service-worker.js'),
+  }),
     new HtmlWebpackPlugin({
       title: "Foxtail",
       template: "src/page-template.hbs",
