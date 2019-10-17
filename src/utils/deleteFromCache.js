@@ -4,6 +4,12 @@ export default ({ cache, query }) => {
   // This empties the cache of all of our list items and
   // forces a refetch of the data.
   Object.keys(cache.data.data).forEach(key => {
-    key.match(query) && cache.data.delete(key);
+    if (key === "ROOT_QUERY") {
+      Object.keys(cache.data.data[key]).forEach(subkey => {
+        return subkey.match(query) && delete cache.data.data[key][subkey];
+      });
+    } else {
+      return key.match(query) && cache.data.delete(key);
+    }
   });
 };

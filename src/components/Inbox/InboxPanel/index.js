@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import InboxSearchTextBox from "./InboxSearchTextBox";
 import InboxList from "./InboxList";
 import { GET_INBOX, NEW_INBOX_SUB } from "../../../queries";
-import { Query, withApollo } from "react-apollo";
+import { Query } from "react-apollo";
 import Spinner from "../../common/Spinner";
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 class InboxPanel extends Component {
-  unsubscribe = null;
+  unsubscribe;
   state = { searchTerm: "", skip: 0 };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -174,4 +174,4 @@ class InboxPanel extends Component {
   }
 }
 
-export default withApollo(InboxPanel);
+export default InboxPanel;

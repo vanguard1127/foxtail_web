@@ -110,7 +110,9 @@ class Tour extends PureComponent {
                       </div>
                       <div className="col-md-6">
                         <div className="item">
-                          <div className="range-head">{t("distance")}:</div>
+                          <div className="range-head">
+                            {t("common:distance")}:
+                          </div>
                           <div className="rc-slider range-con">
                             <div className="rc-slider-rail" />
                             <div

@@ -66,7 +66,6 @@ class InboxList extends PureComponent {
             <img
               src={item.profilePic !== "" ? item.profilePic : NoProfileImg}
               alt=""
-              
             />
           </span>
           <div className="data">

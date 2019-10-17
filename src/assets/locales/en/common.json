@@ -192,7 +192,7 @@
   "Name should be between 3 and 120 characters.": "Name should be between 3 and 120 characters.",
   "Name may only contain letters and numbers.": "Name may only contain letters and numbers.",
   "We're having trouble connecting to you. Please check your connection and try again.": "We're having trouble connecting to you. Please check your connection and try again.",
-  "Right-click disabled - Saving images on Foxtail will result in your account being banned.": "Right-click disabled - Saving images on Foxtail will result in your account being banned.",
+  "Right-click disabled - Saving images on Foxtail will result in your IP address being banned.": "Right-click disabled - Saving images on Foxtail will result in your IP address being banned.",
   "sharefox": "Share Foxtail",
   "shareme": "Share My Profile",
   "Get a free week of Black Membership when someone using your link joins Foxtail.": "Get a free week of Black Membership when someone using your link joins Foxtail.",
@@ -238,7 +238,7 @@
   "Please enter a valid url": "Please enter a valid url",
   "Error occurred please try again.": "Error occurred please try again.",
   "Uh-oh...": "Uh-oh...",
-  "Idle warning: You will be logged out automatically in 1 minute": "Idle warning: You will be logged out automatically in 1 minute",
+  "Idle warning - You will be logged out automatically in 1 minute": "Idle warning - You will be logged out automatically in 1 minute",
   "stray": "Stray Together",
   "cplpros": "Couple's Profiles",
   "Submit": "Submit",
@@ -247,5 +247,6 @@
   "Profile Picture Selector": "Profile Picture Selector",
   "Privacy Studio": "Privacy Studio",
   "Email has been confirmed.": "Email has been confirmed.",
-  "Email confirmation has been used or is expired, please go to your 'My Account' page to request another.": "Email confirmation has been used or is expired, please go to your 'My Account' page to request another."
+  "Email confirmation has been used or is expired, please go to your 'My Account' page to request another.": "Email confirmation has been used or is expired, please go to your 'My Account' page to request another.",
+  "This link has expired please request again.": "This link has expired please request again."
 }

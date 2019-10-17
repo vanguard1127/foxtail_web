@@ -14,6 +14,7 @@ class EmailPhoneResetBtn extends PureComponent {
       .catch(res => {
         ErrorHandler.catchErrors(res.graphQLErrors);
       });
+    close();
   };
   render() {
     const { t, phone } = this.props;

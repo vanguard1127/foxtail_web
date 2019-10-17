@@ -57,7 +57,7 @@ class IdleTimer extends PureComponent {
     if (!toast.isActive("warn")) {
       toast(
         i18next.t(
-          "common:Idle warning: You will be logged out automatically in 1 minute"
+          "common:Idle warning - You will be logged out automatically in 1 minute"
         ),
         {
           toastId: "warn",
