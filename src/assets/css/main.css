@@ -6672,6 +6672,7 @@ section.landing .left {
   float: left;
   position: relative;
   top: 160px;
+  z-index: 1;
 }
 
 section.landing .left .welcome-text {
