@@ -52,8 +52,7 @@ import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
 
-import * as serviceWorker from './service-worker';
-
+import * as serviceWorker from "./service-worker";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
@@ -391,11 +390,10 @@ render(
   document.getElementById("root")
 );
 
-if ('serviceWorker' in navigator) {
-  if(process.env.NODE_ENV!=='production'){
+if ("serviceWorker" in navigator) {
+  if (process.env.NODE_ENV !== "production") {
     serviceWorker.unregister();
-  }else{
+  } else {
     serviceWorker.register();
   }
-
 }
