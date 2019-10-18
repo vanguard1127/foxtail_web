@@ -57,7 +57,7 @@ import * as serviceWorker from './service-worker';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
-}); 
+});
 
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -225,9 +225,9 @@ const Root = () => (
 );
 
 const Wrapper = withRouter(props => {
-  setTimeout(() => {
-    window.scrollTo(0, 1);
-  }, 1000);
+  // setTimeout(() => {
+  //   window.scrollTo(0, 1);
+  // }, 1000);
   let location = props.location;
   if (location.pathname) {
     if (
@@ -397,5 +397,5 @@ if ('serviceWorker' in navigator) {
   }else{
     serviceWorker.register();
   }
-  
+
 }
