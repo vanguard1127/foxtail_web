@@ -49,6 +49,7 @@ class ProfilePage extends Component {
 
   componentDidMount() {
     this.mounted = true;
+    //test
     window.scrollTo(0, 1);
   }
   componentWillUnmount() {
