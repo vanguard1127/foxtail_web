@@ -158,16 +158,17 @@ class EditCanvasImage extends PureComponent {
         if (!toast.isActive("upload")) {
           toast.success(t("secupload"), {
             toastId: "upload",
-            autoClose: false
+            autoClose: false,
+            hideProgressBar: false
           });
         }
         const rotDegrees = rotation % 360;
         const scaledImgWidth =
-          rotDegrees == 0 || rotDegrees == 180
+          rotDegrees === 0 || rotDegrees === 180
             ? imageWidth * scale
             : imageHeight * scale;
         const scaledImgHeight =
-          rotDegrees == 0 || rotDegrees == 180
+          rotDegrees === 0 || rotDegrees === 180
             ? imageHeight * scale
             : imageWidth * scale;
 
