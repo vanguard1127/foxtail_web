@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import Signup from "./Signup";
+import SignupDev from "./Signup_dev";
 import LoginButton from "./LoginButton";
 import withAuth from "../HOCs/withAuth";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
@@ -204,19 +205,35 @@ class Landing extends PureComponent {
                   </div>
                   <div className="col-lg-5 col-md-12">
                     <ErrorHandler.ErrorBoundary>
-                      <Signup
-                        t={t}
-                        ErrorHandler={ErrorHandler}
-                        lang={lang}
-                        refer={refer}
-                        aff={aff}
-                        mem={mem}
-                        eve={eve}
-                        toast={toast}
-                        session={session}
-                        history={history}
-                        ReactGA={ReactGA}
-                      />
+                      {process.env.NODE_ENV === "production" ? (
+                        <Signup
+                          t={t}
+                          ErrorHandler={ErrorHandler}
+                          lang={lang}
+                          refer={refer}
+                          aff={aff}
+                          mem={mem}
+                          eve={eve}
+                          toast={toast}
+                          session={session}
+                          history={history}
+                          ReactGA={ReactGA}
+                        />
+                      ) : (
+                        <SignupDev
+                          t={t}
+                          ErrorHandler={ErrorHandler}
+                          lang={lang}
+                          refer={refer}
+                          aff={aff}
+                          mem={mem}
+                          eve={eve}
+                          toast={toast}
+                          session={session}
+                          history={history}
+                          ReactGA={ReactGA}
+                        />
+                      )}
                     </ErrorHandler.ErrorBoundary>
                   </div>
                 </div>
