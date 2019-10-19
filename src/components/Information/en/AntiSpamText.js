@@ -207,7 +207,7 @@ const AntiSpam = () => (
         Any questions or comments regarding this Anti-Spam Policy should be
         directed to:
       </p>
-      <p>support@Foxtailapp.com</p>
+      <p>support@foxtailapp.com</p>
     </div>
   </div>
 );

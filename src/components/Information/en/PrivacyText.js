@@ -213,7 +213,7 @@ const Privacy = () => (
       <h2>How do I contact Foxtail if I have any privacy questions?</h2>
       <p>
         If you have any questions about our Privacy Policy, please get in touch
-        with us at support@Foxtailapp.com, and we’ll be happy to answer any
+        with us at support@foxtailapp.com, and we’ll be happy to answer any
         questions you might have!
       </p>
     </div>

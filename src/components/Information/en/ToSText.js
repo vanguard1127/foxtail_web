@@ -579,7 +579,7 @@ const ToS = () => (
       <p>7. PAYMENT & REFUNDS</p>
       <p>
         To request a refund you have to email{" "}
-        <a href="mailto=support@Foxtailapp.com">support@Foxtailapp.com</a>{" "}
+        <a href="mailto=support@foxtailapp.com">support@foxtailapp.com</a>{" "}
         within 7 days of the transaction and request a refund. Refunds will be
         for the full price of the transaction. LOV does not refund any interest
         or transaction fees that might of been charged to you by your financial
@@ -986,7 +986,7 @@ const ToS = () => (
         Notifying LOV of Copyright Infringement: To provide LOV notice of an
         infringement, you must provide a written communication to the attention
         of "DMCA Infringement Notification Dept." care of{" "}
-        <a href="mailto=report@Foxtailapp.com">report@Foxtailapp.com</a> that
+        <a href="mailto=support@foxtailapp.com">support@foxtailapp.com</a> that
         sets forth the information specified by the DMCA
         (http://www.copyright.gov/title17/92chap5.html#512). Please note that
         you may be liable for damages (including costs and attorneys' fees) if
@@ -998,7 +998,7 @@ const ToS = () => (
         does not constitute infringement, you may provide LOV with a counter
         notification by written communication to the attention of "DMCA Counter
         Notification Dept." at{" "}
-        <a href="mailto=report@Foxtailapp.com">report@Foxtailapp.com</a> that
+        <a href="mailto=support@foxtailapp.com">support@foxtailapp.com</a> that
         sets forth all of the necessary information required by the DMCA
         (http://www.copyright.gov/title17/92chap5.html#512). Please note that
         you may be liable for damages (including costs and attorneys' fees) if
@@ -1158,7 +1158,7 @@ const ToS = () => (
       </p>
       <p>
         For the quickest response, email us at{" "}
-        <a href="mailto=support@Foxtailapp.com">support@Foxtailapp.com</a>.
+        <a href="mailto=support@foxtailapp.com">support@foxtailapp.com</a>.
       </p>
       <p>33. VIOLATIONS OF TERMS AND CONDITIONS</p>
       <p>
@@ -1170,7 +1170,7 @@ const ToS = () => (
       <p>
         If you are aware of any violations of these Terms and Conditions, please
         report them to:{" "}
-        <a href="mailto=report@Foxtailapp.com">report@Foxtailapp.com</a>.
+        <a href="mailto=support@foxtailapp.com">support@foxtailapp.com</a>.
       </p>
       <p>
         Please read the entire Terms and Conditions, as all LOV properties,
