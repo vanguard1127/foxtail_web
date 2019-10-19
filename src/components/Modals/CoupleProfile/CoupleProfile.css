@@ -168,6 +168,10 @@ p.require-code {
 }
 
 @media screen and (max-width: 990px) {
+  .couple-profile .content-code {
+    margin: 0 auto;
+  }
+
   .couple-profile {
     width: 100%;
     height: auto;

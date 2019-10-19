@@ -7351,11 +7351,16 @@ section.login-modal .popup.full {
 }
 
 section.login-modal.couples .popup.full,
-section.login-modal.black .popup.full,
-section.login-modal.create-event .popup {
+section.login-modal.black .popup.full {
   padding: 0;
   max-height: 88vh;
 }
+
+section.login-modal.create-event .popup form,
+section.login-modal.rules .popup form {
+  max-height: 70vh;
+}
+
 section.login-modal.couples .popup.full .form-content,
 section.login-modal.black .popup.full .form-content {
   padding: 0px;
