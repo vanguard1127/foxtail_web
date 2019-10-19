@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
-import { FB_RESOLVE, LOGIN, CREATE_USER } from "../../queries";
+import gql from "graphql-tag";
+import { FB_RESOLVE } from "../../queries";
 import SignupForm from "./SignupForm";
 const initialState = {
   username: "",
@@ -13,7 +14,39 @@ const initialState = {
   csrf: "",
   code: ""
 };
+const LOGIN = gql`
+  mutation($phone: String!) {
+    login(phone: $phone) {
+      token
+      access
+    }
+  }
+`;
 
+const CREATE_USER = gql`
+  mutation(
+    $username: String!
+    $email: String!
+    $phone: String!
+    $gender: String!
+    $interestedIn: [String]
+    $dob: String!
+    $lang: String
+  ) {
+    createUser(
+      username: $username
+      email: $email
+      phone: $phone
+      gender: $gender
+      interestedIn: $interestedIn
+      dob: $dob
+      lang: $lang
+    ) {
+      token
+      access
+    }
+  }
+`;
 class Signup extends PureComponent {
   state = { ...initialState };
 
