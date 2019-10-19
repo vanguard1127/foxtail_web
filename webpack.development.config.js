@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+var ServiceWorkerWebpackPlugin = require("serviceworker-webpack-plugin");
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -60,15 +60,15 @@ module.exports = {
   devtool: "cheap-module-source-map",
   plugins: [
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'src/service-worker.js'),
-  }),
+      entry: path.join(__dirname, "src/service-worker.js")
+    }),
     new HtmlWebpackPlugin({
       title: "Foxtail",
       template: "src/page-template.hbs",
       description: "New site for alternative relationships",
       filename: "index.html",
       favicon: "./src/assets/favicon.ico",
-      manifest: "./src/assets/manifest.json",
+      manifest: "./src/assets/manifest.json"
     }),
     new CopyPlugin([
       { from: "src/assets/locales", to: "locales", toType: "dir" },

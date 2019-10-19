@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+var ServiceWorkerWebpackPlugin = require("serviceworker-webpack-plugin");
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -22,7 +22,11 @@ module.exports = {
       {
         loader: "babel-loader",
         test: /\.js$/,
-        exclude: ["/node_modules/", "/src/DevTools.js"]
+        exclude: [
+          "/node_modules/",
+          "/src/DevTools.js",
+          "/src/components/Landing/Signup_dev.js"
+        ]
       },
       {
         test: /\.s?css$/,
@@ -57,16 +61,13 @@ module.exports = {
     }
   },
   plugins: [
-    new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'src/service-worker.js'),
-  }),
     new HtmlWebpackPlugin({
       title: "Foxtail",
       template: "src/page-template.hbs",
       description: "FREE | Private | 18+ Fun",
       filename: "index.html",
       favicon: "./src/assets/favicon.ico",
-      manifest: "./src/assets/manifest.json",
+      manifest: "./src/assets/manifest.json"
     }),
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css"

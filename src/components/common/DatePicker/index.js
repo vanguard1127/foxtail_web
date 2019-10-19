@@ -56,6 +56,7 @@ export default class CustomDatePicker extends Component {
             maxDate={date}
             locale="en"
             withPortal
+            onFocus={e => (e.target.readOnly = true)}
           />
         </div>
       );

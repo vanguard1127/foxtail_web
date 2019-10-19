@@ -20,12 +20,13 @@ class Tour extends PureComponent {
   }
   closeTour = (seenTour, isProfile) => {
     seenTour()
-      .then(({ data }) => {
+      .then(() => {
         this.props.refetchUser();
         if (isProfile) {
           this.props.history.push("/member/tour");
         } else {
           window.location.reload();
+          //this.props.history.push("/members");
         }
       })
       .catch(res => {

@@ -156,8 +156,9 @@ class EditCanvasImage extends PureComponent {
     if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, () => {
         if (!toast.isActive("upload")) {
-          toast.success(t("common:upload"), {
-            toastId: "upload"
+          toast.success(t("secupload"), {
+            toastId: "upload",
+            autoClose: false
           });
         }
         const rotDegrees = rotation % 360;

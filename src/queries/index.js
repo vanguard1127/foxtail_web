@@ -287,6 +287,14 @@ export const BLOCK_PROFILE = gql`
     blockProfile(blockedProfileID: $blockedProfileID)
   }
 `;
+export const LOGIN = gql`
+  mutation($phone: String!) {
+    login(phone: $phone) {
+      token
+      access
+    }
+  }
+`;
 
 export const UPDATE_NOTIFICATIONS = gql`
   mutation($notificationIDs: [String]!, $read: Boolean, $seen: Boolean) {

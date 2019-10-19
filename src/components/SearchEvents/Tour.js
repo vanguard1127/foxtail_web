@@ -25,6 +25,7 @@ class Tour extends PureComponent {
           this.props.history.push("/event/tour");
         } else {
           window.location.reload();
+          //this.props.history.push("/events");
         }
       })
       .catch(res => {
