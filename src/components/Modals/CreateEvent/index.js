@@ -308,6 +308,7 @@ class CreateEvent extends Component {
           header={eventID ? t("updateeve") : t("createeve")}
           close={close}
           disableOffClick
+          className="create-event"
         >
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
