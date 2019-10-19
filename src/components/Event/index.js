@@ -50,6 +50,7 @@ class EventPage extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 1);
     this.mounted = true;
   }
   componentWillUnmount() {

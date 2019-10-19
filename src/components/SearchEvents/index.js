@@ -57,8 +57,8 @@ class SearchEvents extends Component {
     return false;
   }
   componentDidMount() {
+    window.scrollTo(0, 1);
     this.mounted = true;
-
     if (!this.props.location.lat) {
       this.timer = setInterval(() => this.tick(), 3000);
     }
@@ -70,7 +70,8 @@ class SearchEvents extends Component {
     this.mounted = false;
   }
 
-  componentWillUpdate(nextProps) {
+  //TODO: figure out what to do with this
+  UNSAFE_componentWillUpdate(nextProps) {
     if (
       this.props.location.lat === undefined &&
       nextProps.location.lat !== undefined
