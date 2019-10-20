@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import EditCanvasImage from "./ImageEditorWindow/EditCanvasImage";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
-import { Spring } from "react-spring/renderprops";
 
 class ImageEditor extends Component {
   shouldComponentUpdate(nextProps) {
@@ -31,6 +30,7 @@ class ImageEditor extends Component {
     if (!tReady) {
       return null;
     }
+
     const editCanvas = (
       <ErrorHandler.ErrorBoundary>
         <EditCanvasImage
@@ -47,21 +47,19 @@ class ImageEditor extends Component {
       </ErrorHandler.ErrorBoundary>
     );
     return (
-      <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
-        {props => (
-          <div style={props}>
-            <Modal
-              fullScreen
-              header={t("editphoto")}
-              close={close}
-              ref={el => (this.container = el)}
-              popupClass={"photo-editor"}
-            >
-              {editCanvas}
-            </Modal>
-          </div>
-        )}
-      </Spring>
+      <div>
+        <Modal
+          fullScreen
+          header={t("editphoto")}
+          close={close}
+          ref={el => (this.container = el)}
+          popupClass={"photo-editor"}
+          noFade
+          showLoader
+        >
+          {editCanvas}
+        </Modal>
+      </div>
     );
   }
 }

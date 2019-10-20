@@ -54,6 +54,8 @@ class ImageEditor extends Component {
               close={close}
               ref={el => (this.container = el)}
               className="edit-photo-modal clearfix"
+              noFade
+              showLoader
             >
               {editor}
             </Modal>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Spring } from "react-spring/renderprops";
+import Spinner from "../common/Spinner";
 
 class Modal extends Component {
   constructor(props) {
@@ -49,11 +50,18 @@ class Modal extends Component {
       fullScreen,
       className,
       popupClass,
-      noHeader
+      noHeader,
+      noFade,
+      showLoader
     } = this.props;
 
     return (
-      <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
+      <Spring
+        from={{ opacity: 0.6 }}
+        to={{ opacity: 1 }}
+        immediate={noFade}
+        after={{ test: "o" }}
+      >
         {props => (
           <div className="popup-wrapper">
             <section
@@ -73,11 +81,7 @@ class Modal extends Component {
                       className={`popup ${popupClass ? popupClass : ""}`}
                       style={{ height: "100vh", padding: "unset" }}
                     >
-                      {/* <span className="head">{header}</span> */}
-                      {/* <a
-                  className="close close-fullscreen-popup"
-                  onClick={() => close()}
-                /> */}
+                      {showLoader && <Spinner />}
                       <form>
                         <div className="form-content">
                           {children}

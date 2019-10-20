@@ -9813,9 +9813,11 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
 
 .loadingActive {
   display: flex;
-  flex: 1;
+  position: absolute;
   align-items: center;
   height: 100vh;
+  justify-items: center;
+  width: 100vw;
 }
 
 .loadingContainer {
