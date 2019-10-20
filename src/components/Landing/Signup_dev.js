@@ -226,7 +226,8 @@ class Signup extends PureComponent {
       lang,
       refer,
       aff,
-      history
+      history,
+      toast
     } = this.props;
 
     let {
@@ -289,6 +290,7 @@ class Signup extends PureComponent {
                       ErrorHandler={ErrorHandler}
                       history={history}
                       lang={lang}
+                      toast={toast}
                     />
                     <div className="form terms">
                       <span onClick={() => this.testCreateUser(createUser)}>

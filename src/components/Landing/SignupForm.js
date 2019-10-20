@@ -4,6 +4,7 @@ import DatePicker from "../common/DatePicker";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
 import isEmpty from "../../utils/isEmpty.js";
+import Tooltip from "../common/Tooltip";
 
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
@@ -37,6 +38,7 @@ class SignupForm extends Component {
     isValid: false,
     errors: {}
   };
+
   shouldComponentUpdate(nextProps, nextState) {
     const {
       username,
@@ -72,13 +74,11 @@ class SignupForm extends Component {
   componentWillUnmount() {
     this.mounted = false;
   }
-  setValue = ({ name, value }) => {
+  setValue = ({ name, value, dontVer }) => {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
-        if (!isEmpty(this.state.errors)) {
+        if (!dontVer) {
           this.validateForm();
-        } else {
-          this.props.setFormValues(this.state);
         }
       });
     }
@@ -94,18 +94,18 @@ class SignupForm extends Component {
       }
     } catch (e) {
       let errors = { [e.path]: e.message };
-
+      // if (!this.props.toast.isActive("pleasefillin")) {
+      //   this.props.toast.error(this.props.t("pleasefillin"), {
+      //     toastId: "pleasefillin"
+      //   });
+      // }
       this.setState({ isValid: false, errors });
       return false;
     }
   };
 
   InputFeedback = error =>
-    error ? (
-      <div className="input-feedback" style={{ color: "red" }}>
-        {error}
-      </div>
-    ) : null;
+    error ? <div className="input-feedback">{error}</div> : null;
 
   render() {
     const { fbResolve, handleFBReturn, t, history, lang } = this.props;
@@ -130,6 +130,13 @@ class SignupForm extends Component {
               placeholder={t("userLbl")}
               type="text"
               onChange={e => {
+                this.setValue({
+                  name: "username",
+                  value: e.target.value,
+                  dontVer: true
+                });
+              }}
+              onBlur={e => {
                 this.setValue({
                   name: "username",
                   value: e.target.value
@@ -210,8 +217,12 @@ class SignupForm extends Component {
                 <span />
                 <b>{t("coupleBox")}</b>
               </label>
+              <Tooltip title={t("cplsmsg")} placement="left-start">
+                <span className="tip" />
+              </Tooltip>{" "}
             </div>
           </div>
+
           <SignupButton
             disabled={!isValid}
             fbResolve={fbResolve}
@@ -221,10 +232,14 @@ class SignupForm extends Component {
             t={t}
             lang={lang}
           />
-          <div className="terms">
+
+          <div className="disclaim">
             {t(
               "This site uses your Phone Number to Authenticate your account ONLY"
             )}
+            <Tooltip title={t("phonemsg")} placement="left-start">
+              <span className="tip" />
+            </Tooltip>
           </div>
           <div className="terms">
             {t("signupMsg")}

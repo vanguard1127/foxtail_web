@@ -142,9 +142,7 @@ class UploadComponent extends PureComponent {
                 <img
                   className="img-box"
                   src={file.url}
-                  onLoad={() => {
-                    setTimeout(this.switchLoader, 1000);
-                  }}
+                  onLoad={this.switchLoader}
                   alt=""
                 />
                 <div className="btns">

@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-import { LOGIN } from "./queries";
+import gql from "graphql-tag";
+
+const LOGIN = gql`
+  mutation($phone: String!) {
+    login(phone: $phone) {
+      token
+      access
+    }
+  }
+`;
+
 class DevTools extends Component {
   state = { phone: "" };
   handleLogin = login => {

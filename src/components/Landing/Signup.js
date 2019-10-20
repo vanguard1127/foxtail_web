@@ -110,13 +110,13 @@ class Signup extends PureComponent {
       lang,
       refer,
       aff,
-      history
+      history,
+      toast
     } = this.props;
 
     let {
       csrf,
       code,
-      phone,
       username,
       email,
       dob,
@@ -158,6 +158,7 @@ class Signup extends PureComponent {
                 ErrorHandler={ErrorHandler}
                 history={history}
                 lang={lang}
+                toast={toast}
               />
             </div>
           );

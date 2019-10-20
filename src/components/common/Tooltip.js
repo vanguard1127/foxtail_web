@@ -6,7 +6,7 @@ Tooltip.defaultProps = {
 };
 const StyledTooltip = withStyles({
   tooltip: {
-    fontSize: "15px",
+    fontSize: "15px"
   }
 })(Tooltip);
 

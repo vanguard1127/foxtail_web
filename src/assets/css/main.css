@@ -6509,6 +6509,20 @@ header.landing {
   left: 0;
 }
 
+section.landing .register-form form .form-content span.tip::before {
+  content: "\f29c";
+  font-family: "foxtail-icon";
+  color: #acacac;
+  font-size: 14px;
+}
+
+section.landing .register-form form .form-content span.tip {
+  float: right;
+  right:4px;
+}
+
+
+
 header.landing .logo {
   width: 117px;
   height: 72px;
@@ -7133,6 +7147,10 @@ section.landing .register-form form .form-content .submit {
   float: left;
 }
 
+section.landing .register-form form .form-content .input-feedback {
+  color: red;
+}
+
 section.landing .register-form form .form-content .submit .btn {
   width: 100%;
   height: 50px;
@@ -7158,6 +7176,7 @@ section.landing .register-form form .form-content .submit .btn:hover {
   transform: translateY(-1px);
 }
 
+section.landing .register-form form .form-content .disclaim,
 section.landing .register-form form .form-content .terms {
   width: 100%;
   display: block;
@@ -7167,6 +7186,10 @@ section.landing .register-form form .form-content .terms {
   color: #5a5a5a;
   letter-spacing: -0.3px;
   padding-top: 15px;
+}
+
+section.landing .register-form form .form-content .disclaim {
+  padding-left: 5px;
 }
 
 section.landing .register-form form .form-content .terms span {

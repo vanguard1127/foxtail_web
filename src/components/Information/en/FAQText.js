@@ -54,9 +54,10 @@ const FAQ = () => {
           </p>
           <p>
             Your name isn’t required to use foxtail but you’ll need to use your
-            phone to login via Facebook’s phone login. Email is required to
-            communicate in Foxtail, this ensures you’ll get all messages (but
-            you can turn off emails).{" "}
+            phone to login via Facebook’s Account Kit login. Facebook, ONLY
+            verifies you are the owner of the phone and doesn't store your phone
+            number. Email is required to communicate in Foxtail, this ensures
+            you’ll get all messages (but you can turn off emails).{" "}
           </p>
           <p>
             It is IMPOSSIBLE for your personal information to be retrieved from
