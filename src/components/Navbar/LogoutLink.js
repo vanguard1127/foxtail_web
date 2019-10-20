@@ -10,11 +10,9 @@ class Logout extends Component {
     return false;
   }
   handleLogout = () => {
-    axios.get(
-      process.env.REACT_APP_HTTPS_URL +
-        "/offline?token=" +
-        localStorage.getItem("token")
-    );
+    const token = localStorage.getItem("token");
+    if (token)
+      axios.get(process.env.REACT_APP_HTTPS_URL + "/offline?token=" + token);
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     sessionStorage.clear();

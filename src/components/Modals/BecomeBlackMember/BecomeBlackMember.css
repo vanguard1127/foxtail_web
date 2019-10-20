@@ -124,7 +124,7 @@
   background-color: "#fff";
   text-transform: uppercase;
   animation-name: myAnimation;
-  animation-duration: 3000ms;
+  animation-duration: 4000ms;
   animation-fill-mode: forwards;
   width: 100%;
 }

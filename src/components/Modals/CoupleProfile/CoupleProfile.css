@@ -23,7 +23,7 @@
   font-size: 14px;
   position: absolute;
   animation-name: myAnimation;
-  animation-duration: 3000ms;
+  animation-duration: 4000ms;
   animation-fill-mode: forwards;
   background-color: "#fff";
   top: 10px;

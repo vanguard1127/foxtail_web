@@ -55,7 +55,6 @@ export default class CustomDatePicker extends Component {
             dropdownMode="select"
             maxDate={date}
             locale="en"
-            withPortal
             onFocus={e => (e.target.readOnly = true)}
           />
         </div>
@@ -66,7 +65,6 @@ export default class CustomDatePicker extends Component {
           <DatePicker
             peekNextMonth
             showMonthDropdown
-            showYearDropdown
             showTimeSelect
             placeholderText={placeholder}
             selected={selectedDate && new Date(selectedDate)}

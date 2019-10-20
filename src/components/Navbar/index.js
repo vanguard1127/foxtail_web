@@ -86,15 +86,24 @@ class NavbarAuth extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    const token = localStorage.getItem("token");
     //I don't know why but we need both for it to work
     window.addEventListener("beforeunload", () => {
-      navigator.sendBeacon(
-        process.env.REACT_APP_HTTPS_URL +
-          "/offline?token=" +
-          localStorage.getItem("token")
-      );
+      if (token) {
+        navigator.sendBeacon(
+          process.env.REACT_APP_HTTPS_URL + "/offline?token=" + token
+        );
+      }
     });
-    window.addEventListener("unload", this.logData, false);
+    window.addEventListener(
+      "unload",
+      () => {
+        if (token) {
+          this.logData();
+        }
+      },
+      false
+    );
   }
 
   componentWillUnmount() {

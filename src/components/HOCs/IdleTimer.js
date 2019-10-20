@@ -81,13 +81,12 @@ class IdleTimer extends PureComponent {
   }
 
   handleLogout = () => {
-    axios.get(
-      process.env.REACT_APP_HTTPS_URL +
-        "/offline?token=" +
-        localStorage.getItem("token")
-    );
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios.get(process.env.REACT_APP_HTTPS_URL + "/offline?token=" + token);
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+    }
     sessionStorage.clear();
     this.destroy();
     //Causes console error but currently best option.
