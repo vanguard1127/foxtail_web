@@ -3,7 +3,6 @@ import * as yup from "yup";
 import DatePicker from "../common/DatePicker";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
-import isEmpty from "../../utils/isEmpty.js";
 import Tooltip from "../common/Tooltip";
 
 let date = new Date();

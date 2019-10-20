@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node src/index.js",
     "build": "webpack --config webpack.production.config.js",
-    "dev": "webpack-dev-server --config webpack.development.config.js --hot  --host 0.0.0.0",
+    "dev": "webpack-dev-server --config webpack.development.config.js --hot",
     "local": "webpack-dev-server --config webpack.local.config.js --hot",
     "deploytest": "npm run build && cd build && surge --domain foxtail.surge.sh",
     "lint": "eslint .",
