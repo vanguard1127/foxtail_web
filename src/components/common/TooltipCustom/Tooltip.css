@@ -1,0 +1,58 @@
+.tooltip {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  /* border-bottom: 1px dotted black; */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  max-width: 300px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 14px;
+  padding: 8px !important;
+  line-height: 1;
+  border: 0 !important;
+  min-height: 28px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip .tooltiptext-right {
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip .tooltiptext-left {
+  top: -5px;
+  right: 105%;
+}
+
+.tooltip .tooltiptext-top {
+  width: auto;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.tooltip .tooltiptext-bottom {
+  max-width: 300px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
