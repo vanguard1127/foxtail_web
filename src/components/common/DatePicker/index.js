@@ -75,6 +75,7 @@ export default class CustomDatePicker extends Component {
             timeCaption="time"
             {...p}
             withPortal
+            onFocus={e => (e.target.readOnly = true)}
           />
         </div>
       );

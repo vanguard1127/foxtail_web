@@ -11,7 +11,7 @@ class Tooltip extends Component {
   render() {
     const { placement, title, children } = this.props;
     return (
-      <div className={`tooltip`}>
+      <div className="tooltip">
         {children}
         <span className={`tooltiptext ${`tooltiptext-${placement}`}`}>
           {title}
