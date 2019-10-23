@@ -75,6 +75,6 @@ module.exports = {
       { from: "src/assets/manifest.json", to: "manifest.json" }
     ]),
     new CleanWebpackPlugin(),
-    new Dotenv({ path: "./.env.prod", defaults: true })
+    new Dotenv({ path: "./.env.stage", defaults: true })
   ]
 };
