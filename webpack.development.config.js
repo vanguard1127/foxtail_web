@@ -65,7 +65,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "Foxtail",
       template: "src/page-template.hbs",
-      description: "New site for alternative relationships",
+      description: "FREE | Private | 18+ Fun",
       filename: "index.html",
       favicon: "./src/assets/favicon.ico",
       manifest: "./src/assets/manifest.json"
