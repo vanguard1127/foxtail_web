@@ -49,7 +49,7 @@ module.exports = {
     ]
   },
   devServer: {
-    port: 1234,
+    port: process.env.PORT || 1234,
     contentBase: path.resolve(__dirname, "./build"),
     compress: true,
     index: "index.html",
