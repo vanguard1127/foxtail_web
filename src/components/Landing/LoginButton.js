@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE } from "../../queries";
+import FirebaseAuth from "./FirebaseAuth";
 import AccountKit from "react-facebook-account-kit";
 
 const initialState = {
@@ -14,6 +15,51 @@ class LoginButton extends PureComponent {
   }
   componentWillUnmount() {
     this.mounted = false;
+  }
+
+
+  
+  handleFirebaseReturn=({state,code}, fbResolve)=>{
+    if (this.mounted) {
+      const { ErrorHandler, history, ReactGA } = this.props;
+      this.setState(
+        {
+          csrf: state,
+          code
+        },
+        () => {
+          fbResolve()
+          .then(async ({ data }) => {
+            if (data.fbResolve === null) {
+              ReactGA.event({
+                category: "Login",
+                action: "Fail"
+              });
+              alert(t("noUserError") + ".");
+  
+              return;
+            } else {
+              ReactGA.event({
+                category: "Login",
+                action: "Success"
+              });
+              localStorage.setItem(
+                "token",
+                data.fbResolve.find(token => token.access === "auth").token
+              );
+              localStorage.setItem(
+                "refreshToken",
+                data.fbResolve.find(token => token.access === "refresh").token
+              );
+              this.props.history.push("/members");
+            }
+          })
+          .catch(res => {
+            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          });
+      }
+      );
+    }
   }
   handleFBReturn = ({ state, code }, fbResolve) => {
     if (this.mounted) {
@@ -60,7 +106,8 @@ class LoginButton extends PureComponent {
   };
   render() {
     const { csrf, code } = this.state;
-    const { t, lang } = this.props;
+    const { t, lang, ErrorHandler } = this.props;
+    const props=this.props;
 
     return (
       <Mutation
@@ -68,26 +115,18 @@ class LoginButton extends PureComponent {
         variables={{ csrf, code, isCreate: false }}
       >
         {fbResolve => {
-          return (
-            <AccountKit
-              appId="172075056973555" // Update this!
-              version="v1.1" // Version must be in form v{major}.{minor}
-              onResponse={resp => {
-                this.handleFBReturn(resp, fbResolve);
-              }}
-              csrf={"889306f7553962e44db6ed508b4e8266"} // Required for security
-              countryCode={"+1"} // eg. +60
-              phoneNumber={""} // eg. 12345678
-              emailAddress={"noreply@foxtailapp.com"} // eg. me@site.com
-              language={lang}
-            >
-              {p => (
-                <a {...p} className="login-btn">
+          return( <FirebaseAuth
+            csrf={"889306f7553962e44db6ed508b4e8266"}
+            phoneNumber={""} // eg. 12345678
+            language={lang}
+            ErrorHandler={ErrorHandler}
+            onResponse={this.handleFirebaseReturn}
+            fbResolve={fbResolve}
+          >
+            <a {...props} className="login-btn">
                   {t("loginBtn")}
                 </a>
-              )}
-            </AccountKit>
-          );
+          </FirebaseAuth>)
         }}
       </Mutation>
     );

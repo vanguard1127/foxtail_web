@@ -60,7 +60,7 @@ module.exports = {
   devtool: "cheap-module-source-map",
   plugins: [
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, "src/service-worker.js")
+      entry: path.join(__dirname, "src/sw.js")
     }),
     new HtmlWebpackPlugin({
       title: "Foxtail",
@@ -72,7 +72,9 @@ module.exports = {
     }),
     new CopyPlugin([
       { from: "src/assets/locales", to: "locales", toType: "dir" },
-      { from: "src/assets/manifest.json", to: "manifest.json" }
+      { from: "src/assets/manifest.json", to: "manifest.json" },
+      { from: "src/assets/icon-192.png", to: "icon-192.png" },
+      { from: "src/assets/icon-512.png", to: "icon-512.png" },
     ]),
     new CleanWebpackPlugin(),
     new Dotenv({ path: "./.env.prod", defaults: true })

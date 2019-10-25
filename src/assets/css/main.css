@@ -15,6 +15,14 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+main{
+  margin-top: 65px;
+}
+.landing + main{
+  margin-top: 0;
+  box-shadow: none;
+}
+
 /*---- GLOBAL ----*/
 .hidden-mobile {
   display: none;
@@ -65,6 +73,12 @@ header {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  box-shadow: 0 3px 2px -2px rgba(0,0,0,.3);
 }
 
 header .logo {
@@ -1988,7 +2002,7 @@ section.inbox {
   display: block;
   float: left;
   left: 0;
-  z-index: 100;
+  /*z-index: 100;*/
   height: calc(100vh - 128px);
   position: relative;
 }
@@ -3309,8 +3323,9 @@ section.go-events .header {
   padding: 10px 0;
   background: #ffffff;
   margin-bottom: 30px;
-  z-index: 999;
-  position: relative;
+  z-index: 1;
+  overflow: visible;
+  /*position: relative;*/
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
 }
 
@@ -5610,7 +5625,7 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 1002;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -6507,6 +6522,7 @@ header.landing {
   z-index: 100;
   top: 20px;
   left: 0;
+  box-shadow: none;
 }
 
 section.landing .register-form form .form-content span.tip::before {
@@ -7435,7 +7451,7 @@ section.login-modal .popup form {
   float: left;
   padding: 0;
   margin: 0;
-  overflow-y: auto;
+  /*overflow-y: auto;*/
 }
 
 section.login-modal .popup form .form-content {
@@ -7450,6 +7466,16 @@ section.login-modal .popup form .form-content .input {
   float: left;
   position: relative;
   margin-bottom: 10px;
+}
+
+section.login-modal.confirm-phone .popup span.head{
+  float: none!important;
+  width: auto;
+}
+
+section.login-modal.confirm-phone .popup form .form-content{
+  float: none!important;
+  width: auto;
 }
 
 .phoneText {
@@ -10178,4 +10204,31 @@ animation: CycleC 30s ease infinite;
   section.desires-popup .modal-popup .m-body .search {
     padding: 0 32px 0 32px;
   }
+}
+
+.react-tel-input {
+  font-family: 'Roboto',sans-serif;
+  font-size: 15px;
+  position: relative;
+  width: 100%;
+  height: 52px;
+  z-index: 9999;
+}
+
+.react-tel-input .flag-dropdown{
+  background: #e9ebec!important;
+  border-color: #e9ebec!important;
+}
+
+.react-tel-input .arrow{
+  border: unset!important;
+}
+
+.react-tel-input .arrow::after{
+  bottom: -12px;
+  right: -11px;
+}
+
+.react-tel-input .selected-flag{
+  padding-left: 5px!important;
 }

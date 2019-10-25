@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-// var ServiceWorkerWebpackPlugin = require("serviceworker-webpack-plugin");
+var ServiceWorkerWebpackPlugin = require("serviceworker-webpack-plugin");
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -61,6 +61,7 @@ module.exports = {
     }
   },
   plugins: [
+
     new HtmlWebpackPlugin({
       title: "Foxtail",
       template: "src/page-template.hbs",
@@ -74,9 +75,14 @@ module.exports = {
     }),
     new CopyPlugin([
       { from: "src/assets/locales", to: "locales", toType: "dir" },
-      { from: "src/assets/manifest.json", to: "manifest.json" }
+      { from: "src/assets/manifest.json", to: "manifest.json" },
+      { from: "src/assets/icon-192.png", to: "icon-192.png" },
+      { from: "src/assets/icon-512.png", to: "icon-512.png" },
     ]),
     new CleanWebpackPlugin(),
-    new Dotenv({ path: "./.env.prod", defaults: true })
+    new Dotenv({ path: "./.env.prod", defaults: true }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'src/sw.js'),
+  }),
   ]
 };
