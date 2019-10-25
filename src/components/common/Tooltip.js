@@ -2,7 +2,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
 
 Tooltip.defaultProps = {
-  enterTouchDelay: 50
+  enterTouchDelay: 10
 };
 const StyledTooltip = withStyles({
   tooltip: {

@@ -56,7 +56,8 @@ class EditCanvasImage extends PureComponent {
     const width = this.container.offsetWidth;
     const height = window.innerHeight - 56; // here also we've subtract topbar height
     //window.scrollTo(0, 1);
-    if (this.props.imageObject.type !== "image/jpeg") {
+    if (!this.props.imageObject) {
+      toast.error("Image upload error has occured please try again.");
       return;
     }
     this.setState({ width, height });
