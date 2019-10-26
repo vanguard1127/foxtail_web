@@ -4,8 +4,6 @@ import DatePicker from "../common/DatePicker";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
 import Tooltip from "../common/Tooltip";
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/dist/style.css'
 
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
@@ -109,7 +107,14 @@ class SignupForm extends Component {
     error ? <div className="input-feedback">{error}</div> : null;
 
   render() {
-    const { fbResolve, handleFirebaseReturn, t, history, lang,ErrorHandler } = this.props;
+    const {
+      fbResolve,
+      handleFirebaseReturn,
+      t,
+      history,
+      lang,
+      ErrorHandler
+    } = this.props;
 
     const {
       username,

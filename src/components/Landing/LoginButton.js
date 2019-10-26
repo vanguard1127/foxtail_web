@@ -17,9 +17,7 @@ class LoginButton extends PureComponent {
     this.mounted = false;
   }
 
-
-  
-  handleFirebaseReturn=({state,code}, fbResolve)=>{
+  handleFirebaseReturn = ({ state, code }, fbResolve) => {
     if (this.mounted) {
       const { ErrorHandler, history, ReactGA } = this.props;
       this.setState(
@@ -29,38 +27,38 @@ class LoginButton extends PureComponent {
         },
         () => {
           fbResolve()
-          .then(async ({ data }) => {
-            if (data.fbResolve === null) {
-              ReactGA.event({
-                category: "Login",
-                action: "Fail"
-              });
-              alert(t("noUserError") + ".");
-  
-              return;
-            } else {
-              ReactGA.event({
-                category: "Login",
-                action: "Success"
-              });
-              localStorage.setItem(
-                "token",
-                data.fbResolve.find(token => token.access === "auth").token
-              );
-              localStorage.setItem(
-                "refreshToken",
-                data.fbResolve.find(token => token.access === "refresh").token
-              );
-              this.props.history.push("/members");
-            }
-          })
-          .catch(res => {
-            this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-          });
-      }
+            .then(async ({ data }) => {
+              if (data.fbResolve === null) {
+                ReactGA.event({
+                  category: "Login",
+                  action: "Fail"
+                });
+                alert(t("noUserError") + ".");
+
+                return;
+              } else {
+                ReactGA.event({
+                  category: "Login",
+                  action: "Success"
+                });
+                localStorage.setItem(
+                  "token",
+                  data.fbResolve.find(token => token.access === "auth").token
+                );
+                localStorage.setItem(
+                  "refreshToken",
+                  data.fbResolve.find(token => token.access === "refresh").token
+                );
+                this.props.history.push("/members");
+              }
+            })
+            .catch(res => {
+              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+            });
+        }
       );
     }
-  }
+  };
   handleFBReturn = ({ state, code }, fbResolve) => {
     if (this.mounted) {
       if (!state || !code) {
@@ -107,7 +105,7 @@ class LoginButton extends PureComponent {
   render() {
     const { csrf, code } = this.state;
     const { t, lang, ErrorHandler } = this.props;
-    const props=this.props;
+    const props = this.props;
 
     return (
       <Mutation
@@ -115,18 +113,20 @@ class LoginButton extends PureComponent {
         variables={{ csrf, code, isCreate: false }}
       >
         {fbResolve => {
-          return( <FirebaseAuth
-            csrf={"889306f7553962e44db6ed508b4e8266"}
-            phoneNumber={""} // eg. 12345678
-            language={lang}
-            ErrorHandler={ErrorHandler}
-            onResponse={this.handleFirebaseReturn}
-            fbResolve={fbResolve}
-          >
-            <a {...props} className="login-btn">
-                  {t("loginBtn")}
-                </a>
-          </FirebaseAuth>)
+          return (
+            <FirebaseAuth
+              csrf={"889306f7553962e44db6ed508b4e8266"}
+              phoneNumber={""} // eg. 12345678
+              language={lang}
+              ErrorHandler={ErrorHandler}
+              onResponse={this.handleFirebaseReturn}
+              fbResolve={fbResolve}
+            >
+              <a {...props} className="login-btn">
+                {t("loginBtn")}
+              </a>
+            </FirebaseAuth>
+          );
         }}
       </Mutation>
     );
