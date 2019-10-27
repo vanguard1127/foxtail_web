@@ -215,7 +215,8 @@ const errorLink = onError(
             }
           );
           console.error(networkError);
-          window.location.replace("/uh-oh");
+          // @TODO Remove this and search for a better solution
+          //window.location.replace("/uh-oh");
         }
       }
     }
