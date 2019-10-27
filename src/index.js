@@ -52,7 +52,22 @@ import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
 
-// import * as serviceWorker from "./service-worker";
+import runtime from "serviceworker-webpack-plugin/lib/runtime";
+
+//the firebase auth kit
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
+var app = firebase.initializeApp({
+  apiKey: "AIzaSyB8634G6nHB3YGn7cfeTL-s4OQsQwF9TzQ",
+  authDomain: "foxtail-fde20.firebaseapp.com",
+  databaseURL: "https://foxtail-fde20.firebaseio.com",
+  projectId: "foxtail-fde20",
+  storageBucket: "foxtail-fde20.appspot.com",
+  messagingSenderId: "513031685453",
+  appId: "1:513031685453:web:2e76604e2cdacd6f71e304",
+  measurementId: "G-4RCTRH4S3S"
+});
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
@@ -198,7 +213,8 @@ const errorLink = onError(
             }
           );
           console.error(networkError);
-          window.location.replace("/uh-oh");
+          // @TODO Remove this and search for a better solution
+          //window.location.replace("/uh-oh");
         }
       }
     }
@@ -386,11 +402,10 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
-
-// if ("serviceWorker" in navigator) {
-//   if (process.env.NODE_ENV !== "production") {
-//     serviceWorker.unregister();
-//   } else {
-//     serviceWorker.register();
-//   }
-// }
+if ("serviceWorker" in navigator) {
+  if (process.env.NODE_ENV !== "production") {
+    //runtime.unregister();
+  } else {
+    runtime.register();
+  }
+}

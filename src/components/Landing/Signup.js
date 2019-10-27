@@ -75,6 +75,66 @@ class Signup extends PureComponent {
     }
   };
 
+  handleFirebaseReturn = ({ state, code }, fbResolve) => {
+    if (!state || !code) {
+      return;
+    }
+    if (this.mounted) {
+      const { ErrorHandler, history, ReactGA } = this.props;
+      this.setState(
+        {
+          csrf: state,
+          code
+        },
+        () => {
+          fbResolve()
+            .then(({ data }) => {
+              const { isCouple } = this.state;
+              if (data.fbResolve === null) {
+                ReactGA.event({
+                  category: "Signup",
+                  action: "Fail"
+                });
+                alert("Signup failed.");
+                return;
+              }
+              ReactGA.event({
+                category: "Signup",
+                action: "Success"
+              });
+              localStorage.setItem(
+                "token",
+                data.fbResolve.find(token => token.access === "auth").token
+              );
+              localStorage.setItem(
+                "refreshToken",
+                data.fbResolve.find(token => token.access === "refresh").token
+              );
+
+              if (isCouple) {
+                ReactGA.event({
+                  category: "Signup",
+                  action: "Couple"
+                });
+                history.push({
+                  pathname: "/settings",
+                  state: { couple: true, initial: true }
+                });
+              } else {
+                history.push({
+                  pathname: "/settings",
+                  state: { initial: true }
+                });
+              }
+            })
+            .catch(res => {
+              ErrorHandler.catchErrors(res.graphQLErrors);
+            });
+        }
+      );
+    }
+  };
+
   handleFBReturn = ({ state, code }, fbResolve) => {
     if (!state || !code) {
       return;
@@ -283,7 +343,7 @@ class Signup extends PureComponent {
                     </div>
                     <SignupForm
                       fbResolve={fbResolve}
-                      handleFBReturn={this.handleFBReturn}
+                      handleFirebaseReturn={this.handleFirebaseReturn}
                       setFormValues={this.setFormValues}
                       setBreadcrumb={setBreadcrumb}
                       t={t}
