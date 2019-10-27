@@ -62,9 +62,6 @@ class FirebaseAuth extends React.PureComponent {
   }
 
   render() {
-    /*if (!this.mounted) {
-      return null;
-    }*/
     return (
       <>
         {this.state.showPhoneDialog ? (

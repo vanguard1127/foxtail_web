@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE } from "../../queries";
 import FirebaseAuth from "./FirebaseAuth";
-import AccountKit from "react-facebook-account-kit";
 
 const initialState = {
   csrf: "",
@@ -19,7 +18,7 @@ class LoginButton extends PureComponent {
 
   handleFirebaseReturn = ({ state, code }, fbResolve) => {
     if (this.mounted) {
-      const { ErrorHandler, history, ReactGA } = this.props;
+      const { ReactGA } = this.props;
       this.setState(
         {
           csrf: state,
@@ -104,7 +103,7 @@ class LoginButton extends PureComponent {
   };
   render() {
     const { csrf, code } = this.state;
-    const { t, lang, ErrorHandler } = this.props;
+    const { t, lang, ErrorHandler, ReactGA } = this.props;
     const props = this.props;
 
     return (
