@@ -52,13 +52,11 @@ import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
 
-import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-
-
+import runtime from "serviceworker-webpack-plugin/lib/runtime";
 
 //the firebase auth kit
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 firebase.initializeApp({
   apiKey: "AIzaSyB8634G6nHB3YGn7cfeTL-s4OQsQwF9TzQ",
@@ -69,7 +67,7 @@ firebase.initializeApp({
   messagingSenderId: "513031685453",
   appId: "1:513031685453:web:2e76604e2cdacd6f71e304",
   measurementId: "G-4RCTRH4S3S"
- });
+});
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS
@@ -215,7 +213,8 @@ const errorLink = onError(
             }
           );
           console.error(networkError);
-          window.location.replace("/uh-oh");
+          // @TODO Remove this and search for a better solution
+          //window.location.replace("/uh-oh");
         }
       }
     }
@@ -406,7 +405,7 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
-if ('serviceWorker' in navigator) {
+if ("serviceWorker" in navigator) {
   if (process.env.NODE_ENV !== "production") {
     //runtime.unregister();
   } else {

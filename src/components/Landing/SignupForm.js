@@ -107,7 +107,14 @@ class SignupForm extends Component {
     error ? <div className="input-feedback">{error}</div> : null;
 
   render() {
-    const { fbResolve, handleFirebaseReturn, t, history, lang,ErrorHandler } = this.props;
+    const {
+      fbResolve,
+      handleFirebaseReturn,
+      t,
+      history,
+      lang,
+      ErrorHandler
+    } = this.props;
 
     const {
       username,

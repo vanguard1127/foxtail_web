@@ -6,7 +6,14 @@ import { countryCodeOptions } from "../../../docs/options";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 class ConfirmPhone extends PureComponent {
-  state = { text: "", code: "+1", vcode: "", sending:false, confirm:false, error:false };
+  state = {
+    text: "",
+    code: "+1",
+    vcode: "",
+    sending: false,
+    confirm: false,
+    error: false
+  };
   componentDidMount() {
     this.mounted = true;
   }
@@ -22,131 +29,188 @@ class ConfirmPhone extends PureComponent {
     }
   };
 
-  handleCodeChange=e=>{
-    if(this.mounted){
-      this.setState({vcode:e.target.value})
+  handleCodeChange = e => {
+    if (this.mounted) {
+      this.setState({ vcode: e.target.value });
     }
-  }
+  };
 
-  renderPhoneInput(){
-    const { close, t, ErrorHandler, token, history, lang, tReady, sendConfirmationMessage } = this.props;
+  renderPhoneInput() {
+    const {
+      close,
+      t,
+      ErrorHandler,
+      token,
+      history,
+      lang,
+      tReady,
+      sendConfirmationMessage
+    } = this.props;
     const { code, text } = this.state;
-    return ( 
+    return (
       <>
-    <span className="description">{t("enterphone")}</span>
-    <Select
-      onChange={this.handleChange}
-      defaultOptionValue={code}
-      options={countryCodeOptions}
-      className={"dropdown"}
-    />
+        <span className="description">{t("enterphone")}</span>
+        <Select
+          onChange={this.handleChange}
+          defaultOptionValue={code}
+          options={countryCodeOptions}
+          className={"dropdown"}
+        />
 
-    <div className="phoneText input">
-      <input
-        type="tel"
-        placeholder={t("phonenum")}
-        onChange={this.handleTextChange}
-        value={text}
-        autoFocus
-      />
-    </div>
+        <div className="phoneText input">
+          <input
+            type="tel"
+            placeholder={t("phonenum")}
+            onChange={this.handleTextChange}
+            value={text}
+            autoFocus
+          />
+        </div>
 
-    {this.state.error?<div className="input-feedback" style={{
-      float:"none",
-      clear:"both",
-      position:"relative",
-      top: "-10px"
-    }}>{this.state.error}</div>:''}
+        {this.state.error ? (
+          <div
+            className="input-feedback"
+            style={{
+              float: "none",
+              clear: "both",
+              position: "relative",
+              top: "-10px"
+            }}
+          >
+            {this.state.error}
+          </div>
+        ) : (
+          ""
+        )}
 
-    <div className="submit">
-      <ErrorHandler.ErrorBoundary>
-      <span className="color" onClick={()=>{
-            this.setState({
-              sending:true,
-              error:false,
-              confirm:false,
-            })
-            sendConfirmationMessage(code+text).then(()=>{
-              this.setState({
-                sending:false,
-                error:false,
-                confirm:true,
-              })
-            }).catch((err)=>{
-              this.setState({
-                sending:false,
-                error:err.message,
-              })
-            })          
-            
-          }}
-        >
-      {t("sendvcode")}
-    </span>
-      </ErrorHandler.ErrorBoundary>
-      <button className="border" onClick={() => close()}>
-                        Cancel
-                      </button>
-      </div></>);
+        <div className="submit">
+          <ErrorHandler.ErrorBoundary>
+            <span
+              className="color"
+              onClick={() => {
+                this.setState({
+                  sending: true,
+                  error: false,
+                  confirm: false
+                });
+                sendConfirmationMessage(code + text)
+                  .then(() => {
+                    this.setState({
+                      sending: false,
+                      error: false,
+                      confirm: true
+                    });
+                  })
+                  .catch(err => {
+                    this.setState({
+                      sending: false,
+                      error: err.message
+                    });
+                  });
+              }}
+            >
+              {t("sendvcode")}
+            </span>
+          </ErrorHandler.ErrorBoundary>
+          <button className="border" onClick={() => close()}>
+            Cancel
+          </button>
+        </div>
+      </>
+    );
   }
 
-  renderLoading(){
-return( <div style={{textAlign:"center"}}>
-<CircularProgress  /> </div>);
+  renderLoading() {
+    return (
+      <div style={{ textAlign: "center" }}>
+        <CircularProgress />{" "}
+      </div>
+    );
   }
 
-  renderCodeInput(){
-    const { close, t, ErrorHandler, token, history, lang, tReady, confirmPhone, onSuccess } = this.props;
+  renderCodeInput() {
+    const {
+      close,
+      t,
+      ErrorHandler,
+      token,
+      history,
+      lang,
+      tReady,
+      confirmPhone,
+      onSuccess
+    } = this.props;
     const { vcode } = this.state;
-    return (<>
-    <span className="description">{t("entercode")}</span>
-    <div className="input">
-      <input
-        type="text"
-        placeholder={t("vcode")}
-        onChange={this.handleCodeChange}
-        value={vcode}
-        autoFocus
-      />
-      {this.state.error?<div className="input-feedback">{this.state.error}</div>:''}
-    </div>
-    <div className="submit">
-    <ErrorHandler.ErrorBoundary>
-      <span className="color" onClick={()=>{
-         this.setState({
-          sending:true,
-          error:false,
-          confirm:true,
-        })
-        confirmPhone(vcode).then((result)=>{
-        
-          this.setState({
-            sending:false,
-            error:false,
-            confirm:true,
-          }, ()=>{
-            onSuccess(result)
-          })
-        }).catch((err)=>{
-          this.setState({
-            sending:false,
-            error:err.message,
-          })
-        })          
-        
-      }}>
-      {t("confirmphone")}
-      </span>
-      </ErrorHandler.ErrorBoundary>
-    <button className="border" onClick={() => close()}>
-                        Cancel
-                      </button>
-                      </div>
-    </>)
+    return (
+      <>
+        <span className="description">{t("entercode")}</span>
+        <div className="input">
+          <input
+            type="text"
+            placeholder={t("vcode")}
+            onChange={this.handleCodeChange}
+            value={vcode}
+            autoFocus
+          />
+          {this.state.error ? (
+            <div className="input-feedback">{this.state.error}</div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="submit">
+          <ErrorHandler.ErrorBoundary>
+            <span
+              className="color"
+              onClick={() => {
+                this.setState({
+                  sending: true,
+                  error: false,
+                  confirm: true
+                });
+                confirmPhone(vcode)
+                  .then(result => {
+                    this.setState(
+                      {
+                        sending: false,
+                        error: false,
+                        confirm: true
+                      },
+                      () => {
+                        onSuccess(result);
+                      }
+                    );
+                  })
+                  .catch(err => {
+                    this.setState({
+                      sending: false,
+                      error: err.message
+                    });
+                  });
+              }}
+            >
+              {t("confirmphone")}
+            </span>
+          </ErrorHandler.ErrorBoundary>
+          <button className="border" onClick={() => close()}>
+            Cancel
+          </button>
+        </div>
+      </>
+    );
   }
 
   render() {
-    const { close, t, ErrorHandler, token, history, lang, tReady, sendConfirmationMessage } = this.props;
+    const {
+      close,
+      t,
+      ErrorHandler,
+      token,
+      history,
+      lang,
+      tReady,
+      sendConfirmationMessage
+    } = this.props;
     const { code, text } = this.state;
     if (!tReady) {
       return null;
@@ -161,16 +225,16 @@ return( <div style={{textAlign:"center"}}>
                 <a className="close" onClick={() => close()} />
                 <form>
                   <div className="form-content">
-                    {(this.state.sending)?this.renderLoading()
-                   :
-                    <div>
-                      {(this.state.confirm)?this.renderCodeInput():this.renderPhoneInput()}
-                   
-                     
-                    </div>
-                    }
+                    {this.state.sending ? (
+                      this.renderLoading()
+                    ) : (
+                      <div>
+                        {this.state.confirm
+                          ? this.renderCodeInput()
+                          : this.renderPhoneInput()}
+                      </div>
+                    )}
                   </div>
-                  
                 </form>
               </div>
             </div>

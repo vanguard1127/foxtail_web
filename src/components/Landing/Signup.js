@@ -42,7 +42,7 @@ class Signup extends PureComponent {
     }
   };
 
-  handleFirebaseReturn=(result, fbResolve)=>{
+  handleFirebaseReturn = (result, fbResolve) => {
     if (this.mounted) {
       const { ErrorHandler, history, ReactGA } = this.props;
       this.setState(
@@ -97,7 +97,7 @@ class Signup extends PureComponent {
         }
       );
     }
-  }
+  };
 
   handleFBReturn = ({ state, code }, fbResolve) => {
     if (!state || !code) {
