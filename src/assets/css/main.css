@@ -6702,7 +6702,7 @@ section.landing .left {
   float: left;
   position: relative;
   top: 160px;
-  z-index: 1;
+  z-index: 9999;
 }
 
 section.landing .left .welcome-text {
@@ -7328,6 +7328,10 @@ section.login-modal {
   visibility: hidden;
   display: flex;
   flex-direction: column;
+}
+
+section.login-modal .container{
+  z-index: 1;
 }
 
 section.login-modal.verifications {
@@ -9010,10 +9014,12 @@ section.not-found span.description {
   }
   section.landing .left {
     top: 175px;
+    z-index: 0;
   }
 
   section.landing .register-form {
     top: 200px;
+    z-index: 0;
   }
 
   section.landing .left .welcome-text h1 {

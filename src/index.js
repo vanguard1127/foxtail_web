@@ -60,7 +60,7 @@ import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
-var app = firebase.initializeApp({
+firebase.initializeApp({
   apiKey: "AIzaSyB8634G6nHB3YGn7cfeTL-s4OQsQwF9TzQ",
   authDomain: "foxtail-fde20.firebaseapp.com",
   databaseURL: "https://foxtail-fde20.firebaseio.com",
