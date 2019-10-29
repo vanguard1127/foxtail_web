@@ -97,9 +97,9 @@ class Landing extends PureComponent {
                         <LoginButton
                           t={t}
                           history={history}
-                          ErrorHandler={ErrorHandler}
+                          errorhandler={ErrorHandler}
                           lang={lang}
-                          ReactGA={ReactGA}
+                          reactga={ReactGA}
                         />
                       </ErrorHandler.ErrorBoundary>
                     </span>
@@ -136,9 +136,9 @@ class Landing extends PureComponent {
                           <LoginButton
                             t={t}
                             history={history}
-                            ErrorHandler={ErrorHandler}
+                            errorhandler={ErrorHandler}
                             lang={lang}
-                            ReactGA={ReactGA}
+                            reactga={ReactGA}
                           />
                         </ErrorHandler.ErrorBoundary>
                       </div>

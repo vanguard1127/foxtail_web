@@ -18,7 +18,7 @@ class LoginButton extends PureComponent {
 
   handleFirebaseReturn = ({ state, code }, fbResolve) => {
     if (this.mounted) {
-      const { ReactGA } = this.props;
+      const { reactga } = this.props;
       this.setState(
         {
           csrf: state,
@@ -28,7 +28,7 @@ class LoginButton extends PureComponent {
           fbResolve()
             .then(async ({ data }) => {
               if (data.fbResolve === null) {
-                ReactGA.event({
+                reactga.event({
                   category: "Login",
                   action: "Fail"
                 });
@@ -36,7 +36,7 @@ class LoginButton extends PureComponent {
 
                 return;
               } else {
-                ReactGA.event({
+                reactga.event({
                   category: "Login",
                   action: "Success"
                 });
@@ -63,7 +63,7 @@ class LoginButton extends PureComponent {
       if (!state || !code) {
         return null;
       }
-      const { t, ReactGA } = this.props;
+      const { t, reactga } = this.props;
 
       this.setState({
         csrf: state,
@@ -73,7 +73,7 @@ class LoginButton extends PureComponent {
       fbResolve()
         .then(async ({ data }) => {
           if (data.fbResolve === null) {
-            ReactGA.event({
+            reactga.event({
               category: "Login",
               action: "Fail"
             });
@@ -81,7 +81,7 @@ class LoginButton extends PureComponent {
 
             return;
           } else {
-            ReactGA.event({
+            reactga.event({
               category: "Login",
               action: "Success"
             });
@@ -103,9 +103,8 @@ class LoginButton extends PureComponent {
   };
   render() {
     const { csrf, code } = this.state;
-    const { t, lang, ErrorHandler, ReactGA } = this.props;
+    const { t, lang, errorhandler } = this.props;
     const props = this.props;
-
     return (
       <Mutation
         mutation={FB_RESOLVE}
@@ -117,11 +116,11 @@ class LoginButton extends PureComponent {
               csrf={"889306f7553962e44db6ed508b4e8266"}
               phoneNumber={""} // eg. 12345678
               language={lang}
-              ErrorHandler={ErrorHandler}
+              ErrorHandler={errorhandler}
               onResponse={this.handleFirebaseReturn}
               fbResolve={fbResolve}
             >
-              <a {...props} className="login-btn">
+              <a className="login-btn">
                 {t("loginBtn")}
               </a>
             </FirebaseAuth>
