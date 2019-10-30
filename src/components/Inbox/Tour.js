@@ -23,7 +23,7 @@ class InboxTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        this.setState({ redirect: true }));
+        this.setState({ redirect: true });
         //window.location.reload();
       })
       .catch(res => {
@@ -109,9 +109,9 @@ class InboxTour extends PureComponent {
     }
 
     const { redirect } = this.state;
-    
+
     if (redirect) {
-      return <Redirect to='/'/>;
+      return <Redirect to="/" />;
     }
 
     return (
