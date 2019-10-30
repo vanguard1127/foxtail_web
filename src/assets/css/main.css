@@ -11,7 +11,7 @@ html {
 
 body {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -152,7 +152,8 @@ header ul.menu li:nth-child(2) a::before {
   top: 0px;
 }
 
-header ul.menu li.active a::before {
+header ul.menu li a.active::before,
+header ul.menu li a.active div::before {
   background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
   background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
   background-image: linear-gradient(to left, #f70016 7%, #5f00a4 100%);
@@ -161,7 +162,7 @@ header ul.menu li.active a::before {
   display: inline;
 }
 
-header ul.menu li.active a {
+header ul.menu li a.active {
   color: #cf003c !important;
 }
 
@@ -201,6 +202,19 @@ header .function .inbox span.icon::before {
   color: #d6dde4;
   font-size: 24px;
   padding-right: 10px;
+}
+
+
+header .function .active .inbox span.text{
+  color: #cf003c !important;
+}
+
+header .function .active .inbox span.icon::before{
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
 }
 
 header .function .inbox span.icon.blink::before {
@@ -7402,6 +7416,7 @@ section.login-modal.black .popup.full {
 section.login-modal.create-event .popup form,
 section.login-modal.rules .popup form {
   max-height: 70vh;
+  overflow: auto;
 }
 
 section.login-modal.couples .popup.full .form-content,
@@ -10258,4 +10273,8 @@ div.calender{
 }
 .couple-choose {
   margin-top: 15px;
+}
+
+.ReactModalPortal>div{
+  z-index: 9999!important;
 }
