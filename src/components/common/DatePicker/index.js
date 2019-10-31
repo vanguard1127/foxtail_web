@@ -56,7 +56,6 @@ export default class CustomDatePicker extends Component {
             maxDate={date}
             locale="en"
             onFocus={e => (e.target.readOnly = true)}
-            popperPlacement="top"
           />
         </div>
       );

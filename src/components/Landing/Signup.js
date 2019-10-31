@@ -42,7 +42,7 @@ class Signup extends PureComponent {
     }
   };
 
-  handleFirebaseReturn = (result, fbResolve) => {
+  handleFirebaseReturn = ({ state, code }, fbResolve) => {
     if (this.mounted) {
       const { ErrorHandler, history, ReactGA } = this.props;
       this.setState(
