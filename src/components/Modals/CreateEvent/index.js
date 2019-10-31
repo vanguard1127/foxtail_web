@@ -77,7 +77,7 @@ class CreateEvent extends Component {
     showDesiresPopup: false,
     isImageAlt: false,
     removeCurrentImage: this.props.updateEventProps
-      ? !!this.props.updateEventProps.image
+      ? this.props.updateEventProps.image
       : false,
     setOlderImage: false,
     ...this.props.updateEventProps

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import Signup from "./Signup";
+import Signup from "./Signup_dev";
 import LoginButton from "./LoginButton";
 import withAuth from "../HOCs/withAuth";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
@@ -16,16 +16,27 @@ import { withTranslation } from "react-i18next";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
+import * as firebase from "firebase/app";
 
 class Landing extends PureComponent {
-  state = {
-    resetPhoneVisible: false,
-    token: null,
-    tooltip: false,
-    showContactModal: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      resetPhoneVisible: false,
+      token: null,
+      tooltip: false,
+      showContactModal: false
+    };
+  }
 
   componentDidMount() {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+      "recaptcha-container",
+      {
+        size: "invisible"
+        // other options
+      }
+    );
     document.title = "Foxtail";
   }
 
@@ -65,10 +76,10 @@ class Landing extends PureComponent {
         }
       }
     }
-
     return (
       <>
         <header className="landing">
+          <div id="recaptcha-container" style={{ display: "none" }}></div>
           <div className="container">
             <div className="col-md-12">
               <div className="row">
@@ -86,9 +97,9 @@ class Landing extends PureComponent {
                         <LoginButton
                           t={t}
                           history={history}
-                          ErrorHandler={ErrorHandler}
+                          errorhandler={ErrorHandler}
                           lang={lang}
-                          ReactGA={ReactGA}
+                          reactga={ReactGA}
                         />
                       </ErrorHandler.ErrorBoundary>
                     </span>
@@ -125,9 +136,9 @@ class Landing extends PureComponent {
                           <LoginButton
                             t={t}
                             history={history}
-                            ErrorHandler={ErrorHandler}
+                            errorhandler={ErrorHandler}
                             lang={lang}
-                            ReactGA={ReactGA}
+                            reactga={ReactGA}
                           />
                         </ErrorHandler.ErrorBoundary>
                       </div>
