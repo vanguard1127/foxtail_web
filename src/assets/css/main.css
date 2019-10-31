@@ -214,7 +214,7 @@ header .function .active .inbox span.icon::before{
   background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
   background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; 
+  -webkit-text-fill-color: transparent;
 }
 
 header .function .inbox span.icon.blink::before {
@@ -4752,13 +4752,20 @@ section.settings .page {
   width: 100%;
   display: block;
   float: left;
-  background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
-  padding: 30px;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   position: relative;
 }
 
-section.settings .page.mtop {
+section.settings .page-section {
+  width: 100%;
+  display: block;
+  float: left;
+  background: #ffffff;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  padding: 30px;
+  position: relative;
   margin-top: 15px;
 }
 
@@ -4786,6 +4793,7 @@ section.settings .message {
   animation-iteration-count: infinite;
   display: flex;
   justify-content: center;
+  margin-top: 25px;
   margin-bottom: 25px;
 }
 
@@ -9190,7 +9198,7 @@ section.not-found span.description {
     visibility: hidden;
   }
 
-  section.settings .page.mtop {
+  section.settings .page-section.mtop:nth-child(1) {
     margin-top: 0;
   }
 
@@ -9865,7 +9873,7 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   align-items: center;
   height: 100vh;
   justify-items: center;
-  width: 100vw; 
+  width: 100vw;
 
   /** Added by @ashutoshpw **/
   /**display: flex;
@@ -10265,14 +10273,14 @@ animation: CycleC 30s ease infinite;
   padding-left: 5px!important;
 }
 /** Added by @ashutoshpw **/
-div.register-form div.dropdown{
+div.register-form div.form-fields div.dropdown{
   margin-top: 18px;
   margin-bottom: 0px!important;
 }
-div.register-form div.calender{
+div.register-form div.form-fields div.calender{
   margin-bottom: 0px!important;
 }
-div.register-form .couple-choose {
+div.register-form div.form-fields .couple-choose {
   margin-top: 15px;
 }
 

@@ -130,102 +130,104 @@ class SignupForm extends Component {
     return (
       <form>
         <div className="form-content">
-          <div className="input username">
-            <input
-              aria-label="username"
-              placeholder={t("userLbl")}
-              type="text"
-              onChange={e => {
-                this.setValue({
-                  name: "username",
-                  value: e.target.value,
-                  dontVer: true
-                });
-              }}
-              onBlur={e => {
-                this.setValue({
-                  name: "username",
-                  value: e.target.value
-                });
-              }}
-              value={username}
-            />
-            {this.InputFeedback(t(errors.username))}
-          </div>
-          <div className="input email">
-            <input
-              aria-label="email"
-              placeholder={t("emailLbl")}
-              type="email"
-              onChange={e => {
-                this.setValue({
-                  name: "email",
-                  value: e.target.value
-                });
-              }}
-              value={email}
-            />
-            {this.InputFeedback(t(errors.email))}
-          </div>
-          <DatePicker
-            value={dob}
-            onChange={e => {
-              this.setValue({
-                name: "dob",
-                value: e
-              });
-            }}
-            t={t}
-            type="birthday"
-          />
-          {this.InputFeedback(t(errors.dob))}
-          <Dropdown
-            value={gender}
-            type={"gender"}
-            onChange={e => {
-              this.setValue({
-                name: "gender",
-                value: e.value
-              });
-            }}
-            placeholder={t("common:Sex") + ":"}
-            lang={lang}
-          />
-          {this.InputFeedback(t(errors.gender))}
-
-          <Dropdown
-            value={interestedIn}
-            type={"interestedIn"}
-            onChange={el => {
-              this.setValue({
-                name: "interestedIn",
-                value: el.map(e => e.value)
-              });
-            }}
-            placeholder={t("common:Interested") + ":"}
-            lang={lang}
-          />
-          {this.InputFeedback(t(errors.interestedIn))}
-          <div className="couple-choose">
-            <div className="select-checkbox">
+          <div className="form-fields">
+            <div className="input username">
               <input
-                type="checkbox"
-                id="cbox"
-                checked={isCouple}
-                onChange={el => {
+                aria-label="username"
+                placeholder={t("userLbl")}
+                type="text"
+                onChange={e => {
                   this.setValue({
-                    name: "isCouple",
-                    value: el.target.checked
+                    name: "username",
+                    value: e.target.value,
+                    dontVer: true
                   });
                 }}
+                onBlur={e => {
+                  this.setValue({
+                    name: "username",
+                    value: e.target.value
+                  });
+                }}
+                value={username}
               />
-              <label htmlFor="cbox">
-                <span />
-                <b>{t("coupleBox")}</b>
-              </label>
-              <Tooltip title={t("cplsmsg")} placement="left-start">
-                <span className="tip" />
-              </Tooltip>{" "}
+              {this.InputFeedback(t(errors.username))}
+            </div>
+            <div className="input email">
+              <input
+                aria-label="email"
+                placeholder={t("emailLbl")}
+                type="email"
+                onChange={e => {
+                  this.setValue({
+                    name: "email",
+                    value: e.target.value
+                  });
+                }}
+                value={email}
+              />
+              {this.InputFeedback(t(errors.email))}
+            </div>
+            <DatePicker
+              value={dob}
+              onChange={e => {
+                this.setValue({
+                  name: "dob",
+                  value: e
+                });
+              }}
+              t={t}
+              type="birthday"
+            />
+            {this.InputFeedback(t(errors.dob))}
+            <Dropdown
+              value={gender}
+              type={"gender"}
+              onChange={e => {
+                this.setValue({
+                  name: "gender",
+                  value: e.value
+                });
+              }}
+              placeholder={t("common:Sex") + ":"}
+              lang={lang}
+            />
+            {this.InputFeedback(t(errors.gender))}
+
+            <Dropdown
+              value={interestedIn}
+              type={"interestedIn"}
+              onChange={el => {
+                this.setValue({
+                  name: "interestedIn",
+                  value: el.map(e => e.value)
+                });
+              }}
+              placeholder={t("common:Interested") + ":"}
+              lang={lang}
+            />
+            {this.InputFeedback(t(errors.interestedIn))}
+            <div className="couple-choose">
+              <div className="select-checkbox">
+                <input
+                  type="checkbox"
+                  id="cbox"
+                  checked={isCouple}
+                  onChange={el => {
+                    this.setValue({
+                      name: "isCouple",
+                      value: el.target.checked
+                    });
+                  }}
+                />
+                <label htmlFor="cbox">
+                  <span />
+                  <b>{t("coupleBox")}</b>
+                </label>
+                <Tooltip title={t("cplsmsg")} placement="left-start">
+                  <span className="tip" />
+                </Tooltip>{" "}
+              </div>
             </div>
           </div>
 
