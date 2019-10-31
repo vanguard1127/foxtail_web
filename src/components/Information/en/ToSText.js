@@ -15,8 +15,8 @@ const ToS = () => (
       <p>
         {" "}
         Welcome to FoxtailApp.com (“Foxtail”), owned, produced and operated by
-        LOV Inc. (“LOV”). Foxtail is a dating/social network for people curious
-        about exploring their sexuality. Unless explicitly stated otherwise, any
+        LOV Inc. (“LOV”). Foxtail is a social network for people curious about
+        exploring their sexuality. Unless explicitly stated otherwise, any
         current, updated and new products and services (“Products and
         Services”), including the addition of new properties, shall be subject
         to these General Terms and Conditions of Use (“Terms and Conditions”).{" "}

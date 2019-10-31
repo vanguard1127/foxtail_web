@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import Signup from "./Signup";
+import Signup from "./Signup_dev";
 import LoginButton from "./LoginButton";
 import withAuth from "../HOCs/withAuth";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
