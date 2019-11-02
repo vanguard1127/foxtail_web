@@ -82,7 +82,7 @@ class Modal extends Component {
                       style={{ height: "100vh", padding: "unset" }}
                     >
                       {showLoader && <Spinner />}
-                      <form>
+                      <form className="form">
                         <div className="form-content">
                           {children}
                           {description && (

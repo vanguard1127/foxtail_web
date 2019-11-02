@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+var OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -59,9 +59,6 @@ module.exports = {
   },
   devtool: "cheap-module-source-map",
   plugins: [
-    new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'src/sw.js'),
-  }),
     new HtmlWebpackPlugin({
       title: "Foxtail",
       template: "src/page-template.hbs",
@@ -77,6 +74,7 @@ module.exports = {
       { from: "src/assets/icon-512.png", to: "icon-512.png" },
     ]),
     new CleanWebpackPlugin(),
-    new Dotenv({ path: "./.env.local", defaults: true })
+    new Dotenv({ path: "./.env.local", defaults: true }),
+    new OfflinePlugin(),  
   ]
 };

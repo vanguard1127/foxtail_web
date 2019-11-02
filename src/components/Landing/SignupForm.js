@@ -128,7 +128,7 @@ class SignupForm extends Component {
     } = this.state;
 
     return (
-      <form>
+      <div className="form">
         <div className="form-content">
           <div className="input username">
             <input
@@ -254,7 +254,7 @@ class SignupForm extends Component {
             <span onClick={() => history.push("/privacy")}>{t("privacy")}</span>
           </div>
         </div>
-      </form>
+      </div>
     );
   }
 }
