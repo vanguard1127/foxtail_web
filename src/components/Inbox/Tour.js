@@ -4,7 +4,8 @@ import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import Spinner from "../common/Spinner";
 import CustomTour from "../common/CustomTour";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
+
 class InboxTour extends PureComponent {
   state = {
     isTourOpen: true,
@@ -22,7 +23,8 @@ class InboxTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        window.location.reload();
+        this.setState({ redirect: true });
+        //window.location.reload();
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -105,6 +107,13 @@ class InboxTour extends PureComponent {
         }
       ];
     }
+
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <Fragment>
         <section className="breadcrumb">

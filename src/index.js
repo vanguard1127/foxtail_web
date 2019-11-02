@@ -240,9 +240,6 @@ const Root = () => (
 );
 
 const Wrapper = withRouter(props => {
-  // setTimeout(() => {
-  //   window.scrollTo(0, 1);
-  // }, 1000);
   let location = props.location;
   if (location.pathname) {
     if (
