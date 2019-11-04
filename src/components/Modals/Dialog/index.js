@@ -50,6 +50,7 @@ class Dialog extends PureComponent {
     ) : null;
 
   render() {
+
     const {
       close,
       t,

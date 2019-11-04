@@ -249,7 +249,7 @@ class ConfirmPhone extends PureComponent {
             <div className="popup">
               <span className="head">{t("updphone")}</span>
               <a className="close" onClick={() => close()} />
-              <form>
+              <form className="form">
                 <div className="form-content">
                   <div className="submit">
                     <ErrorHandler.ErrorBoundary>

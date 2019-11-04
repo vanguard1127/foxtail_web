@@ -9690,6 +9690,10 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   right: 0;
 }
 
+.edit-photo-modal .popup form .form-content{
+  margin: 0!important;
+}
+
 .edit-photo-modal .popup form::-webkit-scrollbar{
   width: initial!important;
   height: initial!important;
@@ -10200,6 +10204,10 @@ animation: CycleC 30s ease infinite;
 .photo-editor {
   background-color: transparent !important;
   max-height: 100vh;
+}
+
+.photo-editor .form-content{
+  margin: 0!important;
 }
 
 .single-line{

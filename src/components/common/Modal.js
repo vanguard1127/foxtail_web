@@ -105,7 +105,7 @@ class Modal extends Component {
                   <div className={`${fullWidth ? "popup full" : "popup"}`}>
                     {!noHeader && <span className="head">{header}</span>}
                     {close && <a className="close" onClick={() => close()} />}
-                    <form>
+                    <form className="form">
                       <div className="form-content">
                         {children}
                         {description && (
