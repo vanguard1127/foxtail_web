@@ -402,6 +402,9 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
-
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
-OfflinePluginRuntime.install();
+if(process.env.NODE_ENV==='production'){
+  
+  OfflinePluginRuntime.install();
+
+}
