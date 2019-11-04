@@ -563,6 +563,9 @@ header .toggle {
   color: rgba(0, 0, 0, 0.8);
   margin-left: 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .invite-member .content .apply-content span {
@@ -2933,6 +2936,12 @@ section.profile .desires {
   z-index: 100;
   display: none;
   visibility: hidden;
+}
+
+section.profile .desires .list {
+  max-height: 30vh;
+  overflow-y: auto;
+  display: inline-block;width: 100%;
 }
 
 section.profile .desires.mobile {

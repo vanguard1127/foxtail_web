@@ -12,7 +12,6 @@ import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 
-
 class MembersList extends PureComponent {
   state = {
     skip: 0,
@@ -216,7 +215,9 @@ class MembersList extends PureComponent {
                 <img src={el.profilePic} alt="" />
               </div>
             </div>
-            <span className="username">{el.profileName}</span>
+            <span className="username" title={el.profileName}>
+              {el.profileName}
+            </span>
           </NavLink>
         </div>
       ))}
@@ -337,7 +338,7 @@ class MembersList extends PureComponent {
       t
     });
     return (
-      <div >
+      <div>
         {" "}
         {membersList}
         <div style={{ height: "2vh", backgroundColor: "#fff" }}>

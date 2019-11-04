@@ -92,6 +92,7 @@ class Landing extends PureComponent {
                 <div className="offset-md-3 col-md-5">
                   <div className="content">
                     <span className="mobilesubtitle">{t("common:stray")}</span>
+
                     <span className="login">
                       <ErrorHandler.ErrorBoundary>
                         <LoginButton
@@ -123,11 +124,12 @@ class Landing extends PureComponent {
                       <div className="welcome-text">
                         <h1>
                           <span className="landing-header">
-                            <span className="single-line">{t("free")}</span>
+                            {/* <span className="single-line">{t("free")}</span>
                             <span className="divider">|</span>
                             <span className="single-line">{t("private")}</span>
                             <span className="divider">|</span>
-                            <span className="single-line">18+ {t("fun")}</span>
+                            <span className="single-line">18+ {t("fun")}</span> */}
+                            ***BETA***
                           </span>
                         </h1>
                       </div>

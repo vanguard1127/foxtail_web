@@ -3,7 +3,7 @@ import * as yup from "yup";
 import DatePicker from "../common/DatePicker";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
-import Tooltip from "../common/Tooltip";
+import Tooltip from "../common/TooltipCustom/Tooltip";
 
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
