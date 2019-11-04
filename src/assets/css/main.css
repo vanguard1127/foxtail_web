@@ -4981,7 +4981,6 @@ input.location-search-input {
   position: absolute;
   top: 10px;
   left: 20px;
-  line-height: 53px;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0;
@@ -5021,7 +5020,7 @@ input.location-search-input {
   border: 1px solid #e9ebec;
   border-radius: 2px;
   height: 52px;
-  padding: 2px 20px 0 46px;
+  padding: 2px 20px 0 46px !important;
   font-family: "Roboto";
   color: #414141;
   font-size: 14px;

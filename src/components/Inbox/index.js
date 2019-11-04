@@ -90,18 +90,16 @@ class InboxPage extends Component {
   };
 
   handleRemoveSelf = removeSelf => {
-    const { refetch, history, t } = this.props;
     const { chatID } = this.state;
     ErrorHandler.setBreadcrumb("Remove Self from Chat:" + chatID);
     removeSelf()
-      .then(({ data }) => {
+      .then(() => {
         if (this.mounted) {
           this.props.ReactGA.event({
             category: "Chat",
             action: "Remove Self"
           });
-          refetch();
-          history.push("/inbox");
+          this.closeChat();
         }
       })
       .catch(res => {
