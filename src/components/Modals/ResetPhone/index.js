@@ -36,7 +36,7 @@ class ResetPhone extends PureComponent {
               <div className="popup">
                 <span className="head">{t("resetphone")}</span>
                 <a className="close" onClick={() => close()} />
-                <form>
+                <form className="form">
                   <div className="form-content">
                     <span className="description">{t("enterlast")}</span>
                     <Select

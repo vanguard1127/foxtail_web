@@ -52,7 +52,7 @@ import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
 
-import runtime from "serviceworker-webpack-plugin/lib/runtime";
+//import runtime from "serviceworker-webpack-plugin/lib/runtime";
 
 //the firebase auth kit
 import * as firebase from "firebase/app";
@@ -402,10 +402,6 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
-if ("serviceWorker" in navigator) {
-  if (process.env.NODE_ENV !== "production") {
-    //runtime.unregister();
-  } else {
-    runtime.register();
-  }
-}
+
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+OfflinePluginRuntime.install();

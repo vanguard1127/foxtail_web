@@ -3,7 +3,10 @@ import * as yup from "yup";
 import DatePicker from "../common/DatePicker";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
+<<<<<<< HEAD
 //import Tooltip from "../common/Tooltip";
+=======
+>>>>>>> dev
 import Tooltip from "../common/TooltipCustom/Tooltip";
 
 let date = new Date();
@@ -129,7 +132,7 @@ class SignupForm extends Component {
     } = this.state;
 
     return (
-      <form>
+      <div className="form">
         <div className="form-content">
           <div className="form-fields">
             <div className="input username">
@@ -257,7 +260,7 @@ class SignupForm extends Component {
             <span onClick={() => history.push("/privacy")}>{t("privacy")}</span>
           </div>
         </div>
-      </form>
+      </div>
     );
   }
 }

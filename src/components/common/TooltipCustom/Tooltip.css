@@ -20,9 +20,9 @@
   margin-left: -60px;
   opacity: 0;
   transition: opacity 0.3s;
-  font-size: 14px;
+  font-size: 16px;
   padding: 8px !important;
-  line-height: 1;
+  line-height: 25px;
   border: 0 !important;
   min-height: 28px;
 }

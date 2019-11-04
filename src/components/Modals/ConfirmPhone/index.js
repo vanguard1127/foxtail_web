@@ -223,7 +223,7 @@ class ConfirmPhone extends PureComponent {
               <div className="popup">
                 <span className="head">{t("confirmphone")}</span>
                 <a className="close" onClick={() => close()} />
-                <form>
+                <div className="form">
                   <div className="form-content">
                     {this.state.sending ? (
                       this.renderLoading()
@@ -235,7 +235,7 @@ class ConfirmPhone extends PureComponent {
                       </div>
                     )}
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
