@@ -15,16 +15,18 @@ class DesiresMobile extends Component {
       <ErrorBoundary>
         <div className="mobile desires">
           <div className="profile-head">{t("Desires")}</div>
-          <ul>
-            {desires.reduce(function(result, desire) {
-              result.push(
-                <li key={Math.random()} className="capitalize">
-                  {t(desire)}
-                </li>
-              );
-              return result;
-            }, [])}
-          </ul>
+          <div className="list">
+            <ul>
+              {desires.reduce(function(result, desire) {
+                result.push(
+                  <li key={Math.random()} className="capitalize">
+                    {t(desire)}
+                  </li>
+                );
+                return result;
+              }, [])}
+            </ul>
+          </div>
         </div>
       </ErrorBoundary>
     );
