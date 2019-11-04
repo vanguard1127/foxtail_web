@@ -4934,7 +4934,7 @@ input.location-search-input {
 .page .form .content .item .input input:focus + label::before {
   line-height: 25px;
   font-size: 12px;
-  top: 10px;
+  top: 0;
   padding-left: 1px;
 }
 
@@ -4979,7 +4979,7 @@ input.location-search-input {
 .page .form .content .item .input label::before {
   content: attr(title);
   position: absolute;
-  top: 10px;
+  top: 15px;
   left: 20px;
   font-size: 14px;
   font-weight: 400;
@@ -5832,7 +5832,7 @@ section.desires-popup {
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 99999999999999999;
   display: none;
   visibility: hidden;
 }
