@@ -5656,7 +5656,7 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1002;
+  z-index: 9999999999999;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -6877,7 +6877,7 @@ section.landing .register-form {
   border-radius: 2px;
   position: relative;
   top: 180px;
-  z-index: 999;
+  /*z-index: 999;*/
 }
 
 section.landing .register-form .head {
@@ -7354,7 +7354,7 @@ section.login-modal {
   background: rgba(41, 1, 10, 0.67);
   left: 0;
   top: 0;
-  z-index: 1200;
+  z-index: 9999999999999;
   /* padding:15% 0; */
   display: none;
   visibility: hidden;
@@ -9052,7 +9052,6 @@ section.not-found span.description {
 
   section.landing .register-form {
     top: 200px;
-    z-index: 999999999999;
   }
 
   section.landing .left .welcome-text h1 {
@@ -9454,7 +9453,7 @@ img {
 .tooltip {
   position: relative;
   display: inline-block;
-  z-index: 999;
+  z-index: 1;
 }
 
 .tooltip .tooltiptext {
@@ -9474,7 +9473,7 @@ img {
   z-index: 1;
   padding: 10px 20px !important;
   line-height: 2;
-  z-index: 99999999999;
+  z-index: 1;
 }
 
 .tooltip .tooltiptext div {
