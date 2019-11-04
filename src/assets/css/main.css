@@ -6877,6 +6877,7 @@ section.landing .register-form {
   border-radius: 2px;
   position: relative;
   top: 180px;
+  z-index: 999;
 }
 
 section.landing .register-form .head {
@@ -9051,7 +9052,7 @@ section.not-found span.description {
 
   section.landing .register-form {
     top: 200px;
-    z-index: 0;
+    z-index: 999999999999;
   }
 
   section.landing .left .welcome-text h1 {
@@ -9453,7 +9454,7 @@ img {
 .tooltip {
   position: relative;
   display: inline-block;
-  z-index: 99999999999;
+  z-index: 999;
 }
 
 .tooltip .tooltiptext {
