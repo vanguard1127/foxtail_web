@@ -104,19 +104,21 @@ class MessageList extends Component {
       },
       updateQuery: (prev, { subscriptionData }) => {
         const { newMessageSubscribe } = subscriptionData.data;
-
+        console.log("prev", prev, "new", newMessageSubscribe);
         if (!newMessageSubscribe) {
-          return prev;
+          return;
         }
 
-        if (prev.getMessages) {
+        if (prev && prev.getMessages) {
           prev.getMessages.messages = [
             newMessageSubscribe,
             ...prev.getMessages.messages
           ];
         } else {
-          prev.getMessages = {
-            messages: [newMessageSubscribe]
+          prev = {
+            getMessages: {
+              messages: [newMessageSubscribe]
+            }
           };
         }
 

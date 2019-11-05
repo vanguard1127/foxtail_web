@@ -55,16 +55,14 @@ class ProfilesContainer extends Component {
   componentDidMount() {
     this.mounted = true;
   }
+
   componentWillUnmount() {
-    this.clearSearchResults();
+    deleteFromCache({
+      cache: this.props.client.cache,
+      query: "searchProfiles"
+    });
     this.mounted = false;
   }
-
-  clearSearchResults = () => {
-    const { cache } = this.props.client;
-    deleteFromCache({ cache, query: "searchProfiles" });
-    deleteFromCache({ cache, query: "getInbox" });
-  };
 
   setMaxLikeDlgVisible = () => {
     this.props.ErrorHandler.setBreadcrumb("Max Like Dialog Toggled:");
