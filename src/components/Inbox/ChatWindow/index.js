@@ -44,7 +44,6 @@ class ChatWindow extends PureComponent {
       isOwner,
       leaveDialog,
       lang,
-      subscribeToMore,
       fetchMore,
       ReactGA
     } = this.props;
@@ -83,7 +82,6 @@ class ChatWindow extends PureComponent {
               lang={lang}
               messages={currentChat.messages}
               fetchMore={fetchMore}
-              subscribeToMore={subscribeToMore}
             />
             <ChatPanel
               chatID={currentChat.id}

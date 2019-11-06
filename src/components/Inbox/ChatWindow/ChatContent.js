@@ -11,7 +11,6 @@ class ChatContent extends PureComponent {
       ErrorHandler,
       dayjs,
       lang,
-      subscribeToMore,
       fetchMore,
       messages,
       limit
@@ -31,7 +30,6 @@ class ChatContent extends PureComponent {
           t={t}
           messages={messages}
           fetchMore={fetchMore}
-          subscribeToMore={subscribeToMore}
           dayjs={dayjs}
           lang={lang}
           ErrorHandler={ErrorHandler}
