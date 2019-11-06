@@ -12,6 +12,7 @@ class AcctSettings extends Component {
     setting: "",
     successMsg: ""
   };
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state !== nextState || this.props.t !== nextProps.t) {
       return true;
@@ -86,14 +87,12 @@ class AcctSettings extends Component {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="verification-box">
-                <ChangePhoneBtn
-                  t={t}
-                  ErrorHandler={ErrorHandler}
-                  lang={lang}
-                  ReactGA={ReactGA}
-                />
-              </div>
+              <ChangePhoneBtn
+                t={t}
+                ErrorHandler={ErrorHandler}
+                lang={lang}
+                ReactGA={ReactGA}
+              />
             </div>
             <div className="col-md-6">
               <div className="verification-box">

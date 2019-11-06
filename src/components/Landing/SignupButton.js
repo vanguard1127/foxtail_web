@@ -1,5 +1,5 @@
 import React from "react";
-import FirebaseAuth from "./FirebaseAuth";
+import FirebaseAuth from "../common/FirebaseAuth";
 
 //POSIBLE BACKUP:https://github.com/floodfx/react-account-kit-web
 const SignupButton = ({

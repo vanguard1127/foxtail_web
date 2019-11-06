@@ -4035,6 +4035,8 @@ section.event-detail .header .info .report-con {
   position: absolute;
   right: 15px;
   bottom: 12px;
+  display: none;
+  visibility: hidden;
 }
 
 section.event-detail .header .info .report-con span.rep-text {
@@ -4985,7 +4987,7 @@ input.location-search-input {
   font-weight: 400;
   letter-spacing: 0;
   font-family: "Roboto Condensed";
-  color: #373737;
+  color: #8c909d;
   transition: 300ms all;
   -webkit-font-smoothing: antialiased;
   text-transform: none;
@@ -5033,6 +5035,11 @@ input.location-search-input {
   min-height: 120px;
   overflow-y: auto;
   padding-top: 8px;
+}
+
+.page .form .content .item .textarea textarea::placeholder{
+  color: #8c909d;
+  opacity: 1;
 }
 
 .page .form .content .item .textarea textarea:focus,
@@ -5398,7 +5405,7 @@ section.meet-filter .noUi-background {
 }
 
 section.meet-filter .range-con {
-  padding: 7px 0 9px 0;
+  padding: 7px 0 9px 0 !important;
 }
 
 .noUi-horizontal .noUi-handle {
@@ -7501,7 +7508,6 @@ section.login-modal .popup .form .form-content .input {
   display: block;
   float: left;
   position: relative;
-  margin-bottom: 10px;
 }
 
 section.login-modal.confirm-phone .popup span.head{
@@ -7532,6 +7538,10 @@ section.login-modal .popup .form .form-content .input input {
   font-size: 14px;
   letter-spacing: -0.5px;
   font-weight: 400;
+}
+
+section.login-modal.create-event .popup .form .form-content .input input {
+  padding: 15px 20px 0 20px;
 }
 
 section.login-modal .popup .form .form-content .input textarea {
@@ -7636,6 +7646,10 @@ section.login-modal .popup .form .form-content .dropdown label {
 
 section.login-modal .popup .form .form-content .dropdown span {
   position: relative;
+}
+
+.popup .page .form .content .select_desires {
+  margin-bottom: 0px !important;
 }
 
 section.login-modal
@@ -7778,6 +7792,7 @@ section.login-modal .popup .form .form-content .submit button.color {
   font-weight: 700;
   color: #fff;
   margin-bottom: 15px;
+  margin-top: 5px;
 }
 
 section.login-modal .popup .form .form-content .submit span.border,
@@ -7840,6 +7855,7 @@ section.settings .rc-slider-handle {
 
 .rc-slider {
   z-index: 100;
+  padding: 15px 0 !important;
 }
 
 .select-list {
@@ -7890,10 +7906,6 @@ section.login-modal .popup form::-webkit-scrollbar-corner,
 
 .filepond--drop-label label {
   text-transform: none;
-}
-
-section.settings .select-container {
-  height: 60px !important;
 }
 
 .select-container label {
@@ -8970,7 +8982,8 @@ section.not-found span.description {
     padding-top: 12px;
   }
 
-  section.event-detail .header .info .share-event {
+  section.event-detail .header .info .share-event,
+  section.event-detail .header .info .report-con {
     display: inline-block;
     visibility: visible;
   }
@@ -10057,6 +10070,7 @@ animation: CycleC 30s ease infinite;
     display: flex;
     justify-content: flex-end;
   }
+
   .event-tool-mobile .share-event ul li {
     width: 35px;
     height: 35px;
@@ -10107,6 +10121,38 @@ animation: CycleC 30s ease infinite;
     content: "\f234";
   }
 
+  .event-tool-mobile span.report{
+    width: 35px;
+    height: 35px;
+    float: right;
+    border: 1px solid #c40148;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 1px;
+    transition: 0.3s all;
+    color: #c40148;
+    position: initial;
+    right: 16px;
+    top: 34px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.event-tool-mobile span.report::before {
+  content: "";
+  content: "\e808";
+  font-size: 15px;
+  font-family: "foxtail-icon";
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+}
+  .event-tool-mobile span.report::before {
+    content: "\e808";
+  }
+
+  .event-tool-mobile span.report:hover,
   .event-tool-mobile .share-event ul li:hover {
     background-color: #c40148;
     color: #fff;
@@ -10125,13 +10171,20 @@ animation: CycleC 30s ease infinite;
     letter-spacing: -0.3px;
     line-height: 35px;
   }
-  .event-tool-mobile ul li.report::before {
-    content: "\e808";
-    padding-left: 2px;
-  }
-  .event-tool-mobile .share-event {
+
+  .event-tool-mobile .share-event,.event-tool-mobile .report-con {
     display: flex;
   }
+
+  .event-tool-mobile .report-con span.rep-text {
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    color: #464648;
+    margin-right: 5px;
+    margin-left: 10px;
+    line-height: 35px;
+  }
+
 
   .event-tool-mobile .members-toggle.invite-event {
     top: 21px;

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE } from "../../queries";
-import FirebaseAuth from "./FirebaseAuth";
+import FirebaseAuth from "../common/FirebaseAuth";
 
 const initialState = {
   csrf: "",
@@ -104,7 +104,6 @@ class LoginButton extends PureComponent {
   render() {
     const { csrf, code } = this.state;
     const { t, lang, errorhandler } = this.props;
-    const props = this.props;
     return (
       <Mutation
         mutation={FB_RESOLVE}
@@ -120,9 +119,7 @@ class LoginButton extends PureComponent {
               onResponse={this.handleFirebaseReturn}
               fbResolve={fbResolve}
             >
-              <a className="login-btn">
-                {t("loginBtn")}
-              </a>
+              <a className="login-btn">{t("loginBtn")}</a>
             </FirebaseAuth>
           );
         }}
