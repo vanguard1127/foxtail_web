@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Waypoint } from "react-waypoint";
 import Message from "./Message.js";
 import _ from "lodash";
 import DateItem from "./DateItem";
 
-class MessageList extends PureComponent {
+class MessageList extends Component {
   constructor(props) {
     super(props);
     this.messagesEnd = React.createRef();
@@ -18,21 +18,20 @@ class MessageList extends PureComponent {
     fetching: false
   };
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (
-  //     this.props.messages.length !== nextProps.messages.length ||
-  //     this.state.hasMoreItems !== nextState.hasMoreItems ||
-  //     this.state.previousClientHeight !== nextState.previousClientHeight ||
-  //     this.state.previousScrollHeight !== nextState.previousScrollHeight ||
-  //     this.state.previousScrollTop !== nextState.previousScrollTop ||
-  //     this.state.dateWaypoints.length !== nextState.dateWaypoints.length ||
-  //     this.props.chatID !== nextProps.chatID ||
-  //     this.props.messages !== nextProps.messages
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.messages.length !== nextProps.messages.length ||
+      this.state.hasMoreItems !== nextState.hasMoreItems ||
+      this.state.previousClientHeight !== nextState.previousClientHeight ||
+      this.state.previousScrollHeight !== nextState.previousScrollHeight ||
+      this.state.previousScrollTop !== nextState.previousScrollTop ||
+      this.state.dateWaypoints.length !== nextState.dateWaypoints.length ||
+      this.props.chatID !== nextProps.chatID
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   componentDidMount() {
     this.mounted = true;
