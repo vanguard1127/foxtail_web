@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import LoadProfileImg from "../../../assets/img/elements/load-profile.png";
 
 class ProfilePic extends Component {
   shouldComponentUpdate() {
@@ -10,7 +9,6 @@ class ProfilePic extends Component {
     return (
       <div className="avatar">
         <img src={profilePic !== "" && profilePic} alt="" />
-        <img src={LoadProfileImg} alt="" />
       </div>
     );
   }

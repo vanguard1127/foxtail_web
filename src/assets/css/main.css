@@ -9528,7 +9528,8 @@ img {
 }
 
 .green-button-small:hover {
-  background-color: #00af49;
+  background-color: #00b94d !important;
+  border-color: #00b94d !important;
 }
 
 .capitalize {

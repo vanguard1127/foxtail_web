@@ -33,7 +33,8 @@ class EditCanvasImage extends PureComponent {
     imageHeight: 0,
     init_x: 0,
     init_y: 0,
-    isShowStickers: false
+    isShowStickers: false,
+    certChecked: false
   };
 
   componentDidMount() {
@@ -319,6 +320,14 @@ class EditCanvasImage extends PureComponent {
       this.setState({ isShowStickers: false });
   };
 
+  toggleCert = () => {
+    if (this.mounted) {
+      this.setState({
+        certChecked: !this.state.certChecked
+      });
+    }
+  };
+
   render() {
     const {
       konvaImageList,
@@ -332,7 +341,8 @@ class EditCanvasImage extends PureComponent {
       selectedShapeName,
       uploading,
       isShowStickers,
-      rotation
+      rotation,
+      certChecked
     } = this.state;
     const { t } = this.props;
     const Sticker = props => (
@@ -591,21 +601,35 @@ class EditCanvasImage extends PureComponent {
               Foxtail {t("Privacy Studio")}
             </span>
           </div>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleExportClick}
-              className="green-button-small"
-            >
-              {!uploading ? t("Save") : t("Uploading")}
-            </Button>
-            <Button
-              style={{ color: "white", marginLeft: "8px" }}
-              onClick={() => this.props.close()}
-            >
-              {t("Cancel")}
-            </Button>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              {certChecked ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleExportClick}
+                  className="green-button-small"
+                >
+                  {!uploading ? t("Save") : t("upload")}
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={this.toggleCert}
+                >
+                  {t(
+                    "I certify, I have explicit permission to post this image on Foxtail"
+                  )}
+                </Button>
+              )}
+              <Button
+                style={{ color: "white", marginLeft: "8px" }}
+                onClick={() => this.props.close()}
+              >
+                {t("Cancel")}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

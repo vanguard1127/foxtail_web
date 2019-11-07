@@ -164,6 +164,8 @@
   "Cannot invite yourself!": "Cannot invite yourself!",
   "Please wait for user to respond.": "Please wait for user to respond.",
   "Please confirm your email before contacting members.": "Please confirm your email before contacting members.",
+  "Max Daily Messages Reached!": "Max Daily Messages Reached!",
+  "Max Daily Likes Reached!": "Max Daily Likes Reached!",
   "Name may only contain letters.": "Name may only contain letters.",
   "Please keep name between 1 and 120 characters.": "Please keep name between 1 and 120 characters.",
   "Invalid email.": "Invalid email.",
@@ -246,6 +248,7 @@
   "NotInclude": "DO NOT Include",
   "Profile Picture Selector": "Profile Picture Selector",
   "Privacy Studio": "Privacy Studio",
+  "I certify, I have explicit permission to post this image on Foxtail": "I certify, I have explicit permission to post this image on Foxtail",
   "Email has been confirmed.": "Email has been confirmed.",
   "Email confirmation has been used or is expired, please go to your 'My Account' page to request another.": "Email confirmation has been used or is expired, please go to your 'My Account' page to request another.",
   "This link has expired please request again.": "This link has expired please request again."
