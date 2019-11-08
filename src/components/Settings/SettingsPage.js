@@ -650,7 +650,7 @@ class SettingsPage extends Component {
       history,
       ReactGA
     } = this.props;
-    console.log("POJKOOK", password);
+
     return (
       <Mutation
         mutation={UPDATE_SETTINGS}
