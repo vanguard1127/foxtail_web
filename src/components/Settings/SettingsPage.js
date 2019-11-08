@@ -35,7 +35,6 @@ class SettingsPage extends Component {
     this.isPhotoChanged = false;
   }
 
-  //TODO: Reduce this page more. test settings instad of reusing
   state = {
     distance: 100,
     distanceMetric: "mi",
@@ -78,6 +77,7 @@ class SettingsPage extends Component {
     profilePic: "",
     profilePicUrl: "",
     flashCpl: false,
+    ...this.props.settings,
     publicPhotoList: undefined,
     privatePhotoList: undefined,
     showModal: false,
@@ -87,9 +87,7 @@ class SettingsPage extends Component {
     okAction: null,
     errors: this.props.errors,
     isCouple: this.props.isCouple,
-    isInitial: this.props.isInitial,
-    password: undefined,
-    ...this.props.settings
+    isInitial: this.props.isInitial
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -243,6 +241,7 @@ class SettingsPage extends Component {
       });
     }
   };
+
   handleSubmit = (updateSettings, doRefetch) => {
     const { ErrorHandler, t, ReactGA } = this.props;
     const { isCouple, isInitial } = this.state;
@@ -651,7 +650,7 @@ class SettingsPage extends Component {
       history,
       ReactGA
     } = this.props;
-
+    console.log("POJKOOK", password);
     return (
       <Mutation
         mutation={UPDATE_SETTINGS}
@@ -910,7 +909,7 @@ class SettingsPage extends Component {
                                 lang={lang}
                                 isEmailOK={currentuser.isEmailOK}
                                 ReactGA={ReactGA}
-                                passEnabled={password}
+                                passEnabled={password !== null}
                               />
                               <DeactivateAcctBtn
                                 t={t}

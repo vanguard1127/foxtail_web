@@ -124,7 +124,7 @@ class AcctSettings extends Component {
               <span className="heading">{t("acctsetting")}</span>
             </div>
             <div className="col-md-6">
-              <div className="switch-con">
+              <div className="switch-con no-border">
                 <div className="sw-head">{t("2faenable")}:</div>
                 <div className="sw-btn">
                   <div className="switch">

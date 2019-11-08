@@ -5118,6 +5118,10 @@ input.location-search-input {
   border-top: 1px solid #e8e8e8;
 }
 
+.switch-con.no-border {
+  border: 0px;
+}
+
 .switch-con .sw-head {
   float: left;
   line-height: 33px;
