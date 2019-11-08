@@ -7510,6 +7510,11 @@ section.login-modal .popup .form .form-content .input {
   position: relative;
 }
 
+section.login-modal .popup .form .form-content .input.password{
+  margin-bottom: 10px;
+ }
+
+
 section.login-modal.confirm-phone .popup span.head{
   float: none!important;
   width: auto;
@@ -7789,6 +7794,15 @@ section.login-modal .popup .form .form-content .submit button.color {
   background-image: -webkit-linear-gradient(119deg, #f70016 0%, #5f00a4 100%);
   background-image: -o-linear-gradient(119deg, #f70016 0%, #5f00a4 100%);
   background-image: linear-gradient(209deg, #f70016 0%, #5f00a4 100%);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+section.login-modal .popup .form .form-content .submit span.disabled,
+section.login-modal .popup .form .form-content .submit button.disabled {
+  background-color:#767676;
   font-weight: 700;
   color: #fff;
   margin-bottom: 15px;

@@ -99,6 +99,7 @@
   "resetphone": "Reset Phone Login",
   "confirmphone": "Confirm Phone Number",
   "enterphone": "Enter your phone number",
+  "enable2fa": "Enable 2-Factor Authentication (optional but Recommended)",
   "updphone": "Update Phone Login",
   "sendvcode": "Send verification code",
   "entercode": "Enter the verification code",

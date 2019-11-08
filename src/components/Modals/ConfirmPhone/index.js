@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
+import * as yup from "yup";
 import ConfirmPhoneButton from "./ConfirmPhoneButton";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
@@ -7,19 +8,30 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 class ConfirmPhone extends PureComponent {
   state = {
-    text: "",
+    phoneNumber: "",
     code: "+1",
     vcode: "",
     sending: false,
     confirm: false,
-    error: false
+    errors: {},
+    password: "",
+    confirmpass: "",
+    isValid: true
   };
+
+  schema = yup.object().shape({
+    password: yup.string().max(30, "usernameLen"),
+    confirmpass: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+  });
+
   componentDidMount() {
     this.mounted = true;
   }
   handleTextChange = event => {
     if (this.mounted) {
-      this.setState({ text: event.target.value.replace(/\D/g, "") });
+      this.setState({ phoneNumber: event.target.value.replace(/\D/g, "") });
     }
   };
 
@@ -35,6 +47,44 @@ class ConfirmPhone extends PureComponent {
     }
   };
 
+  setValue = ({ name, value }) => {
+    if (this.mounted) {
+      this.setState({ [name]: value }, () => {
+        this.validateForm();
+      });
+    }
+  };
+
+  validateForm = async () => {
+    try {
+      if (this.mounted) {
+        const { password, confirmpass } = this.state;
+        await this.schema.validate({ password, confirmpass });
+        this.setState({ isValid: true, errors: {} });
+        return true;
+      }
+    } catch (e) {
+      let errors = { [e.path]: e.message };
+      this.setState({ isValid: false, errors });
+      return false;
+    }
+  };
+
+  InputFeedback = error =>
+    error ? (
+      <div
+        className="input-feedback"
+        style={{
+          float: "none",
+          clear: "both",
+          position: "relative",
+          color: "red"
+        }}
+      >
+        {error}
+      </div>
+    ) : null;
+
   renderPhoneInput() {
     const {
       close,
@@ -46,7 +96,15 @@ class ConfirmPhone extends PureComponent {
       tReady,
       sendConfirmationMessage
     } = this.props;
-    const { code, text } = this.state;
+    const {
+      code,
+      phoneNumber,
+      password,
+      confirmpass,
+      isValid,
+      errors
+    } = this.state;
+
     return (
       <>
         <span className="description">{t("enterphone")}</span>
@@ -56,44 +114,59 @@ class ConfirmPhone extends PureComponent {
           options={countryCodeOptions}
           className={"dropdown"}
         />
-
         <div className="phoneText input">
           <input
             type="tel"
             placeholder={t("phonenum")}
             onChange={this.handleTextChange}
-            value={text}
+            value={phoneNumber}
             autoFocus
           />
         </div>
-
-        {this.state.error ? (
-          <div
-            className="input-feedback"
-            style={{
-              float: "none",
-              clear: "both",
-              position: "relative",
-              top: "-10px"
+        {this.InputFeedback(t(errors.phoneNumber))}
+        <span className="description">{t("enable2fa")}</span>
+        <div className="input password">
+          <input
+            type="Password"
+            placeholder={"Password"}
+            onChange={e => {
+              this.setValue({
+                name: "password",
+                value: e.target.value
+              });
             }}
-          >
-            {this.state.error}
-          </div>
-        ) : (
-          ""
-        )}
-
+            value={password}
+          />
+          {this.InputFeedback(t(errors.password))}
+        </div>{" "}
+        <div className="input password">
+          <input
+            type="Password"
+            placeholder={"Confirm Password"}
+            onChange={e =>
+              this.setValue({
+                name: "confirmpass",
+                value: e.target.value
+              })
+            }
+            value={confirmpass}
+          />
+          {this.InputFeedback(t(errors.confirmpass))}
+        </div>
         <div className="submit">
           <ErrorHandler.ErrorBoundary>
             <span
-              className="color"
+              className={!isValid ? "disabled" : "color"}
               onClick={() => {
+                if (!isValid) {
+                  return;
+                }
                 this.setState({
                   sending: true,
                   error: false,
                   confirm: false
                 });
-                sendConfirmationMessage(code + text)
+                sendConfirmationMessage(code + phoneNumber)
                   .then(() => {
                     this.setState({
                       sending: false,
@@ -104,7 +177,97 @@ class ConfirmPhone extends PureComponent {
                   .catch(err => {
                     this.setState({
                       sending: false,
-                      error: err.message
+                      errors: { phoneNumber: err.message }
+                    });
+                  });
+              }}
+            >
+              {t("sendvcode")}
+            </span>
+          </ErrorHandler.ErrorBoundary>
+          <button className="border" onClick={() => close()}>
+            Cancel
+          </button>
+        </div>
+      </>
+    );
+  }
+
+  renderLogin() {
+    const {
+      close,
+      t,
+      ErrorHandler,
+      token,
+      history,
+      lang,
+      tReady,
+      sendConfirmationMessage
+    } = this.props;
+    const {
+      code,
+      phoneNumber,
+      password,
+      confirmpass,
+      isValid,
+      errors
+    } = this.state;
+
+    return (
+      <>
+        <span className="description">{t("enterphone")}</span>
+        <Select
+          onChange={this.handleChange}
+          defaultOptionValue={code}
+          options={countryCodeOptions}
+          className={"dropdown"}
+        />
+        <div className="phoneText input">
+          <input
+            type="tel"
+            placeholder={t("phonenum")}
+            onChange={this.handleTextChange}
+            value={phoneNumber}
+            autoFocus
+          />
+        </div>
+        {this.InputFeedback(t(errors.phoneNumber))}
+        <div className="input password">
+          <input
+            type="Password"
+            placeholder={"Password (if you have one)"}
+            onChange={e => {
+              this.setValue({
+                name: "password",
+                value: e.target.value
+              });
+            }}
+            value={password}
+          />
+          {this.InputFeedback(t(errors.password))}
+        </div>
+        <div className="submit">
+          <ErrorHandler.ErrorBoundary>
+            <span
+              className="color"
+              onClick={() => {
+                this.setState({
+                  sending: true,
+                  error: false,
+                  confirm: false
+                });
+                sendConfirmationMessage(code + phoneNumber)
+                  .then(() => {
+                    this.setState({
+                      sending: false,
+                      error: false,
+                      confirm: true
+                    });
+                  })
+                  .catch(err => {
+                    this.setState({
+                      sending: false,
+                      errors: { phoneNumber: err.message }
                     });
                   });
               }}
@@ -140,7 +303,7 @@ class ConfirmPhone extends PureComponent {
       confirmPhone,
       onSuccess
     } = this.props;
-    const { vcode } = this.state;
+    const { vcode, password } = this.state;
     return (
       <>
         <span className="description">{t("entercode")}</span>
@@ -177,7 +340,7 @@ class ConfirmPhone extends PureComponent {
                         confirm: true
                       },
                       () => {
-                        onSuccess(result);
+                        onSuccess(result, password);
                       }
                     );
                   })
@@ -209,11 +372,22 @@ class ConfirmPhone extends PureComponent {
       history,
       lang,
       tReady,
-      sendConfirmationMessage
+      sendConfirmationMessage,
+      type
     } = this.props;
-    const { code, text } = this.state;
+
     if (!tReady) {
       return null;
+    }
+    let body;
+    if (this.state.confirm) {
+      body = this.renderCodeInput();
+    } else {
+      if (type === "signup") {
+        body = this.renderPhoneInput();
+      } else {
+        body = this.renderLogin();
+      }
     }
     if (!token) {
       return (
@@ -228,11 +402,7 @@ class ConfirmPhone extends PureComponent {
                     {this.state.sending ? (
                       this.renderLoading()
                     ) : (
-                      <div>
-                        {this.state.confirm
-                          ? this.renderCodeInput()
-                          : this.renderPhoneInput()}
-                      </div>
+                      <div>{body}</div>
                     )}
                   </div>
                 </div>

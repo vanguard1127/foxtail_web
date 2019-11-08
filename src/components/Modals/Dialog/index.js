@@ -32,8 +32,10 @@ class Dialog extends PureComponent {
           { abortEarly: false }
         );
         this.setState({ errors: {} });
+
         return true;
       } catch (e) {
+        console.error(e);
         let errors = {};
         e.inner.forEach(err => (errors[err.path] = err.message));
         this.setState({ errors });
@@ -50,7 +52,6 @@ class Dialog extends PureComponent {
     ) : null;
 
   render() {
-
     const {
       close,
       t,
@@ -63,6 +64,7 @@ class Dialog extends PureComponent {
       specialType,
       lang,
       className,
+      placeholder,
       tReady
     } = this.props;
     const { text, errors } = this.state;
@@ -83,13 +85,18 @@ class Dialog extends PureComponent {
         />
       );
     } else {
+      let type = "text";
+      if (specialType === "password") {
+        type = "password";
+      }
       inputField = (
         <div className="input">
           <input
-            placeholder={t("writemsg") + "..."}
+            placeholder={placeholder ? placeholder : t("writemsg") + "..."}
             value={text}
             onChange={this.handleTextChange}
             autoFocus
+            type={type}
           />
         </div>
       );

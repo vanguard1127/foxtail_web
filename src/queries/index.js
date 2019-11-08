@@ -237,6 +237,7 @@ export const UPDATE_SETTINGS = gql`
     $privatePhotoList: [String]
     $includeMsgs: Boolean
     $profileID: String
+    $password: String
   ) {
     updateSettings(
       distance: $distance
@@ -266,6 +267,7 @@ export const UPDATE_SETTINGS = gql`
       privatePhotoList: $privatePhotoList
       includeMsgs: $includeMsgs
       profileID: $profileID
+      password: $password
     )
   }
 `;
@@ -406,6 +408,7 @@ export const FB_RESOLVE = gql`
     $code: String!
     $isCreate: Boolean!
     $email: String
+    $password: String
     $username: String
     $lang: String
     $dob: String
@@ -419,6 +422,7 @@ export const FB_RESOLVE = gql`
       code: $code
       isCreate: $isCreate
       email: $email
+      password: $password
       username: $username
       lang: $lang
       dob: $dob
@@ -910,6 +914,7 @@ export const GET_SETTINGS = gql`
       about
       desires
       sexuality
+      password
     }
   }
 `;

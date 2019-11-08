@@ -21,8 +21,6 @@ import MyProfile from "./MyProfile/";
 import DesiresModal from "../Modals/Desires/Modal";
 import ShareModal from "../Modals/Share";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
-// import CoupleModal from "../Modals/Couples";
-// import BlackModal from "../Modals/Black";
 import getCityCountry from "../../utils/getCityCountry";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import Modal from "../common/Modal";
@@ -37,6 +35,7 @@ class SettingsPage extends Component {
     this.isPhotoChanged = false;
   }
 
+  //TODO: Reduce this page more. test settings instad of reusing
   state = {
     distance: 100,
     distanceMetric: "mi",
@@ -79,7 +78,6 @@ class SettingsPage extends Component {
     profilePic: "",
     profilePicUrl: "",
     flashCpl: false,
-    ...this.props.settings,
     publicPhotoList: undefined,
     privatePhotoList: undefined,
     showModal: false,
@@ -89,7 +87,9 @@ class SettingsPage extends Component {
     okAction: null,
     errors: this.props.errors,
     isCouple: this.props.isCouple,
-    isInitial: this.props.isInitial
+    isInitial: this.props.isInitial,
+    password: undefined,
+    ...this.props.settings
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -146,6 +146,7 @@ class SettingsPage extends Component {
       this.state.visible !== nextState.visible ||
       this.props.t !== nextProps.t ||
       this.props.errors !== nextProps.errors ||
+      this.state.password !== nextState.password ||
       this.state.errors !== nextState.errors
     ) {
       return true;
@@ -401,14 +402,9 @@ class SettingsPage extends Component {
     this.setErrorHandler("Desires popup toggled");
     const { showDesiresPopup } = this.state;
     if (this.mounted) {
-      this.setState(
-        {
-          showDesiresPopup: !showDesiresPopup
-        },
-        () => {
-          //this.toggleScroll(!showDesiresPopup);
-        }
-      );
+      this.setState({
+        showDesiresPopup: !showDesiresPopup
+      });
     }
   };
 
@@ -642,7 +638,8 @@ class SettingsPage extends Component {
       title,
       okAction,
       sexuality,
-      errors
+      errors,
+      password
     } = this.state;
 
     const {
@@ -686,7 +683,8 @@ class SettingsPage extends Component {
           phone,
           profilePic,
           sexuality,
-          profileID: currentuser.profileID
+          profileID: currentuser.profileID,
+          password
         }}
       >
         {(updateSettings, { loading }) => {
@@ -912,6 +910,7 @@ class SettingsPage extends Component {
                                 lang={lang}
                                 isEmailOK={currentuser.isEmailOK}
                                 ReactGA={ReactGA}
+                                passEnabled={password}
                               />
                               <DeactivateAcctBtn
                                 t={t}
