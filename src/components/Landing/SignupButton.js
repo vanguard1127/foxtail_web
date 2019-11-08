@@ -1,5 +1,5 @@
 import React from "react";
-import FirebaseAuth from "./FirebaseAuth";
+import FirebaseAuth from "../common/FirebaseAuth";
 
 //POSIBLE BACKUP:https://github.com/floodfx/react-account-kit-web
 const SignupButton = ({
@@ -22,6 +22,7 @@ const SignupButton = ({
       ErrorHandler={ErrorHandler}
       onResponse={handleFirebaseReturn}
       fbResolve={fbResolve}
+      type="signup"
     >
       <div className="submit">
         <button className="btn">{t("getstarted")}</button>

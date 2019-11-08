@@ -69,7 +69,8 @@ class FirebaseAuth extends React.PureComponent {
             ErrorHandler={this.props.ErrorHandler}
             sendConfirmationMessage={this.sendCode}
             confirmPhone={this.confirmPhone}
-            onSuccess={result => {
+            type={this.props.type}
+            onSuccess={(result, password) => {
               this.setState(
                 {
                   showPhoneDialog: false
@@ -78,7 +79,8 @@ class FirebaseAuth extends React.PureComponent {
                   this.props.onResponse(
                     {
                       state: this.props.csrf,
-                      code: result
+                      code: result,
+                      password
                     },
                     this.props.fbResolve
                   );

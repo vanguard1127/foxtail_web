@@ -1,11 +1,12 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE } from "../../queries";
-import FirebaseAuth from "./FirebaseAuth";
+import FirebaseAuth from "../common/FirebaseAuth";
 
 const initialState = {
   csrf: "",
-  code: ""
+  code: "",
+  password: ""
 };
 class LoginButton extends PureComponent {
   state = { ...initialState };
@@ -16,13 +17,14 @@ class LoginButton extends PureComponent {
     this.mounted = false;
   }
 
-  handleFirebaseReturn = ({ state, code }, fbResolve) => {
+  handleFirebaseReturn = ({ state, code, password }, fbResolve) => {
     if (this.mounted) {
       const { reactga } = this.props;
       this.setState(
         {
           csrf: state,
-          code
+          code,
+          password
         },
         () => {
           fbResolve()
@@ -58,57 +60,14 @@ class LoginButton extends PureComponent {
       );
     }
   };
-  handleFBReturn = ({ state, code }, fbResolve) => {
-    if (this.mounted) {
-      if (!state || !code) {
-        return null;
-      }
-      const { t, reactga } = this.props;
 
-      this.setState({
-        csrf: state,
-        code
-      });
-
-      fbResolve()
-        .then(async ({ data }) => {
-          if (data.fbResolve === null) {
-            reactga.event({
-              category: "Login",
-              action: "Fail"
-            });
-            alert(t("noUserError") + ".");
-
-            return;
-          } else {
-            reactga.event({
-              category: "Login",
-              action: "Success"
-            });
-            localStorage.setItem(
-              "token",
-              data.fbResolve.find(token => token.access === "auth").token
-            );
-            localStorage.setItem(
-              "refreshToken",
-              data.fbResolve.find(token => token.access === "refresh").token
-            );
-            this.props.history.push("/members");
-          }
-        })
-        .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-        });
-    }
-  };
   render() {
-    const { csrf, code } = this.state;
+    const { csrf, code, password } = this.state;
     const { t, lang, errorhandler } = this.props;
-    const props = this.props;
     return (
       <Mutation
         mutation={FB_RESOLVE}
-        variables={{ csrf, code, isCreate: false }}
+        variables={{ csrf, code, isCreate: false, password }}
       >
         {fbResolve => {
           return (
@@ -120,9 +79,7 @@ class LoginButton extends PureComponent {
               onResponse={this.handleFirebaseReturn}
               fbResolve={fbResolve}
             >
-              <a className="login-btn">
-                {t("loginBtn")}
-              </a>
+              <a className="login-btn">{t("loginBtn")}</a>
             </FirebaseAuth>
           );
         }}

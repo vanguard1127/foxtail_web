@@ -10,10 +10,16 @@ class AcctSettings extends Component {
     btnText: "",
     title: "",
     setting: "",
-    successMsg: ""
+    successMsg: "",
+    placeholder: ""
   };
+
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state !== nextState || this.props.t !== nextProps.t) {
+    if (
+      this.state !== nextState ||
+      this.props.t !== nextProps.t ||
+      this.props.passEnabled !== nextProps.passEnabled
+    ) {
       return true;
     }
     return false;
@@ -23,20 +29,67 @@ class AcctSettings extends Component {
     this.setState({ showDialog: !this.state.showDialog });
   };
 
-  setDialogContent = ({ title, msg, btnText, setting, successMsg }) => {
+  setDialogContent = ({
+    title,
+    msg,
+    btnText,
+    setting,
+    successMsg,
+    placeholder
+  }) => {
     this.setState({
       title,
       msg,
       btnText,
       setting,
+      placeholder,
       successMsg: successMsg || null,
       showDialog: !this.state.showDialog
     });
   };
 
+  toggleEnablePass = () => {
+    const { t } = this.props;
+    if (!this.props.passEnabled) {
+      const title = t("2faenable");
+      const msg = t("2faenabledes");
+      const btnText = t("common:Save");
+      const setting = "password";
+      const successMsg = t("2fasuccess");
+      const placeholder = t("2faplaceholder");
+
+      this.setDialogContent({
+        title,
+        msg,
+        btnText,
+        setting,
+        successMsg,
+        placeholder
+      });
+    } else {
+      this.props.setValue({ name: "password", value: null });
+    }
+  };
+
   render() {
-    const { ErrorHandler, t, setValue, lang, isEmailOK, ReactGA } = this.props;
-    const { showDialog, title, msg, btnText, setting, successMsg } = this.state;
+    const {
+      ErrorHandler,
+      t,
+      setValue,
+      lang,
+      isEmailOK,
+      ReactGA,
+      passEnabled
+    } = this.props;
+    const {
+      showDialog,
+      title,
+      msg,
+      btnText,
+      setting,
+      successMsg,
+      placeholder
+    } = this.state;
     let schema;
     if (setting === "email") {
       schema = yup.object().shape({
@@ -53,7 +106,16 @@ class AcctSettings extends Component {
       schema = yup.object().shape({
         text: yup.string().required(t("genreq"))
       });
+    } else if (setting === "password") {
+      schema = yup.object().shape({
+        text: yup.string().max(30, "usernameLen")
+      });
+    } else {
+      schema = yup.object().shape({
+        text: yup.string()
+      });
     }
+
     return (
       <ErrorHandler.ErrorBoundary>
         <div className="content mtop">
@@ -61,6 +123,23 @@ class AcctSettings extends Component {
             <div className="col-md-12">
               <span className="heading">{t("acctsetting")}</span>
             </div>
+            <div className="col-md-6">
+              <div className="switch-con">
+                <div className="sw-head">{t("2faenable")}:</div>
+                <div className="sw-btn">
+                  <div className="switch">
+                    <input
+                      type="checkbox"
+                      id="passEnabled"
+                      checked={passEnabled ? true : false}
+                      onChange={this.toggleEnablePass}
+                    />
+                    <label htmlFor="passEnabled" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6"></div>
             <div className="col-md-6">
               <div className="verification-box">
                 <span
@@ -71,13 +150,15 @@ class AcctSettings extends Component {
                     const btnText = t("common:Update");
                     const setting = "email";
                     const successMsg = t("emailupdsuccess");
+                    const placeholder = t("emailplaceholder");
 
                     this.setDialogContent({
                       title,
                       msg,
                       btnText,
                       setting,
-                      successMsg
+                      successMsg,
+                      placeholder
                     });
                   }}
                 >
@@ -86,14 +167,12 @@ class AcctSettings extends Component {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="verification-box">
-                <ChangePhoneBtn
-                  t={t}
-                  ErrorHandler={ErrorHandler}
-                  lang={lang}
-                  ReactGA={ReactGA}
-                />
-              </div>
+              <ChangePhoneBtn
+                t={t}
+                ErrorHandler={ErrorHandler}
+                lang={lang}
+                ReactGA={ReactGA}
+              />
             </div>
             <div className="col-md-6">
               <div className="verification-box">
@@ -104,12 +183,14 @@ class AcctSettings extends Component {
                     const msg = t("usrupddes");
                     const btnText = t("common:Update");
                     const setting = "username";
+                    const placeholder = t("unplaceholder");
                     this.setDialogContent({
                       title,
                       msg,
                       btnText,
                       setting,
-                      successMsg
+                      successMsg,
+                      placeholder
                     });
                   }}
                 >
@@ -139,6 +220,7 @@ class AcctSettings extends Component {
                 </span>
               </div>
             </div>
+
             {!isEmailOK && (
               <div className="col-md-12">
                 <div className="verification-box">
@@ -160,8 +242,11 @@ class AcctSettings extends Component {
               btnText={btnText}
               successMsg={successMsg}
               schema={schema}
-              setValue={value => setValue({ name: setting, value })}
+              setValue={value => {
+                setValue({ name: setting, value });
+              }}
               specialType={setting}
+              placeholder={placeholder}
               className="acctsetting"
             />
           )}

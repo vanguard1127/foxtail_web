@@ -56,7 +56,7 @@ class EventInfoMobile extends Component {
     return (
       <>
         <div className="event-info-content hid-desktop">
-          <div className="event-image" >
+          <div className="event-image">
             <span>
               <img src={image || NoEventImg} alt="" />
             </span>
@@ -154,6 +154,10 @@ class EventInfoMobile extends Component {
             ErrorHandler={ErrorHandler}
             ReactGA={ReactGA}
           />
+          <div className="report-con">
+            <span className="rep-text">{t("reportlbl")}</span>
+            <span className="report" onClick={showBlockModal} />
+          </div>
         </div>
       </>
     );

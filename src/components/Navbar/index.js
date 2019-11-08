@@ -172,7 +172,7 @@ class NavbarAuth extends PureComponent {
                   return;
                 }
 
-                const newCount = { ...prev.getCounts };
+                let newCount = { ...prev.getCounts };
 
                 if (newInboxMsgSubscribe.type === "new") {
                   newCount.newMsg = true;

@@ -57,10 +57,12 @@ class DirectMsg extends Component {
             }
           } else {
             toast.error(t("msgnotsent"));
+            close();
           }
         })
         .catch(res => {
           ErrorHandler.catchErrors(res.graphQLErrors);
+          close();
         });
     });
   };

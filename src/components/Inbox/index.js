@@ -12,7 +12,8 @@ import {
   GET_INBOX,
   REMOVE_SELF,
   GET_MESSAGES,
-  GET_COUNTS
+  GET_COUNTS,
+  NEW_MESSAGE_SUB
 } from "../../queries";
 import { Mutation, Query, withApollo } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
@@ -27,6 +28,7 @@ require("dayjs/locale/" + lang);
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class InboxPage extends Component {
+  unsubscribe;
   readChat;
   state = {
     unSeenCount: 0,
@@ -62,6 +64,9 @@ class InboxPage extends Component {
   }
 
   componentWillUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
     this.mounted = false;
     sessionStorage.setItem("page", null);
     sessionStorage.setItem("pid", null);
@@ -90,18 +95,16 @@ class InboxPage extends Component {
   };
 
   handleRemoveSelf = removeSelf => {
-    const { refetch, history, t } = this.props;
     const { chatID } = this.state;
     ErrorHandler.setBreadcrumb("Remove Self from Chat:" + chatID);
     removeSelf()
-      .then(({ data }) => {
+      .then(() => {
         if (this.mounted) {
           this.props.ReactGA.event({
             category: "Chat",
             action: "Remove Self"
           });
-          refetch();
-          history.push("/inbox");
+          this.closeChat();
         }
       })
       .catch(res => {
@@ -322,6 +325,48 @@ class InboxPage extends Component {
                         <Spinner message={t("common:Loading")} size="large" />
                       );
                     }
+
+                    if (!this.unsubscribe) {
+                      this.unsubscribe = subscribeToMore({
+                        document: NEW_MESSAGE_SUB,
+                        variables: {
+                          chatID: chatID
+                        },
+                        updateQuery: (prev, { subscriptionData }) => {
+                          const { newMessageSubscribe } = subscriptionData.data;
+                          if (!newMessageSubscribe) {
+                            return prev;
+                          }
+
+                          let previousResult = Array.from(
+                            prev.getMessages.messages
+                          );
+
+                          if (previousResult) {
+                            previousResult = [
+                              newMessageSubscribe,
+                              ...previousResult
+                            ];
+                          } else {
+                            previousResult = [newMessageSubscribe];
+                          }
+
+                          if (this.mounted) {
+                            /* if (this.isUserInside) {
+                              this.scrollToBottom();
+                            } */
+                          }
+
+                          return {
+                            getMessages: {
+                              messages: [...previousResult],
+                              __typename: "ChatType"
+                            }
+                          };
+                        }
+                      });
+                    }
+
                     const { getMessages: chat } = data;
 
                     return (
@@ -351,7 +396,6 @@ class InboxPage extends Component {
                             });
                           }}
                           fetchMore={fetchMore}
-                          subscribeToMore={subscribeToMore}
                           cache={this.props.client.cache}
                         />
                         <Mutation

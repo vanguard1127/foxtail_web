@@ -64,7 +64,7 @@ class SearchEvents extends Component {
     }
   }
   componentWillUnmount() {
-    this.clearSearchResults();
+    deleteFromCache({ cache: this.props.client.cache, query: "searchEvents" });
     clearAllBodyScrollLocks();
     clearInterval(this.timer);
     this.mounted = false;
@@ -203,11 +203,6 @@ class SearchEvents extends Component {
         this.setState({ hasMore: false });
       }
     }
-  };
-
-  clearSearchResults = () => {
-    const { cache } = this.props.client;
-    deleteFromCache({ cache, query: "searchEvents" });
   };
 
   toggleScroll(enabled) {

@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-var OfflinePlugin = require('offline-plugin');
+var OfflinePlugin = require("offline-plugin");
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -65,16 +65,16 @@ module.exports = {
       description: "New site for alternative relationships",
       filename: "index.html",
       favicon: "./src/assets/favicon.ico",
-      manifest: "./src/assets/manifest.json",
+      manifest: "./src/assets/manifest.json"
     }),
     new CopyPlugin([
       { from: "src/assets/locales", to: "locales", toType: "dir" },
       { from: "src/assets/manifest.json", to: "manifest.json" },
       { from: "src/assets/icon-192.png", to: "icon-192.png" },
-      { from: "src/assets/icon-512.png", to: "icon-512.png" },
+      { from: "src/assets/icon-512.png", to: "icon-512.png" }
     ]),
     new CleanWebpackPlugin(),
     new Dotenv({ path: "./.env.local", defaults: true }),
-    new OfflinePlugin(),  
+    new OfflinePlugin()
   ]
 };

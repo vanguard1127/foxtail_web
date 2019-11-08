@@ -4035,6 +4035,8 @@ section.event-detail .header .info .report-con {
   position: absolute;
   right: 15px;
   bottom: 12px;
+  display: none;
+  visibility: hidden;
 }
 
 section.event-detail .header .info .report-con span.rep-text {
@@ -4934,7 +4936,7 @@ input.location-search-input {
 .page .form .content .item .input input:focus + label::before {
   line-height: 25px;
   font-size: 12px;
-  top: 10px;
+  top: 0;
   padding-left: 1px;
 }
 
@@ -4979,14 +4981,13 @@ input.location-search-input {
 .page .form .content .item .input label::before {
   content: attr(title);
   position: absolute;
-  top: 10px;
+  top: 15px;
   left: 20px;
-  line-height: 53px;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0;
   font-family: "Roboto Condensed";
-  color: #373737;
+  color: #8c909d;
   transition: 300ms all;
   -webkit-font-smoothing: antialiased;
   text-transform: none;
@@ -5021,7 +5022,7 @@ input.location-search-input {
   border: 1px solid #e9ebec;
   border-radius: 2px;
   height: 52px;
-  padding: 2px 20px 0 46px;
+  padding: 2px 20px 0 46px !important;
   font-family: "Roboto";
   color: #414141;
   font-size: 14px;
@@ -5034,6 +5035,11 @@ input.location-search-input {
   min-height: 120px;
   overflow-y: auto;
   padding-top: 8px;
+}
+
+.page .form .content .item .textarea textarea::placeholder{
+  color: #8c909d;
+  opacity: 1;
 }
 
 .page .form .content .item .textarea textarea:focus,
@@ -5399,7 +5405,7 @@ section.meet-filter .noUi-background {
 }
 
 section.meet-filter .range-con {
-  padding: 7px 0 9px 0;
+  padding: 7px 0 9px 0 !important;
 }
 
 .noUi-horizontal .noUi-handle {
@@ -5656,7 +5662,7 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1002;
+  z-index: 9999999999999;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -5833,7 +5839,7 @@ section.desires-popup {
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 99999999999999999;
   display: none;
   visibility: hidden;
 }
@@ -6877,6 +6883,7 @@ section.landing .register-form {
   border-radius: 2px;
   position: relative;
   top: 180px;
+  /*z-index: 999;*/
 }
 
 section.landing .register-form .head {
@@ -7353,7 +7360,7 @@ section.login-modal {
   background: rgba(41, 1, 10, 0.67);
   left: 0;
   top: 0;
-  z-index: 1200;
+  z-index: 9999999999999;
   /* padding:15% 0; */
   display: none;
   visibility: hidden;
@@ -7501,8 +7508,12 @@ section.login-modal .popup .form .form-content .input {
   display: block;
   float: left;
   position: relative;
-  margin-bottom: 10px;
 }
+
+section.login-modal .popup .form .form-content .input.password{
+  margin-bottom: 10px;
+ }
+
 
 section.login-modal.confirm-phone .popup span.head{
   float: none!important;
@@ -7532,6 +7543,10 @@ section.login-modal .popup .form .form-content .input input {
   font-size: 14px;
   letter-spacing: -0.5px;
   font-weight: 400;
+}
+
+section.login-modal.create-event .popup .form .form-content .input input {
+  padding: 15px 20px 0 20px;
 }
 
 section.login-modal .popup .form .form-content .input textarea {
@@ -7636,6 +7651,10 @@ section.login-modal .popup .form .form-content .dropdown label {
 
 section.login-modal .popup .form .form-content .dropdown span {
   position: relative;
+}
+
+.popup .page .form .content .select_desires {
+  margin-bottom: 0px !important;
 }
 
 section.login-modal
@@ -7778,6 +7797,16 @@ section.login-modal .popup .form .form-content .submit button.color {
   font-weight: 700;
   color: #fff;
   margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+section.login-modal .popup .form .form-content .submit span.disabled,
+section.login-modal .popup .form .form-content .submit button.disabled {
+  background-color:#767676;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+  margin-top: 5px;
 }
 
 section.login-modal .popup .form .form-content .submit span.border,
@@ -7840,6 +7869,7 @@ section.settings .rc-slider-handle {
 
 .rc-slider {
   z-index: 100;
+  padding: 15px 0 !important;
 }
 
 .select-list {
@@ -7890,10 +7920,6 @@ section.login-modal .popup form::-webkit-scrollbar-corner,
 
 .filepond--drop-label label {
   text-transform: none;
-}
-
-section.settings .select-container {
-  height: 60px !important;
 }
 
 .select-container label {
@@ -8970,7 +8996,8 @@ section.not-found span.description {
     padding-top: 12px;
   }
 
-  section.event-detail .header .info .share-event {
+  section.event-detail .header .info .share-event,
+  section.event-detail .header .info .report-con {
     display: inline-block;
     visibility: visible;
   }
@@ -9051,7 +9078,6 @@ section.not-found span.description {
 
   section.landing .register-form {
     top: 200px;
-    z-index: 0;
   }
 
   section.landing .left .welcome-text h1 {
@@ -9453,7 +9479,7 @@ img {
 .tooltip {
   position: relative;
   display: inline-block;
-  z-index: 99999999999;
+  z-index: 1;
 }
 
 .tooltip .tooltiptext {
@@ -9473,7 +9499,7 @@ img {
   z-index: 1;
   padding: 10px 20px !important;
   line-height: 2;
-  z-index: 99999999999;
+  z-index: 1;
 }
 
 .tooltip .tooltiptext div {
@@ -9516,7 +9542,8 @@ img {
 }
 
 .green-button-small:hover {
-  background-color: #00af49;
+  background-color: #00b94d !important;
+  border-color: #00b94d !important;
 }
 
 .capitalize {
@@ -9688,6 +9715,10 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   position: absolute;
   left: 0;
   right: 0;
+}
+
+.edit-photo-modal .popup form .form-content{
+  margin: 0!important;
 }
 
 .edit-photo-modal .popup form::-webkit-scrollbar{
@@ -10054,6 +10085,7 @@ animation: CycleC 30s ease infinite;
     display: flex;
     justify-content: flex-end;
   }
+
   .event-tool-mobile .share-event ul li {
     width: 35px;
     height: 35px;
@@ -10104,6 +10136,38 @@ animation: CycleC 30s ease infinite;
     content: "\f234";
   }
 
+  .event-tool-mobile span.report{
+    width: 35px;
+    height: 35px;
+    float: right;
+    border: 1px solid #c40148;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 1px;
+    transition: 0.3s all;
+    color: #c40148;
+    position: initial;
+    right: 16px;
+    top: 34px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.event-tool-mobile span.report::before {
+  content: "";
+  content: "\e808";
+  font-size: 15px;
+  font-family: "foxtail-icon";
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+}
+  .event-tool-mobile span.report::before {
+    content: "\e808";
+  }
+
+  .event-tool-mobile span.report:hover,
   .event-tool-mobile .share-event ul li:hover {
     background-color: #c40148;
     color: #fff;
@@ -10122,13 +10186,20 @@ animation: CycleC 30s ease infinite;
     letter-spacing: -0.3px;
     line-height: 35px;
   }
-  .event-tool-mobile ul li.report::before {
-    content: "\e808";
-    padding-left: 2px;
-  }
-  .event-tool-mobile .share-event {
+
+  .event-tool-mobile .share-event,.event-tool-mobile .report-con {
     display: flex;
   }
+
+  .event-tool-mobile .report-con span.rep-text {
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    color: #464648;
+    margin-right: 5px;
+    margin-left: 10px;
+    line-height: 35px;
+  }
+
 
   .event-tool-mobile .members-toggle.invite-event {
     top: 21px;
@@ -10200,6 +10271,10 @@ animation: CycleC 30s ease infinite;
 .photo-editor {
   background-color: transparent !important;
   max-height: 100vh;
+}
+
+.photo-editor .form-content{
+  margin: 0!important;
 }
 
 .single-line{
