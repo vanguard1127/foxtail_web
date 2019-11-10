@@ -237,7 +237,6 @@ export const UPDATE_SETTINGS = gql`
     $privatePhotoList: [String]
     $includeMsgs: Boolean
     $profileID: String
-    $password: String
   ) {
     updateSettings(
       distance: $distance
@@ -267,7 +266,6 @@ export const UPDATE_SETTINGS = gql`
       privatePhotoList: $privatePhotoList
       includeMsgs: $includeMsgs
       profileID: $profileID
-      password: $password
     )
   }
 `;
@@ -398,12 +396,12 @@ export const TOGGLE_EVENT_ATTEND = gql`
 
 export const SEND_PHONE_RESET_EMAIL = gql`
   mutation($phone: String!) {
-    resetPassword(phone: $phone)
+    sendPhoneResetEmail(phone: $phone)
   }
 `;
 
 export const RESET_PASSWORD = gql`
-  mutation($password: String!, $token: String!) {
+  mutation($password: String!, $token: String) {
     resetPassword(password: $password, token: $token)
   }
 `;

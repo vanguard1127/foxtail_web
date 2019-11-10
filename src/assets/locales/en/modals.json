@@ -99,6 +99,7 @@
   "updatedphone": "Update Phone Number",
   "resetphone": "Reset Phone Login",
   "resetpass": "Reset Password",
+  "setpass": "Set Password",
   "confirmphone": "Confirm Phone Number",
   "enterphone": "Enter your phone number",
   "enable2fa": "Enable 2-Factor Authentication (optional but Recommended)",
@@ -150,5 +151,9 @@
   "dailylimit": "Daily Like Limit Reached",
   "becomeblkulm": "Become a Black Member and have UNLIMITED Likes!",
   "setstart": "Start time may not be after ending time",
-  "setend": "End time may not be before starting time"
+  "setend": "End time may not be before starting time",
+  "2faenable": "Set Password",
+  "2faenabledes": "Please use a unique password. Reusing passwords across different sites is a security risk.",
+  "2fasuccess": "Password has been updated Successfully.",
+  "2faplaceholder": "Enter a secure password"
 }

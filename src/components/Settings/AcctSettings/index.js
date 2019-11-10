@@ -1,8 +1,17 @@
 import React, { Component } from "react";
-import Dialog from "../../Modals/Dialog";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogModal from "../../Modals/Dialog";
+import Button from "@material-ui/core/Button";
 import RequestEmailVerBtn from "./RequestEmailVerBtn";
 import ChangePhoneBtn from "./ChangePhoneBtn";
+import ResetPassModal from "../../Modals/ResetPassword";
 import * as yup from "yup";
+import { Mutation } from "react-apollo";
+import { RESET_PASSWORD } from "../../../queries";
 class AcctSettings extends Component {
   state = {
     showDialog: false,
@@ -11,7 +20,9 @@ class AcctSettings extends Component {
     title: "",
     setting: "",
     successMsg: "",
-    placeholder: ""
+    placeholder: "",
+    resetPassVisible: false,
+    clearPassDlg: false
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -24,6 +35,7 @@ class AcctSettings extends Component {
     }
     return false;
   }
+
   toggleDialog = () => {
     this.props.ErrorHandler.setBreadcrumb("Dialog Modal Toggled:");
     this.setState({ showDialog: !this.state.showDialog });
@@ -48,27 +60,20 @@ class AcctSettings extends Component {
     });
   };
 
-  toggleEnablePass = () => {
-    const { t } = this.props;
-    if (!this.props.passEnabled) {
-      const title = t("2faenable");
-      const msg = t("2faenabledes");
-      const btnText = t("common:Save");
-      const setting = "password";
-      const successMsg = t("2fasuccess");
-      const placeholder = t("2faplaceholder");
+  toggleClearPassDlg = () => {
+    this.setState({ clearPassDlg: !this.state.clearPassDlg });
+  };
 
-      this.setDialogContent({
-        title,
-        msg,
-        btnText,
-        setting,
-        successMsg,
-        placeholder
+  handleDlgBtnClick = resetPassword => {
+    resetPassword()
+      .then(({ data }) => {
+        this.setState({ clearPassDlg: false });
+        this.props.setValue({ name: "password", value: null });
+        this.props.refetchUser();
+      })
+      .catch(res => {
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
-    } else {
-      this.props.setValue({ name: "password", value: null });
-    }
   };
 
   render() {
@@ -79,8 +84,10 @@ class AcctSettings extends Component {
       lang,
       isEmailOK,
       ReactGA,
-      passEnabled
+      passEnabled,
+      refetchUser
     } = this.props;
+
     const {
       showDialog,
       title,
@@ -88,9 +95,13 @@ class AcctSettings extends Component {
       btnText,
       setting,
       successMsg,
-      placeholder
+      placeholder,
+      resetPassVisible,
+      clearPassDlg
     } = this.state;
+
     let schema;
+
     if (setting === "email") {
       schema = yup.object().shape({
         text: yup
@@ -105,10 +116,6 @@ class AcctSettings extends Component {
     } else if (setting === "gender") {
       schema = yup.object().shape({
         text: yup.string().required(t("genreq"))
-      });
-    } else if (setting === "password") {
-      schema = yup.object().shape({
-        text: yup.string().max(30, "usernameLen")
       });
     } else {
       schema = yup.object().shape({
@@ -132,7 +139,16 @@ class AcctSettings extends Component {
                       type="checkbox"
                       id="passEnabled"
                       checked={passEnabled ? true : false}
-                      onChange={this.toggleEnablePass}
+                      onChange={() => {
+                        if (!passEnabled) {
+                          this.setState({
+                            resetPassVisible: !resetPassVisible
+                          });
+                        } else {
+                          this.toggleClearPassDlg();
+                        }
+                        refetchUser();
+                      }}
                     />
                     <label htmlFor="passEnabled" />
                   </div>
@@ -234,7 +250,7 @@ class AcctSettings extends Component {
             )}
           </div>
           {showDialog && (
-            <Dialog
+            <DialogModal
               close={() => this.toggleDialog()}
               ErrorBoundary={ErrorHandler.ErrorBoundary}
               title={title}
@@ -248,6 +264,65 @@ class AcctSettings extends Component {
               specialType={setting}
               placeholder={placeholder}
               className="acctsetting"
+            />
+          )}
+          <Dialog onClose={this.toggleClearPassDlg} open={clearPassDlg}>
+            <DialogTitle id="alert-dialog-title">{t("includemsg")}</DialogTitle>
+
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                {t("includemsgdesc")}
+              </DialogContentText>
+            </DialogContent>
+
+            <DialogActions>
+              <Mutation
+                mutation={RESET_PASSWORD}
+                variables={{
+                  password: ""
+                }}
+              >
+                {resetPassword => (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        this.handleDlgBtnClick(resetPassword);
+                      }}
+                    >
+                      {"Remove Password"}
+                    </Button>
+                    {"  "}
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => {
+                        this.setState({ clearPassDlg: false });
+                      }}
+                    >
+                      {t("common:Cancel")}
+                    </Button>
+                  </>
+                )}
+              </Mutation>
+            </DialogActions>
+          </Dialog>
+          {resetPassVisible && (
+            <ResetPassModal
+              t={t}
+              close={() => {
+                this.setState({ resetPassVisible: false });
+              }}
+              ErrorHandler={ErrorHandler}
+              lang={lang}
+              isLoggedIn={true}
+              callback={() =>
+                setValue({
+                  name: "password",
+                  value: ""
+                })
+              }
             />
           )}
         </div>

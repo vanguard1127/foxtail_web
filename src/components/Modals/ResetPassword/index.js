@@ -4,9 +4,33 @@ import ResetPasswordBtn from "./ResetPasswordBtn";
 import EmailPasswordResetBtn from "./EmailPasswordResetBtn";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
+import * as yup from "yup";
 
 class ResetPassword extends PureComponent {
-  state = { text: "", code: "+1", email: "", password: "" };
+  state = {
+    text: "",
+    code: "+1",
+    email: "",
+    password: "",
+    confirmpass: "",
+    isValid: true,
+    errors: {}
+  };
+
+  //TODO: set this name rigth
+  schema = yup.object().shape({
+    password: yup
+      .string()
+      .matches(/^.[a-zA-Z0-9_]+$/, {
+        message: "Alphanumeric characters or underscores only",
+        excludeEmptyString: true
+      })
+      .max(30, "usernameLen"),
+    confirmpass: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+  });
+
   componentDidMount() {
     this.mounted = true;
   }
@@ -14,23 +38,69 @@ class ResetPassword extends PureComponent {
     this.mounted = false;
   }
 
-  setValue = ({ name, value }) => {
-    this.setState({ [name]: value });
-  };
-
-  handleChange = e => {
+  setValue = ({ name, value, validate }) => {
     if (this.mounted) {
-      this.setState({ code: e.value });
+      this.setState({ [name]: value }, () => {
+        validate && this.validateForm();
+      });
     }
   };
 
+  validateForm = async () => {
+    try {
+      if (this.mounted) {
+        const { password, confirmpass } = this.state;
+        await this.schema.validate({ password, confirmpass });
+        this.setState({ isValid: true, errors: {} });
+        return true;
+      }
+    } catch (e) {
+      let errors = { [e.path]: e.message };
+      this.setState({ isValid: false, errors });
+      return false;
+    }
+  };
+
+  InputFeedback = error =>
+    error ? (
+      <div
+        className="input-feedback"
+        style={{
+          float: "none",
+          clear: "both",
+          position: "relative",
+          color: "red"
+        }}
+      >
+        {error}
+      </div>
+    ) : null;
+
   render() {
-    const { close, t, ErrorHandler, token, history, lang, tReady } = this.props;
-    const { code, text, email, password } = this.state;
+    const {
+      close,
+      t,
+      ErrorHandler,
+      token,
+      history,
+      lang,
+      tReady,
+      isLoggedIn,
+      callback
+    } = this.props;
+    const {
+      code,
+      text,
+      email,
+      password,
+      confirmpass,
+      isValid,
+      errors
+    } = this.state;
     if (!tReady) {
       return null;
     }
-    if (!token) {
+    if (!token && !isLoggedIn) {
       return (
         <section className="login-modal show">
           <div className="container">
@@ -42,7 +112,12 @@ class ResetPassword extends PureComponent {
                   <div className="form-content">
                     <span className="description">{t("enterboth")}</span>
                     <Select
-                      onChange={this.handleChange}
+                      onChange={e => {
+                        this.setValue({
+                          name: "code",
+                          value: e.value
+                        });
+                      }}
                       defaultOptionValue={code}
                       options={countryCodeOptions}
                       className={"dropdown"}
@@ -103,38 +178,58 @@ class ResetPassword extends PureComponent {
         <div className="container">
           <div className="offset-md-3 col-md-6">
             <div className="popup">
-              <span className="head">{t("resetpass")}</span>
+              <span className="head">{t("setpass")}</span>
               <a className="close" onClick={() => close()} />
               <form className="form">
                 <div className="form-content">
-                  <span className="description">
-                    {t("common:2faenabledes")}
-                  </span>
+                  <span className="description">{t("2faenabledes")}</span>
 
                   <div className="input password">
                     <input
                       type="password"
-                      placeholder={t("common:2faplaceholder")}
+                      placeholder={t("2faplaceholder")}
                       value={password}
                       onChange={e => {
                         this.setValue({
                           name: "password",
-                          value: e.target.value
+                          value: e.target.value,
+                          validate: true
                         });
                       }}
                     />
+
+                    {this.InputFeedback(t(errors.password))}
+                  </div>
+
+                  <div className="input password">
+                    <input
+                      type="Password"
+                      placeholder={"Confirm Password"}
+                      onChange={e =>
+                        this.setValue({
+                          name: "confirmpass",
+                          value: e.target.value,
+                          validate: true
+                        })
+                      }
+                      value={confirmpass}
+                    />
+                    {this.InputFeedback(t(errors.confirmpass))}
                   </div>
 
                   <div className="submit">
-                    <ErrorHandler.ErrorBoundary>
-                      <ResetPasswordBtn
-                        t={t}
-                        token={token}
-                        password={password}
-                        close={close}
-                        ErrorHandler={ErrorHandler}
-                      />
-                    </ErrorHandler.ErrorBoundary>
+                    {isValid && (
+                      <ErrorHandler.ErrorBoundary>
+                        <ResetPasswordBtn
+                          t={t}
+                          token={token}
+                          password={password}
+                          close={close}
+                          ErrorHandler={ErrorHandler}
+                          callback={callback}
+                        />
+                      </ErrorHandler.ErrorBoundary>
+                    )}
                     <button className="border" onClick={() => close()}>
                       Cancel
                     </button>

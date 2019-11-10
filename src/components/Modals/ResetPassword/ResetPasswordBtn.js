@@ -4,11 +4,12 @@ import { RESET_PASSWORD } from "../../../queries";
 
 class ResetPasswordBtn extends PureComponent {
   handleClick = resetPassword => {
-    const { t, close, ErrorHandler } = this.props;
+    const { t, close, ErrorHandler, callback } = this.props;
 
     resetPassword()
-      .then(() => {
-        alert(t("common:2fasuccess"));
+      .then(data => {
+        alert(t("2fasuccess"));
+        callback();
         close();
       })
       .catch(res => {

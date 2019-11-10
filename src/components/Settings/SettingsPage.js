@@ -682,8 +682,7 @@ class SettingsPage extends Component {
           phone,
           profilePic,
           sexuality,
-          profileID: currentuser.profileID,
-          password
+          profileID: currentuser.profileID
         }}
       >
         {(updateSettings, { loading }) => {
@@ -910,6 +909,7 @@ class SettingsPage extends Component {
                                 isEmailOK={currentuser.isEmailOK}
                                 ReactGA={ReactGA}
                                 passEnabled={password !== null}
+                                refetchUser={refetchUser}
                               />
                               <DeactivateAcctBtn
                                 t={t}

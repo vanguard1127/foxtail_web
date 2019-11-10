@@ -19,8 +19,15 @@ class ConfirmPhone extends PureComponent {
     isValid: true
   };
 
+  //TODO: set this name rigth
   schema = yup.object().shape({
-    password: yup.string().max(30, "usernameLen"),
+    password: yup
+      .string()
+      .matches(/^.[a-zA-Z0-9_]+$/, {
+        message: "Alphanumeric characters or underscores only",
+        excludeEmptyString: true
+      })
+      .max(30, "usernameLen"),
     confirmpass: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -29,23 +36,6 @@ class ConfirmPhone extends PureComponent {
   componentDidMount() {
     this.mounted = true;
   }
-  handleTextChange = event => {
-    if (this.mounted) {
-      this.setState({ phoneNumber: event.target.value.replace(/\D/g, "") });
-    }
-  };
-
-  handleChange = e => {
-    if (this.mounted) {
-      this.setState({ code: e.value });
-    }
-  };
-
-  handleCodeChange = e => {
-    if (this.mounted) {
-      this.setState({ vcode: e.target.value });
-    }
-  };
 
   setValue = ({ name, value }) => {
     if (this.mounted) {
@@ -109,7 +99,12 @@ class ConfirmPhone extends PureComponent {
       <>
         <span className="description">{t("enterphone")}</span>
         <Select
-          onChange={this.handleChange}
+          onChange={e => {
+            this.setValue({
+              name: "code",
+              value: e.value
+            });
+          }}
           defaultOptionValue={code}
           options={countryCodeOptions}
           className={"dropdown"}
@@ -118,7 +113,12 @@ class ConfirmPhone extends PureComponent {
           <input
             type="tel"
             placeholder={t("phonenum")}
-            onChange={this.handleTextChange}
+            onChange={e => {
+              this.setValue({
+                name: "phoneNumber",
+                value: e.target.value.replace(/\D/g, "")
+              });
+            }}
             value={phoneNumber}
             autoFocus
           />
@@ -138,7 +138,7 @@ class ConfirmPhone extends PureComponent {
             value={password}
           />
           {this.InputFeedback(t(errors.password))}
-        </div>{" "}
+        </div>
         <div className="input password">
           <input
             type="Password"
@@ -217,7 +217,12 @@ class ConfirmPhone extends PureComponent {
       <>
         <span className="description">{t("enterphone")}</span>
         <Select
-          onChange={this.handleChange}
+          onChange={e => {
+            this.setValue({
+              name: "code",
+              value: e.value
+            });
+          }}
           defaultOptionValue={code}
           options={countryCodeOptions}
           className={"dropdown"}
@@ -226,7 +231,12 @@ class ConfirmPhone extends PureComponent {
           <input
             type="tel"
             placeholder={t("phonenum")}
-            onChange={this.handleTextChange}
+            onChange={e => {
+              this.setValue({
+                name: "phoneNumber",
+                value: e.target.value.replace(/\D/g, "")
+              });
+            }}
             value={phoneNumber}
             autoFocus
           />
@@ -311,7 +321,12 @@ class ConfirmPhone extends PureComponent {
           <input
             type="text"
             placeholder={t("vcode")}
-            onChange={this.handleCodeChange}
+            onChange={e => {
+              this.setValue({
+                name: "vcode",
+                value: e.target.value
+              });
+            }}
             value={vcode}
             autoFocus
           />
