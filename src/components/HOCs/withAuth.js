@@ -10,7 +10,6 @@ import { ApolloConsumer } from "react-apollo";
 import { GET_CURRENT_USER, CONFIRM_EMAIL } from "../../queries";
 const withAuth = conditionFunc => Component => props => {
   const { location } = props;
-
   return (
     <ApolloConsumer>
       {client => {
@@ -82,21 +81,48 @@ const withAuth = conditionFunc => Component => props => {
                       });
                     }
                   }
+                } else if (location.pathname === "/passReset") {
+                  const token = new URLSearchParams(location.search).get(
+                    "token"
+                  );
+                  if (token) {
+                    return (
+                      <Redirect
+                        to={{
+                          pathname: "/",
+                          state: {
+                            type: "passReset",
+                            token
+                          }
+                        }}
+                        push={true}
+                      />
+                    );
+                  } else {
+                    if (!toast.isActive("errVer")) {
+                      toast.error(i18next.t("phonefail"), {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: "errVer"
+                      });
+                    }
+                  }
                 }
               }
 
               if (error) {
-                if (
-                  (location.pathname === "/" && location.search) ||
-                  (location.state &&
-                    (location.state.token &&
-                      location.state.type === "phoneReset"))
-                ) {
+                if (location.pathname === "/" && location.search) {
                   return <Component {...props} />;
                 }
-
-                if (location.state && location.state.noCheck) {
-                  return <Component {...props} />;
+                if (location.state) {
+                  if (
+                    location.state.noCheck ||
+                    (location.state.token &&
+                      location.state.type === "passReset") ||
+                    (location.state.token &&
+                      location.state.type === "phoneReset")
+                  ) {
+                    return <Component {...props} />;
+                  }
                 }
 
                 return (

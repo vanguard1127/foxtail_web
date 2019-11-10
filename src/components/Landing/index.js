@@ -8,6 +8,7 @@ import CountUp from "react-countup";
 import { Query } from "react-apollo";
 import { GET_DEMO_COUNTS } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
+import ResetPassModal from "../Modals/ResetPassword";
 import ContactUsModal from "../Modals/ContactUs";
 import Spinner from "../common/Spinner";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,6 +24,7 @@ class Landing extends PureComponent {
     super(props);
     this.state = {
       resetPhoneVisible: false,
+      resetPassVisible: false,
       token: null,
       tooltip: false,
       showContactModal: false
@@ -46,7 +48,13 @@ class Landing extends PureComponent {
 
   render() {
     const { t, location, history, session, ReactGA, tReady } = this.props;
-    const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
+    const {
+      resetPhoneVisible,
+      token,
+      tooltip,
+      showContactModal,
+      resetPassVisible
+    } = this.state;
     let refer = null;
     let aff = null;
     let mem = null;
@@ -60,10 +68,26 @@ class Landing extends PureComponent {
       aff = params.get("aff");
       mem = params.get("mem");
       eve = params.get("eve");
+
       if (location.state && location.state.type === "phoneReset") {
         if (location.state.token) {
           this.setState({
             resetPhoneVisible: true,
+            token: location.state.token
+          });
+        } else {
+          if (!toast.isActive("errVer")) {
+            toast.error(t("phonefail"), {
+              position: toast.POSITION.TOP_CENTER,
+              toastId: "errVer"
+            });
+          }
+        }
+      } else if (location.state && location.state.type === "passReset") {
+        //TODO: update error mssgs
+        if (location.state.token) {
+          this.setState({
+            resetPassVisible: true,
             token: location.state.token
           });
         } else {
@@ -261,6 +285,17 @@ class Landing extends PureComponent {
                           {t("resetphone")}
                         </span>
                       </li>
+                      <li>
+                        <span
+                          onClick={() => {
+                            this.setState({
+                              resetPassVisible: !resetPassVisible
+                            });
+                          }}
+                        >
+                          {t("resetpass")}
+                        </span>
+                      </li>
                       <li className="tooltip" style={{ zIndex: 0 }}>
                         {tooltip && (
                           <span className="tooltiptext">
@@ -321,16 +356,27 @@ class Landing extends PureComponent {
             </div>
           </div>
         </footer>
+        {resetPassVisible && (
+          <ResetPassModal
+            t={t}
+            token={token}
+            close={() => {
+              history.replace({ state: {} });
+              this.setState({ resetPassVisible: false, token: null });
+            }}
+            ErrorHandler={ErrorHandler}
+            history={history}
+            lang={lang}
+          />
+        )}
         {resetPhoneVisible && (
           <ResetPhoneModal
             t={t}
             token={token}
-            close={() =>
-              this.setState(
-                { resetPhoneVisible: false, token: null },
-                history.replace({ state: {} })
-              )
-            }
+            close={() => {
+              history.replace({ state: {} });
+              this.setState({ resetPhoneVisible: false, token: null });
+            }}
             ErrorHandler={ErrorHandler}
             history={history}
             lang={lang}
