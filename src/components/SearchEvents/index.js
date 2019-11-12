@@ -397,6 +397,7 @@ class SearchEvents extends Component {
             visible={shareModalVisible}
             close={() => this.setShareModalVisible(false)}
             ErrorBoundary={ErrorHandler.ErrorBoundary}
+            t={t}
           />
         )}
       </>

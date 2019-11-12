@@ -63,7 +63,7 @@ class Modal extends Component {
         after={{ test: "o" }}
       >
         {props => (
-          <div className="popup-wrapper">
+          <div className="popup-wrapper" style={props}>
             <section
               style={props}
               className={`login-modal show ${

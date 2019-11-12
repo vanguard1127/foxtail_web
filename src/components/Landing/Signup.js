@@ -138,7 +138,8 @@ class Signup extends PureComponent {
           dob: "12/12/1990",
           interestedIn: ["M"],
           gender: "M",
-          isCouple: true
+          isCouple: true,
+          lang: "en"
         },
         () =>
           createUser()

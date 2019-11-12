@@ -73,6 +73,7 @@ class SearchProfiles extends Component {
                   visible={shareModalVisible}
                   close={this.toggleShareModal}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  t={t}
                 />
               )}
             </>

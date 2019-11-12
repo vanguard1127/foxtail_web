@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
 import * as yup from "yup";
+import { Spring } from "react-spring/renderprops";
 import ConfirmPhoneButton from "./ConfirmPhoneButton";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
@@ -19,18 +20,17 @@ class ConfirmPhone extends PureComponent {
     isValid: true
   };
 
-  //TODO: set this name rigth
   schema = yup.object().shape({
     password: yup
       .string()
       .matches(/^.[a-zA-Z0-9_]+$/, {
-        message: "Alphanumeric characters or underscores only",
+        message: this.props.t("Alphanumeric characters or underscores only"),
         excludeEmptyString: true
       })
-      .max(30, "usernameLen"),
+      .max(30, this.props.t("Passwords must be less than 30 characters")),
     confirmpass: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .oneOf([yup.ref("password"), null], this.props.t("Passwords must match"))
   });
 
   componentDidMount() {
@@ -406,57 +406,73 @@ class ConfirmPhone extends PureComponent {
     }
     if (!token) {
       return (
-        <section className="login-modal show confirm-phone">
-          <div className="container">
-            <div className="offset-md-3 col-md-6">
-              <div className="popup">
-                <span className="head">{t("confirmphone")}</span>
-                <a className="close" onClick={() => close()} />
-                <div className="form">
-                  <div className="form-content">
-                    {this.state.sending ? (
-                      this.renderLoading()
-                    ) : (
-                      <div>{body}</div>
-                    )}
+        <Spring
+          from={{ opacity: 0.6 }}
+          to={{ opacity: 1 }}
+          after={{ test: "o" }}
+        >
+          {props => (
+            <div className="popup-wrapper" style={props}>
+              <section className="login-modal show confirm-phone">
+                <div className="container">
+                  <div className="offset-md-3 col-md-6">
+                    <div className="popup">
+                      <span className="head">{t("confirmphone")}</span>
+                      <a className="close" onClick={() => close()} />
+                      <div className="form">
+                        <div className="form-content">
+                          {this.state.sending ? (
+                            this.renderLoading()
+                          ) : (
+                            <div>{body}</div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </section>
             </div>
-          </div>
-        </section>
+          )}
+        </Spring>
       );
     }
     return (
-      <section className="login-modal show">
-        <div className="container">
-          <div className="offset-md-3 col-md-6">
-            <div className="popup">
-              <span className="head">{t("updphone")}</span>
-              <a className="close" onClick={() => close()} />
-              <form className="form">
-                <div className="form-content">
-                  <div className="submit">
-                    <ErrorHandler.ErrorBoundary>
-                      <ConfirmPhoneButton
-                        token={token}
-                        t={t}
-                        history={history}
-                        ErrorHandler={ErrorHandler}
-                        lang={lang}
-                        sendConfirmationMessage={sendConfirmationMessage}
-                      />
-                    </ErrorHandler.ErrorBoundary>
-                    <button className="border" onClick={() => close()}>
-                      {t("common:Cancel")}
-                    </button>
+      <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }} after={{ test: "o" }}>
+        {props => (
+          <div className="popup-wrapper" style={props}>
+            <section className="login-modal show">
+              <div className="container">
+                <div className="offset-md-3 col-md-6">
+                  <div className="popup">
+                    <span className="head">{t("updphone")}</span>
+                    <a className="close" onClick={() => close()} />
+                    <form className="form">
+                      <div className="form-content">
+                        <div className="submit">
+                          <ErrorHandler.ErrorBoundary>
+                            <ConfirmPhoneButton
+                              token={token}
+                              t={t}
+                              history={history}
+                              ErrorHandler={ErrorHandler}
+                              lang={lang}
+                              sendConfirmationMessage={sendConfirmationMessage}
+                            />
+                          </ErrorHandler.ErrorBoundary>
+                          <button className="border" onClick={() => close()}>
+                            {t("common:Cancel")}
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
-              </form>
-            </div>
+              </div>
+            </section>{" "}
           </div>
-        </div>
-      </section>
+        )}
+      </Spring>
     );
   }
 }

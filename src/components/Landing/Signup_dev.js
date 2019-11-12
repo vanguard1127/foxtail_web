@@ -12,7 +12,7 @@ const initialState = {
   gender: "",
   isCouple: false,
   csrf: "",
-  code: "",
+  code: ""
 };
 const LOGIN = gql`
   mutation($phone: String!) {
@@ -75,7 +75,7 @@ class Signup extends PureComponent {
     }
   };
 
-  handleFirebaseReturn=({state, code}, fbResolve)=>{
+  handleFirebaseReturn = ({ state, code }, fbResolve) => {
     if (!state || !code) {
       return;
     }
@@ -133,7 +133,7 @@ class Signup extends PureComponent {
         }
       );
     }
-  }
+  };
 
   handleFBReturn = ({ state, code }, fbResolve) => {
     if (!state || !code) {
@@ -208,7 +208,8 @@ class Signup extends PureComponent {
           dob: "12/12/1990",
           interestedIn: ["M"],
           gender: "M",
-          isCouple: true
+          isCouple: true,
+          lang: "en"
         },
         () =>
           createUser()

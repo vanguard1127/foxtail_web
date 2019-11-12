@@ -349,6 +349,7 @@ class ProfilePage extends Component {
                         profile={profile}
                         close={() => this.setShareModalVisible(false)}
                         ErrorBoundary={ErrorHandler.ErrorBoundary}
+                        t={t}
                       />
                     )}
 

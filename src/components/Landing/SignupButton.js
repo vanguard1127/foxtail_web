@@ -20,8 +20,7 @@ const SignupButton = ({
       validateForm={validateForm}
       disabled={disabled}
       ErrorHandler={ErrorHandler}
-      onResponse={handleFirebaseReturn}
-      fbResolve={fbResolve}
+      onResponse={resp => handleFirebaseReturn(resp, fbResolve)}
       type="signup"
     >
       <div className="submit">

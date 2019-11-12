@@ -29,6 +29,7 @@
   "About": "About",
   "Support": "Support",
   "phonefail": "Phone reset failed, please try again.",
+  "passfail": "Password reset failed, please try again.",
   "resetphone": "Reset Phone Number",
   "resetpass": "Reset Password",
   "antispam": "Anti Spam",

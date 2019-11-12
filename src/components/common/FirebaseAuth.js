@@ -4,33 +4,25 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import ConfirmPhone from "../Modals/ConfirmPhone";
 
-function initializeFirebaseAuth(props, callback) {
-  callback();
-}
-
 class FirebaseAuth extends React.PureComponent {
   state = {
-    initialized: !!window.recaptchaVerifier,
     showPhoneDialog: false
   };
 
   componentDidMount() {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+      "recaptcha-container",
+      {
+        size: "invisible"
+        // other options
+      }
+    );
     this.mounted = true;
   }
-
-  componentDidUpdate() {}
 
   componentWillUnmount() {
     this.mounted = false;
   }
-
-  onLoad = () => {
-    if (this.mounted) {
-      this.setState({
-        initialized: true
-      });
-    }
-  };
 
   signIn = async e => {
     e.preventDefault();
@@ -45,7 +37,7 @@ class FirebaseAuth extends React.PureComponent {
 
   async sendCode(phone) {
     var appVerifier = window.recaptchaVerifier;
-    return recaptchaVerifier.render().then(function(widgetId) {
+    return appVerifier.render().then(function(widgetId) {
       return firebase
         .auth()
         .signInWithPhoneNumber(phone, appVerifier)
@@ -76,14 +68,11 @@ class FirebaseAuth extends React.PureComponent {
                   showPhoneDialog: false
                 },
                 () => {
-                  this.props.onResponse(
-                    {
-                      state: this.props.csrf,
-                      code: result,
-                      password
-                    },
-                    this.props.fbResolve
-                  );
+                  this.props.onResponse({
+                    state: this.props.csrf,
+                    code: result,
+                    password
+                  });
                 }
               );
             }}
@@ -96,6 +85,8 @@ class FirebaseAuth extends React.PureComponent {
           ></ConfirmPhone>
         ) : null}
         <span onClick={this.signIn}>{this.props.children}</span>
+
+        <div id="recaptcha-container" style={{ display: "none" }}></div>
       </>
     );
   }

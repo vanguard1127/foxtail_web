@@ -281,6 +281,7 @@ class EventPage extends Component {
                   event={event}
                   close={() => this.setShareModalVisible(false)}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  t={t}
                 />
               )}
               {blockModalVisible && (

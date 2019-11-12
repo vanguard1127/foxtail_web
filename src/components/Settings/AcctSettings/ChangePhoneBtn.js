@@ -60,7 +60,6 @@ class ChangePhoneBtn extends PureComponent {
               language={lang}
               ErrorHandler={ErrorHandler}
               onResponse={resp => this.handleFBReturn(resp, fbResetPhone)}
-              fbResolve={fbResetPhone}
             >
               <div className="verification-box">
                 <span className="clickverify-btn">{t("changephone")}</span>

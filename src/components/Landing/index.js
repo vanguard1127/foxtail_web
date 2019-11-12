@@ -17,7 +17,6 @@ import { withTranslation } from "react-i18next";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
-import * as firebase from "firebase/app";
 
 class Landing extends PureComponent {
   constructor(props) {
@@ -32,13 +31,6 @@ class Landing extends PureComponent {
   }
 
   componentDidMount() {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-      "recaptcha-container",
-      {
-        size: "invisible"
-        // other options
-      }
-    );
     document.title = "Foxtail";
   }
 
@@ -84,7 +76,6 @@ class Landing extends PureComponent {
           }
         }
       } else if (location.state && location.state.type === "passReset") {
-        //TODO: update error mssgs
         if (location.state.token) {
           this.setState({
             resetPassVisible: true,
@@ -92,7 +83,7 @@ class Landing extends PureComponent {
           });
         } else {
           if (!toast.isActive("errVer")) {
-            toast.error(t("phonefail"), {
+            toast.error(t("passfail"), {
               position: toast.POSITION.TOP_CENTER,
               toastId: "errVer"
             });

@@ -155,5 +155,8 @@
   "2faenable": "Set Password",
   "2faenabledes": "Please use a unique password. Reusing passwords across different sites is a security risk.",
   "2fasuccess": "Password has been updated Successfully.",
-  "2faplaceholder": "Enter a secure password"
+  "2faplaceholder": "Enter a secure password",
+  "Alphanumeric characters or underscores only": "Alphanumeric characters or underscores only",
+  "Passwords must match": "Passwords must match",
+  "Passwords must be less than 30 characters": "Passwords must be less than 30 characters"
 }

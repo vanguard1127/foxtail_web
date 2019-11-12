@@ -100,7 +100,7 @@ const withAuth = conditionFunc => Component => props => {
                     );
                   } else {
                     if (!toast.isActive("errVer")) {
-                      toast.error(i18next.t("phonefail"), {
+                      toast.error(i18next.t("passfail"), {
                         position: toast.POSITION.TOP_CENTER,
                         toastId: "errVer"
                       });

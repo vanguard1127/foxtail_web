@@ -1029,6 +1029,7 @@ class SettingsPage extends Component {
                   visible={showSharePopup}
                   close={this.toggleSharePopup}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  t={t}
                 />
               )}
             </section>

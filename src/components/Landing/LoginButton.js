@@ -76,8 +76,7 @@ class LoginButton extends PureComponent {
               phoneNumber={""} // eg. 12345678
               language={lang}
               ErrorHandler={errorhandler}
-              onResponse={this.handleFirebaseReturn}
-              fbResolve={fbResolve}
+              onResponse={resp => this.handleFirebaseReturn(resp, fbResolve)}
             >
               <a className="login-btn">{t("loginBtn")}</a>
             </FirebaseAuth>
