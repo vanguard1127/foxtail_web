@@ -196,6 +196,7 @@ class CoupleProfile extends PureComponent {
           onClose={this.toggleDlg}
           aria-labelledby="Image"
           open={cfmDlgOpen}
+          style={{ zIndex: "999999999999999" }}
         >
           <DialogTitle id="alert-dialog-title">{t("includemsg")}</DialogTitle>
 
