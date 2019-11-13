@@ -145,6 +145,7 @@ class EventPage extends Component {
         query={GET_EVENT}
         variables={{ id }}
         fetchPolicy="cache-and-network"
+        returnPartialData={true}
       >
         {({ data, loading, error, refetch }) => {
           if (error) {

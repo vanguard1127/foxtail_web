@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { desireOptions } from "../../docs/options";
 
 class DesiresMobile extends Component {
   shouldComponentUpdate(nextProps) {
@@ -18,11 +19,13 @@ class DesiresMobile extends Component {
           <div className="list">
             <ul>
               {desires.reduce(function(result, desire) {
-                result.push(
-                  <li key={Math.random()} className="capitalize">
-                    {t(desire)}
-                  </li>
-                );
+                if (desireOptions.find(el => el.value === desire)) {
+                  result.push(
+                    <li key={desire}>
+                      {t(desireOptions.find(el => el.value === desire).label)}
+                    </li>
+                  );
+                }
                 return result;
               }, [])}
             </ul>

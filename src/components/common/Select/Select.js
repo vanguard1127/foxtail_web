@@ -15,7 +15,7 @@ class Select extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.scrollPosition=0;
+    this.scrollPosition = 0;
   }
 
   state = {
@@ -29,10 +29,9 @@ class Select extends PureComponent {
     document.addEventListener("touchstart", this.handleClickOutside, false);
   }
 
-
   componentWillUpdate(prevProps, prevState) {
-    if(this.listContainerRef){
-       this.scrollPosition=  this.listContainerRef.scrollTop;
+    if (this.listContainerRef) {
+      this.scrollPosition = this.listContainerRef.scrollTop;
     }
   }
 
@@ -40,7 +39,7 @@ class Select extends PureComponent {
     // If we have a snapshot value, we've just added new items.
     // Adjust scroll so these new items don't push the old ones out of view.
     // (snapshot here is the value returned from getSnapshotBeforeUpdate)
-    if(this.listContainerRef){
+    if (this.listContainerRef) {
       this.listContainerRef.scrollTop = this.scrollPosition;
     }
   }
@@ -64,7 +63,7 @@ class Select extends PureComponent {
 
   handleClickOutside = event => {
     if (this.state.menuOpen) {
-      if (!this.selectContainerRef.contains(event.target)) {      
+      if (!this.selectContainerRef.contains(event.target)) {
         if (this.mounted) {
           this.setState({ menuOpen: false }, () => {
             if (this.props.onClose) this.props.onClose();
@@ -86,12 +85,12 @@ class Select extends PureComponent {
       let selectedOptionsCopy = [...this.state.selectedOptions];
 
       let isOptionExists =
-        selectedOptionsCopy.find(x => x.value == optionProps.value) !=
+        selectedOptionsCopy.find(x => x.value === optionProps.value) !==
         undefined;
 
       if (isOptionExists) {
         selectedOptionsCopy = selectedOptionsCopy.filter(
-          x => x.value != optionProps.value
+          x => x.value !== optionProps.value
         );
       } else {
         selectedOptionsCopy = [...selectedOptionsCopy, optionProps];
@@ -116,9 +115,9 @@ class Select extends PureComponent {
 
     const SelectList = () => (
       <div className={multiple ? "select-list multiple" : "select-list"}>
-        <ul  ref={listContainerRef =>
-            (this.listContainerRef = listContainerRef)
-          }>
+        <ul
+          ref={listContainerRef => (this.listContainerRef = listContainerRef)}
+        >
           {options.map((d, i) => {
             let checked = false;
             if (multiple) {

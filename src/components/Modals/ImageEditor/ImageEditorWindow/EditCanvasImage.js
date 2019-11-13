@@ -611,7 +611,7 @@ class EditCanvasImage extends PureComponent {
                   onClick={this.handleExportClick}
                   className="green-button-small"
                 >
-                  {!uploading ? t("Save") : t("upload")}
+                  {!uploading ? t("Save") : t("common:upload")}
                 </Button>
               ) : (
                 <Button
@@ -624,12 +624,14 @@ class EditCanvasImage extends PureComponent {
                   )}
                 </Button>
               )}
-              <Button
-                style={{ color: "white", marginLeft: "8px" }}
-                onClick={() => this.props.close()}
-              >
-                {t("Cancel")}
-              </Button>
+              {!uploading && (
+                <Button
+                  style={{ color: "white", marginLeft: "8px" }}
+                  onClick={() => this.props.close()}
+                >
+                  {t("Cancel")}
+                </Button>
+              )}
             </div>
           </div>
         </div>

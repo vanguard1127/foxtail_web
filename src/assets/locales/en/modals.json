@@ -55,7 +55,7 @@
   "eveend": "Date/Time End",
   "evedesc": "Event Description",
   "eveimg": "Event Image",
-  "toexpect": "Select What To Expect (Multiple)",
+  "toexpect": "Select What is Allowed (Multiple)",
   "desctitle": "Your event description here",
   "selevetype": "Select Event Type",
   "hostorinvite": "Host or Invite members to events",

@@ -7932,7 +7932,7 @@ section.login-modal .popup form::-webkit-scrollbar-corner,
   z-index: auto !important;
 }
 
-section.settings .select-list {
+section.settings .select-list.multiple {
   top: 59px !important;
   margin: 0 0 0 15px;
   width: calc(100% - 30px) !important;

@@ -289,7 +289,7 @@ class Landing extends PureComponent {
                       </li>
                       <li className="tooltip" style={{ zIndex: 0 }}>
                         {tooltip && (
-                          <span className="tooltiptext">
+                          <span className="tooltiptext show">
                             <div>
                               {" "}
                               <span onClick={() => history.push("/tos")}>

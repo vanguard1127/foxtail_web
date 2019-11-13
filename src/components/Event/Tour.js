@@ -323,7 +323,7 @@ class EventTour extends PureComponent {
                         <span className="title">Flirting, Dating</span>
                       </li>
                       <li>
-                        <span className="head">What to Expect:</span>
+                        <span className="head">Allowed With Consent:</span>
                         <span className="title">Expect</span>
                       </li>
                       <li>
@@ -465,7 +465,7 @@ class EventTour extends PureComponent {
                         <span className="title">Flirting, Dating</span>
                       </li>
                       <li>
-                        <span className="head">What to Expect:</span>
+                        <span className="head">Allowed With Consent:</span>
                         <span className="title">Expect</span>
                       </li>
                       <li>

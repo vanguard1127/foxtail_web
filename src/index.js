@@ -13,6 +13,7 @@ import {
   withRouter,
   Redirect
 } from "react-router-dom";
+import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import { ToastContainer, toast } from "react-toastify";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";
@@ -51,6 +52,7 @@ import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
+import deleteFromCache from "././utils/deleteFromCache";
 
 //import runtime from "serviceworker-webpack-plugin/lib/runtime";
 
@@ -146,7 +148,8 @@ const cache = new InMemoryCache({
   dataIdFromObject: o => {
     if (o._id) return { [o.__typename]: o._id };
     else return null;
-  }
+  },
+  freezeResults: true
 });
 
 const stateLink = withClientState({
@@ -230,7 +233,8 @@ const link = errorLink.concat(
 
 const client = new ApolloClient({
   link,
-  cache
+  cache,
+  assumeImmutableResults: true
 });
 
 const Root = () => (
@@ -396,13 +400,19 @@ window.onresize(); // called to initially set the height.
 //prevent context menu
 document.addEventListener("contextmenu", preventContextMenu);
 
+//Trying to remove the images for aws rerender images
+deleteFromCache({
+  cache,
+  query: "searchProfiles"
+});
+
 render(
   <ApolloProvider client={client}>
     <Root />
   </ApolloProvider>,
   document.getElementById("root")
 );
-import * as OfflinePluginRuntime from "offline-plugin/runtime";
+
 if (process.env.NODE_ENV === "production") {
   OfflinePluginRuntime.install();
 }

@@ -32,6 +32,10 @@
   opacity: 1;
 }
 
+.tooltip .tooltiptext.show {
+  visibility: visible !important;
+}
+
 .tooltip .tooltiptext-right {
   top: -5px;
   left: 105%;

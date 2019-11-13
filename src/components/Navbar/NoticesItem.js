@@ -107,11 +107,14 @@ class NoticesItem extends Component {
 
     if (read) {
       const [id] = notificationIDs;
-      var readNotice = notifications.find(notice => notice.id === id);
+      var notice = notifications.find(notice => notice.id === id);
+      let readNotice = { ...notice };
+
       if (readNotice) readNotice.read = true;
     } else {
       notificationIDs.forEach(notifID => {
-        var seenNotice = notifications.find(notice => notice.id === notifID);
+        var notice = notifications.find(notice => notice.id === notifID);
+        let seenNotice = { ...notice };
         if (seenNotice) seenNotice.seen = true;
       });
 

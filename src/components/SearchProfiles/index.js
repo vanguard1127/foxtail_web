@@ -41,7 +41,11 @@ class SearchProfiles extends Component {
     }
     ErrorHandler.setBreadcrumb("Enter Search Profiles");
     return (
-      <Query query={GET_SEARCH_SETTINGS} fetchPolicy="cache-and-network">
+      <Query
+        query={GET_SEARCH_SETTINGS}
+        fetchPolicy="cache-and-network"
+        returnPartialData={true}
+      >
         {({ data, loading, error, refetch: { refetchSettings } }) => {
           if (error) {
             return (
