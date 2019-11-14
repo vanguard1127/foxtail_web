@@ -4,15 +4,23 @@ import { RESET_PASSWORD } from "../../../queries";
 
 class ResetPasswordBtn extends PureComponent {
   handleClick = resetPassword => {
-    const { t, close, ErrorHandler, callback } = this.props;
+    const { t, close, ErrorHandler, callback, ReactGA } = this.props;
 
     resetPassword()
       .then(data => {
         alert(t("2fasuccess"));
+        ReactGA.event({
+          category: "Reset Password",
+          action: "Success"
+        });
         callback();
         close();
       })
       .catch(res => {
+        ReactGA.event({
+          category: "Reset Password",
+          action: "Failure"
+        });
         ErrorHandler.catchErrors(res.graphQLErrors);
       });
     close();

@@ -91,6 +91,22 @@ class ProfilesContainer extends Component {
     this.props.ErrorHandler.setBreadcrumb(
       "Message Modal visible:" + msgModalVisible
     );
+
+    if (this.props.msgsSent > 4 && msgModalVisible) {
+      if (!toast.isActive("maxmsgs")) {
+        toast.info(
+          this.props.t(
+            "common:Daily Direct Message Limit Reached. *Only 5 allowed daily."
+          ),
+          {
+            position: toast.POSITION.TOP_CENTER,
+            toastId: "maxmsgs"
+          }
+        );
+      }
+      return;
+    }
+
     if (!this.props.isBlackMember) {
       if (!toast.isActive("directerr")) {
         toast.info(
@@ -126,6 +142,7 @@ class ProfilesContainer extends Component {
   handleLike = (likeProfile, profile, featured) => {
     const { ErrorHandler, t, ReactGA, likesSent } = this.props;
     ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
+
     if (likesSent > 24) {
       this.setMaxLikeDlgVisible();
       return;

@@ -34,6 +34,7 @@
 
 .tooltip .tooltiptext.show {
   visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .tooltip .tooltiptext-right {

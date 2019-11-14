@@ -268,6 +268,7 @@ class ProfilePage extends Component {
                               likesSent={
                                 this.props.session.currentuser.likesSent
                               }
+                              msgsSent={this.props.session.currentuser.msgsSent}
                               showShareModal={() =>
                                 this.setShareModalVisible(true, profile)
                               }

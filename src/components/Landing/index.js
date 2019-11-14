@@ -287,36 +287,40 @@ class Landing extends PureComponent {
                           {t("resetpass")}
                         </span>
                       </li>
-                      <li className="tooltip" style={{ zIndex: 0 }}>
+                      <li style={{ zIndex: 0 }}>
                         {tooltip && (
-                          <span className="tooltiptext show">
-                            <div>
-                              {" "}
-                              <span onClick={() => history.push("/tos")}>
-                                {t("common:Terms")}
-                              </span>
-                            </div>
-                            <div>
-                              {" "}
-                              <span onClick={() => history.push("/privacy")}>
-                                {t("common:Privacy")}
-                              </span>
-                            </div>
-                            <div>
-                              {" "}
-                              <span onClick={() => history.push("/antispam")}>
-                                {t("antispam")}
-                              </span>
-                            </div>
-                            <div>
-                              {" "}
-                              <span
-                                onClick={() => history.push("/lawenforcement")}
-                              >
-                                {t("lawenf")}
-                              </span>
-                            </div>
-                          </span>
+                          <div className="tooltip">
+                            <span className="tooltiptext show">
+                              <div>
+                                {" "}
+                                <span onClick={() => history.push("/tos")}>
+                                  {t("common:Terms")}
+                                </span>
+                              </div>
+                              <div>
+                                {" "}
+                                <span onClick={() => history.push("/privacy")}>
+                                  {t("common:Privacy")}
+                                </span>
+                              </div>
+                              <div>
+                                {" "}
+                                <span onClick={() => history.push("/antispam")}>
+                                  {t("antispam")}
+                                </span>
+                              </div>
+                              <div>
+                                {" "}
+                                <span
+                                  onClick={() =>
+                                    history.push("/lawenforcement")
+                                  }
+                                >
+                                  {t("lawenf")}
+                                </span>
+                              </div>
+                            </span>
+                          </div>
                         )}
                         <span
                           onClick={() => this.setState({ tooltip: !tooltip })}
@@ -358,6 +362,7 @@ class Landing extends PureComponent {
             ErrorHandler={ErrorHandler}
             history={history}
             lang={lang}
+            ReactGA={ReactGA}
           />
         )}
         {resetPhoneVisible && (
@@ -371,6 +376,7 @@ class Landing extends PureComponent {
             ErrorHandler={ErrorHandler}
             history={history}
             lang={lang}
+            ReactGA={ReactGA}
           />
         )}
         {showContactModal && (

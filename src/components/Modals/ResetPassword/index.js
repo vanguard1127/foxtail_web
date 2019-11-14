@@ -86,7 +86,8 @@ class ResetPassword extends PureComponent {
       lang,
       tReady,
       isLoggedIn,
-      callback
+      callback,
+      ReactGA
     } = this.props;
     const {
       code,
@@ -240,6 +241,7 @@ class ResetPassword extends PureComponent {
                                 close={close}
                                 ErrorHandler={ErrorHandler}
                                 callback={callback}
+                                ReactGA={ReactGA}
                               />
                             </ErrorHandler.ErrorBoundary>
                           )}

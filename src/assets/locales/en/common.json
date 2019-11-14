@@ -254,5 +254,11 @@
   "Email has been confirmed.": "Email has been confirmed.",
   "Email confirmation has been used or is expired, please go to your 'My Account' page to request another.": "Email confirmation has been used or is expired, please go to your 'My Account' page to request another.",
   "This link has expired please request again.": "This link has expired please request again.",
-  "Phone numbers are not allowed in your bio": "Phone numbers are not allowed in your bio"
+  "Phone numbers are not allowed in your username.": "Phone numbers are not allowed in your username.",
+  "Emails are not allowed in your username.": "Emails are not allowed in your username.",
+  "Links are not allowed in your username.": "Links are not allowed in your username.",
+  "Phone numbers are not allowed in your bio.": "Phone numbers are not allowed in your bio.",
+  "Links are not allowed in your bio.": "Links are not allowed in your bio.",
+  "Email are not allowed in your bio.": "Email are not allowed in your bio.",
+  "Daily Direct Message Limit Reached. *Only 5 allowed daily.": "Daily Direct Message Limit Reached. *Only 5 allowed daily."
 }

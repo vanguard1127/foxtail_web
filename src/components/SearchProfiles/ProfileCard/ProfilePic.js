@@ -5,7 +5,7 @@ class ProfilePic extends PureComponent {
   render() {
     const { profilePic } = this.props;
     return (
-      <div className="image" >
+      <div className="image">
         <img src={profilePic !== "" ? profilePic : NoProfileImg} alt="" />
       </div>
     );

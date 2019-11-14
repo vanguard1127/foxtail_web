@@ -16,7 +16,7 @@ class ResetPhoneButton extends PureComponent {
     this.mounted = false;
   }
   handleFBReturn = ({ state, code }, fbResetPhone) => {
-    const { t, ErrorHandler, history } = this.props;
+    const { t, ErrorHandler, history, ReactGA } = this.props;
     if (!state || !code) {
       return;
     }
@@ -33,18 +33,18 @@ class ResetPhoneButton extends PureComponent {
           return;
         } else {
           alert(t("phoneupd"));
-          localStorage.setItem(
-            "token",
-            data.fbResetPhone.find(token => token.access === "auth").token
-          );
-          localStorage.setItem(
-            "refreshToken",
-            data.fbResetPhone.find(token => token.access === "refresh").token
-          );
+          ReactGA.event({
+            category: "Reset Phone",
+            action: "Success"
+          });
           history.push("/members");
         }
       })
       .catch(res => {
+        ReactGA.event({
+          category: "Reset Phone",
+          action: "Failuer"
+        });
         ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };

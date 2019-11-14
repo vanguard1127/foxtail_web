@@ -63,7 +63,7 @@ class BecomeBlackMember extends PureComponent {
               </li>
               <li>
                 <i className="fas fa-angle-right"></i>
-                {t("morecoming")}
+                {t("unlimlikes")}
               </li>
             </ul>
             <p className="get-more">
