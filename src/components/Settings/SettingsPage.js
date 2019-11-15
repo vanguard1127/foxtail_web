@@ -27,6 +27,7 @@ import Modal from "../common/Modal";
 import { toast } from "react-toastify";
 import CoupleProfileModal from "../Modals/CoupleProfile";
 import BecomeBlackMemberModal from "../Modals/BecomeBlackMember";
+import CreditCardModal from "../Modals/CreditCard";
 
 class SettingsPage extends Component {
   constructor(props) {
@@ -1014,7 +1015,7 @@ class SettingsPage extends Component {
                 />
               )}
               {showBlackPopup && (
-                <BecomeBlackMemberModal
+                <CreditCardModal
                   close={this.toggleBlackPopup}
                   userID={currentuser.userID}
                   ErrorHandler={ErrorHandler}

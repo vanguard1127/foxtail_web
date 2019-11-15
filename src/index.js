@@ -400,12 +400,6 @@ window.onresize(); // called to initially set the height.
 //prevent context menu
 document.addEventListener("contextmenu", preventContextMenu);
 
-//Trying to remove the images for aws rerender images
-deleteFromCache({
-  cache,
-  query: "searchProfiles"
-});
-
 render(
   <ApolloProvider client={client}>
     <Root />

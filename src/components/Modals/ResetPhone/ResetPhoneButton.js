@@ -20,33 +20,38 @@ class ResetPhoneButton extends PureComponent {
     if (!state || !code) {
       return;
     }
+
     if (this.mounted) {
-      this.setState({
-        csrf: state,
-        code
-      });
-    }
-    fbResetPhone()
-      .then(async ({ data }) => {
-        if (data.fbResetPhone === null) {
-          alert(t("noUserError") + ".");
-          return;
-        } else {
-          alert(t("phoneupd"));
-          ReactGA.event({
-            category: "Reset Phone",
-            action: "Success"
-          });
-          history.push("/members");
+      this.setState(
+        {
+          csrf: state,
+          code
+        },
+        () => {
+          fbResetPhone()
+            .then(async ({ data }) => {
+              if (data.fbResetPhone === null) {
+                alert(t("noUserError") + ".");
+                return;
+              } else {
+                alert(t("phoneupd"));
+                ReactGA.event({
+                  category: "Reset Phone",
+                  action: "Success"
+                });
+                history.push("/members");
+              }
+            })
+            .catch(res => {
+              ReactGA.event({
+                category: "Reset Phone",
+                action: "Failuer"
+              });
+              ErrorHandler.catchErrors(res.graphQLErrors);
+            });
         }
-      })
-      .catch(res => {
-        ReactGA.event({
-          category: "Reset Phone",
-          action: "Failuer"
-        });
-        ErrorHandler.catchErrors(res.graphQLErrors);
-      });
+      );
+    }
   };
   render() {
     const { csrf, code, lang } = this.state;
