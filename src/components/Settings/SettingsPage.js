@@ -885,6 +885,7 @@ class SettingsPage extends Component {
                                 lang={lang}
                                 ReactGA={ReactGA}
                                 ccLast4={ccLast4}
+                                toggleBlackPopup={this.toggleBlackPopup}
                               />
                             </div>
                           )}
@@ -1020,11 +1021,11 @@ class SettingsPage extends Component {
               {showBlackPopup && (
                 <CreditCardModal
                   close={this.toggleBlackPopup}
-                  userID={currentuser.userID}
                   ErrorHandler={ErrorHandler}
                   notifyClient={this.notifyClient}
                   lang={lang}
                   t={t}
+                  ccLast4={ccLast4}
                 />
               )}
               {showSharePopup && (

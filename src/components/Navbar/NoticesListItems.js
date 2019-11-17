@@ -77,12 +77,12 @@ class NoticesListItems extends Component {
                 this.props.noMoreItems();
                 return;
               }
-              previousResult.getNotifications.notifications = [
+              const newNotices = [
                 ...previousResult.getNotifications.notifications,
                 ...fetchMoreResult.getNotifications.notifications
               ];
               this.props.setNotifications({
-                notifications: previousResult.getNotifications.notifications
+                notifications: newNotices
               });
             }
             return previousResult;
@@ -101,14 +101,15 @@ class NoticesListItems extends Component {
         if (!newNoticeSubscribe) {
           return prev;
         }
-        prev.getNotifications.notifications = [
+
+        const newNotices = [
           newNoticeSubscribe,
           ...prev.getNotifications.notifications
         ];
 
         if (this.mounted) {
           this.props.setNotifications({
-            notifications: prev.getNotifications.notifications
+            notifications: newNotices
           });
         }
 
