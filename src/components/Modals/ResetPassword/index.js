@@ -178,7 +178,7 @@ class ResetPassword extends PureComponent {
                     </div>
                   </div>
                 </div>
-              </section>{" "}
+              </section>
             </div>
           )}
         </Spring>

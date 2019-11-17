@@ -78,6 +78,7 @@ class SettingsPage extends Component {
     profilePic: "",
     profilePicUrl: "",
     flashCpl: false,
+    ccLast4: "",
     ...this.props.settings,
     publicPhotoList: undefined,
     privatePhotoList: undefined,
@@ -639,7 +640,8 @@ class SettingsPage extends Component {
       okAction,
       sexuality,
       errors,
-      password
+      password,
+      ccLast4
     } = this.state;
 
     const {
@@ -882,6 +884,7 @@ class SettingsPage extends Component {
                                 setDialogContent={this.setDialogContent}
                                 lang={lang}
                                 ReactGA={ReactGA}
+                                ccLast4={ccLast4}
                               />
                             </div>
                           )}
@@ -1021,6 +1024,7 @@ class SettingsPage extends Component {
                   ErrorHandler={ErrorHandler}
                   notifyClient={this.notifyClient}
                   lang={lang}
+                  t={t}
                 />
               )}
               {showSharePopup && (

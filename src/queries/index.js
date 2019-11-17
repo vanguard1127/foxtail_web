@@ -97,8 +97,20 @@ export const NEW_NOTICE_SUB = gql`
 // `;
 
 export const CREATE_SUBSCRIPTION = gql`
-  mutation($token: String!, $ccLast4: String!) {
-    createSubcription(token: $token, ccLast4: $ccLast4)
+  mutation(
+    $ccnum: String!
+    $exp: String!
+    $cvc: String!
+    $fname: String!
+    $lname: String!
+  ) {
+    createSubcription(
+      ccnum: $ccnum
+      exp: $exp
+      cvc: $cvc
+      fname: $fname
+      lname: $lname
+    )
   }
 `;
 
@@ -843,7 +855,6 @@ export const GET_CURRENT_USER = gql`
         active
         renewalDate
       }
-      ccLast4
       isProfileOK
       isEmailOK
       tours
@@ -922,6 +933,7 @@ export const GET_SETTINGS = gql`
       desires
       sexuality
       password
+      ccLast4
     }
   }
 `;
