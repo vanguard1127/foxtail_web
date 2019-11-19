@@ -388,7 +388,8 @@ class ConfirmPhone extends PureComponent {
       lang,
       tReady,
       sendConfirmationMessage,
-      type
+      type,
+      title
     } = this.props;
 
     if (!tReady) {
@@ -417,7 +418,7 @@ class ConfirmPhone extends PureComponent {
                 <div className="container">
                   <div className="offset-md-3 col-md-6">
                     <div className="popup">
-                      <span className="head">{t("confirmphone")}</span>
+                      <span className="head">{title}</span>
                       <a className="close" onClick={() => close()} />
                       <div className="form">
                         <div className="form-content">
@@ -445,7 +446,7 @@ class ConfirmPhone extends PureComponent {
               <div className="container">
                 <div className="offset-md-3 col-md-6">
                   <div className="popup">
-                    <span className="head">{t("updphone")}</span>
+                    <span className="head">{title}</span>
                     <a className="close" onClick={() => close()} />
                     <form className="form">
                       <div className="form-content">

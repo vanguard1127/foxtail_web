@@ -60,12 +60,22 @@ class NoticesItem extends Component {
   };
 
   skipForward = () => {
+    const skip =
+      this.state.skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT);
     if (this.mounted) {
       this.setState({
-        skip: this.state.skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)
+        skip
       });
     }
-    return this.state.skip;
+    return skip;
+  };
+
+  resetSkip = () => {
+    if (this.mounted) {
+      this.setState({
+        skip: 0
+      });
+    }
   };
 
   handleCloseAlert = notificationID => {
@@ -197,6 +207,7 @@ class NoticesItem extends Component {
                 skip={skip}
                 recount={recount}
                 skipForward={this.skipForward}
+                resetSkip={this.resetSkip}
               />
             </span>
           );

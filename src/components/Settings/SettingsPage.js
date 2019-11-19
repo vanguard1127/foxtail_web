@@ -64,6 +64,7 @@ class SettingsPage extends Component {
     showDesiresPopup: false,
     showPhotoVerPopup: false,
     showBlackPopup: this.props.showBlkModal || false,
+    showCCModal: false,
     showImgEditorPopup: false,
     showImgCropperPopup: false,
     showSharePopup: false,
@@ -129,6 +130,7 @@ class SettingsPage extends Component {
       this.state.profilePicUrl !== nextState.profilePicUrl ||
       this.state.publicPhotoList !== nextState.publicPhotoList ||
       this.state.privatePhotoList !== nextState.privatePhotoList ||
+      this.state.showCCModal !== nextState.showCCModal ||
       this.state.showBlackPopup !== nextState.showBlackPopup ||
       this.state.shareProfile !== nextState.shareProfile ||
       this.state.showSharePopup !== nextState.showSharePopup ||
@@ -474,6 +476,18 @@ class SettingsPage extends Component {
     }
   };
 
+  toggleCCModal = () => {
+    this.setErrorHandler("Toggle Blk popup");
+    if (this.mounted) {
+      this.setState(
+        {
+          showCCModal: !this.state.showCCModal
+        },
+        this.toggleScroll(!this.state.showCCModal)
+      );
+    }
+  };
+
   toggleSharePopup = shareProfile => {
     this.setErrorHandler("Toggle Share popup");
     if (this.mounted) {
@@ -641,7 +655,8 @@ class SettingsPage extends Component {
       sexuality,
       errors,
       password,
-      ccLast4
+      ccLast4,
+      showCCModal
     } = this.state;
 
     const {
@@ -885,7 +900,7 @@ class SettingsPage extends Component {
                                 lang={lang}
                                 ReactGA={ReactGA}
                                 ccLast4={ccLast4}
-                                toggleBlackPopup={this.toggleBlackPopup}
+                                toggleCCModal={this.toggleCCModal}
                               />
                             </div>
                           )}
@@ -1019,8 +1034,20 @@ class SettingsPage extends Component {
                 />
               )}
               {showBlackPopup && (
-                <CreditCardModal
+                <BecomeBlackMemberModal
                   close={this.toggleBlackPopup}
+                  userID={currentuser.userID}
+                  ErrorHandler={ErrorHandler}
+                  notifyClient={this.notifyClient}
+                  lang={lang}
+                  t={t}
+                  ccLast4={ccLast4}
+                  toggleCCModal={this.toggleCCModal}
+                />
+              )}
+              {showCCModal && (
+                <CreditCardModal
+                  close={this.toggleCCModal}
                   ErrorHandler={ErrorHandler}
                   notifyClient={this.notifyClient}
                   lang={lang}

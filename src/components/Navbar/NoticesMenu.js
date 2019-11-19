@@ -24,7 +24,8 @@ class NoticesMenu extends Component {
       limit,
       skip,
       recount,
-      skipForward
+      skipForward,
+      resetSkip
     } = this.props;
 
     return (
@@ -85,6 +86,7 @@ class NoticesMenu extends Component {
                 recount={recount}
                 notifications={data.getNotifications.notifications}
                 skipForward={skipForward}
+                resetSkip={resetSkip}
               />
             );
           }}

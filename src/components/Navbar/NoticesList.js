@@ -39,7 +39,8 @@ class NoticesList extends Component {
       fetchMore,
       readNotices,
       setAlert,
-      skipForward
+      skipForward,
+      resetSkip
     } = this.props;
     const { notifications } = this.state;
     return (
@@ -56,6 +57,7 @@ class NoticesList extends Component {
         readNotices={readNotices}
         setAlert={setAlert}
         skipForward={skipForward}
+        resetSkip={resetSkip}
       />
     );
   }

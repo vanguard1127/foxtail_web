@@ -68,8 +68,9 @@ class ResetPhoneButton extends PureComponent {
               onResponse={resp => {
                 this.handleFBReturn(resp, fbResetPhone);
               }}
+              title={t("common:updphone")}
             >
-              <span className="color">{t("updphone")}</span>
+              <span className="color">{t("common:update")}</span>
             </FirebaseAuth>
           );
         }}

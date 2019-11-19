@@ -54,22 +54,31 @@ class FirebaseAuth extends React.PureComponent {
   }
 
   render() {
+    const {
+      ErrorHandler,
+      type,
+      csrf,
+      onResponse,
+      children,
+      title
+    } = this.props;
     return (
       <>
         {this.state.showPhoneDialog ? (
           <ConfirmPhone
-            ErrorHandler={this.props.ErrorHandler}
+            ErrorHandler={ErrorHandler}
             sendConfirmationMessage={this.sendCode}
             confirmPhone={this.confirmPhone}
-            type={this.props.type}
+            title={title}
+            type={type}
             onSuccess={(result, password) => {
               this.setState(
                 {
                   showPhoneDialog: false
                 },
                 () => {
-                  this.props.onResponse({
-                    state: this.props.csrf,
+                  onResponse({
+                    state: csrf,
                     code: result,
                     password
                   });
@@ -84,7 +93,7 @@ class FirebaseAuth extends React.PureComponent {
             sendCode={this.sendCode}
           ></ConfirmPhone>
         ) : null}
-        <span onClick={this.signIn}>{this.props.children}</span>
+        <span onClick={this.signIn}>{children}</span>
 
         <div id="recaptcha-container" style={{ display: "none" }}></div>
       </>

@@ -19,7 +19,7 @@ class ManageBlackSub extends Component {
       setDialogContent,
       lang,
       ccLast4,
-      toggleBlackPopup,
+      toggleCCModal,
       ReactGA
     } = this.props;
     return (
@@ -51,10 +51,7 @@ class ManageBlackSub extends Component {
             )}
             <div className="col-md-6">
               <div className="verification-box">
-                <span
-                  className="clickverify-btn photo"
-                  onClick={toggleBlackPopup}
-                >
+                <span className="clickverify-btn photo" onClick={toggleCCModal}>
                   {ccLast4 ? t("cardchange") : t("addchange")}
                 </span>
               </div>

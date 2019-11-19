@@ -22,6 +22,7 @@ const SignupButton = ({
       ErrorHandler={ErrorHandler}
       onResponse={resp => handleFirebaseReturn(resp, fbResolve)}
       type="signup"
+      title={t("pleasever")}
     >
       <div className="submit">
         <button className="btn">{t("getstarted")}</button>

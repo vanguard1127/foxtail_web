@@ -267,11 +267,11 @@ class AcctSettings extends Component {
             />
           )}
           <Dialog onClose={this.toggleClearPassDlg} open={clearPassDlg}>
-            <DialogTitle id="alert-dialog-title">{t("includemsg")}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">{t("removepass")}</DialogTitle>
 
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                {t("includemsgdesc")}
+                {t("removepassdes")}
               </DialogContentText>
             </DialogContent>
 
@@ -313,6 +313,8 @@ class AcctSettings extends Component {
               t={t}
               close={() => {
                 this.setState({ resetPassVisible: false });
+                this.props.setValue({ name: "password", value: "" });
+                this.props.refetchUser();
               }}
               ErrorHandler={ErrorHandler}
               lang={lang}

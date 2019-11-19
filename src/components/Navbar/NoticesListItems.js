@@ -21,6 +21,7 @@ class NoticesListItems extends Component {
   }
 
   componentWillUnmount() {
+    this.props.resetSkip();
     this.mounted = false;
   }
 
@@ -67,25 +68,26 @@ class NoticesListItems extends Component {
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (this.mounted) {
               this.setState({ loading: false });
-
-              if (
-                !fetchMoreResult ||
-                !fetchMoreResult.getNotifications ||
-                fetchMoreResult.getNotifications.notifications.length === 0
-              ) {
+            }
+            if (
+              !fetchMoreResult ||
+              !fetchMoreResult.getNotifications ||
+              fetchMoreResult.getNotifications.notifications.length === 0
+            ) {
+              if (this.mounted) {
                 this.setState({ hasMore: false });
-                this.props.noMoreItems();
-                return;
               }
-              const newNotices = [
+              return;
+            }
+
+            this.props.setNotifications({
+              notifications: [
                 ...previousResult.getNotifications.notifications,
                 ...fetchMoreResult.getNotifications.notifications
-              ];
-              this.props.setNotifications({
-                notifications: newNotices
-              });
-            }
-            return previousResult;
+              ]
+            });
+
+            return;
           }
         });
       });

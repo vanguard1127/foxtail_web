@@ -235,7 +235,7 @@
   "ID Invalid.": "ID Invalid.",
   "Sex has been updated.": "Sex has been updated.",
   "Username has been updated.": "Username has been updated.",
-  "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox.": "Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox.",
+  "Please wait at least 5 mintues to recieve email verification. Check Spam, if it's not in your inbox.": "Please wait at least 5 mintues to recieve email verification. Check Spam, if it's not in your inbox.",
   "Profile no longer exists": "Profile no longer exists",
   "Reset email has been sent to you within the last 5 minutes. Please check your spam.": "Reset email has been sent to you within the last 5 minutes. Please check your spam.",
   "Email has been sent to the account associated with this phone number. If it exists.": "Email has been sent to the account associated with this phone number. If it exists.",
@@ -269,5 +269,7 @@
   "Lastly, please take a moment to read our rules found at https://www.foxtailapp.com/tos": "Lastly, please take a moment to read our rules found at https://www.foxtailapp.com/tos",
   "-Stray Together-": "-Stray Together-",
   "Your account has been deleted from Foxtail. If you have a moment, please let us know if there is anything we can do to improve at support@foxtailapp.com.": "Your account has been deleted from Foxtail. If you have a moment, please let us know if there is anything we can do to improve at support@foxtailapp.com.",
-  "Your Foxtail Account has been Deleted.": "Your Foxtail Account has been Deleted."
+  "Your Foxtail Account has been Deleted.": "Your Foxtail Account has been Deleted.",
+  "updphone": "Update Phone Login",
+  "update": "Update"
 }

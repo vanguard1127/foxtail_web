@@ -60,9 +60,10 @@ class ChangePhoneBtn extends PureComponent {
               language={lang}
               ErrorHandler={ErrorHandler}
               onResponse={resp => this.handleFBReturn(resp, fbResetPhone)}
+              title={t("common:updphone")}
             >
               <div className="verification-box">
-                <span className="clickverify-btn">{t("changephone")}</span>
+                <span className="clickverify-btn">{t("updatephone")}</span>
               </div>
             </FirebaseAuth>
           );

@@ -48,7 +48,7 @@
   "cardchange": "Update Credit Card",
   "addchange": "Add Credit Card",
   "changenum": "Phone number has been changed",
-  "changephone": "Change Phone",
+  "updatephone": "Update Phone",
   "invemail": "Invalid email address",
   "emailreq": "Email is required!",
   "unreq": "Username is required!",
@@ -75,5 +75,8 @@
   "recvemail": "Receive E-mails: Recieve notification emails such as new messages, event reminders, etc.",
   "showonl": "Show Online Status (Black only): Show/Hide your online status from members",
   "visiblelike": "Visible to Liked Only (Black only): Only show your profile to those you've liked",
-  "onlyavailblk": "This feature is only available for Black members"
+  "onlyavailblk": "This feature is only available for Black members",
+  "2faenable": "Set Password",
+  "removepass": "Remove Password",
+  "removepassdes": "This will remove your password. You will no longer need to enter a password to login."
 }
