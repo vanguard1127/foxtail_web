@@ -759,11 +759,12 @@ class SettingsPage extends Component {
                               interestedIn={interestedIn}
                               city={city}
                               isBlackMember={currentuser.blackMember.active}
-                              setValue={({ name, value }) =>
+                              setValue={({ name, value, doRefetch }) =>
                                 this.setValue({
                                   name,
                                   value,
-                                  updateSettings
+                                  updateSettings,
+                                  doRefetch
                                 })
                               }
                               setLocationValues={({ lat, long, city }) =>

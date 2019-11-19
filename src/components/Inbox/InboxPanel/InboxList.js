@@ -98,8 +98,8 @@ class InboxList extends PureComponent {
       <>
         {messages.map((message, i) => {
           var timeAgo = TimeAgo(message.createdAt);
-
-          return this.renderItem(message, timeAgo);
+          const msgObj = { ...message };
+          return this.renderItem(msgObj, timeAgo);
         })}
       </>
     );

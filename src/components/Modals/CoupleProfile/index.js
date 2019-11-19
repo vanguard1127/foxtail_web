@@ -45,7 +45,7 @@ class CoupleProfile extends PureComponent {
       linkProfile()
         .then(({ data }) => {
           close();
-          window.location.reload();
+          window.location.reload(false);
         })
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -65,7 +65,7 @@ class CoupleProfile extends PureComponent {
       .then(({ data }) => {
         //switch to new screen for do u want to edit?
         close();
-        window.location.reload();
+        window.location.reload(false);
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);

@@ -179,11 +179,11 @@ class InboxPage extends Component {
         skip: 0
       }
     });
-    let newData = Array.from(getInbox);
 
-    const chatIndex = newData.findIndex(chat => chat.chatID === chatID);
+    const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
 
     if (chatIndex > -1) {
+      var newData = Array.from(getInbox);
       newData[chatIndex].unSeenCount = 0;
       cache.writeQuery({
         query: GET_INBOX,

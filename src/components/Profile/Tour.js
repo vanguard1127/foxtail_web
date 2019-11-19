@@ -3,7 +3,7 @@ import { withTranslation } from "react-i18next";
 import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 class ProfileTour extends PureComponent {
@@ -21,7 +21,7 @@ class ProfileTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        window.location.replace("/members");
+        this.setState({ redirect: true });
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -39,7 +39,7 @@ class ProfileTour extends PureComponent {
 
   render() {
     const { t } = this.props;
-    const { isTourOpen } = this.state;
+    const { isTourOpen, redirect } = this.state;
 
     let showDesire = '[data-tut="desires"]';
     if (window.innerWidth < 768) {
@@ -69,6 +69,9 @@ class ProfileTour extends PureComponent {
       }
     ];
 
+    if (redirect) {
+      return <Redirect to="/members" />;
+    }
     return (
       <Fragment>
         <section className="profile">

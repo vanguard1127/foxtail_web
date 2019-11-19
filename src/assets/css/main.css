@@ -7660,6 +7660,11 @@ section.login-modal .popup .form .form-content .dropdown span {
   position: relative;
 }
 
+section.login-modal.acctsetting .popup .form .form-content .dropdown span {
+  position: absolute;
+  top:25px;
+}
+
 .popup .page .form .content .select_desires {
   margin-bottom: 0px !important;
 }

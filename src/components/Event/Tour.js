@@ -4,7 +4,7 @@ import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
 import Spinner from "../common/Spinner";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 class EventTour extends PureComponent {
   state = {
     isTourOpen: true
@@ -21,7 +21,7 @@ class EventTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        window.location.replace("/events");
+        this.setState({ redirect: true });
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -39,7 +39,7 @@ class EventTour extends PureComponent {
 
   render() {
     const { t, tReady } = this.props;
-    const { isTourOpen } = this.state;
+    const { isTourOpen, redirect } = this.state;
     if (!tReady) {
       return <Spinner />;
     }
@@ -70,6 +70,10 @@ class EventTour extends PureComponent {
         content: `Feel free to like and message members in an event before going. It's more fun that way.`
       }
     ];
+
+    if (redirect) {
+      return <Redirect to="/events" />;
+    }
 
     return (
       <Fragment>

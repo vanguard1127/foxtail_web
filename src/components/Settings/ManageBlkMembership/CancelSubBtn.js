@@ -12,7 +12,7 @@ class CancelSubBtn extends PureComponent {
           action: "Cancelled"
         });
         this.props.notifyClient(this.props.t("cancelblk"));
-        window.location.reload();
+        window.location.reload(false);
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
