@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Waypoint } from "react-waypoint";
 class DateItem extends Component {
-  isUserInside = true;
   state = {
     position: "inside"
   };

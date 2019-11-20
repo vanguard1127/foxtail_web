@@ -94,6 +94,7 @@ class ProfileCard extends Component {
   setMessaged = profileID => {
     this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
     if (this.mounted) {
+      this.props.setMsgSent();
       this.setState({ msgModalVisible: false });
     }
   };
@@ -117,13 +118,13 @@ class ProfileCard extends Component {
     if (
       users.every(
         user =>
-          user.verifications.photo === true && user.verifications.std === true
+          user.verifications.photoVer.active && user.verifications.stdVer.active
       )
     ) {
       badge = "full-verified";
-    } else if (users.every(user => user.verifications.photo)) {
+    } else if (users.every(user => user.verifications.stdVer.active)) {
       badge = "std-verified";
-    } else if (users.every(user => user.verifications.std === true)) {
+    } else if (users.every(user => user.verifications.photoVer.active)) {
       badge = "profile-verified";
     }
 

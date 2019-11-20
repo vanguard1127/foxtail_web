@@ -3356,7 +3356,7 @@ section.go-events .header .settings-con {
   width: 100%;
   float: left;
   position: relative;
-  z-index: 2;
+  z-index: auto;
 }
 
 section.go-events .header .settings-con .dropdown {
@@ -5666,7 +5666,7 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9999999999999;
+  z-index: 1999999999;/*--For recaTCPA--*/
   -webkit-overflow-scrolling: touch;
 }
 

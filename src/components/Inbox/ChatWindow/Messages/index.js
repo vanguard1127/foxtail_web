@@ -5,12 +5,16 @@ import _ from "lodash";
 import DateItem from "./DateItem";
 
 class MessageList extends Component {
+  isUserInside = true;
   constructor(props) {
     super(props);
     this.messagesEnd = React.createRef();
   }
   state = {
-    hasMoreItems: true,
+    hasMoreItems:
+      this.props.messages.length < process.env.REACT_APP_CHATMSGS_LIMIT
+        ? false
+        : true,
     previousClientHeight: null,
     previousScrollHeight: null,
     previousScrollTop: 0,
@@ -36,10 +40,17 @@ class MessageList extends Component {
   componentDidMount() {
     this.mounted = true;
     this.scrollToBottom();
+    this.props.subscribeToMore();
   }
 
   componentWillUnmount() {
     this.mounted = false;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.messages !== this.props.messages) {
+      this.isUserInside && this.scrollToBottom();
+    }
   }
 
   handleEndScrollUp = ({ cursor }) => {
@@ -119,8 +130,9 @@ class MessageList extends Component {
   };
 
   render() {
-    const { children, currentUserID, t, dayjs, lang, messages } = this.props;
+    const { currentUserID, t, dayjs, lang, messages } = this.props;
     const { fetching, hasMoreItems } = this.state;
+
     const messageElements = _.flatten(
       _.chain(messages)
         .groupBy(datum =>
@@ -270,12 +282,14 @@ class MessageList extends Component {
             />
           </div>
           <div
-            style={{ float: "left", clear: "both" }}
+            style={{
+              float: "left",
+              clear: "both"
+            }}
             ref={el => {
               this.messagesEnd = el;
             }}
           />
-          {children}
         </div>
       </div>
     );

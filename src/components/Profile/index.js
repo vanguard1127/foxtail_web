@@ -153,6 +153,9 @@ class ProfilePage extends Component {
       });
   };
 
+  setMsgSent = () => {
+    this.setState({ matched: true });
+  };
   render() {
     const { id } = this.props.match.params;
     const {
@@ -272,6 +275,7 @@ class ProfilePage extends Component {
                               showShareModal={() =>
                                 this.setShareModalVisible(true, profile)
                               }
+                              setMsgSent={this.setMsgSent}
                             />
                             <DesiresSection
                               desires={desires}

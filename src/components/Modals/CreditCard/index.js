@@ -94,14 +94,13 @@ export default class PaymentForm extends React.Component {
                   <div className="popup">
                     <a className="close" onClick={() => close()} />
                     {!ccLast4 ? (
-                      <>
-                        {" "}
+                      <div className="head">
                         <h1>Upgrade to Black</h1>
                         <h4>
                           Only $10 a Month. 7-Day Money Back Guarantee. Cancel
                           Anytime.*
                         </h4>
-                      </>
+                      </div>
                     ) : (
                       <h1>Update Credit Card</h1>
                     )}
