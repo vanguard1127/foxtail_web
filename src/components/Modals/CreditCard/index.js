@@ -10,6 +10,8 @@ import {
 import { Mutation } from "react-apollo";
 import { CREATE_SUBSCRIPTION } from "../../../queries";
 import "./CreditCard.css";
+
+const CCLogosPng = require("../../../assets/img/elements/cclogos.png");
 const intialState = {
   ccnum: "",
   exp: "",
@@ -198,12 +200,17 @@ export default class PaymentForm extends React.Component {
                               Cancel
                             </button>
                           </div>
-                          <div className="form-content">
-                            <small>
-                              *No refunds. You will not be charged after
-                              cancellation.
-                            </small>
-                          </div>
+                          {!ccLast4 && (
+                            <div>
+                              <small>*No refunds after 7 days.</small>
+                            </div>
+                          )}
+                          <br />
+                          <img
+                            src={CCLogosPng}
+                            alt="credit card logos"
+                            style={{ maxWidth: "340px" }}
+                          />
                         </div>
                       </form>
                     </div>
