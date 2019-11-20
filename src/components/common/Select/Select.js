@@ -147,7 +147,7 @@ class Select extends PureComponent {
             (this.selectContainerRef = selectContainerRef)
           }
         >
-          {!selectedOption && <label>{label}</label>}
+          <label>{label}</label>
           {multiple && (
             <div className="multiple-options">
               {selectedOptions.length > 0 ? (
