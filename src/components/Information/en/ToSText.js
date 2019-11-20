@@ -1013,8 +1013,8 @@ const ToS = () => (
         and Services, all legal issues arising from or related to the use of the
         Products and Services shall be construed in accordance with, and all
         questions with respect thereto shall be determined by, the laws of
-        California, United States of America applicable to contracts entered
-        into and wholly to be performed within said province. Any controversy or
+        Georgia, United States of America applicable to contracts entered into
+        and wholly to be performed within said province. Any controversy or
         claim arising out of or relating to these Terms and Conditions or any
         user's use of the Products and Services shall be settled by binding
         arbitration in accordance with the commercial arbitration rules of the
@@ -1022,19 +1022,18 @@ const ToS = () => (
         Association. Any such controversy or claim shall be arbitrated on an
         individual basis, and shall not be consolidated in any arbitration with
         any claim or controversy of any other party. The arbitration shall be
-        conducted in San Diego, California, United States of America, and
-        judgment on the arbitration award may be entered into in any provincial
-        or federal court in the United States of America having jurisdiction
-        thereof. Any party seeking temporary or preliminary injunctive relief
-        may do so in any provincial or federal court in San Diego, California
-        having jurisdiction thereof. Except as set forth above, the provincial
-        and federal courts of California shall be the exclusive forum and venue
-        to resolve disputes arising out of or relating to these Terms and
-        Conditions or any user's use of the Products and Services. By using the
-        Products and Services and thereby agreeing to these Terms and
-        Conditions, users consent to personal jurisdiction and venue in the
-        provincial and federal courts in California with respect to all such
-        disputes.
+        conducted in Atlanta, Georgia, United States of America, and judgment on
+        the arbitration award may be entered into in any provincial or federal
+        court in the United States of America having jurisdiction thereof. Any
+        party seeking temporary or preliminary injunctive relief may do so in
+        any provincial or federal court in Atlanta, Georgia having jurisdiction
+        thereof. Except as set forth above, the provincial and federal courts of
+        Georgia shall be the exclusive forum and venue to resolve disputes
+        arising out of or relating to these Terms and Conditions or any user's
+        use of the Products and Services. By using the Products and Services and
+        thereby agreeing to these Terms and Conditions, users consent to
+        personal jurisdiction and venue in the provincial and federal courts in
+        Georgia with respect to all such disputes.
       </p>
       <p>
         22. CHANGES IN TERMS AND CONDITIONS AND CHANGES IN PRODUCTS AND SERVICES
