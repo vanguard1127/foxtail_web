@@ -70,32 +70,6 @@ export const NEW_NOTICE_SUB = gql`
   }
 `;
 
-/* Mutations */
-// export const CREATE_USER = gql`
-//   mutation(
-//     $username: String!
-//     $email: String!
-//     $phone: String!
-//     $gender: String!
-//     $interestedIn: [String]
-//     $dob: String!
-//     $lang: String
-//   ) {
-//     createUser(
-//       username: $username
-//       email: $email
-//       phone: $phone
-//       gender: $gender
-//       interestedIn: $interestedIn
-//       dob: $dob
-//       lang: $lang
-//     ) {
-//       token
-//       access
-//     }
-//   }
-// `;
-
 export const CREATE_SUBSCRIPTION = gql`
   mutation(
     $ccnum: String!

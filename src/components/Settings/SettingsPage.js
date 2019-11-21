@@ -730,9 +730,7 @@ class SettingsPage extends Component {
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}
                           blackModalToggle={this.toggleBlackPopup}
-                          shareModalToggle={isShareProfile =>
-                            this.toggleSharePopup(isShareProfile)
-                          }
+                          shareModalToggle={this.toggleSharePopup}
                           t={t}
                           flashCpl={flashCpl}
                           currentuser={currentuser}
@@ -1054,6 +1052,7 @@ class SettingsPage extends Component {
                   lang={lang}
                   t={t}
                   ccLast4={ccLast4}
+                  toggleSharePopup={this.toggleSharePopup}
                 />
               )}
               {showSharePopup && (

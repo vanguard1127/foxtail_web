@@ -201,7 +201,8 @@
   "shareme": "Share My Profile",
   "Get a free week of Black Membership when someone using your link joins Foxtail.": "Get a free week of Black Membership when someone using your link joins Foxtail.",
   "+1 week": "+1 week",
-  "Why are you downgrading your membership?": "Why are you downgrading your membership?",
+  "Why are you downgrading?": "Why are you downgrading?",
+  "Please note - The photo limit on free accounts is 4, we will have to remove any photos over this limit.": "Please note - The photo limit on free accounts is 4, we will have to remove any photos over this limit.",
   "Let us know what we can do to improve": "Let us know what we can do to improve",
   "Send Complaint & Remain a Black Member": "Send Complaint & Remain a Black Member",
   "Cancel Black Membership": "Cancel Black Membership",
@@ -272,5 +273,6 @@
   "Your Foxtail Account has been Deleted.": "Your Foxtail Account has been Deleted.",
   "updphone": "Update Phone Login",
   "update": "Update",
-  "Can't report yourself": "Can't report yourself"
+  "Can't report yourself": "Can't report yourself",
+  "Error processing your credit card. Please check and try again. If you continue to have problems, please contact us at support@foxtailapp.com": "Error processing your credit card. Please check and try again. If you continue to have problems, please contact us at support@foxtailapp.com"
 }

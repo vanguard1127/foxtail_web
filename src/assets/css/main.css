@@ -8190,12 +8190,14 @@ section.not-found .icon i.nico::before {
   font-style: normal;
 }
 
-section.not-found .icon i.nico.magnifier::before {
-  content: "\e822";
-}
 section.not-found .icon i.nico.blackmember::before {
   content: "\e823";
 }
+
+section.not-found .icon i.nico.magnifier::before {
+  content: "\e822";
+}
+
 section.not-found .icon i.nico.location::before {
   content: "\e820";
 }
@@ -10209,9 +10211,15 @@ animation: CycleC 30s ease infinite;
 }
 .rulesCon {
   margin: 25px;
-  overflow: auto;
   /*max-height: 58vh;*/
   border-bottom: 1px solid #dcdfe4;
+}
+.rulesCon .rulesScroll{
+  border-top: 1px solid #c40148;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+    max-height: 325px;
+    overflow: auto;
 }
 @media (max-height: 633px) {
   .rulesCon {
