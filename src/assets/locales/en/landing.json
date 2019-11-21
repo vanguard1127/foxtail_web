@@ -45,6 +45,6 @@
   "invemail": "Invalid email address",
   "emailreq": "Email is required!",
   "userreq": "Username is required!",
-  "pleaselogin": "Please login before using that link.",
+  "Please login first": "Please login before using that link.",
   "usernameLen": "Username must be between 3 and 30 characters."
 }

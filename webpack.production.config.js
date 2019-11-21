@@ -23,9 +23,9 @@ module.exports = {
         loader: "babel-loader",
         test: /\.js$/,
         exclude: [
-          "/node_modules/",
-          "/src/DevTools.js",
-          "/src/components/Landing/Signup_dev.js"
+          "/node_modules/"
+          //TODO:READD
+          // "/src/DevTools.js"
         ]
       },
       {

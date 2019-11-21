@@ -14,7 +14,7 @@ const go = () => {
   if (window.location.pathname === "/captcha") {
     window.location.replace("/");
   } else {
-    window.location.reload();
+    window.location.reload(false);
   }
 };
 const ReCaptcha = ({ t, tReady }) => {

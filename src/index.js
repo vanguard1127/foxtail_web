@@ -267,7 +267,7 @@ const Wrapper = withRouter(props => {
       return <ReCaptcha />;
     } else if (location.pathname === "/uh-oh") {
       return <NotFound />;
-    } else if (location.pathname === "/devtools") {
+    } else if (location.pathname === "/dev") {
       if (process.env.NODE_ENV === "development") {
         return <DevTools />;
       }

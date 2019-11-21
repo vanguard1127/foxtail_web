@@ -4,7 +4,6 @@ import DatePicker from "../common/DatePicker";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
 import Tooltip from "../common/TooltipCustom/Tooltip";
-
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
 
@@ -27,6 +26,7 @@ class SignupForm extends Component {
       .min(3, "usernameLen")
       .max(30, "usernameLen")
   });
+
   state = {
     username: "",
     email: "",
@@ -65,14 +65,20 @@ class SignupForm extends Component {
     }
     return false;
   }
+
   componentDidMount() {
     this.mounted = true;
-    this.props.ErrorHandler.setBreadcrumb("Signup Form loaded");
+    const { mem, eve, ErrorHandler, toast, t } = this.props;
+    ErrorHandler.setBreadcrumb("Signup Form loaded");
+    if (mem || eve) {
+      toast.info(t("Please login first"));
+    }
   }
 
   componentWillUnmount() {
     this.mounted = false;
   }
+
   setValue = ({ name, value, dontVer }) => {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
@@ -83,21 +89,22 @@ class SignupForm extends Component {
     }
   };
 
+  setFormValues = values => {
+    if (this.mounted) {
+      this.setState(values);
+    }
+  };
+
   validateForm = async () => {
     try {
       if (this.mounted) {
         await this.schema.validate(this.state);
         this.setState({ isValid: true, errors: {} });
-        this.props.setFormValues(this.state);
+        this.setFormValues(this.state);
         return true;
       }
     } catch (e) {
       let errors = { [e.path]: e.message };
-      // if (!this.props.toast.isActive("pleasefillin")) {
-      //   this.props.toast.error(this.props.t("pleasefillin"), {
-      //     toastId: "pleasefillin"
-      //   });
-      // }
       this.setState({ isValid: false, errors });
       return false;
     }
@@ -107,14 +114,7 @@ class SignupForm extends Component {
     error ? <div className="input-feedback">{error}</div> : null;
 
   render() {
-    const {
-      fbResolve,
-      handleFirebaseReturn,
-      t,
-      history,
-      lang,
-      ErrorHandler
-    } = this.props;
+    const { t, ErrorHandler, lang, refer, aff, history, ReactGA } = this.props;
 
     const {
       username,
@@ -226,22 +226,33 @@ class SignupForm extends Component {
                 </label>
                 <Tooltip title={t("cplsmsg")} placement="left-start">
                   <span className="tip" />
-                </Tooltip>{" "}
+                </Tooltip>
               </div>
             </div>
           </div>
 
           <SignupButton
             disabled={!isValid}
-            fbResolve={fbResolve}
-            handleFirebaseReturn={handleFirebaseReturn}
+            createData={{
+              username,
+              email,
+              dob,
+              interestedIn,
+              gender,
+              isCouple,
+              lang,
+              isCreate: true,
+              refer,
+              aff
+            }}
             setValue={this.setValue}
             validateForm={this.validateForm}
             ErrorHandler={ErrorHandler}
             t={t}
             lang={lang}
+            history={history}
+            ReactGA={ReactGA}
           />
-
           <div className="disclaim">
             {t(
               "This site uses your Phone Number to Authenticate your account ONLY"
