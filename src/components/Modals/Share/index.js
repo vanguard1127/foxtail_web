@@ -110,7 +110,13 @@ class Share extends Component {
 
           let refUrl = `${process.env.REACT_APP_CLIENT_URL}/${data.setFullLink}`;
           return (
-            <Modal header={modalBody} close={close}>
+            <Modal
+              header={modalBody}
+              close={close}
+              description={t(
+                "Share Foxtail and Get 1 week FREE Black Membership"
+              )}
+            >
               <ErrorBoundary>
                 <div
                   style={{

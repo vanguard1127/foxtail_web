@@ -7,7 +7,7 @@ import ShareForm from "./ShareForm";
 
 export default class PaymentForm extends React.Component {
   state = {
-    type: "share"
+    type: "cc"
   };
   componentDidMount() {
     this.mounted = true;

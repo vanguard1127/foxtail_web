@@ -52,7 +52,6 @@ import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
-import deleteFromCache from "././utils/deleteFromCache";
 
 //import runtime from "serviceworker-webpack-plugin/lib/runtime";
 

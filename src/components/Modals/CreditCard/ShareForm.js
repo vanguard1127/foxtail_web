@@ -51,8 +51,9 @@ const ShareForm = ({
             notified.
           </li>
           <li>
-            Please note: Black membership is activated once the member joins and
-            cancels 1 week later unless you get more referrals.
+            Please note: Black membership is activated once the member finishes
+            their profile. Your Black membership will cancel 1 week later unless
+            you get more referrals.
           </li>
         </ul>
       </p>

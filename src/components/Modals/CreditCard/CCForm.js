@@ -179,7 +179,17 @@ export default class CCForm extends React.Component {
                     return (
                       <button
                         className="color"
-                        onClick={() => this.handleSubmit(createSubscription)}
+                        disabled={
+                          ccnum === "" &&
+                          exp === "" &&
+                          cvc === "" &&
+                          fname === "" &&
+                          lname === ""
+                        }
+                        onClick={e => {
+                          e.preventDefault();
+                          this.handleSubmit(createSubscription);
+                        }}
                       >
                         {!ccLast4 ? "UPGRADE" : "Update"}
                       </button>
@@ -192,7 +202,11 @@ export default class CCForm extends React.Component {
               </div>
               {!ccLast4 && (
                 <div>
-                  <small>*No refunds after 7 days.</small>
+                  <small>*No refunds after 7 days. </small>
+                  <small>
+                    *Couple Profiles: Both members must upgrade to upgrade the
+                    profile.
+                  </small>
                 </div>
               )}
               <br />
