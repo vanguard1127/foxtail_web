@@ -67,7 +67,7 @@ export default class CCForm extends React.Component {
 
   handleSubmit = createSubscription => {
     if (this.mounted) {
-      const { notifyClient, ccLast4 } = this.props;
+      const { notifyClient, ccLast4, close } = this.props;
       createSubscription()
         .then(({ data }) => {
           const msg = !ccLast4
@@ -75,6 +75,7 @@ export default class CCForm extends React.Component {
             : "Credit Card Updated";
           notifyClient(msg);
           this.clearState();
+          window.location.reload(false);
         })
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);

@@ -80,7 +80,7 @@ class Share extends Component {
         body = t("invitation") + " " + event.eventname + ":\n" + "\n";
         return <div>{t("shareevent")}?</div>;
       } else if (profileID) {
-        body = "Check out my profile on Foxtail!" + "\n" + "\n";
+        body = "Check out my profile on Foxtail profile." + "\n" + "\n";
         return <div>{t("shareprof")}</div>;
       } else {
         body = t("checkoutfox");
