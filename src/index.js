@@ -3,7 +3,6 @@ import "regenerator-runtime/runtime";
 import "./assets/css/main.css";
 import "./docs/manifest.json";
 import "./assets/favicon.ico";
-import "react-datepicker/dist/react-datepicker.css";
 import "react-image-lightbox/style.css";
 import React from "react";
 import ReactGA from "react-ga";

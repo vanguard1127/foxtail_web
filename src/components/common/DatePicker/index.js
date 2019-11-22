@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 // import fi from "date-fns/locale/fi";
 // registerLocale("fi", fi);
 import "./DatePicker.css";
+require("react-datepicker/dist/react-datepicker.css");
 
 export default class CustomDatePicker extends Component {
   constructor(props) {
