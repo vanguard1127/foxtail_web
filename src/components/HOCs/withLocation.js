@@ -90,7 +90,10 @@ const withLocation = PassedComponent =>
           }
         }
       }
-      await this.props.refetch();
+
+      if (this.mounted) {
+        this.props.refetch();
+      }
     };
 
     componentDidMount() {

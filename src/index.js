@@ -3,6 +3,8 @@ import "regenerator-runtime/runtime";
 import "./assets/css/main.css";
 import "./docs/manifest.json";
 import "./assets/favicon.ico";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-image-lightbox/style.css";
 import React from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
@@ -50,7 +52,6 @@ import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
-import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
 
 //import runtime from "serviceworker-webpack-plugin/lib/runtime";
