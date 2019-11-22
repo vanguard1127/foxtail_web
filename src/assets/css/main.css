@@ -10210,9 +10210,8 @@ animation: CycleC 30s ease infinite;
   }
 }
 .rulesCon {
-  margin: 25px;
-  /*max-height: 58vh;*/
   border-bottom: 1px solid #dcdfe4;
+  text-align: initial !important;
 }
 .rulesCon .rulesScroll{
   border-top: 1px solid #c40148;
@@ -10220,12 +10219,9 @@ animation: CycleC 30s ease infinite;
     0 13px 16px 0 rgba(66, 81, 110, 0.04);
     max-height: 325px;
     overflow: auto;
+    padding: 10px;
 }
-@media (max-height: 633px) {
-  .rulesCon {
-    /*max-height: 54vh;*/
-  }
-}
+
 .rulesCon h2 {
   text-align: center;
   color: #f70016;
