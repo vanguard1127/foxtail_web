@@ -155,3 +155,8 @@ export const eventTypeOptions = [
   { label: "Public", value: "public" },
   { label: "Private", value: "private" }
 ];
+
+export const payTypeOptions = [
+  { label: "Credit Card", value: "cc" },
+  { label: "Free (Share)", value: "share" }
+];

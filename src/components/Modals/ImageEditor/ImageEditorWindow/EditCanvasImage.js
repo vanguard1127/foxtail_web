@@ -427,37 +427,37 @@ class EditCanvasImage extends PureComponent {
                       y
                     };
                   }}
-                  onTouchMove={res => {
-                    res.evt.preventDefault();
-                    const stage = res.currentTarget;
-                    var touch1 = res.evt.touches[0];
-                    var touch2 = res.evt.touches[1];
+                  // onTouchMove={res => {
+                  //   res.evt.preventDefault();
+                  //   const stage = res.currentTarget;
+                  //   var touch1 = res.evt.touches[0];
+                  //   var touch2 = res.evt.touches[1];
 
-                    if (touch1 && touch2) {
-                      var dist = this.getDistance(
-                        {
-                          x: touch1.clientX,
-                          y: touch1.clientY
-                        },
-                        {
-                          x: touch2.clientX,
-                          y: touch2.clientY
-                        }
-                      );
+                  //   if (touch1 && touch2) {
+                  //     var dist = this.getDistance(
+                  //       {
+                  //         x: touch1.clientX,
+                  //         y: touch1.clientY
+                  //       },
+                  //       {
+                  //         x: touch2.clientX,
+                  //         y: touch2.clientY
+                  //       }
+                  //     );
 
-                      if (!this.lastDist) {
-                        this.lastDist = dist;
-                      }
+                  //     if (!this.lastDist) {
+                  //       this.lastDist = dist;
+                  //     }
 
-                      var scale = (stage.scaleX() * dist) / this.lastDist;
-                      this.setScale(scale);
+                  //     var scale = (stage.scaleX() * dist) / this.lastDist;
+                  //     this.setScale(scale);
 
-                      this.lastDist = dist;
-                    }
-                  }}
-                  onTouchEnd={() => {
-                    this.lastDist = 0;
-                  }}
+                  //     this.lastDist = dist;
+                  //   }
+                  // }}
+                  // onTouchEnd={() => {
+                  //   this.lastDist = 0;
+                  // }}
                 >
                   {this.props.imageObject && (
                     <SourceImage

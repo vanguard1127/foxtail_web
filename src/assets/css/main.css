@@ -1865,7 +1865,6 @@ footer .brand .medias ul li i::before {
   height: 100%;
   float: left;
   display: block;
-  right: 3px;
 }
 
 footer .brand .medias ul li.facebook i::before {
@@ -5636,7 +5635,7 @@ section.meet-filter .range-con {
   margin: 0;
   float: left;
   display: inline-block;
-  width: 90% !important;
+  width: 80% !important;
 }
 
 .page .form .content .select_desires ul li {
@@ -7358,6 +7357,11 @@ footer.landing .links ul li span div:hover {
   color: #b50131;
 }
 
+
+footer.landing .tooltip .tooltiptext.show {
+  position: absolute;
+    left: -10vw;
+}
 section.login-modal {
   width: 100%;
   height: 100%;
@@ -7420,7 +7424,7 @@ section.login-modal .popup-container {
 
 section.login-modal .popup {
   width: 100%;
-  /* max-height: 88vh; */
+ max-height: 88vh;
   background-color: #fff;
   box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
   border-radius: 4px;
@@ -7437,19 +7441,20 @@ section.login-modal .popup.full {
 }
 
 section.login-modal.couples .popup.full,
-section.login-modal.black .popup.full {
+section.login-modal.black .popup.full,
+section.login-modal.rules .popup.full  {
   padding: 0;
   max-height: 88vh;
 }
 
-section.login-modal.create-event .popup form,
-section.login-modal.rules .popup form {
+section.login-modal.create-event .popup form{
   max-height: 70vh;
   overflow: auto;
 }
 
 section.login-modal.couples .popup.full .form-content,
-section.login-modal.black .popup.full .form-content {
+section.login-modal.black .popup.full .form-content,
+section.login-modal.rules .popup.full .form-content  {
   padding: 0px;
   margin: 0;
 }
@@ -9481,37 +9486,6 @@ img {
   /* z-index: 1; */
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  z-index: 1;
-}
-
-.tooltip .tooltiptext {
-  width: auto !important;
-  height: auto !important;
-  background-color: #fff;
-  color: #414141;
-  border: 1px solid #e9ebec;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  bottom: 125%;
-  left: 20%;
-  margin-left: -60px;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  padding: 10px 20px !important;
-  line-height: 2;
-  z-index: 1;
-}
-
-.tooltip .tooltiptext div {
-  width: max-content;
-  z-index: 99999999999;
-}
-
 .greenButton {
   width: 100%;
   height: 50px;
@@ -10218,7 +10192,7 @@ animation: CycleC 30s ease infinite;
   border-top: 1px solid #c40148;
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
     0 13px 16px 0 rgba(66, 81, 110, 0.04);
-    max-height: 325px;
+    max-height: 40vh;
     overflow: auto;
     padding: 10px;
 }
@@ -10268,7 +10242,6 @@ animation: CycleC 30s ease infinite;
   margin: 10px;
   font-style: italic;
   color: #f70016;
-  padding-bottom: 15px;
 }
 
 .cropper-bg {

@@ -40,6 +40,7 @@
   "remoundone": "This removes your photo from our server and cannot be undone.",
   "langlbl": "Language:",
   "sexlbl": "Sexuality:",
+  "paylbl": "Payment Type:",
   "cancelblk": "Black Membership Canceled Successfully",
   "cancelblktitle": "Cancel Black Membership",
   "canblkdes": "This will cancel your Black Membership. You will have access to all Black features until your billing cycle ends.",

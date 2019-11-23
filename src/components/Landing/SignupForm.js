@@ -224,7 +224,7 @@ class SignupForm extends Component {
                   <span />
                   <b>{t("coupleBox")}</b>
                 </label>
-                <Tooltip title={t("cplsmsg")} placement="left-start">
+                <Tooltip title={t("cplsmsg")} placement="left">
                   <span className="tip" />
                 </Tooltip>
               </div>
@@ -257,7 +257,7 @@ class SignupForm extends Component {
             {t(
               "This site uses your Phone Number to Authenticate your account ONLY"
             )}
-            <Tooltip title={t("phonemsg")} placement="left-start">
+            <Tooltip title={t("phonemsg")} placement="left">
               <span className="tip" />
             </Tooltip>
           </div>

@@ -65,6 +65,7 @@ const DailyLimitModal = ({ t, close }) => {
             </div>
             <div className="btm-msg">
               {t("Please follow all of our rules.")}
+              <br />
               <span className="saying">{t("Stay Sexy, Stay Safe")}</span>
             </div>
             <div className="btm-sitename">Foxtail.</div>

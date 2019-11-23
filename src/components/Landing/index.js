@@ -139,12 +139,11 @@ class Landing extends PureComponent {
                       <div className="welcome-text">
                         <h1>
                           <span className="landing-header">
-                            {/* <span className="single-line">{t("free")}</span>
+                            <span className="single-line">{t("free")}</span>
                             <span className="divider">|</span>
                             <span className="single-line">{t("private")}</span>
                             <span className="divider">|</span>
-                            <span className="single-line">18+ {t("fun")}</span> */}
-                            ***BETA***
+                            <span className="single-line">18+ {t("fun")}</span>
                           </span>
                         </h1>
                       </div>

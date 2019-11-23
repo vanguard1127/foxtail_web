@@ -52,7 +52,8 @@ class Modal extends Component {
       popupClass,
       noHeader,
       noFade,
-      showLoader
+      showLoader,
+      scrollable
     } = this.props;
 
     return (
@@ -98,11 +99,12 @@ class Modal extends Component {
                   </div>
                 </div>
               ) : (
-                <div
-                  className={fullWidth ? "" : ""}
-                  style={fullWidth ? {} : { maxWidth: "520px" }}
-                >
-                  <div className={`${fullWidth ? "popup full" : "popup"}`}>
+                <div style={fullWidth ? {} : { maxWidth: "520px" }}>
+                  <div
+                    className={`${
+                      scrollable || fullWidth ? "popup full" : "popup"
+                    }`}
+                  >
                     {!noHeader && <span className="head">{header}</span>}
                     {close && <a className="close" onClick={() => close()} />}
                     <form className="form">
