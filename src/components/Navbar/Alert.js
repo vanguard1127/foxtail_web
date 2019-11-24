@@ -7,11 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 const Alert = ({ alert, close, t, visible }) => {
   return (
-    <Dialog
-      onClose={() => close(alert.id)}
-      aria-labelledby="Image"
-      open={visible}
-    >
+    <Dialog onClose={() => close(alert.id)} aria-labelledby="Image" open={true}>
       {alert.text && (
         <DialogTitle id="alert-dialog-title">{t(alert.text)}</DialogTitle>
       )}

@@ -20,10 +20,11 @@ class AddressSearch extends Component {
       return;
     }
     const { isBlackMember, t } = this.props;
+
     if (isBlackMember !== undefined) {
-      if (!isBlackMember && this.props.address) {
+      if (!isBlackMember && this.props.address !== "") {
         if (!toast.isActive("onlyblkmem")) {
-          toast(t("onlyblkmem"), {
+          toast(t("Only Black Members can change location."), {
             toastId: "onlyblkmem"
           });
         }
@@ -114,7 +115,7 @@ class AddressSearch extends Component {
   };
 
   render() {
-    const { type, t, placeholder, hideReset, isBlackMember } = this.props;
+    const { type, t, placeholder, hideReset } = this.props;
     const { address } = this.state;
     const onError = (status, clearSuggestions) => {
       this.props.ErrorHandler && this.props.ErrorHandler.catchErrors(status);
@@ -135,19 +136,8 @@ class AddressSearch extends Component {
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
           return (
             <div className="search" style={{ position: "relative" }}>
-              {/* <label>Location</label> */}
               <div style={{ display: "flex" }}>
                 <input
-                  readOnly={isBlackMember !== undefined && !isBlackMember}
-                  onClick={() => {
-                    if (isBlackMember !== undefined && !isBlackMember) {
-                      if (!toast.isActive("onlyblkmem")) {
-                        toast(t("onlyblkmem"), {
-                          toastId: "onlyblkmem"
-                        });
-                      }
-                    }
-                  }}
                   aria-label="search location"
                   {...getInputProps({
                     placeholder,

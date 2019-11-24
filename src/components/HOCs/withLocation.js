@@ -74,12 +74,7 @@ const withLocation = PassedComponent =>
           lat: crd.latitude
         });
 
-        if (citycntry === null) {
-          const { toast } = require("react-toastify");
-          if (!toast.isActive("locerror")) {
-            toast.error(i18next.t("common:locerror"), { toastId: "locerror" });
-          }
-        } else {
+        if (citycntry !== null) {
           if (this.mounted) {
             this.setState({
               long: crd.longitude,

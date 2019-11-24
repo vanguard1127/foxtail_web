@@ -7428,7 +7428,7 @@ section.login-modal .popup-container {
 
 section.login-modal .popup {
   width: 100%;
- max-height: 88vh;
+ /* max-height: 88vh; */
   background-color: #fff;
   box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
   border-radius: 4px;
@@ -7448,6 +7448,10 @@ section.login-modal.couples .popup.full,
 section.login-modal.black .popup.full,
 section.login-modal.rules .popup.full  {
   padding: 0;
+  max-height: 88vh;
+}
+
+section.login-modal.verifications .popup.full{
   max-height: 88vh;
 }
 
