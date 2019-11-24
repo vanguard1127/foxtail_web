@@ -4870,6 +4870,10 @@ input.location-search-input {
   margin-bottom: 15px;
 }
 
+section.settings .page .content span.heading {
+  width: 99% !important;
+}
+
 .page .content span.heading span.tip {
   position: absolute;
   right: 20px;
@@ -7991,12 +7995,19 @@ section.settings .profile-bio-textarea {
 }
 
 section.settings textarea.bio {
-  /* padding-top: 38px !important; */
   border: unset !important;
   z-index: 0;
   margin-top: 38px;
   min-height: 80px !important;
   padding-top: 0 !important;
+}
+
+section.settings div.saving {
+  position: absolute;
+  right: 0px;
+  color: #9d9d9d;
+  font-size: 14px;
+  padding: 5px;
 }
 
 /* REVISION ADD */

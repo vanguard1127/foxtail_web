@@ -2,7 +2,7 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
 
-const DailyLimitModal = ({ t, close }) => {
+const RulesModal = ({ t, close }) => {
   return (
     <Modal
       header={t("Quick Rules Review")}
@@ -76,4 +76,4 @@ const DailyLimitModal = ({ t, close }) => {
   );
 };
 
-export default withTranslation("modals")(DailyLimitModal);
+export default withTranslation("modals")(RulesModal);

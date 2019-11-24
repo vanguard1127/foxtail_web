@@ -296,7 +296,7 @@ class ConfirmPhone extends PureComponent {
   renderLoading() {
     return (
       <div style={{ textAlign: "center" }}>
-        <CircularProgress />{" "}
+        <CircularProgress />
       </div>
     );
   }

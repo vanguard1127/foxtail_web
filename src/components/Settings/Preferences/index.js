@@ -49,7 +49,8 @@ class Preferences extends Component {
       lang
     } = this.props;
     const { interestedIn } = this.state;
-
+    console.log("INTERES", interestedIn);
+    console.log("PPINTERES", this.props.interestedIn);
     return (
       <ErrorBoundary>
         <div className="content">

@@ -29,7 +29,7 @@ const ShareForm = ({
           </div>
         </div>
       </section>
-      <p>
+      <div className="cont">
         Everyone with a Foxtail account has a personal invite code that you can
         share with friends interested in joining our sex-positive community.
         <br /> <br />
@@ -41,7 +41,7 @@ const ShareForm = ({
         be eligible for this reward. <br /> <br />
         Ways to find and share your invite code:
         <br />
-        <ul>
+        <div>
           <li>
             Click any share button, including social buttons, from within
             Foxtail. Share on any sites like Fet, Reddit, Facebook, etc…
@@ -55,8 +55,8 @@ const ShareForm = ({
             their profile. Your Black membership will cancel 1 week later unless
             you get more referrals.
           </li>
-        </ul>
-      </p>
+        </div>
+      </div>
       <div className="form-container">
         <form className="form">
           <div className="form-content">

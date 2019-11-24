@@ -139,7 +139,7 @@ class NavbarAuth extends PureComponent {
           if (loading || !data) {
             return (
               <div className="function">
-                <CircularProgress />
+                <CircularProgress size={30} color="secondary" />
               </div>
             );
           }
