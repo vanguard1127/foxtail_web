@@ -201,6 +201,7 @@ class ResetPassword extends PureComponent {
                         <div className="input password">
                           <input
                             type="password"
+                            tabIndex="1"
                             placeholder={t("2faplaceholder")}
                             value={password}
                             onChange={e => {
@@ -218,6 +219,7 @@ class ResetPassword extends PureComponent {
                         <div className="input password">
                           <input
                             type="Password"
+                            tabIndex="2"
                             placeholder={"Confirm Password"}
                             onChange={e =>
                               this.setValue({

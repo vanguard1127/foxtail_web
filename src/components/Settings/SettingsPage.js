@@ -172,6 +172,7 @@ class SettingsPage extends Component {
     clearAllBodyScrollLocks();
     this.mounted = false;
     window.ALLOWCONTEXTMENU = false;
+    toast.dismiss();
   }
 
   handlePhotoListChange = ({ file, key, url, isPrivate, isDeleted }) => {
@@ -602,6 +603,21 @@ class SettingsPage extends Component {
     return word === null;
   };
 
+  showPleaseComplete = () => {
+    if (!toast.isActive("plscomplete")) {
+      toast.info(
+        <div>
+          {this.props.t("common:plscomplete")}
+          <br />
+          {this.props.t("common:plscompleteExample")}
+        </div>,
+        {
+          toastId: "plscomplete"
+        }
+      );
+    }
+  };
+
   render() {
     const {
       lat,
@@ -668,6 +684,14 @@ class SettingsPage extends Component {
       history,
       ReactGA
     } = this.props;
+
+    if (
+      errors.about !== null ||
+      errors.desires !== null ||
+      errors.profilePic !== null
+    ) {
+      this.showPleaseComplete();
+    }
 
     return (
       <Mutation
@@ -744,7 +768,10 @@ class SettingsPage extends Component {
                         {(errors.about !== null ||
                           errors.desires !== null ||
                           errors.profilePic !== null) && (
-                          <span className="message">
+                          <span
+                            className="message"
+                            onClick={this.showPleaseComplete}
+                          >
                             {t("common:plscomplete")}
                           </span>
                         )}

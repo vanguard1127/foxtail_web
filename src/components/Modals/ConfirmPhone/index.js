@@ -112,6 +112,7 @@ class ConfirmPhone extends PureComponent {
         <div className="phoneText input">
           <input
             type="tel"
+            tabIndex="1"
             placeholder={t("phonenum")}
             onChange={e => {
               this.setValue({
@@ -128,6 +129,7 @@ class ConfirmPhone extends PureComponent {
         <div className="input password">
           <input
             type="Password"
+            tabIndex="2"
             placeholder={"Password"}
             onChange={e => {
               this.setValue({
@@ -142,6 +144,7 @@ class ConfirmPhone extends PureComponent {
         <div className="input password">
           <input
             type="Password"
+            tabIndex="3"
             placeholder={"Confirm Password"}
             onChange={e =>
               this.setValue({
@@ -157,6 +160,7 @@ class ConfirmPhone extends PureComponent {
           <ErrorHandler.ErrorBoundary>
             <span
               className={!isValid ? "disabled" : "color"}
+              tabIndex="4"
               onClick={() => {
                 if (!isValid) {
                   return;
@@ -237,6 +241,7 @@ class ConfirmPhone extends PureComponent {
                 value: e.target.value.replace(/\D/g, "")
               });
             }}
+            tabIndex="1"
             value={phoneNumber}
             autoFocus
           />
@@ -246,6 +251,7 @@ class ConfirmPhone extends PureComponent {
           <input
             type="Password"
             placeholder={"Password (if you have one)"}
+            tabIndex="2"
             onChange={e => {
               this.setValue({
                 name: "password",
@@ -259,6 +265,7 @@ class ConfirmPhone extends PureComponent {
         <div className="submit">
           <ErrorHandler.ErrorBoundary>
             <span
+              tabIndex="3"
               className="color"
               onClick={() => {
                 this.setState({

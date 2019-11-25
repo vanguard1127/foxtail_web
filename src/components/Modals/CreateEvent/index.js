@@ -320,6 +320,7 @@ class CreateEvent extends Component {
                         <div className="input">
                           <input
                             type="text"
+                            tabIndex="1"
                             required
                             id="eventname"
                             onChange={el =>
@@ -338,6 +339,7 @@ class CreateEvent extends Component {
                         <div className="input">
                           <input
                             type="text"
+                            tabIndex="2"
                             required
                             id="tagline"
                             onChange={el =>
@@ -354,6 +356,7 @@ class CreateEvent extends Component {
                       <div className="item">
                         <div className="textarea">
                           <textarea
+                            tabIndex="3"
                             placeholder={t("desctitle") + "..."}
                             onChange={el =>
                               this.setValue({

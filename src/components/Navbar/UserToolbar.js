@@ -72,6 +72,7 @@ const UserToolbar = ({
       this.props.ErrorHandler.catchErrors(res.graphQLErrors);
     });
   };
+
   return (
     <div className="function">
       {alertVisible && counts.alert && (

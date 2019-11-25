@@ -33,6 +33,7 @@ class ResetPasswordBtn extends PureComponent {
         {resetPassword => {
           return (
             <span
+              tabIndex="3"
               className="color"
               onClick={() => this.handleClick(resetPassword)}
               style={{ marginTop: "5px" }}

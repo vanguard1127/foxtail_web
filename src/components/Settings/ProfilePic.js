@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import Avatar from "react-avatar";
+const defaultPro = require("../../assets/img/elements/defaultPro.png");
 
 class ProfilePic extends PureComponent {
   render() {
@@ -17,7 +18,7 @@ class ProfilePic extends PureComponent {
           <div className="picture">
             <Avatar
               size="90"
-              src={profilePic}
+              src={profilePic ? profilePic : defaultPro}
               round
               onClick={() => history.push("/member/" + id)}
             />
