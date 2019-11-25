@@ -274,13 +274,9 @@ export const BLOCK_PROFILE = gql`
   }
 `;
 
-export const UPDATE_NOTIFICATIONS = gql`
-  mutation($notificationIDs: [String]!, $read: Boolean, $seen: Boolean) {
-    updateNotifications(
-      notificationIDs: $notificationIDs
-      read: $read
-      seen: $seen
-    )
+export const READ_NOTIFICATION = gql`
+  mutation($notificationID: String!) {
+    readNotification(notificationID: $notificationID)
   }
 `;
 

@@ -119,9 +119,9 @@ class NoticesListItems extends Component {
       }
     }));
 
-  markReadAndGo = ({ notificationIDs, targetID, type }) => {
+  markReadAndGo = ({ notificationID, targetID, type }) => {
     try {
-      this.props.readNotices(notificationIDs);
+      this.props.readNotices(notificationID);
 
       switch (type) {
         case "chat":
@@ -148,7 +148,7 @@ class NoticesListItems extends Component {
       t={this.props.t}
       dayjs={dayjs}
       lang={lang}
-      setAlert={this.props.setAlert}
+      showAlert={this.props.showAlert}
       markReadAndGo={this.markReadAndGo}
     />
   );

@@ -38,7 +38,7 @@ class NoticesList extends Component {
       subscribeToMore,
       fetchMore,
       readNotices,
-      setAlert,
+      showAlert,
       skipForward,
       resetSkip
     } = this.props;
@@ -55,7 +55,7 @@ class NoticesList extends Component {
         history={history}
         setNotifications={this.setNotifications}
         readNotices={readNotices}
-        setAlert={setAlert}
+        showAlert={showAlert}
         skipForward={skipForward}
         resetSkip={resetSkip}
       />

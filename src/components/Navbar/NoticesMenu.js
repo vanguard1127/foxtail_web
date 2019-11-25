@@ -15,11 +15,10 @@ class NoticesMenu extends Component {
   render() {
     const {
       t,
-      updateNotifications,
       count,
       ErrorHandler,
       history,
-      setAlert,
+      showAlert,
       readNotices,
       limit,
       skip,
@@ -74,12 +73,11 @@ class NoticesMenu extends Component {
             return (
               <NoticesList
                 history={history}
-                updateNotifications={updateNotifications}
                 subscribeToMore={subscribeToMore}
                 fetchMore={fetchMore}
                 t={t}
                 ErrorHandler={ErrorHandler}
-                setAlert={setAlert}
+                showAlert={showAlert}
                 readNotices={readNotices}
                 limit={limit}
                 skip={skip}

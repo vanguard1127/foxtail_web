@@ -380,6 +380,7 @@ class NavbarAuth extends PureComponent {
                         counts={data.getCounts}
                         msgAudio={msgAudio}
                         blinkInbox={newMsg}
+                        history={history}
                       />
                     )}
                   </div>

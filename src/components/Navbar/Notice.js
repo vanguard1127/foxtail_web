@@ -1,17 +1,17 @@
 import React from "react";
 const NoProfileImg = require("../../assets/img/elements/no-profile.png");
 
-const Notice = ({ notice, t, dayjs, lang, setAlert, markReadAndGo }) => {
+const Notice = ({ notice, t, dayjs, lang, showAlert, markReadAndGo }) => {
   if (notice.type === "alert") {
     return (
       <div
         className={notice.read ? "item read" : "item unread"}
         key={notice.id}
-        onClick={() => setAlert({ alert: notice })}
+        onClick={() => showAlert(notice)}
       >
         <span>
           <span className="avatar">
-            <img src={NoProfileImg} alt=""  />
+            <img src={NoProfileImg} alt="" />
           </span>
           <div>
             <span className="text">
@@ -36,7 +36,7 @@ const Notice = ({ notice, t, dayjs, lang, setAlert, markReadAndGo }) => {
         key={notice.id}
         onClick={() =>
           markReadAndGo({
-            notificationIDs: [notice.id],
+            notificationID: notice.id,
             targetID: notice.targetID,
             type: notice.type
           })
@@ -50,7 +50,6 @@ const Notice = ({ notice, t, dayjs, lang, setAlert, markReadAndGo }) => {
                   ? notice.fromProfile.profilePic
                   : NoProfileImg
               }
-              
               className="avatar"
               alt="avatar"
             />
