@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import dayjs from "dayjs";
 
 import { withTranslation } from "react-i18next";
+import produce from "immer";
 import RulesModal from "../Modals/Rules";
 import InboxPanel from "./InboxPanel/";
 import Header from "./Header";
@@ -12,7 +13,8 @@ import {
   GET_INBOX,
   REMOVE_SELF,
   GET_MESSAGES,
-  GET_COUNTS
+  GET_COUNTS,
+  NEW_MESSAGE_SUB
 } from "../../queries";
 import { Mutation, Query, withApollo } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
@@ -27,6 +29,7 @@ require("dayjs/locale/" + lang);
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class InboxPage extends Component {
+  unsubscribe;
   readChat;
   state = {
     unSeenCount: 0,
@@ -35,7 +38,7 @@ class InboxPage extends Component {
     msg: "",
     btnText: "",
     title: "",
-    chatOpen: false,
+    chatOpen: this.props.location.state ? true : false,
     chatID: this.props.location.state ? this.props.location.state.chatID : null,
     showRulesModal: false
   };
@@ -62,6 +65,9 @@ class InboxPage extends Component {
   }
 
   componentWillUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
     this.mounted = false;
     sessionStorage.setItem("page", null);
     sessionStorage.setItem("pid", null);
@@ -90,18 +96,16 @@ class InboxPage extends Component {
   };
 
   handleRemoveSelf = removeSelf => {
-    const { refetch, history, t } = this.props;
     const { chatID } = this.state;
     ErrorHandler.setBreadcrumb("Remove Self from Chat:" + chatID);
     removeSelf()
-      .then(({ data }) => {
+      .then(() => {
         if (this.mounted) {
           this.props.ReactGA.event({
             category: "Chat",
             action: "Remove Self"
           });
-          refetch();
-          history.push("/inbox");
+          this.closeChat();
         }
       })
       .catch(res => {
@@ -176,12 +180,13 @@ class InboxPage extends Component {
         skip: 0
       }
     });
-    let newData = Array.from(getInbox);
 
-    const chatIndex = newData.findIndex(chat => chat.chatID === chatID);
+    const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
 
     if (chatIndex > -1) {
-      newData[chatIndex].unSeenCount = 0;
+      const newData = produce(getInbox, draftState => {
+        draftState[chatIndex].unSeenCount = 0;
+      });
       cache.writeQuery({
         query: GET_INBOX,
         variables: {
@@ -322,6 +327,7 @@ class InboxPage extends Component {
                         <Spinner message={t("common:Loading")} size="large" />
                       );
                     }
+
                     const { getMessages: chat } = data;
 
                     return (
@@ -351,8 +357,38 @@ class InboxPage extends Component {
                             });
                           }}
                           fetchMore={fetchMore}
-                          subscribeToMore={subscribeToMore}
                           cache={this.props.client.cache}
+                          subscribeToMore={() => {
+                            subscribeToMore({
+                              document: NEW_MESSAGE_SUB,
+                              variables: {
+                                chatID: chatID
+                              },
+                              updateQuery: (prev, { subscriptionData }) => {
+                                const {
+                                  newMessageSubscribe
+                                } = subscriptionData.data;
+                                if (!newMessageSubscribe) {
+                                  return prev;
+                                }
+
+                                const newData = produce(prev, draftState => {
+                                  if (draftState.getMessages.messages) {
+                                    draftState.getMessages.messages = [
+                                      newMessageSubscribe,
+                                      ...draftState.getMessages.messages
+                                    ];
+                                  } else {
+                                    draftState.getMessages.messages = [
+                                      newMessageSubscribe
+                                    ];
+                                  }
+                                });
+
+                                return newData;
+                              }
+                            });
+                          }}
                         />
                         <Mutation
                           mutation={REMOVE_SELF}

@@ -3,6 +3,7 @@ import "regenerator-runtime/runtime";
 import "./assets/css/main.css";
 import "./docs/manifest.json";
 import "./assets/favicon.ico";
+import "react-image-lightbox/style.css";
 import React from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
@@ -13,6 +14,7 @@ import {
   withRouter,
   Redirect
 } from "react-router-dom";
+import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import { ToastContainer, toast } from "react-toastify";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";
@@ -49,16 +51,15 @@ import EventPage from "./components/Event";
 import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
-import "react-image-lightbox/style.css";
 import { preventContextMenu } from "./utils/image";
 
-import runtime from "serviceworker-webpack-plugin/lib/runtime";
+//import runtime from "serviceworker-webpack-plugin/lib/runtime";
 
 //the firebase auth kit
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
-var app = firebase.initializeApp({
+firebase.initializeApp({
   apiKey: "AIzaSyB8634G6nHB3YGn7cfeTL-s4OQsQwF9TzQ",
   authDomain: "foxtail-fde20.firebaseapp.com",
   databaseURL: "https://foxtail-fde20.firebaseio.com",
@@ -146,7 +147,8 @@ const cache = new InMemoryCache({
   dataIdFromObject: o => {
     if (o._id) return { [o.__typename]: o._id };
     else return null;
-  }
+  },
+  freezeResults: true
 });
 
 const stateLink = withClientState({
@@ -230,7 +232,8 @@ const link = errorLink.concat(
 
 const client = new ApolloClient({
   link,
-  cache
+  cache,
+  assumeImmutableResults: true
 });
 
 const Root = () => (
@@ -263,10 +266,10 @@ const Wrapper = withRouter(props => {
       return <ReCaptcha />;
     } else if (location.pathname === "/uh-oh") {
       return <NotFound />;
-    } else if (location.pathname === "/devtools") {
-      if (process.env.NODE_ENV === "development") {
-        return <DevTools />;
-      }
+    } else if (location.pathname === "/dev") {
+      // if (process.env.NODE_ENV === "development") {
+      return <DevTools />;
+      //}
     } else if (location.pathname === "/" && location.search) {
       return <ShortLinkRedirect hash={location.search} />;
     }
@@ -402,10 +405,7 @@ render(
   </ApolloProvider>,
   document.getElementById("root")
 );
-if ("serviceWorker" in navigator) {
-  if (process.env.NODE_ENV !== "production") {
-    //runtime.unregister();
-  } else {
-    runtime.register();
-  }
+
+if (process.env.NODE_ENV === "production") {
+  OfflinePluginRuntime.install();
 }

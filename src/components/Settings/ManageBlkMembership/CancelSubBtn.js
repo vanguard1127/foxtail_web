@@ -12,7 +12,7 @@ class CancelSubBtn extends PureComponent {
           action: "Cancelled"
         });
         this.props.notifyClient(this.props.t("cancelblk"));
-        window.location.reload();
+        window.location.reload(false);
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -54,8 +54,10 @@ class CancelSubBtn extends PureComponent {
                         })
                     });
                   }}
-                  header={t("Why are you downgrading your membership?")}
-                  description={t("Let us know what we can do to improve")}
+                  header={t("Why are you downgrading?")}
+                  description={t(
+                    "Please note - The photo limit on free accounts is 4, we will have to remove any photos over this limit."
+                  )}
                   cancelText={t("Send Complaint & Remain a Black Member")}
                   okText={t("Cancel Black Membership")}
                 />

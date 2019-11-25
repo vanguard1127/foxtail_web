@@ -5,6 +5,7 @@ import { SEEN_TOUR } from "../../queries";
 import Spinner from "../common/Spinner";
 import CustomTour from "../common/CustomTour";
 import { withRouter } from "react-router-dom";
+
 class InboxTour extends PureComponent {
   state = {
     isTourOpen: true,
@@ -22,7 +23,7 @@ class InboxTour extends PureComponent {
     seenTour()
       .then(({ data }) => {
         this.props.refetchUser();
-        window.location.reload();
+        window.location.reload(false);
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -105,6 +106,7 @@ class InboxTour extends PureComponent {
         }
       ];
     }
+
     return (
       <Fragment>
         <section className="breadcrumb">

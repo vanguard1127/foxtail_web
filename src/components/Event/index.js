@@ -145,6 +145,7 @@ class EventPage extends Component {
         query={GET_EVENT}
         variables={{ id }}
         fetchPolicy="cache-and-network"
+        returnPartialData={true}
       >
         {({ data, loading, error, refetch }) => {
           if (error) {
@@ -281,6 +282,7 @@ class EventPage extends Component {
                   event={event}
                   close={() => this.setShareModalVisible(false)}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  t={t}
                 />
               )}
               {blockModalVisible && (

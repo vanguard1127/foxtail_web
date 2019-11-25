@@ -1,0 +1,96 @@
+.credit-card a {
+  color: #666;
+}
+
+.credit-card .head {
+  padding: 0px 25px 0px 25px;
+}
+
+.credit-card div.cont {
+  border-top: 1px solid #c40148;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  margin: 10px 35px 0px 35px;
+  padding: 40px;
+  overflow: auto;
+  max-height: 430px;
+}
+
+.credit-card h1 {
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.credit-card h4 {
+  margin-bottom: 10px;
+}
+
+.credit-card .cclogos {
+  width: 100%;
+  display: block;
+  float: left;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.credit-card .select-container::before {
+  bottom: 17px;
+}
+
+.credit-card .cancelbtn {
+  margin-bottom: 15px;
+}
+
+.credit-card h1,
+.credit-card h2,
+.credit-card h4 {
+  text-align: center;
+}
+
+.credit-card .form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.credit-card form {
+  margin: 30px auto 0;
+  max-width: 400px;
+}
+
+.form-control {
+  margin-top: 15px;
+  padding: 0;
+}
+
+section.blk {
+  width: 100%;
+  display: inline-block;
+  /* padding: 140px 0; */
+}
+
+section.blk .icon {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  float: left;
+}
+
+section.blk .icon i.nico::before {
+  content: "";
+  font-family: "foxtail-icon";
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  overflow: hidden;
+  font-size: 100px;
+  width: 100%;
+  text-align: center;
+  font-style: normal;
+}
+
+section.blk .icon i.nico.blackmember::before {
+  content: "\e823";
+}

@@ -1,13 +1,20 @@
 import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
-import CreateSubBtn from "./CreateSubBtn";
 import "./BecomeBlackMember.css";
 import BecomeBlackMemberImage from "../../../assets/img/elements/become-black-member.png";
 
 class BecomeBlackMember extends PureComponent {
   render() {
-    const { close, t, ErrorHandler, notifyClient, lang, tReady } = this.props;
+    const {
+      close,
+      t,
+      ErrorHandler,
+      notifyClient,
+      lang,
+      tReady,
+      toggleCCModal
+    } = this.props;
     if (!tReady) {
       return null;
     }
@@ -63,20 +70,18 @@ class BecomeBlackMember extends PureComponent {
               </li>
               <li>
                 <i className="fas fa-angle-right"></i>
-                {t("morecoming")}
+                {t("unlimlikes")}
               </li>
             </ul>
             <p className="get-more">
               {t("getmore")}
               <i className="fas fa-heart" style={{ color: "#db0016" }}></i>
             </p>
-            <CreateSubBtn
-              close={close}
-              t={t}
-              ErrorHandler={ErrorHandler}
-              notifyClient={notifyClient}
-              lang={lang}
-            />
+            <span href="" className="btn-link" onClick={toggleCCModal}>
+              <div className="btn-upgrade">
+                <span className="text-gradient">{t("upgradeblk")}</span>
+              </div>
+            </span>
           </div>
         </div>
       </Modal>

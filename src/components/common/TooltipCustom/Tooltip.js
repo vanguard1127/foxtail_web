@@ -14,7 +14,7 @@ class Tooltip extends Component {
       <div className="tooltip">
         {children}
         <span className={`tooltiptext ${`tooltiptext-${placement}`}`}>
-          {title}
+          <div style={{ width: "250px" }}> {title}</div>
         </span>
       </div>
     );

@@ -37,7 +37,11 @@ class ProfileCard extends Component {
   };
 
   toggleLiked = () => {
-    if (!this.state.liked && this.props.likesSent > 24) {
+    if (
+      !this.state.liked &&
+      this.props.likesSent > 24 &&
+      !this.props.isBlackMember
+    ) {
       this.setMaxLikeDlgVisible();
       return;
     }
@@ -45,9 +49,22 @@ class ProfileCard extends Component {
   };
 
   setMsgModalVisible = msgModalVisible => {
-    const { toast, ErrorHandler, isBlackMember } = this.props;
+    const { toast, ErrorHandler, isBlackMember, t } = this.props;
     ErrorHandler.setBreadcrumb("Message Modal Opened:" + msgModalVisible);
-
+    if (this.props.msgsSent > 4 && msgModalVisible) {
+      if (!toast.isActive("maxmsgs")) {
+        toast.info(
+          t(
+            "common:Daily Direct Message Limit Reached. *Only 5 allowed daily."
+          ),
+          {
+            position: toast.POSITION.TOP_CENTER,
+            toastId: "maxmsgs"
+          }
+        );
+      }
+      return;
+    }
     if (!isBlackMember) {
       if (!toast.isActive("directerr")) {
         toast.info(
@@ -77,6 +94,7 @@ class ProfileCard extends Component {
   setMessaged = profileID => {
     this.props.ErrorHandler.setBreadcrumb("Messaged:" + profileID);
     if (this.mounted) {
+      this.props.setMsgSent();
       this.setState({ msgModalVisible: false });
     }
   };
@@ -100,13 +118,13 @@ class ProfileCard extends Component {
     if (
       users.every(
         user =>
-          user.verifications.photo === true && user.verifications.std === true
+          user.verifications.photoVer.active && user.verifications.stdVer.active
       )
     ) {
       badge = "full-verified";
-    } else if (users.every(user => user.verifications.photo)) {
+    } else if (users.every(user => user.verifications.stdVer.active)) {
       badge = "std-verified";
-    } else if (users.every(user => user.verifications.std === true)) {
+    } else if (users.every(user => user.verifications.photoVer.active)) {
       badge = "profile-verified";
     }
 

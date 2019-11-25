@@ -38,7 +38,7 @@ class MyProfile extends Component {
         <div className="row">
           <div className="col-md-12">
             <span className="heading">
-              {t("myprofile")}{" "}
+              {t("myprofile")}
               <Tooltip title={t("selecthonest")} placement="left-start">
                 <span className="tip" />
               </Tooltip>

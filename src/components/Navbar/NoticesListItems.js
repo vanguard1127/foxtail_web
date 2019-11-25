@@ -21,6 +21,7 @@ class NoticesListItems extends Component {
   }
 
   componentWillUnmount() {
+    this.props.resetSkip();
     this.mounted = false;
   }
 
@@ -67,25 +68,26 @@ class NoticesListItems extends Component {
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (this.mounted) {
               this.setState({ loading: false });
-
-              if (
-                !fetchMoreResult ||
-                !fetchMoreResult.getNotifications ||
-                fetchMoreResult.getNotifications.notifications.length === 0
-              ) {
+            }
+            if (
+              !fetchMoreResult ||
+              !fetchMoreResult.getNotifications ||
+              fetchMoreResult.getNotifications.notifications.length === 0
+            ) {
+              if (this.mounted) {
                 this.setState({ hasMore: false });
-                this.props.noMoreItems();
-                return;
               }
-              previousResult.getNotifications.notifications = [
+              return;
+            }
+
+            this.props.setNotifications({
+              notifications: [
                 ...previousResult.getNotifications.notifications,
                 ...fetchMoreResult.getNotifications.notifications
-              ];
-              this.props.setNotifications({
-                notifications: previousResult.getNotifications.notifications
-              });
-            }
-            return previousResult;
+              ]
+            });
+
+            return;
           }
         });
       });
@@ -101,14 +103,15 @@ class NoticesListItems extends Component {
         if (!newNoticeSubscribe) {
           return prev;
         }
-        prev.getNotifications.notifications = [
+
+        const newNotices = [
           newNoticeSubscribe,
           ...prev.getNotifications.notifications
         ];
 
         if (this.mounted) {
           this.props.setNotifications({
-            notifications: prev.getNotifications.notifications
+            notifications: newNotices
           });
         }
 
@@ -116,9 +119,9 @@ class NoticesListItems extends Component {
       }
     }));
 
-  markReadAndGo = ({ notificationIDs, targetID, type }) => {
+  markReadAndGo = ({ notificationID, targetID, type }) => {
     try {
-      this.props.readNotices(notificationIDs);
+      this.props.readNotices(notificationID);
 
       switch (type) {
         case "chat":
@@ -145,7 +148,7 @@ class NoticesListItems extends Component {
       t={this.props.t}
       dayjs={dayjs}
       lang={lang}
-      setAlert={this.props.setAlert}
+      showAlert={this.props.showAlert}
       markReadAndGo={this.markReadAndGo}
     />
   );

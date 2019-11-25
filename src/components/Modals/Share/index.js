@@ -11,23 +11,18 @@ import {
 } from "react-share";
 import { Query } from "react-apollo";
 import { SET_FULL_LINK } from "../../../queries";
-import Tooltip from "../../common/Tooltip";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "../../common/Modal";
 import { withTranslation } from "react-i18next";
-
 import LinkIcon from "@material-ui/icons/Link";
+import { toast } from "react-toastify";
 
 class Share extends Component {
   referUrl = "";
-  state = {
-    copied: false
-  };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (
       this.props.t !== nextProps.t ||
-      this.state.copied !== nextState.copied ||
       this.props.tReady !== nextProps.tReady
     ) {
       return true;
@@ -35,8 +30,12 @@ class Share extends Component {
     return false;
   }
 
-  toggleCopied = val => {
-    this.setState({ copied: val });
+  showCopied = () => {
+    if (!toast.isActive("copied")) {
+      toast(this.props.t("Link copied to clipboard"), {
+        toastId: "copied"
+      });
+    }
   };
 
   render() {
@@ -61,7 +60,6 @@ class Share extends Component {
     } else {
       url = `refer=${userID}`;
     }
-    const { copied } = this.state;
 
     if (!tReady) {
       return null;
@@ -82,7 +80,7 @@ class Share extends Component {
         body = t("invitation") + " " + event.eventname + ":\n" + "\n";
         return <div>{t("shareevent")}?</div>;
       } else if (profileID) {
-        body = "Check out my profile on Foxtail!" + "\n" + "\n";
+        body = "Check out my profile on Foxtail profile." + "\n" + "\n";
         return <div>{t("shareprof")}</div>;
       } else {
         body = t("checkoutfox");
@@ -112,7 +110,13 @@ class Share extends Component {
 
           let refUrl = `${process.env.REACT_APP_CLIENT_URL}/${data.setFullLink}`;
           return (
-            <Modal header={modalBody} close={close}>
+            <Modal
+              header={modalBody}
+              close={close}
+              description={t(
+                "Share Foxtail and Get 1 week FREE Black Membership"
+              )}
+            >
               <ErrorBoundary>
                 <div
                   style={{
@@ -143,32 +147,22 @@ class Share extends Component {
                     </RedditShareButton>
                     <div className="SocialMediaShareButton ">
                       <CopyToClipboard text={refUrl}>
-                        <Tooltip
-                          title={
-                            copied
-                              ? t("Copied url to clipboard")
-                              : t("Copy referral url")
-                          }
-                          placement="top"
-                          onClick={() => this.toggleCopied(true)}
-                          onClose={() => this.toggleCopied(false)}
+                        <span
+                          style={{
+                            width: "32px",
+                            height: "32px",
+                            cursor: "pointer"
+                          }}
+                          className="copyIcon"
+                          onClick={this.showCopied}
                         >
-                          <span
-                            style={{
-                              width: "32px",
-                              height: "32px",
-                              cursor: "pointer"
-                            }}
-                            className="copyIcon"
-                          >
-                            <svg viewBox="0 0 64 64" width="32" height="32">
-                              <g>
-                                <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
-                                <LinkIcon className="linksvg" />
-                              </g>
-                            </svg>
-                          </span>
-                        </Tooltip>
+                          <svg viewBox="0 0 64 64" width="32" height="32">
+                            <g>
+                              <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
+                              <LinkIcon className="linksvg" />
+                            </g>
+                          </svg>
+                        </span>
                       </CopyToClipboard>
                     </div>
                     <EmailShareButton url={refUrl} subject={title} body={body}>

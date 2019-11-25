@@ -32,9 +32,9 @@ class RequestEmailVerBtn extends PureComponent {
           toast.success("Email has sent successsfully");
           return;
         } else {
-          toast.error(
+          toast(
             t(
-              "common:Please wait at least 5 mintues to recieve email verification. Check Spam if it's not in your inbox."
+              "common:Please wait at least 5 mintues to recieve email verification. Check Spam, if it's not in your inbox."
             )
           );
         }

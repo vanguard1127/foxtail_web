@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
+import produce from "immer";
 import {
   TOGGLE_EVENT_ATTEND,
   GET_EVENT,
@@ -65,26 +66,28 @@ class AttendEvent extends Component {
         variables: { eventID: id }
       });
 
+      let newData;
       if (this.state.isGoing) {
-        getEvent.event.participants = [
-          {
+        newData = produce(getEvent, draftState => {
+          draftState.event.participants.push({
             id: toggleAttendEvent,
             profileName: this.props.session.currentuser.username,
             profilePic: this.props.session.currentuser.profilePic,
             __typename: "ProfileType"
-          },
-          ...getEvent.event.participants
-        ];
+          });
+        });
       } else {
-        getEvent.event.participants = getEvent.event.participants.filter(
-          member => member.id !== toggleAttendEvent
-        );
+        newData = produce(getEvent, draftState => {
+          draftState.event.participants = draftState.event.participants.filter(
+            member => member.id !== toggleAttendEvent
+          );
+        });
       }
 
       cache.writeQuery({
         query: GET_EVENT_PARTICIPANTS,
         variables: { eventID: id },
-        data: { getEvent }
+        data: { getEvent: newData }
       });
 
       const { event } = cache.readQuery({

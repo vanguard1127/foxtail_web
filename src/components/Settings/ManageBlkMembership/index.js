@@ -18,6 +18,8 @@ class ManageBlackSub extends Component {
       notifyClient,
       setDialogContent,
       lang,
+      ccLast4,
+      toggleCCModal,
       ReactGA
     } = this.props;
     return (
@@ -29,10 +31,9 @@ class ManageBlackSub extends Component {
                 {t("ManageBlackSub")} <i>- ({t("vertitle")})</i>
               </span>
             </div>
-            {currentuser.ccLast4 && (
+            {ccLast4 && (
               <div className="col-md-12">
-                {t("common:creditend")} {currentuser.ccLast4}{" "}
-                {t("common:renewdate")}:{" "}
+                {t("common:creditend")} {ccLast4} {t("common:renewdate")}:{" "}
                 {currentuser.blackMember.renewalDate
                   ? dayjs(currentuser.blackMember.renewalDate)
                       .locale(lang)
@@ -40,7 +41,7 @@ class ManageBlackSub extends Component {
                   : "Lifetime :)"}
               </div>
             )}
-            {!currentuser.ccLast4 && (
+            {!ccLast4 && (
               <div className="col-md-12">
                 {t("common:blkend")}:{" "}
                 {dayjs(currentuser.blackMember.renewalDate)
@@ -50,15 +51,9 @@ class ManageBlackSub extends Component {
             )}
             <div className="col-md-6">
               <div className="verification-box">
-                <UpdateSubBtn
-                  refetchUser={refetchUser}
-                  t={t}
-                  ErrorHandler={ErrorHandler}
-                  notifyClient={notifyClient}
-                  lang={lang}
-                  currCCLast4={currentuser.ccLast4}
-                  ReactGA={ReactGA}
-                />
+                <span className="clickverify-btn photo" onClick={toggleCCModal}>
+                  {ccLast4 ? t("cardchange") : t("addchange")}
+                </span>
               </div>
             </div>
             <div className="col-md-6">

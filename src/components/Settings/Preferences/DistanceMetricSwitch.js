@@ -12,7 +12,8 @@ const DistanceMetricSwitch = ({ distanceMetric, setValue, t }) => {
             onChange={e => {
               setValue({
                 name: "distanceMetric",
-                value: distanceMetric === "km" ? "mi" : "km"
+                value: distanceMetric === "km" ? "mi" : "km",
+                doRefetch: true
               });
             }}
           />

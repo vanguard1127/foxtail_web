@@ -18,8 +18,8 @@ class Logout extends Component {
     sessionStorage.clear();
 
     //Causes console error but currently best option.
-    this.props.client.resetStore();
-
+    //this.props.client.resetStore();
+    window.location.reload(false);
     this.props.history.push("/", { noCheck: true });
   };
 

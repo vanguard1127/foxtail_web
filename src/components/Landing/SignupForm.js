@@ -3,9 +3,7 @@ import * as yup from "yup";
 import DatePicker from "../common/DatePicker";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
-//import Tooltip from "../common/Tooltip";
 import Tooltip from "../common/TooltipCustom/Tooltip";
-
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
 
@@ -25,9 +23,13 @@ class SignupForm extends Component {
     username: yup
       .string()
       .required("userreq")
+      .matches(/^.[a-zA-Z0-9]+$/, {
+        message: "Alphanumeric characters only"
+      })
       .min(3, "usernameLen")
       .max(30, "usernameLen")
   });
+
   state = {
     username: "",
     email: "",
@@ -66,14 +68,20 @@ class SignupForm extends Component {
     }
     return false;
   }
+
   componentDidMount() {
     this.mounted = true;
-    this.props.ErrorHandler.setBreadcrumb("Signup Form loaded");
+    const { mem, eve, ErrorHandler, toast, t } = this.props;
+    ErrorHandler.setBreadcrumb("Signup Form loaded");
+    if (mem || eve) {
+      toast.info(t("Please login first"));
+    }
   }
 
   componentWillUnmount() {
     this.mounted = false;
   }
+
   setValue = ({ name, value, dontVer }) => {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
@@ -84,21 +92,22 @@ class SignupForm extends Component {
     }
   };
 
+  setFormValues = values => {
+    if (this.mounted) {
+      this.setState(values);
+    }
+  };
+
   validateForm = async () => {
     try {
       if (this.mounted) {
         await this.schema.validate(this.state);
         this.setState({ isValid: true, errors: {} });
-        this.props.setFormValues(this.state);
+        this.setFormValues(this.state);
         return true;
       }
     } catch (e) {
       let errors = { [e.path]: e.message };
-      // if (!this.props.toast.isActive("pleasefillin")) {
-      //   this.props.toast.error(this.props.t("pleasefillin"), {
-      //     toastId: "pleasefillin"
-      //   });
-      // }
       this.setState({ isValid: false, errors });
       return false;
     }
@@ -108,14 +117,7 @@ class SignupForm extends Component {
     error ? <div className="input-feedback">{error}</div> : null;
 
   render() {
-    const {
-      fbResolve,
-      handleFirebaseReturn,
-      t,
-      history,
-      lang,
-      ErrorHandler
-    } = this.props;
+    const { t, ErrorHandler, lang, refer, aff, history, ReactGA } = this.props;
 
     const {
       username,
@@ -129,123 +131,136 @@ class SignupForm extends Component {
     } = this.state;
 
     return (
-      <form>
+      <div className="form">
         <div className="form-content">
-          <div className="input username">
-            <input
-              aria-label="username"
-              placeholder={t("userLbl")}
-              type="text"
-              onChange={e => {
-                this.setValue({
-                  name: "username",
-                  value: e.target.value,
-                  dontVer: true
-                });
-              }}
-              onBlur={e => {
-                this.setValue({
-                  name: "username",
-                  value: e.target.value
-                });
-              }}
-              value={username}
-            />
-            {this.InputFeedback(t(errors.username))}
-          </div>
-          <div className="input email">
-            <input
-              aria-label="email"
-              placeholder={t("emailLbl")}
-              type="email"
-              onChange={e => {
-                this.setValue({
-                  name: "email",
-                  value: e.target.value
-                });
-              }}
-              value={email}
-            />
-            {this.InputFeedback(t(errors.email))}
-          </div>
-          <DatePicker
-            value={dob}
-            onChange={e => {
-              this.setValue({
-                name: "dob",
-                value: e
-              });
-            }}
-            t={t}
-            type="birthday"
-          />
-          {this.InputFeedback(t(errors.dob))}
-          <Dropdown
-            value={gender}
-            type={"gender"}
-            onChange={e => {
-              this.setValue({
-                name: "gender",
-                value: e.value
-              });
-            }}
-            placeholder={t("common:Sex") + ":"}
-            lang={lang}
-          />
-          {this.InputFeedback(t(errors.gender))}
-
-          <Dropdown
-            value={interestedIn}
-            type={"interestedIn"}
-            onChange={el => {
-              this.setValue({
-                name: "interestedIn",
-                value: el.map(e => e.value)
-              });
-            }}
-            placeholder={t("common:Interested") + ":"}
-            lang={lang}
-          />
-          {this.InputFeedback(t(errors.interestedIn))}
-          <div className="couple-choose">
-            <div className="select-checkbox">
+          <div className="form-fields">
+            <div className="input username">
               <input
-                type="checkbox"
-                id="cbox"
-                checked={isCouple}
-                onChange={el => {
+                aria-label="username"
+                placeholder={t("userLbl")}
+                type="text"
+                onChange={e => {
                   this.setValue({
-                    name: "isCouple",
-                    value: el.target.checked
+                    name: "username",
+                    value: e.target.value,
+                    dontVer: true
                   });
                 }}
+                onBlur={e => {
+                  this.setValue({
+                    name: "username",
+                    value: e.target.value
+                  });
+                }}
+                value={username}
               />
-              <label htmlFor="cbox">
-                <span />
-                <b>{t("coupleBox")}</b>
-              </label>
-              <Tooltip title={t("cplsmsg")} placement="left-start">
-                <span className="tip" />
-              </Tooltip>{" "}
+              {this.InputFeedback(t(errors.username))}
+            </div>
+            <div className="input email">
+              <input
+                aria-label="email"
+                placeholder={t("emailLbl")}
+                type="email"
+                onChange={e => {
+                  this.setValue({
+                    name: "email",
+                    value: e.target.value
+                  });
+                }}
+                value={email}
+              />
+              {this.InputFeedback(t(errors.email))}
+            </div>
+            <DatePicker
+              value={dob}
+              onChange={e => {
+                this.setValue({
+                  name: "dob",
+                  value: e
+                });
+              }}
+              t={t}
+              type="birthday"
+            />
+            {this.InputFeedback(t(errors.dob))}
+            <Dropdown
+              value={gender}
+              type={"gender"}
+              onChange={e => {
+                this.setValue({
+                  name: "gender",
+                  value: e.value
+                });
+              }}
+              placeholder={t("common:Sex") + ":"}
+              lang={lang}
+            />
+            {this.InputFeedback(t(errors.gender))}
+
+            <Dropdown
+              value={interestedIn}
+              type={"interestedIn"}
+              onChange={el => {
+                this.setValue({
+                  name: "interestedIn",
+                  value: el.map(e => e.value)
+                });
+              }}
+              placeholder={t("common:Interested") + ":"}
+              lang={lang}
+            />
+            {this.InputFeedback(t(errors.interestedIn))}
+            <div className="couple-choose">
+              <div className="select-checkbox">
+                <input
+                  type="checkbox"
+                  id="cbox"
+                  checked={isCouple}
+                  onChange={el => {
+                    this.setValue({
+                      name: "isCouple",
+                      value: el.target.checked
+                    });
+                  }}
+                />
+                <label htmlFor="cbox">
+                  <span />
+                  <b>{t("coupleBox")}</b>
+                </label>
+                <Tooltip title={t("cplsmsg")} placement="left">
+                  <span className="tip" />
+                </Tooltip>
+              </div>
             </div>
           </div>
 
           <SignupButton
             disabled={!isValid}
-            fbResolve={fbResolve}
-            handleFirebaseReturn={handleFirebaseReturn}
+            createData={{
+              username,
+              email,
+              dob,
+              interestedIn,
+              gender,
+              isCouple,
+              lang,
+              isCreate: true,
+              refer,
+              aff
+            }}
             setValue={this.setValue}
             validateForm={this.validateForm}
             ErrorHandler={ErrorHandler}
             t={t}
             lang={lang}
+            history={history}
+            ReactGA={ReactGA}
           />
-
           <div className="disclaim">
             {t(
               "This site uses your Phone Number to Authenticate your account ONLY"
             )}
-            <Tooltip title={t("phonemsg")} placement="left-start">
+            <Tooltip title={t("phonemsg")} placement="left">
               <span className="tip" />
             </Tooltip>
           </div>
@@ -255,7 +270,7 @@ class SignupForm extends Component {
             <span onClick={() => history.push("/privacy")}>{t("privacy")}</span>
           </div>
         </div>
-      </form>
+      </div>
     );
   }
 }

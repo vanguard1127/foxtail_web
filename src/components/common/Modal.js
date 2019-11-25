@@ -52,7 +52,8 @@ class Modal extends Component {
       popupClass,
       noHeader,
       noFade,
-      showLoader
+      showLoader,
+      scrollable
     } = this.props;
 
     return (
@@ -63,7 +64,7 @@ class Modal extends Component {
         after={{ test: "o" }}
       >
         {props => (
-          <div className="popup-wrapper">
+          <div className="popup-wrapper" style={props}>
             <section
               style={props}
               className={`login-modal show ${
@@ -82,7 +83,7 @@ class Modal extends Component {
                       style={{ height: "100vh", padding: "unset" }}
                     >
                       {showLoader && <Spinner />}
-                      <form>
+                      <form className="form">
                         <div className="form-content">
                           {children}
                           {description && (
@@ -98,14 +99,15 @@ class Modal extends Component {
                   </div>
                 </div>
               ) : (
-                <div
-                  className={fullWidth ? "" : ""}
-                  style={fullWidth ? {} : { maxWidth: "520px" }}
-                >
-                  <div className={`${fullWidth ? "popup full" : "popup"}`}>
+                <div style={fullWidth ? {} : { maxWidth: "520px" }}>
+                  <div
+                    className={`${
+                      scrollable || fullWidth ? "popup full" : "popup"
+                    }`}
+                  >
                     {!noHeader && <span className="head">{header}</span>}
                     {close && <a className="close" onClick={() => close()} />}
-                    <form>
+                    <form className="form">
                       <div className="form-content">
                         {children}
                         {description && (

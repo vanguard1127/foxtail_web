@@ -22,7 +22,7 @@ class UpdateSubBtn extends PureComponent {
             action: "Updated"
           });
           this.props.notifyClient(t("ccupdate"));
-          window.location.reload();
+          window.location.reload(false);
         })
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);

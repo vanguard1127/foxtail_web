@@ -83,7 +83,7 @@ class AppSettings extends Component {
                         name: "lang",
                         value: e.value
                       });
-                      window.location.reload();
+                      window.location.reload(false);
                     }
                   }}
                   placeholder={t("langlbl")}

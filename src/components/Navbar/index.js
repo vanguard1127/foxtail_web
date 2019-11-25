@@ -129,13 +129,17 @@ class NavbarAuth extends PureComponent {
 
     const { session, t, history } = this.props;
     const { mobileMenu } = this.state;
+    const isBlack = session.currentuser.blackMember.active ? true : false;
+    const isCouple =
+      session.currentuser.coupleProfileName !== null ? true : false;
+
     return (
       <Query query={GET_COUNTS} fetchPolicy="cache-first">
         {({ data, loading, error, refetch, subscribeToMore }) => {
           if (loading || !data) {
             return (
               <div className="function">
-                <CircularProgress />
+                <CircularProgress size={30} color="secondary" />
               </div>
             );
           }
@@ -172,7 +176,7 @@ class NavbarAuth extends PureComponent {
                   return;
                 }
 
-                const newCount = { ...prev.getCounts };
+                let newCount = { ...prev.getCounts };
 
                 if (newInboxMsgSubscribe.type === "new") {
                   newCount.newMsg = true;
@@ -288,39 +292,44 @@ class NavbarAuth extends PureComponent {
                               this.toggleMobileMenu();
                             }}
                           >
-                            {t("common:myaccount")}
+                            {isCouple
+                              ? t("common:ouracct")
+                              : t("common:myaccount")}
                           </span>
                         </li>
                         {history.location.pathname !== "/settings" && (
                           <>
-                            {" "}
-                            <li>
-                              <span
-                                onClick={() => {
-                                  history.push({
-                                    pathname: "/settings",
-                                    state: { showBlkMdl: true }
-                                  });
-                                  this.toggleMobileMenu();
-                                }}
-                                className="highlightTxt"
-                              >
-                                {t("common:becomeblk")}
-                              </span>
-                            </li>
-                            <li>
-                              <span
-                                onClick={() => {
-                                  history.push({
-                                    pathname: "/settings",
-                                    state: { showCplMdl: true }
-                                  });
-                                  this.toggleMobileMenu();
-                                }}
-                              >
-                                {t("common:addcoup")}
-                              </span>
-                            </li>
+                            {!isCouple && (
+                              <li>
+                                <span
+                                  onClick={() => {
+                                    history.push({
+                                      pathname: "/settings",
+                                      state: { showCplMdl: true }
+                                    });
+                                    this.toggleMobileMenu();
+                                  }}
+                                >
+                                  {t("common:addcoup")}
+                                </span>
+                              </li>
+                            )}
+                            {!isBlack && (
+                              <li>
+                                <span
+                                  onClick={() => {
+                                    history.push({
+                                      pathname: "/settings",
+                                      state: { showBlkMdl: true }
+                                    });
+                                    this.toggleMobileMenu();
+                                  }}
+                                  className="highlightTxt"
+                                >
+                                  {t("common:becomeblk")}
+                                </span>
+                              </li>
+                            )}
                           </>
                         )}
                         <li>
@@ -371,6 +380,7 @@ class NavbarAuth extends PureComponent {
                         counts={data.getCounts}
                         msgAudio={msgAudio}
                         blinkInbox={newMsg}
+                        history={history}
                       />
                     )}
                   </div>

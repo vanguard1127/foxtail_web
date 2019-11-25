@@ -3,7 +3,6 @@ import { Mutation } from "react-apollo";
 import { UPDATE_SETTINGS } from "../../queries";
 import Dropdown from "../common/Dropdown";
 import AddressSearch from "../common/AddressSearch";
-import SetLocationModal from "../Modals/SetLocation";
 import DistanceSlider from "../common/DistanceSlider";
 import AgeRange from "../common/AgeRange";
 import getCityCountry from "../../utils/getCityCountry";
@@ -17,8 +16,7 @@ class SearchCriteria extends PureComponent {
     city: this.props.city,
     country: this.props.country,
     lat: this.props.lat,
-    long: this.props.long,
-    locModalVisible: false
+    long: this.props.long
   };
 
   componentDidMount() {
@@ -27,12 +25,6 @@ class SearchCriteria extends PureComponent {
   componentWillUnmount() {
     this.mounted = false;
   }
-
-  setLocModalVisible = visible => {
-    if (this.mounted) {
-      this.setState({ locModalVisible: visible });
-    }
-  };
 
   setLocation = async (pos, updateSettings) => {
     var crd = pos.coords;
@@ -122,7 +114,7 @@ class SearchCriteria extends PureComponent {
   };
 
   render() {
-    const { locModalVisible, interestedIn } = this.state;
+    const { interestedIn } = this.state;
     const {
       t,
       loading,
@@ -300,14 +292,6 @@ class SearchCriteria extends PureComponent {
             );
           }}
         </Mutation>
-
-        {locModalVisible && (
-          <SetLocationModal
-            close={() => this.setLocModalVisible(false)}
-            setLocation={this.setLocation}
-            isBlackMember={isBlackMember}
-          />
-        )}
       </>
     );
   }

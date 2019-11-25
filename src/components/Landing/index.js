@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import Signup from "./Signup_dev";
+import Signup from "./Signup";
 import LoginButton from "./LoginButton";
 import withAuth from "../HOCs/withAuth";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
@@ -8,6 +8,7 @@ import CountUp from "react-countup";
 import { Query } from "react-apollo";
 import { GET_DEMO_COUNTS } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
+import ResetPassModal from "../Modals/ResetPassword";
 import ContactUsModal from "../Modals/ContactUs";
 import Spinner from "../common/Spinner";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,25 +17,20 @@ import { withTranslation } from "react-i18next";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
-import * as firebase from 'firebase/app';
 
 class Landing extends PureComponent {
-  constructor(props){
+  constructor(props) {
     super(props);
-  this.state = {
-    resetPhoneVisible: false,
-    token: null,
-    tooltip: false,
-    showContactModal: false
-  };
-}
+    this.state = {
+      resetPhoneVisible: false,
+      resetPassVisible: false,
+      token: null,
+      tooltip: false,
+      showContactModal: false
+    };
+  }
 
   componentDidMount() {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container',
-    {
-       size:"invisible"
-        // other options
-    });
     document.title = "Foxtail";
   }
 
@@ -44,7 +40,13 @@ class Landing extends PureComponent {
 
   render() {
     const { t, location, history, session, ReactGA, tReady } = this.props;
-    const { resetPhoneVisible, token, tooltip, showContactModal } = this.state;
+    const {
+      resetPhoneVisible,
+      token,
+      tooltip,
+      showContactModal,
+      resetPassVisible
+    } = this.state;
     let refer = null;
     let aff = null;
     let mem = null;
@@ -58,6 +60,7 @@ class Landing extends PureComponent {
       aff = params.get("aff");
       mem = params.get("mem");
       eve = params.get("eve");
+
       if (location.state && location.state.type === "phoneReset") {
         if (location.state.token) {
           this.setState({
@@ -72,13 +75,26 @@ class Landing extends PureComponent {
             });
           }
         }
+      } else if (location.state && location.state.type === "passReset") {
+        if (location.state.token) {
+          this.setState({
+            resetPassVisible: true,
+            token: location.state.token
+          });
+        } else {
+          if (!toast.isActive("errVer")) {
+            toast.error(t("passfail"), {
+              position: toast.POSITION.TOP_CENTER,
+              toastId: "errVer"
+            });
+          }
+        }
       }
     }
-
     return (
       <>
         <header className="landing">
-        <div id="recaptcha-container" style={{display:"none"}}></div>
+          <div id="recaptcha-container" style={{ display: "none" }}></div>
           <div className="container">
             <div className="col-md-12">
               <div className="row">
@@ -91,14 +107,15 @@ class Landing extends PureComponent {
                 <div className="offset-md-3 col-md-5">
                   <div className="content">
                     <span className="mobilesubtitle">{t("common:stray")}</span>
+
                     <span className="login">
                       <ErrorHandler.ErrorBoundary>
                         <LoginButton
                           t={t}
                           history={history}
-                          ErrorHandler={ErrorHandler}
+                          errorhandler={ErrorHandler}
                           lang={lang}
-                          ReactGA={ReactGA}
+                          reactga={ReactGA}
                         />
                       </ErrorHandler.ErrorBoundary>
                     </span>
@@ -135,9 +152,9 @@ class Landing extends PureComponent {
                           <LoginButton
                             t={t}
                             history={history}
-                            ErrorHandler={ErrorHandler}
+                            errorhandler={ErrorHandler}
                             lang={lang}
-                            ReactGA={ReactGA}
+                            reactga={ReactGA}
                           />
                         </ErrorHandler.ErrorBoundary>
                       </div>
@@ -258,36 +275,51 @@ class Landing extends PureComponent {
                           {t("resetphone")}
                         </span>
                       </li>
-                      <li className="tooltip" style={{ zIndex: 0 }}>
+                      <li>
+                        <span
+                          onClick={() => {
+                            this.setState({
+                              resetPassVisible: !resetPassVisible
+                            });
+                          }}
+                        >
+                          {t("resetpass")}
+                        </span>
+                      </li>
+                      <li style={{ zIndex: 0 }}>
                         {tooltip && (
-                          <span className="tooltiptext">
-                            <div>
-                              {" "}
-                              <span onClick={() => history.push("/tos")}>
-                                {t("common:Terms")}
-                              </span>
-                            </div>
-                            <div>
-                              {" "}
-                              <span onClick={() => history.push("/privacy")}>
-                                {t("common:Privacy")}
-                              </span>
-                            </div>
-                            <div>
-                              {" "}
-                              <span onClick={() => history.push("/antispam")}>
-                                {t("antispam")}
-                              </span>
-                            </div>
-                            <div>
-                              {" "}
-                              <span
-                                onClick={() => history.push("/lawenforcement")}
-                              >
-                                {t("lawenf")}
-                              </span>
-                            </div>
-                          </span>
+                          <div className="tooltip">
+                            <span className="tooltiptext show">
+                              <div>
+                                {" "}
+                                <span onClick={() => history.push("/tos")}>
+                                  {t("common:Terms")}
+                                </span>
+                              </div>
+                              <div>
+                                {" "}
+                                <span onClick={() => history.push("/privacy")}>
+                                  {t("common:Privacy")}
+                                </span>
+                              </div>
+                              <div>
+                                {" "}
+                                <span onClick={() => history.push("/antispam")}>
+                                  {t("antispam")}
+                                </span>
+                              </div>
+                              <div>
+                                {" "}
+                                <span
+                                  onClick={() =>
+                                    history.push("/lawenforcement")
+                                  }
+                                >
+                                  {t("lawenf")}
+                                </span>
+                              </div>
+                            </span>
+                          </div>
                         )}
                         <span
                           onClick={() => this.setState({ tooltip: !tooltip })}
@@ -318,19 +350,32 @@ class Landing extends PureComponent {
             </div>
           </div>
         </footer>
+        {resetPassVisible && (
+          <ResetPassModal
+            t={t}
+            token={token}
+            close={() => {
+              history.replace({ state: {} });
+              this.setState({ resetPassVisible: false, token: null });
+            }}
+            ErrorHandler={ErrorHandler}
+            history={history}
+            lang={lang}
+            ReactGA={ReactGA}
+          />
+        )}
         {resetPhoneVisible && (
           <ResetPhoneModal
             t={t}
             token={token}
-            close={() =>
-              this.setState(
-                { resetPhoneVisible: false, token: null },
-                history.replace({ state: {} })
-              )
-            }
+            close={() => {
+              history.replace({ state: {} });
+              this.setState({ resetPhoneVisible: false, token: null });
+            }}
             ErrorHandler={ErrorHandler}
             history={history}
             lang={lang}
+            ReactGA={ReactGA}
           />
         )}
         {showContactModal && (

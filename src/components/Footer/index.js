@@ -1,9 +1,4 @@
 import React, { Component } from "react";
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  EmailShareButton
-} from "react-share";
 import RulesModal from "../Modals/Rules";
 import ContactUsModal from "../Modals/ContactUs";
 
@@ -33,8 +28,6 @@ class Footer extends Component {
   render() {
     const { t, tReady } = this.props;
     const { showRulesModal, showContactModal } = this.state;
-    const shareUrl = "www.fotxtailapp.com";
-    const title = "Foxtail - Free | Secure | 18+ Fun";
     if (!tReady) {
       return null;
     }
@@ -49,25 +42,26 @@ class Footer extends Component {
               <div className="medias">
                 <ul>
                   <li className="facebook">
-                    <FacebookShareButton url={shareUrl} quote={title}>
+                    <a
+                      href="https://fb.me/foxtailapp"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <span aria-label="facebook share">
                         <i />
                       </span>
-                    </FacebookShareButton>
+                    </a>
                   </li>
                   <li className="twitter">
-                    <TwitterShareButton url={shareUrl} title={title}>
+                    <a
+                      href="https://www.facebook.com/Foxtail-1629223060455218/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <span aria-label="twitter share">
                         <i />
                       </span>
-                    </TwitterShareButton>
-                  </li>
-                  <li className="mail">
-                    <EmailShareButton url={shareUrl} body={title}>
-                      <span aria-label="email share">
-                        <i />
-                      </span>
-                    </EmailShareButton>
+                    </a>
                   </li>
                 </ul>
               </div>

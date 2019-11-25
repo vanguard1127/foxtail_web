@@ -1,37 +1,36 @@
 import React, { Component } from "react";
 import { Waypoint } from "react-waypoint";
 import Message from "./Message.js";
-import { NEW_MESSAGE_SUB } from "../../../../queries";
 import _ from "lodash";
 import DateItem from "./DateItem";
 
 class MessageList extends Component {
-  unsubscribe;
+  isUserInside = true;
   constructor(props) {
     super(props);
     this.messagesEnd = React.createRef();
   }
   state = {
-    restoreScroll: false,
-    hasMoreItems: true,
+    hasMoreItems:
+      this.props.messages.length < process.env.REACT_APP_CHATMSGS_LIMIT
+        ? false
+        : true,
     previousClientHeight: null,
     previousScrollHeight: null,
     previousScrollTop: 0,
     dateWaypoints: [],
-    messages: this.props.messages
+    fetching: false
   };
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.state.messages.length !== nextState.messages.length ||
-      this.state.restoreScroll !== nextState.restoreScroll ||
+      this.props.messages.length !== nextProps.messages.length ||
       this.state.hasMoreItems !== nextState.hasMoreItems ||
       this.state.previousClientHeight !== nextState.previousClientHeight ||
       this.state.previousScrollHeight !== nextState.previousScrollHeight ||
       this.state.previousScrollTop !== nextState.previousScrollTop ||
       this.state.dateWaypoints.length !== nextState.dateWaypoints.length ||
-      this.props.chatID !== nextProps.chatID ||
-      this.props.messages !== nextProps.messages
+      this.props.chatID !== nextProps.chatID
     ) {
       return true;
     }
@@ -41,95 +40,75 @@ class MessageList extends Component {
   componentDidMount() {
     this.mounted = true;
     this.scrollToBottom();
-    if (this.props.subscribeToMore) {
-      this.subscribeToMessages();
-    }
+    this.props.subscribeToMore();
   }
 
   componentWillUnmount() {
     this.mounted = false;
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
   }
-  componentDidUpdate() {
-    if (this.topWaypoint._previousPosition === Waypoint.inside) {
-      const { messages } = this.state;
-      this.fetchDataForScrollUp(messages[messages.length - 1].createdAt);
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.messages !== this.props.messages) {
+      this.isUserInside && this.scrollToBottom();
     }
   }
 
-  handleEndScrollUp = ({ previousPosition, cursor }) => {
-    if (this.state.hasMoreItems) {
-      if (previousPosition === Waypoint.above) {
-        this.fetchDataForScrollUp(cursor);
-      }
-    }
+  handleEndScrollUp = ({ cursor }) => {
+    const { fetching, hasMoreItems } = this.state;
+    if (!hasMoreItems || fetching) return;
+
+    this.fetchDataForScrollUp(cursor);
   };
 
   fetchDataForScrollUp = async cursor => {
     this.props.ErrorHandler.setBreadcrumb("fetch more messages");
     const { chatID, limit, fetchMore } = this.props;
-    if (!this.state.hasMoreItems || this.state.restoreScroll) return;
 
-    fetchMore({
-      variables: {
-        chatID,
-        limit,
-        cursor
+    this.setState(
+      {
+        fetching: true
       },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          this.setState({ hasMoreItems: false });
-        } else {
-          previousResult.getMessages.messages = [
-            ...previousResult.getMessages.messages,
-            ...fetchMoreResult.getMessages.messages
-          ];
-        }
-        if (this.mounted) {
-          this.setState({ messages: previousResult.getMessages.messages });
-        }
-        return previousResult;
-      }
-    });
-  };
+      () => {
+        fetchMore({
+          variables: {
+            chatID,
+            limit,
+            cursor
+          },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            if (fetchMoreResult.getMessages.messages.length < 12) {
+              this.setState({
+                hasMoreItems: false
+              });
+            }
+            if (
+              fetchMoreResult.getMessages.messages.length === 0 ||
+              !fetchMoreResult
+            ) {
+              return prev;
+            }
 
-  subscribeToMessages = () => {
-    const { chatID, subscribeToMore } = this.props;
-    this.unsubscribe = subscribeToMore({
-      document: NEW_MESSAGE_SUB,
-      variables: {
-        chatID: chatID
-      },
-      updateQuery: (prev, { subscriptionData }) => {
-        const { newMessageSubscribe } = subscriptionData.data;
+            let previousResult = Array.from(prev.getMessages.messages);
 
-        if (!newMessageSubscribe) {
-          return prev;
-        }
-
-        if (prev.getMessages) {
-          prev.getMessages.messages = [
-            newMessageSubscribe,
-            ...prev.getMessages.messages
-          ];
-        } else {
-          prev.getMessages = {
-            messages: [newMessageSubscribe]
-          };
-        }
-
-        if (this.mounted) {
-          this.setState({ messages: prev.getMessages.messages });
-          if (this.isUserInside) {
-            this.scrollToBottom();
+            if (previousResult) {
+              previousResult = [
+                ...previousResult,
+                ...fetchMoreResult.getMessages.messages
+              ];
+            }
+            this.setState({
+              fetching: false
+            });
+            return {
+              getMessages: {
+                messages: [...previousResult],
+                __typename: "ChatType"
+              }
+            };
           }
-        }
-
-        return;
+        });
       }
-    });
+    );
   };
 
   scrollToBottom = () => {
@@ -151,9 +130,8 @@ class MessageList extends Component {
   };
 
   render() {
-    const { children, currentUserID, t, dayjs, lang } = this.props;
-
-    const { messages } = this.state;
+    const { currentUserID, t, dayjs, lang, messages } = this.props;
+    const { fetching, hasMoreItems } = this.state;
 
     const messageElements = _.flatten(
       _.chain(messages)
@@ -238,8 +216,25 @@ class MessageList extends Component {
 
     return (
       <div>
-        {" "}
-        <Waypoint
+        {hasMoreItems && (
+          <div
+            style={{
+              textAlign: "center",
+              textDecoration: "underline",
+              color: "blue",
+              cursor: "pointer",
+              padding: "10px"
+            }}
+            onClick={() =>
+              this.handleEndScrollUp({
+                cursor: messages[messages.length - 1].createdAt
+              })
+            }
+          >
+            {fetching ? "Loading..." : "Click for more"}
+          </div>
+        )}
+        {/* <Waypoint
           onEnter={({ previousPosition }) => {
             if (messages.length > 0) {
               this.handleEndScrollUp({
@@ -254,7 +249,7 @@ class MessageList extends Component {
           ref={node => {
             this.topWaypoint = node;
           }}
-        />
+        /> */}
         {/** Parent for abs position elements because scroll does weird things for abs items */}
         <div
           style={{
@@ -287,12 +282,14 @@ class MessageList extends Component {
             />
           </div>
           <div
-            style={{ float: "left", clear: "both" }}
+            style={{
+              float: "left",
+              clear: "both"
+            }}
             ref={el => {
               this.messagesEnd = el;
             }}
           />
-          {children}
         </div>
       </div>
     );

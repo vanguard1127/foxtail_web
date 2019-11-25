@@ -72,12 +72,14 @@ class ChatPanel extends PureComponent {
         }}
       >
         {sendMessage => (
-          <form onSubmit={e => this.submitMessage(e, sendMessage)}>
+          <form
+            onSubmit={e => this.submitMessage(e, sendMessage)}
+            className="form"
+          >
             <div className="panel">
               {/* <div className="files" /> */}
               <div className="textarea">
                 <input
-                  autoFocus
                   placeholder={t("typemsg") + "..."}
                   value={text}
                   onChange={e => this.setText(e)}

@@ -44,9 +44,9 @@ class ChatWindow extends PureComponent {
       isOwner,
       leaveDialog,
       lang,
-      subscribeToMore,
       fetchMore,
-      ReactGA
+      ReactGA,
+      subscribeToMore
     } = this.props;
 
     if (currentChat !== null) {

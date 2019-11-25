@@ -54,6 +54,8 @@ class Dropdown extends Component {
           ops = els.sexualityOptions;
         } else if (this.props.type === "eventType") {
           ops = els.eventTypeOptions;
+        } else if (this.props.type === "payType") {
+          ops = els.payTypeOptions;
         } else {
           ops = els.sexOptions;
         }

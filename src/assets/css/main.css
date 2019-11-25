@@ -11,8 +11,9 @@ html {
 
 body {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  -webkit-user-select: none;
 }
 
 main{
@@ -152,7 +153,8 @@ header ul.menu li:nth-child(2) a::before {
   top: 0px;
 }
 
-header ul.menu li.active a::before {
+header ul.menu li a.active::before,
+header ul.menu li a.active div::before {
   background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
   background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
   background-image: linear-gradient(to left, #f70016 7%, #5f00a4 100%);
@@ -161,7 +163,7 @@ header ul.menu li.active a::before {
   display: inline;
 }
 
-header ul.menu li.active a {
+header ul.menu li a.active {
   color: #cf003c !important;
 }
 
@@ -201,6 +203,19 @@ header .function .inbox span.icon::before {
   color: #d6dde4;
   font-size: 24px;
   padding-right: 10px;
+}
+
+
+header .function .active .inbox span.text{
+  color: #cf003c !important;
+}
+
+header .function .active .inbox span.icon::before{
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 header .function .inbox span.icon.blink::before {
@@ -549,6 +564,9 @@ header .toggle {
   color: rgba(0, 0, 0, 0.8);
   margin-left: 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .invite-member .content .apply-content span {
@@ -1847,7 +1865,6 @@ footer .brand .medias ul li i::before {
   height: 100%;
   float: left;
   display: block;
-  right: 3px;
 }
 
 footer .brand .medias ul li.facebook i::before {
@@ -2921,6 +2938,12 @@ section.profile .desires {
   visibility: hidden;
 }
 
+section.profile .desires .list {
+  max-height: 30vh;
+  overflow-y: auto;
+  display: inline-block;width: 100%;
+}
+
 section.profile .desires.mobile {
   display: inline-block;
   visibility: visible;
@@ -3333,7 +3356,7 @@ section.go-events .header .settings-con {
   width: 100%;
   float: left;
   position: relative;
-  z-index: 2;
+  z-index: auto;
 }
 
 section.go-events .header .settings-con .dropdown {
@@ -4012,6 +4035,8 @@ section.event-detail .header .info .report-con {
   position: absolute;
   right: 15px;
   bottom: 12px;
+  display: none;
+  visibility: hidden;
 }
 
 section.event-detail .header .info .report-con span.rep-text {
@@ -4738,13 +4763,20 @@ section.settings .page {
   width: 100%;
   display: block;
   float: left;
-  background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
-  padding: 30px;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   position: relative;
 }
 
-section.settings .page.mtop {
+section.settings .page-section {
+  width: 100%;
+  display: block;
+  float: left;
+  background: #ffffff;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  padding: 30px;
+  position: relative;
   margin-top: 15px;
 }
 
@@ -4763,7 +4795,7 @@ section.settings .message {
   color: #ff1b03;
   font-size: 24px;
   line-height: 28px;
-
+cursor: pointer;
   -webkit-animation-name: opacity;
   -webkit-animation-duration: 3s;
   -webkit-animation-iteration-count: infinite;
@@ -4772,6 +4804,7 @@ section.settings .message {
   animation-iteration-count: infinite;
   display: flex;
   justify-content: center;
+  margin-top: 25px;
   margin-bottom: 25px;
 }
 
@@ -4835,6 +4868,10 @@ input.location-search-input {
   border-bottom: 1px solid #e8e8e8;
   text-transform: uppercase;
   margin-bottom: 15px;
+}
+
+section.settings .page .content span.heading {
+  width: 99% !important;
 }
 
 .page .content span.heading span.tip {
@@ -4903,7 +4940,7 @@ input.location-search-input {
 .page .form .content .item .input input:focus + label::before {
   line-height: 25px;
   font-size: 12px;
-  top: 10px;
+  top: 0;
   padding-left: 1px;
 }
 
@@ -4948,14 +4985,13 @@ input.location-search-input {
 .page .form .content .item .input label::before {
   content: attr(title);
   position: absolute;
-  top: 10px;
+  top: 15px;
   left: 20px;
-  line-height: 53px;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0;
   font-family: "Roboto Condensed";
-  color: #373737;
+  color: #8c909d;
   transition: 300ms all;
   -webkit-font-smoothing: antialiased;
   text-transform: none;
@@ -4990,7 +5026,7 @@ input.location-search-input {
   border: 1px solid #e9ebec;
   border-radius: 2px;
   height: 52px;
-  padding: 2px 20px 0 46px;
+  padding: 2px 20px 0 46px !important;
   font-family: "Roboto";
   color: #414141;
   font-size: 14px;
@@ -5003,6 +5039,11 @@ input.location-search-input {
   min-height: 120px;
   overflow-y: auto;
   padding-top: 8px;
+}
+
+.page .form .content .item .textarea textarea::placeholder{
+  color: #8c909d;
+  opacity: 1;
 }
 
 .page .form .content .item .textarea textarea:focus,
@@ -5079,6 +5120,10 @@ input.location-search-input {
 
 .switch-con.border-top {
   border-top: 1px solid #e8e8e8;
+}
+
+.switch-con.no-border {
+  border: 0px;
 }
 
 .switch-con .sw-head {
@@ -5368,7 +5413,7 @@ section.meet-filter .noUi-background {
 }
 
 section.meet-filter .range-con {
-  padding: 7px 0 9px 0;
+  padding: 7px 0 9px 0 !important;
 }
 
 .noUi-horizontal .noUi-handle {
@@ -5594,7 +5639,7 @@ section.meet-filter .range-con {
   margin: 0;
   float: left;
   display: inline-block;
-  width: 90% !important;
+  width: 80% !important;
 }
 
 .page .form .content .select_desires ul li {
@@ -5625,7 +5670,7 @@ section.meet-filter .range-con {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1002;
+  z-index: 1999999999;/*--For recaTCPA--*/
   -webkit-overflow-scrolling: touch;
 }
 
@@ -5802,7 +5847,7 @@ section.desires-popup {
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 99999999999999999;
   display: none;
   visibility: hidden;
 }
@@ -6525,14 +6570,14 @@ header.landing {
   box-shadow: none;
 }
 
-section.landing .register-form form .form-content span.tip::before {
+section.landing .register-form .form .form-content span.tip::before {
   content: "\f29c";
   font-family: "foxtail-icon";
   color: #acacac;
   font-size: 14px;
 }
 
-section.landing .register-form form .form-content span.tip {
+section.landing .register-form .form .form-content span.tip {
   float: right;
   right:4px;
 }
@@ -6702,7 +6747,7 @@ section.landing .left {
   float: left;
   position: relative;
   top: 160px;
-  z-index: 1;
+  z-index: 9999;
 }
 
 section.landing .left .welcome-text {
@@ -6846,6 +6891,7 @@ section.landing .register-form {
   border-radius: 2px;
   position: relative;
   top: 180px;
+  /*z-index: 999;*/
 }
 
 section.landing .register-form .head {
@@ -6878,13 +6924,13 @@ section.landing .register-form form {
   margin: 0;
 }
 
-section.landing .register-form form .form-content {
+section.landing .register-form .form .form-content {
   width: 100%;
   display: block;
   float: left;
 }
 
-section.landing .register-form form .form-content .input {
+section.landing .register-form .form .form-content .input {
   width: 100%;
   display: block;
   float: left;
@@ -6892,7 +6938,7 @@ section.landing .register-form form .form-content .input {
   margin-bottom: 15px;
 }
 
-section.landing .register-form form .form-content .input::before {
+section.landing .register-form .form .form-content .input::before {
   content: "";
   font-family: "foxtail-icon";
   color: #e5e7ee;
@@ -6902,25 +6948,25 @@ section.landing .register-form form .form-content .input::before {
   top: 15px;
 }
 
-section.landing .register-form form .form-content .input.username::before {
+section.landing .register-form .form .form-content .input.username::before {
   content: "\e815";
   left: 18px;
   top: 14px;
 }
 
-section.landing .register-form form .form-content .input.email::before {
+section.landing .register-form .form .form-content .input.email::before {
   content: "\e80c";
   font-size: 20px;
   top: 12px;
 }
 
-section.landing .register-form form .form-content .input.birthday::before {
+section.landing .register-form .form .form-content .input.birthday::before {
   content: "\f4c5";
   font-size: 20px;
   top: 12px;
 }
 
-section.landing .register-form form .form-content .input input {
+section.landing .register-form .form .form-content .input input {
   width: 100%;
   display: block;
   float: left;
@@ -6936,33 +6982,33 @@ section.landing .register-form form .form-content .input input {
   font-weight: 400;
 }
 
-section.landing .register-form form .form-content .input input::-webkit-input-placeholder {
+section.landing .register-form .form .form-content .input input::-webkit-input-placeholder {
   color: #8c909d;
 }
 
-section.landing .register-form form .form-content .input input::-moz-placeholder {
+section.landing .register-form .form .form-content .input input::-moz-placeholder {
   color: #8c909d;
 }
 
-section.landing .register-form form .form-content .input input:-ms-input-placeholder {
+section.landing .register-form .form .form-content .input input:-ms-input-placeholder {
   color: #8c909d;
 }
 
-section.landing .register-form form .form-content .input input:-moz-placeholder {
+section.landing .register-form .form .form-content .input input:-moz-placeholder {
   color: #8c909d;
 }
 
-section.landing .register-form form .form-content .dropdown {
+section.landing .register-form .form .form-content .dropdown {
   width: 100%;
   position: relative;
   float: left;
   margin-bottom: 15px;
 }
-section.landing .register-form form .form-content .dropdown.nobottom {
+section.landing .register-form .form .form-content .dropdown.nobottom {
   margin-bottom: none;
 }
 
-section.landing .register-form form .form-content .dropdown select {
+section.landing .register-form .form .form-content .dropdown select {
   width: 100%;
   height: 70px;
   display: block;
@@ -6981,7 +7027,7 @@ section.landing .register-form form .form-content .dropdown select {
   font-weight: 400;
 }
 
-section.landing .register-form form .form-content .dropdown::before {
+section.landing .register-form .form .form-content .dropdown::before {
   content: "";
   font-family: "foxtail-icon";
   color: #e5e7ee;
@@ -6992,7 +7038,7 @@ section.landing .register-form form .form-content .dropdown::before {
   /* z-index: 999999; */
 }
 
-section.landing .register-form form .form-content .dropdown::after {
+section.landing .register-form .form .form-content .dropdown::after {
   content: "\f004";
   font-family: "foxtail-icon";
   color: #f50043;
@@ -7003,7 +7049,7 @@ section.landing .register-form form .form-content .dropdown::after {
   z-index: 1;
 }
 
-section.landing .register-form form .form-content .dropdown label {
+section.landing .register-form .form .form-content .dropdown label {
   top: 9px;
   left: 15px;
   font-family: "Roboto";
@@ -7032,7 +7078,7 @@ section.landing
   padding: 19px 19px 0 14px;
 }
 
-section.landing .register-form form .form-content .dropdown .select2-container--default .select2-selection--single,
+section.landing .register-form .form .form-content .dropdown .select2-container--default .select2-selection--single,
 section.landing .register-form form .select2-container--default .select2-selection--multiple {
   height: 50px;
   border-color: #e9ebec !important;
@@ -7111,17 +7157,17 @@ section.landing
   visibility: hidden;
 }
 
-section.landing .register-form form .form-content .couple-choose {
+section.landing .register-form .form .form-content .couple-choose {
   width: 100%;
   display: block;
   float: left;
 }
 
-section.landing .register-form form .form-content .couple-choose input {
+section.landing .register-form .form .form-content .couple-choose input {
   display: none;
 }
 
-section.landing .register-form form .form-content .couple-choose input + label span {
+section.landing .register-form .form .form-content .couple-choose input + label span {
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -7133,7 +7179,7 @@ section.landing .register-form form .form-content .couple-choose input + label s
   cursor: pointer;
 }
 
-section.landing .register-form form .form-content .couple-choose label b {
+section.landing .register-form .form .form-content .couple-choose label b {
   padding-left: 10px;
   display: inline-block;
   float: left;
@@ -7145,7 +7191,7 @@ section.landing .register-form form .form-content .couple-choose label b {
   user-select: none;
 }
 
-section.landing .register-form form .form-content .couple-choose input:checked + label span:before {
+section.landing .register-form .form .form-content .couple-choose input:checked + label span:before {
   content: "\e803";
   font-family: "foxtail-icon";
   color: #cb0032;
@@ -7157,17 +7203,17 @@ section.landing .register-form form .form-content .couple-choose input:checked +
   line-height: 24px;
 }
 
-section.landing .register-form form .form-content .submit {
+section.landing .register-form .form .form-content .submit {
   width: 100%;
   display: block;
   float: left;
 }
 
-section.landing .register-form form .form-content .input-feedback {
+section.landing .register-form .form .form-content .input-feedback {
   color: red;
 }
 
-section.landing .register-form form .form-content .submit .btn {
+section.landing .register-form .form .form-content .submit .btn {
   width: 100%;
   height: 50px;
   line-height: 50px;
@@ -7188,12 +7234,12 @@ section.landing .register-form form .form-content .submit .btn {
   transition: 0.3s all;
 }
 
-section.landing .register-form form .form-content .submit .btn:hover {
+section.landing .register-form .form .form-content .submit .btn:hover {
   transform: translateY(-1px);
 }
 
-section.landing .register-form form .form-content .disclaim,
-section.landing .register-form form .form-content .terms {
+section.landing .register-form .form .form-content .disclaim,
+section.landing .register-form .form .form-content .terms {
   width: 100%;
   display: block;
   float: left;
@@ -7204,21 +7250,21 @@ section.landing .register-form form .form-content .terms {
   padding-top: 15px;
 }
 
-section.landing .register-form form .form-content .disclaim {
+section.landing .register-form .form .form-content .disclaim {
   padding-left: 5px;
 }
 
-section.landing .register-form form .form-content .terms span {
+section.landing .register-form .form .form-content .terms span {
   text-decoration: underline;
   padding-left: 5px;
   cursor: pointer;
 }
 
-section.landing .register-form form .form-content .terms span:hover {
+section.landing .register-form .form .form-content .terms span:hover {
   color: #b50131;
 }
 
-section.landing .register-form form .form-content .input.birthday .gj-datepicker-md [role="right-icon"] {
+section.landing .register-form .form .form-content .input.birthday .gj-datepicker-md [role="right-icon"] {
   display: none;
   visibility: hidden;
 }
@@ -7315,6 +7361,11 @@ footer.landing .links ul li span div:hover {
   color: #b50131;
 }
 
+
+footer.landing .tooltip .tooltiptext.show {
+  position: absolute;
+    left: -10vw;
+}
 section.login-modal {
   width: 100%;
   height: 100%;
@@ -7322,12 +7373,16 @@ section.login-modal {
   background: rgba(41, 1, 10, 0.67);
   left: 0;
   top: 0;
-  z-index: 1200;
+  z-index: 9999999999999;
   /* padding:15% 0; */
   display: none;
   visibility: hidden;
   display: flex;
   flex-direction: column;
+}
+
+section.login-modal .container{
+  z-index: 1;
 }
 
 section.login-modal.verifications {
@@ -7373,7 +7428,7 @@ section.login-modal .popup-container {
 
 section.login-modal .popup {
   width: 100%;
-  /* max-height: 88vh; */
+ /* max-height: 88vh; */
   background-color: #fff;
   box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
   border-radius: 4px;
@@ -7390,18 +7445,24 @@ section.login-modal .popup.full {
 }
 
 section.login-modal.couples .popup.full,
-section.login-modal.black .popup.full {
+section.login-modal.black .popup.full,
+section.login-modal.rules .popup.full  {
   padding: 0;
   max-height: 88vh;
 }
 
-section.login-modal.create-event .popup form,
-section.login-modal.rules .popup form {
+section.login-modal.verifications .popup.full{
+  max-height: 88vh;
+}
+
+section.login-modal.create-event .popup form{
   max-height: 70vh;
+  overflow: auto;
 }
 
 section.login-modal.couples .popup.full .form-content,
-section.login-modal.black .popup.full .form-content {
+section.login-modal.black .popup.full .form-content,
+section.login-modal.rules .popup.full .form-content  {
   padding: 0px;
   margin: 0;
 }
@@ -7429,20 +7490,20 @@ section.login-modal .popup a.close:hover::before {
 }
 
 section.login-modal .popup span.head {
-  /*width: 100%;*/
-  display: block;
-  float: left;
-  font-size: 25px;
-  color: #321935;
-  font-family: "Poppins";
-  font-weight: 400;
-  letter-spacing: -0.3px;
-  line-height: 35px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #dcdfe4;
-  text-align: center;
-  margin: 0 30px;
-  margin-bottom: 25px;
+  width: auto !important;
+  display: block !important;
+  float: left !important;
+  font-size: 25px !important;
+  color: #321935 !important;
+  font-family: "Poppins" !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.3px !important;
+  line-height: 35px !important;
+  padding-bottom: 15px !important;
+  border-bottom: 1px solid #dcdfe4 !important;
+  text-align: center !important;
+  margin: 0 30px !important;
+  margin-bottom: 25px !important;
 }
 
 section.login-modal .popup form {
@@ -7454,26 +7515,33 @@ section.login-modal .popup form {
   /*overflow-y: auto;*/
 }
 
-section.login-modal .popup form .form-content {
-  /*width: 100%;
-  display: block;
-  float: left;*/
+/* For nested popup */
+section.login-modal .popup .form .form-content .form .form-content .dropdown span{
+  line-height: 0px !important;
+  text-align:start !important;
+  font-size: 13px !important;
+  letter-spacing: 0px !important;
+  width: auto !important;
 }
 
-section.login-modal .popup form .form-content .input {
+section.login-modal .popup .form .form-content .input {
   width: 100%;
   display: block;
   float: left;
   position: relative;
-  margin-bottom: 10px;
 }
+
+section.login-modal .popup .form .form-content .input.password{
+  margin-bottom: 10px;
+ }
+
 
 section.login-modal.confirm-phone .popup span.head{
   float: none!important;
   width: auto;
 }
 
-section.login-modal.confirm-phone .popup form .form-content{
+section.login-modal.confirm-phone .popup .form .form-content{
   float: none!important;
   width: auto;
 }
@@ -7482,7 +7550,7 @@ section.login-modal.confirm-phone .popup form .form-content{
   width: calc(100% - 100px) !important;
 }
 
-section.login-modal .popup form .form-content .input input {
+section.login-modal .popup .form .form-content .input input {
   width: 100%;
   display: block;
   float: left;
@@ -7498,7 +7566,11 @@ section.login-modal .popup form .form-content .input input {
   font-weight: 400;
 }
 
-section.login-modal .popup form .form-content .input textarea {
+section.login-modal.create-event .popup .form .form-content .input input {
+  padding: 15px 20px 0 20px;
+}
+
+section.login-modal .popup .form .form-content .input textarea {
   width: 100%;
   display: block;
   float: left;
@@ -7513,34 +7585,34 @@ section.login-modal .popup form .form-content .input textarea {
   font-weight: 400;
 }
 
-section.login-modal .popup form .form-content .input input::-webkit-input-placeholder {
+section.login-modal .popup .form .form-content .input input::-webkit-input-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup form .form-content .input input::-moz-placeholder {
+section.login-modal .popup .form .form-content .input input::-moz-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup form .form-content .input input:-ms-input-placeholder {
+section.login-modal .popup .form .form-content .input input:-ms-input-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup form .form-content .input input:-moz-placeholder {
+section.login-modal .popup .form .form-content .input input:-moz-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup form .form-content .dropdown {
+section.login-modal .popup .form .form-content .dropdown {
   width: 100px;
   position: relative;
   float: left;
   z-index: 100;
 }
 
-section.login-modal .popup form .form-content .dropdown.wide {
+section.login-modal .popup .form .form-content .dropdown.wide {
   width: 100%;
 }
 
-section.login-modal .popup form .form-content .dropdown select {
+section.login-modal .popup .form .form-content .dropdown select {
   width: 100%;
   height: 70px;
   display: block;
@@ -7559,7 +7631,7 @@ section.login-modal .popup form .form-content .dropdown select {
   font-weight: 400;
 }
 
-section.login-modal .popup form .form-content .dropdown::before {
+section.login-modal .popup .form .form-content .dropdown::before {
   content: "";
   font-family: "foxtail-icon";
   color: #e5e7ee;
@@ -7570,7 +7642,7 @@ section.login-modal .popup form .form-content .dropdown::before {
   z-index: 999999;
 }
 
-section.login-modal .popup form .form-content .dropdown::after {
+section.login-modal .popup .form .form-content .dropdown::after {
   content: "\f004";
   font-family: "foxtail-icon";
   color: #f50043;
@@ -7581,7 +7653,7 @@ section.login-modal .popup form .form-content .dropdown::after {
   z-index: 99999;
 }
 
-section.login-modal .popup form .form-content .dropdown label {
+section.login-modal .popup .form .form-content .dropdown label {
   position: absolute;
   top: 9px;
   left: 15px;
@@ -7598,8 +7670,17 @@ section.login-modal .popup form .form-content .dropdown label {
   z-index: 9999;
 }
 
-section.login-modal .popup form .form-content .dropdown span {
+section.login-modal .popup .form .form-content .dropdown span {
   position: relative;
+}
+
+section.login-modal.acctsetting .popup .form .form-content .dropdown span {
+  position: absolute;
+  top:25px;
+}
+
+.popup .page .form .content .select_desires {
+  margin-bottom: 0px !important;
 }
 
 section.login-modal
@@ -7615,7 +7696,7 @@ section.login-modal
   padding: 12px 19px 0 14px;
 }
 
-section.login-modal .popup form .form-content .dropdown .select2-container--default .select2-selection--single,
+section.login-modal .popup .form .form-content .dropdown .select2-container--default .select2-selection--single,
 section.landing .register-form form .select2-container--default .select2-selection--multiple {
   height: 50px;
   border-color: #e9ebec !important;
@@ -7694,32 +7775,31 @@ section.login-modal
   visibility: hidden;
 }
 
-section.login-modal .popup form .form-content span.description {
-  width: 100%;
-  display: block;
-  float: left;
-  font-size: 14px;
-  color: #232323;
-  letter-spacing: -0.3px;
-  line-height: 20px;
-  padding-bottom: 15px;
-  text-align: center;
-  padding-top: 5px;
+section.login-modal .popup .form .form-content span.description {
+  width: 100% !important;
+  display: block !important;
+  float: left !important;
+  font-size: 14px !important;
+  color: #232323 !important;
+  letter-spacing: -0.3px !important;
+  line-height: 20px !important;
+  padding-bottom: 15px !important;
+  text-align: center !important;
+  padding-top: 5px !important;
   /* padding-top: 15px;
   border-top: 1px solid #e9ebec;
   margin-top: 12px; */
 }
 
-section.login-modal .popup form .form-content .submit {
+section.login-modal .popup .form .form-content .submit {
   width: 100%;
   display: block;
   float: left;
 }
 
-section.login-modal .popup form .form-content .submit span,
-section.login-modal .popup form .form-content .submit button {
+section.login-modal .popup .form .form-content .submit span,
+section.login-modal .popup .form .form-content .submit button {
   width: 100%;
-  height: 50px;
   line-height: 50px;
   outline: none;
   border: none;
@@ -7734,25 +7814,35 @@ section.login-modal .popup form .form-content .submit button {
   cursor: pointer;
 }
 
-section.login-modal .popup form .form-content .submit span.color,
-section.login-modal .popup form .form-content .submit button.color {
+section.login-modal .popup .form .form-content .submit span.color,
+section.login-modal .popup .form .form-content .submit button.color {
   background-image: -webkit-linear-gradient(119deg, #f70016 0%, #5f00a4 100%);
   background-image: -o-linear-gradient(119deg, #f70016 0%, #5f00a4 100%);
   background-image: linear-gradient(209deg, #f70016 0%, #5f00a4 100%);
   font-weight: 700;
   color: #fff;
   margin-bottom: 15px;
+  margin-top: 5px;
 }
 
-section.login-modal .popup form .form-content .submit span.border,
-section.login-modal .popup form .form-content .submit button.border {
+section.login-modal .popup .form .form-content .submit span.disabled,
+section.login-modal .popup .form .form-content .submit button.disabled {
+  background-color:#767676;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+section.login-modal .popup .form .form-content .submit span.border,
+section.login-modal .popup .form .form-content .submit button.border {
   background-color: #fff;
   border: 1px solid #c20046;
   color: #c20046;
 }
 
-section.login-modal .popup form .form-content .submit span.border:hover,
-section.login-modal .popup form .form-content .submit button.border:hover {
+section.login-modal .popup .form .form-content .submit span.border:hover,
+section.login-modal .popup .form .form-content .submit button.border:hover {
   background-color: #c20046;
   color: #fff;
 }
@@ -7804,6 +7894,7 @@ section.settings .rc-slider-handle {
 
 .rc-slider {
   z-index: 100;
+  padding: 15px 0 !important;
 }
 
 .select-list {
@@ -7856,15 +7947,11 @@ section.login-modal .popup form::-webkit-scrollbar-corner,
   text-transform: none;
 }
 
-section.settings .select-container {
-  height: 60px !important;
-}
-
 .select-container label {
   z-index: auto !important;
 }
 
-section.settings .select-list {
+section.settings .select-list.multiple {
   top: 59px !important;
   margin: 0 0 0 15px;
   width: calc(100% - 30px) !important;
@@ -7912,12 +7999,19 @@ section.settings .profile-bio-textarea {
 }
 
 section.settings textarea.bio {
-  /* padding-top: 38px !important; */
   border: unset !important;
   z-index: 0;
   margin-top: 38px;
   min-height: 80px !important;
   padding-top: 0 !important;
+}
+
+section.settings div.saving {
+  position: absolute;
+  right: 0px;
+  color: #9d9d9d;
+  font-size: 14px;
+  padding: 5px;
 }
 
 /* REVISION ADD */
@@ -7930,15 +8024,6 @@ section.settings textarea.bio {
   background-size: 100%;
   background-repeat: no-repeat;
   margin-bottom: 15px;
-}
-
-.couple-cover {
-  width: 100%;
-  height: 170px;
-  display: inline-block;
-  background-image: url("../img/elements/couple-cover.png");
-  background-size: 100%;
-  background-repeat: no-repeat;
 }
 
 h3.black-head {
@@ -8021,11 +8106,11 @@ ul.black-member li::before {
   color: #5b5b65;
   font-size: 14px;
 }
-section.login-modal .popup form .form-content{
+section.login-modal .popup .form .form-content{
   margin: 0 30px;
 }
 
-section.login-modal .popup form .form-content .example-image {
+section.login-modal .popup .form .form-content .example-image {
   width: 100%;
   display: block !important;
   float: left;
@@ -8036,14 +8121,14 @@ section.login-modal .popup form .form-content .example-image {
 }
 
 
-section.login-modal .popup form .form-content .example-image img {
+section.login-modal .popup .form .form-content .example-image img {
   width: 100%;
   height: 100%;
   display: inline-block;
   float: left;
 }
 
-section.login-modal .popup form .form-content .instructions {
+section.login-modal .popup .form .form-content .instructions {
   width: 100%;
   display: block;
   float: left;
@@ -8052,7 +8137,7 @@ section.login-modal .popup form .form-content .instructions {
   padding-top: 20px;
 }
 
-section.login-modal .popup form .form-content .upload-verify {
+section.login-modal .popup .form .form-content .upload-verify {
   width: 100%;
   display: block;
   float: left;
@@ -8126,12 +8211,14 @@ section.not-found .icon i.nico::before {
   font-style: normal;
 }
 
-section.not-found .icon i.nico.magnifier::before {
-  content: "\e822";
-}
 section.not-found .icon i.nico.blackmember::before {
   content: "\e823";
 }
+
+section.not-found .icon i.nico.magnifier::before {
+  content: "\e822";
+}
+
 section.not-found .icon i.nico.location::before {
   content: "\e820";
 }
@@ -8934,7 +9021,8 @@ section.not-found span.description {
     padding-top: 12px;
   }
 
-  section.event-detail .header .info .share-event {
+  section.event-detail .header .info .share-event,
+  section.event-detail .header .info .report-con {
     display: inline-block;
     visibility: visible;
   }
@@ -9010,6 +9098,7 @@ section.not-found span.description {
   }
   section.landing .left {
     top: 175px;
+    z-index: 0;
   }
 
   section.landing .register-form {
@@ -9169,7 +9258,7 @@ section.not-found span.description {
     visibility: hidden;
   }
 
-  section.settings .page.mtop {
+  section.settings .page-section.mtop:nth-child(1) {
     margin-top: 0;
   }
 
@@ -9412,37 +9501,6 @@ img {
   /* z-index: 1; */
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  z-index: 99999999999;
-}
-
-.tooltip .tooltiptext {
-  width: auto !important;
-  height: auto !important;
-  background-color: #fff;
-  color: #414141;
-  border: 1px solid #e9ebec;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  bottom: 125%;
-  left: 20%;
-  margin-left: -60px;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  padding: 10px 20px !important;
-  line-height: 2;
-  z-index: 99999999999;
-}
-
-.tooltip .tooltiptext div {
-  width: max-content;
-  z-index: 99999999999;
-}
-
 .greenButton {
   width: 100%;
   height: 50px;
@@ -9478,7 +9536,8 @@ img {
 }
 
 .green-button-small:hover {
-  background-color: #00af49;
+  background-color: #00b94d !important;
+  border-color: #00b94d !important;
 }
 
 .capitalize {
@@ -9650,6 +9709,10 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   position: absolute;
   left: 0;
   right: 0;
+}
+
+.edit-photo-modal .popup form .form-content{
+  margin: 0!important;
 }
 
 .edit-photo-modal .popup form::-webkit-scrollbar{
@@ -9830,6 +9893,7 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
   display: flex;
   align-items: center;
   height: 100vh;
+  top: 100px;
 }
 .xxxloader {
   position: relative;
@@ -9838,22 +9902,22 @@ section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfi
 }
 
 .loadingActive {
-  /* display: flex;
+  display: flex;
   position: absolute;
   align-items: center;
   height: 100vh;
   justify-items: center;
-  width: 100vw; */
+  width: 100vw;
 
   /** Added by @ashutoshpw **/
-  display: flex;
+  /**display: flex;
   position: fixed;
   align-items: center;
   height: 110%;
   justify-items: center;
   width: 100vw;
   background:#fff;
-  z-index: 99999999999999999999;
+  z-index: 99999999999999999999; **/
 }
 
 .loadingContainer {
@@ -10015,6 +10079,7 @@ animation: CycleC 30s ease infinite;
     display: flex;
     justify-content: flex-end;
   }
+
   .event-tool-mobile .share-event ul li {
     width: 35px;
     height: 35px;
@@ -10065,6 +10130,38 @@ animation: CycleC 30s ease infinite;
     content: "\f234";
   }
 
+  .event-tool-mobile span.report{
+    width: 35px;
+    height: 35px;
+    float: right;
+    border: 1px solid #c40148;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 1px;
+    transition: 0.3s all;
+    color: #c40148;
+    position: initial;
+    right: 16px;
+    top: 34px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.event-tool-mobile span.report::before {
+  content: "";
+  content: "\e808";
+  font-size: 15px;
+  font-family: "foxtail-icon";
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+}
+  .event-tool-mobile span.report::before {
+    content: "\e808";
+  }
+
+  .event-tool-mobile span.report:hover,
   .event-tool-mobile .share-event ul li:hover {
     background-color: #c40148;
     color: #fff;
@@ -10083,29 +10180,38 @@ animation: CycleC 30s ease infinite;
     letter-spacing: -0.3px;
     line-height: 35px;
   }
-  .event-tool-mobile ul li.report::before {
-    content: "\e808";
-    padding-left: 2px;
-  }
-  .event-tool-mobile .share-event {
+
+  .event-tool-mobile .share-event,.event-tool-mobile .report-con {
     display: flex;
   }
+
+  .event-tool-mobile .report-con span.rep-text {
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    color: #464648;
+    margin-right: 5px;
+    margin-left: 10px;
+    line-height: 35px;
+  }
+
 
   .event-tool-mobile .members-toggle.invite-event {
     top: 21px;
   }
 }
 .rulesCon {
-  margin: 25px;
-  overflow: auto;
-  /*max-height: 58vh;*/
   border-bottom: 1px solid #dcdfe4;
+  text-align: initial !important;
 }
-@media (max-height: 633px) {
-  .rulesCon {
-    /*max-height: 54vh;*/
-  }
+.rulesCon .rulesScroll{
+  border-top: 1px solid #c40148;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+    max-height: 40vh;
+    overflow: auto;
+    padding: 10px;
 }
+
 .rulesCon h2 {
   text-align: center;
   color: #f70016;
@@ -10151,7 +10257,6 @@ animation: CycleC 30s ease infinite;
   margin: 10px;
   font-style: italic;
   color: #f70016;
-  padding-bottom: 15px;
 }
 
 .cropper-bg {
@@ -10161,6 +10266,10 @@ animation: CycleC 30s ease infinite;
 .photo-editor {
   background-color: transparent !important;
   max-height: 100vh;
+}
+
+.photo-editor .form-content{
+  margin: 0!important;
 }
 
 .single-line{
@@ -10243,13 +10352,21 @@ animation: CycleC 30s ease infinite;
   padding-left: 5px!important;
 }
 /** Added by @ashutoshpw **/
-div.dropdown{
+div.register-form div.form-fields div.dropdown{
   margin-top: 18px;
   margin-bottom: 0px!important;
 }
-div.calender{
+div.register-form div.form-fields div.calender{
   margin-bottom: 0px!important;
 }
-.couple-choose {
+div.register-form div.form-fields .couple-choose {
   margin-top: 15px;
+}
+
+.ReactModalPortal>div{
+  z-index: 9999!important;
+}
+
+.Toastify {
+  z-index: 99999999999999;
 }

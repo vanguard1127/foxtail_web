@@ -21,14 +21,13 @@ import MyProfile from "./MyProfile/";
 import DesiresModal from "../Modals/Desires/Modal";
 import ShareModal from "../Modals/Share";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
-// import CoupleModal from "../Modals/Couples";
-// import BlackModal from "../Modals/Black";
 import getCityCountry from "../../utils/getCityCountry";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import Modal from "../common/Modal";
 import { toast } from "react-toastify";
 import CoupleProfileModal from "../Modals/CoupleProfile";
 import BecomeBlackMemberModal from "../Modals/BecomeBlackMember";
+import CreditCardModal from "../Modals/CreditCard";
 
 class SettingsPage extends Component {
   constructor(props) {
@@ -65,6 +64,7 @@ class SettingsPage extends Component {
     showDesiresPopup: false,
     showPhotoVerPopup: false,
     showBlackPopup: this.props.showBlkModal || false,
+    showCCModal: false,
     showImgEditorPopup: false,
     showImgCropperPopup: false,
     showSharePopup: false,
@@ -79,6 +79,7 @@ class SettingsPage extends Component {
     profilePic: "",
     profilePicUrl: "",
     flashCpl: false,
+    ccLast4: "",
     ...this.props.settings,
     publicPhotoList: undefined,
     privatePhotoList: undefined,
@@ -129,6 +130,7 @@ class SettingsPage extends Component {
       this.state.profilePicUrl !== nextState.profilePicUrl ||
       this.state.publicPhotoList !== nextState.publicPhotoList ||
       this.state.privatePhotoList !== nextState.privatePhotoList ||
+      this.state.showCCModal !== nextState.showCCModal ||
       this.state.showBlackPopup !== nextState.showBlackPopup ||
       this.state.shareProfile !== nextState.shareProfile ||
       this.state.showSharePopup !== nextState.showSharePopup ||
@@ -146,6 +148,7 @@ class SettingsPage extends Component {
       this.state.visible !== nextState.visible ||
       this.props.t !== nextProps.t ||
       this.props.errors !== nextProps.errors ||
+      this.state.password !== nextState.password ||
       this.state.errors !== nextState.errors
     ) {
       return true;
@@ -157,7 +160,7 @@ class SettingsPage extends Component {
   componentDidMount() {
     const { history } = this.props;
     history.replace({ state: {} });
-    window.ALLOWCONTEXTMENU=true;
+    window.ALLOWCONTEXTMENU = true;
     window.addEventListener("beforeunload", () => {
       this.handleSubmit(this.updateSettings);
     });
@@ -168,7 +171,8 @@ class SettingsPage extends Component {
     await this.handleSubmit(this.updateSettings);
     clearAllBodyScrollLocks();
     this.mounted = false;
-    window.ALLOWCONTEXTMENU=false;
+    window.ALLOWCONTEXTMENU = false;
+    toast.dismiss();
   }
 
   handlePhotoListChange = ({ file, key, url, isPrivate, isDeleted }) => {
@@ -242,6 +246,7 @@ class SettingsPage extends Component {
       });
     }
   };
+
   handleSubmit = (updateSettings, doRefetch) => {
     const { ErrorHandler, t, ReactGA } = this.props;
     const { isCouple, isInitial } = this.state;
@@ -401,14 +406,9 @@ class SettingsPage extends Component {
     this.setErrorHandler("Desires popup toggled");
     const { showDesiresPopup } = this.state;
     if (this.mounted) {
-      this.setState(
-        {
-          showDesiresPopup: !showDesiresPopup
-        },
-        () => {
-          //this.toggleScroll(!showDesiresPopup);
-        }
-      );
+      this.setState({
+        showDesiresPopup: !showDesiresPopup
+      });
     }
   };
 
@@ -473,6 +473,18 @@ class SettingsPage extends Component {
           showBlackPopup: !this.state.showBlackPopup
         },
         this.toggleScroll(!this.state.showBlackPopup)
+      );
+    }
+  };
+
+  toggleCCModal = () => {
+    this.setErrorHandler("Toggle Blk popup");
+    if (this.mounted) {
+      this.setState(
+        {
+          showCCModal: !this.state.showCCModal
+        },
+        this.toggleScroll(!this.state.showCCModal)
       );
     }
   };
@@ -591,6 +603,21 @@ class SettingsPage extends Component {
     return word === null;
   };
 
+  showPleaseComplete = () => {
+    if (!toast.isActive("plscomplete")) {
+      toast.info(
+        <div>
+          {this.props.t("common:plscomplete")}
+          <br />
+          {this.props.t("common:plscompleteExample")}
+        </div>,
+        {
+          toastId: "plscomplete"
+        }
+      );
+    }
+  };
+
   render() {
     const {
       lat,
@@ -642,7 +669,10 @@ class SettingsPage extends Component {
       title,
       okAction,
       sexuality,
-      errors
+      errors,
+      password,
+      ccLast4,
+      showCCModal
     } = this.state;
 
     const {
@@ -654,6 +684,14 @@ class SettingsPage extends Component {
       history,
       ReactGA
     } = this.props;
+
+    if (
+      errors.about !== null ||
+      errors.desires !== null ||
+      errors.profilePic !== null
+    ) {
+      this.showPleaseComplete();
+    }
 
     return (
       <Mutation
@@ -716,9 +754,7 @@ class SettingsPage extends Component {
                           coupleModalToggle={this.toggleCouplesPopup}
                           couplePartner={couplePartner}
                           blackModalToggle={this.toggleBlackPopup}
-                          shareModalToggle={isShareProfile =>
-                            this.toggleSharePopup(isShareProfile)
-                          }
+                          shareModalToggle={this.toggleSharePopup}
                           t={t}
                           flashCpl={flashCpl}
                           currentuser={currentuser}
@@ -732,7 +768,10 @@ class SettingsPage extends Component {
                         {(errors.about !== null ||
                           errors.desires !== null ||
                           errors.profilePic !== null) && (
-                          <span className="message">
+                          <span
+                            className="message"
+                            onClick={this.showPleaseComplete}
+                          >
                             {t("common:plscomplete")}
                           </span>
                         )}
@@ -745,11 +784,12 @@ class SettingsPage extends Component {
                               interestedIn={interestedIn}
                               city={city}
                               isBlackMember={currentuser.blackMember.active}
-                              setValue={({ name, value }) =>
+                              setValue={({ name, value, doRefetch }) =>
                                 this.setValue({
                                   name,
                                   value,
-                                  updateSettings
+                                  updateSettings,
+                                  doRefetch
                                 })
                               }
                               setLocationValues={({ lat, long, city }) =>
@@ -828,6 +868,7 @@ class SettingsPage extends Component {
                               }
                               t={t}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              toggleScroll={this.toggleScroll}
                             />
                           </div>
 
@@ -884,6 +925,8 @@ class SettingsPage extends Component {
                                 setDialogContent={this.setDialogContent}
                                 lang={lang}
                                 ReactGA={ReactGA}
+                                ccLast4={ccLast4}
+                                toggleCCModal={this.toggleCCModal}
                               />
                             </div>
                           )}
@@ -911,6 +954,8 @@ class SettingsPage extends Component {
                                 lang={lang}
                                 isEmailOK={currentuser.isEmailOK}
                                 ReactGA={ReactGA}
+                                passEnabled={password !== null}
+                                refetchUser={refetchUser}
                               />
                               <DeactivateAcctBtn
                                 t={t}
@@ -1021,6 +1066,20 @@ class SettingsPage extends Component {
                   ErrorHandler={ErrorHandler}
                   notifyClient={this.notifyClient}
                   lang={lang}
+                  t={t}
+                  ccLast4={ccLast4}
+                  toggleCCModal={this.toggleCCModal}
+                />
+              )}
+              {showCCModal && (
+                <CreditCardModal
+                  close={this.toggleCCModal}
+                  ErrorHandler={ErrorHandler}
+                  notifyClient={this.notifyClient}
+                  lang={lang}
+                  t={t}
+                  ccLast4={ccLast4}
+                  toggleSharePopup={this.toggleSharePopup}
                 />
               )}
               {showSharePopup && (
@@ -1030,6 +1089,7 @@ class SettingsPage extends Component {
                   visible={showSharePopup}
                   close={this.toggleSharePopup}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  t={t}
                 />
               )}
             </section>

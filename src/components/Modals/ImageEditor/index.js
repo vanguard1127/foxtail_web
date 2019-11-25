@@ -31,37 +31,37 @@ class ImageEditor extends Component {
       return null;
     }
     const editor = (
-      <ErrorHandler.ErrorBoundary>
-        <EditCanvasImage
-          imageObject={file}
-          setS3PhotoParams={setS3PhotoParams}
-          uploadToS3={uploadToS3}
-          signS3={signS3}
-          handlePhotoListChange={handlePhotoListChange}
-          close={close}
-          t={t}
-          ErrorHandler={ErrorHandler}
-        />
-      </ErrorHandler.ErrorBoundary>
-    );
-    return (
       <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }}>
         {props => (
           <div style={props}>
-            <Modal
-              fullScreen
-              header={t("editphoto")}
-              close={close}
-              ref={el => (this.container = el)}
-              className="edit-photo-modal clearfix"
-              noFade
-              showLoader
-            >
-              {editor}
-            </Modal>
+            <ErrorHandler.ErrorBoundary>
+              <EditCanvasImage
+                imageObject={file}
+                setS3PhotoParams={setS3PhotoParams}
+                uploadToS3={uploadToS3}
+                signS3={signS3}
+                handlePhotoListChange={handlePhotoListChange}
+                close={close}
+                t={t}
+                ErrorHandler={ErrorHandler}
+              />
+            </ErrorHandler.ErrorBoundary>
           </div>
         )}
       </Spring>
+    );
+    return (
+      <Modal
+        fullScreen
+        header={t("editphoto")}
+        close={close}
+        ref={el => (this.container = el)}
+        className="edit-photo-modal clearfix"
+        noFade
+        showLoader
+      >
+        {editor}
+      </Modal>
     );
   }
 }

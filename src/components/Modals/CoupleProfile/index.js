@@ -45,7 +45,7 @@ class CoupleProfile extends PureComponent {
       linkProfile()
         .then(({ data }) => {
           close();
-          window.location.reload();
+          window.location.reload(false);
         })
         .catch(res => {
           this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -65,7 +65,7 @@ class CoupleProfile extends PureComponent {
       .then(({ data }) => {
         //switch to new screen for do u want to edit?
         close();
-        window.location.reload();
+        window.location.reload(false);
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res.graphQLErrors);
@@ -194,8 +194,8 @@ class CoupleProfile extends PureComponent {
         </Modal>
         <Dialog
           onClose={this.toggleDlg}
-          aria-labelledby="Image"
           open={cfmDlgOpen}
+          style={{ zIndex: "999999999999999" }}
         >
           <DialogTitle id="alert-dialog-title">{t("includemsg")}</DialogTitle>
 

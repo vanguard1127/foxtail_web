@@ -33,17 +33,14 @@ class MyAccountMenu extends Component {
           <ul>
             {this.props.location.pathname !== "/settings" && (
               <>
-                {isCouple ? (
-                  <NavLink to="/settings">
-                    {" "}
-                    <li>{t("ouracct")}</li>
-                  </NavLink>
-                ) : (
-                  <NavLink to="/settings">
-                    {" "}
+                <NavLink to="/settings">
+                  {isCouple ? (
+                    <li>{t("common:ouracct")}</li>
+                  ) : (
                     <li>{t("common:myaccount")} </li>
-                  </NavLink>
-                )}
+                  )}
+                </NavLink>
+
                 {!isCouple && (
                   <li onClick={this.onAddCouple}>
                     <span role="heading" aria-level="2">

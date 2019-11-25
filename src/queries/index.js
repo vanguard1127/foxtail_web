@@ -70,35 +70,21 @@ export const NEW_NOTICE_SUB = gql`
   }
 `;
 
-/* Mutations */
-// export const CREATE_USER = gql`
-//   mutation(
-//     $username: String!
-//     $email: String!
-//     $phone: String!
-//     $gender: String!
-//     $interestedIn: [String]
-//     $dob: String!
-//     $lang: String
-//   ) {
-//     createUser(
-//       username: $username
-//       email: $email
-//       phone: $phone
-//       gender: $gender
-//       interestedIn: $interestedIn
-//       dob: $dob
-//       lang: $lang
-//     ) {
-//       token
-//       access
-//     }
-//   }
-// `;
-
 export const CREATE_SUBSCRIPTION = gql`
-  mutation($token: String!, $ccLast4: String!) {
-    createSubcription(token: $token, ccLast4: $ccLast4)
+  mutation(
+    $ccnum: String!
+    $exp: String!
+    $cvc: String!
+    $fname: String!
+    $lname: String!
+  ) {
+    createSubcription(
+      ccnum: $ccnum
+      exp: $exp
+      cvc: $cvc
+      fname: $fname
+      lname: $lname
+    )
   }
 `;
 
@@ -288,13 +274,9 @@ export const BLOCK_PROFILE = gql`
   }
 `;
 
-export const UPDATE_NOTIFICATIONS = gql`
-  mutation($notificationIDs: [String]!, $read: Boolean, $seen: Boolean) {
-    updateNotifications(
-      notificationIDs: $notificationIDs
-      read: $read
-      seen: $seen
-    )
+export const READ_NOTIFICATION = gql`
+  mutation($notificationID: String!) {
+    readNotification(notificationID: $notificationID)
   }
 `;
 
@@ -400,12 +382,25 @@ export const SEND_PHONE_RESET_EMAIL = gql`
   }
 `;
 
+export const RESET_PASSWORD = gql`
+  mutation($password: String!, $token: String) {
+    resetPassword(password: $password, token: $token)
+  }
+`;
+
+export const SEND_PASSWORD_RESET_EMAIL = gql`
+  mutation($phone: String!, $email: String!) {
+    sendPasswordResetEmail(phone: $phone, email: $email)
+  }
+`;
+
 export const FB_RESOLVE = gql`
   mutation(
     $csrf: String!
     $code: String!
     $isCreate: Boolean!
     $email: String
+    $password: String
     $username: String
     $lang: String
     $dob: String
@@ -419,6 +414,7 @@ export const FB_RESOLVE = gql`
       code: $code
       isCreate: $isCreate
       email: $email
+      password: $password
       username: $username
       lang: $lang
       dob: $dob
@@ -435,10 +431,7 @@ export const FB_RESOLVE = gql`
 
 export const FB_RESET_PHONE = gql`
   mutation($csrf: String!, $code: String!, $token: String) {
-    fbResetPhone(csrf: $csrf, code: $code, token: $token) {
-      token
-      access
-    }
+    fbResetPhone(csrf: $csrf, code: $code, token: $token)
   }
 `;
 
@@ -832,7 +825,6 @@ export const GET_CURRENT_USER = gql`
         active
         renewalDate
       }
-      ccLast4
       isProfileOK
       isEmailOK
       tours
@@ -910,6 +902,8 @@ export const GET_SETTINGS = gql`
       about
       desires
       sexuality
+      password
+      ccLast4
     }
   }
 `;
