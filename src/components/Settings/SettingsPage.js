@@ -24,7 +24,6 @@ import SubmitPhotoModal from "../Modals/SubmitPhoto";
 import getCityCountry from "../../utils/getCityCountry";
 import DeactivateAcctBtn from "../common/DeactivateAcctBtn";
 import Modal from "../common/Modal";
-import { toast } from "react-toastify";
 import CoupleProfileModal from "../Modals/CoupleProfile";
 import BecomeBlackMemberModal from "../Modals/BecomeBlackMember";
 import CreditCardModal from "../Modals/CreditCard";
@@ -158,13 +157,20 @@ class SettingsPage extends Component {
   }
 
   componentDidMount() {
-    const { history } = this.props;
+    const { history, errors } = this.props;
     history.replace({ state: {} });
     window.ALLOWCONTEXTMENU = true;
     window.addEventListener("beforeunload", () => {
       this.handleSubmit(this.updateSettings);
     });
     this.mounted = true;
+    if (
+      errors.about !== null ||
+      errors.desires !== null ||
+      errors.profilePic !== null
+    ) {
+      this.showPleaseComplete();
+    }
   }
 
   async componentWillUnmount() {
@@ -172,11 +178,10 @@ class SettingsPage extends Component {
     clearAllBodyScrollLocks();
     this.mounted = false;
     window.ALLOWCONTEXTMENU = false;
-    toast.dismiss();
   }
 
   handlePhotoListChange = ({ file, key, url, isPrivate, isDeleted }) => {
-    const { t } = this.props;
+    const { t, toast } = this.props;
     this.isPhotoChanged = true;
     this.setErrorHandler("Photo list updated");
     if (isPrivate) {
@@ -248,7 +253,7 @@ class SettingsPage extends Component {
   };
 
   handleSubmit = (updateSettings, doRefetch) => {
-    const { ErrorHandler, t, ReactGA } = this.props;
+    const { ErrorHandler, t, ReactGA, toast } = this.props;
     const { isCouple, isInitial } = this.state;
     this.setErrorHandler("Settings updated...");
 
@@ -503,7 +508,7 @@ class SettingsPage extends Component {
   };
 
   notifyClient = text => {
-    toast.success(text);
+    this.props.toast.success(text);
   };
   openPhotoVerPopup = type => {
     if (this.mounted) {
@@ -535,7 +540,7 @@ class SettingsPage extends Component {
 
       const resp = await axios.put(signedRequest, file, options);
       if (resp.status !== 200) {
-        toast.error(this.props.t("uplerr"));
+        this.props.toast.error(this.props.t("uplerr"));
       }
     } catch (e) {
       this.props.ErrorHandler.catchErrors(e);
@@ -604,8 +609,8 @@ class SettingsPage extends Component {
   };
 
   showPleaseComplete = () => {
-    if (!toast.isActive("plscomplete")) {
-      toast.info(
+    if (!this.props.toast.isActive("plscomplete")) {
+      this.props.toast.info(
         <div>
           {this.props.t("common:plscomplete")}
           <br />
@@ -682,16 +687,9 @@ class SettingsPage extends Component {
       refetchUser,
       dayjs,
       history,
-      ReactGA
+      ReactGA,
+      toast
     } = this.props;
-
-    if (
-      errors.about !== null ||
-      errors.desires !== null ||
-      errors.profilePic !== null
-    ) {
-      this.showPleaseComplete();
-    }
 
     return (
       <Mutation

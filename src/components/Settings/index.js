@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { Query } from "react-apollo";
+import { toast } from "react-toastify";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
 import SettingsPage from "./SettingsPage";
@@ -156,6 +157,7 @@ class Settings extends Component {
                   lang={lang}
                   ReactGA={ReactGA}
                   errors={errors}
+                  toast={toast}
                 />
               )}
             </Fragment>

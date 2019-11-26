@@ -33,7 +33,8 @@ class UploadComponent extends PureComponent {
       previewVisible: false,
       selectedImg: null, //for modal dialog
       loader: "inline-block",
-      uploadImg: "none"
+      uploadImg: "none",
+      mobileBtnsActive: false
     };
   }
 
@@ -107,9 +108,16 @@ class UploadComponent extends PureComponent {
     }
   };
 
+  toggleMobileBtns = () => {
+    this.setState({ mobileBtnsActive: !this.state.mobileBtnsActive });
+  };
+  closeMobileBtns = () => {
+    this.setState({ mobileBtnsActive: false });
+  };
+
   render() {
     const { classes, photos, t, setProfilePic, isBlackMember } = this.props;
-    const { selectedImg, previewVisible } = this.state;
+    const { selectedImg, previewVisible, mobileBtnsActive } = this.state;
     return (
       <div className="header-container">
         {photos.map((file, index) => {
@@ -122,6 +130,7 @@ class UploadComponent extends PureComponent {
                     className={classes.progress}
                   />
                 </div>
+
                 <div title={t("deletepic")} className="delete box">
                   <DeleteIcon
                     style={{
@@ -135,16 +144,65 @@ class UploadComponent extends PureComponent {
                   />
                 </div>
               </div>
+
               <div
                 className="imgContainer"
                 style={{ display: this.state.uploadImg }}
+                onBlur={this.closeMobileBtns}
+                tabIndex={0}
               >
                 <img
                   className="img-box"
                   src={file.url}
                   onLoad={this.switchLoader}
                   alt=""
+                  onClick={this.toggleMobileBtns}
                 />
+                {mobileBtnsActive && (
+                  <div
+                    className={
+                      !this.props.isPrivate ? "tooltip" : "tooltip priv"
+                    }
+                  >
+                    <span className="tooltiptext show">
+                      <div className="mobilebtns">
+                        <div title={t("deletepic")}>
+                          <DeleteIcon
+                            style={{ cursor: "pointer", fontSize: 30 }}
+                            onClick={() => {
+                              this.deleteFile(index);
+                            }}
+                          />
+                          {t("common:Delete")}
+                        </div>
+                        {!this.props.isPrivate && (
+                          <div title={t("updatepro")}>
+                            <StarIcon
+                              style={{ cursor: "pointer", fontSize: 30 }}
+                              onClick={() => {
+                                this.handleClickProPic({
+                                  index,
+                                  setProfilePic
+                                });
+                              }}
+                            />
+
+                            {t("common:Profile")}
+                          </div>
+                        )}{" "}
+                        <div title={t("viewpic")}>
+                          <ViewIcon
+                            style={{ cursor: "pointer", fontSize: 30 }}
+                            onClick={() => {
+                              this.handleClickOpen(index);
+                            }}
+                          />
+                          {t("common:View")}
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                )}
                 <div className="btns">
                   <div title={t("deletepic")}>
                     <DeleteIcon
@@ -182,7 +240,7 @@ class UploadComponent extends PureComponent {
             <Upload
               onSuccess={this.imageUploaded}
               onError={err => console.error(err)}
-              accept=".jpg,.jpeg,.png,.bmp,.gif"
+              accept=".jpg,.jpeg,.png"
               customRequest={dummyRequest}
             >
               <div className="upload-box">

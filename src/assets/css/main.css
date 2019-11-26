@@ -4795,7 +4795,8 @@ section.settings .message {
   color: #ff1b03;
   font-size: 24px;
   line-height: 28px;
-cursor: pointer;
+  padding: 10px;
+  cursor: pointer;
   -webkit-animation-name: opacity;
   -webkit-animation-duration: 3s;
   -webkit-animation-iteration-count: infinite;
@@ -4807,6 +4808,50 @@ cursor: pointer;
   margin-top: 25px;
   margin-bottom: 25px;
 }
+
+
+@-webkit-keyframes opacity {
+  0%{   color: #cf003c;},
+  100% {
+    opacity: 0;
+    background-color: #cf003c;
+    color: white;
+  }
+  50% {
+    opacity: 1;
+    background-color: #cf003c;
+    color: white;
+  }
+}
+
+@-o-keyframes opacity {
+  0%{   color: #cf003c;},
+  100% {
+    opacity: 0;
+    background-color: #cf003c;
+    color: white;
+  }
+  50% {
+    opacity: 1;
+    background-color: #cf003c;
+    color: white;
+  }
+}
+
+@-moz-keyframes opacity {
+  0%{   color: #cf003c;},
+  100% {
+    opacity: 0;
+    background-color: #cf003c;
+    color: white;
+  }
+  50% {
+    opacity: 1;
+    background-color: #cf003c;
+    color: white;
+  }
+}
+
 
 section.settings .select-container .option-counter {
   right: 55px;
@@ -9262,36 +9307,6 @@ section.not-found span.description {
     margin-top: 0;
   }
 
-  @-webkit-keyframes opacity {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @-o-keyframes opacity {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @-moz-keyframes opacity {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
   footer.sticky {
     position: absolute;
     bottom: 0;
@@ -10352,6 +10367,7 @@ animation: CycleC 30s ease infinite;
   padding-left: 5px!important;
 }
 /** Added by @ashutoshpw **/
+
 div.register-form div.form-fields div.dropdown{
   margin-top: 18px;
   margin-bottom: 0px!important;
