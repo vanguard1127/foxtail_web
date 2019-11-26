@@ -174,10 +174,8 @@ class ContactUs extends Component {
       >
         <>
           {guest && (
-            <>
-              {" "}
+            <div className="contactus">
               <div className="input">
-                {" "}
                 <input
                   placeholder={"Name"}
                   value={name}
@@ -204,7 +202,7 @@ class ContactUs extends Component {
                 />
                 {this.InputFeedback(errors.email)}
               </div>
-            </>
+            </div>
           )}
           <div className="input">
             <textarea
@@ -221,7 +219,7 @@ class ContactUs extends Component {
             />
           </div>
           {guest && (
-            <div className="input">
+            <div className="input recap">
               <ReCAPTCHA
                 sitekey="6LdvxqYUAAAAAEnP6CGkMWBUiznH8Ulm6K1Mm4A9"
                 onChange={this.onChange}

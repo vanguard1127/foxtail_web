@@ -7977,6 +7977,14 @@ section.login-modal .popup .form .form-content .submit button.border:hover {
   color: #fff;
 }
 
+section.login-modal .popup .form .form-content .contactus .input {
+  margin-bottom: 10px;
+}
+
+section.login-modal .popup .form .form-content .input.recap{
+  margin-top: 10px;
+}
+
 /*---- EDIT ----*/
 
 a {
