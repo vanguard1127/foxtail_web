@@ -16,7 +16,7 @@ class SignupButton extends PureComponent {
 
   handleFirebaseReturn = ({ state, code, password }) => {
     if (this.mounted) {
-      const { ErrorHandler, history, ReactGA } = this.props;
+      const { ErrorHandler, history, ReactGA, t } = this.props;
       this.setState(
         {
           csrf: state,
@@ -32,7 +32,8 @@ class SignupButton extends PureComponent {
                   category: "Signup",
                   action: "Fail"
                 });
-                alert("Signup failed.");
+                const failmsg = t("Signup failed.");
+                alert(failmsg);
                 return;
               }
 

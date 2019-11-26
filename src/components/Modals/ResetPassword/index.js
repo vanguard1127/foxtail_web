@@ -82,8 +82,6 @@ class ResetPassword extends PureComponent {
       t,
       ErrorHandler,
       token,
-      history,
-      lang,
       tReady,
       isLoggedIn,
       callback,
@@ -115,7 +113,7 @@ class ResetPassword extends PureComponent {
                   <div className="offset-md-3 col-md-6">
                     <div className="popup">
                       <span className="head">{t("resetpass")}</span>
-                      <a className="close" onClick={() => close()} />
+                      <a className="close" onClick={close} />
                       <form className="form">
                         <div className="form-content">
                           <span className="description">{t("enterboth")}</span>
@@ -193,7 +191,7 @@ class ResetPassword extends PureComponent {
                 <div className="offset-md-3 col-md-6">
                   <div className="popup">
                     <span className="head">{t("setpass")}</span>
-                    <a className="close" onClick={() => close()} />
+                    <a className="close" onClick={close} />
                     <form className="form">
                       <div className="form-content">
                         <span className="description">{t("2faenabledes")}</span>
@@ -247,8 +245,8 @@ class ResetPassword extends PureComponent {
                               />
                             </ErrorHandler.ErrorBoundary>
                           )}
-                          <button className="border" onClick={() => close()}>
-                            Cancel
+                          <button className="border" onClick={close}>
+                            {t("common:Cancel")}
                           </button>
                         </div>
                       </div>

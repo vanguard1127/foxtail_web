@@ -12,12 +12,14 @@ const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
           <img
             src={message.profilePic !== "" ? message.profilePic : NoProfileImg}
             alt=""
-            
           />
         </span>
       </span>
       <div className="info">
-        <span className={message.blackMember?"name blk":"name"} title={message.fromUser.username}>
+        <span
+          className={message.blackMember ? "name blk" : "name"}
+          title={message.fromUser.username}
+        >
           <span
             onClick={() =>
               history.push("/member/" + message.fromUser.profile.id)
@@ -25,7 +27,6 @@ const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
           >
             {message.fromUser.username}
           </span>
-
         </span>
         <span className="date">
           {" "}

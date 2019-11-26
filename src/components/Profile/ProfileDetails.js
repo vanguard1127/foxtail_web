@@ -80,7 +80,11 @@ class ProfileDetails extends Component {
                 "Get a free week of Black Membership when someone using your link joins Foxtail."
               )}
             />
-            <div className="report btn" onClick={showBlockModal} />
+            <div
+              className="report btn"
+              onClick={showBlockModal}
+              title={t("reportmem")}
+            />
           </div>
         </div>
       </ErrorBoundary>

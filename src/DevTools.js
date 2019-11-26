@@ -45,7 +45,6 @@ class DevTools extends Component {
     const { phone } = this.state;
     return (
       <div className="form terms">
-        Test Users:
         <Mutation mutation={LOGIN} variables={{ phone }}>
           {(login, { loading, error }) => {
             return (

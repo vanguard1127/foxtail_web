@@ -317,7 +317,6 @@ class AcctSettings extends Component {
                 this.props.refetchUser();
               }}
               ErrorHandler={ErrorHandler}
-              lang={lang}
               isLoggedIn={true}
               callback={() =>
                 setValue({

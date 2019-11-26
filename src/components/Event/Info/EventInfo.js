@@ -55,7 +55,7 @@ class EventInfo extends Component {
     return (
       <ErrorHandler.ErrorBoundary>
         <div className="event-info-content hid-mobile">
-          <div className="event-image" >
+          <div className="event-image">
             <span>
               <img src={image || NoEventImg} alt="" />
             </span>

@@ -297,10 +297,10 @@ class InboxPage extends Component {
                                 <i className="nico x" />
                               </div>
                               <span className="head">
-                                Chat No Longer Available
+                                {t("Chat No Longer Available")}
                               </span>
                               <span className="description">
-                                This chat is no longer available
+                                {t("This chat is no longer available")}
                               </span>
                               <span style={{ display: "none" }}>
                                 <ErrorHandler.report

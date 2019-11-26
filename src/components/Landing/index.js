@@ -359,8 +359,6 @@ class Landing extends PureComponent {
               this.setState({ resetPassVisible: false, token: null });
             }}
             ErrorHandler={ErrorHandler}
-            history={history}
-            lang={lang}
             ReactGA={ReactGA}
           />
         )}

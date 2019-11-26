@@ -57,7 +57,6 @@ class UpdateSubBtn extends PureComponent {
               locale={lang}
             >
               <span className="clickverify-btn photo">
-                {" "}
                 {currCCLast4 ? t("cardchange") : t("addchange")}
               </span>
             </StripeCheckout>

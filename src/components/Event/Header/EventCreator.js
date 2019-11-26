@@ -20,7 +20,6 @@ class EventCreator extends PureComponent {
                   : NoProfileImg
               }
               alt=""
-              
             />
           </span>
           <div className="detail">

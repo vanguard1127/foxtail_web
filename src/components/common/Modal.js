@@ -16,7 +16,7 @@ class Modal extends Component {
   componentDidMount() {
     if (!this.props.disableOffClick) {
       document.addEventListener("mousedown", this.handleClickOutside);
-      document.addEventListener("touchdown", this.handleClickOutside);
+      document.addEventListener("touchstart", this.handleClickOutside);
     }
   }
 

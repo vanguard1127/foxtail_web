@@ -67,12 +67,12 @@ export default class CCForm extends React.Component {
 
   handleSubmit = createSubscription => {
     if (this.mounted) {
-      const { notifyClient, ccLast4, close } = this.props;
+      const { notifyClient, ccLast4, t } = this.props;
       createSubscription()
         .then(({ data }) => {
           const msg = !ccLast4
-            ? "Black Membership Activated"
-            : "Credit Card Updated";
+            ? t("common:Black Membership Activated")
+            : t("common:Credit Card Updated");
           notifyClient(msg);
           this.clearState();
           window.location.reload(false);
@@ -91,13 +91,15 @@ export default class CCForm extends React.Component {
         <a className="close" onClick={() => close()} />
         {!ccLast4 ? (
           <div className="head">
-            <h1>Upgrade to Black</h1>
+            <h1>{t("Upgrade to Black")}</h1>
             <h4>
-              Only $10 a Month. 7-Day Money Back Guarantee. Cancel Anytime.*
+              {t(
+                "Only $10 a Month. 7-Day Money Back Guarantee. Cancel Anytime.*"
+              )}
             </h4>
           </div>
         ) : (
-          <h1>Update Credit Card</h1>
+          <h1>{t("Update Credit Card")}</h1>
         )}
         <Card
           number={ccnum}
@@ -115,7 +117,7 @@ export default class CCForm extends React.Component {
                   type="tel"
                   name="ccnum"
                   className="form-control"
-                  placeholder="Card Number"
+                  placeholder={t("Card Number")}
                   pattern="[\d| ]{16,22}"
                   required
                   onChange={this.handleInputChange}
@@ -129,7 +131,7 @@ export default class CCForm extends React.Component {
                 <input
                   type="text"
                   name="fname"
-                  placeholder="First Name"
+                  placeholder={t("First Name")}
                   required
                   onChange={this.handleInputChange}
                   onFocus={this.handleInputFocus}
@@ -139,7 +141,7 @@ export default class CCForm extends React.Component {
                 <input
                   type="text"
                   name="lname"
-                  placeholder="Last Name"
+                  placeholder={t("Last Name")}
                   required
                   onChange={this.handleInputChange}
                   onFocus={this.handleInputFocus}
@@ -150,7 +152,7 @@ export default class CCForm extends React.Component {
                 <input
                   type="tel"
                   name="exp"
-                  placeholder="Valid Thru"
+                  placeholder={t("Valid Thru")}
                   pattern="\d\d/\d\d"
                   required
                   onChange={this.handleInputChange}
@@ -162,7 +164,7 @@ export default class CCForm extends React.Component {
                 <input
                   type="tel"
                   name="cvc"
-                  placeholder="CVC"
+                  placeholder={t("CVC")}
                   pattern="\d{3,4}"
                   required
                   onChange={this.handleInputChange}
@@ -180,8 +182,8 @@ export default class CCForm extends React.Component {
                     return (
                       <button
                         className="color"
-                        disabled
                         //TODO: UNDO
+                        disabled
                         // disabled={
                         //   ccnum === "" &&
                         //   exp === "" &&
@@ -194,22 +196,23 @@ export default class CCForm extends React.Component {
                           this.handleSubmit(createSubscription);
                         }}
                       >
-                        Temporarily Unavailable{" "}
-                        {/* {!ccLast4 ? "UPGRADE" : "Update"} */}
+                        Temporarily Unavailable
+                        {/* {!ccLast4 ? t("UPGRADE") : t("Update")} */}
                       </button>
                     );
                   }}
                 </Mutation>
                 <button className="border cancelbtn" onClick={() => close()}>
-                  Cancel
+                  {t("Cancel")}
                 </button>
               </div>
               {!ccLast4 && (
                 <div>
-                  <small>*No refunds after 7 days. </small>
+                  <small>{t("*No refunds after 7 days.")}</small>
                   <small>
-                    *Couple Profiles: Both members must upgrade to upgrade the
-                    profile.
+                    {t(
+                      "*Couple Profiles: Both members must upgrade to upgrade the profile."
+                    )}
                   </small>
                 </div>
               )}

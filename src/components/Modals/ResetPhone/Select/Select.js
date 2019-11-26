@@ -13,16 +13,13 @@ class Select extends PureComponent {
     onChange: PropTypes.func
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     menuOpen: false,
     selectedOption: "",
     selectedOptions: []
   };
 
+  //TODO:Find replacment
   componentWillMount() {
     document.addEventListener("mousedown", this.handleClickOutside, false);
     document.addEventListener("touchstart", this.handleClickOutside, false);
@@ -53,12 +50,12 @@ class Select extends PureComponent {
 
     if (multiple && defaultOptionValues) {
       const defaultOptions = defaultOptionValues.map(d => {
-        const found = options.find(x => x.value == d.value);
-        if (found == undefined) return found;
+        const found = options.find(x => x.value === d.value);
+        if (found === undefined) return found;
       });
       this.setState({ selectedOptions: defaultOptions });
     } else if (defaultOptionValue) {
-      const foundOption = options.find(x => x.value == defaultOptionValue);
+      const foundOption = options.find(x => x.value === defaultOptionValue);
       if (foundOption) {
         this.setState({ selectedOption: foundOption });
       }
@@ -75,12 +72,12 @@ class Select extends PureComponent {
       let selectedOptionsCopy = [...this.state.selectedOptions];
 
       let isOptionExists =
-        selectedOptionsCopy.find(x => x.value == optionProps.value) !=
+        selectedOptionsCopy.find(x => x.value === optionProps.value) !==
         undefined;
 
       if (isOptionExists) {
         selectedOptionsCopy = selectedOptionsCopy.filter(
-          x => x.value != optionProps.value
+          x => x.value !== optionProps.value
         );
       } else {
         selectedOptionsCopy = [...selectedOptionsCopy, optionProps];

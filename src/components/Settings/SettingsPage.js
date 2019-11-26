@@ -175,6 +175,9 @@ class SettingsPage extends Component {
 
   async componentWillUnmount() {
     await this.handleSubmit(this.updateSettings);
+    window.removeEventListener("beforeunload", () => {
+      this.handleSubmit(this.updateSettings);
+    });
     clearAllBodyScrollLocks();
     this.mounted = false;
     window.ALLOWCONTEXTMENU = false;

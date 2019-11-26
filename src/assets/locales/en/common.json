@@ -73,6 +73,7 @@
   "Sexes": "Sexes",
   "Interested": "Interested In",
   "Cancel": "Cancel",
+  "Share": "Share",
   "tryagain": "Error: Please try again later",
   "Update": "Update",
   "NA": "N/A",
@@ -149,6 +150,8 @@
   "Phone verification failed, please check your number and try again.": "Phone verification failed, please check your number and try again.",
   "Chat room closed.": "Chat room closed.",
   "Chat no longer available.": "Chat no longer available.",
+  "This chat is no longer available": "This chat is no longer available",
+  "Alphanumeric characters only": "Alphanumeric characters only",
   "Chat not found.": "Chat not found.",
   "Chat is no longer available.": "Chat is no longer available.",
   "Can't remove the owner!": "Can't remove the owner!",
@@ -248,6 +251,7 @@
   "stray": "Stray Together",
   "cplpros": "Couple's Profiles",
   "Submit": "Submit",
+  "Yes": "Yes",
   "Include": "Include",
   "NotInclude": "DO NOT Include",
   "Profile Picture Selector": "Profile Picture Selector",
@@ -277,5 +281,6 @@
   "Can't report yourself": "Can't report yourself",
   "Error processing your credit card. Please check and try again. If you continue to have problems, please contact us at support@foxtailapp.com": "Error processing your credit card. Please check and try again. If you continue to have problems, please contact us at support@foxtailapp.com",
   "Profile": "Profile",
-  "View": "View"
+  "View": "View",
+  "Saving": "Saving"
 }

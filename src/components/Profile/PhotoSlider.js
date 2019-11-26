@@ -46,12 +46,7 @@ class PhotoSlider extends Component {
     }
   };
   render() {
-    const {
-      isPublic,
-      photos,
-      t,
-      ErrorHandler,
-    } = this.props;
+    const { isPublic, photos, t, ErrorHandler } = this.props;
     const { previewVisible, selectedImg } = this.state;
 
     return (
@@ -101,20 +96,11 @@ class PhotoSlider extends Component {
               <div className="item" key={Math.random()}>
                 {photo.url !== "private" ? (
                   <div onClick={() => this.handleClickOpen(photo.url)}>
-                    <img
-                      src={photo.url}
-                      alt=""
-                      
-                    />
+                    <img src={photo.url} alt="" />
                   </div>
                 ) : (
                   <span onClick={this.warnPrivate.bind(this)}>
-                    <img
-                      className="blur"
-                      src={NoPictureImg}
-                      alt=""
-                      
-                    />
+                    <img className="blur" src={NoPictureImg} alt="" />
                   </span>
                 )}
               </div>

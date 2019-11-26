@@ -52,7 +52,7 @@ class ResetPhone extends PureComponent {
                   <div className="offset-md-3 col-md-6">
                     <div className="popup">
                       <span className="head">{t("resetphone")}</span>
-                      <a className="close" onClick={() => close()} />
+                      <a className="close" onClick={close} />
                       <form className="form">
                         <div className="form-content">
                           <span className="description">{t("enterlast")}</span>
@@ -82,8 +82,8 @@ class ResetPhone extends PureComponent {
                                 ErrorHandler={ErrorHandler}
                               />
                             </ErrorHandler.ErrorBoundary>
-                            <button className="border" onClick={() => close()}>
-                              Cancel
+                            <button className="border" onClick={close}>
+                              {t("Cancel")}
                             </button>
                           </div>
                         </div>
@@ -106,7 +106,7 @@ class ResetPhone extends PureComponent {
                 <div className="offset-md-3 col-md-6">
                   <div className="popup">
                     <span className="head">{t("common:updphone")}</span>
-                    <a className="close" onClick={() => close()} />
+                    <a className="close" onClick={close} />
                     <form className="form">
                       <div className="form-content">
                         <div className="submit">
@@ -120,7 +120,7 @@ class ResetPhone extends PureComponent {
                               ReactGA={ReactGA}
                             />
                           </ErrorHandler.ErrorBoundary>
-                          <button className="border" onClick={() => close()}>
+                          <button className="border" onClick={close}>
                             {t("common:Cancel")}
                           </button>
                         </div>
@@ -129,7 +129,7 @@ class ResetPhone extends PureComponent {
                   </div>
                 </div>
               </div>
-            </section>{" "}
+            </section>
           </div>
         )}
       </Spring>

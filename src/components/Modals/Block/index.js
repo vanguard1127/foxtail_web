@@ -196,7 +196,7 @@ class BlockModal extends Component {
                 >
                   {(blockProfile, { loading }) => {
                     if (loading) {
-                      return <div>{t("Saving")}</div>;
+                      return <div>{t("common:Saving")}</div>;
                     }
                     return (
                       <span

@@ -3,8 +3,6 @@
   "Distance": "Distance",
   "lookfor": "Looking For",
   "lstlogin": "Last Login",
-  "Share": "Share",
-  "Report": "Report",
   "bio": "User Bio",
   "nobiomsg": "This user hasn't filled in their bio yet. Send them a message to chat.",
   "Public": "Public",
@@ -13,5 +11,6 @@
   "notexist": "This profile either never existed or it no longer does.",
   "nopro": "Profile Not Available",
   "Desires": "Desires",
+  "reportmem": "Report member",
   "privwarning": "You must match with this member to see their private pics."
 }

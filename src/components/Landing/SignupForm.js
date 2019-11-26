@@ -23,7 +23,7 @@ class SignupForm extends Component {
       .string()
       .required("userreq")
       .matches(/^.[a-zA-Z0-9]+$/, {
-        message: "Alphanumeric characters only"
+        message: "common:Alphanumeric characters only"
       })
       .min(3, "usernameLen")
       .max(30, "usernameLen")

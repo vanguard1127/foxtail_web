@@ -3,11 +3,6 @@ import OwlCarousel from "react-owl-carousel";
 import FeaturedCard from "./FeaturedCard";
 import arraysEqual from "../../../utils/arraysEqual";
 
-const configLightGallery = {
-  selector: "a",
-  width: "100%"
-};
-
 class FeaturedDiv extends Component {
   shouldComponentUpdate(nextProps) {
     if (

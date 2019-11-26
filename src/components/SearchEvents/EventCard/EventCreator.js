@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
-
 class EventCreator extends Component {
   shouldComponentUpdate() {
     return false;
@@ -19,7 +18,6 @@ class EventCreator extends Component {
                   : "assets/img/elements/no-profile.png"
               }
               alt=""
-              
             />
           </span>
           <span className="name" title={ownerProfile.profileName}>

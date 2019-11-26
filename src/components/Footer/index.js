@@ -72,7 +72,7 @@ class Footer extends Component {
           <div className="container">
             <div className="col-md-12">
               <span className="text">
-                © 2019 - 2020 Foxtail App Inc. {t("register")}.
+                © {new Date().getFullYear()} Foxtail App Inc. {t("register")}.
               </span>
               <div className="menu">
                 <ul>

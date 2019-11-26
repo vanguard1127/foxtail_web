@@ -108,6 +108,22 @@ class NavbarAuth extends PureComponent {
 
   componentWillUnmount() {
     this.mounted = false;
+    window.removeEventListener("beforeunload", () => {
+      if (token) {
+        navigator.sendBeacon(
+          process.env.REACT_APP_HTTPS_URL + "/offline?token=" + token
+        );
+      }
+    });
+    window.removeEventListener(
+      "unload",
+      () => {
+        if (token) {
+          this.logData();
+        }
+      },
+      false
+    );
     if (this.unsubscribe) {
       this.unsubscribe();
     }

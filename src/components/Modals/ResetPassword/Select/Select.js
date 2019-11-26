@@ -13,16 +13,12 @@ class Select extends PureComponent {
     onChange: PropTypes.func
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     menuOpen: false,
     selectedOption: "",
     selectedOptions: []
   };
-
+  //TODO:Find replacment
   componentWillMount() {
     document.addEventListener("mousedown", this.handleClickOutside, false);
     document.addEventListener("touchstart", this.handleClickOutside, false);

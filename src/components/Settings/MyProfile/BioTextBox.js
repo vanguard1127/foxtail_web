@@ -26,7 +26,7 @@ const BioTextBox = ({ t, setValue, ErrorBoundary, about }) => {
         />
         {saving && (
           <div className="saving">
-            Saving...
+            {t("common:Saving")}...
             <CircularProgress size={16} color="secondary" />
           </div>
         )}

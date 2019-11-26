@@ -26,7 +26,6 @@ const Message = React.forwardRef(
                 message.profilePic !== "" ? message.profilePic : NoProfileImg
               }
               alt=""
-              
             />
           </div>
         </NavLink>

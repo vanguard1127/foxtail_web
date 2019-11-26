@@ -32,10 +32,7 @@ class Photos extends Component {
             <div className="col-md-12">
               <span className="heading">
                 {!isPrivate ? t("pubphotos") : t("privphotos")}
-                <i>
-                  {" "}
-                  {!isPrivate ? "- " + t("nonude") : "- " + t("nudeok")}
-                </i>{" "}
+                <i>{!isPrivate ? "- " + t("nonude") : "- " + t("nudeok")}</i>
                 <Tooltip
                   title={!isPrivate ? t("publictitle") : t("prvtitle")}
                   placement="left-start"

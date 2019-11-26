@@ -48,6 +48,7 @@ class SearchProfilesPage extends Component {
     return false;
   }
 
+  //TODO: figure out
   componentWillUpdate(nextProps) {
     if (
       this.props.location.lat === undefined &&

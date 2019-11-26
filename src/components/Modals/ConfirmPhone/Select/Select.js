@@ -13,10 +13,6 @@ class Select extends PureComponent {
     onChange: PropTypes.func
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     menuOpen: false,
     selectedOption: "",

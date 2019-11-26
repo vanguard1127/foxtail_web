@@ -91,7 +91,7 @@ class CoupleProfile extends PureComponent {
                   className="color"
                   onClick={() => this.handleUnLink(unlinkProfile, close)}
                 >
-                  Yes
+                  {t("common:Yes")}
                 </span>
               }
             />
@@ -106,7 +106,7 @@ class CoupleProfile extends PureComponent {
     if (!tReady) {
       return null;
     }
-    const { cfmDlgOpen, code, toLink } = this.state;
+    const { cfmDlgOpen, code } = this.state;
     if (username) {
       return this.showDeleteConfirm(close, username, setValue);
     }
@@ -147,7 +147,7 @@ class CoupleProfile extends PureComponent {
                     className="submitCpl"
                     onClick={() => this.toggleDlg(true)}
                   >
-                    {t("Submit")}
+                    {t("common:Submit")}
                   </span>
                 </div>
                 <hr className="line" />
@@ -228,7 +228,6 @@ class CoupleProfile extends PureComponent {
                   >
                     {t("common:Include")}
                   </Button>
-                  {"  "}
                   <Button
                     variant="contained"
                     color="secondary"

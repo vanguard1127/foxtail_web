@@ -49,13 +49,7 @@ class UploadComponent extends PureComponent {
     var fileName = file.name;
     let idxDot = fileName.lastIndexOf(".") + 1;
     let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-    if (
-      extFile == "jpg" ||
-      extFile == "jpeg" ||
-      extFile == "png" ||
-      extFile == "bmp" ||
-      extFile == "gif"
-    ) {
+    if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
       if (file.size > 4000000) {
         alert(this.props.t("only4mb"));
       } else {
