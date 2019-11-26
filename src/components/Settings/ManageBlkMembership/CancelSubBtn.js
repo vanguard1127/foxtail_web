@@ -30,14 +30,14 @@ class CancelSubBtn extends PureComponent {
           return (
             <>
               <span
-                onClick={() => this.toggleContactModal()}
+                onClick={this.toggleContactModal}
                 className="clickverify-btn photo"
               >
                 {t("subcancel")}
               </span>
               {showContactModal && (
                 <ContactUsModal
-                  close={() => this.toggleContactModal()}
+                  close={this.toggleContactModal}
                   isDelete={true}
                   callback={() => {
                     this.toggleContactModal();

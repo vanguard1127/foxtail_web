@@ -39,12 +39,12 @@ class DeactivateAcctBtn extends PureComponent {
                   {client => {
                     return (
                       <>
-                        <span onClick={() => this.toggleContactModal()}>
+                        <span onClick={this.toggleContactModal}>
                           {t("common:deactacct")}
                         </span>
                         {showContactModal && (
                           <ContactUsModal
-                            close={() => this.toggleContactModal()}
+                            close={this.toggleContactModal}
                             isDelete={true}
                             callback={() =>
                               this.handleSubmit({

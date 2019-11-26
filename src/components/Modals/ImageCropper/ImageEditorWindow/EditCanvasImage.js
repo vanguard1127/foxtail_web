@@ -236,7 +236,7 @@ class EditCanvasImage extends PureComponent {
             </Button>
             <Button
               style={{ color: "white", marginLeft: "8px" }}
-              onClick={() => this.props.close()}
+              onClick={close}
             >
               {t("Cancel")}
             </Button>

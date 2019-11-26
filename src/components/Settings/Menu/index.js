@@ -38,10 +38,7 @@ class Menu extends Component {
         <div className="menu">
           <ul>
             <li>
-              <span
-                onClick={() => coupleModalToggle()}
-                className={cplItemStyle}
-              >
+              <span onClick={coupleModalToggle} className={cplItemStyle}>
                 {couplePartner === null
                   ? t("common:addcoup")
                   : t("common:Partner") + ": " + couplePartner}

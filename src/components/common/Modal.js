@@ -106,7 +106,7 @@ class Modal extends Component {
                     }`}
                   >
                     {!noHeader && <span className="head">{header}</span>}
-                    {close && <a className="close" onClick={() => close()} />}
+                    {close && <a className="close" onClick={close} />}
                     <form className="form">
                       <div className="form-content">
                         {children}

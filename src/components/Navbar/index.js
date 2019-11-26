@@ -248,7 +248,7 @@ class NavbarAuth extends PureComponent {
                       >
                         <span
                           className="hamburger-box"
-                          onClick={() => this.toggleMobileMenu()}
+                          onClick={this.toggleMobileMenu}
                         >
                           <span className="hamburger-inner" />
                           {count}

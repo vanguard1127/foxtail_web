@@ -11,12 +11,7 @@ class ConfirmPhoneButton extends PureComponent {
   render() {
     const { t, sendConfirmationMessage } = this.props;
     return (
-      <span
-        className="color"
-        onClick={() => {
-          sendConfirmationMessage();
-        }}
-      >
+      <span className="color" onClick={sendConfirmationMessage}>
         {t("sendvcode")}
       </span>
     );

@@ -181,13 +181,13 @@ const errorLink = onError(
           if (!toast.isActive("err")) {
             toast.error(
               <span>
-                Something went wrong:
+                {i18n.t("common:Something went wrong")}:
                 <br />
                 <span
-                  onClick={() => Sentry.showReportDialog()}
+                  onClick={Sentry.showReportDialog}
                   style={{ color: "light-blue", textDecoration: "underline" }}
                 >
-                  Report feedback
+                  {i18n.t("common:Report feedback")}
                 </span>
               </span>,
               {

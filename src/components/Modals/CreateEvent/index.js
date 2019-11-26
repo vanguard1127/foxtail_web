@@ -430,7 +430,7 @@ class CreateEvent extends Component {
                       </div>
                       <div className="item">
                         <div className="button mtop">
-                          <button onClick={() => this.togglePage()}>
+                          <button onClick={this.togglePage}>
                             {t("common:Next")}
                           </button>
                         </div>
@@ -577,10 +577,7 @@ class CreateEvent extends Component {
                               );
                             }}
                           </Mutation>
-                          <span
-                            className="border"
-                            onClick={() => this.togglePage()}
-                          >
+                          <span className="border" onClick={this.togglePage}>
                             {t("Back")}
                           </span>
                         </div>

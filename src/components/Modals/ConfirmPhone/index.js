@@ -189,8 +189,8 @@ class ConfirmPhone extends PureComponent {
               {t("sendvcode")}
             </span>
           </ErrorHandler.ErrorBoundary>
-          <button className="border" onClick={() => close()}>
-            Cancel
+          <button className="border" onClick={close}>
+            {t("common:Cancel")}
           </button>
         </div>
       </>
@@ -292,8 +292,8 @@ class ConfirmPhone extends PureComponent {
               {t("sendvcode")}
             </span>
           </ErrorHandler.ErrorBoundary>
-          <button className="border" onClick={() => close()}>
-            Cancel
+          <button className="border" onClick={close}>
+            {t("common:Cancel")}
           </button>
         </div>
       </>
@@ -377,8 +377,8 @@ class ConfirmPhone extends PureComponent {
               {t("confirmphone")}
             </span>
           </ErrorHandler.ErrorBoundary>
-          <button className="border" onClick={() => close()}>
-            Cancel
+          <button className="border" onClick={close}>
+            {t("common:Cancel")}
           </button>
         </div>
       </>
@@ -426,7 +426,7 @@ class ConfirmPhone extends PureComponent {
                   <div className="offset-md-3 col-md-6">
                     <div className="popup">
                       <span className="head">{title}</span>
-                      <a className="close" onClick={() => close()} />
+                      <a className="close" onClick={close} />
                       <div className="form">
                         <div className="form-content">
                           {this.state.sending ? (
@@ -454,7 +454,7 @@ class ConfirmPhone extends PureComponent {
                 <div className="offset-md-3 col-md-6">
                   <div className="popup">
                     <span className="head">{title}</span>
-                    <a className="close" onClick={() => close()} />
+                    <a className="close" onClick={close} />
                     <form className="form">
                       <div className="form-content">
                         <div className="submit">
@@ -468,7 +468,7 @@ class ConfirmPhone extends PureComponent {
                               sendConfirmationMessage={sendConfirmationMessage}
                             />
                           </ErrorHandler.ErrorBoundary>
-                          <button className="border" onClick={() => close()}>
+                          <button className="border" onClick={close}>
                             {t("common:Cancel")}
                           </button>
                         </div>

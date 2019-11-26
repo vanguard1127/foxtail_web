@@ -12,7 +12,7 @@ const ShareForm = ({
 }) => {
   return (
     <div className="popup">
-      <a className="close" onClick={() => close()} />
+      <a className="close" onClick={close} />
 
       <div className="head">
         <h1>{t("Upgrade to Black")}</h1>
@@ -59,7 +59,7 @@ const ShareForm = ({
               >
                 {t("common:Share")}
               </button>
-              <button className="border" onClick={() => close()}>
+              <button className="border" onClick={close}>
                 {t("common:Cancel")}
               </button>
             </div>

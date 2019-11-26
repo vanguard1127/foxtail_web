@@ -251,7 +251,7 @@ class AcctSettings extends Component {
           </div>
           {showDialog && (
             <DialogModal
-              close={() => this.toggleDialog()}
+              close={this.toggleDialog}
               ErrorBoundary={ErrorHandler.ErrorBoundary}
               title={title}
               msg={msg}

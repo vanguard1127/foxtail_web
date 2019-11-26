@@ -6,7 +6,7 @@ const DailyLimitModal = ({ t, close, history }) => {
   return (
     <Modal
       header={t("dailylimit")}
-      close={() => close()}
+      close={close}
       okSpan={
         <span
           className="color"

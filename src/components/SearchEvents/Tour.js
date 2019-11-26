@@ -57,7 +57,7 @@ class Tour extends PureComponent {
       {
         selector: '[data-tut="search"]',
         content: t(
-          "Here you can limit your search to events near you. *Only BLACK members can chage their location."
+          "Here you can limit your search to events near you. *Only BLACK members can change their location."
         )
       },
       {

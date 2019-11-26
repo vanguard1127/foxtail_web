@@ -17,7 +17,7 @@ class EventShare extends PureComponent {
                 "Get a free week of Black Membership when someone using your link joins Foxtail."
               )}
             >
-              <span onClick={() => showShareModal()} />
+              <span onClick={showShareModal} />
             </li>
             <li className="add">
               <span

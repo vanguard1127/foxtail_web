@@ -26,7 +26,7 @@ const ReCaptcha = ({ t, tReady }) => {
     <Modal
       header={"Are you Human?"}
       description={t(
-        "common:We've detected some bot-like behavior from your session. Please complete this captcha so we know you're human. Sorry for the inconvienence."
+        "common:We've detected some bot-like behavior from your session. Please complete this captcha so we know you're human. Sorry for the inconvenience."
       )}
     >
       <div>

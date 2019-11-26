@@ -10,7 +10,7 @@ class InboxHeader extends PureComponent {
           <div className="col-md-12">
             <span
               className={chatOpen ? "head back" : "head"}
-              onClick={() => closeChat()}
+              onClick={closeChat}
             >
               <NavLink to="/inbox">{t("common:Inbox")}</NavLink>
             </span>

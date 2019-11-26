@@ -34,7 +34,7 @@ class RequestEmailVerBtn extends PureComponent {
         } else {
           toast(
             t(
-              "common:Please wait at least 5 mintues to recieve email verification. Check Spam, if it's not in your inbox."
+              "common:Please wait at least 5 minutes to receive email verification. Check Spam, if it's not in your inbox."
             )
           );
         }

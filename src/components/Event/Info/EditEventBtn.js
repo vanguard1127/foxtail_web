@@ -39,9 +39,7 @@ class EditEventBtn extends PureComponent {
     return (
       <Fragment>
         <div className="join-event">
-          <span onClick={() => this.togglePopup()}>
-            {t("common:updateevent")}
-          </span>
+          <span onClick={this.togglePopup}>{t("common:updateevent")}</span>
         </div>
 
         {this.state.showPopup ? (

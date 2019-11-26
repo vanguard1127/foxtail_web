@@ -167,8 +167,8 @@ class ResetPassword extends PureComponent {
                                 ErrorHandler={ErrorHandler}
                               />
                             </ErrorHandler.ErrorBoundary>
-                            <button className="border" onClick={() => close()}>
-                              Cancel
+                            <button className="border" onClick={close}>
+                              {t("common:Cancel")}
                             </button>
                           </div>
                         </div>

@@ -13,7 +13,7 @@
   "newmatch": "New Match!",
   "succleft": "Successfully left Chat",
   "nomsgs": "No Messages found for this chat",
-  "leavewarn": "Are you sure you would like to leave this conversation? You will not be able to see this chat anylonger.",
+  "leavewarn": "Are you sure you would like to leave this conversation? You will not be able to see this chat any longer.",
   "Leave": "Leave",
   "invitemem": "Invite Members",
   "nomsgsInbox": "No messages found.",
@@ -22,6 +22,6 @@
   "Each chat shows the number of messages you haven't seen.": "Each chat shows the number of messages you haven't seen.",
   "Your chat actions can be found here including leaving and reporting a chat. Please report any behavior that makes you uncomfortable.": "Your chat actions can be found here including leaving and reporting a chat. Please report any behavior that makes you uncomfortable.",
   "If no chat is selected there will be random information or ads here.": "If no chat is selected there will be random information or ads here.",
-  "These are your chats. **Hint: Click one to see messages**": "These are your chats. **Hint: Click one to see messages**",
+  "These are your chats. **Click one to see messages**": "These are your chats. **Click one to see messages**",
   "Clicking the menu to the right will open chat actions.": "Clicking the menu to the right will open chat actions."
 }

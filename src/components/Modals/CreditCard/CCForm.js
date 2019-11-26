@@ -88,7 +88,7 @@ export default class CCForm extends React.Component {
     const { close, t, tReady, ErrorHandler, ccLast4 } = this.props;
     return (
       <div className="popup full">
-        <a className="close" onClick={() => close()} />
+        <a className="close" onClick={close} />
         {!ccLast4 ? (
           <div className="head">
             <h1>{t("Upgrade to Black")}</h1>
@@ -202,7 +202,7 @@ export default class CCForm extends React.Component {
                     );
                   }}
                 </Mutation>
-                <button className="border cancelbtn" onClick={() => close()}>
+                <button className="border cancelbtn" onClick={close}>
                   {t("Cancel")}
                 </button>
               </div>

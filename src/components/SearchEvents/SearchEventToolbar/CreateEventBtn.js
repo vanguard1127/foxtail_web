@@ -18,7 +18,7 @@ class CreateEventBtn extends PureComponent {
     ErrorHandler.setBreadcrumb("Open Create Event");
     return (
       <Fragment>
-        <div className="create-event-btn" onClick={() => this.togglePopup()}>
+        <div className="create-event-btn" onClick={this.togglePopup}>
           <span>{t("common:createevent")}</span>
         </div>
         {this.state.showPopup ? (
