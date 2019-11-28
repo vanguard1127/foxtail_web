@@ -87,7 +87,7 @@ class InboxTour extends PureComponent {
         },
         {
           selector: '[data-tut="list"]',
-          content: t("These are your chats. **Click one to see messages**")
+          content: t("These are your chats. **Click one, to see messages**")
         }
       ];
     } else if (window.innerWidth < 1200) {

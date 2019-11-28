@@ -1,17 +1,17 @@
 export default [
-  { img: "", tinyImg: "", message: "", btnText: "", link: "" },
   {
-    img: "black.png",
-    message: "Upgrade to Foxtail Black and get more of what you love.",
-    btnText: "Get More",
+    img: "refer.png",
+    message: "Refer a Friend. You Both Get Free Black Membership.",
+    btnText: "Share and Upgrade",
     link: "blk",
-    title: "Upgrade Today"
+    title: "Refer a Friend"
   },
   {
     img: "black2.jpg",
-    message: "Upgrade to Foxtail Black and get more of what you love.",
+    message:
+      "Upgrade to Foxtail Black by sharing any links from the site with friends.",
     link: "blk",
-    btnText: "Get More",
+    btnText: "Share and Upgrade",
     title: "Upgrade Today"
   }
 ];

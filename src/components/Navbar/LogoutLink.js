@@ -17,8 +17,8 @@ class Logout extends Component {
     localStorage.removeItem("refreshToken");
     sessionStorage.clear();
 
-    //Causes console error but currently best option.
-    //this.props.client.resetStore();
+    //TODO:Causes console error but currently best option.
+    this.props.client.resetStore();
     window.location.reload(false);
     this.props.history.push("/", { noCheck: true });
   };

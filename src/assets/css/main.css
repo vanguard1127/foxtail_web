@@ -7576,7 +7576,8 @@ section.login-modal .popup.full {
 
 section.login-modal.couples .popup.full,
 section.login-modal.black .popup.full,
-section.login-modal.rules .popup.full  {
+section.login-modal.rules .popup.full,
+.credit-card section.login-modal .popup{
   padding: 0;
   max-height: 88vh;
 }

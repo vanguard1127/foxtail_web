@@ -70,7 +70,7 @@ class SearchProfiles extends Component {
                 session={session}
                 refetch={refetch}
                 toggleShareModal={this.toggleShareModal}
-              />{" "}
+              />
               {shareModalVisible && (
                 <ShareModal
                   userID={session.currentuser.userID}

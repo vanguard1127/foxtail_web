@@ -41,7 +41,7 @@
   "Request": "Request",
   "enableloc": "Please enable location services if available.",
   "enablerem": "Please enable location services to remove your set location.",
-  "locuse": "We use your location to show how far other members are from your for better matching. Turn on location services then click 'OK'",
+  "locuse": "We use your location to show how far other members are from you for better matching. Turn on location services then click 'OK'",
   "cantshare": "No, I can't share my location",
   "geonotlocated": "Geolocation is not supported by this browser, Please click 'No'",
   "people": "people",

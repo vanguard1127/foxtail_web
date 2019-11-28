@@ -32,18 +32,23 @@ const ShareForm = ({
         </div>
       </section>
       <div className="cont">
-        {t("inviteeveryone")}
+        {t("modals:inviteeveryone")}
         <br /> <br />
-        {t("friendsfree")}
+        {t("modals:friendsfree")}
         <br /> <br />
-        {t("refferalalready")}
+        {t("modals:refferalalready")}
         <br /> <br />
-        {t("findcode")}:
+        <strong style={{ fontSize: "larger" }}>
+          <i>{t("modals:findcode")}</i>
+        </strong>
         <br />
-        <div>
-          <li>{t("clickany")}</li>
-          <li>{t("whennewmember")}</li>
-          <li>{t("pleasenoteactive")}</li>
+        <div style={{ marginTop: "15px" }}>
+          {t("modals:clickany")}
+          <hr />
+          {t("modals:whennewmember")}
+          <hr />
+          {t("modals:pleasenoteactive")}
+          <hr />
         </div>
       </div>
       <div className="form-container">

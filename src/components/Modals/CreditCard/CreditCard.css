@@ -93,4 +93,5 @@ section.blk .icon i.nico::before {
 
 section.blk .icon i.nico.blackmember::before {
   content: "\e823";
+  font-size: 10vh;
 }

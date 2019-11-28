@@ -87,7 +87,7 @@ export default class CCForm extends React.Component {
     const { focused, ccnum, exp, cvc, fname, lname } = this.state;
     const { close, t, tReady, ErrorHandler, ccLast4 } = this.props;
     return (
-      <div className="popup full">
+      <div className="popup">
         <a className="close" onClick={close} />
         {!ccLast4 ? (
           <div className="head">
