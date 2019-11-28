@@ -324,7 +324,7 @@ class ConfirmPhone extends PureComponent {
     return (
       <>
         <span className="description">{t("entercode")}</span>
-        <div className="input">
+        <div className="input code">
           <input
             type="text"
             placeholder={t("vcode")}

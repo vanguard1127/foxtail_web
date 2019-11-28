@@ -17,12 +17,13 @@ class LoginButton extends PureComponent {
     this.mounted = false;
   }
 
-  handleFirebaseReturn = ({ state, code, password }, fbResolve) => {
+  handleFirebaseReturn = ({ csrf, code, password }, fbResolve) => {
     if (this.mounted) {
-      const { reactga } = this.props;
+      const { reactga, t, ErrorHandler } = this.props;
+
       this.setState(
         {
-          csrf: state,
+          csrf,
           code,
           password
         },
@@ -54,7 +55,7 @@ class LoginButton extends PureComponent {
               }
             })
             .catch(res => {
-              this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+              ErrorHandler.catchErrors(res.graphQLErrors);
             });
         }
       );
@@ -63,7 +64,7 @@ class LoginButton extends PureComponent {
 
   render() {
     const { csrf, code, password } = this.state;
-    const { t, lang, errorhandler } = this.props;
+    const { t, lang, ErrorHandler } = this.props;
     return (
       <Mutation
         mutation={FB_RESOLVE}
@@ -72,10 +73,8 @@ class LoginButton extends PureComponent {
         {fbResolve => {
           return (
             <FirebaseAuth
-              csrf={"889306f7553962e44db6ed508b4e8266"}
-              phoneNumber={""} // eg. 12345678
               language={lang}
-              ErrorHandler={errorhandler}
+              ErrorHandler={ErrorHandler}
               onResponse={resp => this.handleFirebaseReturn(resp, fbResolve)}
               title={t("welcomeback")}
             >

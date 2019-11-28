@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/browser";
 import i18n from "i18next";
 
 Sentry.init({
-  dsn: "https://e26c22fc85dc4315bddcad2103c61cee@sentry.io/1380381"
+  dsn: process.env.REACT_APP_SENTRY_DNS
 });
 
 const setBreadcrumb = msg => {

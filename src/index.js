@@ -60,14 +60,14 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 
 firebase.initializeApp({
-  apiKey: "AIzaSyB8634G6nHB3YGn7cfeTL-s4OQsQwF9TzQ",
-  authDomain: "foxtail-fde20.firebaseapp.com",
-  databaseURL: "https://foxtail-fde20.firebaseio.com",
-  projectId: "foxtail-fde20",
-  storageBucket: "foxtail-fde20.appspot.com",
-  messagingSenderId: "513031685453",
-  appId: "1:513031685453:web:2e76604e2cdacd6f71e304",
-  measurementId: "G-4RCTRH4S3S"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSEGE_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
 });
 
 Sentry.init({
@@ -381,15 +381,6 @@ const Body = withAuth(session => session && session.currentuser)(
     </div>
   )
 );
-
-// import(/*webpackChunkName: 'root' */ Root).then(({ default: Root }) =>
-//   render(
-//     <ApolloProvider client={client}>
-//       <Root />
-//     </ApolloProvider>,
-//     document.getElementById("root")
-//   )
-// );
 
 window.onresize = function() {
   document.body.height = window.innerHeight;

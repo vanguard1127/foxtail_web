@@ -113,7 +113,7 @@ class Landing extends PureComponent {
                         <LoginButton
                           t={t}
                           history={history}
-                          errorhandler={ErrorHandler}
+                          ErrorHandler={ErrorHandler}
                           lang={lang}
                           reactga={ReactGA}
                         />
@@ -152,7 +152,7 @@ class Landing extends PureComponent {
                           <LoginButton
                             t={t}
                             history={history}
-                            errorhandler={ErrorHandler}
+                            ErrorHandler={ErrorHandler}
                             lang={lang}
                             reactga={ReactGA}
                           />

@@ -14,12 +14,12 @@ class SignupButton extends PureComponent {
     this.mounted = false;
   }
 
-  handleFirebaseReturn = ({ state, code, password }) => {
+  handleFirebaseReturn = ({ csrf, code, password }) => {
     if (this.mounted) {
       const { ErrorHandler, history, ReactGA, t } = this.props;
       this.setState(
         {
-          csrf: state,
+          csrf,
           code,
           password
         },
@@ -90,7 +90,6 @@ class SignupButton extends PureComponent {
           this.fbResolve = fbResolve;
           return (
             <FirebaseAuth
-              csrf={"889306f7553962e44db6ed508b4e8266"}
               language={lang}
               validateForm={validateForm}
               disabled={disabled}

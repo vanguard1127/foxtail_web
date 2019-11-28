@@ -4,19 +4,19 @@ import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
 import axios from "axios";
 
-function onChange(value) {
-  axios
-    .post(process.env.REACT_APP_HTTPS_URL + "/allowIp", { capToken: value })
-    .then(go());
-}
-
-const go = () => {
-  if (window.location.pathname === "/captcha") {
+async function onChange(value) {
+  const result = await axios.post(
+    process.env.REACT_APP_HTTPS_URL + "/allowIp",
+    { capToken: value }
+  );
+  if (!result.data) {
+    alert("Incorrect Captcha");
     window.location.replace("/");
   } else {
     window.location.reload(false);
   }
-};
+}
+
 const ReCaptcha = ({ t, tReady }) => {
   if (!tReady) {
     return null;
@@ -31,7 +31,7 @@ const ReCaptcha = ({ t, tReady }) => {
     >
       <div>
         <ReCAPTCHA
-          sitekey={"6LdvxqYUAAAAAEnP6CGkMWBUiznH8Ulm6K1Mm4A9"}
+          sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_KEY}
           onChange={value => onChange(value)}
         />
         <br />

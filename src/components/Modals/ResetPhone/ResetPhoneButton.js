@@ -61,8 +61,6 @@ class ResetPhoneButton extends PureComponent {
         {fbResetPhone => {
           return (
             <FirebaseAuth
-              csrf={"889306f7553962e44db6ed508b4e8266"}
-              phoneNumber={""} // eg. 12345678
               language={lang}
               ErrorHandler={ErrorHandler}
               onResponse={resp => {

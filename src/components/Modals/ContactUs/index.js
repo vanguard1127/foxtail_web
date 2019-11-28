@@ -221,7 +221,7 @@ class ContactUs extends Component {
           {guest && (
             <div className="input recap">
               <ReCAPTCHA
-                sitekey="6LdvxqYUAAAAAEnP6CGkMWBUiznH8Ulm6K1Mm4A9"
+                sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_KEY}
                 onChange={this.onChange}
               />
             </div>

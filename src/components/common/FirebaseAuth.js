@@ -54,14 +54,7 @@ class FirebaseAuth extends React.PureComponent {
   }
 
   render() {
-    const {
-      ErrorHandler,
-      type,
-      csrf,
-      onResponse,
-      children,
-      title
-    } = this.props;
+    const { ErrorHandler, type, onResponse, children, title } = this.props;
     return (
       <>
         {this.state.showPhoneDialog ? (
@@ -78,7 +71,7 @@ class FirebaseAuth extends React.PureComponent {
                 },
                 () => {
                   onResponse({
-                    state: csrf,
+                    csrf: process.env.CSRF,
                     code: result,
                     password
                   });
@@ -102,11 +95,9 @@ class FirebaseAuth extends React.PureComponent {
 }
 
 FirebaseAuth.propTypes = {
-  csrf: PropTypes.string.isRequired,
   onResponse: PropTypes.func.isRequired,
   debug: PropTypes.bool,
-  disabled: PropTypes.bool,
-  phoneNumber: PropTypes.string
+  disabled: PropTypes.bool
 };
 
 FirebaseAuth.defaultProps = {
