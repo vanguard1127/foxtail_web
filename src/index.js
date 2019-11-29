@@ -159,7 +159,7 @@ const errorLink = onError(
   ({ graphQLErrors, networkError, response, operation, forward }) => {
     if (graphQLErrors) {
       graphQLErrors.map(({ message, path }) => {
-        if (~message.indexOf("Client")) {
+        if (message.includes("Client")) {
           if (!toast.isActive(message)) {
             toast(i18n.t("common:" + message.replace("Client:", "").trim()), {
               position: toast.POSITION.TOP_CENTER,
