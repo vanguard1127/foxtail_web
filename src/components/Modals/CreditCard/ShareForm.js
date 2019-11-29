@@ -17,9 +17,8 @@ const ShareForm = ({
       <div className="head">
         <h1>{t("Upgrade to Black")}</h1>
         <h4>
-          {t(
-            "For a Limited Time - Share Foxtail and Get 1 week FREE Black Membership"
-          )}
+          {t("For a Limited Time - Share Foxtail")}
+          <br /> {t("Get 1 week FREE Black Membership")}
         </h4>
       </div>
       <section className="blk">

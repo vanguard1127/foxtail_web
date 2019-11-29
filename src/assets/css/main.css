@@ -7576,13 +7576,13 @@ section.login-modal .popup.full {
 
 section.login-modal.couples .popup.full,
 section.login-modal.black .popup.full,
-section.login-modal.rules .popup.full,
-.credit-card section.login-modal .popup{
+section.login-modal.rules .popup.full{
   padding: 0;
   max-height: 88vh;
 }
 
-section.login-modal.verifications .popup.full{
+section.login-modal.verifications .popup.full,
+.credit-card section.login-modal .popup{
   max-height: 88vh;
 }
 
