@@ -71,7 +71,7 @@ class FirebaseAuth extends React.PureComponent {
                 },
                 () => {
                   onResponse({
-                    csrf: process.env.CSRF,
+                    csrf: process.env.REACT_APP_CSRF,
                     code: result,
                     password
                   });

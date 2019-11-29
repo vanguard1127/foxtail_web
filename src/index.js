@@ -169,8 +169,8 @@ const errorLink = onError(
         } else if (~message.indexOf("authenticated")) {
           tokenHandler({ operation, forward });
         } else {
-          console.error(message);
-          if (process.env.NODE_ENV === "development") {
+          if (process.env.NODE_ENV !== "production") {
+            console.error(message);
             Sentry.withScope(scope => {
               scope.setLevel("error");
               scope.setTag("resolver", path);

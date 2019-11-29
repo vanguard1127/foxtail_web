@@ -29,6 +29,8 @@ const refreshToken = ({ operation, forward }) => {
         localStorage.removeItem("token");
 
         localStorage.removeItem("refreshToken");
+        window.location.reload(false);
+        return;
       }
 
       return forward(operation);
