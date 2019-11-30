@@ -77,7 +77,6 @@ class ErrorBoundary extends PureComponent {
         <span>
           {i18n.t("common:errMsg")}:
           <span onClick={() => Sentry.showReportDialog()}>
-            {" "}
             {i18n.t("common:reportErr")}
           </span>
         </span>

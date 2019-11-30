@@ -64,7 +64,7 @@ div:focus {
 /*---- HEADER ----*/
 
 /* LOGO */
-header {
+header.topbar {
   width: 100%;
   height: 65px;
   background-color: #fff;
@@ -10484,3 +10484,13 @@ div.register-form div.form-fields .couple-choose {
 .Toastify {
   z-index: 99999999999999;
 }
+
+@media screen and (max-width: 660px){
+.sentry-error-embed {
+  margin-top: 10% !important;
+}}
+
+@media screen and (max-width: 480px){
+  .sentry-error-embed {
+    margin-top: 18% !important;
+  }}

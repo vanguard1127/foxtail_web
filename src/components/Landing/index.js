@@ -93,7 +93,7 @@ class Landing extends PureComponent {
     }
     return (
       <>
-        <header className="landing">
+        <header className="topbar landing">
           <div id="recaptcha-container" style={{ display: "none" }}></div>
           <div className="container">
             <div className="col-md-12">

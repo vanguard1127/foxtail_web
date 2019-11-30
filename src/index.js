@@ -179,13 +179,13 @@ const errorLink = onError(
             });
           }
           if (!toast.isActive("err")) {
-            toast.error(
+            toast.info(
               <span>
                 {i18n.t("common:Something went wrong")}:
                 <br />
                 <span
                   onClick={Sentry.showReportDialog}
-                  style={{ color: "light-blue", textDecoration: "underline" }}
+                  style={{ color: "yellow", textDecoration: "underline" }}
                 >
                   {i18n.t("common:Report feedback")}
                 </span>
@@ -286,7 +286,7 @@ const Body = withAuth(session => session && session.currentuser)(
   ({ showFooter, session, refetch }) => (
     <div className="layout">
       <IdleTimer />
-      <header>
+      <header className="topbar">
         <Navbar ErrorHandler={ErrorHandler} session={session} />
       </header>
       <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>

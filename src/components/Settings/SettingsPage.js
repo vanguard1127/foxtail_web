@@ -620,7 +620,8 @@ class SettingsPage extends Component {
           {this.props.t("common:plscompleteExample")}
         </div>,
         {
-          toastId: "plscomplete"
+          toastId: "plscomplete",
+          autoClose: false
         }
       );
     }
