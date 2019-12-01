@@ -449,7 +449,6 @@ class SettingsPage extends Component {
   };
 
   toggleImgEditorPopup = (file, isPrivate) => {
-    console.log("CLOSE");
     this.setErrorHandler("Toggle image editor");
     if (this.mounted) {
       this.setState(
@@ -464,7 +463,6 @@ class SettingsPage extends Component {
   };
 
   toggleImgCropperPopup = url => {
-    console.log("CLOSE2");
     this.setErrorHandler("Toggle image cropper");
 
     if (this.mounted) {
