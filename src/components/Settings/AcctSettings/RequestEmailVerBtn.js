@@ -56,6 +56,8 @@ class RequestEmailVerBtn extends PureComponent {
               onClick={() => this.handleClick(resendVerEMail)}
             >
               {t("resndemlver")}
+              <br />
+              {t("resndemlvertochat")}
             </span>
           );
         }}

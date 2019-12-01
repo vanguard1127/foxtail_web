@@ -199,6 +199,7 @@ class SettingsPage extends Component {
     ) {
       this.showPleaseComplete();
     }
+    window.scrollTo(0, 1);
   }
 
   async componentWillUnmount() {
@@ -726,7 +727,11 @@ class SettingsPage extends Component {
           </ErrorHandler.ErrorBoundary>
         )
       });
-    } else if (modalInputType === "text" || modalInputType === "password") {
+    } else if (
+      modalInputType === "text" ||
+      modalInputType === "password" ||
+      modalInputType === "email"
+    ) {
       this.setState({
         modalInput: (
           <ErrorHandler.ErrorBoundary>
@@ -865,29 +870,31 @@ class SettingsPage extends Component {
       toast
     } = this.props;
 
-    switch (schemaType) {
-      case "email":
-        this.schema = yup.object().shape({
-          text: yup
-            .string()
-            .email(t("invemail"))
-            .required(t("emailreq"))
-        });
-        break;
-      case "username":
-        this.schema = yup.object().shape({
-          text: yup.string().required(t("unreq"))
-        });
-        break;
-      case "gender":
-        this.schema = yup.object().shape({
-          text: yup.string().required(t("genreq"))
-        });
-        break;
-      default:
-        this.schema = yup.object().shape({
-          text: yup.string()
-        });
+    if (schemaType) {
+      switch (schemaType) {
+        case "email":
+          this.schema = yup.object().shape({
+            text: yup
+              .string()
+              .email(t("invemail"))
+              .required(t("emailreq"))
+          });
+          break;
+        case "username":
+          this.schema = yup.object().shape({
+            text: yup.string().required(t("unreq"))
+          });
+          break;
+        case "gender":
+          this.schema = yup.object().shape({
+            text: yup.string().required(t("genreq"))
+          });
+          break;
+        default:
+          this.schema = yup.object().shape({
+            text: yup.string()
+          });
+      }
     }
 
     return (
