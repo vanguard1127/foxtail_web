@@ -114,7 +114,7 @@ class ResetPassword extends PureComponent {
                     <div className="popup">
                       <span className="head">{t("resetpass")}</span>
                       <a className="close" onClick={close} />
-                      <form className="form">
+                      <form>
                         <div className="form-content">
                           <span className="description">{t("enterboth")}</span>
                           <Select
@@ -192,7 +192,7 @@ class ResetPassword extends PureComponent {
                   <div className="popup">
                     <span className="head">{t("setpass")}</span>
                     <a className="close" onClick={close} />
-                    <form className="form">
+                    <form>
                       <div className="form-content">
                         <span className="description">{t("2faenabledes")}</span>
 

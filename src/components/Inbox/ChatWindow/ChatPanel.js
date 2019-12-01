@@ -72,10 +72,7 @@ class ChatPanel extends PureComponent {
         }}
       >
         {sendMessage => (
-          <form
-            onSubmit={e => this.submitMessage(e, sendMessage)}
-            className="form"
-          >
+          <form onSubmit={e => this.submitMessage(e, sendMessage)}>
             <div className="panel">
               {/* <div className="files" /> */}
               <div className="textarea">

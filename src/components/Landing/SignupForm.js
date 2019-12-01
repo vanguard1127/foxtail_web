@@ -130,7 +130,7 @@ class SignupForm extends Component {
     } = this.state;
 
     return (
-      <div className="form">
+      <form>
         <div className="form-content">
           <div className="form-fields">
             <div className="input username">
@@ -160,6 +160,7 @@ class SignupForm extends Component {
                 aria-label="email"
                 placeholder={t("emailLbl")}
                 type="email"
+                inputMode="email"
                 onChange={e => {
                   this.setValue({
                     name: "email",
@@ -181,6 +182,21 @@ class SignupForm extends Component {
               t={t}
               type="birthday"
             />
+            {/* <div className="input birthday">
+              <input
+                aria-label="birthday"
+                placeholder={t("Birthday")}
+                type="date"
+                onChange={e => {
+                  this.setValue({
+                    name: "dob",
+                    value: e.target.value
+                  });
+                }}
+                value={dob}
+                max={date}
+              />
+            </div> */}
             {this.InputFeedback(t(errors.dob))}
             <Dropdown
               value={gender}
@@ -263,7 +279,7 @@ class SignupForm extends Component {
             <span onClick={() => history.push("/privacy")}>{t("privacy")}</span>
           </div>
         </div>
-      </div>
+      </form>
     );
   }
 }

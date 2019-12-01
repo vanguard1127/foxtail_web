@@ -313,8 +313,8 @@ class CreateEvent extends Component {
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
               <div className="page">
-                <div className="form">
-                  {showInfo && (
+                <form>
+                  {showInfo ? (
                     <div className="content">
                       <div className="item">
                         <div className="input">
@@ -436,8 +436,7 @@ class CreateEvent extends Component {
                         </div>
                       </div>
                     </div>
-                  )}
-                  {!showInfo && (
+                  ) : (
                     <div className="content">
                       <div className="item">
                         <AddressSearch
@@ -584,7 +583,7 @@ class CreateEvent extends Component {
                       </div>
                     </div>
                   )}
-                </div>
+                </form>
               </div>
             </div>
           </ErrorHandler.ErrorBoundary>

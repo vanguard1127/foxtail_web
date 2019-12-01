@@ -15,7 +15,7 @@ class ManageBlackSub extends Component {
       currentuser,
       dayjs,
       notifyClient,
-      setDialogContent,
+      initializeModal,
       lang,
       ccLast4,
       toggleCCModal,
@@ -62,7 +62,7 @@ class ManageBlackSub extends Component {
                   t={t}
                   ErrorHandler={ErrorHandler}
                   notifyClient={notifyClient}
-                  setDialogContent={setDialogContent}
+                  initializeModal={initializeModal}
                   ReactGA={ReactGA}
                 />
               </div>

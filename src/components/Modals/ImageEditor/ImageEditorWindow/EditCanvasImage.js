@@ -345,7 +345,7 @@ class EditCanvasImage extends PureComponent {
       rotation,
       certChecked
     } = this.state;
-    const { t } = this.props;
+    const { t, close } = this.props;
     const Sticker = props => (
       <div
         {...props}

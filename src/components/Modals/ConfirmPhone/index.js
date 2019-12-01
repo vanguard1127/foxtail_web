@@ -128,7 +128,7 @@ class ConfirmPhone extends PureComponent {
         <span className="description">{t("enable2fa")}</span>
         <div className="input password">
           <input
-            type="Password"
+            type="password"
             tabIndex="2"
             placeholder={"Password"}
             onChange={e => {
@@ -143,7 +143,7 @@ class ConfirmPhone extends PureComponent {
         </div>
         <div className="input password">
           <input
-            type="Password"
+            type="password"
             tabIndex="3"
             placeholder={"Confirm Password"}
             onChange={e =>
@@ -234,6 +234,7 @@ class ConfirmPhone extends PureComponent {
         <div className="phoneText input">
           <input
             type="tel"
+            inputMode="tel"
             placeholder={t("phonenum")}
             onChange={e => {
               this.setValue({
@@ -249,7 +250,7 @@ class ConfirmPhone extends PureComponent {
         {this.InputFeedback(t(errors.phoneNumber))}
         <div className="input password">
           <input
-            type="Password"
+            type="password"
             placeholder={"Password (if you have one)"}
             tabIndex="2"
             onChange={e => {
@@ -264,8 +265,9 @@ class ConfirmPhone extends PureComponent {
         </div>
         <div className="submit">
           <ErrorHandler.ErrorBoundary>
-            <span
+            <button
               tabIndex="3"
+              type="submit"
               className="color"
               onClick={() => {
                 this.setState({
@@ -290,7 +292,7 @@ class ConfirmPhone extends PureComponent {
               }}
             >
               {t("sendvcode")}
-            </span>
+            </button>
           </ErrorHandler.ErrorBoundary>
           <button className="border" onClick={close}>
             {t("common:Cancel")}
@@ -427,7 +429,7 @@ class ConfirmPhone extends PureComponent {
                     <div className="popup">
                       <span className="head">{title}</span>
                       <a className="close" onClick={close} />
-                      <div className="form">
+                      <form>
                         <div className="form-content">
                           {this.state.sending ? (
                             this.renderLoading()
@@ -435,7 +437,7 @@ class ConfirmPhone extends PureComponent {
                             <div>{body}</div>
                           )}
                         </div>
-                      </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -455,7 +457,7 @@ class ConfirmPhone extends PureComponent {
                   <div className="popup">
                     <span className="head">{title}</span>
                     <a className="close" onClick={close} />
-                    <form className="form">
+                    <form>
                       <div className="form-content">
                         <div className="submit">
                           <ErrorHandler.ErrorBoundary>

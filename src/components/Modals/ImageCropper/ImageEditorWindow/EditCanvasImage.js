@@ -166,7 +166,7 @@ class EditCanvasImage extends PureComponent {
 
   render() {
     const { uploading, height, width } = this.state;
-    const { t, imgUrl } = this.props;
+    const { t, imgUrl, close } = this.props;
 
     return (
       <div className="edit-canvas-image-div">

@@ -272,5 +272,6 @@
   "Saving": "Saving",
   "Something went wrong": "Something went wrong",
   "Report feedback": "Report feedback",
-  "Phone verification failed, please clear your browser cache and try again.": "Phone verification failed, please clear your browser cache and try again."
+  "Phone verification failed, please clear your browser cache and try again.": "Phone verification failed, please clear your browser cache and try again.",
+  "Email has been updated successfully. Please verify in your inbox.": "Email has been updated successfully. Please verify in your inbox."
 }

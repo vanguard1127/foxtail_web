@@ -53,7 +53,7 @@ class ResetPhone extends PureComponent {
                     <div className="popup">
                       <span className="head">{t("resetphone")}</span>
                       <a className="close" onClick={close} />
-                      <form className="form">
+                      <form>
                         <div className="form-content">
                           <span className="description">{t("enterlast")}</span>
                           <Select
@@ -107,7 +107,7 @@ class ResetPhone extends PureComponent {
                   <div className="popup">
                     <span className="head">{t("common:updphone")}</span>
                     <a className="close" onClick={close} />
-                    <form className="form">
+                    <form>
                       <div className="form-content">
                         <div className="submit">
                           <ErrorHandler.ErrorBoundary>

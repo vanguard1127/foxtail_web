@@ -51,7 +51,7 @@ const ShareForm = ({
         </div>
       </div>
       <div className="form-container">
-        <form className="form">
+        <form>
           <div className="form-content">
             <div className="submit form-control">
               <button

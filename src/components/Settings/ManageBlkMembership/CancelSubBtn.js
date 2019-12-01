@@ -22,7 +22,7 @@ class CancelSubBtn extends PureComponent {
     this.setState({ showContactModal: !this.state.showContactModal });
   };
   render() {
-    const { t, setDialogContent } = this.props;
+    const { t, initializeModal } = this.props;
     const { showContactModal } = this.state;
     return (
       <Mutation mutation={CANCEL_SUBSCRIPTION}>
@@ -44,7 +44,7 @@ class CancelSubBtn extends PureComponent {
                     const title = t("cancelblktitle");
                     const msg = t("canblkdes");
                     const btnText = t("common:Cancel");
-                    setDialogContent({
+                    initializeModal({
                       title,
                       msg,
                       btnText,

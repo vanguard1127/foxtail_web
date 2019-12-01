@@ -110,7 +110,7 @@ export default class CCForm extends React.Component {
           callback={this.handleCallback}
         />
         <div className="form-container">
-          <form className="form">
+          <form>
             <div className="form-content">
               <div className="input">
                 <input

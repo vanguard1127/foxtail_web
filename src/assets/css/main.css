@@ -4892,14 +4892,14 @@ input.location-search-input {
   border: 1px solid #e3e3e3 !important;
 }
 
-.page .form,
-.page .form .content {
+.page form,
+.page form .content {
   width: 100%;
   display: block;
   float: left;
 }
 
-.page .form .content.mtop {
+.page form .content.mtop {
   margin-top: 15px;
 }
 
@@ -4944,7 +4944,8 @@ section.settings .page .content span.heading {
   font-style: normal;
 }
 
-.page .form .content .item {
+.page .settings-content .content .item,
+.page form .content .item {
   width: 100%;
   display: block;
   float: left;
@@ -4953,24 +4954,29 @@ section.settings .page .content span.heading {
   /* z-index: 1; */
 }
 
-.page .form .content .item.nobottom {
+.page .settings-content .content .item.nobottom,
+.page form .content .item.nobottom {
   margin-bottom: 0;
 }
 
-.page .form .content .item.sticky {
+.page .settings-content .content .item.sticky,
+.page form .content .item.sticky {
   position: relative;
   top: -1px;
 }
 
-.page .form .content .item button {
+.page .settings-content .content .item button,
+.page form .content .item button {
   cursor: pointer;
 }
 
-.page .form .content .item.sticky .button button {
+.page .settings-content .content .item.sticky .button button,
+.page form .content .item.sticky .button button {
   border-radius: 0 0 2px 2px;
 }
 
-.page .form .content .item .textarea label {
+.page .settings-content .content .item .textarea label,
+.page form .content .item .textarea label {
   position: absolute;
   left: 20px;
   top: 15px;
@@ -4981,18 +4987,24 @@ section.settings .page .content span.heading {
   /* z-index: 500; */
 }
 
-.page .form .content .item .textarea textarea:valid + textarea::before,
-.page .form .content .item .textarea textarea:focus + textarea::before,
-.page .form .content .item .input input:valid + label::before,
-.page .form .content .item .input input:focus + label::before {
+.page .settings-content .content .item .textarea textarea:valid + textarea::before,
+.page .settings-content .content .item .textarea textarea:focus + textarea::before,
+.page .settings-content .content .item .input input:valid + label::before,
+.page .settings-content .content .item .input input:focus + label::before,
+.page form .content .item .textarea textarea:valid + textarea::before,
+.page form .content .item .textarea textarea:focus + textarea::before,
+.page form .content .item .input input:valid + label::before,
+.page form .content .item .input input:focus + label::before {
   line-height: 25px;
   font-size: 12px;
   top: 0;
   padding-left: 1px;
 }
 
-.page .form .content .item .textarea textarea,
-.page .form .content .item .input {
+.page .settings-content .content .item .textarea textarea,
+.page .settings-content .content .item .input,
+.page form .content .item .textarea textarea,
+.page form .content .item .input {
   position: relative;
   display: block;
   float: left;
@@ -5000,24 +5012,35 @@ section.settings .page .content span.heading {
   resize: none;
 }
 
-.page .form .content .item .textarea.invalid textarea,
-.page .form .content .item .input.invalid input {
+.page .settings-content .content .item .textarea.invalid textarea,
+.page .settings-content .content .item .input.invalid input
+.page form .content .item .textarea.invalid textarea,
+.page form .content .item .input.invalid input {
   border-color: #d35656 !important;
 }
 
-.page .form .content .item .textarea.invalid textarea::before,
-.page .form .content .item .item .input.invalid label::before,
-.page .form .content .item .input.invalid input:valid + label::before {
+
+.page .settings-content .content .item .textarea.invalid textarea::before,
+.page .settings-content .content .item .item .input.invalid label::before,
+.page .settings-content .content .item .input.invalid input:valid + label::before,
+.page form .content .item .textarea.invalid textarea::before,
+.page form .content .item .item .input.invalid label::before,
+.page form .content .item .input.invalid input:valid + label::before {
   color: #d35656 !important;
 }
 
-.page .form .content .item .textarea span,
-.page .form .content .item .input span {
+.page .settings-content .content .item .textarea span,
+.page .settings-content .content .item .input span,
+.page form .content .item .textarea span,
+.page form .content .item .input span {
   display: none;
   visibility: hidden;
 }
-.page .form .content .item .textarea.invalid textarea,
-.page .form .content .item .input.invalid span {
+
+.page .settings-content .content .item .textarea.invalid textarea,
+.page .settings-content .content .item .input.invalid span,
+.page form .content .item .textarea.invalid textarea,
+.page form .content .item .input.invalid span {
   display: inline-block;
   float: left;
   visibility: visible;
@@ -5028,8 +5051,10 @@ section.settings .page .content span.heading {
   padding-left: 1px;
 }
 
-.page .form .content .item .textarea label::before,
-.page .form .content .item .input label::before {
+.page .settings-content .content .item .textarea label::before,
+.page .settings-content .content .item .input label::before,
+.page form .content .item .textarea label::before,
+.page form .content .item .input label::before {
   content: attr(title);
   position: absolute;
   top: 15px;
@@ -5044,8 +5069,10 @@ section.settings .page .content span.heading {
   text-transform: none;
 }
 
-.page .form .content .item .textarea textarea,
-.page .form .content .item .input input {
+.page .settings-content .content .item .textarea textarea,
+.page .settings-content .content .item .input input,
+.page form .content .item .textarea textarea,
+.page form .content .item .input input {
   width: 100%;
   height: 70px;
   overflow: hidden;
@@ -5064,8 +5091,8 @@ section.settings .page .content span.heading {
   appearance: none;
   box-shadow: none;
 }
-
-.page .form .content .item .calender input {
+.page .settings-content .content .item .calender input,
+.page form .content .item .calender input {
   width: 100%;
   display: block;
   float: left;
@@ -5081,58 +5108,72 @@ section.settings .page .content span.heading {
   font-weight: 400;
 }
 
-.page .form .content .item .textarea textarea {
+.page .settings-content .content .item .textarea textarea,
+.page form .content .item .textarea textarea {
   font-size: 14px;
   min-height: 120px;
   overflow-y: auto;
   padding-top: 8px;
 }
 
-.page .form .content .item .textarea textarea::placeholder{
+.page .settings-content .content .item .textarea textarea::placeholder,
+.page form .content .item .textarea textarea::placeholder{
   color: #8c909d;
   opacity: 1;
 }
-
-.page .form .content .item .textarea textarea:focus,
-.page .form .content .item .input input:focus {
+.page .settings-content .content .item .textarea textarea:focus,
+.page .settings-content .content .item .input input:focus,
+.page form .content .item .textarea textarea:focus,
+.page form .content .item .input input:focus {
   outline: 0;
   border-color: #b4bbce;
 }
-
-.page .form .content .item .textarea textarea:valid,
-.page .form .content .item .input input:valid {
+.page .settings-content .content .item .textarea textarea:valid,
+.page .settings-content .content .item .input input:valid,
+.page form .content .item .textarea textarea:valid,
+.page form .content .item .input input:valid {
   border-color: #e3e3e3;
 }
 
-.page .form .content .item .textarea textarea:valid + label::before,
-.page .form .content .item .input input:valid + label::before {
+.page .settings-content .content .item .textarea textarea:valid + label::before,
+.page .settings-content .content .item .input input:valid + label::before,
+.page form .content .item .textarea textarea:valid + label::before,
+.page form .content .item .input input:valid + label::before {
   color: #8c909d !important;
 }
 
-.page .form .content .item .textarea textarea:focus + label::before,
-.page .form .content .item .input input:focus + label::before {
+.page .settings-content .content .item .textarea textarea:focus + label::before,
+.page .settings-content .content .item .input input:focus + label::before,
+.page form .content .item .textarea textarea:focus + label::before,
+.page form .content .item .input input:focus + label::before {
   color: #8c909d;
 }
 
-.page .form .content .item .textarea label,
-.page .form .content .item .input label {
+.page .settings-content .content .item .textarea label,
+.page .settings-content .content .item .input label,
+.page form .content .item .textarea label,
+.page form .content .item .input label {
   float: left;
   padding: 0;
   margin: 0;
 }
 
-.page .form .content .item .button {
+.page .settings-content .content .item .button,
+.page form .content .item .button {
   width: 100%;
   display: block;
   float: left;
 }
 
-.page .form .content .item .button.mtop {
+.page .settings-content .content .item .button.mtop,
+.page form .content .item .button.mtop {
   margin-top: 15px;
 }
 
-.page .form .content .item .button span,
-.page .form .content .item .button button {
+.page .settings-content .content .item .button span,
+.page .settings-content .content .item .button button,
+.page form .content .item .button span,
+.page form .content .item .button button {
   width: 100%;
   height: 50px;
   outline: none;
@@ -5150,8 +5191,10 @@ section.settings .page .content span.heading {
   cursor: pointer;
 }
 
-.page .form .content .item .button span:hover,
-.page .form .content .item .button button:hover {
+.page .settings-content .content .item .button span:hover,
+.page .settings-content .content .item .button button:hover,
+.page form .content .item .button span:hover,
+.page form .content .item .button button:hover {
   background-color: #00af49;
 }
 
@@ -5395,15 +5438,16 @@ section.settings .page .content span.heading {
 }
 
 /* DROPDOWN */
-.page .form .content .item .dropdown {
+.page .settings-content .content .item .dropdown,
+.page form .content .item .dropdown {
   width: 100%;
   display: block;
   float: left;
   position: relative;
   /* z-index: 9999; */
 }
-
-.page .form .content .item .dropdown select {
+.page .settings-content .content .item .dropdown select,
+.page form .content .item .dropdown select {
   width: 100%;
   height: 70px;
   display: block;
@@ -5422,7 +5466,8 @@ section.settings .page .content span.heading {
   font-weight: 400;
 }
 
-.page .form .content .item .dropdown::before {
+.page .settings-content .content .item .dropdown::before,
+.page form .content .item .dropdown::before {
   content: "\f004";
   font-family: "foxtail-icon";
   color: #f50043;
@@ -5433,7 +5478,8 @@ section.settings .page .content span.heading {
   /* z-index: 99999; */
 }
 
-.page .form .content .item .dropdown label {
+.page .settings-content .content .item .dropdown label,
+.page form .content .item .dropdown label {
   font-family: "Roboto Condensed";
   font-size: 13px;
   line-height: 17px;
@@ -5449,7 +5495,8 @@ section.settings .page .content span.heading {
 }
 
 /* RANGE SLIDER */
-.page .form .content .item .range-slider {
+.page .settings-content .content .item .range-slider,
+.page form .content .item .range-slider {
   width: 100%;
   display: block;
   float: left;
@@ -5519,7 +5566,8 @@ section.meet-filter .range-con {
   visibility: hidden;
 }
 
-.page .form .content .item .range-head {
+.page .settings-content .content .item .range-head,
+.page form .content .item .range-head {
   width: 100%;
   display: block;
   float: left;
@@ -5528,35 +5576,41 @@ section.meet-filter .range-con {
   letter-spacing: -0.3px;
 }
 
-.page .form .content .item .limit {
+.page .settings-content .content .item .limit,
+.page form .content .item .limit {
   width: 100%;
   display: block;
   float: left;
   padding: 4px 0 0 0;
 }
 
-.page .form .content .item .limit span {
+.page .settings-content .content .item .limit span,
+.page form .content .item .limit span {
   float: left;
   font-size: 13px;
   color: #acacac;
   letter-spacing: -0.3px;
 }
 
-.page .form .content .item .limit span:first-child {
+.page .settings-content .content .item .limit span:first-child,
+.page form .content .item .limit span:first-child {
   float: left;
   text-align: left;
 }
 
-.page .form .content .item .limit span:nth-child(2) {
+.page .settings-content .content .item .limit span:nth-child(2),
+.page form .content .item .limit span:nth-child(2) {
   float: right;
   text-align: right;
 }
 
-.page .form .content .item .pmd-range-slider.noUi-target {
+.page .settings-content .content .item .pmd-range-slider.noUi-target,
+.page form .content .item .pmd-range-slider.noUi-target {
   height: 5px !important;
 }
 
-.page .form .content .item .pmd-range-slider .noUi-handle {
+.page .settings-content .content .item .pmd-range-slider .noUi-handle,
+.page form .content .item .pmd-range-slider .noUi-handle {
   top: -5px;
 }
 
@@ -5574,7 +5628,8 @@ section.meet-filter .range-con {
 }
 
 /* VERIFICATION BOX */
-.page .form .content .verification-box {
+.page .settings-content .content .verification-box,
+.page form .content .verification-box {
   width: 100%;
   display: block;
   float: left;
@@ -5584,13 +5639,15 @@ section.meet-filter .range-con {
   margin-top: 10px;
 }
 
-.page .form .content .verification-box span {
+.page .settings-content .content .verification-box span,
+.page form .content .verification-box span {
   width: 100%;
   display: block;
   float: left;
 }
 
-.page .form .content .verification-box span.head {
+.page .settings-content .content .verification-box span.head,
+.page form .content .verification-box span.head {
   font-size: 16px;
   color: #565656;
   line-height: 19px;
@@ -5599,7 +5656,8 @@ section.meet-filter .range-con {
   font-weight: 700;
 }
 
-.page .form .content .verification-box span.title {
+.page .settings-content .content .verification-box span.title,
+.page form .content .verification-box span.title {
   font-size: 14px;
   color: #7b7b7b;
   line-height: 20px;
@@ -5607,8 +5665,10 @@ section.meet-filter .range-con {
   padding-bottom: 10px;
 }
 
-.page .form .content .verification-box span.clickverify-btn,
-.page .form .content .verification-box a.clickverify-btn {
+.page .settings-content .content .verification-box span.clickverify-btn,
+.page .settings-content .content .verification-box a.clickverify-btn,
+.page form .content .verification-box span.clickverify-btn,
+.page form .content .verification-box a.clickverify-btn {
   /* height: 40px; */
   line-height: 40px;
   text-align: center;
@@ -5625,22 +5685,24 @@ section.meet-filter .range-con {
   cursor: pointer;
 }
 
-.page .form .content .verification-box span.clickverify-btn:hover,
-.page .form .content .verification-box a.clickverify-btn:hover {
+.page .settings-content .content .verification-box span.clickverify-btn:hover,
+.page .settings-content .content .verification-box a.clickverify-btn:hover,
+.page form .content .verification-box span.clickverify-btn:hover,
+.page form .content .verification-box a.clickverify-btn:hover {
   background-color: #00be4f;
 }
-
-.page .form .content .verification-box span.resetemail {
+.page .settings-content .content .verification-box span.resetemail,
+.page form .content .verification-box span.resetemail {
   background-color: #00a9ff;
 }
-
-.page .form .content .verification-box span.resetemail:hover {
+.page .settings-content .content .verification-box span.resetemail:hover,
+.page form .content .verification-box span.resetemail:hover {
   background-color: #1f71e0;
 }
 
 /*---- DESIRES SELECTED */
-
-.page .form .content .select_desires {
+.page .settings-content .content .select_desires,
+.page form .content .select_desires {
   width: 100%;
   height: 70px;
   border: 1px solid #e3e3e3;
@@ -5652,7 +5714,8 @@ section.meet-filter .range-con {
   cursor: pointer;
 }
 
-.page .form .content .select_desires::before {
+.page .settings-content .content .select_desires::before,
+.page form .content .select_desires::before {
   content: "\f004";
   font-family: "foxtail-icon";
   color: #f50043;
@@ -5662,8 +5725,8 @@ section.meet-filter .range-con {
   font-size: 14px;
   /* z-index: 99999; */
 }
-
-.page .form .content .select_desires span.label {
+.page .settings-content .content .select_desires span.label,
+.page form .content .select_desires span.label {
   position: absolute;
   top: 14px;
   left: 15px;
@@ -5679,8 +5742,8 @@ section.meet-filter .range-con {
   margin: 0;
   /* z-index: 99999; */
 }
-
-.page .form .content .select_desires ul {
+.page .settings-content .content .select_desires ul,
+.page form .content .select_desires ul {
   list-style-type: none;
   padding: 0 0 0 5px;
   margin: 0;
@@ -5688,8 +5751,8 @@ section.meet-filter .range-con {
   display: inline-block;
   width: 80% !important;
 }
-
-.page .form .content .select_desires ul li {
+.page .settings-content .content .select_desires ul li,
+.page form .content .select_desires ul li {
   float: left;
   border: 1px solid #f50043;
   background-color: rgba(245, 0, 67, 0.02);
@@ -5701,8 +5764,8 @@ section.meet-filter .range-con {
   margin-top: 27px;
   width: auto !important;
 }
-
-.page .form .content .select_desires .counter {
+.page .settings-content .content .select_desires .counter,
+.page form .content .select_desires .counter {
   position: absolute;
   right: 42px;
   top: 37%;
@@ -6617,14 +6680,14 @@ header.landing {
   box-shadow: none;
 }
 
-section.landing .register-form .form .form-content span.tip::before {
+section.landing .register-form form .form-content span.tip::before {
   content: "\f29c";
   font-family: "foxtail-icon";
   color: #acacac;
   font-size: 14px;
 }
 
-section.landing .register-form .form .form-content span.tip {
+section.landing .register-form form .form-content span.tip {
   float: right;
   right:4px;
 }
@@ -6971,13 +7034,13 @@ section.landing .register-form form {
   margin: 0;
 }
 
-section.landing .register-form .form .form-content {
+section.landing .register-form form .form-content {
   width: 100%;
   display: block;
   float: left;
 }
 
-section.landing .register-form .form .form-content .input {
+section.landing .register-form form .form-content .input {
   width: 100%;
   display: block;
   float: left;
@@ -6985,7 +7048,7 @@ section.landing .register-form .form .form-content .input {
   margin-bottom: 15px;
 }
 
-section.landing .register-form .form .form-content .input::before {
+section.landing .register-form form .form-content .input::before {
   content: "";
   font-family: "foxtail-icon";
   color: #e5e7ee;
@@ -6995,25 +7058,25 @@ section.landing .register-form .form .form-content .input::before {
   top: 15px;
 }
 
-section.landing .register-form .form .form-content .input.username::before {
+section.landing .register-form form .form-content .input.username::before {
   content: "\e815";
   left: 18px;
   top: 14px;
 }
 
-section.landing .register-form .form .form-content .input.email::before {
+section.landing .register-form form .form-content .input.email::before {
   content: "\e80c";
   font-size: 20px;
   top: 12px;
 }
 
-section.landing .register-form .form .form-content .input.birthday::before {
+section.landing .register-form form .form-content .input.birthday::before {
   content: "\f4c5";
   font-size: 20px;
   top: 12px;
 }
 
-section.landing .register-form .form .form-content .input input {
+section.landing .register-form form .form-content .input input {
   width: 100%;
   display: block;
   float: left;
@@ -7029,33 +7092,33 @@ section.landing .register-form .form .form-content .input input {
   font-weight: 400;
 }
 
-section.landing .register-form .form .form-content .input input::-webkit-input-placeholder {
+section.landing .register-form form .form-content .input input::-webkit-input-placeholder {
   color: #8c909d;
 }
 
-section.landing .register-form .form .form-content .input input::-moz-placeholder {
+section.landing .register-form form .form-content .input input::-moz-placeholder {
   color: #8c909d;
 }
 
-section.landing .register-form .form .form-content .input input:-ms-input-placeholder {
+section.landing .register-form form .form-content .input input:-ms-input-placeholder {
   color: #8c909d;
 }
 
-section.landing .register-form .form .form-content .input input:-moz-placeholder {
+section.landing .register-form form .form-content .input input:-moz-placeholder {
   color: #8c909d;
 }
 
-section.landing .register-form .form .form-content .dropdown {
+section.landing .register-form form .form-content .dropdown {
   width: 100%;
   position: relative;
   float: left;
   margin-bottom: 15px;
 }
-section.landing .register-form .form .form-content .dropdown.nobottom {
+section.landing .register-form form .form-content .dropdown.nobottom {
   margin-bottom: none;
 }
 
-section.landing .register-form .form .form-content .dropdown select {
+section.landing .register-form form .form-content .dropdown select {
   width: 100%;
   height: 70px;
   display: block;
@@ -7074,7 +7137,7 @@ section.landing .register-form .form .form-content .dropdown select {
   font-weight: 400;
 }
 
-section.landing .register-form .form .form-content .dropdown::before {
+section.landing .register-form form .form-content .dropdown::before {
   content: "";
   font-family: "foxtail-icon";
   color: #e5e7ee;
@@ -7085,7 +7148,7 @@ section.landing .register-form .form .form-content .dropdown::before {
   /* z-index: 999999; */
 }
 
-section.landing .register-form .form .form-content .dropdown::after {
+section.landing .register-form form .form-content .dropdown::after {
   content: "\f004";
   font-family: "foxtail-icon";
   color: #f50043;
@@ -7096,7 +7159,7 @@ section.landing .register-form .form .form-content .dropdown::after {
   z-index: 1;
 }
 
-section.landing .register-form .form .form-content .dropdown label {
+section.landing .register-form form .form-content .dropdown label {
   top: 9px;
   left: 15px;
   font-family: "Roboto";
@@ -7125,7 +7188,7 @@ section.landing
   padding: 19px 19px 0 14px;
 }
 
-section.landing .register-form .form .form-content .dropdown .select2-container--default .select2-selection--single,
+section.landing .register-form form .form-content .dropdown .select2-container--default .select2-selection--single,
 section.landing .register-form form .select2-container--default .select2-selection--multiple {
   height: 50px;
   border-color: #e9ebec !important;
@@ -7204,17 +7267,17 @@ section.landing
   visibility: hidden;
 }
 
-section.landing .register-form .form .form-content .couple-choose {
+section.landing .register-form form .form-content .couple-choose {
   width: 100%;
   display: block;
   float: left;
 }
 
-section.landing .register-form .form .form-content .couple-choose input {
+section.landing .register-form form .form-content .couple-choose input {
   display: none;
 }
 
-section.landing .register-form .form .form-content .couple-choose input + label span {
+section.landing .register-form form .form-content .couple-choose input + label span {
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -7226,7 +7289,7 @@ section.landing .register-form .form .form-content .couple-choose input + label 
   cursor: pointer;
 }
 
-section.landing .register-form .form .form-content .couple-choose label b {
+section.landing .register-form form .form-content .couple-choose label b {
   padding-left: 10px;
   display: inline-block;
   float: left;
@@ -7238,7 +7301,7 @@ section.landing .register-form .form .form-content .couple-choose label b {
   user-select: none;
 }
 
-section.landing .register-form .form .form-content .couple-choose input:checked + label span:before {
+section.landing .register-form form .form-content .couple-choose input:checked + label span:before {
   content: "\e803";
   font-family: "foxtail-icon";
   color: #cb0032;
@@ -7250,17 +7313,17 @@ section.landing .register-form .form .form-content .couple-choose input:checked 
   line-height: 24px;
 }
 
-section.landing .register-form .form .form-content .submit {
+section.landing .register-form form .form-content .submit {
   width: 100%;
   display: block;
   float: left;
 }
 
-section.landing .register-form .form .form-content .input-feedback {
+section.landing .register-form form .form-content .input-feedback {
   color: red;
 }
 
-section.landing .register-form .form .form-content .submit .btn {
+section.landing .register-form form .form-content .submit .btn {
   width: 100%;
   height: 50px;
   line-height: 50px;
@@ -7281,12 +7344,12 @@ section.landing .register-form .form .form-content .submit .btn {
   transition: 0.3s all;
 }
 
-section.landing .register-form .form .form-content .submit .btn:hover {
+section.landing .register-form form .form-content .submit .btn:hover {
   transform: translateY(-1px);
 }
 
-section.landing .register-form .form .form-content .disclaim,
-section.landing .register-form .form .form-content .terms {
+section.landing .register-form form .form-content .disclaim,
+section.landing .register-form form .form-content .terms {
   width: 100%;
   display: block;
   float: left;
@@ -7297,21 +7360,21 @@ section.landing .register-form .form .form-content .terms {
   padding-top: 15px;
 }
 
-section.landing .register-form .form .form-content .disclaim {
+section.landing .register-form form .form-content .disclaim {
   padding-left: 5px;
 }
 
-section.landing .register-form .form .form-content .terms span {
+section.landing .register-form form .form-content .terms span {
   text-decoration: underline;
   padding-left: 5px;
   cursor: pointer;
 }
 
-section.landing .register-form .form .form-content .terms span:hover {
+section.landing .register-form form .form-content .terms span:hover {
   color: #b50131;
 }
 
-section.landing .register-form .form .form-content .input.birthday .gj-datepicker-md [role="right-icon"] {
+section.landing .register-form form .form-content .input.birthday .gj-datepicker-md [role="right-icon"] {
   display: none;
   visibility: hidden;
 }
@@ -7537,7 +7600,7 @@ section.full-screen-modal {
 }
 
 
-section.login-modal.full-screen-modal .popup .form-content{
+section.login-modal.full-screen-modal .popup form-content{
   margin: 0;
 }
 
@@ -7647,7 +7710,7 @@ section.login-modal .popup form {
 }
 
 /* For nested popup */
-section.login-modal .popup .form .form-content .form .form-content .dropdown span{
+section.login-modal .popup form .form-content form .form-content .dropdown span{
   line-height: 0px !important;
   text-align:start !important;
   font-size: 13px !important;
@@ -7655,18 +7718,18 @@ section.login-modal .popup .form .form-content .form .form-content .dropdown spa
   width: auto !important;
 }
 
-section.login-modal .popup .form .form-content .input {
+section.login-modal .popup form .form-content .input {
   width: 100%;
   display: block;
   float: left;
   position: relative;
 }
 
-section.login-modal .popup .form .form-content .input.code{
+section.login-modal .popup form .form-content .input.code{
   margin-bottom: 15px;
  }
 
-section.login-modal .popup .form .form-content .input.password{
+section.login-modal .popup form .form-content .input.password{
   margin-bottom: 10px;
  }
 
@@ -7676,7 +7739,7 @@ section.login-modal.confirm-phone .popup span.head{
   width: auto;
 }
 
-section.login-modal.confirm-phone .popup .form .form-content{
+section.login-modal.confirm-phone .popup form .form-content{
   float: none!important;
   width: auto;
 }
@@ -7685,7 +7748,7 @@ section.login-modal.confirm-phone .popup .form .form-content{
   width: calc(100% - 100px) !important;
 }
 
-section.login-modal .popup .form .form-content .input input {
+section.login-modal .popup form .form-content .input input {
   width: 100%;
   display: block;
   float: left;
@@ -7701,11 +7764,11 @@ section.login-modal .popup .form .form-content .input input {
   font-weight: 400;
 }
 
-section.login-modal.create-event .popup .form .form-content .input input {
+section.login-modal.create-event .popup form .form-content .input input {
   padding: 15px 20px 0 20px;
 }
 
-section.login-modal .popup .form .form-content .input textarea {
+section.login-modal .popup form .form-content .input textarea {
   width: 100%;
   display: block;
   float: left;
@@ -7720,34 +7783,34 @@ section.login-modal .popup .form .form-content .input textarea {
   font-weight: 400;
 }
 
-section.login-modal .popup .form .form-content .input input::-webkit-input-placeholder {
+section.login-modal .popup form .form-content .input input::-webkit-input-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup .form .form-content .input input::-moz-placeholder {
+section.login-modal .popup form .form-content .input input::-moz-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup .form .form-content .input input:-ms-input-placeholder {
+section.login-modal .popup form .form-content .input input:-ms-input-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup .form .form-content .input input:-moz-placeholder {
+section.login-modal .popup form .form-content .input input:-moz-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup .form .form-content .dropdown {
+section.login-modal .popup form .form-content .dropdown {
   width: 100px;
   position: relative;
   float: left;
   z-index: 100;
 }
 
-section.login-modal .popup .form .form-content .dropdown.wide {
+section.login-modal .popup form .form-content .dropdown.wide {
   width: 100%;
 }
 
-section.login-modal .popup .form .form-content .dropdown select {
+section.login-modal .popup form .form-content .dropdown select {
   width: 100%;
   height: 70px;
   display: block;
@@ -7766,7 +7829,7 @@ section.login-modal .popup .form .form-content .dropdown select {
   font-weight: 400;
 }
 
-section.login-modal .popup .form .form-content .dropdown::before {
+section.login-modal .popup form .form-content .dropdown::before {
   content: "";
   font-family: "foxtail-icon";
   color: #e5e7ee;
@@ -7777,7 +7840,7 @@ section.login-modal .popup .form .form-content .dropdown::before {
   z-index: 999999;
 }
 
-section.login-modal .popup .form .form-content .dropdown::after {
+section.login-modal .popup form .form-content .dropdown::after {
   content: "\f004";
   font-family: "foxtail-icon";
   color: #f50043;
@@ -7788,7 +7851,7 @@ section.login-modal .popup .form .form-content .dropdown::after {
   z-index: 99999;
 }
 
-section.login-modal .popup .form .form-content .dropdown label {
+section.login-modal .popup form .form-content .dropdown label {
   position: absolute;
   top: 9px;
   left: 15px;
@@ -7805,16 +7868,16 @@ section.login-modal .popup .form .form-content .dropdown label {
   z-index: 9999;
 }
 
-section.login-modal .popup .form .form-content .dropdown span {
+section.login-modal .popup form .form-content .dropdown span {
   position: relative;
 }
 
-section.login-modal.acctsetting .popup .form .form-content .dropdown span {
+section.login-modal.acctsetting .popup form .form-content .dropdown span {
   position: absolute;
   top:25px;
 }
-
-.popup .page .form .content .select_desires {
+.popup .page .settings-content .content .select_desires,
+.popup .page form .content .select_desires {
   margin-bottom: 0px !important;
 }
 
@@ -7831,7 +7894,7 @@ section.login-modal
   padding: 12px 19px 0 14px;
 }
 
-section.login-modal .popup .form .form-content .dropdown .select2-container--default .select2-selection--single,
+section.login-modal .popup form .form-content .dropdown .select2-container--default .select2-selection--single,
 section.landing .register-form form .select2-container--default .select2-selection--multiple {
   height: 50px;
   border-color: #e9ebec !important;
@@ -7910,7 +7973,7 @@ section.login-modal
   visibility: hidden;
 }
 
-section.login-modal .popup .form .form-content span.description {
+section.login-modal .popup form .form-content span.description {
   width: 100% !important;
   display: block !important;
   float: left !important;
@@ -7926,14 +7989,14 @@ section.login-modal .popup .form .form-content span.description {
   margin-top: 12px; */
 }
 
-section.login-modal .popup .form .form-content .submit {
+section.login-modal .popup form .form-content .submit {
   width: 100%;
   display: block;
   float: left;
 }
 
-section.login-modal .popup .form .form-content .submit span,
-section.login-modal .popup .form .form-content .submit button {
+section.login-modal .popup form .form-content .submit span,
+section.login-modal .popup form .form-content .submit button {
   width: 100%;
   line-height: 50px;
   outline: none;
@@ -7949,8 +8012,8 @@ section.login-modal .popup .form .form-content .submit button {
   cursor: pointer;
 }
 
-section.login-modal .popup .form .form-content .submit span.color,
-section.login-modal .popup .form .form-content .submit button.color {
+section.login-modal .popup form .form-content .submit span.color,
+section.login-modal .popup form .form-content .submit button.color {
   background-image: -webkit-linear-gradient(119deg, #f70016 0%, #5f00a4 100%);
   background-image: -o-linear-gradient(119deg, #f70016 0%, #5f00a4 100%);
   background-image: linear-gradient(209deg, #f70016 0%, #5f00a4 100%);
@@ -7960,8 +8023,8 @@ section.login-modal .popup .form .form-content .submit button.color {
   margin-top: 5px;
 }
 
-section.login-modal .popup .form .form-content .submit span.disabled,
-section.login-modal .popup .form .form-content .submit button.disabled {
+section.login-modal .popup form .form-content .submit span.disabled,
+section.login-modal .popup form .form-content .submit button.disabled {
   background-color:#767676;
   font-weight: 700;
   color: #fff;
@@ -7969,24 +8032,24 @@ section.login-modal .popup .form .form-content .submit button.disabled {
   margin-top: 5px;
 }
 
-section.login-modal .popup .form .form-content .submit span.border,
-section.login-modal .popup .form .form-content .submit button.border {
+section.login-modal .popup form .form-content .submit span.border,
+section.login-modal .popup form .form-content .submit button.border {
   background-color: #fff;
   border: 1px solid #c20046;
   color: #c20046;
 }
 
-section.login-modal .popup .form .form-content .submit span.border:hover,
-section.login-modal .popup .form .form-content .submit button.border:hover {
+section.login-modal .popup form .form-content .submit span.border:hover,
+section.login-modal .popup form .form-content .submit button.border:hover {
   background-color: #c20046;
   color: #fff;
 }
 
-section.login-modal .popup .form .form-content .contactus .input {
+section.login-modal .popup form .form-content .contactus .input {
   margin-bottom: 10px;
 }
 
-section.login-modal .popup .form .form-content .input.recap{
+section.login-modal .popup form .form-content .input.recap{
   margin-top: 10px;
 }
 
@@ -8249,11 +8312,11 @@ ul.black-member li::before {
   color: #5b5b65;
   font-size: 14px;
 }
-section.login-modal .popup .form .form-content{
+section.login-modal .popup form .form-content{
   margin: 0 30px;
 }
 
-section.login-modal .popup .form .form-content .example-image {
+section.login-modal .popup form .form-content .example-image {
   width: 100%;
   display: block !important;
   float: left;
@@ -8264,14 +8327,14 @@ section.login-modal .popup .form .form-content .example-image {
 }
 
 
-section.login-modal .popup .form .form-content .example-image img {
+section.login-modal .popup form .form-content .example-image img {
   width: 100%;
   height: 100%;
   display: inline-block;
   float: left;
 }
 
-section.login-modal .popup .form .form-content .instructions {
+section.login-modal .popup form .form-content .instructions {
   width: 100%;
   display: block;
   float: left;
@@ -8280,7 +8343,7 @@ section.login-modal .popup .form .form-content .instructions {
   padding-top: 20px;
 }
 
-section.login-modal .popup .form .form-content .upload-verify {
+section.login-modal .popup form .form-content .upload-verify {
   width: 100%;
   display: block;
   float: left;

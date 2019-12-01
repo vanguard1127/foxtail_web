@@ -6,7 +6,15 @@ import {
   enableBodyScroll,
   clearAllBodyScrollLocks
 } from "body-scroll-lock";
-import { UPDATE_SETTINGS, SIGNS3 } from "../../queries";
+import * as yup from "yup";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import ResetPassModal from "../Modals/ResetPassword";
+import { UPDATE_SETTINGS, SIGNS3, RESET_PASSWORD } from "../../queries";
 import ImageEditor from "../Modals/ImageEditor";
 import ImageCropper from "../Modals/ImageCropper";
 import ProfilePic from "./ProfilePic";
@@ -27,8 +35,10 @@ import Modal from "../common/Modal";
 import CoupleProfileModal from "../Modals/CoupleProfile";
 import BecomeBlackMemberModal from "../Modals/BecomeBlackMember";
 import CreditCardModal from "../Modals/CreditCard";
+import Dropdown from "../common/Dropdown";
 
 class SettingsPage extends Component {
+  schema;
   constructor(props) {
     super(props);
     this.targetElement = React.createRef();
@@ -83,13 +93,22 @@ class SettingsPage extends Component {
     publicPhotoList: undefined,
     privatePhotoList: undefined,
     showModal: false,
-    msg: "",
-    btnText: "",
-    title: "",
+    modalDecription: "",
+    modalBtnText: "",
+    modalTitle: "",
     okAction: null,
     errors: this.props.errors,
     isCouple: this.props.isCouple,
-    isInitial: this.props.isInitial
+    isInitial: this.props.isInitial,
+    modalInputType: "",
+    modalValue: "",
+    modalPlaceholder: "",
+    modalError: undefined,
+    modalClassName: "",
+    modalInput: undefined,
+    schemaType: "",
+    resetPassVisible: false,
+    clearPassDlg: false
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -97,7 +116,7 @@ class SettingsPage extends Component {
       this.props.currentuser !== nextProps.currentuser ||
       this.state.about !== nextState.about ||
       this.state.ageRange !== nextState.ageRange ||
-      this.state.btnText !== nextState.btnText ||
+      this.state.modalBtnText !== nextState.modalBtnText ||
       this.state.city !== nextState.city ||
       this.state.country !== nextState.country ||
       this.state.couplePartner !== nextState.couplePartner ||
@@ -118,7 +137,7 @@ class SettingsPage extends Component {
       this.state.lang !== nextState.lang ||
       this.state.lastActive !== nextState.lastActive ||
       this.state.likedOnly !== nextState.likedOnly ||
-      this.state.msg !== nextState.msg ||
+      this.state.modalDecription !== nextState.modalDecription ||
       this.state.newMsgNotify !== nextState.newMsgNotify ||
       this.state.okAction !== nextState.okAction ||
       this.state.phone !== nextState.phone ||
@@ -140,7 +159,7 @@ class SettingsPage extends Component {
       this.state.showModal !== nextState.showModal ||
       this.state.showOnline !== nextState.showOnline ||
       this.state.showPhotoVerPopup !== nextState.showPhotoVerPopup ||
-      this.state.title !== nextState.title ||
+      this.state.modalTitle !== nextState.modalTitle ||
       this.state.username !== nextState.username ||
       this.state.users !== nextState.users ||
       this.state.vibrateNotify !== nextState.vibrateNotify ||
@@ -148,7 +167,16 @@ class SettingsPage extends Component {
       this.props.t !== nextProps.t ||
       this.props.errors !== nextProps.errors ||
       this.state.password !== nextState.password ||
-      this.state.errors !== nextState.errors
+      this.state.modalError !== nextState.modalError ||
+      this.state.modalClassName !== nextState.modalClassName ||
+      this.state.modalInputType !== nextState.modalInputType ||
+      this.state.modalValue !== nextState.modalValue ||
+      this.state.modalInput !== nextState.modalInput ||
+      this.state.schemaType !== nextState.schemaType ||
+      this.state.modalPlaceholder !== nextState.modalPlaceholder ||
+      this.state.errors !== nextState.errors ||
+      this.state.resetPassVisible !== nextState.resetPassVisible ||
+      this.state.clearPassDlg !== nextState.clearPassDlg
     ) {
       return true;
     }
@@ -421,6 +449,7 @@ class SettingsPage extends Component {
   };
 
   toggleImgEditorPopup = (file, isPrivate) => {
+    console.log("CLOSE");
     this.setErrorHandler("Toggle image editor");
     if (this.mounted) {
       this.setState(
@@ -435,6 +464,7 @@ class SettingsPage extends Component {
   };
 
   toggleImgCropperPopup = url => {
+    console.log("CLOSE2");
     this.setErrorHandler("Toggle image cropper");
 
     if (this.mounted) {
@@ -551,18 +581,16 @@ class SettingsPage extends Component {
   };
 
   toggleDialog = () => {
-    const { showModal } = this.state;
     this.setErrorHandler("Dialog Modal Toggled:");
-    this.setState({ showModal: !showModal });
-  };
-
-  setDialogContent = ({ title, msg, btnText, okAction }) => {
     this.setState({
-      title,
-      msg,
-      btnText,
-      okAction,
-      showModal: !this.state.showModal
+      showModal: false,
+      modalInputType: "",
+      modalValue: "",
+      modalPlaceholder: "",
+      modalError: undefined,
+      modalClassName: "",
+      modalInput: undefined,
+      schemaType: ""
     });
   };
 
@@ -627,6 +655,145 @@ class SettingsPage extends Component {
     }
   };
 
+  InputFeedback = error =>
+    error ? (
+      <div className="input-feedback" style={{ color: "red" }}>
+        {error}
+      </div>
+    ) : null;
+
+  handleModalTextChange = event => {
+    if (this.mounted) {
+      this.setState({ modalValue: event.target.value }, () =>
+        this.handleModalInput()
+      );
+    }
+  };
+
+  handleModalValueChange = event => {
+    if (this.mounted) {
+      this.setState({ modalValue: event.value }, () => this.handleModalInput());
+    }
+  };
+
+  handleModalError = error => {
+    if (this.mounted) {
+      this.setState({ modalError: error.text }, () => this.handleModalInput());
+    }
+  };
+
+  validateForm = async () => {
+    const { modalValue, schemaType } = this.state;
+    if (this.mounted) {
+      try {
+        await this.schema.validate({ text: modalValue }, { abortEarly: false });
+        this.handleModalError({});
+        this.setState({ [schemaType]: modalValue }, () => {
+          this.handleSubmit(this.updateSettings, true);
+          this.toggleDialog();
+        });
+
+        return true;
+      } catch (e) {
+        let errors = {};
+        e.inner.forEach(err => (errors[err.path] = err.message));
+        this.handleModalError(errors);
+        return false;
+      }
+    }
+  };
+
+  handleModalInput = () => {
+    const {
+      lang,
+      modalInputType,
+      modalValue,
+      modalPlaceholder,
+      modalError
+    } = this.state;
+
+    const { ErrorHandler } = this.props;
+    if (modalInputType === "gender") {
+      this.setState({
+        modalInput: (
+          <ErrorHandler.ErrorBoundary>
+            <Dropdown
+              value={modalValue}
+              type={modalInputType}
+              onChange={this.handleModalValueChange}
+              placeholder={modalPlaceholder}
+              lang={lang}
+            />
+            {this.InputFeedback(modalError)}
+          </ErrorHandler.ErrorBoundary>
+        )
+      });
+    } else if (modalInputType === "text" || modalInputType === "password") {
+      this.setState({
+        modalInput: (
+          <ErrorHandler.ErrorBoundary>
+            <div className="input">
+              <input
+                placeholder={modalPlaceholder}
+                value={modalValue}
+                onChange={this.handleModalTextChange}
+                autoFocus
+                type={modalInputType}
+              />
+            </div>
+            {this.InputFeedback(modalError)}
+          </ErrorHandler.ErrorBoundary>
+        )
+      });
+    }
+  };
+
+  initializeModal = ({
+    modalTitle,
+    modalDecription,
+    modalClassName,
+    okAction,
+    modalBtnText,
+    modalPlaceholder,
+    modalInputType,
+    schemaType
+  }) => {
+    this.setState(
+      {
+        modalTitle,
+        modalDecription,
+        modalBtnText,
+        okAction,
+        modalClassName,
+        modalPlaceholder,
+        modalInputType,
+        schemaType,
+        showModal: !this.state.showModal
+      },
+      () => this.handleModalInput()
+    );
+  };
+
+  toggleClearPassDlg = () => {
+    this.setState({ clearPassDlg: !this.state.clearPassDlg });
+  };
+
+  toggleResetPassDlg = () => {
+    this.setState({ resetPassVisible: !this.state.resetPassVisible });
+  };
+
+  handleDlgBtnClick = resetPassword => {
+    resetPassword()
+      .then(({ data }) => {
+        this.setState({ clearPassDlg: false, password: null });
+
+        this.props.refetchUser();
+      })
+      .catch(res => {
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+      });
+  };
+
   render() {
     const {
       lat,
@@ -673,15 +840,20 @@ class SettingsPage extends Component {
       phone,
       flashCpl,
       showModal,
-      msg,
-      btnText,
-      title,
+      modalDecription,
+      modalBtnText,
+      modalTitle,
       okAction,
       sexuality,
       errors,
       password,
       ccLast4,
-      showCCModal
+      showCCModal,
+      modalClassName,
+      modalInput,
+      schemaType,
+      resetPassVisible,
+      clearPassDlg
     } = this.state;
 
     const {
@@ -694,6 +866,31 @@ class SettingsPage extends Component {
       ReactGA,
       toast
     } = this.props;
+
+    switch (schemaType) {
+      case "email":
+        this.schema = yup.object().shape({
+          text: yup
+            .string()
+            .email(t("invemail"))
+            .required(t("emailreq"))
+        });
+        break;
+      case "username":
+        this.schema = yup.object().shape({
+          text: yup.string().required(t("unreq"))
+        });
+        break;
+      case "gender":
+        this.schema = yup.object().shape({
+          text: yup.string().required(t("genreq"))
+        });
+        break;
+      default:
+        this.schema = yup.object().shape({
+          text: yup.string()
+        });
+    }
 
     return (
       <Mutation
@@ -777,7 +974,7 @@ class SettingsPage extends Component {
                             {t("common:plscomplete")}
                           </span>
                         )}
-                        <div className="form">
+                        <div className="settings-content">
                           <div className="page-section mtop">
                             <Preferences
                               distance={distance}
@@ -823,10 +1020,10 @@ class SettingsPage extends Component {
                               }
                               isBlackMember={currentuser.blackMember.active}
                               deleteImg={({ file, key }) =>
-                                this.setDialogContent({
-                                  title: t("delpho"),
-                                  msg: t("remoundone"),
-                                  btnText: t("common:Delete"),
+                                this.initializeModal({
+                                  modalTitle: t("delpho"),
+                                  modalDecription: t("remoundone"),
+                                  modalBtnText: t("common:Delete"),
                                   okAction: () =>
                                     this.handlePhotoListChange({
                                       file,
@@ -854,10 +1051,10 @@ class SettingsPage extends Component {
                               photos={privatePhotos}
                               isBlackMember={currentuser.blackMember.active}
                               deleteImg={({ file, key }) =>
-                                this.setDialogContent({
-                                  title: t("delpho"),
-                                  msg: t("remoundone"),
-                                  btnText: t("common:Delete"),
+                                this.initializeModal({
+                                  modalTitle: t("delpho"),
+                                  modalDecription: t("remoundone"),
+                                  modalBtnText: t("common:Delete"),
                                   okAction: () =>
                                     this.handlePhotoListChange({
                                       file,
@@ -924,7 +1121,7 @@ class SettingsPage extends Component {
                                 t={t}
                                 dayjs={dayjs}
                                 notifyClient={this.notifyClient}
-                                setDialogContent={this.setDialogContent}
+                                initializeModal={this.initializeModal}
                                 lang={lang}
                                 ReactGA={ReactGA}
                                 ccLast4={ccLast4}
@@ -958,6 +1155,12 @@ class SettingsPage extends Component {
                                 ReactGA={ReactGA}
                                 passEnabled={password !== null}
                                 refetchUser={refetchUser}
+                                initializeModal={this.initializeModal}
+                                close={this.toggleDialog}
+                                handleModalError={this.handleModalError}
+                                okAction={this.validateForm}
+                                toggleResetPassDlg={this.toggleResetPassDlg}
+                                toggleClearPassDlg={this.toggleClearPassDlg}
                               />
                               <DeactivateAcctBtn
                                 t={t}
@@ -966,18 +1169,6 @@ class SettingsPage extends Component {
                               />
                             </>
                           </div>
-                          {showModal && (
-                            <Modal
-                              header={title}
-                              close={this.toggleDialog}
-                              description={msg}
-                              okSpan={
-                                <span className="color" onClick={okAction}>
-                                  {btnText}
-                                </span>
-                              }
-                            />
-                          )}
                         </div>
                       </div>
                     </div>
@@ -1092,6 +1283,78 @@ class SettingsPage extends Component {
                   close={this.toggleSharePopup}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
                   t={t}
+                />
+              )}
+              {showModal && (
+                <Modal
+                  header={modalTitle}
+                  close={this.toggleDialog}
+                  description={modalDecription}
+                  className={modalClassName}
+                  okSpan={
+                    <span className="color" onClick={okAction}>
+                      {modalBtnText}
+                    </span>
+                  }
+                >
+                  {modalInput}
+                </Modal>
+              )}
+              <Dialog onClose={this.toggleClearPassDlg} open={clearPassDlg}>
+                <DialogTitle id="alert-dialog-title">
+                  {t("removepass")}
+                </DialogTitle>
+
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    {t("removepassdes")}
+                  </DialogContentText>
+                </DialogContent>
+
+                <DialogActions>
+                  <Mutation
+                    mutation={RESET_PASSWORD}
+                    variables={{
+                      password: ""
+                    }}
+                  >
+                    {resetPassword => (
+                      <>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            this.handleDlgBtnClick(resetPassword);
+                          }}
+                        >
+                          {"Remove Password"}
+                        </Button>
+                        {"  "}
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => {
+                            this.setState({ clearPassDlg: false });
+                          }}
+                        >
+                          {t("common:Cancel")}
+                        </Button>
+                      </>
+                    )}
+                  </Mutation>
+                </DialogActions>
+              </Dialog>
+              {resetPassVisible && (
+                <ResetPassModal
+                  t={t}
+                  close={() => this.setState({ resetPassVisible: false })}
+                  ErrorHandler={ErrorHandler}
+                  isLoggedIn={true}
+                  ReactGA={ReactGA}
+                  callback={() => {
+                    this.setState({ password: "" });
+                    refetchUser();
+                  }}
                 />
               )}
             </section>

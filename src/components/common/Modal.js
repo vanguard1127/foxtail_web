@@ -83,15 +83,19 @@ class Modal extends Component {
                       style={{ height: "100vh", padding: "unset" }}
                     >
                       {showLoader && <Spinner />}
-                      <form className="form">
+                      <form>
                         <div className="form-content">
                           {children}
                           {description && (
                             <span className="description">{description}</span>
                           )}
-                          {okSpan && <div className="submit">{okSpan}</div>}
+                          {okSpan && (
+                            <button type="submit" className="submit">
+                              {okSpan}
+                            </button>
+                          )}
                           {cancelSpan && (
-                            <div className="submit">{cancelSpan}</div>
+                            <button className="submit">{cancelSpan}</button>
                           )}
                         </div>
                       </form>
@@ -107,7 +111,7 @@ class Modal extends Component {
                   >
                     {!noHeader && <span className="head">{header}</span>}
                     {close && <a className="close" onClick={close} />}
-                    <form className="form">
+                    <form>
                       <div className="form-content">
                         {children}
                         {description && (

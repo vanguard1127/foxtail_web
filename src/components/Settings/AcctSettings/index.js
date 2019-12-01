@@ -1,29 +1,14 @@
 import React, { Component } from "react";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogModal from "../../Modals/Dialog";
-import Button from "@material-ui/core/Button";
 import RequestEmailVerBtn from "./RequestEmailVerBtn";
 import ChangePhoneBtn from "./ChangePhoneBtn";
-import ResetPassModal from "../../Modals/ResetPassword";
-import * as yup from "yup";
-import { Mutation } from "react-apollo";
-import { RESET_PASSWORD } from "../../../queries";
 class AcctSettings extends Component {
-  state = {
-    showDialog: false,
-    msg: "",
-    btnText: "",
-    title: "",
-    setting: "",
-    successMsg: "",
-    placeholder: "",
-    resetPassVisible: false,
-    clearPassDlg: false
-  };
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
@@ -36,92 +21,20 @@ class AcctSettings extends Component {
     return false;
   }
 
-  toggleDialog = () => {
-    this.props.ErrorHandler.setBreadcrumb("Dialog Modal Toggled:");
-    this.setState({ showDialog: !this.state.showDialog });
-  };
-
-  setDialogContent = ({
-    title,
-    msg,
-    btnText,
-    setting,
-    successMsg,
-    placeholder
-  }) => {
-    this.setState({
-      title,
-      msg,
-      btnText,
-      setting,
-      placeholder,
-      successMsg: successMsg || null,
-      showDialog: !this.state.showDialog
-    });
-  };
-
-  toggleClearPassDlg = () => {
-    this.setState({ clearPassDlg: !this.state.clearPassDlg });
-  };
-
-  handleDlgBtnClick = resetPassword => {
-    resetPassword()
-      .then(({ data }) => {
-        this.setState({ clearPassDlg: false });
-        this.props.setValue({ name: "password", value: null });
-        this.props.refetchUser();
-      })
-      .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-      });
-  };
-
   render() {
     const {
       ErrorHandler,
       t,
-      setValue,
       lang,
       isEmailOK,
       ReactGA,
       passEnabled,
-      refetchUser
+      refetchUser,
+      initializeModal,
+      okAction,
+      toggleClearPassDlg,
+      toggleResetPassDlg
     } = this.props;
-
-    const {
-      showDialog,
-      title,
-      msg,
-      btnText,
-      setting,
-      successMsg,
-      placeholder,
-      resetPassVisible,
-      clearPassDlg
-    } = this.state;
-
-    let schema;
-
-    if (setting === "email") {
-      schema = yup.object().shape({
-        text: yup
-          .string()
-          .email(t("invemail"))
-          .required(t("emailreq"))
-      });
-    } else if (setting === "username") {
-      schema = yup.object().shape({
-        text: yup.string().required(t("unreq"))
-      });
-    } else if (setting === "gender") {
-      schema = yup.object().shape({
-        text: yup.string().required(t("genreq"))
-      });
-    } else {
-      schema = yup.object().shape({
-        text: yup.string()
-      });
-    }
 
     return (
       <ErrorHandler.ErrorBoundary>
@@ -141,11 +54,9 @@ class AcctSettings extends Component {
                       checked={passEnabled ? true : false}
                       onChange={() => {
                         if (!passEnabled) {
-                          this.setState({
-                            resetPassVisible: !resetPassVisible
-                          });
+                          toggleResetPassDlg();
                         } else {
-                          this.toggleClearPassDlg();
+                          toggleClearPassDlg();
                         }
                         refetchUser();
                       }}
@@ -161,20 +72,19 @@ class AcctSettings extends Component {
                 <span
                   className="clickverify-btn"
                   onClick={() => {
-                    const title = t("updemail");
-                    const msg = t("updemaildes");
-                    const btnText = t("common:Update");
-                    const setting = "email";
-                    const successMsg = t("emailupdsuccess");
-                    const placeholder = t("emailplaceholder");
-
-                    this.setDialogContent({
-                      title,
-                      msg,
-                      btnText,
-                      setting,
-                      successMsg,
-                      placeholder
+                    const modalTitle = t("updemail");
+                    const modalDecription = t("updemaildes");
+                    const modalBtnText = t("common:Update");
+                    const modalPlaceholder = t("emailplaceholder");
+                    initializeModal({
+                      modalTitle,
+                      modalDecription,
+                      modalClassName: "acctsetting",
+                      okAction,
+                      modalBtnText,
+                      modalPlaceholder,
+                      modalInputType: "text",
+                      schemaType: "email"
                     });
                   }}
                 >
@@ -195,18 +105,19 @@ class AcctSettings extends Component {
                 <span
                   className="clickverify-btn"
                   onClick={() => {
-                    const title = t("usrupd");
-                    const msg = t("usrupddes");
-                    const btnText = t("common:Update");
-                    const setting = "username";
-                    const placeholder = t("unplaceholder");
-                    this.setDialogContent({
-                      title,
-                      msg,
-                      btnText,
-                      setting,
-                      successMsg,
-                      placeholder
+                    const modalTitle = t("usrupd");
+                    const modalDecription = t("usrupddes");
+                    const modalBtnText = t("common:Update");
+                    const modalPlaceholder = t("unplaceholder");
+                    initializeModal({
+                      modalTitle,
+                      modalDecription,
+                      modalClassName: "acctsetting",
+                      okAction,
+                      modalBtnText,
+                      modalPlaceholder,
+                      modalInputType: "text",
+                      schemaType: "username"
                     });
                   }}
                 >
@@ -219,16 +130,19 @@ class AcctSettings extends Component {
                 <span
                   className="clickverify-btn"
                   onClick={() => {
-                    const title = t("updgen");
-                    const msg = t("updgendes");
-                    const btnText = t("common:Update");
-                    const setting = "gender";
-                    this.setDialogContent({
-                      title,
-                      msg,
-                      btnText,
-                      setting,
-                      successMsg
+                    const modalTitle = t("updgen");
+                    const modalDecription = t("updgendes");
+                    const modalBtnText = t("common:Update");
+                    const modalPlaceholder = t("common:Sex") + ":";
+                    initializeModal({
+                      modalTitle,
+                      modalDecription,
+                      modalClassName: "acctsetting",
+                      okAction,
+                      modalBtnText,
+                      modalInputType: "gender",
+                      modalPlaceholder,
+                      schemaType: "gender"
                     });
                   }}
                 >
@@ -249,83 +163,6 @@ class AcctSettings extends Component {
               </div>
             )}
           </div>
-          {showDialog && (
-            <DialogModal
-              close={this.toggleDialog}
-              ErrorBoundary={ErrorHandler.ErrorBoundary}
-              title={title}
-              msg={msg}
-              btnText={btnText}
-              successMsg={successMsg}
-              schema={schema}
-              setValue={value => {
-                setValue({ name: setting, value });
-              }}
-              specialType={setting}
-              placeholder={placeholder}
-              className="acctsetting"
-            />
-          )}
-          <Dialog onClose={this.toggleClearPassDlg} open={clearPassDlg}>
-            <DialogTitle id="alert-dialog-title">{t("removepass")}</DialogTitle>
-
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                {t("removepassdes")}
-              </DialogContentText>
-            </DialogContent>
-
-            <DialogActions>
-              <Mutation
-                mutation={RESET_PASSWORD}
-                variables={{
-                  password: ""
-                }}
-              >
-                {resetPassword => (
-                  <>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        this.handleDlgBtnClick(resetPassword);
-                      }}
-                    >
-                      {"Remove Password"}
-                    </Button>
-                    {"  "}
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => {
-                        this.setState({ clearPassDlg: false });
-                      }}
-                    >
-                      {t("common:Cancel")}
-                    </Button>
-                  </>
-                )}
-              </Mutation>
-            </DialogActions>
-          </Dialog>
-          {resetPassVisible && (
-            <ResetPassModal
-              t={t}
-              close={() => {
-                this.setState({ resetPassVisible: false });
-                this.props.setValue({ name: "password", value: "" });
-                this.props.refetchUser();
-              }}
-              ErrorHandler={ErrorHandler}
-              isLoggedIn={true}
-              callback={() =>
-                setValue({
-                  name: "password",
-                  value: ""
-                })
-              }
-            />
-          )}
         </div>
       </ErrorHandler.ErrorBoundary>
     );
