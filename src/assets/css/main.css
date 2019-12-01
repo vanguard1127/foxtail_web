@@ -4892,6 +4892,7 @@ input.location-search-input {
   border: 1px solid #e3e3e3 !important;
 }
 
+.page .settings-content,
 .page form,
 .page form .content {
   width: 100%;
@@ -4899,6 +4900,7 @@ input.location-search-input {
   float: left;
 }
 
+.page .settings-content .content.mtop ,
 .page form .content.mtop {
   margin-top: 15px;
 }

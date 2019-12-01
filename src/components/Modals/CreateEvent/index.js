@@ -313,7 +313,7 @@ class CreateEvent extends Component {
           <ErrorHandler.ErrorBoundary>
             <div className="m-body">
               <div className="page">
-                <form>
+                <div className="settings-content">
                   {showInfo ? (
                     <div className="content">
                       <div className="item">
@@ -583,7 +583,7 @@ class CreateEvent extends Component {
                       </div>
                     </div>
                   )}
-                </form>
+                </div>
               </div>
             </div>
           </ErrorHandler.ErrorBoundary>
