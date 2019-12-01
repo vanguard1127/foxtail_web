@@ -72,7 +72,7 @@ class EventCard extends Component {
               </ul>
               <span className="stats">
                 <b>
-                  {participants.length} {t("common:people")}
+                  {participants.length} {t("common:people")}{" "}
                 </b>
                 {t("common:going")}
               </span>

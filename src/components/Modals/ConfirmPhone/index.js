@@ -2,10 +2,10 @@ import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
 import * as yup from "yup";
 import { Spring } from "react-spring/renderprops";
-import ConfirmPhoneButton from "./ConfirmPhoneButton";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
 import CircularProgress from "@material-ui/core/CircularProgress";
+const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
 class ConfirmPhone extends PureComponent {
   state = {
@@ -21,6 +21,7 @@ class ConfirmPhone extends PureComponent {
   };
 
   schema = yup.object().shape({
+    phoneNumber: yup.string().matches(phoneRegExp, "Phone number is not valid"),
     password: yup
       .string()
       .matches(/^.[a-zA-Z0-9_]+$/, {
@@ -40,7 +41,11 @@ class ConfirmPhone extends PureComponent {
   setValue = ({ name, value }) => {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
-        this.validateForm();
+        if (name !== "phoneNumber") {
+          this.validateForm();
+        } else {
+          this.validatePhone();
+        }
       });
     }
   };
@@ -50,6 +55,22 @@ class ConfirmPhone extends PureComponent {
       if (this.mounted) {
         const { password, confirmpass } = this.state;
         await this.schema.validate({ password, confirmpass });
+        this.setState({ isValid: true, errors: {} });
+        return true;
+      }
+    } catch (e) {
+      let errors = { [e.path]: e.message };
+      this.setState({ isValid: false, errors });
+      return false;
+    }
+  };
+
+  validatePhone = async () => {
+    try {
+      if (this.mounted) {
+        const { code, phoneNumber } = this.state;
+        const phoneStr = code + phoneNumber;
+        await this.schema.validate({ phoneNumber: phoneStr });
         this.setState({ isValid: true, errors: {} });
         return true;
       }
@@ -122,6 +143,7 @@ class ConfirmPhone extends PureComponent {
             }}
             value={phoneNumber}
             autoFocus
+            required
           />
         </div>
         {this.InputFeedback(t(errors.phoneNumber))}
@@ -245,6 +267,7 @@ class ConfirmPhone extends PureComponent {
             tabIndex="1"
             value={phoneNumber}
             autoFocus
+            required
           />
         </div>
         {this.InputFeedback(t(errors.phoneNumber))}
@@ -268,9 +291,11 @@ class ConfirmPhone extends PureComponent {
             <button
               type="submit"
               tabIndex="3"
-              type="submit"
               className="color"
               onClick={() => {
+                if (!isValid) {
+                  return;
+                }
                 this.setState({
                   sending: true,
                   error: false,
@@ -313,7 +338,7 @@ class ConfirmPhone extends PureComponent {
 
   renderCodeInput() {
     const { close, t, ErrorHandler, confirmPhone, onSuccess } = this.props;
-    const { vcode, password } = this.state;
+    const { vcode, password, isValid } = this.state;
     return (
       <>
         <span className="description">{t("entercode")}</span>
@@ -329,6 +354,7 @@ class ConfirmPhone extends PureComponent {
             }}
             value={vcode}
             autoFocus
+            required
           />
           {this.state.error ? (
             <div className="input-feedback">{this.state.error}</div>
@@ -341,6 +367,9 @@ class ConfirmPhone extends PureComponent {
             type="submit"
             className="color"
             onClick={() => {
+              if (!isValid) {
+                return;
+              }
               this.setState({
                 sending: true,
                 error: false,

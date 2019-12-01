@@ -1,19 +1,28 @@
 import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
 import { Spring } from "react-spring/renderprops";
+import * as yup from "yup";
 import EmailPhoneResetBtn from "./EmailPhoneResetBtn";
 import ResetPhoneButton from "./ResetPhoneButton";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
+const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
 class ResetPhone extends PureComponent {
-  state = { text: "", code: "+1" };
+  state = { text: "", code: "+1", isValid: false, errors: {} };
+
+  schema = yup.object().shape({
+    phoneNumber: yup.string().matches(phoneRegExp, "Phone number is not valid")
+  });
+
   componentDidMount() {
     this.mounted = true;
   }
   handleTextChange = event => {
     if (this.mounted) {
-      this.setState({ text: event.target.value.replace(/\D/g, "") });
+      this.setState({ text: event.target.value.replace(/\D/g, "") }, () =>
+        this.validatePhone()
+      );
     }
   };
 
@@ -23,6 +32,36 @@ class ResetPhone extends PureComponent {
     }
   };
 
+  validatePhone = async () => {
+    try {
+      if (this.mounted) {
+        const { code, text } = this.state;
+        const phoneStr = code + text;
+        await this.schema.validate({ phoneNumber: phoneStr });
+        this.setState({ isValid: true, errors: {} });
+        return true;
+      }
+    } catch (e) {
+      let errors = { [e.path]: e.message };
+      this.setState({ isValid: false, errors });
+      return false;
+    }
+  };
+
+  InputFeedback = error =>
+    error ? (
+      <div
+        className="input-feedback"
+        style={{
+          float: "none",
+          clear: "both",
+          position: "relative",
+          color: "red"
+        }}
+      >
+        {error}
+      </div>
+    ) : null;
   render() {
     const {
       close,
@@ -34,7 +73,7 @@ class ResetPhone extends PureComponent {
       tReady,
       ReactGA
     } = this.props;
-    const { code, text } = this.state;
+    const { code, text, isValid, errors } = this.state;
     if (!tReady) {
       return null;
     }
@@ -73,6 +112,7 @@ class ResetPhone extends PureComponent {
                             />
                           </div>
 
+                          {this.InputFeedback(t(errors.phoneNumber))}
                           <div className="submit">
                             <ErrorHandler.ErrorBoundary>
                               <EmailPhoneResetBtn
@@ -80,6 +120,7 @@ class ResetPhone extends PureComponent {
                                 phone={code + text}
                                 close={close}
                                 ErrorHandler={ErrorHandler}
+                                isValid={isValid}
                               />
                             </ErrorHandler.ErrorBoundary>
                             <button className="border" onClick={close}>

@@ -99,9 +99,9 @@ class PhotoSlider extends Component {
                     <img src={photo.url} alt="" />
                   </div>
                 ) : (
-                  <span onClick={this.warnPrivate.bind(this)}>
+                  <div onClick={this.warnPrivate.bind(this)}>
                     <img className="blur" src={NoPictureImg} alt="" />
-                  </span>
+                  </div>
                 )}
               </div>
             ))}

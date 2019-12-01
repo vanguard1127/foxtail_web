@@ -235,11 +235,14 @@ class SettingsPage extends Component {
             }
           ];
         }
-        this.setState({
-          privatePhotos,
-          publicPhotoList: undefined,
-          privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
-        });
+        this.setState(
+          {
+            privatePhotos,
+            publicPhotoList: undefined,
+            privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
+          },
+          () => this.fillInErrors()
+        );
       }
     } else {
       let { publicPhotos } = this.state;

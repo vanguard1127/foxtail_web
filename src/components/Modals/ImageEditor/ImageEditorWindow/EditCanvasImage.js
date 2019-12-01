@@ -221,7 +221,7 @@ class EditCanvasImage extends PureComponent {
         close();
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res);
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
       });
   };
 
@@ -608,7 +608,7 @@ class EditCanvasImage extends PureComponent {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={this.handleExportClick}
+                  onClick={!uploading && this.handleExportClick}
                   className="green-button-small"
                 >
                   {!uploading ? t("Save") : t("common:upload")}

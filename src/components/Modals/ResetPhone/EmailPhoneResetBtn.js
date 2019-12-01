@@ -13,10 +13,12 @@ class EmailPhoneResetBtn extends PureComponent {
       })
       .catch(res => {
         ErrorHandler.catchErrors(res);
+        alert(t("common:error"));
+        close();
       });
   };
   render() {
-    const { t, phone } = this.props;
+    const { t, phone, isValid } = this.props;
     return (
       <Mutation mutation={SEND_PHONE_RESET_EMAIL} variables={{ phone }}>
         {sendPhoneResetEmail => {
@@ -25,6 +27,9 @@ class EmailPhoneResetBtn extends PureComponent {
               className="color"
               onClick={e => {
                 e.preventDefault();
+                if (!isValid) {
+                  return;
+                }
                 this.handleClick(sendPhoneResetEmail);
               }}
             >
