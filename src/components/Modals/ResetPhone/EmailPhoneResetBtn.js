@@ -7,14 +7,13 @@ class EmailPhoneResetBtn extends PureComponent {
     const { t, close, ErrorHandler } = this.props;
 
     sendPhoneResetEmail()
-      .then(async ({ data }) => {
+      .then(({ data }) => {
         alert(t("alreadyphonemsg"));
         close();
       })
       .catch(res => {
-        ErrorHandler.catchErrors(res.graphQLErrors);
+        ErrorHandler.catchErrors(res);
       });
-    close();
   };
   render() {
     const { t, phone } = this.props;
@@ -22,12 +21,15 @@ class EmailPhoneResetBtn extends PureComponent {
       <Mutation mutation={SEND_PHONE_RESET_EMAIL} variables={{ phone }}>
         {sendPhoneResetEmail => {
           return (
-            <span
+            <button
               className="color"
-              onClick={() => this.handleClick(sendPhoneResetEmail)}
+              onClick={e => {
+                e.preventDefault();
+                this.handleClick(sendPhoneResetEmail);
+              }}
             >
               {t("sendphoneres")}
-            </span>
+            </button>
           );
         }}
       </Mutation>

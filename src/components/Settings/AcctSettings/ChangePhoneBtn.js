@@ -43,7 +43,7 @@ class ChangePhoneBtn extends PureComponent {
         toast.success(t("changenum"));
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
 

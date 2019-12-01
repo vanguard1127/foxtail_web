@@ -184,7 +184,7 @@ class CreateEvent extends Component {
           }
         })
         .catch(res => {
-          ErrorHandler.catchErrors(res.graphQLErrors);
+          ErrorHandler.catchErrors(res);
         });
     }
   };
@@ -206,7 +206,7 @@ class CreateEvent extends Component {
         }
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
 

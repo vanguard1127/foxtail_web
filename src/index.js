@@ -71,7 +71,8 @@ firebase.initializeApp({
 });
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DNS
+  dsn: process.env.REACT_APP_SENTRY_DNS,
+  ignoreErrors: ["^.*Client:.*$", "^.*authenticated.*$"]
 });
 
 ReactGA.initialize("UA-106316956-1");
@@ -214,7 +215,7 @@ const errorLink = onError(
               toastId: "networkError"
             }
           );
-          console.error(networkError);
+          console.error("Network Error:", networkError);
           // @TODO Remove this and search for a better solution
           //window.location.replace("/uh-oh");
         }

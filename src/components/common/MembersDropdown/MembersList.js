@@ -79,7 +79,7 @@ class MembersList extends PureComponent {
           }
         })
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          this.props.ErrorHandler.catchErrors(res);
         });
     } else {
       invite()
@@ -94,7 +94,7 @@ class MembersList extends PureComponent {
           }
         })
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          this.props.ErrorHandler.catchErrors(res);
         });
     }
   };
@@ -114,7 +114,7 @@ class MembersList extends PureComponent {
           }
         })
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          this.props.ErrorHandler.catchErrors(res);
         });
     } else {
       remove()
@@ -129,7 +129,7 @@ class MembersList extends PureComponent {
           }
         })
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          this.props.ErrorHandler.catchErrors(res);
         });
     }
   };

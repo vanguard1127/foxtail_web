@@ -32,7 +32,7 @@ class DevTools extends Component {
         window.location.replace("/members");
       })
       .catch(res => {
-        const errors = res.graphQLErrors.map(error => {
+        const errors = res.map(error => {
           return error.message;
         });
 

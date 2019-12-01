@@ -324,7 +324,7 @@ class SettingsPage extends Component {
             if (doRefetch) {
               this.props.refetchUser();
             }
-            ErrorHandler.catchErrors(res.graphQLErrors);
+            ErrorHandler.catchErrors(res);
           });
       }
     } else {
@@ -349,7 +349,7 @@ class SettingsPage extends Component {
         })
         .catch(res => {
           this.resetAcctSettingState();
-          ErrorHandler.catchErrors(res.graphQLErrors);
+          ErrorHandler.catchErrors(res);
         });
     }
   };
@@ -793,7 +793,7 @@ class SettingsPage extends Component {
         this.props.refetchUser();
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
 

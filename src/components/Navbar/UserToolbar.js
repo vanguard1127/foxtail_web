@@ -69,7 +69,7 @@ const UserToolbar = ({
     updateNotifications({
       variables: { notificationID }
     }).catch(res => {
-      this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+      this.props.ErrorHandler.catchErrors(res);
     });
   };
 

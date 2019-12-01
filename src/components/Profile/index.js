@@ -149,7 +149,7 @@ class ProfilePage extends Component {
         //  refetch();
       })
       .catch(res => {
-        ErrorHandler.catchErrors(res.graphQLErrors);
+        ErrorHandler.catchErrors(res);
       });
   };
 

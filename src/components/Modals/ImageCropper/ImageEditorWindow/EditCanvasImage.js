@@ -125,7 +125,7 @@ class EditCanvasImage extends PureComponent {
         close();
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
 

@@ -204,7 +204,7 @@ class ProfilesContainer extends Component {
             }
           })
           .catch(res => {
-            ErrorHandler.catchErrors(res.graphQLErrors);
+            ErrorHandler.catchErrors(res);
           });
       });
     }

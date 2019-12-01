@@ -26,7 +26,7 @@ class InboxTour extends PureComponent {
         window.location.reload(false);
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
     if (this.mounted) {
       this.setState({ isTourOpen: false });

@@ -78,7 +78,7 @@ export default class CCForm extends React.Component {
           window.location.reload(false);
         })
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          this.props.ErrorHandler.catchErrors(res);
         });
     }
   };

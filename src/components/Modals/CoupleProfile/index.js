@@ -48,7 +48,7 @@ class CoupleProfile extends PureComponent {
           window.location.reload(false);
         })
         .catch(res => {
-          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+          this.props.ErrorHandler.catchErrors(res);
         });
     } else {
       if (!toast.isActive("sharewith")) {
@@ -68,7 +68,7 @@ class CoupleProfile extends PureComponent {
         window.location.reload(false);
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
 

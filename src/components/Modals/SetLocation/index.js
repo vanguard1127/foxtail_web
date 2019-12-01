@@ -57,7 +57,7 @@ class SetLocationModal extends Component {
         }
       })
       .catch(res => {
-        catchErrors(res.graphQLErrors);
+        catchErrors(res);
       });
   };
 

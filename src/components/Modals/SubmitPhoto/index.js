@@ -42,7 +42,7 @@ class PhotoVerify extends PureComponent {
         await this.handleSubmit(submitPhoto);
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
 
@@ -53,7 +53,7 @@ class PhotoVerify extends PureComponent {
         this.props.close();
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
 

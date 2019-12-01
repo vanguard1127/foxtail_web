@@ -41,7 +41,7 @@ class RequestEmailVerBtn extends PureComponent {
       })
       .catch(res => {
         toast.error("Error sending email");
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
 

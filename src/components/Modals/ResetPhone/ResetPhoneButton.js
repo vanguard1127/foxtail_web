@@ -47,7 +47,7 @@ class ResetPhoneButton extends PureComponent {
                 category: "Reset Phone",
                 action: "Failuer"
               });
-              ErrorHandler.catchErrors(res.graphQLErrors);
+              ErrorHandler.catchErrors(res);
             });
         }
       );

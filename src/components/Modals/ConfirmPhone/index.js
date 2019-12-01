@@ -266,6 +266,7 @@ class ConfirmPhone extends PureComponent {
         <div className="submit">
           <ErrorHandler.ErrorBoundary>
             <button
+              type="submit"
               tabIndex="3"
               type="submit"
               className="color"
@@ -311,17 +312,7 @@ class ConfirmPhone extends PureComponent {
   }
 
   renderCodeInput() {
-    const {
-      close,
-      t,
-      ErrorHandler,
-      token,
-      history,
-      lang,
-      tReady,
-      confirmPhone,
-      onSuccess
-    } = this.props;
+    const { close, t, ErrorHandler, confirmPhone, onSuccess } = this.props;
     const { vcode, password } = this.state;
     return (
       <>
@@ -346,39 +337,38 @@ class ConfirmPhone extends PureComponent {
           )}
         </div>
         <div className="submit">
-          <ErrorHandler.ErrorBoundary>
-            <span
-              className="color"
-              onClick={() => {
-                this.setState({
-                  sending: true,
-                  error: false,
-                  confirm: true
-                });
-                confirmPhone(vcode)
-                  .then(result => {
-                    this.setState(
-                      {
-                        sending: false,
-                        error: false,
-                        confirm: true
-                      },
-                      () => {
-                        onSuccess(result, password);
-                      }
-                    );
-                  })
-                  .catch(err => {
-                    this.setState({
+          <button
+            type="submit"
+            className="color"
+            onClick={() => {
+              this.setState({
+                sending: true,
+                error: false,
+                confirm: true
+              });
+              confirmPhone(vcode)
+                .then(result => {
+                  this.setState(
+                    {
                       sending: false,
-                      error: err.message
-                    });
+                      error: false,
+                      confirm: true
+                    },
+                    () => {
+                      onSuccess(result, password);
+                    }
+                  );
+                })
+                .catch(err => {
+                  this.setState({
+                    sending: false,
+                    error: err.message
                   });
-              }}
-            >
-              {t("confirmphone")}
-            </span>
-          </ErrorHandler.ErrorBoundary>
+                });
+            }}
+          >
+            {t("confirmphone")}
+          </button>
           <button className="border" onClick={close}>
             {t("common:Cancel")}
           </button>
@@ -460,16 +450,13 @@ class ConfirmPhone extends PureComponent {
                     <form>
                       <div className="form-content">
                         <div className="submit">
-                          <ErrorHandler.ErrorBoundary>
-                            <ConfirmPhoneButton
-                              token={token}
-                              t={t}
-                              history={history}
-                              ErrorHandler={ErrorHandler}
-                              lang={lang}
-                              sendConfirmationMessage={sendConfirmationMessage}
-                            />
-                          </ErrorHandler.ErrorBoundary>
+                          <button
+                            type="submit"
+                            className="color"
+                            onClick={sendConfirmationMessage}
+                          >
+                            {t("sendvcode")}
+                          </button>
                           <button className="border" onClick={close}>
                             {t("common:Cancel")}
                           </button>

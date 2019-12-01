@@ -55,7 +55,7 @@ class LoginButton extends PureComponent {
               }
             })
             .catch(res => {
-              ErrorHandler.catchErrors(res.graphQLErrors);
+              ErrorHandler.catchErrors(res);
             });
         }
       );

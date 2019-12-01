@@ -82,7 +82,7 @@ class BlockModal extends Component {
         close();
       })
       .catch(res => {
-        ErrorHandler.catchErrors(res.graphQLErrors);
+        ErrorHandler.catchErrors(res);
       });
   };
 

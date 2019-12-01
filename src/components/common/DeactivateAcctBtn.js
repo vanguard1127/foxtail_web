@@ -20,7 +20,7 @@ class DeactivateAcctBtn extends PureComponent {
         history.push("/");
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   };
   toggleContactModal = () => {

@@ -21,7 +21,7 @@ class ResetPasswordBtn extends PureComponent {
           category: "Reset Password",
           action: "Failure"
         });
-        ErrorHandler.catchErrors(res.graphQLErrors);
+        ErrorHandler.catchErrors(res);
       });
     close();
   };

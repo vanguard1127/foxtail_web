@@ -24,7 +24,7 @@ class EventTour extends PureComponent {
         this.setState({ redirect: true });
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
     if (this.mounted) {
       this.setState({ isTourOpen: false });

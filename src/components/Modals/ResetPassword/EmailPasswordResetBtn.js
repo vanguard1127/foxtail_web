@@ -12,7 +12,7 @@ class EmailPasswordResetBtn extends PureComponent {
         close();
       })
       .catch(res => {
-        ErrorHandler.catchErrors(res.graphQLErrors);
+        ErrorHandler.catchErrors(res);
       });
     close();
   };

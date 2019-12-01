@@ -29,7 +29,7 @@ class ChatPanel extends PureComponent {
         }
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   }
 

@@ -85,7 +85,7 @@ class EventPage extends Component {
         this.props.history.push("/events");
       })
       .catch(res => {
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+        this.props.ErrorHandler.catchErrors(res);
       });
   }
 
