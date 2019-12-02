@@ -137,7 +137,8 @@ class InboxTour extends PureComponent {
                       <span className="img">
                         <img
                           src={
-                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            process.env.REACT_APP_S3_BUCKET_URL +
+                            "tour/" +
                             "usr/medium-avatar/1001.png"
                           }
                           alt=""
@@ -156,7 +157,8 @@ class InboxTour extends PureComponent {
                       <span className="img">
                         <img
                           src={
-                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            process.env.REACT_APP_S3_BUCKET_URL +
+                            "tour/" +
                             "usr/medium-avatar/1002.png"
                           }
                           alt=""
@@ -175,7 +177,8 @@ class InboxTour extends PureComponent {
                       <span className="img">
                         <img
                           src={
-                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            process.env.REACT_APP_S3_BUCKET_URL +
+                            "tour/" +
                             "usr/medium-avatar/1003.png"
                           }
                           alt=""
@@ -196,7 +199,8 @@ class InboxTour extends PureComponent {
                       <span className="img">
                         <img
                           src={
-                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            process.env.REACT_APP_S3_BUCKET_URL +
+                            "tour/" +
                             "usr/medium-avatar/1004.png"
                           }
                           alt=""
@@ -223,7 +227,8 @@ class InboxTour extends PureComponent {
                       <a href="#">
                         <img
                           src={
-                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            process.env.REACT_APP_S3_BUCKET_URL +
+                            "tour/" +
                             "usr/medium-avatar/1001.png"
                           }
                           alt=""
@@ -258,7 +263,8 @@ class InboxTour extends PureComponent {
                     <div className="avatar">
                       <img
                         src={
-                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          process.env.REACT_APP_S3_BUCKET_URL +
+                          "tour/" +
                           "usr/medium-avatar/1001.png"
                         }
                         alt=""
@@ -274,7 +280,8 @@ class InboxTour extends PureComponent {
                     <div className="avatar">
                       <img
                         src={
-                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          process.env.REACT_APP_S3_BUCKET_URL +
+                          "tour/" +
                           "usr/medium-avatar/1001.png"
                         }
                         alt=""
@@ -287,7 +294,8 @@ class InboxTour extends PureComponent {
                     <div className="avatar">
                       <img
                         src={
-                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          process.env.REACT_APP_S3_BUCKET_URL +
+                          "tour/" +
                           "usr/medium-avatar/1001.png"
                         }
                         alt=""
@@ -300,7 +308,8 @@ class InboxTour extends PureComponent {
                     <div className="avatar">
                       <img
                         src={
-                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          process.env.REACT_APP_S3_BUCKET_URL +
+                          "tour/" +
                           "usr/medium-avatar/1001.png"
                         }
                         alt=""
@@ -315,7 +324,8 @@ class InboxTour extends PureComponent {
                     <div className="avatar">
                       <img
                         src={
-                          process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                          process.env.REACT_APP_S3_BUCKET_URL +
+                          "tour/" +
                           "usr/medium-avatar/1001.png"
                         }
                         alt=""

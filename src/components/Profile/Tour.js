@@ -84,7 +84,7 @@ class ProfileTour extends PureComponent {
                       <div className="avatar">
                         <img
                           src={
-                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                             "usr/big-avatar/1011@2x.png"
                           }
                           alt=""
@@ -157,7 +157,7 @@ class ProfileTour extends PureComponent {
                         <a href={"#link"}>
                           <img
                             src={
-                              process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                              process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                               "usr/medium-avatar/1001.png"
                             }
                             alt=""
@@ -173,7 +173,7 @@ class ProfileTour extends PureComponent {
                         <a href={"#link"}>
                           <img
                             src={
-                              process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                              process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                               "usr/blur-avatar/1002.png"
                             }
                             alt=""

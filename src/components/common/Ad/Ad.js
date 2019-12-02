@@ -32,7 +32,7 @@ const Ad = ({
         <div className="content">
           <div className="ad-con">
             <img
-              src={process.env.REACT_APP_S3_AD_BUCKET_URL + img}
+              src={process.env.REACT_APP_S3_BUCKET_URL + "creatives/" + img}
               alt=""
               width="100%"
               height="100%"

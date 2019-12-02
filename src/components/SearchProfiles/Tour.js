@@ -239,7 +239,7 @@ class Tour extends PureComponent {
                             <div className="image">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/big-avatar/1001@2x.png"
                                 }
                                 alt=""
@@ -281,7 +281,7 @@ class Tour extends PureComponent {
                             <div className="image">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/big-avatar/1006@2x.png"
                                 }
                                 alt=""
@@ -318,7 +318,7 @@ class Tour extends PureComponent {
                             <div className="image">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/big-avatar/1005@2x.png"
                                 }
                                 alt=""
@@ -357,7 +357,7 @@ class Tour extends PureComponent {
                             <div className="image">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/big-avatar/1004@2x.png"
                                 }
                                 alt=""
@@ -395,7 +395,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1001@2x.png"
                                 }
                                 alt=""
@@ -436,7 +436,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1010@2x.png"
                                 }
                                 alt=""
@@ -476,7 +476,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1011@2x.png"
                                 }
                                 alt=""
@@ -516,7 +516,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1004@2x.png"
                                 }
                                 alt=""
@@ -556,7 +556,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1005@2x.png"
                                 }
                                 alt=""
@@ -597,7 +597,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1006@2x.png"
                                 }
                                 alt=""
@@ -638,7 +638,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1007@2x.png"
                                 }
                                 alt=""
@@ -679,7 +679,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1012@2x.png"
                                 }
                                 alt=""
@@ -721,7 +721,7 @@ class Tour extends PureComponent {
                             <a href="#">
                               <img
                                 src={
-                                  process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                  process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
                                   "usr/medium-avatar/1009@2x.png"
                                 }
                                 alt=""

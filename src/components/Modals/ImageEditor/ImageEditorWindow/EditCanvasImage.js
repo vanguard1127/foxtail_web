@@ -212,6 +212,7 @@ class EditCanvasImage extends PureComponent {
     // filename: this.formatFilename(file.name),
     await signS3()
       .then(async ({ data }) => {
+        console.log("GO:", data);
         const { signedRequest, key, url } = data.signS3;
 
         await uploadToS3(file.filebody, signedRequest);
@@ -608,7 +609,7 @@ class EditCanvasImage extends PureComponent {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={!uploading && this.handleExportClick}
+                  onClick={this.handleExportClick}
                   className="green-button-small"
                 >
                   {!uploading ? t("Save") : t("common:upload")}

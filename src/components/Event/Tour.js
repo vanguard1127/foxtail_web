@@ -102,7 +102,8 @@ class EventTour extends PureComponent {
                           <a href="#">
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1003.png"
                               }
                               alt=""
@@ -163,7 +164,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1001.png"
                               }
                               alt=""
@@ -172,7 +174,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1002.png"
                               }
                               alt=""
@@ -181,7 +184,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1003.png"
                               }
                               alt=""
@@ -190,7 +194,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1004.png"
                               }
                               alt=""
@@ -199,7 +204,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1005.png"
                               }
                               alt=""
@@ -208,7 +214,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1006.png"
                               }
                               alt=""
@@ -217,7 +224,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1003.png"
                               }
                               alt=""
@@ -226,7 +234,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1004.png"
                               }
                               alt=""
@@ -235,7 +244,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1005.png"
                               }
                               alt=""
@@ -244,7 +254,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1006.png"
                               }
                               alt=""
@@ -253,7 +264,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1003.png"
                               }
                               alt=""
@@ -262,7 +274,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1004.png"
                               }
                               alt=""
@@ -271,7 +284,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1005.png"
                               }
                               alt=""
@@ -280,7 +294,8 @@ class EventTour extends PureComponent {
                           <li>
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1006.png"
                               }
                               alt=""
@@ -302,7 +317,8 @@ class EventTour extends PureComponent {
                       <span>
                         <img
                           src={
-                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            process.env.REACT_APP_S3_BUCKET_URL +
+                            "tour/" +
                             "events/1001.png"
                           }
                           alt=""
@@ -360,7 +376,8 @@ class EventTour extends PureComponent {
                           <a href="#">
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1001.png"
                               }
                               alt=""
@@ -385,7 +402,8 @@ class EventTour extends PureComponent {
                           <a href="#">
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1002.png"
                               }
                               alt=""
@@ -411,7 +429,8 @@ class EventTour extends PureComponent {
                           <a href="#">
                             <img
                               src={
-                                process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                                process.env.REACT_APP_S3_BUCKET_URL +
+                                "tour/" +
                                 "usr/medium-avatar/1003.png"
                               }
                               alt=""
@@ -444,7 +463,8 @@ class EventTour extends PureComponent {
                       <span>
                         <img
                           src={
-                            process.env.REACT_APP_S3_TOUR_BUCKET_URL +
+                            process.env.REACT_APP_S3_BUCKET_URL +
+                            "tour/" +
                             "events/1001.png"
                           }
                           alt=""

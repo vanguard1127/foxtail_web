@@ -161,7 +161,8 @@ class PhotoVerify extends PureComponent {
                 <div className="example-image">
                   <img
                     src={
-                      process.env.REACT_APP_S3_AD_BUCKET_URL +
+                      process.env.REACT_APP_S3_BUCKET_URL +
+                      "creatives/" +
                       "selfie-peace.jpg"
                     }
                     alt=""
