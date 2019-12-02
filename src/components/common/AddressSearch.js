@@ -118,7 +118,8 @@ class AddressSearch extends Component {
     const { type, t, placeholder, hideReset } = this.props;
     const { address } = this.state;
     const onError = (status, clearSuggestions) => {
-      this.props.ErrorHandler && this.props.ErrorHandler.catchErrors(status);
+      if (status !== "ZERO_RESULTS")
+        this.props.ErrorHandler && this.props.ErrorHandler.catchErrors(status);
       clearSuggestions();
     };
 
