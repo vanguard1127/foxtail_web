@@ -97,6 +97,7 @@ class NavbarAuth extends PureComponent {
         );
       }
     });
+    //TODO: Test removing this now that toekn is added
     window.addEventListener(
       "unload",
       () => {
@@ -110,6 +111,7 @@ class NavbarAuth extends PureComponent {
 
   componentWillUnmount() {
     this.mounted = false;
+    const token = localStorage.getItem("token");
     window.removeEventListener("beforeunload", () => {
       if (token) {
         navigator.sendBeacon(

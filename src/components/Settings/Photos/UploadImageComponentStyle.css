@@ -123,6 +123,7 @@
     0 13px 16px 0 rgba(66, 81, 110, 0.04);
   top: -75px;
   right: -44px;
+  border-radius: 5px;
 }
 
 .imgContainer .tooltip.priv {

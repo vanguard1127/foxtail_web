@@ -212,7 +212,6 @@ class EditCanvasImage extends PureComponent {
     // filename: this.formatFilename(file.name),
     await signS3()
       .then(async ({ data }) => {
-        console.log("GO:", data);
         const { signedRequest, key, url } = data.signS3;
 
         await uploadToS3(file.filebody, signedRequest);

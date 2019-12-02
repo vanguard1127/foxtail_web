@@ -146,6 +146,10 @@ class ResetPhone extends PureComponent {
               <div className="container">
                 <div className="offset-md-3 col-md-6">
                   <div className="popup">
+                    <div
+                      id="recaptcha-container"
+                      style={{ display: "none" }}
+                    ></div>
                     <span className="head">{t("common:updphone")}</span>
                     <a className="close" onClick={close} />
                     <form>
