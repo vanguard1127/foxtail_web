@@ -225,6 +225,7 @@ class SettingsPage extends Component {
 
           this.setState({ showModal: false });
           toast.success(t("photodel"));
+          this.fillInErrors();
         } else {
           privatePhotos = [
             ...privatePhotos,

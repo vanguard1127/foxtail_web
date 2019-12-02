@@ -171,7 +171,7 @@ class SignupForm extends Component {
               />
               {this.InputFeedback(t(errors.email))}
             </div>
-            <DatePicker
+            {/* <DatePicker
               value={dob}
               onChange={e => {
                 this.setValue({
@@ -181,12 +181,11 @@ class SignupForm extends Component {
               }}
               t={t}
               type="birthday"
-            />
-            {/* <div className="input birthday">
+            /> */}
+            <div className="input birthday">
               <input
                 aria-label="birthday"
                 placeholder={t("Birthday")}
-                type="date"
                 onChange={e => {
                   this.setValue({
                     name: "dob",
@@ -195,8 +194,16 @@ class SignupForm extends Component {
                 }}
                 value={dob}
                 max={date}
+                type="text"
+                onFocus={e => {
+                  e.target.type = "date";
+                }}
+                onBlur={e => {
+                  e.target.type = "text";
+                }}
+                id="date"
               />
-            </div> */}
+            </div>
             {this.InputFeedback(t(errors.dob))}
             <Dropdown
               value={gender}

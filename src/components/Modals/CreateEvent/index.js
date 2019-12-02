@@ -491,6 +491,7 @@ class CreateEvent extends Component {
                       <div className="item">
                         <DatePicker
                           value={endTime}
+                          selected={startTime}
                           p={{ minDate: new Date(startTime) || new Date() }}
                           onChange={e => {
                             // console.log("END", startTime, "isAfter", e);
