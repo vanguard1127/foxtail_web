@@ -56,6 +56,7 @@ export default class PaymentForm extends React.Component {
                     }}
                     placeholder={t("paylbl")}
                     lang={lang}
+                    className="dropdown wide"
                   />
                   {body}
                 </div>

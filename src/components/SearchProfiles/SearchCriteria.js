@@ -174,6 +174,7 @@ class SearchCriteria extends PureComponent {
                             onChange={el => null}
                             value={[]}
                             placeholder={t("common:Interested") + ":"}
+                            className="dropdown wide"
                           />
                         </div>
                       </div>
@@ -255,6 +256,7 @@ class SearchCriteria extends PureComponent {
                             value={interestedIn}
                             placeholder={t("common:Interested") + ":"}
                             lang={lang}
+                            className="dropdown wide"
                           />
                         </div>
                       </div>
