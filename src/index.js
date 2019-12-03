@@ -26,6 +26,8 @@ import { getMainDefinition } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 import * as Sentry from "@sentry/browser";
+import DayJsUtils from "@date-io/dayjs";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import i18n from "./i18n";
 import DevTools from "./DevTools";
 
@@ -393,7 +395,9 @@ document.addEventListener("contextmenu", preventContextMenu);
 
 render(
   <ApolloProvider client={client}>
-    <Root />
+    <MuiPickersUtilsProvider utils={DayJsUtils}>
+      <Root />
+    </MuiPickersUtilsProvider>
   </ApolloProvider>,
   document.getElementById("root")
 );

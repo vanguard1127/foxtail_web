@@ -5716,17 +5716,7 @@ section.meet-filter .range-con {
   cursor: pointer;
 }
 
-.page .settings-content .content .select_desires::before,
-.page form .content .select_desires::before {
-  content: "\f004";
-  font-family: "foxtail-icon";
-  color: #f50043;
-  position: absolute;
-  right: 20px;
-  top: 25px;
-  font-size: 14px;
-  /* z-index: 99999; */
-}
+
 .page .settings-content .content .select_desires span.label,
 .page form .content .select_desires span.label {
   position: absolute;
@@ -5769,7 +5759,8 @@ section.meet-filter .range-con {
 .page .settings-content .content .select_desires .counter,
 .page form .content .select_desires .counter {
   position: absolute;
-  right: 42px;
+  color: #f50043;
+  right: 4%;
   top: 37%;
   font-size: 14px;
 }
@@ -7068,12 +7059,6 @@ section.landing .register-form form .form-content .input.username::before {
 
 section.landing .register-form form .form-content .input.email::before {
   content: "\e80c";
-  font-size: 20px;
-  top: 12px;
-}
-
-section.landing .register-form form .form-content .input.birthday::before {
-  content: "\f4c5";
   font-size: 20px;
   top: 12px;
 }
@@ -10559,3 +10544,24 @@ div.register-form div.form-fields .couple-choose {
   .sentry-error-embed {
     margin-top: 18% !important;
   }}
+
+  .datePickerInput{
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .MuiPopover-root,.MuiDialog-root{
+  z-index: 99999999999999 !important;
+  }
+
+  .datePickerInput::before {
+    content: "\f4c5" !important;
+    font-size: 20px;
+    top: 12px !important;
+    font-family: "foxtail-icon";
+    z-index: 1 !important;
+    color: #e5e7ee;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+  }

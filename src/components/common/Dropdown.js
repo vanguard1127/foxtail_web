@@ -70,7 +70,14 @@ class Dropdown extends Component {
   };
 
   render() {
-    const { onChange, onClose, value, placeholder, type, noClass } = this.props;
+    const {
+      onChange,
+      onClose,
+      value,
+      placeholder,
+      type,
+      className
+    } = this.props;
     const { options, isLoading } = this.state;
     let multiple = false;
     if (type === "interestedIn") {
@@ -94,7 +101,7 @@ class Dropdown extends Component {
               : null
           }
           options={options}
-          className={noClass ? "" : "dropdown wide"}
+          className={className}
         />
       );
     } else {
@@ -106,7 +113,7 @@ class Dropdown extends Component {
           label={placeholder}
           defaultOptionValue={value}
           options={options}
-          className={noClass ? "" : "dropdown wide"}
+          className={className}
         />
       );
     }

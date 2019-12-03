@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
+import { DateTimePicker } from "@material-ui/pickers";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 import * as yup from "yup";
 import dayjs from "dayjs";
 import axios from "axios";
@@ -9,12 +12,41 @@ import PhotoUpload from "../../common/PhotoUpload";
 import DesiresModal from "../Desires/Modal";
 import DesiresSelector from "../../Modals/Desires/Selector";
 import AddressSearch from "../../common/AddressSearch";
-import DatePicker from "../../common/DatePicker";
 import Modal from "../../common/Modal";
 import isEmpty from "../../../utils/isEmpty";
 import { toast } from "react-toastify";
 import Dropdown from "../../common/Dropdown";
-
+const materialTheme = createMuiTheme({
+  overrides: {
+    // MuiPickersToolbar: {
+    //   toolbar: {
+    //     backgroundColor: "#cf003c"
+    //   }
+    // },
+    // MuiPickerDTTabs: {
+    //   tabs: "#cf003c"
+    // },
+    // MuiPickersDay: {
+    //   day: {
+    //     color: "#5f00a4"
+    //   },
+    //   daySelected: {
+    //     backgroundColor: "#cf003c"
+    //   },
+    //   dayDisabled: {
+    //     color: "##616d78"
+    //   },
+    //   current: {
+    //     color: "#f70016"
+    //   }
+    // },
+    // MuiPickersModal: {
+    //   dialogAction: {
+    //     color: "#cf003c"
+    //   }
+    // }
+  }
+});
 class CreateEvent extends Component {
   schema = yup.object().shape({
     eventname: yup
@@ -69,8 +101,8 @@ class CreateEvent extends Component {
     address: "",
     image: "",
     type: "",
-    startTime: "",
-    endTime: "",
+    startTime: null,
+    endTime: null,
     interestedIn: [],
     errors: {},
     showInfo: true,
@@ -459,64 +491,72 @@ class CreateEvent extends Component {
                       </div>
                       {this.InputFeedback(t(errors.address))}
                       <div className="item">
-                        <DatePicker
-                          value={startTime}
-                          p={{
-                            maxDate: new Date(endTime) || null,
-                            minDate: new Date()
-                          }}
-                          withPortal
-                          onChange={e => {
-                            // console.log("START", e, "isAfter", endTime);
-                            if (endTime && dayjs(e).isAfter(dayjs(endTime))) {
-                              if (!toast.isActive("startTime")) {
-                                toast.info(t("setstart"), {
-                                  position: toast.POSITION.TOP_CENTER,
-                                  toastId: "startTime"
-                                });
-                              }
-                              return;
-                            }
+                        <div className="input calender calender-input-sm">
+                          <ThemeProvider theme={materialTheme}>
+                            <DateTimePicker
+                              autoOk
+                              disablePast
+                              emptyLabel={t("evestart")}
+                              InputProps={{
+                                disableUnderline: true
+                              }}
+                              classes={{ root: "datePickerInput" }}
+                              value={startTime}
+                              onChange={e => {
+                                if (
+                                  endTime &&
+                                  dayjs(e).isAfter(dayjs(endTime))
+                                ) {
+                                  if (!toast.isActive("startTime")) {
+                                    toast.info(t("setstart"), {
+                                      position: toast.POSITION.TOP_CENTER,
+                                      toastId: "startTime"
+                                    });
+                                  }
+                                  return;
+                                }
 
-                            this.setValue({
-                              name: "startTime",
-                              value: e
-                            });
-                          }}
-                          t={t}
-                          type="datetime"
-                          placeholder={t("evestart")}
-                        />
+                                this.setValue({
+                                  name: "startTime",
+                                  value: e
+                                });
+                              }}
+                            />
+                          </ThemeProvider>
+                        </div>
                       </div>
                       <div className="item">
-                        <DatePicker
-                          value={endTime}
-                          selected={startTime}
-                          p={{ minDate: new Date(startTime) || new Date() }}
-                          onChange={e => {
-                            // console.log("END", startTime, "isAfter", e);
-                            if (
-                              startTime &&
-                              dayjs(startTime).isAfter(dayjs(e))
-                            ) {
-                              if (!toast.isActive("endTime")) {
-                                toast.info(t("setend"), {
-                                  position: toast.POSITION.TOP_CENTER,
-                                  toastId: "endTime"
-                                });
+                        <div className="input calender calender-input-sm">
+                          <DateTimePicker
+                            autoOk
+                            emptyLabel={t("eveend")}
+                            InputProps={{
+                              disableUnderline: true
+                            }}
+                            classes={{ root: "datePickerInput" }}
+                            value={endTime}
+                            disablePast
+                            onChange={e => {
+                              if (
+                                startTime &&
+                                dayjs(startTime).isAfter(dayjs(e))
+                              ) {
+                                if (!toast.isActive("endTime")) {
+                                  toast.info(t("setend"), {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    toastId: "endTime"
+                                  });
+                                }
+                                return;
                               }
-                              return;
-                            }
 
-                            this.setValue({
-                              name: "endTime",
-                              value: e
-                            });
-                          }}
-                          t={t}
-                          placeholder={t("eveend")}
-                          type="datetime"
-                        />
+                              this.setValue({
+                                name: "endTime",
+                                value: e.toISOString()
+                              });
+                            }}
+                          />
+                        </div>
                       </div>
                       {!isEmpty(this.state.errors) && (
                         <div

@@ -1,18 +1,54 @@
 import React, { Component } from "react";
 import * as yup from "yup";
-import DatePicker from "../common/DatePicker";
+import { DatePicker } from "@material-ui/pickers";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
-
+const materialTheme = createMuiTheme({
+  overrides: {
+    // MuiPickersToolbar: {
+    //   toolbar: {
+    //     backgroundColor: "#5f00a4"
+    //   }
+    // },
+    // MuiPickersCalendarHeader: {
+    //   switchHeader: {
+    //     // backgroundColor: lightBlue.A200,
+    //     // color: "white",
+    //   }
+    // },
+    // MuiPickersDay: {
+    //   day: {
+    //     color: "#5f00a4"
+    //   },
+    //   daySelected: {
+    //     backgroundColor: "#cf003c"
+    //   },
+    //   dayDisabled: {
+    //     color: "##616d78"
+    //   },
+    //   current: {
+    //     color: "#f70016"
+    //   }
+    // },
+    // MuiPickersModal: {
+    //   dialogAction: {
+    //     color: "#cf003c"
+    //   }
+    // }
+  }
+});
 class SignupForm extends Component {
   schema = yup.object().shape({
     interestedIn: yup.array().required("intrstreq"),
     gender: yup.string().required("genreq"),
     dob: yup
       .date()
-      .default(undefined)
+      .nullable()
+      .default(null)
       .max(date, "18old")
       .required("birthreq"),
     email: yup
@@ -32,7 +68,7 @@ class SignupForm extends Component {
   state = {
     username: "",
     email: "",
-    dob: undefined,
+    dob: null,
     gender: "",
     interestedIn: [],
     isCouple: false,
@@ -171,38 +207,29 @@ class SignupForm extends Component {
               />
               {this.InputFeedback(t(errors.email))}
             </div>
-            {/* <DatePicker
-              value={dob}
-              onChange={e => {
-                this.setValue({
-                  name: "dob",
-                  value: e
-                });
-              }}
-              t={t}
-              type="birthday"
-            /> */}
-            <div className="input birthday">
-              <input
-                aria-label="birthday"
-                placeholder={t("Birthday")}
-                onChange={e => {
-                  this.setValue({
-                    name: "dob",
-                    value: e.target.value
-                  });
-                }}
-                value={dob}
-                max={date}
-                type="text"
-                onFocus={e => {
-                  e.target.type = "date";
-                }}
-                onBlur={e => {
-                  e.target.type = "text";
-                }}
-                id="date"
-              />
+            <div className="input">
+              <ThemeProvider theme={materialTheme}>
+                <DatePicker
+                  autoOk
+                  disableFuture
+                  openTo="year"
+                  variant="inline"
+                  emptyLabel={t("Birthday")}
+                  InputProps={{
+                    disableUnderline: true
+                  }}
+                  classes={{ root: "datePickerInput" }}
+                  views={["year", "month", "date"]}
+                  value={dob}
+                  onChange={e => {
+                    this.setValue({
+                      name: "dob",
+                      value: e.toISOString()
+                    });
+                  }}
+                  maxDate={date}
+                />
+              </ThemeProvider>
             </div>
             {this.InputFeedback(t(errors.dob))}
             <Dropdown

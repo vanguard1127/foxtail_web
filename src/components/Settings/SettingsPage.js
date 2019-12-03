@@ -274,6 +274,9 @@ class SettingsPage extends Component {
         );
       }
     }
+    //Save all pics immediately
+
+    this.handleSubmit(this.updateSettings);
   };
 
   //Must reset these to prevent override on save
@@ -726,6 +729,7 @@ class SettingsPage extends Component {
               onChange={this.handleModalValueChange}
               placeholder={modalPlaceholder}
               lang={lang}
+              className="dropdown wide"
             />
             {this.InputFeedback(modalError)}
           </ErrorHandler.ErrorBoundary>
@@ -1023,8 +1027,7 @@ class SettingsPage extends Component {
                               setProfilePic={({ key, url }) =>
                                 this.setProfilePic({
                                   key,
-                                  url,
-                                  updateSettings
+                                  url
                                 })
                               }
                               isBlackMember={currentuser.blackMember.active}
@@ -1038,8 +1041,7 @@ class SettingsPage extends Component {
                                       file,
                                       key,
                                       isPrivate: false,
-                                      isDeleted: true,
-                                      updateSettings
+                                      isDeleted: true
                                     })
                                 })
                               }
@@ -1069,8 +1071,7 @@ class SettingsPage extends Component {
                                       file,
                                       key,
                                       isPrivate: true,
-                                      isDeleted: true,
-                                      updateSettings
+                                      isDeleted: true
                                     })
                                 })
                               }
