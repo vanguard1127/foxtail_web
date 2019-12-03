@@ -101,7 +101,7 @@ class Dropdown extends Component {
               : null
           }
           options={options}
-          className={className}
+          className={className ? className : ""}
         />
       );
     } else {
@@ -113,7 +113,7 @@ class Dropdown extends Component {
           label={placeholder}
           defaultOptionValue={value}
           options={options}
-          className={className}
+          className={className ? className : ""}
         />
       );
     }
