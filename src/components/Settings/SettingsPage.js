@@ -274,9 +274,6 @@ class SettingsPage extends Component {
         );
       }
     }
-    //Save all pics immediately
-
-    this.handleSubmit(this.updateSettings);
   };
 
   //Must reset these to prevent override on save
