@@ -232,32 +232,37 @@ class SignupForm extends Component {
               </ThemeProvider>
             </div>
             {this.InputFeedback(t(errors.dob))}
-            <Dropdown
-              value={gender}
-              type={"gender"}
-              onChange={e => {
-                this.setValue({
-                  name: "gender",
-                  value: e.value
-                });
-              }}
-              placeholder={t("common:Sex") + ":"}
-              lang={lang}
-            />
-            {this.InputFeedback(t(errors.gender))}
-
-            <Dropdown
-              value={interestedIn}
-              type={"interestedIn"}
-              onChange={el => {
-                this.setValue({
-                  name: "interestedIn",
-                  value: el.map(e => e.value)
-                });
-              }}
-              placeholder={t("common:Interested") + ":"}
-              lang={lang}
-            />
+            <div className="input">
+              <Dropdown
+                value={gender}
+                type={"gender"}
+                onChange={e => {
+                  this.setValue({
+                    name: "gender",
+                    value: e.value
+                  });
+                }}
+                placeholder={t("common:Sex") + ":"}
+                lang={lang}
+                className="dropdown wide"
+              />
+              {this.InputFeedback(t(errors.gender))}
+            </div>
+            <div className="input">
+              <Dropdown
+                value={interestedIn}
+                type={"interestedIn"}
+                onChange={el => {
+                  this.setValue({
+                    name: "interestedIn",
+                    value: el.map(e => e.value)
+                  });
+                }}
+                placeholder={t("common:Interested") + ":"}
+                lang={lang}
+                className="dropdown wide"
+              />
+            </div>
             {this.InputFeedback(t(errors.interestedIn))}
             <div className="couple-choose">
               <div className="select-checkbox">

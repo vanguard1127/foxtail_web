@@ -11,6 +11,7 @@ html {
 }
 
 body {
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -10516,14 +10517,14 @@ animation: CycleC 30s ease infinite;
 /** Added by @ashutoshpw **/
 
 div.register-form div.form-fields div.dropdown{
-  margin-top: 18px;
+  /* margin-top: 18px; */
   margin-bottom: 0px!important;
 }
 div.register-form div.form-fields div.calender{
   margin-bottom: 0px!important;
 }
 div.register-form div.form-fields .couple-choose {
-  margin-top: 15px;
+  margin-top: 0px;
 }
 
 .ReactModalPortal>div{
