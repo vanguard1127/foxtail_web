@@ -274,6 +274,9 @@ class SettingsPage extends Component {
         );
       }
     }
+    //Save all pics immediately
+
+    this.handleSubmit(this.updateSettings);
   };
 
   //Must reset these to prevent override on save
@@ -424,11 +427,11 @@ class SettingsPage extends Component {
     ErrorHandler.setBreadcrumb(message);
   };
 
-  setProfilePic = ({ key, url }) => {
+  setProfilePic = ({ key, url, updateSettings }) => {
     if (this.mounted) {
       this.setState({ profilePic: key, profilePicUrl: url }, () => {
         this.fillInErrors(true);
-        this.handleSubmit(this.updateSettings, true);
+        this.handleSubmit(updateSettings, true);
       });
     }
   };
@@ -1024,7 +1027,8 @@ class SettingsPage extends Component {
                               setProfilePic={({ key, url }) =>
                                 this.setProfilePic({
                                   key,
-                                  url
+                                  url,
+                                  updateSettings
                                 })
                               }
                               isBlackMember={currentuser.blackMember.active}
