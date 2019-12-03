@@ -157,7 +157,7 @@ class Landing extends PureComponent {
                           />
                         </ErrorHandler.ErrorBoundary>
                       </div>
-                      <Query
+                      {/* <Query
                         query={GET_DEMO_COUNTS}
                         fetchPolicy="cache-first"
                         errorPolicy="ignore"
@@ -225,7 +225,7 @@ class Landing extends PureComponent {
                             </div>
                           );
                         }}
-                      </Query>
+                      </Query> */}
                     </div>
                   </div>
                   <div className="col-lg-5 col-md-12">
