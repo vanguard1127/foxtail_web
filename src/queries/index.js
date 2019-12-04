@@ -446,8 +446,8 @@ export const SIGNS3 = gql`
 `;
 
 export const REMOVE_SELF = gql`
-  mutation($chatID: ID!) {
-    removeSelf(chatID: $chatID)
+  mutation($chatID: ID!, $isBlock: Boolean) {
+    removeSelf(chatID: $chatID, isBlock: $isBlock)
   }
 `;
 /* Queries */

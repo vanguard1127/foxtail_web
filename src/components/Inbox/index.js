@@ -40,7 +40,8 @@ class InboxPage extends Component {
     title: "",
     chatOpen: this.props.location.state ? true : false,
     chatID: this.props.location.state ? this.props.location.state.chatID : null,
-    showRulesModal: false
+    showRulesModal: false,
+    isBlock: false
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -50,6 +51,7 @@ class InboxPage extends Component {
       this.state.chatOpen !== nextState.chatOpen ||
       this.state.showModal !== nextState.showModal ||
       this.state.chatID !== nextState.chatID ||
+      this.state.isBlock !== nextState.isBlock ||
       this.props.location.state !== nextProps.location.state ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady
@@ -96,8 +98,10 @@ class InboxPage extends Component {
   };
 
   handleRemoveSelf = removeSelf => {
-    const { chatID } = this.state;
-    ErrorHandler.setBreadcrumb("Remove Self from Chat:" + chatID);
+    const { chatID, isBlock } = this.state;
+    ErrorHandler.setBreadcrumb(
+      "Remove Self from Chat:" + chatID + " Blocked?: " + isBlock
+    );
     removeSelf()
       .then(() => {
         if (this.mounted) {
@@ -209,7 +213,8 @@ class InboxPage extends Component {
       title,
       chatOpen,
       chatID,
-      showRulesModal
+      showRulesModal,
+      isBlock
     } = this.state;
 
     const { t, ReactGA, session, history, tReady } = this.props;
@@ -392,7 +397,7 @@ class InboxPage extends Component {
                         />
                         <Mutation
                           mutation={REMOVE_SELF}
-                          variables={{ chatID }}
+                          variables={{ chatID, isBlock }}
                           update={this.updateMail}
                         >
                           {removeSelf => {
@@ -434,11 +439,36 @@ class InboxPage extends Component {
                                       <span
                                         className="color"
                                         onClick={() =>
-                                          this.handleRemoveSelf(removeSelf)
+                                          this.setState(
+                                            { isBlock: false },
+                                            () =>
+                                              this.handleRemoveSelf(removeSelf)
+                                          )
                                         }
                                       >
                                         {btnText}
                                       </span>
+                                    }
+                                    cancelSpan={
+                                      <>
+                                        <span
+                                          className="color"
+                                          onClick={() => {
+                                            this.setState(
+                                              { isBlock: true },
+                                              () =>
+                                                this.handleRemoveSelf(
+                                                  removeSelf
+                                                )
+                                            );
+                                          }}
+                                        >
+                                          {t("leaveBlock")}
+                                        </span>
+                                        <span className="description">
+                                          {t("leaveBlockwarn")}
+                                        </span>
+                                      </>
                                     }
                                   />
                                 )}

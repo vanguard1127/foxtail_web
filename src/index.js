@@ -251,10 +251,14 @@ const materialTheme = createMuiTheme({
         backgroundColor: "#E91E63"
       }
     },
-    MuiPickersCalendarHeader: {
-      switchHeader: {
-        // backgroundColor: lightBlue.A200,
-        // color: "white",
+    MuiPickerDTTabs: {
+      tabs: {
+        backgroundColor: "#E91E63"
+      }
+    },
+    PrivateTabIndicator: {
+      colorSecondary: {
+        backgroundColor: "#673ab7"
       }
     },
     MuiPickersMonth: {
@@ -291,6 +295,10 @@ const Root = () => (
 );
 
 const Wrapper = withRouter(props => {
+  //TODO:Check if it fixes scrollTo
+  setTimeout(() => {
+    window.scrollTo(0, 1);
+  }, 1000);
   let location = props.location;
   if (location.pathname) {
     if (

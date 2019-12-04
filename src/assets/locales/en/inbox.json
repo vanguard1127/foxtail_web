@@ -14,6 +14,8 @@
   "succleft": "Successfully left Chat",
   "nomsgs": "No Messages found for this chat",
   "leavewarn": "Are you sure you would like to leave this conversation? You will not be able to see this chat any longer.",
+  "leaveBlockwarn": "Leave & Block will block everyone participating in the chat from seeing you again, before removing you from the chat. If you want to block specific members go to their profile and block them using the flag icon.",
+  "leaveBlock": "Leave & Block",
   "Leave": "Leave",
   "invitemem": "Invite Members",
   "nomsgsInbox": "No messages found.",
