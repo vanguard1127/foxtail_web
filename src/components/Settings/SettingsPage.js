@@ -221,11 +221,12 @@ class SettingsPage extends Component {
 
       if (this.mounted) {
         if (isDeleted) {
-          privatePhotos = privatePhotos.filter(x => x.id !== file.id);
+          privatePhotos = privatePhotos.filter(
+            x.id.toString() !== file.id.toString()
+          );
 
           this.setState({ showModal: false });
           toast.success(t("photodel"));
-          this.fillInErrors();
         } else {
           privatePhotos = [
             ...privatePhotos,
@@ -236,24 +237,22 @@ class SettingsPage extends Component {
             }
           ];
         }
-        this.setState(
-          {
-            privatePhotos,
-            publicPhotoList: undefined,
-            privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
-          },
-          () => this.fillInErrors()
-        );
+        this.setState({
+          privatePhotos,
+          publicPhotoList: undefined,
+          privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
+        });
       }
     } else {
       let { publicPhotos } = this.state;
 
       if (this.mounted) {
         if (isDeleted) {
-          publicPhotos = publicPhotos.filter(x => x.id !== file.id);
+          publicPhotos = publicPhotos.filter(
+            x => x.id.toString() !== file.id.toString()
+          );
           this.setState({ showModal: false });
           toast.success(t("photodel"));
-          this.fillInErrors();
         } else {
           publicPhotos = [
             ...publicPhotos,
@@ -295,6 +294,7 @@ class SettingsPage extends Component {
     const { ErrorHandler, t, ReactGA, toast } = this.props;
     const { isCouple, isInitial } = this.state;
     this.setErrorHandler("Settings updated...");
+    console.log("SAVE POL", this.isPhotoChanged, this.state.publicPhotos);
 
     if (!this.isPhotoChanged) {
       if (this.mounted) {
@@ -335,6 +335,7 @@ class SettingsPage extends Component {
           });
       }
     } else {
+      console.log("SAVE UN");
       this.isPhotoChanged = false;
       updateSettings()
         .then(({ data }) => {
