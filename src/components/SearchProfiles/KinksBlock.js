@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Context } from "./SearchProfilesPage";
-class DesiresBlock extends Component {
+class KinksBlock extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.t !== nextProps.t) {
       return true;
@@ -9,26 +9,26 @@ class DesiresBlock extends Component {
   }
 
   render() {
-    const { desires, t, id } = this.props;
+    const { kinks, t, id } = this.props;
     return (
       <Context.Consumer>
-        {({ desireOptions }) => (
+        {({ kinkOptions }) => (
           <span className="interest">
             <ul>
-              {desires.reduce(function(result, desire) {
+              {kinks.reduce(function(result, kink) {
                 if (result.length < 2) {
-                  if (desireOptions.find(el => el.value === desire)) {
-                    const desireLbl = t(
-                      desireOptions.find(el => el.value === desire).label
+                  if (kinkOptions.find(el => el.value === kink)) {
+                    const kinkLbl = t(
+                      kinkOptions.find(el => el.value === kink).label
                     );
                     result.push(
-                      <li key={desire} title={desireLbl}>
-                        {desireLbl}
+                      <li key={kink} title={kinkLbl}>
+                        {kinkLbl}
                       </li>
                     );
-                    if (result.length > 1 && desires.length > 2) {
+                    if (result.length > 1 && kinks.length > 2) {
                       result.push(
-                        <li key={"na" + id}>+{desires.length - 2}</li>
+                        <li key={"na" + id}>+{kinks.length - 2}</li>
                       );
                     }
                   }
@@ -43,4 +43,4 @@ class DesiresBlock extends Component {
   }
 }
 
-export default DesiresBlock;
+export default KinksBlock;

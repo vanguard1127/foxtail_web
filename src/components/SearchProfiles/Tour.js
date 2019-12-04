@@ -223,7 +223,7 @@ class Tour extends PureComponent {
                               <span className="name online">Dorothy</span>
                               <span className="detail">
                                 <ul>
-                                  <li className="gender f">24</li>
+                                  <li className="sex f">24</li>
 
                                   <li>- 8.4 mil</li>
                                 </ul>
@@ -265,8 +265,8 @@ class Tour extends PureComponent {
                               </span>
                               <span className="detail">
                                 <ul>
-                                  <li className="gender m">24</li>
-                                  <li className="gender f">32</li>
+                                  <li className="sex m">24</li>
+                                  <li className="sex f">32</li>
                                   <li>- 4.2 mil</li>
                                 </ul>
                               </span>
@@ -305,7 +305,7 @@ class Tour extends PureComponent {
                               <span className="name online">Barry</span>
                               <span className="detail">
                                 <ul>
-                                  <li className="gender m">32</li>
+                                  <li className="sex m">32</li>
                                   <li>- 4.9 mil</li>
                                 </ul>
                               </span>
@@ -342,7 +342,7 @@ class Tour extends PureComponent {
                               <span className="name online">Amanda</span>
                               <span className="detail">
                                 <ul>
-                                  <li className="gender f">28</li>
+                                  <li className="sex f">28</li>
                                   <li>- 4.9 mil</li>
                                 </ul>
                               </span>
@@ -408,7 +408,7 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">32</li>
+                                <li className="sex f">32</li>
                                 <li>- 8.4 mil</li>
                               </ul>
                             </span>
@@ -449,7 +449,7 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender m">24</li>
+                                <li className="sex m">24</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>
@@ -489,8 +489,8 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">42</li>
-                                <li className="gender f">39</li>
+                                <li className="sex f">42</li>
+                                <li className="sex f">39</li>
                                 <li>- 9.9 mil</li>
                               </ul>
                             </span>
@@ -529,7 +529,7 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender t">27</li>
+                                <li className="sex t">27</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>
@@ -569,7 +569,7 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">38</li>
+                                <li className="sex f">38</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>
@@ -610,7 +610,7 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">38</li>
+                                <li className="sex f">38</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>
@@ -651,7 +651,7 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">38</li>
+                                <li className="sex f">38</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>
@@ -692,8 +692,8 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender m">22</li>
-                                <li className="gender m">24</li>
+                                <li className="sex m">22</li>
+                                <li className="sex m">24</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>
@@ -734,7 +734,7 @@ class Tour extends PureComponent {
                             </span>
                             <span className="detail">
                               <ul>
-                                <li className="gender f">38</li>
+                                <li className="sex f">38</li>
                                 <li>- 4.9 mil</li>
                               </ul>
                             </span>

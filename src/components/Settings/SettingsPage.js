@@ -26,7 +26,7 @@ import AcctSettings from "./AcctSettings/";
 import Verifications from "./Verifications";
 import ManageBlkMembership from "./ManageBlkMembership/";
 import MyProfile from "./MyProfile/";
-import DesiresModal from "../Modals/Desires/Modal";
+import KinksModal from "../Modals/Kinks/Modal";
 import ShareModal from "../Modals/Share";
 import SubmitPhotoModal from "../Modals/SubmitPhoto";
 import getCityCountry from "../../utils/getCityCountry";
@@ -64,13 +64,13 @@ class SettingsPage extends Component {
     publicPhotos: this.props.settings.publicPhotos,
     privatePhotos: this.props.settings.privatePhotos,
     about: undefined,
-    desires: [],
+    kinks: [],
     username: undefined,
     email: undefined,
     sexuality: "",
-    gender: undefined,
+    sex: undefined,
     phone: undefined,
-    showDesiresPopup: false,
+    showKinksPopup: false,
     showPhotoVerPopup: false,
     showBlackPopup: this.props.showBlkModal || false,
     showCCModal: false,
@@ -120,7 +120,7 @@ class SettingsPage extends Component {
       this.state.city !== nextState.city ||
       this.state.country !== nextState.country ||
       this.state.couplePartner !== nextState.couplePartner ||
-      this.state.desires !== nextState.desires ||
+      this.state.kinks !== nextState.kinks ||
       this.state.distance !== nextState.distance ||
       this.state.distanceMetric !== nextState.distanceMetric ||
       this.state.email !== nextState.email ||
@@ -130,7 +130,7 @@ class SettingsPage extends Component {
       this.state.filetype !== nextState.filetype ||
       this.state.flashCpl !== nextState.flashCpl ||
       this.state.sexuality !== nextState.sexuality ||
-      this.state.gender !== nextState.gender ||
+      this.state.sex !== nextState.sex ||
       this.state.includeMsgs !== nextState.includeMsgs ||
       this.state.interestedIn !== nextState.interestedIn ||
       this.state.isPrivate !== nextState.isPrivate ||
@@ -153,7 +153,7 @@ class SettingsPage extends Component {
       this.state.shareProfile !== nextState.shareProfile ||
       this.state.showSharePopup !== nextState.showSharePopup ||
       this.state.showCouplePopup !== nextState.showCouplePopup ||
-      this.state.showDesiresPopup !== nextState.showDesiresPopup ||
+      this.state.showKinksPopup !== nextState.showKinksPopup ||
       this.state.showImgEditorPopup !== nextState.showImgEditorPopup ||
       this.state.showImgCropperPopup !== nextState.showImgCropperPopup ||
       this.state.showModal !== nextState.showModal ||
@@ -194,7 +194,7 @@ class SettingsPage extends Component {
     this.mounted = true;
     if (
       errors.about !== null ||
-      errors.desires !== null ||
+      errors.kinks !== null ||
       errors.profilePic !== null
     ) {
       this.showPleaseComplete();
@@ -289,7 +289,7 @@ class SettingsPage extends Component {
       this.setState({
         username: undefined,
         email: undefined,
-        gender: undefined,
+        sex: undefined,
         phone: undefined
       });
     }
@@ -392,16 +392,16 @@ class SettingsPage extends Component {
     }
   };
 
-  toggleDesires = ({ checked, value }) => {
-    const { desires } = this.state;
+  toggleKinks = ({ checked, value }) => {
+    const { kinks } = this.state;
     if (this.mounted) {
       if (checked) {
-        this.setState({ desires: [...desires, value] }, () =>
+        this.setState({ kinks: [...kinks, value] }, () =>
           this.fillInErrors()
         );
       } else {
         this.setState(
-          { desires: desires.filter(desire => desire !== value) },
+          { kinks: kinks.filter(kink => kink !== value) },
           () => this.fillInErrors()
         );
       }
@@ -416,7 +416,7 @@ class SettingsPage extends Component {
             name === "about" ||
             name === "publicPhotos" ||
             name === "profilePic" ||
-            name === "desires"
+            name === "kinks"
           ) {
             this.fillInErrors();
           }
@@ -452,12 +452,12 @@ class SettingsPage extends Component {
     }
   }
 
-  toggleDesiresPopup = () => {
-    this.setErrorHandler("Desires popup toggled");
-    const { showDesiresPopup } = this.state;
+  toggleKinksPopup = () => {
+    this.setErrorHandler("Kinks popup toggled");
+    const { showKinksPopup } = this.state;
     if (this.mounted) {
       this.setState({
-        showDesiresPopup: !showDesiresPopup
+        showKinksPopup: !showKinksPopup
       });
     }
   };
@@ -607,7 +607,7 @@ class SettingsPage extends Component {
   };
 
   fillInErrors = async skipSave => {
-    const { about, publicPhotos, profilePic, desires } = this.state;
+    const { about, publicPhotos, profilePic, kinks } = this.state;
 
     const { t } = this.props;
 
@@ -625,13 +625,13 @@ class SettingsPage extends Component {
       profilePicErr = t("selpho");
     }
 
-    let desiresErr = desires.length === 0 ? t("onedes") : null;
+    let kinksErr = kinks.length === 0 ? t("onedes") : null;
 
     if (
       this.isNull(this.state.errors.profilePic) !==
         this.isNull(profilePicErr) ||
       this.isNull(this.state.errors.about) !== this.isNull(aboutErr) ||
-      this.isNull(this.state.errors.desires) !== this.isNull(desiresErr)
+      this.isNull(this.state.errors.kinks) !== this.isNull(kinksErr)
     ) {
       if (!skipSave) {
         await this.handleSubmit(this.updateSettings, true);
@@ -642,7 +642,7 @@ class SettingsPage extends Component {
       errors: {
         profilePic: profilePicErr,
         about: aboutErr,
-        desires: desiresErr
+        kinks: kinksErr
       }
     });
   };
@@ -725,7 +725,7 @@ class SettingsPage extends Component {
     } = this.state;
 
     const { ErrorHandler } = this.props;
-    if (modalInputType === "gender") {
+    if (modalInputType === "sex") {
       this.setState({
         modalInput: (
           <ErrorHandler.ErrorBoundary>
@@ -828,16 +828,16 @@ class SettingsPage extends Component {
       interestedIn,
       email,
       username,
-      gender,
+      sex,
       users,
       publicPhotoList,
       privatePhotoList,
       publicPhotos,
       privatePhotos,
       about,
-      desires,
+      kinks,
       showPhotoVerPopup,
-      showDesiresPopup,
+      showKinksPopup,
       photoSubmitType,
       showImgEditorPopup,
       showImgCropperPopup,
@@ -899,7 +899,7 @@ class SettingsPage extends Component {
             text: yup.string().required(t("unreq"))
           });
           break;
-        case "gender":
+        case "sex":
           this.schema = yup.object().shape({
             text: yup.string().required(t("genreq"))
           });
@@ -933,12 +933,12 @@ class SettingsPage extends Component {
           publicPhotoList,
           privatePhotoList,
           about,
-          desires,
+          kinks,
           couplePartner,
           includeMsgs,
           email,
           username,
-          gender,
+          sex,
           phone,
           profilePic,
           sexuality,
@@ -984,7 +984,7 @@ class SettingsPage extends Component {
                     <div className="col-md-12 col-lg-9">
                       <div className="page mtop">
                         {(errors.about !== null ||
-                          errors.desires !== null ||
+                          errors.kinks !== null ||
                           errors.profilePic !== null) && (
                           <span
                             className="message"
@@ -1090,9 +1090,9 @@ class SettingsPage extends Component {
 
                           <div className="page-section mtop">
                             <MyProfile
-                              desires={desires}
+                              kinks={kinks}
                               about={about}
-                              togglePopup={this.toggleDesiresPopup}
+                              togglePopup={this.toggleKinksPopup}
                               setValue={({ name, value, noSave }) =>
                                 this.setValue({
                                   name,
@@ -1242,11 +1242,11 @@ class SettingsPage extends Component {
                 </Mutation>
               )}
 
-              {showDesiresPopup && (
-                <DesiresModal
-                  close={this.toggleDesiresPopup}
-                  onChange={e => this.toggleDesires(e, updateSettings)}
-                  desires={desires}
+              {showKinksPopup && (
+                <KinksModal
+                  close={this.toggleKinksPopup}
+                  onChange={e => this.toggleKinks(e, updateSettings)}
+                  kinks={kinks}
                   updateSettings={updateSettings}
                   ErrorBoundary={ErrorHandler.ErrorBoundary}
                 />

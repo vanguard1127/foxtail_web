@@ -1318,7 +1318,7 @@ section.featured-profiles .slider .item .info .data span.detail ul li {
   padding-right: 5px;
 }
 
-section.featured-profiles .slider .item .info .data span.detail ul li.gender::before {
+section.featured-profiles .slider .item .info .data span.detail ul li.sex::before {
   content: "";
   font-family: "foxtail-icon";
   color: #fff;
@@ -1326,11 +1326,11 @@ section.featured-profiles .slider .item .info .data span.detail ul li.gender::be
   padding-right: 3px;
 }
 
-section.featured-profiles .slider .item .info .data span.detail ul li.gender.f::before {
+section.featured-profiles .slider .item .info .data span.detail ul li.sex.f::before {
   content: "\e801";
 }
 
-section.featured-profiles .slider .item .info .data span.detail ul li.gender.m::before {
+section.featured-profiles .slider .item .info .data span.detail ul li.sex.m::before {
   content: "\e802";
 }
 
@@ -1600,7 +1600,7 @@ section.members .card-item .info span.detail ul li {
   padding-right: 6px;
 }
 
-section.members .card-item .info span.detail ul li.gender::before {
+section.members .card-item .info span.detail ul li.sex::before {
   content: "";
   font-family: "foxtail-icon";
   color: #8f969c;
@@ -1608,17 +1608,17 @@ section.members .card-item .info span.detail ul li.gender::before {
   padding-right: 3px;
 }
 
-section.members .card-item .info span.detail ul li.gender.f::before {
+section.members .card-item .info span.detail ul li.sex.f::before {
   content: "\e801";
   font-size: 12px;
 }
 
-section.members .card-item .info span.detail ul li.gender.m::before {
+section.members .card-item .info span.detail ul li.sex.m::before {
   content: "\e802";
   font-size: 12px;
 }
 
-section.members .card-item .info span.detail ul li.gender.i::before {
+section.members .card-item .info span.detail ul li.sex.i::before {
   content: "\f224";
   font-size: 12px;
 }
@@ -2931,7 +2931,7 @@ section.profile .avatar-card .functions .btn.share:hover {
   background-color: #d7004a;
 }
 
-section.profile .desires {
+section.profile .kinks {
   width: 100%;
   float: left;
   z-index: 100;
@@ -2939,25 +2939,25 @@ section.profile .desires {
   visibility: hidden;
 }
 
-section.profile .desires .list {
+section.profile .kinks .list {
   max-height: 30vh;
   overflow-y: auto;
   display: inline-block;width: 100%;
 }
 
-section.profile .desires.mobile {
+section.profile .kinks.mobile {
   display: inline-block;
   visibility: visible;
   margin-top: 15px;
 }
 
-section.profile .desires ul {
+section.profile .kinks ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-section.profile .desires ul li {
+section.profile .kinks ul li {
   width: 100%;
   display: block;
   float: left;
@@ -3121,7 +3121,7 @@ section.profile .data-info ul li span.data.lookfor {
   /* display: inline-block; */
 }
 
-section.profile .data-info ul li span.data.gender {
+section.profile .data-info ul li span.data.sex {
   justify-content: space-evenly;
 }
 
@@ -5702,8 +5702,8 @@ section.meet-filter .range-con {
 }
 
 /*---- DESIRES SELECTED */
-.page .settings-content .content .select_desires,
-.page form .content .select_desires {
+.page .settings-content .content .select_kinks,
+.page form .content .select_kinks {
   width: 100%;
   height: 70px;
   border: 1px solid #e3e3e3;
@@ -5716,8 +5716,8 @@ section.meet-filter .range-con {
 }
 
 
-.page .settings-content .content .select_desires span.label,
-.page form .content .select_desires span.label {
+.page .settings-content .content .select_kinks span.label,
+.page form .content .select_kinks span.label {
   position: absolute;
   top: 14px;
   left: 15px;
@@ -5733,8 +5733,8 @@ section.meet-filter .range-con {
   margin: 0;
   /* z-index: 99999; */
 }
-.page .settings-content .content .select_desires ul,
-.page form .content .select_desires ul {
+.page .settings-content .content .select_kinks ul,
+.page form .content .select_kinks ul {
   list-style-type: none;
   padding: 0 0 0 5px;
   margin: 0;
@@ -5742,8 +5742,8 @@ section.meet-filter .range-con {
   display: inline-block;
   width: 80% !important;
 }
-.page .settings-content .content .select_desires ul li,
-.page form .content .select_desires ul li {
+.page .settings-content .content .select_kinks ul li,
+.page form .content .select_kinks ul li {
   float: left;
   border: 1px solid #f50043;
   background-color: rgba(245, 0, 67, 0.02);
@@ -5755,8 +5755,8 @@ section.meet-filter .range-con {
   margin-top: 27px;
   width: auto !important;
 }
-.page .settings-content .content .select_desires .counter,
-.page form .content .select_desires .counter {
+.page .settings-content .content .select_kinks .counter,
+.page form .content .select_kinks .counter {
   position: absolute;
   right: 4%;
   top: 37%;
@@ -5878,7 +5878,7 @@ section.popup-content .modal-popup .m-body {
   background-color: #fff;
 }
 
-section.popup-content .modal-popup .m-body.desires {
+section.popup-content .modal-popup .m-body.kinks {
   padding: 0;
 }
 
@@ -5941,7 +5941,7 @@ section.popup-content .modal-popup .m-body .verify-account .submit {
   border-radius: 1px;
 }
 
-section.desires-popup {
+section.kinks-popup {
   display: block;
   position: fixed;
   top: 0;
@@ -5953,7 +5953,7 @@ section.desires-popup {
   visibility: hidden;
 }
 
-section.desires-popup.show {
+section.kinks-popup.show {
   display: flex;
   visibility: visible;
   overflow-y: auto;
@@ -5961,7 +5961,7 @@ section.desires-popup.show {
   justify-content: center;
 }
 
-section.desires-popup::before {
+section.kinks-popup::before {
   content: "";
   position: fixed;
   left: 0;
@@ -5972,7 +5972,7 @@ section.desires-popup::before {
   background: rgba(41, 1, 10, 0.44);
 }
 
-section.desires-popup .modal-popup {
+section.kinks-popup .modal-popup {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -5985,12 +5985,12 @@ section.desires-popup .modal-popup {
 }
 
 @media only screen and (max-width: 768px) {
-  section.desires-popup .modal-popup {
+  section.kinks-popup .modal-popup {
     width: 80%;
   }
 }
 
-section.desires-popup .modal-popup .m-head {
+section.kinks-popup .modal-popup .m-head {
   width: 100%;
   display: block;
   float: left;
@@ -6011,7 +6011,7 @@ section.desires-popup .modal-popup .m-head {
   position: relative;
 }
 
-section.desires-popup .modal-popup .m-head .close::before {
+section.kinks-popup .modal-popup .m-head .close::before {
   content: "\e804";
   font-family: "foxtail-icon";
   position: absolute;
@@ -6025,11 +6025,11 @@ section.desires-popup .modal-popup .m-head .close::before {
   cursor: pointer;
 }
 
-section.desires-popup .modal-popup .m-head .close:hover::before {
+section.kinks-popup .modal-popup .m-head .close:hover::before {
   color: #fff;
 }
 
-section.desires-popup .modal-popup .m-head span {
+section.kinks-popup .modal-popup .m-head span {
   width: 100%;
   display: block;
   float: left;
@@ -6038,7 +6038,7 @@ section.desires-popup .modal-popup .m-head span {
   white-space: nowrap;
 }
 
-section.desires-popup .modal-popup .m-head span.heading {
+section.kinks-popup .modal-popup .m-head span.heading {
   color: #fff;
   font-weight: 700;
   font-size: 26px;
@@ -6046,13 +6046,13 @@ section.desires-popup .modal-popup .m-head span.heading {
   line-height: 36px;
 }
 
-section.desires-popup .modal-popup .m-head span.title {
+section.kinks-popup .modal-popup .m-head span.title {
   color: rgba(255, 255, 255, 0.85);
   font-size: 13px;
   line-height: 15px;
 }
 
-section.desires-popup .modal-popup .m-body {
+section.kinks-popup .modal-popup .m-body {
   width: 100%;
   display: block;
   float: left;
@@ -6060,7 +6060,7 @@ section.desires-popup .modal-popup .m-body {
   background-color: #fff;
 }
 
-section.desires-popup .modal-popup .m-body.desires {
+section.kinks-popup .modal-popup .m-body.kinks {
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -6068,7 +6068,7 @@ section.desires-popup .modal-popup .m-body.desires {
   overflow: auto;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con {
+section.kinks-popup .modal-popup .m-body .kinks-list-con {
   width: 100%;
   display: block;
   float: left;
@@ -6077,7 +6077,7 @@ section.desires-popup .modal-popup .m-body .desires-list-con {
   padding: 10px 15px 0px 15px;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con::-webkit-scrollbar {
+section.kinks-popup .modal-popup .m-body .kinks-list-con::-webkit-scrollbar {
   width: 9px;
   height: 10px;
   border: none;
@@ -6086,16 +6086,16 @@ section.desires-popup .modal-popup .m-body .desires-list-con::-webkit-scrollbar 
   border-radius: 0 3px 3px 0;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con::-webkit-scrollbar-thumb {
+section.kinks-popup .modal-popup .m-body .kinks-list-con::-webkit-scrollbar-thumb {
   background: #ececec;
   border: none;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con::-webkit-scrollbar-corner {
+section.kinks-popup .modal-popup .m-body .kinks-list-con::-webkit-scrollbar-corner {
   background: inherit;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con ul {
+section.kinks-popup .modal-popup .m-body .kinks-list-con ul {
   list-style-type: none;
   margin: 0;
   display: -webkit-flex;
@@ -6108,7 +6108,7 @@ section.desires-popup .modal-popup .m-body .desires-list-con ul {
   width: 100%;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con ul li {
+section.kinks-popup .modal-popup .m-body .kinks-list-con ul li {
   flex-grow: 1;
   width: 40%;
   height: 50px;
@@ -6122,7 +6122,7 @@ section.desires-popup .modal-popup .m-body .desires-list-con ul li {
     top: 0%;
   }
 
-  section.desires-popup .modal-popup .m-body .desires-list-con ul li {
+  section.kinks-popup .modal-popup .m-body .kinks-list-con ul li {
     width: 100% !important;
   }
 
@@ -6143,11 +6143,11 @@ section.desires-popup .modal-popup .m-body .desires-list-con ul li {
   }
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con ul li input {
+section.kinks-popup .modal-popup .m-body .kinks-list-con ul li input {
   display: none;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con ul li input + label span {
+section.kinks-popup .modal-popup .m-body .kinks-list-con ul li input + label span {
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -6159,14 +6159,14 @@ section.desires-popup .modal-popup .m-body .desires-list-con ul li input + label
   cursor: pointer;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con ul li label {
+section.kinks-popup .modal-popup .m-body .kinks-list-con ul li label {
   width: 100%;
   display: block;
   float: left;
   cursor: pointer;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con ul li label b {
+section.kinks-popup .modal-popup .m-body .kinks-list-con ul li label b {
   padding-left: 10px;
   display: inline-block;
   float: left;
@@ -6182,7 +6182,7 @@ section.desires-popup .modal-popup .m-body .desires-list-con ul li label b {
   overflow: hidden;
 }
 
-section.desires-popup .modal-popup .m-body .desires-list-con ul li input:checked + label span:before {
+section.kinks-popup .modal-popup .m-body .kinks-list-con ul li input:checked + label span:before {
   content: "\e803";
   font-family: "foxtail-icon";
   color: #cb0032;
@@ -7861,8 +7861,8 @@ section.login-modal.acctsetting .popup form .form-content .dropdown span {
   position: absolute;
   top:25px;
 }
-.popup .page .settings-content .content .select_desires,
-.popup .page form .content .select_desires {
+.popup .page .settings-content .content .select_kinks,
+.popup .page form .content .select_kinks {
   margin-bottom: 0px !important;
 }
 
@@ -8167,12 +8167,12 @@ section.settings .select-list.multiple {
   color: #7b7a7a;
 }
 
-section.desires-popup .modal-popup .m-body .search {
+section.kinks-popup .modal-popup .m-body .search {
   width: 100%;
   padding: 0 41px 0 32px;
 }
 
-section.desires-popup .modal-popup .m-body .search input {
+section.kinks-popup .modal-popup .m-body .search input {
   width: 100%;
   height: 45px;
   outline: none;
@@ -9185,11 +9185,11 @@ section.not-found span.description {
   section.profile .data-info ul li:first-child {
     padding-left: 0;
   }
-  section.profile .desires.mobile {
+  section.profile .kinks.mobile {
     display: none;
     visibility: hidden;
   }
-  section.profile .desires {
+  section.profile .kinks {
     display: inline-block;
     visibility: visible;
   }
@@ -10481,7 +10481,7 @@ animation: CycleC 30s ease infinite;
     background: unset!important;
   }
 
-  section.desires-popup .modal-popup .m-body .search {
+  section.kinks-popup .modal-popup .m-body .search {
     padding: 0 32px 0 32px;
   }
 }

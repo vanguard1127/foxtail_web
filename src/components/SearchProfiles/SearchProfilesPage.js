@@ -7,7 +7,7 @@ import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
 import Tour from "./Tour";
-import { desireOptions } from "../../docs/options";
+import { kinkOptions } from "../../docs/options";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 require("dayjs/locale/" + lang);
@@ -139,7 +139,7 @@ class SearchProfilesPage extends Component {
       body = locationErr;
     } else {
       body = (
-        <Context.Provider value={{ desireOptions }}>
+        <Context.Provider value={{ kinkOptions }}>
           <ProfilesContainer
             loading={loading}
             t={t}

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import { desireOptions } from "../../../docs/options";
+import { kinkOptions } from "../../../docs/options";
 import Spinner from "../../common/Spinner";
 import SearchBox from "./SearchBox";
 import Tooltip from "./Tooltip/Tooltip";
 
-class Desires extends Component {
+class Kinks extends Component {
   state = { searchText: "" };
   constructor(props) {
     super(props);
@@ -33,7 +33,7 @@ class Desires extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.searchText !== nextState.searchText ||
-      this.props.desires !== nextProps.desires ||
+      this.props.kinks !== nextProps.kinks ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady
     ) {
@@ -43,26 +43,38 @@ class Desires extends Component {
   }
   render() {
     const { searchText } = this.state;
-    const { close, onChange, desires, t, ErrorBoundary, tReady } = this.props;
+    const {
+      close,
+      onChange,
+      kinks,
+      t,
+      ErrorBoundary,
+      tReady,
+      isEvent
+    } = this.props;
     if (!tReady) {
       return <Spinner />;
     }
     return (
-      <section className="desires-popup show" ref={this.wrapperRef}>
-        <div className="modal-popup desires-select">
+      <section className="kinks-popup show" ref={this.wrapperRef}>
+        <div className="modal-popup kinks-select">
           <ErrorBoundary>
             <div className="m-head">
-              <span className="heading">{t("desireselect")}</span>
-              <span className="title">{t("setdesires")}</span>
+              <span className="heading">
+                {!isEvent ? t("kinkselect") : t("playselect")}
+              </span>
+              <span className="title">
+                {!isEvent ? t("setkinks") : t("setplay")}
+              </span>
               <span className="close" onClick={close} />
             </div>
-            <div className="m-body desires">
+            <div className="m-body kinks">
               <SearchBox value={searchText} onChange={this.setValue} t={t} />
-              <div className="desires-list-con">
+              <div className="kinks-list-con">
                 <ul>
-                  {desireOptions
-                    .filter(desire =>
-                      desire.label.toLowerCase().startsWith(searchText)
+                  {kinkOptions
+                    .filter(kink =>
+                      kink.label.toLowerCase().startsWith(searchText)
                     )
                     .map((option, index) => (
                       <li key={option.value}>
@@ -71,7 +83,7 @@ class Desires extends Component {
                             type="checkbox"
                             id={option.value}
                             checked={
-                              desires.indexOf(option.value) > -1 ? true : false
+                              kinks.indexOf(option.value) > -1 ? true : false
                             }
                             onChange={e =>
                               onChange({
@@ -98,4 +110,4 @@ class Desires extends Component {
     );
   }
 }
-export default withTranslation("modals")(Desires);
+export default withTranslation("modals")(Kinks);

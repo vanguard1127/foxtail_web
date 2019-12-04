@@ -98,7 +98,7 @@ class Settings extends Component {
 
           const settings = data.getSettings;
 
-          const { about, publicPhotos, profilePic, desires } = settings;
+          const { about, publicPhotos, profilePic, kinks } = settings;
 
           let aboutErr = null;
           if (about === "") {
@@ -114,12 +114,12 @@ class Settings extends Component {
             profilePicErr = t("selpho");
           }
 
-          let desiresErr = desires.length === 0 ? t("onedes") : null;
+          let kinksErr = kinks.length === 0 ? t("onedes") : null;
 
           const errors = {
             profilePic: profilePicErr,
             about: aboutErr,
-            desires: desiresErr
+            kinks: kinksErr
           };
 
           return (

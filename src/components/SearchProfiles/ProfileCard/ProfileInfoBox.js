@@ -20,17 +20,17 @@ class ProfileInfoBox extends PureComponent {
         </span>
         <span className="detail">
           <ul>
-            <li className={"gender " + users[0].gender}>
+            <li className={"sex " + users[0].sex}>
               <span
-                className={"sex " + users[0].gender + " profileCardSymbol"}
+                className={"sex " + users[0].sex + " profileCardSymbol"}
               />
               &nbsp;
               {dayjs().diff(users[0].dob, "years")}
             </li>
             {users[1] && (
-              <li className={"gender " + users[1].gender}>
+              <li className={"sex " + users[1].sex}>
                 <span
-                  className={"sex " + users[1].gender + " profileCardSymbol"}
+                  className={"sex " + users[1].sex + " profileCardSymbol"}
                 />
                 &nbsp;
                 {dayjs().diff(users[1].dob, "years")}

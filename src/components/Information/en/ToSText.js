@@ -127,7 +127,7 @@ const ToS = () => (
       <p>
         Registered sex offenders convicted of sexual violence and/or
         non-consensual sexual offenses are not permitted to have accounts on
-        Foxtail. LOV does not discriminate on the basis of age, gender, race,
+        Foxtail. LOV does not discriminate on the basis of age, sex, race,
         ethnicity, nationality, religion, sexual orientation or any other
         protected status.
       </p>

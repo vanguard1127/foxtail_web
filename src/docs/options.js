@@ -1,4 +1,4 @@
-export const desireOptions = [
+export const kinkOptions = [
   { value: "swinging", label: "Swinging" },
   { value: "softswap", label: "Soft Swap" },
   { value: "polyamory", label: "Polyamory" },

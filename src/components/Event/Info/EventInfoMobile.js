@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { formatedMilesToKm } from "../../../utils/distanceMetric";
-import { desireOptions } from "../../../docs/options";
+import { kinkOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EventShare from "../Header/EventShare";
 import EditEventBtn from "./EditEventBtn";
@@ -14,7 +14,7 @@ class EventInfoMobile extends Component {
 
     if (
       eventProps.address !== nextEventProps.address ||
-      !eventProps.desires.every(e => nextEventProps.desires.includes(e)) ||
+      !eventProps.kinks.every(e => nextEventProps.kinks.includes(e)) ||
       eventProps.distance !== nextEventProps.distance ||
       eventProps.endTime !== nextEventProps.endTime ||
       eventProps.startTime !== nextEventProps.startTime ||
@@ -47,7 +47,7 @@ class EventInfoMobile extends Component {
       startTime,
       endTime,
       type,
-      desires,
+      kinks,
       distance,
       address,
       participants,
@@ -93,14 +93,14 @@ class EventInfoMobile extends Component {
               <span className="head">{t("toexpect")}:</span>
               <span className="title">
                 {" "}
-                {desires.reduce(function(result, desire, idx) {
-                  const desireObj = desireOptions.find(
-                    el => el.value === desire
+                {kinks.reduce(function(result, kink, idx) {
+                  const kinkObj = kinkOptions.find(
+                    el => el.value === kink
                   );
-                  if (idx !== desires.length - 1) {
-                    result.push(t(desireObj.label) + ", ");
+                  if (idx !== kinks.length - 1) {
+                    result.push(t(kinkObj.label) + ", ");
                   } else {
-                    result.push(t(desireObj.label));
+                    result.push(t(kinkObj.label));
                   }
                   return result;
                 }, [])}

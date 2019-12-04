@@ -1,4 +1,4 @@
-export const desireOptions = [
+export const kinkOptions = [
   { value: "swinging", label: "Swinging" },
   { value: "softswap", label: "Soft Swap" },
   { value: "polyamory", label: "Polyamory" },
@@ -120,7 +120,7 @@ export const sexOptions = [
   { value: "MI", label: "Male + Intersex" }
 ];
 
-export const genderOptions = [
+export const sexSingleOptions = [
   { value: "F", label: "Female" },
   { value: "M", label: "Male" },
   { value: "I", label: "Intersex" }

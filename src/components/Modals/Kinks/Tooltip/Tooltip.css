@@ -1,4 +1,4 @@
-.desire-tooltip {
+.kink-tooltip {
   width: 100%;
   position: relative;
   display: inline-block;
@@ -6,7 +6,7 @@
   /* border-bottom: 1px dotted black; */
 }
 
-.desire-tooltip .tooltiptext {
+.kink-tooltip .tooltiptext {
   visibility: hidden;
   width: auto;
   max-width: 300px;
@@ -29,29 +29,29 @@
   min-height: 28px;
 }
 
-.desire-tooltip:hover .tooltiptext {
+.kink-tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }
 
-.desire-tooltip .tooltiptext-right {
+.kink-tooltip .tooltiptext-right {
   top: -5px;
   left: 105%;
 }
 
-.desire-tooltip .tooltiptext-left {
+.kink-tooltip .tooltiptext-left {
   top: -5px;
   right: 105%;
 }
 
-.desire-tooltip .tooltiptext-top {
+.kink-tooltip .tooltiptext-top {
   width: auto;
   bottom: 100%;
   left: 50%;
   margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
 }
 
-.desire-tooltip .tooltiptext-bottom {
+.kink-tooltip .tooltiptext-bottom {
   max-width: 300px;
   top: 100%;
   left: 50%;

@@ -25,7 +25,7 @@ class ProfileInfo extends Component {
               <span className="name">
                 {users[1] && (
                   <span
-                    className={"sex " + users[0].gender + " userInfoHeader"}
+                    className={"sex " + users[0].sex + " userInfoHeader"}
                   />
                 )}
                 &nbsp;{users[0].username},&nbsp;{" "}
@@ -49,7 +49,7 @@ class ProfileInfo extends Component {
                 {" "}
                 {users[1] && (
                   <span
-                    className={"sex " + users[1].gender + " userInfoHeader"}
+                    className={"sex " + users[1].sex + " userInfoHeader"}
                   />
                 )}
                 &nbsp;{users[1].username},&nbsp;{" "}

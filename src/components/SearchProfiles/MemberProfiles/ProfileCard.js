@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DesiresBlock from "../DesiresBlock";
+import KinksBlock from "../KinksBlock";
 import { ProfileActionBtns, ProfileInfoBox, ProfilePic } from "../ProfileCard/";
 
 class ProfileCard extends Component {
@@ -65,7 +65,7 @@ class ProfileCard extends Component {
                 dayjs={dayjs}
                 distanceMetric={distanceMetric}
               />
-              <DesiresBlock desires={profile.desires} t={t} id={profile.id} />
+              <KinksBlock kinks={profile.kinks} t={t} id={profile.id} />
             </span>
             <ProfileActionBtns
               profile={profile}

@@ -72,11 +72,11 @@ class Dialog extends PureComponent {
       return null;
     }
     let inputField;
-    if (specialType === "gender") {
+    if (specialType === "sex") {
       inputField = (
         <Dropdown
           value={text}
-          type={"gender"}
+          type={"sex"}
           onChange={e => {
             this.setValue(e.value);
           }}

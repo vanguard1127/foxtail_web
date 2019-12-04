@@ -7,9 +7,9 @@ const AboutText = () => (
         <br />
         Most people have unmet sexual needs
         <br />
-        Fear keeps us from our desires
+        Fear keeps us from our kinks
         <br />
-        We help you find others who share your desires
+        We help you find others who share your kinks
         <br />
         Like-minded people within reach
         <br />

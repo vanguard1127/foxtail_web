@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import Tooltip from "../../common/Tooltip";
-import DesiresSelector from "../../Modals/Desires/Selector";
+import KinksSelector from "../../Modals/Kinks/Selector";
 import Dropdown from "../../common/Dropdown";
 import BioTextBox from "./BioTextBox";
 
 class MyProfile extends Component {
   shouldComponentUpdate(nextProps) {
     if (
-      this.props.desires !== nextProps.desires ||
+      this.props.kinks !== nextProps.kinks ||
       this.props.sexuality !== nextProps.sexuality ||
       this.props.lang !== nextProps.lang ||
       this.props.about !== nextProps.about ||
       this.props.togglePopup !== nextProps.togglePopup ||
       this.props.errors.about !== nextProps.errors.about ||
-      this.props.errors.desires !== nextProps.errors.desires ||
+      this.props.errors.kinks !== nextProps.errors.kinks ||
       this.props.t !== nextProps.t
     ) {
       return true;
@@ -22,7 +22,7 @@ class MyProfile extends Component {
   }
   render() {
     const {
-      desires,
+      kinks,
       about,
       setValue,
       togglePopup,
@@ -46,14 +46,14 @@ class MyProfile extends Component {
           </div>
           <div className="col-md-12">
             <div className="item">
-              <DesiresSelector
+              <KinksSelector
                 t={t}
-                desires={desires}
+                kinks={kinks}
                 togglePopup={togglePopup}
                 ErrorBoundary={ErrorBoundary}
               />
-              {errors.desires && (
-                <label className="errorLbl">{errors.desires}</label>
+              {errors.kinks && (
+                <label className="errorLbl">{errors.kinks}</label>
               )}
             </div>
           </div>

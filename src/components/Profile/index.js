@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
-import DesiresSection from "./DesiresSection";
+import KinksSection from "./KinksSection";
 import ProfileCard from "./ProfileCard/";
 import Tour from "./Tour";
 import ProfileInfo from "./ProfileInfo";
 import ProfileBio from "./ProfileBio";
-import DesiresMobile from "./DesiresMobile";
+import KinksMobile from "./KinksMobile";
 import ProfileDetails from "./ProfileDetails";
 import PhotoSlider from "./PhotoSlider";
 import BlockModal from "../Modals/Block";
@@ -241,7 +241,7 @@ class ProfilePage extends Component {
                   users,
                   publicPhotos,
                   privatePhotos,
-                  desires,
+                  kinks,
                   about
                 } = profile;
 
@@ -277,8 +277,8 @@ class ProfilePage extends Component {
                               }
                               setMsgSent={this.setMsgSent}
                             />
-                            <DesiresSection
-                              desires={desires}
+                            <KinksSection
+                              kinks={kinks}
                               t={t}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                             />
@@ -312,8 +312,8 @@ class ProfilePage extends Component {
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                             />
 
-                            <DesiresMobile
-                              desires={desires}
+                            <KinksMobile
+                              kinks={kinks}
                               t={t}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                             />

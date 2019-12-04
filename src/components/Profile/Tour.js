@@ -41,9 +41,9 @@ class ProfileTour extends PureComponent {
     const { t } = this.props;
     const { isTourOpen, redirect } = this.state;
 
-    let showDesire = '[data-tut="desires"]';
+    let showKink = '[data-tut="kinks"]';
     if (window.innerWidth < 768) {
-      showDesire = '[data-tut="desiresM"]';
+      showKink = '[data-tut="kinksM"]';
     }
 
     const tourConfig = [
@@ -52,8 +52,8 @@ class ProfileTour extends PureComponent {
         content: `Here you will find member info and images. Private images can only be seen after matching or chatting.`
       },
       {
-        selector: showDesire,
-        content: `Desires are simply this member's interests and are NOT to be expected of them.`
+        selector: showKink,
+        content: `Kinks are simply this member's interests and are NOT to be expected of them.`
       },
       {
         selector: '[data-tut="btns"]',
@@ -96,8 +96,8 @@ class ProfileTour extends PureComponent {
                       </div>
                     </div>
                   </div>
-                  <div className="desires" data-tut="desires">
-                    <div className="profile-head">Desires</div>
+                  <div className="kinks" data-tut="kinks">
+                    <div className="profile-head">Kinks</div>
                     <ul>
                       <li>Cuddling</li>
                       <li>Dating</li>
@@ -143,8 +143,8 @@ class ProfileTour extends PureComponent {
                       see where it goes ;)
                     </p>
                   </div>
-                  <div className="mobile desires" data-tut="desiresM">
-                    <div className="profile-head">Desires</div>
+                  <div className="mobile kinks" data-tut="kinksM">
+                    <div className="profile-head">Kinks</div>
                     <ul>
                       <li>cuddling</li>
                       <li>dating</li>

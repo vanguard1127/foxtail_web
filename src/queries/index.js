@@ -207,7 +207,7 @@ export const UPDATE_SETTINGS = gql`
     $email: String
     $phone: String
     $username: String
-    $gender: String
+    $sex: String
     $lat: Float
     $long: Float
     $visible: Boolean
@@ -216,7 +216,7 @@ export const UPDATE_SETTINGS = gql`
     $showOnline: Boolean
     $likedOnly: Boolean
     $vibrateNotify: Boolean
-    $desires: [String]
+    $kinks: [String]
     $about: String
     $sexuality: String
     $publicPhotoList: [String]
@@ -238,7 +238,7 @@ export const UPDATE_SETTINGS = gql`
       email: $email
       phone: $phone
       username: $username
-      gender: $gender
+      sex: $sex
       sexuality: $sexuality
       visible: $visible
       newMsgNotify: $newMsgNotify
@@ -246,7 +246,7 @@ export const UPDATE_SETTINGS = gql`
       showOnline: $showOnline
       likedOnly: $likedOnly
       vibrateNotify: $vibrateNotify
-      desires: $desires
+      kinks: $kinks
       about: $about
       publicPhotoList: $publicPhotoList
       privatePhotoList: $privatePhotoList
@@ -308,7 +308,7 @@ export const CREATE_EVENT = gql`
   mutation(
     $eventname: String!
     $tagline: String
-    $desires: [String]
+    $kinks: [String]
     $interestedIn: [String]
     $description: String!
     $lat: Float!
@@ -324,7 +324,7 @@ export const CREATE_EVENT = gql`
     createEvent(
       eventname: $eventname
       tagline: $tagline
-      desires: $desires
+      kinks: $kinks
       interestedIn: $interestedIn
       description: $description
       lat: $lat
@@ -347,7 +347,7 @@ export const CREATE_EVENT = gql`
         id
       }
       description
-      desires
+      kinks
       interestedIn
       distance
       address
@@ -404,7 +404,7 @@ export const FB_RESOLVE = gql`
     $username: String
     $lang: String
     $dob: String
-    $gender: String
+    $sex: String
     $interestedIn: [String]
     $refer: String
     $aff: String
@@ -418,7 +418,7 @@ export const FB_RESOLVE = gql`
       username: $username
       lang: $lang
       dob: $dob
-      gender: $gender
+      sex: $sex
       interestedIn: $interestedIn
       refer: $refer
       aff: $aff
@@ -456,7 +456,7 @@ export const SEARCH_EVENTS = gql`
     $long: Float!
     $lat: Float!
     $maxDistance: Int!
-    $desires: [String]
+    $kinks: [String]
     $limit: Int!
     $skip: Int!
   ) {
@@ -464,7 +464,7 @@ export const SEARCH_EVENTS = gql`
       long: $long
       lat: $lat
       maxDistance: $maxDistance
-      desires: $desires
+      kinks: $kinks
       limit: $limit
       skip: $skip
     ) {
@@ -478,7 +478,7 @@ export const SEARCH_EVENTS = gql`
         id
       }
       description
-      desires
+      kinks
       interestedIn
       address
       startTime
@@ -515,7 +515,7 @@ export const SEARCH_PROFILES = gql`
       profiles {
         id
         about
-        desires
+        kinks
         profileName
         profilePic
         distance
@@ -523,7 +523,7 @@ export const SEARCH_PROFILES = gql`
           id
           username
           dob
-          gender
+          sex
           verifications {
             stdVer {
               active
@@ -541,7 +541,7 @@ export const SEARCH_PROFILES = gql`
       featuredProfiles {
         id
         about
-        desires
+        kinks
         profileName
         profilePic
         distance
@@ -549,7 +549,7 @@ export const SEARCH_PROFILES = gql`
           id
           username
           dob
-          gender
+          sex
           verifications {
             stdVer {
               active
@@ -581,7 +581,7 @@ export const GET_EVENT = gql`
         id
       }
       description
-      desires
+      kinks
       interestedIn
       ownerProfile {
         profilePic
@@ -650,7 +650,7 @@ export const GET_MY_EVENTS = gql`
         id
       }
       description
-      desires
+      kinks
       interestedIn
       address
       startTime
@@ -900,7 +900,7 @@ export const GET_SETTINGS = gql`
         id
       }
       about
-      desires
+      kinks
       sexuality
       password
       ccLast4
@@ -919,7 +919,7 @@ export const GET_PROFILE = gql`
     profile(id: $id) {
       id
       about
-      desires
+      kinks
       profilePic
       profileName
       interestedIn
@@ -935,7 +935,7 @@ export const GET_PROFILE = gql`
         id
         username
         dob
-        gender
+        sex
         sexuality
         verifications {
           stdVer {

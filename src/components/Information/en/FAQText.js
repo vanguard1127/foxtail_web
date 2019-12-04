@@ -17,7 +17,7 @@ const FAQ = () => {
             everything from flirting and cuddling to relationships and swinging.
             Many members are simply experimenting with sexualities and kinks.
             You can get an idea of what a member might be interested in by
-            looking at their desires. Desires are not a requirement of the
+            looking at their kinks. Kinks are not a requirement of the
             member. Please be respectful.
           </p>
         </li>

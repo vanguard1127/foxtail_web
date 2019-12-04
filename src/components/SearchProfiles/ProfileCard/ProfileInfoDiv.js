@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import ProfileInfoBox from "./ProfileInfoBox";
-import DesiresBlock from "../DesiresBlock";
+import KinksBlock from "../KinksBlock";
 
 class ProfileInfoDiv extends PureComponent {
   render() {
@@ -17,7 +17,7 @@ class ProfileInfoDiv extends PureComponent {
           dayjs={dayjs}
           distanceMetric={distanceMetric}
         />
-        <DesiresBlock desires={profile.desires} t={t} />
+        <KinksBlock kinks={profile.kinks} t={t} />
       </div>
     );
   }

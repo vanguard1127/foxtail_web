@@ -118,9 +118,9 @@ const AcctSettings = ({
                     modalClassName: "acctsetting",
                     okAction,
                     modalBtnText,
-                    modalInputType: "gender",
+                    modalInputType: "sex",
                     modalPlaceholder,
-                    schemaType: "gender"
+                    schemaType: "sex"
                   });
                 }}
               >

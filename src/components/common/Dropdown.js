@@ -46,8 +46,8 @@ class Dropdown extends Component {
     import("../../docs/options/" + lang)
       .then(els => {
         let ops;
-        if (this.props.type === "gender") {
-          ops = els.genderOptions;
+        if (this.props.type === "sex") {
+          ops = els.sexSingleOptions;
         } else if (this.props.type === "lang") {
           ops = els.langOptions;
         } else if (this.props.type === "sexuality") {

@@ -7,8 +7,8 @@ import axios from "axios";
 import { Mutation } from "react-apollo";
 import { SIGNS3, CREATE_EVENT } from "../../../queries";
 import PhotoUpload from "../../common/PhotoUpload";
-import DesiresModal from "../Desires/Modal";
-import DesiresSelector from "../../Modals/Desires/Selector";
+import KinksModal from "../Kinks/Modal";
+import KinksSelector from "../../Modals/Kinks/Selector";
 import AddressSearch from "../../common/AddressSearch";
 import Modal from "../../common/Modal";
 import isEmpty from "../../../utils/isEmpty";
@@ -38,15 +38,15 @@ class CreateEvent extends Component {
       this.state.eventname !== nextState.eventname ||
       this.state.tagline !== nextState.tagline ||
       this.state.description !== nextState.description ||
-      this.state.desires !== nextState.desires ||
-      this.state.desires.length !== nextState.desires.length ||
+      this.state.kinks !== nextState.kinks ||
+      this.state.kinks.length !== nextState.kinks.length ||
       this.state.address !== nextState.address ||
       this.state.image.name !== nextState.image.name ||
       this.state.startTime !== nextState.startTime ||
       this.state.endTime !== nextState.endTime ||
       this.state.interestedIn.length !== nextState.interestedIn.length ||
       this.state.showInfo !== nextState.showInfo ||
-      this.state.showDesiresPopup !== nextState.showDesiresPopup ||
+      this.state.showKinksPopup !== nextState.showKinksPopup ||
       this.state.type !== nextState.type ||
       this.state.errors !== nextState.errors ||
       this.state.removeCurrentImage !== nextState.removeCurrentImage ||
@@ -63,7 +63,7 @@ class CreateEvent extends Component {
     description: "",
     filename: "",
     filetype: "",
-    desires: [],
+    kinks: [],
     lat: null,
     long: null,
     address: "",
@@ -74,7 +74,7 @@ class CreateEvent extends Component {
     interestedIn: [],
     errors: {},
     showInfo: true,
-    showDesiresPopup: false,
+    showKinksPopup: false,
     isImageAlt: false,
     removeCurrentImage: this.props.updateEventProps
       ? this.props.updateEventProps.image
@@ -129,21 +129,21 @@ class CreateEvent extends Component {
       </div>
     ) : null;
 
-  toggleDesiresPopup = () => {
+  toggleKinksPopup = () => {
     if (this.mounted) {
       this.setState({
-        showDesiresPopup: !this.state.showDesiresPopup
+        showKinksPopup: !this.state.showKinksPopup
       });
     }
   };
-  toggleDesires = ({ checked, value, updateSettings }) => {
-    const { desires } = this.state;
+  toggleKinks = ({ checked, value, updateSettings }) => {
+    const { kinks } = this.state;
 
     if (this.mounted) {
       if (checked) {
-        this.setState({ desires: [...desires, value] });
+        this.setState({ kinks: [...kinks, value] });
       } else {
-        this.setState({ desires: desires.filter(desire => desire !== value) });
+        this.setState({ kinks: kinks.filter(kink => kink !== value) });
       }
     }
   };
@@ -280,7 +280,7 @@ class CreateEvent extends Component {
     const {
       eventname,
       tagline,
-      desires,
+      kinks,
       interestedIn,
       description,
       address,
@@ -290,7 +290,7 @@ class CreateEvent extends Component {
       startTime,
       endTime,
       image,
-      showDesiresPopup,
+      showKinksPopup,
       errors,
       showInfo,
       filename,
@@ -370,11 +370,12 @@ class CreateEvent extends Component {
                         {this.InputFeedback(t(errors.description))}
                       </div>
                       <div className="item">
-                        <DesiresSelector
-                          desires={desires}
-                          togglePopup={this.toggleDesiresPopup}
+                        <KinksSelector
+                          kinks={kinks}
+                          togglePopup={this.toggleKinksPopup}
                           ErrorBoundary={ErrorHandler.ErrorBoundary}
                           t={t}
+                          isEvent={true}
                         />
                       </div>
                       <div className="item">
@@ -544,7 +545,7 @@ class CreateEvent extends Component {
                                   mutation={CREATE_EVENT}
                                   variables={{
                                     eventname,
-                                    desires,
+                                    kinks,
                                     interestedIn,
                                     description,
                                     tagline,
@@ -593,12 +594,13 @@ class CreateEvent extends Component {
           </ErrorHandler.ErrorBoundary>
         </Modal>
 
-        {showDesiresPopup && (
-          <DesiresModal
-            close={this.toggleDesiresPopup}
-            onChange={e => this.toggleDesires(e)}
-            desires={desires}
+        {showKinksPopup && (
+          <KinksModal
+            close={this.toggleKinksPopup}
+            onChange={e => this.toggleKinks(e)}
+            kinks={kinks}
             ErrorBoundary={ErrorHandler.ErrorBoundary}
+            isEvent={true}
           />
         )}
       </section>

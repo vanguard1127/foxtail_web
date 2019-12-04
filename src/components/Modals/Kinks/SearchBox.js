@@ -4,7 +4,7 @@ const SearchBox = ({ value, onChange, t }) => {
     <div className="search">
       <input
         type="text"
-        placeholder={t("searchdesires") + "..."}
+        placeholder={t("searchkinks") + "..."}
         value={value}
         onChange={e =>
           onChange({ name: "searchText", value: e.target.value.toLowerCase() })

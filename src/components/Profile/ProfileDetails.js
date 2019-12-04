@@ -45,9 +45,9 @@ class ProfileDetails extends Component {
               <span className="head">
                 {users[1] ? t("common:Sexes") : t("common:Sex")}:
               </span>
-              <span className="data gender">
-                <span className={"sex " + users[0].gender} />
-                {users[1] && <span className={"sex " + users[1].gender} />}
+              <span className="data sex">
+                <span className={"sex " + users[0].sex} />
+                {users[1] && <span className={"sex " + users[1].sex} />}
               </span>
             </li>
             <li>

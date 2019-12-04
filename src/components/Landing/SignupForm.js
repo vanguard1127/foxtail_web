@@ -10,7 +10,7 @@ date.setFullYear(date.getFullYear() - 18);
 class SignupForm extends Component {
   schema = yup.object().shape({
     interestedIn: yup.array().required("intrstreq"),
-    gender: yup.string().required("genreq"),
+    sex: yup.string().required("genreq"),
     dob: yup
       .date()
       .nullable()
@@ -35,7 +35,7 @@ class SignupForm extends Component {
     username: "",
     email: "",
     dob: null,
-    gender: "",
+    sex: "",
     interestedIn: [],
     isCouple: false,
     isValid: false,
@@ -47,7 +47,7 @@ class SignupForm extends Component {
       username,
       email,
       dob,
-      gender,
+      sex,
       interestedIn,
       isCouple,
       isValid,
@@ -58,7 +58,7 @@ class SignupForm extends Component {
       username !== nextState.username ||
       email !== nextState.email ||
       dob !== nextState.dob ||
-      gender !== nextState.gender ||
+      sex !== nextState.sex ||
       interestedIn.length !== nextState.interestedIn.length ||
       isCouple !== nextState.isCouple ||
       isValid !== nextState.isValid ||
@@ -124,7 +124,7 @@ class SignupForm extends Component {
       username,
       email,
       dob,
-      gender,
+      sex,
       interestedIn,
       isCouple,
       isValid,
@@ -200,11 +200,11 @@ class SignupForm extends Component {
             </div>
             <div className="input">
               <Dropdown
-                value={gender}
-                type={"gender"}
+                value={sex}
+                type={"sex"}
                 onChange={e => {
                   this.setValue({
-                    name: "gender",
+                    name: "sex",
                     value: e.value
                   });
                 }}
@@ -212,7 +212,7 @@ class SignupForm extends Component {
                 lang={lang}
                 className="dropdown wide"
               />
-              {this.InputFeedback(t(errors.gender))}
+              {this.InputFeedback(t(errors.sex))}
             </div>
             <div className="input">
               <Dropdown
@@ -258,7 +258,7 @@ class SignupForm extends Component {
               email,
               dob,
               interestedIn,
-              gender,
+              sex,
               isCouple,
               lang,
               isCreate: true,
