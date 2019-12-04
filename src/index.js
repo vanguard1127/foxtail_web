@@ -295,10 +295,6 @@ const Root = () => (
 );
 
 const Wrapper = withRouter(props => {
-  //TODO:Check if it fixes scrollTo
-  setTimeout(() => {
-    window.scrollTo(0, 1);
-  }, 1000);
   let location = props.location;
   if (location.pathname) {
     if (
@@ -323,9 +319,9 @@ const Wrapper = withRouter(props => {
     } else if (location.pathname === "/uh-oh") {
       return <NotFound />;
     } else if (location.pathname === "/dev") {
-      if (process.env.NODE_ENV !== "production") {
-        return <DevTools />;
-      }
+      //TODO: ADD  if (process.env.NODE_ENV !== "production") {
+      return <DevTools />;
+      //}
     } else if (location.pathname === "/" && location.search) {
       return <ShortLinkRedirect hash={location.search} />;
     }
