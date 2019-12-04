@@ -230,8 +230,8 @@ class SignupForm extends Component {
                   maxDate={date}
                 />
               </ThemeProvider>
+              {this.InputFeedback(t(errors.dob))}
             </div>
-            {this.InputFeedback(t(errors.dob))}
             <div className="input">
               <Dropdown
                 value={gender}
@@ -262,8 +262,8 @@ class SignupForm extends Component {
                 lang={lang}
                 className="dropdown wide"
               />
+              {this.InputFeedback(t(errors.interestedIn))}
             </div>
-            {this.InputFeedback(t(errors.interestedIn))}
             <div className="couple-choose">
               <div className="select-checkbox">
                 <input
