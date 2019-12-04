@@ -228,7 +228,8 @@ class ConfirmPhone extends PureComponent {
       history,
       lang,
       tReady,
-      sendConfirmationMessage
+      sendConfirmationMessage,
+      noPass
     } = this.props;
     const {
       code,
@@ -271,21 +272,23 @@ class ConfirmPhone extends PureComponent {
           />
         </div>
         {this.InputFeedback(t(errors.phoneNumber))}
-        <div className="input password">
-          <input
-            type="password"
-            placeholder={"Password (if you have one)"}
-            tabIndex="2"
-            onChange={e => {
-              this.setValue({
-                name: "password",
-                value: e.target.value
-              });
-            }}
-            value={password}
-          />
-          {this.InputFeedback(t(errors.password))}
-        </div>
+        {!noPass && (
+          <div className="input password">
+            <input
+              type="password"
+              placeholder={"Password (if you have one)"}
+              tabIndex="2"
+              onChange={e => {
+                this.setValue({
+                  name: "password",
+                  value: e.target.value
+                });
+              }}
+              value={password}
+            />
+            {this.InputFeedback(t(errors.password))}
+          </div>
+        )}
         <div className="submit">
           <ErrorHandler.ErrorBoundary>
             <button

@@ -18,33 +18,41 @@ import { toast } from "react-toastify";
 import Dropdown from "../../common/Dropdown";
 const materialTheme = createMuiTheme({
   overrides: {
-    // MuiPickersToolbar: {
-    //   toolbar: {
-    //     backgroundColor: "#cf003c"
-    //   }
-    // },
-    // MuiPickerDTTabs: {
-    //   tabs: "#cf003c"
-    // },
-    // MuiPickersDay: {
-    //   day: {
-    //     color: "#5f00a4"
-    //   },
-    //   daySelected: {
-    //     backgroundColor: "#cf003c"
-    //   },
-    //   dayDisabled: {
-    //     color: "##616d78"
-    //   },
-    //   current: {
-    //     color: "#f70016"
-    //   }
-    // },
-    // MuiPickersModal: {
-    //   dialogAction: {
-    //     color: "#cf003c"
-    //   }
-    // }
+    input: {
+      color: "#8c909d"
+    },
+    MuiTypography: {
+      colorPrimary: { color: "#E91E63" }
+    },
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: "#E91E63"
+      }
+    },
+    MuiPickersMonth: {
+      monthSelected: {
+        color: " #E91E63"
+      }
+    },
+    MuiPickersDay: {
+      day: {
+        color: "#673ab7"
+      },
+      daySelected: {
+        backgroundColor: "#673ab7"
+      },
+      dayDisabled: {
+        color: "##616d78"
+      },
+      current: {
+        color: "#cf003c"
+      }
+    },
+    MuiPickersModal: {
+      dialogAction: {
+        color: "#E91E63"
+      }
+    }
   }
 });
 class CreateEvent extends Component {

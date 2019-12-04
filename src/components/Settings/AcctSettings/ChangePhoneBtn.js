@@ -19,14 +19,15 @@ class ChangePhoneBtn extends PureComponent {
     this.mounted = false;
   }
 
-  handleFBReturn = ({ state, code }, fbResetPhone) => {
-    if (!state || !code) {
+  handleFBReturn = ({ csrf, code }, fbResetPhone) => {
+    if (!csrf || !code) {
       return;
     }
+
     const { t, ReactGA } = this.props;
     if (this.mounted) {
       this.setState({
-        csrf: state,
+        csrf,
         code
       });
     }
@@ -59,6 +60,7 @@ class ChangePhoneBtn extends PureComponent {
               ErrorHandler={ErrorHandler}
               onResponse={resp => this.handleFBReturn(resp, fbResetPhone)}
               title={t("common:updphone")}
+              noPass
             >
               <div className="verification-box">
                 <span className="clickverify-btn">{t("updatephone")}</span>

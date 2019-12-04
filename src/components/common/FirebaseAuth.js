@@ -54,7 +54,14 @@ class FirebaseAuth extends React.PureComponent {
   }
 
   render() {
-    const { ErrorHandler, type, onResponse, children, title } = this.props;
+    const {
+      ErrorHandler,
+      type,
+      onResponse,
+      children,
+      title,
+      noPass
+    } = this.props;
     return (
       <>
         {this.state.showPhoneDialog ? (
@@ -84,6 +91,7 @@ class FirebaseAuth extends React.PureComponent {
               });
             }}
             sendCode={this.sendCode}
+            noPass={noPass}
           ></ConfirmPhone>
         ) : null}
         <span onClick={this.signIn}>{children}</span>

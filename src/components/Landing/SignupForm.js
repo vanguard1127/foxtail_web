@@ -9,36 +9,44 @@ let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
 const materialTheme = createMuiTheme({
   overrides: {
-    // MuiPickersToolbar: {
-    //   toolbar: {
-    //     backgroundColor: "#5f00a4"
-    //   }
-    // },
-    // MuiPickersCalendarHeader: {
-    //   switchHeader: {
-    //     // backgroundColor: lightBlue.A200,
-    //     // color: "white",
-    //   }
-    // },
-    // MuiPickersDay: {
-    //   day: {
-    //     color: "#5f00a4"
-    //   },
-    //   daySelected: {
-    //     backgroundColor: "#cf003c"
-    //   },
-    //   dayDisabled: {
-    //     color: "##616d78"
-    //   },
-    //   current: {
-    //     color: "#f70016"
-    //   }
-    // },
-    // MuiPickersModal: {
-    //   dialogAction: {
-    //     color: "#cf003c"
-    //   }
-    // }
+    MuiTypography: {
+      colorPrimary: { color: "#E91E63" }
+    },
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: "#E91E63"
+      }
+    },
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+        // backgroundColor: lightBlue.A200,
+        // color: "white",
+      }
+    },
+    MuiPickersMonth: {
+      monthSelected: {
+        color: " #E91E63"
+      }
+    },
+    MuiPickersDay: {
+      day: {
+        color: "#673ab7"
+      },
+      daySelected: {
+        backgroundColor: "#673ab7"
+      },
+      dayDisabled: {
+        color: "##616d78"
+      },
+      current: {
+        color: "#cf003c"
+      }
+    },
+    MuiPickersModal: {
+      dialogAction: {
+        color: "#E91E63"
+      }
+    }
   }
 });
 class SignupForm extends Component {
