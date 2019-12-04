@@ -219,9 +219,9 @@ const errorLink = onError(
               toastId: "networkError"
             }
           );
-          console.error("Network Error:", networkError);
-          // @TODO Remove this and search for a better solution
-          //window.location.replace("/uh-oh");
+          if (process.env.NODE_ENV !== "production") {
+            console.error("Network Error:", networkError);
+          }
         }
       }
     }
