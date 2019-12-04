@@ -89,45 +89,10 @@ class NavbarAuth extends PureComponent {
   componentDidMount() {
     this.mounted = true;
     const token = localStorage.getItem("token");
-    //I don't know why but we need both for it to work
-    window.addEventListener("beforeunload", () => {
-      if (token) {
-        navigator.sendBeacon(
-          process.env.REACT_APP_HTTPS_URL + "/offline?token=" + token
-        );
-      }
-    });
-    //TODO: Test removing this now that toekn is added
-    window.addEventListener(
-      "unload",
-      () => {
-        if (token) {
-          this.logData();
-        }
-      },
-      false
-    );
   }
 
   componentWillUnmount() {
     this.mounted = false;
-    const token = localStorage.getItem("token");
-    window.removeEventListener("beforeunload", () => {
-      if (token) {
-        navigator.sendBeacon(
-          process.env.REACT_APP_HTTPS_URL + "/offline?token=" + token
-        );
-      }
-    });
-    window.removeEventListener(
-      "unload",
-      () => {
-        if (token) {
-          this.logData();
-        }
-      },
-      false
-    );
     if (this.unsubscribe) {
       this.unsubscribe();
     }
@@ -136,13 +101,6 @@ class NavbarAuth extends PureComponent {
     }
   }
 
-  logData = () => {
-    axios.get(
-      process.env.REACT_APP_HTTPS_URL +
-        "/offline?token=" +
-        localStorage.getItem("token")
-    );
-  };
   render() {
     let href = window.location.href.split("/");
     href = href[3];

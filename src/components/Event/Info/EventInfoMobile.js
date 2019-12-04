@@ -63,7 +63,7 @@ class EventInfoMobile extends Component {
           </div>
           <ul>
             <li>
-              <span className="head">{t("evedate")}:</span>
+              <span className="head">{t("evestart")}:</span>
               <span className="title">
                 {dayjs(startTime)
                   .locale(lang)
@@ -72,9 +72,7 @@ class EventInfoMobile extends Component {
               </span>
             </li>
             <li>
-              <span className="head">
-                {t("evedate")} - {t("time")}:
-              </span>
+              <span className="head">{t("eveend")} :</span>
               <span className="title">
                 {dayjs(startTime)
                   .locale(lang)

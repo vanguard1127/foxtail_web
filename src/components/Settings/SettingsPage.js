@@ -222,10 +222,9 @@ class SettingsPage extends Component {
       if (this.mounted) {
         if (isDeleted) {
           privatePhotos = privatePhotos.filter(
-            x.id.toString() !== file.id.toString()
+            x => x.id.toString() !== file.id.toString()
           );
 
-          this.setState({ showModal: false });
           toast.success(t("photodel"));
         } else {
           privatePhotos = [
@@ -237,11 +236,17 @@ class SettingsPage extends Component {
             }
           ];
         }
-        this.setState({
-          privatePhotos,
-          publicPhotoList: undefined,
-          privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
-        });
+        this.setState(
+          {
+            privatePhotos,
+            showModal: false,
+            publicPhotoList: undefined,
+            privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
+          },
+          () => {
+            this.handleSubmit(this.updateSettings);
+          }
+        );
       }
     } else {
       let { publicPhotos } = this.state;
@@ -251,7 +256,6 @@ class SettingsPage extends Component {
           publicPhotos = publicPhotos.filter(
             x => x.id.toString() !== file.id.toString()
           );
-          this.setState({ showModal: false });
           toast.success(t("photodel"));
         } else {
           publicPhotos = [
@@ -266,16 +270,17 @@ class SettingsPage extends Component {
         this.setState(
           {
             publicPhotos,
+            showModal: false,
             privatePhotoList: undefined,
             publicPhotoList: publicPhotos.map(file => JSON.stringify(file))
           },
-          () => this.fillInErrors()
+          () => {
+            this.fillInErrors();
+            this.handleSubmit(this.updateSettings);
+          }
         );
       }
     }
-    //Save all pics immediately
-
-    this.handleSubmit(this.updateSettings);
   };
 
   //Must reset these to prevent override on save

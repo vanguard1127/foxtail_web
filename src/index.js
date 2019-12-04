@@ -28,6 +28,8 @@ import { withClientState } from "apollo-link-state";
 import * as Sentry from "@sentry/browser";
 import DayJsUtils from "@date-io/dayjs";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 import i18n from "./i18n";
 import DevTools from "./DevTools";
 
@@ -239,6 +241,49 @@ const client = new ApolloClient({
   assumeImmutableResults: true
 });
 
+const materialTheme = createMuiTheme({
+  overrides: {
+    MuiTypography: {
+      colorPrimary: { color: "#E91E63" }
+    },
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: "#E91E63"
+      }
+    },
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+        // backgroundColor: lightBlue.A200,
+        // color: "white",
+      }
+    },
+    MuiPickersMonth: {
+      monthSelected: {
+        color: " #E91E63"
+      }
+    },
+    MuiPickersDay: {
+      day: {
+        color: "#673ab7"
+      },
+      daySelected: {
+        backgroundColor: "#673ab7"
+      },
+      dayDisabled: {
+        color: "##616d78"
+      },
+      current: {
+        color: "#cf003c"
+      }
+    },
+    MuiPickersModal: {
+      dialogAction: {
+        color: "#E91E63"
+      }
+    }
+  }
+});
+
 const Root = () => (
   <Router>
     <Wrapper />
@@ -396,7 +441,9 @@ document.addEventListener("contextmenu", preventContextMenu);
 render(
   <ApolloProvider client={client}>
     <MuiPickersUtilsProvider utils={DayJsUtils}>
-      <Root />
+      <ThemeProvider theme={materialTheme}>
+        <Root />
+      </ThemeProvider>
     </MuiPickersUtilsProvider>
   </ApolloProvider>,
   document.getElementById("root")

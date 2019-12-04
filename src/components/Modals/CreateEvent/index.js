@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import { DateTimePicker } from "@material-ui/pickers";
-import { createMuiTheme } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/styles";
 import * as yup from "yup";
 import dayjs from "dayjs";
 import axios from "axios";
@@ -16,45 +14,7 @@ import Modal from "../../common/Modal";
 import isEmpty from "../../../utils/isEmpty";
 import { toast } from "react-toastify";
 import Dropdown from "../../common/Dropdown";
-const materialTheme = createMuiTheme({
-  overrides: {
-    input: {
-      color: "#8c909d"
-    },
-    MuiTypography: {
-      colorPrimary: { color: "#E91E63" }
-    },
-    MuiPickersToolbar: {
-      toolbar: {
-        backgroundColor: "#E91E63"
-      }
-    },
-    MuiPickersMonth: {
-      monthSelected: {
-        color: " #E91E63"
-      }
-    },
-    MuiPickersDay: {
-      day: {
-        color: "#673ab7"
-      },
-      daySelected: {
-        backgroundColor: "#673ab7"
-      },
-      dayDisabled: {
-        color: "##616d78"
-      },
-      current: {
-        color: "#cf003c"
-      }
-    },
-    MuiPickersModal: {
-      dialogAction: {
-        color: "#E91E63"
-      }
-    }
-  }
-});
+
 class CreateEvent extends Component {
   schema = yup.object().shape({
     eventname: yup
@@ -500,37 +460,32 @@ class CreateEvent extends Component {
                       {this.InputFeedback(t(errors.address))}
                       <div className="item">
                         <div className="input calender calender-input-sm">
-                          <ThemeProvider theme={materialTheme}>
-                            <DateTimePicker
-                              autoOk
-                              disablePast
-                              emptyLabel={t("evestart")}
-                              InputProps={{
-                                disableUnderline: true
-                              }}
-                              classes={{ root: "datePickerInput" }}
-                              value={startTime}
-                              onChange={e => {
-                                if (
-                                  endTime &&
-                                  dayjs(e).isAfter(dayjs(endTime))
-                                ) {
-                                  if (!toast.isActive("startTime")) {
-                                    toast.info(t("setstart"), {
-                                      position: toast.POSITION.TOP_CENTER,
-                                      toastId: "startTime"
-                                    });
-                                  }
-                                  return;
+                          <DateTimePicker
+                            autoOk
+                            disablePast
+                            emptyLabel={t("evestart")}
+                            InputProps={{
+                              disableUnderline: true
+                            }}
+                            classes={{ root: "datePickerInput" }}
+                            value={startTime}
+                            onChange={e => {
+                              if (endTime && dayjs(e).isAfter(dayjs(endTime))) {
+                                if (!toast.isActive("startTime")) {
+                                  toast.info(t("setstart"), {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    toastId: "startTime"
+                                  });
                                 }
+                                return;
+                              }
 
-                                this.setValue({
-                                  name: "startTime",
-                                  value: e
-                                });
-                              }}
-                            />
-                          </ThemeProvider>
+                              this.setValue({
+                                name: "startTime",
+                                value: e
+                              });
+                            }}
+                          />
                         </div>
                       </div>
                       <div className="item">

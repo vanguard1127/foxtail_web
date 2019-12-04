@@ -1,54 +1,12 @@
 import React, { Component } from "react";
 import * as yup from "yup";
 import { DatePicker } from "@material-ui/pickers";
-import { createMuiTheme } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/styles";
+
 import Dropdown from "../common/Dropdown";
 import SignupButton from "./SignupButton";
 let date = new Date();
 date.setFullYear(date.getFullYear() - 18);
-const materialTheme = createMuiTheme({
-  overrides: {
-    MuiTypography: {
-      colorPrimary: { color: "#E91E63" }
-    },
-    MuiPickersToolbar: {
-      toolbar: {
-        backgroundColor: "#E91E63"
-      }
-    },
-    MuiPickersCalendarHeader: {
-      switchHeader: {
-        // backgroundColor: lightBlue.A200,
-        // color: "white",
-      }
-    },
-    MuiPickersMonth: {
-      monthSelected: {
-        color: " #E91E63"
-      }
-    },
-    MuiPickersDay: {
-      day: {
-        color: "#673ab7"
-      },
-      daySelected: {
-        backgroundColor: "#673ab7"
-      },
-      dayDisabled: {
-        color: "##616d78"
-      },
-      current: {
-        color: "#cf003c"
-      }
-    },
-    MuiPickersModal: {
-      dialogAction: {
-        color: "#E91E63"
-      }
-    }
-  }
-});
+
 class SignupForm extends Component {
   schema = yup.object().shape({
     interestedIn: yup.array().required("intrstreq"),
@@ -216,28 +174,28 @@ class SignupForm extends Component {
               {this.InputFeedback(t(errors.email))}
             </div>
             <div className="input">
-              <ThemeProvider theme={materialTheme}>
-                <DatePicker
-                  autoOk
-                  disableFuture
-                  openTo="year"
-                  variant="inline"
-                  emptyLabel={t("Birthday")}
-                  InputProps={{
-                    disableUnderline: true
-                  }}
-                  classes={{ root: "datePickerInput" }}
-                  views={["year", "month", "date"]}
-                  value={dob}
-                  onChange={e => {
-                    this.setValue({
-                      name: "dob",
-                      value: e.toISOString()
-                    });
-                  }}
-                  maxDate={date}
-                />
-              </ThemeProvider>
+              <DatePicker
+                autoOk
+                disableFuture
+                openTo="year"
+                variant="inline"
+                initialFocusedDate={date}
+                emptyLabel={t("Birthday")}
+                InputProps={{
+                  disableUnderline: true
+                }}
+                classes={{ root: "datePickerInput" }}
+                views={["year", "month", "date"]}
+                value={dob}
+                onChange={e => {
+                  this.setValue({
+                    name: "dob",
+                    value: e.toISOString()
+                  });
+                }}
+                maxDate={date}
+                format="MMMM Do, YYYY"
+              />
               {this.InputFeedback(t(errors.dob))}
             </div>
             <div className="input">

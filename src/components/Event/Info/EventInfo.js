@@ -62,27 +62,20 @@ class EventInfo extends Component {
           </div>
           <ul>
             <li>
-              <span className="head">{t("evedate")}:</span>
+              <span className="head">{t("evestart")}:</span>
               <span className="title">
                 {dayjs(startTime)
                   .locale(lang)
-                  .format("DD MMMM YYYY, dddd")
+                  .format("DD MMMM YYYY @ HH:mm")
                   .toString()}
               </span>
             </li>
             <li>
-              <span className="head">
-                {t("evedate")} - {t("time")}:
-              </span>
+              <span className="head">{t("eveend")} :</span>
               <span className="title">
-                {dayjs(startTime)
-                  .locale(lang)
-                  .format("HH:mm")
-                  .toString()}{" "}
-                -{" "}
                 {dayjs(endTime)
                   .locale(lang)
-                  .format("HH:mm")
+                  .format("DD MMMM YYYY @ HH:mm")
                   .toString()}
               </span>
             </li>
