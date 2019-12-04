@@ -319,9 +319,9 @@ const Wrapper = withRouter(props => {
     } else if (location.pathname === "/uh-oh") {
       return <NotFound />;
     } else if (location.pathname === "/dev") {
-      //TODO: ADD  if (process.env.NODE_ENV !== "production") {
-      return <DevTools />;
-      //}
+      if (process.env.NODE_ENV !== "production") {
+        return <DevTools />;
+      }
     } else if (location.pathname === "/" && location.search) {
       return <ShortLinkRedirect hash={location.search} />;
     }

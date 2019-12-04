@@ -22,10 +22,7 @@ module.exports = {
       {
         loader: "babel-loader",
         test: /\.js$/,
-        exclude: [
-          "/node_modules/"
-          //TODO: ADD , "/src/DevTools.js"
-        ]
+        exclude: ["/node_modules/", "/src/DevTools.js"]
       },
       {
         test: /\.s?css$/,
