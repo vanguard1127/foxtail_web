@@ -4,7 +4,6 @@ import { FB_RESET_PHONE } from "../../../queries";
 import FirebaseAuth from "../../common/FirebaseAuth";
 
 const initialState = {
-  csrf: "",
   code: ""
 };
 class ResetPhoneButton extends PureComponent {
@@ -24,7 +23,6 @@ class ResetPhoneButton extends PureComponent {
     if (this.mounted) {
       this.setState(
         {
-          csrf: state,
           code
         },
         () => {
@@ -54,10 +52,13 @@ class ResetPhoneButton extends PureComponent {
     }
   };
   render() {
-    const { csrf, code, lang } = this.state;
+    const { code, lang } = this.state;
     const { t, token, ErrorHandler } = this.props;
     return (
-      <Mutation mutation={FB_RESET_PHONE} variables={{ csrf, code, token }}>
+      <Mutation
+        mutation={FB_RESET_PHONE}
+        variables={{ csrf: process.env.REACT_APP_CSRF, code, token }}
+      >
         {fbResetPhone => {
           return (
             <FirebaseAuth

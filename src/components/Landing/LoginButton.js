@@ -4,7 +4,6 @@ import { FB_RESOLVE } from "../../queries";
 import FirebaseAuth from "../common/FirebaseAuth";
 
 const initialState = {
-  csrf: "",
   code: "",
   password: ""
 };
@@ -17,13 +16,12 @@ class LoginButton extends PureComponent {
     this.mounted = false;
   }
 
-  handleFirebaseReturn = ({ csrf, code, password }, fbResolve) => {
+  handleFirebaseReturn = ({ code, password }, fbResolve) => {
     if (this.mounted) {
       const { reactga, t, ErrorHandler } = this.props;
 
       this.setState(
         {
-          csrf,
           code,
           password
         },
@@ -63,12 +61,17 @@ class LoginButton extends PureComponent {
   };
 
   render() {
-    const { csrf, code, password } = this.state;
+    const { code, password } = this.state;
     const { t, lang, ErrorHandler } = this.props;
     return (
       <Mutation
         mutation={FB_RESOLVE}
-        variables={{ csrf, code, isCreate: false, password }}
+        variables={{
+          csrf: process.env.REACT_APP_CSRF,
+          code,
+          isCreate: false,
+          password
+        }}
       >
         {fbResolve => {
           return (

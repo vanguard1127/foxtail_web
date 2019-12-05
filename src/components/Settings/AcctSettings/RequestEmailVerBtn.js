@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { RESEND_EMAIL_VER } from "../../../queries";
 
 const initialState = {
-  csrf: "",
   code: "",
   phone: ""
 };

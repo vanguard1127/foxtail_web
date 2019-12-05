@@ -5,7 +5,7 @@ import FirebaseAuth from "../common/FirebaseAuth";
 
 class SignupButton extends PureComponent {
   fbResolve;
-  state = { csrf: "", code: "", password: "" };
+  state = { code: "", password: "" };
 
   componentDidMount() {
     this.mounted = true;
@@ -14,12 +14,11 @@ class SignupButton extends PureComponent {
     this.mounted = false;
   }
 
-  handleFirebaseReturn = ({ csrf, code, password }) => {
+  handleFirebaseReturn = ({ code, password }) => {
     if (this.mounted) {
       const { ErrorHandler, history, ReactGA, t } = this.props;
       this.setState(
         {
-          csrf,
           code,
           password
         },

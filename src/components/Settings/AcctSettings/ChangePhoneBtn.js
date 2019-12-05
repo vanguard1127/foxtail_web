@@ -5,7 +5,6 @@ import { FB_RESET_PHONE } from "../../../queries";
 import FirebaseAuth from "../../common/FirebaseAuth";
 
 const initialState = {
-  csrf: "",
   code: "",
   phone: ""
 };
@@ -19,40 +18,46 @@ class ChangePhoneBtn extends PureComponent {
     this.mounted = false;
   }
 
-  handleFBReturn = ({ csrf, code }, fbResetPhone) => {
-    if (!csrf || !code) {
+  handleFBReturn = ({ code }, fbResetPhone) => {
+    if (!code) {
       return;
     }
 
     const { t, ReactGA } = this.props;
     if (this.mounted) {
-      this.setState({
-        csrf,
-        code
-      });
-    }
-    fbResetPhone()
-      .then(({ data }) => {
-        if (data.fbResetPhone === null) {
-          alert(t("common:tryagain"));
-          return;
+      this.setState(
+        {
+          code
+        },
+        () => {
+          fbResetPhone()
+            .then(({ data }) => {
+              if (data.fbResetPhone === null) {
+                alert(t("common:tryagain"));
+                return;
+              }
+              ReactGA.event({
+                category: "Settings",
+                action: "Change Phone"
+              });
+              toast.success(t("changenum"));
+            })
+            .catch(res => {
+              this.props.ErrorHandler.catchErrors(res);
+            });
         }
-        ReactGA.event({
-          category: "Settings",
-          action: "Change Phone"
-        });
-        toast.success(t("changenum"));
-      })
-      .catch(res => {
-        this.props.ErrorHandler.catchErrors(res);
-      });
+      );
+    }
   };
 
   render() {
-    const { csrf, code } = this.state;
+    const { code } = this.state;
     const { t, lang, ErrorHandler } = this.props;
     return (
-      <Mutation mutation={FB_RESET_PHONE} variables={{ csrf, code }}>
+      <Mutation
+        mutation={FB_RESET_PHONE}
+        variables={{ csrf: process.env.REACT_APP_CSRF, code }}
+      >
         {fbResetPhone => {
           return (
             <FirebaseAuth
