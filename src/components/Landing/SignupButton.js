@@ -82,7 +82,11 @@ class SignupButton extends PureComponent {
       lang,
       createData
     } = this.props;
-    const fbData = { ...createData, ...this.state };
+    const fbData = {
+      ...createData,
+      ...this.state,
+      csrf: process.env.REACT_APP_CSRF
+    };
     return (
       <Mutation mutation={FB_RESOLVE} variables={fbData}>
         {fbResolve => {

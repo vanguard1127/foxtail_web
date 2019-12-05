@@ -172,7 +172,7 @@ const errorLink = onError(
           tokenHandler({ operation, forward });
         } else {
           if (process.env.NODE_ENV !== "production") {
-            console.error(message);
+            console.error("GQL ERROR:", message);
             Sentry.withScope(scope => {
               scope.setLevel("error");
               scope.setTag("resolver", path);
