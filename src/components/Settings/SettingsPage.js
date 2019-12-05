@@ -299,7 +299,6 @@ class SettingsPage extends Component {
     const { ErrorHandler, t, ReactGA, toast } = this.props;
     const { isCouple, isInitial } = this.state;
     this.setErrorHandler("Settings updated...");
-    console.log("SAVE POL", this.isPhotoChanged, this.state.publicPhotos);
 
     if (!this.isPhotoChanged) {
       if (this.mounted) {
@@ -340,7 +339,6 @@ class SettingsPage extends Component {
           });
       }
     } else {
-      console.log("SAVE UN");
       this.isPhotoChanged = false;
       updateSettings()
         .then(({ data }) => {
@@ -396,13 +394,10 @@ class SettingsPage extends Component {
     const { kinks } = this.state;
     if (this.mounted) {
       if (checked) {
-        this.setState({ kinks: [...kinks, value] }, () =>
-          this.fillInErrors()
-        );
+        this.setState({ kinks: [...kinks, value] }, () => this.fillInErrors());
       } else {
-        this.setState(
-          { kinks: kinks.filter(kink => kink !== value) },
-          () => this.fillInErrors()
+        this.setState({ kinks: kinks.filter(kink => kink !== value) }, () =>
+          this.fillInErrors()
         );
       }
     }

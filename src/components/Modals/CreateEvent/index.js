@@ -382,8 +382,8 @@ class CreateEvent extends Component {
                         <Dropdown
                           value={type}
                           type={"eventType"}
-                          onChange={async e => {
-                            await this.setValue({
+                          onChange={e => {
+                            this.setValue({
                               name: "type",
                               value: e.value
                             });
@@ -528,13 +528,11 @@ class CreateEvent extends Component {
                             textAlign: "center"
                           }}
                         >
-                          {" "}
                           {this.InputFeedback(t("fixreq"))}
                         </div>
                       )}
                       <div className="item">
                         <div className="submit">
-                          {" "}
                           <Mutation
                             mutation={SIGNS3}
                             variables={{ filename, filetype }}

@@ -88,7 +88,7 @@ class EditCanvasImage extends PureComponent {
   handleExportClick = () => {
     const { uploading } = this.state;
     if (this.mounted && !uploading) {
-      this.setState({ uploading: true }, () => {
+      this.setState({ uploading: true }, async () => {
         const dataURL = this.cropper
           .getCroppedCanvas({ width: 250, height: 250 })
           .toDataURL();
@@ -99,7 +99,7 @@ class EditCanvasImage extends PureComponent {
           filebody: blobData
         };
 
-        this.handleUpload(file);
+        await this.handleUpload(file);
       });
     }
   };
@@ -113,8 +113,6 @@ class EditCanvasImage extends PureComponent {
       close
     } = this.props;
     await setS3PhotoParams(file.filename, file.filetype);
-    // format name on backend
-    // filename: this.formatFilename(file.name),
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key, url } = data.signS3;

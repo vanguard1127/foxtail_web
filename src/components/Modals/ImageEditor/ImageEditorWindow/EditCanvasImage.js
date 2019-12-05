@@ -156,7 +156,7 @@ class EditCanvasImage extends PureComponent {
     const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
     const { t } = this.props;
     if (this.mounted && !uploading && this.SourceImageRef) {
-      this.setState({ hideTransformer: true, uploading: true }, () => {
+      this.setState({ hideTransformer: true, uploading: true }, async () => {
         if (!toast.isActive("upload")) {
           toast.success(t("secupload"), {
             toastId: "upload",
@@ -194,7 +194,7 @@ class EditCanvasImage extends PureComponent {
           filebody: blobData
         };
 
-        this.handleUpload(file);
+        await this.handleUpload(file);
       });
     }
   };
@@ -208,8 +208,7 @@ class EditCanvasImage extends PureComponent {
       close
     } = this.props;
     await setS3PhotoParams(file.filename, file.filetype);
-    // format name on backend
-    // filename: this.formatFilename(file.name),
+
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key, url } = data.signS3;
