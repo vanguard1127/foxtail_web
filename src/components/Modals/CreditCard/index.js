@@ -12,6 +12,8 @@ export default class PaymentForm extends React.Component {
   };
   componentDidMount() {
     this.mounted = true;
+
+    window.scrollTo(0, 1);
   }
   componentWillUnmount() {
     this.mounted = false;

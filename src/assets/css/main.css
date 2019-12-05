@@ -10533,7 +10533,9 @@ div.register-form div.form-fields .couple-choose {
 .Toastify {
   z-index: 99999999999999;
 }
-
+.sentry-error-embed {
+  z-index: 99999999999999;
+}
 @media screen and (max-width: 660px){
 .sentry-error-embed {
   margin-top: 10% !important;

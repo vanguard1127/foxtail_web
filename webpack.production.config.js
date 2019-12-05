@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-var OfflinePlugin = require("offline-plugin");
+const OfflinePlugin = require("offline-plugin");
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -76,6 +76,12 @@ module.exports = {
     ]),
     new CleanWebpackPlugin(),
     new Dotenv({ path: "./.env.prod", defaults: true }),
-    new OfflinePlugin()
+    new OfflinePlugin({
+      ServiceWorker: {
+        events: true,
+        minify: true,
+        prefetchRequest: { credentials: "omit", mode: "same-origin" }
+      }
+    })
   ]
 };
