@@ -280,6 +280,7 @@ const materialTheme = createMuiTheme({
         color: "#cf003c"
       }
     },
+    MuiCircularProgress: { color: "#fff" },
     MuiPickersModal: {
       dialogAction: {
         color: "#E91E63"

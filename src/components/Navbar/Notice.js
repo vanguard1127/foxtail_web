@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 const NoProfileImg = require("../../assets/img/elements/no-profile.png");
 
 const Notice = ({ notice, t, dayjs, lang, showAlert, markReadAndGo }) => {
+  const [proPic, setPropic] = useState(
+    notice.fromProfile ? notice.fromProfile.profilePic : null
+  );
   if (notice.type === "alert") {
     return (
       <div
@@ -45,13 +48,11 @@ const Notice = ({ notice, t, dayjs, lang, showAlert, markReadAndGo }) => {
         <span>
           <span className="avatar">
             <img
-              src={
-                notice.fromProfile
-                  ? notice.fromProfile.profilePic
-                  : NoProfileImg
-              }
-              className="avatar"
-              alt="avatar"
+              src={proPic}
+              alt=""
+              onError={() => {
+                setPropic(NoProfileImg);
+              }}
             />
           </span>
           <div>

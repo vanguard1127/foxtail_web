@@ -276,7 +276,6 @@ class SettingsPage extends Component {
           },
           () => {
             this.fillInErrors();
-            this.handleSubmit(this.updateSettings);
           }
         );
       }

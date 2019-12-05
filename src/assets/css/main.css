@@ -4179,6 +4179,7 @@ section.event-detail .about-event-content p {
   padding: 30px;
   border-bottom: 1px solid #f2f3f5;
   letter-spacing: -0.3px;
+  word-break: break-all;
 }
 
 section.event-detail .event-info-content {
