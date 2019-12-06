@@ -451,13 +451,14 @@ render(
   document.getElementById("root")
 );
 
-OfflinePluginRuntime.install({
-  onUpdateReady: () => {
-    // Tells to new SW to take control immediately
-    OfflinePluginRuntime.applyUpdate();
-  },
-  onUpdated: () => {
-    // Reload the webpage to load into the new version
-    window.location.reload();
-  }
-});
+//TODO: READd
+// OfflinePluginRuntime.install({
+//   onUpdateReady: () => {
+//     // Tells to new SW to take control immediately
+//     OfflinePluginRuntime.applyUpdate();
+//   },
+//   onUpdated: () => {
+//     // Reload the webpage to load into the new version
+//     window.location.reload();
+//   }
+// });

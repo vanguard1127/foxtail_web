@@ -178,7 +178,7 @@ class EditCanvasImage extends PureComponent {
           quality: 1,
           pixelRatio: this.pixelRatio
         });
-        console.log("DATAULRE", dataURL);
+
         const blobData = this.dataURItoBlob(dataURL);
         console.log("TO NAME IT", this.props.imageObject.name);
         const file = {
@@ -205,7 +205,6 @@ class EditCanvasImage extends PureComponent {
     console.log("SET AS:", file.filename, file.filetype);
     setS3PhotoParams(file.filename, file.filetype);
 
-    console.log("SIGNED", data.signS3);
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key, url } = data.signS3;
