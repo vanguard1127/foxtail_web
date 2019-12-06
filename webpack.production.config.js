@@ -79,8 +79,7 @@ module.exports = {
     new OfflinePlugin({
       ServiceWorker: {
         events: true,
-        minify: true,
-        prefetchRequest: { credentials: "omit", mode: "same-origin" }
+        minify: true
       }
     })
   ]
