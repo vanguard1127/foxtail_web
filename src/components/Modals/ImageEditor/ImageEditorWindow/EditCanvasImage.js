@@ -154,8 +154,16 @@ class EditCanvasImage extends PureComponent {
 
   handleExportClick = () => {
     const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
+    const { t } = this.props;
     if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, async () => {
+        if (!toast.isActive("upload")) {
+          toast.success(t("secupload"), {
+            toastId: "upload",
+            autoClose: false,
+            hideProgressBar: false
+          });
+        }
         const rotDegrees = rotation % 360;
         const scaledImgWidth =
           rotDegrees === 0 || rotDegrees === 180
@@ -196,10 +204,9 @@ class EditCanvasImage extends PureComponent {
       handlePhotoListChange,
       setS3PhotoParams,
       uploadToS3,
-      close,
-      t
+      close
     } = this.props;
-    console.log("SET AS:", file.filename, file.filetype);
+
     setS3PhotoParams(file.filename, file.filetype);
 
     await signS3()
@@ -209,13 +216,7 @@ class EditCanvasImage extends PureComponent {
         await uploadToS3(file.filebody, signedRequest);
         console.log("DONE", key, url);
         await handlePhotoListChange({ file, key, url });
-        if (!toast.isActive("upload")) {
-          toast.success(t("secupload"), {
-            toastId: "upload",
-            autoClose: false,
-            hideProgressBar: false
-          });
-        }
+        toast.dismiss();
         close();
       })
       .catch(res => {

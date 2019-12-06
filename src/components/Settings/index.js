@@ -51,6 +51,7 @@ class Settings extends Component {
     let showBlkModal = false;
     let showCplModal = false;
 
+    console.log("STATE", state);
     //For page open responses
     if (state) {
       if (state.couple) isCouple = state.couple;

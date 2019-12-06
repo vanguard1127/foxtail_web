@@ -17,8 +17,8 @@ const FAQ = () => {
             everything from flirting and cuddling to relationships and swinging.
             Many members are simply experimenting with sexualities and kinks.
             You can get an idea of what a member might be interested in by
-            looking at their kinks. Kinks are not a requirement of the
-            member. Please be respectful.
+            looking at their kinks. Kinks are not a requirement of the member.
+            Please be respectful.
           </p>
         </li>
         <li>
@@ -34,11 +34,14 @@ const FAQ = () => {
         </li>
         <li>
           <p>Who is Foxtail?</p>
-          <p>Foxtail includes all of us who enjoy consensual adult play.</p>
+          <p>
+            Foxtail includes all of us who enjoy consent-based adult
+            relationships.
+          </p>
         </li>
         <li>
           <p>Where is Foxtail?</p>
-          <p>We’re a US based organization by LOV Inc.</p>
+          <p>We are a US based organization by LOV Inc.</p>
         </li>
         <li>
           <p>What privacy tools are there?</p>
@@ -47,7 +50,6 @@ const FAQ = () => {
             in our database.
           </p>
           <p>
-            {" "}
             All photos are safely hosted by Amazon and only accessible via our
             website. When you upload photos into Foxtail you can easily add
             Masks (stickers) to your face.
@@ -55,9 +57,9 @@ const FAQ = () => {
           <p>
             Your name isn’t required to use foxtail but you’ll need to use your
             phone to login via Facebook’s Account Kit login. Facebook, ONLY
-            verifies you are the owner of the phone and doesn't store your phone
-            number. Email is required to communicate in Foxtail, this ensures
-            you’ll get all messages (but you can turn off emails).{" "}
+            verifies you are the owner of the phone and does not store your
+            phone number. Email is required to communicate in Foxtail, this
+            ensures you’ll get all messages (but you can turn off emails).{" "}
           </p>
           <p>
             It is IMPOSSIBLE for your personal information to be retrieved from

@@ -240,6 +240,11 @@ const client = new ApolloClient({
 
 const materialTheme = createMuiTheme({
   overrides: {
+    palette: {
+      primary: {
+        main: "#cf003c"
+      }
+    },
     MuiTypography: {
       colorPrimary: { color: "#E91E63" }
     },
@@ -451,14 +456,13 @@ render(
   document.getElementById("root")
 );
 
-//TODO: READd
-// OfflinePluginRuntime.install({
-//   onUpdateReady: () => {
-//     // Tells to new SW to take control immediately
-//     OfflinePluginRuntime.applyUpdate();
-//   },
-//   onUpdated: () => {
-//     // Reload the webpage to load into the new version
-//     window.location.reload();
-//   }
-// });
+OfflinePluginRuntime.install({
+  onUpdateReady: () => {
+    // Tells to new SW to take control immediately
+    OfflinePluginRuntime.applyUpdate();
+  },
+  onUpdated: () => {
+    // Reload the webpage to load into the new version
+    window.location.reload();
+  }
+});

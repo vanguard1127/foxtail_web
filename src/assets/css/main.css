@@ -10566,3 +10566,7 @@ div.register-form div.form-fields .couple-choose {
     left: 15px;
     top: 15px;
   }
+
+  .datePickerInput input{
+    color: #8c909d !important;
+  }

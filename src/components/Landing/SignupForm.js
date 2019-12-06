@@ -184,6 +184,9 @@ class SignupForm extends Component {
                 InputProps={{
                   disableUnderline: true
                 }}
+                InputLabelProps={{
+                  shrink: true
+                }}
                 classes={{ root: "datePickerInput" }}
                 views={["year", "month", "date"]}
                 value={dob}

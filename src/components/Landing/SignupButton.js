@@ -25,7 +25,7 @@ class SignupButton extends PureComponent {
         () => {
           this.fbResolve()
             .then(({ data }) => {
-              const { isCouple } = this.state;
+              const { isCouple } = this.props.createData;
               if (data.fbResolve === null) {
                 ReactGA.event({
                   category: "Signup",
