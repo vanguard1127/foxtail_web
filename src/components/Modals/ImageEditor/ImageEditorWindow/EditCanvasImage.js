@@ -180,14 +180,11 @@ class EditCanvasImage extends PureComponent {
         });
 
         const blobData = this.dataURItoBlob(dataURL);
-        console.log("TO NAME IT", this.props.imageObject.name);
         const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",
           filebody: blobData
         };
-        console.log("File", file);
-
         await this.handleUpload(file);
       });
     }
