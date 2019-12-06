@@ -154,16 +154,8 @@ class EditCanvasImage extends PureComponent {
 
   handleExportClick = () => {
     const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
-    const { t } = this.props;
     if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, async () => {
-        if (!toast.isActive("upload")) {
-          toast.success(t("secupload"), {
-            toastId: "upload",
-            autoClose: false,
-            hideProgressBar: false
-          });
-        }
         const rotDegrees = rotation % 360;
         const scaledImgWidth =
           rotDegrees === 0 || rotDegrees === 180
@@ -186,13 +178,15 @@ class EditCanvasImage extends PureComponent {
           quality: 1,
           pixelRatio: this.pixelRatio
         });
-
+        console.log("DATAULRE", dataURL);
         const blobData = this.dataURItoBlob(dataURL);
+        console.log("TO NAME IT", this.props.imageObject.name);
         const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",
           filebody: blobData
         };
+        console.log("File", file);
 
         await this.handleUpload(file);
       });
@@ -205,10 +199,13 @@ class EditCanvasImage extends PureComponent {
       handlePhotoListChange,
       setS3PhotoParams,
       uploadToS3,
-      close
+      close,
+      t
     } = this.props;
+    console.log("SET AS:", file.filename, file.filetype);
     setS3PhotoParams(file.filename, file.filetype);
 
+    console.log("SIGNED", data.signS3);
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key, url } = data.signS3;
@@ -216,7 +213,13 @@ class EditCanvasImage extends PureComponent {
         await uploadToS3(file.filebody, signedRequest);
         console.log("DONE", key, url);
         await handlePhotoListChange({ file, key, url });
-        toast.dismiss();
+        if (!toast.isActive("upload")) {
+          toast.success(t("secupload"), {
+            toastId: "upload",
+            autoClose: false,
+            hideProgressBar: false
+          });
+        }
         close();
       })
       .catch(res => {
