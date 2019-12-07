@@ -19,7 +19,7 @@ class LoginButton extends PureComponent {
   handleFirebaseReturn = ({ code, password }, fbResolve) => {
     if (this.mounted) {
       const { reactga, t, ErrorHandler } = this.props;
-
+      console.log("FFRR", code, password);
       this.setState(
         {
           code,

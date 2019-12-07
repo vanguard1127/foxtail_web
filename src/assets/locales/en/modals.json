@@ -111,6 +111,7 @@
   "enterboth": "Enter the phone number and email associated with your account.",
   "phonenum": "Phone Number",
   "alreadyphonemsg": "If there is an account for that phone number, an email was sent with instructions to reset the phone number. If you used a bad email for the account, you'll have to contact us at support@foxtailapp.com for help.",
+  "alreadypassmsg": "If there is an account for that phone number and password, an email was sent with instructions to reset the password. If you used a bad email for the account, you'll have to contact us at support@foxtailapp.com for help.",
   "sendphoneres": "Send Phone Reset",
   "sendpassres": "Send Password Reset",
   "msgnotsent": "Message not sent.",

@@ -20,9 +20,7 @@ class ResetPhone extends PureComponent {
   }
   handleTextChange = event => {
     if (this.mounted) {
-      this.setState({ text: event.target.value.replace(/\D/g, "") }, () =>
-        this.validatePhone()
-      );
+      this.setState({ text: event.target.value.replace(/\D/g, "") });
     }
   };
 
@@ -73,7 +71,7 @@ class ResetPhone extends PureComponent {
       tReady,
       ReactGA
     } = this.props;
-    const { code, text, isValid, errors } = this.state;
+    const { code, text, errors } = this.state;
     if (!tReady) {
       return null;
     }
@@ -110,9 +108,9 @@ class ResetPhone extends PureComponent {
                               value={text}
                               autoFocus
                             />
+                            {this.InputFeedback(t(errors.phoneNumber))}
                           </div>
 
-                          {this.InputFeedback(t(errors.phoneNumber))}
                           <div className="submit">
                             <ErrorHandler.ErrorBoundary>
                               <EmailPhoneResetBtn
@@ -120,7 +118,7 @@ class ResetPhone extends PureComponent {
                                 phone={code + text}
                                 close={close}
                                 ErrorHandler={ErrorHandler}
-                                isValid={isValid}
+                                validatePhone={this.validatePhone}
                               />
                             </ErrorHandler.ErrorBoundary>
                             <button className="border" onClick={close}>

@@ -38,11 +38,11 @@ class ConfirmPhone extends PureComponent {
     this.mounted = true;
   }
 
-  setValue = ({ name, value }) => {
+  setValue = ({ name, value, onlyPass }) => {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
         if (name !== "phoneNumber") {
-          this.validateForm();
+          this.validateForm(onlyPass);
         } else {
           this.validatePhone();
         }
@@ -50,14 +50,19 @@ class ConfirmPhone extends PureComponent {
     }
   };
 
-  validateForm = async () => {
+  validateForm = async onlyPass => {
     try {
       if (this.mounted) {
         const { password, confirmpass } = this.state;
-        await this.schema.validate({ password, confirmpass });
-        this.setState({ isValid: true, errors: {} });
-        return true;
+        if (!onlyPass) {
+          await this.schema.validate({ password, confirmpass });
+        } else {
+          await this.schema.validate({ password });
+        }
       }
+
+      this.setState({ isValid: true, errors: {} });
+      return true;
     } catch (e) {
       let errors = { [e.path]: e.message };
       this.setState({ isValid: false, errors });
@@ -211,9 +216,9 @@ class ConfirmPhone extends PureComponent {
               {t("sendvcode")}
             </span>
           </ErrorHandler.ErrorBoundary>
-          <button className="border" onClick={close}>
+          <span className="border" onClick={close}>
             {t("common:Cancel")}
-          </button>
+          </span>
         </div>
       </>
     );
@@ -239,7 +244,7 @@ class ConfirmPhone extends PureComponent {
       isValid,
       errors
     } = this.state;
-
+    console.log("errprs", errors);
     return (
       <>
         <span className="description">{t("enterphone")}</span>
@@ -281,7 +286,8 @@ class ConfirmPhone extends PureComponent {
               onChange={e => {
                 this.setValue({
                   name: "password",
-                  value: e.target.value
+                  value: e.target.value,
+                  onlyPass: true
                 });
               }}
               value={password}
@@ -291,8 +297,7 @@ class ConfirmPhone extends PureComponent {
         )}
         <div className="submit">
           <ErrorHandler.ErrorBoundary>
-            <button
-              type="submit"
+            <span
               tabIndex="3"
               className="color"
               onClick={() => {
@@ -321,11 +326,11 @@ class ConfirmPhone extends PureComponent {
               }}
             >
               {t("sendvcode")}
-            </button>
+            </span>
           </ErrorHandler.ErrorBoundary>
-          <button className="border" onClick={close}>
+          <span className="border" onClick={close}>
             {t("common:Cancel")}
-          </button>
+          </span>
         </div>
       </>
     );
@@ -366,13 +371,9 @@ class ConfirmPhone extends PureComponent {
           )}
         </div>
         <div className="submit">
-          <button
-            type="submit"
+          <span
             className="color"
             onClick={() => {
-              if (!isValid) {
-                return;
-              }
               this.setState({
                 sending: true,
                 error: false,
@@ -400,10 +401,10 @@ class ConfirmPhone extends PureComponent {
             }}
           >
             {t("confirmphone")}
-          </button>
-          <button className="border" onClick={close}>
+          </span>
+          <span className="border" onClick={close}>
             {t("common:Cancel")}
-          </button>
+          </span>
         </div>
       </>
     );
@@ -482,16 +483,15 @@ class ConfirmPhone extends PureComponent {
                     <form>
                       <div className="form-content">
                         <div className="submit">
-                          <button
-                            type="submit"
+                          <span
                             className="color"
                             onClick={sendConfirmationMessage}
                           >
                             {t("sendvcode")}
-                          </button>
-                          <button className="border" onClick={close}>
+                          </span>
+                          <span className="border" onClick={close}>
                             {t("common:Cancel")}
-                          </button>
+                          </span>
                         </div>
                       </div>
                     </form>

@@ -146,6 +146,7 @@ class ResetPassword extends PureComponent {
                           <div className="input password">
                             <input
                               type="email"
+                              inputMode="email"
                               placeholder={"Email"}
                               value={email}
                               onChange={e => {

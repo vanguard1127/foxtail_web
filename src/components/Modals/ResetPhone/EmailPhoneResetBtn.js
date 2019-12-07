@@ -3,8 +3,14 @@ import { Mutation } from "react-apollo";
 import { SEND_PHONE_RESET_EMAIL } from "../../../queries";
 
 class EmailPhoneResetBtn extends PureComponent {
-  handleClick = sendPhoneResetEmail => {
-    const { t, close, ErrorHandler } = this.props;
+  handleClick = async sendPhoneResetEmail => {
+    const { t, close, ErrorHandler, validatePhone } = this.props;
+
+    const isValid = await validatePhone();
+
+    if (!isValid) {
+      return;
+    }
 
     sendPhoneResetEmail()
       .then(({ data }) => {
@@ -13,12 +19,11 @@ class EmailPhoneResetBtn extends PureComponent {
       })
       .catch(res => {
         ErrorHandler.catchErrors(res);
-        alert(t("common:error"));
-        close();
       });
   };
+
   render() {
-    const { t, phone, isValid } = this.props;
+    const { t, phone } = this.props;
     return (
       <Mutation mutation={SEND_PHONE_RESET_EMAIL} variables={{ phone }}>
         {sendPhoneResetEmail => {
@@ -27,9 +32,7 @@ class EmailPhoneResetBtn extends PureComponent {
               className="color"
               onClick={e => {
                 e.preventDefault();
-                if (!isValid) {
-                  return;
-                }
+
                 this.handleClick(sendPhoneResetEmail);
               }}
             >

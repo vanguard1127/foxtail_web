@@ -38,7 +38,7 @@ class ResetPasswordBtn extends PureComponent {
               onClick={() => this.handleClick(resetPassword)}
               style={{ marginTop: "5px" }}
             >
-              {t("sendpassres")}
+              {t("setpass")}
             </span>
           );
         }}

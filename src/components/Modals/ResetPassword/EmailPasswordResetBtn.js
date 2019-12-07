@@ -5,16 +5,16 @@ import { SEND_PASSWORD_RESET_EMAIL } from "../../../queries";
 class EmailPasswordResetBtn extends PureComponent {
   handleClick = sendPasswordResetEmail => {
     const { t, close, ErrorHandler } = this.props;
-
     sendPasswordResetEmail()
-      .then(() => {
-        alert(t("alreadyphonemsg"));
+      .then(data => {
+        alert(t("alreadypassmsg"));
         close();
       })
       .catch(res => {
+        alert(t("alreadypassmsg"));
         ErrorHandler.catchErrors(res);
+        close();
       });
-    close();
   };
   render() {
     const { t, phone, email } = this.props;
