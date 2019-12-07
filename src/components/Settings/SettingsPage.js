@@ -299,7 +299,7 @@ class SettingsPage extends Component {
     const { ErrorHandler, t, ReactGA, toast } = this.props;
     const { isCouple, isInitial } = this.state;
     this.setErrorHandler("Settings updated...");
-    console.log("CIORI", isCouple, isInitial);
+
     if (!this.isPhotoChanged) {
       if (this.mounted) {
         this.setState({

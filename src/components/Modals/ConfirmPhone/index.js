@@ -229,22 +229,11 @@ class ConfirmPhone extends PureComponent {
       close,
       t,
       ErrorHandler,
-      token,
-      history,
-      lang,
-      tReady,
       sendConfirmationMessage,
       noPass
     } = this.props;
-    const {
-      code,
-      phoneNumber,
-      password,
-      confirmpass,
-      isValid,
-      errors
-    } = this.state;
-    console.log("errprs", errors);
+    const { code, phoneNumber, password, isValid, errors } = this.state;
+
     return (
       <>
         <span className="description">{t("enterphone")}</span>

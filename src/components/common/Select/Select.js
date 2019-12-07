@@ -108,7 +108,6 @@ class Select extends PureComponent {
   };
 
   toggleDropdown = e => {
-    console.log(e.target.tagName, this.props.multiple);
     if (this.props.multiple && e.target.tagName === "LI") {
       this.setState({ menuOpen: true });
       return;
