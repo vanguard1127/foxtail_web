@@ -107,10 +107,18 @@ class Select extends PureComponent {
     this.setState({ menuOpen: false });
   };
 
+  toggleDropdown = e => {
+    console.log(e.target.tagName, this.props.multiple);
+    if (this.props.multiple && e.target.tagName === "LI") {
+      this.setState({ menuOpen: true });
+      return;
+    }
+    this.setState({ menuOpen: !this.state.menuOpen });
+  };
+
   render() {
     const { selectedOptions, selectedOption, menuOpen } = this.state;
     const { className, label, multiple, options, t } = this.props;
-    const menuStatus = multiple ? true : !menuOpen;
     const optionCounter = selectedOptions ? selectedOptions.length : 0;
 
     const SelectList = () => (
@@ -141,8 +149,8 @@ class Select extends PureComponent {
     return (
       <React.Fragment>
         <div
-          className={"select-container " + className || ""}
-          onClick={() => this.setState({ menuOpen: menuStatus })}
+          className={`select-container ${className} ${menuOpen ? "open" : ""}`}
+          onClick={this.toggleDropdown}
           ref={selectContainerRef =>
             (this.selectContainerRef = selectContainerRef)
           }

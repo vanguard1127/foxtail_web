@@ -25,6 +25,50 @@
   bottom: 31px;
 }
 
+.select-container.open::before {
+  content: "\F005";
+}
+
+.select-container.dropdown::before {
+  content: "";
+  font-family: "foxtail-icon";
+  color: #e5e7ee;
+  font-size: 18px;
+  position: absolute !important;
+  left: 15px;
+  top: 15px;
+  z-index: 1;
+}
+
+.select-container.dropdown::after {
+  content: "\f004";
+  font-family: "foxtail-icon";
+  color: #f50043;
+  position: absolute;
+  z-index: 1;
+}
+
+.select-container.dropdown.open::after {
+  content: "\f005" !important;
+  font-family: "foxtail-icon";
+  color: #f50043;
+  position: absolute;
+}
+
+section.landing .form-content .select-container.dropdown::after {
+  right: 20px;
+  top: 15px;
+  font-size: 14px;
+  z-index: 1;
+}
+
+.credit-card .dropdown::after {
+  right: 30px;
+  top: 15px;
+  font-size: 14px;
+  z-index: 99999;
+}
+
 .create-event .select-container::before {
   right: 20px;
 }
@@ -101,7 +145,7 @@
   color: #f50043;
 }
 .select-list.multiple li.checked::before {
-  content: "\e803";
+  content: "\e804";
   font-family: "foxtail-icon";
   position: relative;
   font-size: 7px;

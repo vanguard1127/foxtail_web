@@ -95,11 +95,11 @@ class SetLocationModal extends Component {
               close={close}
               description={
                 !isBlackMember && (
-                  <small>
+                  <div>
                     {t("compmsg")}
                     <br />
                     {t("compsecmsg")}
-                  </small>
+                  </div>
                 )
               }
               okSpan={

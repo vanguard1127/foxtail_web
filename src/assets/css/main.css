@@ -491,7 +491,7 @@ header .toggle {
 }
 
 .invite-member .inv-item .select-checkbox input:checked + label span:before {
-  content: "\e803";
+  content: "\e804";
   font-family: "foxtail-icon";
   color: #cb0032;
   font-size: 8px;
@@ -924,11 +924,7 @@ section.meet-filter .dropdown select {
   font-weight: 400;
 }
 
-section.meet-filter .dropdown::before {
-  content: "\f004";
-  font-family: "foxtail-icon";
-  color: #f50043;
-  position: absolute;
+section.meet-filter .dropdown::after {
   right: 20px;
   top: 15px;
   font-size: 14px;
@@ -3393,11 +3389,7 @@ section.go-events .header .settings-con .dropdown select {
   font-weight: 400;
 }
 
-section.go-events .header .settings-con .dropdown::before {
-  content: "\f004";
-  font-family: "foxtail-icon";
-  color: #f50043;
-  position: absolute;
+section.go-events .header .settings-con .dropdown::after {
   right: 20px;
   top: 15px;
   font-size: 14px;
@@ -5389,7 +5381,7 @@ section.settings .page .content span.heading {
 }
 
 .select2-container--default .select2-results__option[aria-selected="true"]::before {
-  content: "\e803";
+  content: "\e804";
   font-family: "foxtail-icon";
   position: relative;
   font-size: 7px;
@@ -6184,7 +6176,7 @@ section.kinks-popup .modal-popup .m-body .kinks-list-con ul li label b {
 }
 
 section.kinks-popup .modal-popup .m-body .kinks-list-con ul li input:checked + label span:before {
-  content: "\e803";
+  content: "\e804";
   font-family: "foxtail-icon";
   color: #cb0032;
   font-size: 10px;
@@ -6336,7 +6328,7 @@ section.couple-popup-content .create-profile .choose-box .select-checkbox label 
 }
 
 section.couple-popup-content .create-profile .choose-box .select-checkbox input:checked + label span:before {
-  content: "\e803";
+  content: "\e804";
   font-family: "foxtail-icon";
   color: #cb0032;
   font-size: 10px;
@@ -6507,7 +6499,7 @@ section.invite-popup-content .select-checkbox input + label span {
 }
 
 section.invite-popup-content .select-checkbox input:checked + label span:before {
-  content: "\e803";
+  content: "\e804";
   font-family: "foxtail-icon";
   color: #cb0032;
   font-size: 10px;
@@ -7123,28 +7115,6 @@ section.landing .register-form form .form-content .dropdown select {
   font-weight: 400;
 }
 
-section.landing .register-form form .form-content .dropdown::before {
-  content: "";
-  font-family: "foxtail-icon";
-  color: #e5e7ee;
-  font-size: 18px;
-  position: absolute !important;
-  left: 15px;
-  top: 15px;
-  /* z-index: 999999; */
-}
-
-section.landing .register-form form .form-content .dropdown::after {
-  content: "\f004";
-  font-family: "foxtail-icon";
-  color: #f50043;
-  position: absolute;
-  right: 20px;
-  top: 17px;
-  font-size: 14px;
-  z-index: 1;
-}
-
 section.landing .register-form form .form-content .dropdown label {
   top: 9px;
   left: 15px;
@@ -7288,7 +7258,7 @@ section.landing .register-form form .form-content .couple-choose label b {
 }
 
 section.landing .register-form form .form-content .couple-choose input:checked + label span:before {
-  content: "\e803";
+  content: "\e804";
   font-family: "foxtail-icon";
   color: #cb0032;
   font-size: 10px;
@@ -7635,6 +7605,7 @@ section.login-modal.verifications .popup.full,
   max-height: 88vh;
 }
 
+
 section.login-modal.create-event .popup form{
   max-height: 70vh;
   overflow: auto;
@@ -7649,7 +7620,7 @@ section.login-modal.rules .popup.full .form-content  {
 
 
 section.login-modal .popup a.close::before {
-  content: "\e804";
+  content: "\e805";
   font-family: "foxtail-icon";
   color: #3d3d3d;
   font-size: 14px;
@@ -8246,7 +8217,7 @@ ul.black-member li {
 }
 
 ul.black-member li::before {
-  content: "\e803";
+  content: "\e804";
   font-family: "foxtail-icon";
   padding-right: 11px;
   font-size: 12px;
@@ -10570,3 +10541,4 @@ div.register-form div.form-fields .couple-choose {
   .datePickerInput input{
     color: #8c909d !important;
   }
+
