@@ -24,7 +24,9 @@ const UserToolbar = ({
   const [skip, setSkip] = useState(0);
 
   const skipForward = () => {
-    setSkip(skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT));
+    const newSkip = skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT);
+    setSkip(newSkip);
+    return newSkip;
   };
 
   const resetSkip = () => {
