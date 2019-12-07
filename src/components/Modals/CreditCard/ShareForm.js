@@ -1,5 +1,4 @@
 import React from "react";
-import "react-credit-cards/es/styles-compiled.css";
 import "./CreditCard.css";
 
 const ShareForm = ({

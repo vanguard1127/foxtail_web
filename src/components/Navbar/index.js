@@ -5,7 +5,6 @@ import { withTranslation } from "react-i18next";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { GET_COUNTS, NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../queries";
 import { Query } from "react-apollo";
-import axios from "axios";
 import Spinner from "../common/Spinner";
 import Logout from "./LogoutLink";
 import * as ErrorHandler from "../common/ErrorHandler";

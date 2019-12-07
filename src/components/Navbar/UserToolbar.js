@@ -14,7 +14,6 @@ const UserToolbar = ({
   counts,
   refetch,
   ErrorHandler,
-  msgAudio,
   blinkInbox,
   history
 }) => {

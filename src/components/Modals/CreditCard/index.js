@@ -1,7 +1,5 @@
 import React from "react";
 import { Spring } from "react-spring/renderprops";
-import "react-credit-cards/es/styles-compiled.css";
-import "./CreditCard.css";
 import Dropdown from "../../common/Dropdown";
 import CCForm from "./CCForm";
 import ShareForm from "./ShareForm";

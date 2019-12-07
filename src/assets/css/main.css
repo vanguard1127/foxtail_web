@@ -1323,11 +1323,11 @@ section.featured-profiles .slider .item .info .data span.detail ul li.sex::befor
 }
 
 section.featured-profiles .slider .item .info .data span.detail ul li.sex.f::before {
-  content: "\e801";
+  content: "\e802";
 }
 
 section.featured-profiles .slider .item .info .data span.detail ul li.sex.m::before {
-  content: "\e802";
+  content: "\e803";
 }
 
 section.featured-profiles .slider .item .info .data span.interest {
@@ -1605,12 +1605,12 @@ section.members .card-item .info span.detail ul li.sex::before {
 }
 
 section.members .card-item .info span.detail ul li.sex.f::before {
-  content: "\e801";
+  content: "\e802";
   font-size: 12px;
 }
 
 section.members .card-item .info span.detail ul li.sex.m::before {
-  content: "\e802";
+  content: "\e803";
   font-size: 12px;
 }
 
@@ -8394,7 +8394,7 @@ section.not-found .icon i.nico.message::before {
   background-image: none;
 }
 section.not-found .icon i.nico.cogs::before {
-  content: "\e800";
+  content: "\e801";
 }
 
 section.not-found .icon i.nico.x::before {
@@ -9723,10 +9723,10 @@ section.settings .sidebar .menu ul li.highlightTxt:hover {
   color: #8f969c;
 }
 .sex.M::before {
-  content: "\e802";
+  content: "\e803";
 }
 .sex.F::before {
-  content: "\e801";
+  content: "\e802";
 }
 
 .sex.I::before {

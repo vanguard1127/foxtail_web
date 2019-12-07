@@ -4,8 +4,6 @@ import { Mutation } from "react-apollo";
 import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
 import { withRouter, Redirect } from "react-router-dom";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
 class ProfileTour extends PureComponent {
   state = {
     isTourOpen: true
@@ -84,7 +82,8 @@ class ProfileTour extends PureComponent {
                       <div className="avatar">
                         <img
                           src={
-                            process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
+                            process.env.REACT_APP_S3_BUCKET_URL +
+                            "tour/" +
                             "usr/big-avatar/1011@2x.png"
                           }
                           alt=""
@@ -157,7 +156,8 @@ class ProfileTour extends PureComponent {
                         <a href={"#link"}>
                           <img
                             src={
-                              process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
+                              process.env.REACT_APP_S3_BUCKET_URL +
+                              "tour/" +
                               "usr/medium-avatar/1001.png"
                             }
                             alt=""
@@ -173,7 +173,8 @@ class ProfileTour extends PureComponent {
                         <a href={"#link"}>
                           <img
                             src={
-                              process.env.REACT_APP_S3_BUCKET_URL+"tour/" +
+                              process.env.REACT_APP_S3_BUCKET_URL +
+                              "tour/" +
                               "usr/blur-avatar/1002.png"
                             }
                             alt=""

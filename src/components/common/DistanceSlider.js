@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 import milesToKilometers from "../../utils/distanceMetric";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const SliderWithToolTip = createSliderWithTooltip(Slider);
