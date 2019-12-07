@@ -287,6 +287,11 @@ const materialTheme = createMuiTheme({
       dialogAction: {
         color: "#E91E63"
       }
+    },
+    MuiPickersClock: { pin: { backgroundColor: "#673ab7" } },
+    MuiPickersClockPointer: {
+      pointer: { backgroundColor: "#673ab7" },
+      thumb: { border: "14px solid #673ab7" }
     }
   }
 });

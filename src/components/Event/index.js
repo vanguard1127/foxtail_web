@@ -13,7 +13,6 @@ import BlockModal from "../Modals/Block";
 import Spinner from "../common/Spinner";
 import Modal from "../common/Modal";
 import Header from "./Header/";
-import Tour from "./Tour";
 import About from "./About/";
 import EventInfoMobile from "./Info/EventInfoMobile";
 import Discussion from "./Discussion/";
@@ -124,22 +123,22 @@ class EventPage extends Component {
     if (!tReady) {
       return <Spinner />;
     }
-    if (
-      id === "tour" &&
-      session &&
-      session.currentuser.tours.indexOf("e") < 0
-    ) {
-      ErrorHandler.setBreadcrumb("Opened Tour: Event");
-      return (
-        <div>
-          <Tour
-            ErrorHandler={ErrorHandler}
-            refetchUser={this.props.refetch}
-            session={session}
-          />
-        </div>
-      );
-    }
+    // if (
+    //   id === "tour" &&
+    //   session &&
+    //   session.currentuser.tours.indexOf("e") < 0
+    // ) {
+    //   ErrorHandler.setBreadcrumb("Opened Tour: Event");
+    //   return (
+    //     <div>
+    //       <Tour
+    //         ErrorHandler={ErrorHandler}
+    //         refetchUser={this.props.refetch}
+    //         session={session}
+    //       />
+    //     </div>
+    //   );
+    // }
     return (
       <Query
         query={GET_EVENT}

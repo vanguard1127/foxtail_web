@@ -12,12 +12,26 @@ export default class PaymentForm extends React.Component {
   };
   componentDidMount() {
     this.mounted = true;
-
+    document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener("touchstart", this.handleClickOutside);
     window.scrollTo(0, 1);
   }
   componentWillUnmount() {
     this.mounted = false;
+    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("touchstart", this.handleClickOutside);
   }
+
+  handleClickOutside = event => {
+    if (
+      (this.wrapperRef && this.wrapperRef.current === event.target) ||
+      event.target.className === "container"
+    ) {
+      if (this.props.close) {
+        this.props.close();
+      }
+    }
+  };
 
   setValue = ({ name, value }) => {
     if (this.mounted) {
@@ -43,7 +57,7 @@ export default class PaymentForm extends React.Component {
       <Spring from={{ opacity: 0.6 }} to={{ opacity: 1 }} after={{ test: "o" }}>
         {props => (
           <div className="popup-wrapper credit-card" style={props}>
-            <section className="login-modal show">
+            <section className="login-modal show" ref={this.wrapperRef}>
               <div className="container">
                 <div className="offset-md-3 col-md-6">
                   <Dropdown

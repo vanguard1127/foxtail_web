@@ -15,7 +15,6 @@ import MyEvents from "./MyEvents";
 import withLocation from "../HOCs/withLocation";
 import SearchEventToolbar from "./SearchEventToolbar/";
 import Header from "./Header";
-import Tour from "./Tour";
 import EventsList from "./EventsList";
 import Spinner from "../common/Spinner";
 import deleteFromCache from "../../utils/deleteFromCache";
@@ -240,14 +239,14 @@ class SearchEvents extends Component {
     const distanceMetric = session.currentuser.distanceMetric;
     ErrorHandler.setBreadcrumb("Search Events");
 
-    if (session && session.currentuser.tours.indexOf("se") < 0) {
-      ErrorHandler.setBreadcrumb("Opened Tour: Search Events");
-      return (
-        <div>
-          <Tour ErrorHandler={ErrorHandler} refetchUser={refetch} />
-        </div>
-      );
-    }
+    // if (session && session.currentuser.tours.indexOf("se") < 0) {
+    //   ErrorHandler.setBreadcrumb("Opened Tour: Search Events");
+    //   return (
+    //     <div>
+    //       <Tour ErrorHandler={ErrorHandler} refetchUser={refetch} />
+    //     </div>
+    //   );
+    // }
 
     return (
       <>

@@ -8,7 +8,6 @@ import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import KinksSection from "./KinksSection";
 import ProfileCard from "./ProfileCard/";
-import Tour from "./Tour";
 import ProfileInfo from "./ProfileInfo";
 import ProfileBio from "./ProfileBio";
 import KinksMobile from "./KinksMobile";
@@ -172,22 +171,22 @@ class ProfilePage extends Component {
     }
     ErrorHandler.setBreadcrumb("Open Profile:" + id);
 
-    if (
-      id === "tour" &&
-      session &&
-      session.currentuser.tours.indexOf("p") < 0
-    ) {
-      ErrorHandler.setBreadcrumb("Opened Tour: Profile");
-      return (
-        <div>
-          <Tour
-            ErrorHandler={ErrorHandler}
-            refetchUser={this.props.refetch}
-            session={session}
-          />
-        </div>
-      );
-    }
+    // if (
+    //   id === "tour" &&
+    //   session &&
+    //   session.currentuser.tours.indexOf("p") < 0
+    // ) {
+    //   ErrorHandler.setBreadcrumb("Opened Tour: Profile");
+    //   return (
+    //     <div>
+    //       <Tour
+    //         ErrorHandler={ErrorHandler}
+    //         refetchUser={this.props.refetch}
+    //         session={session}
+    //       />
+    //     </div>
+    //   );
+    // }
     return (
       <Mutation
         mutation={LIKE_PROFILE}

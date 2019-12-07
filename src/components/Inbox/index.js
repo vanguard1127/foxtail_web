@@ -18,7 +18,6 @@ import {
 } from "../../queries";
 import { Mutation, Query, withApollo } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
-import Tour from "./Tour";
 import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
@@ -224,18 +223,18 @@ class InboxPage extends Component {
     }
 
     const { currentuser } = session;
-    if (currentuser.tours.indexOf("i") < 0) {
-      ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
-      return (
-        <div>
-          <Tour
-            ErrorHandler={ErrorHandler}
-            refetchUser={this.props.refetch}
-            session={session}
-          />
-        </div>
-      );
-    }
+    // if (currentuser.tours.indexOf("i") < 0) {
+    //   ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
+    //   return (
+    //     <div>
+    //       <Tour
+    //         ErrorHandler={ErrorHandler}
+    //         refetchUser={this.props.refetch}
+    //         session={session}
+    //       />
+    //     </div>
+    //   );
+    // }
 
     return (
       <>
@@ -499,4 +498,4 @@ class InboxPage extends Component {
   }
 }
 
-export default withApollo(withTranslation("inbox")(InboxPage));
+export default withApollo(withTranslation(["inbox", "footer"])(InboxPage));

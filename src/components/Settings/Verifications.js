@@ -8,7 +8,7 @@ class Verifications extends Component {
     return false;
   }
   render() {
-    const { openPhotoVerPopup, t, ErrorBoundary } = this.props;
+    const { openPhotoVerPopup, t, ErrorBoundary, verifications } = this.props;
     return (
       <ErrorBoundary>
         <div className="content mtop">
@@ -19,28 +19,44 @@ class Verifications extends Component {
               </span>
             </div>
             <div className="col-md-6">
-              <div className="verification-box">
-                <span className="head">{t("photoverification")}</span>
-                <span className="title">{t("photovermsg") + "..."}</span>
-                <span
-                  className="clickverify-btn photo"
-                  onClick={() => openPhotoVerPopup("verify")}
-                >
-                  {t("sendver")}
-                </span>
-              </div>
+              {!verifications.includes("photo") ? (
+                <div className="verification-box">
+                  <span className="head">{t("photoverification")}</span>
+                  <span className="title">{t("photovermsg") + "..."}</span>
+                  <span
+                    className="clickverify-btn photo"
+                    onClick={() => openPhotoVerPopup("verify")}
+                  >
+                    {t("sendver")}
+                  </span>
+                </div>
+              ) : (
+                <div className="verification-box">
+                  <span className="head" style={{ textAlign: "center" }}>
+                    {t("photocomp")}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="col-md-6">
-              <div className="verification-box">
-                <span className="head">{t("stdverification")}</span>
-                <span className="title">{t("stdmsg") + "..."}</span>
-                <span
-                  className="clickverify-btn"
-                  onClick={() => openPhotoVerPopup("std")}
-                >
-                  {t("sendver")}
-                </span>
-              </div>
+              {!verifications.includes("std") ? (
+                <div className="verification-box">
+                  <span className="head">{t("stdverification")}</span>
+                  <span className="title">{t("stdmsg") + "..."}</span>
+                  <span
+                    className="clickverify-btn"
+                    onClick={() => openPhotoVerPopup("std")}
+                  >
+                    {t("sendver")}
+                  </span>
+                </div>
+              ) : (
+                <div className="verification-box">
+                  <span className="head" style={{ textAlign: "center" }}>
+                    {t("stdcomp")}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

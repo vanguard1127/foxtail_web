@@ -904,6 +904,7 @@ export const GET_SETTINGS = gql`
       sexuality
       password
       ccLast4
+      verifications
     }
   }
 `;

@@ -30,11 +30,25 @@ class PhotoVerify extends PureComponent {
     }
 
     const file = photos[0];
+    if (!file.name || !file.type) {
+      this.props.ErrorHandler.catchErrors({
+        error: "ERROR: File not loaded properly. File object:",
+        file
+      });
+    }
     await this.setS3PhotoParams(file.name, file.type);
 
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
+
+        if (signedRequest === "https://s3.amazonaws.com/") {
+          this.props.ErrorHandler.catchErrors({
+            error: "ERROR: File not loaded properly. File object:",
+            file
+          });
+        }
+
         await this.uploadToS3(file, signedRequest);
         if (this.mounted) {
           this.setState({ photoKey: key });

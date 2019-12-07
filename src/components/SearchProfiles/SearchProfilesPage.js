@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
-import Tour from "./Tour";
 import { kinkOptions } from "../../docs/options";
 import getLang from "../../utils/getLang";
 const lang = getLang();
@@ -123,14 +122,14 @@ class SearchProfilesPage extends Component {
       elapse
     } = this.state;
 
-    if (session && session.currentuser.tours.indexOf("sp") < 0) {
-      ErrorHandler.setBreadcrumb("Opened Tour: Search Profiles");
-      return (
-        <div>
-          <Tour ErrorHandler={ErrorHandler} refetchUser={refetch} />
-        </div>
-      );
-    }
+    // if (session && session.currentuser.tours.indexOf("sp") < 0) {
+    //   ErrorHandler.setBreadcrumb("Opened Tour: Search Profiles");
+    //   return (
+    //     <div>
+    //       <Tour ErrorHandler={ErrorHandler} refetchUser={refetch} />
+    //     </div>
+    //   );
+    // }
 
     let body = null;
     if ((!lat && !elapse) || !session) {

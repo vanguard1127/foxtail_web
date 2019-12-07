@@ -89,6 +89,7 @@ class SettingsPage extends Component {
     profilePicUrl: "",
     flashCpl: false,
     ccLast4: "",
+    verifications: [],
     ...this.props.settings,
     publicPhotoList: undefined,
     privatePhotoList: undefined,
@@ -864,7 +865,8 @@ class SettingsPage extends Component {
       modalInput,
       schemaType,
       resetPassVisible,
-      clearPassDlg
+      clearPassDlg,
+      verifications
     } = this.state;
 
     const {
@@ -1145,6 +1147,7 @@ class SettingsPage extends Component {
                               openPhotoVerPopup={this.openPhotoVerPopup}
                               t={t}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
+                              verifications={verifications}
                             />
                           </div>
 

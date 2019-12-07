@@ -19,7 +19,7 @@ class InboxHeader extends PureComponent {
               <span onClick={toggleRuleModal} className="link">
                 {t("rules")}
               </span>
-              .{" "}
+              .
             </span>
           </div>
         </div>
