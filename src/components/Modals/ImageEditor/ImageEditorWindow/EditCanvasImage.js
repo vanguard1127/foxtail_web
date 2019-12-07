@@ -177,7 +177,7 @@ class EditCanvasImage extends PureComponent {
         const x = this.groupRef.x() - scaledImgWidth / 2;
         const y = this.groupRef.y() - scaledImgHeight / 2;
 
-        const dataURL = this.groupRef.toDataURL({
+        const dataURL = await this.groupRef.toDataURL({
           mimeType: "image/jpeg",
           x,
           y,
@@ -187,7 +187,7 @@ class EditCanvasImage extends PureComponent {
           pixelRatio: this.pixelRatio
         });
 
-        const blobData = this.dataURItoBlob(dataURL);
+        const blobData = await this.dataURItoBlob(dataURL);
         const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",

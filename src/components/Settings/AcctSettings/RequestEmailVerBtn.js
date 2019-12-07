@@ -54,9 +54,8 @@ class RequestEmailVerBtn extends PureComponent {
               className="clickverify-btn resetemail"
               onClick={() => this.handleClick(resendVerEMail)}
             >
-              {t("resndemlver")}
-              <br />
-              {t("resndemlvertochat")}
+              <span>{t("resndemlver")}</span>
+              <span>{t("resndemlvertochat")}</span>
             </span>
           );
         }}

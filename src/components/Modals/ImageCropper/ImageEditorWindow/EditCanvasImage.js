@@ -85,14 +85,14 @@ class EditCanvasImage extends PureComponent {
     return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
   };
 
-  handleExportClick = () => {
+  handleExportClick = async () => {
     const { uploading } = this.state;
     if (this.mounted && !uploading) {
       this.setState({ uploading: true }, async () => {
-        const dataURL = this.cropper
+        const dataURL = await this.cropper
           .getCroppedCanvas({ width: 250, height: 250 })
           .toDataURL();
-        const blobData = this.dataURItoBlob(dataURL);
+        const blobData = await this.dataURItoBlob(dataURL);
         const file = {
           filename: "",
           filetype: "image/jpeg",
@@ -112,13 +112,7 @@ class EditCanvasImage extends PureComponent {
       uploadToS3,
       close
     } = this.props;
-    if (!file.filename || !file.filetype) {
-      this.props.ErrorHandler.catchErrors({
-        error: "ERROR: File not loaded properly. File object:",
-        file
-      });
-      window.location.reload(false);
-    }
+
     await setS3PhotoParams(file.filename, file.filetype);
     await signS3()
       .then(async ({ data }) => {

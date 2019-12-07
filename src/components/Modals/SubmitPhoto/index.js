@@ -30,12 +30,7 @@ class PhotoVerify extends PureComponent {
     }
 
     const file = photos[0];
-    if (!file.name || !file.type) {
-      this.props.ErrorHandler.catchErrors({
-        error: "ERROR: File not loaded properly. File object:",
-        file
-      });
-    }
+
     await this.setS3PhotoParams(file.name, file.type);
 
     await signS3()

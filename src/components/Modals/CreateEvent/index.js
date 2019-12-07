@@ -194,13 +194,7 @@ class CreateEvent extends Component {
     if (file === "") {
       return;
     }
-    if (!file.name || !file.type) {
-      this.props.ErrorHandler.catchErrors({
-        error: "ERROR: File not loaded properly. File object:",
-        file
-      });
-      window.location.reload(false);
-    }
+
     await this.setS3PhotoParams(file.name, file.type);
 
     await signS3()
