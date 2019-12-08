@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 const NoProfileImg = require("../../assets/img/elements/no-profile.png");
 
-const Notice = ({ notice, t, dayjs, lang, showAlert, markReadAndGo }) => {
+const Notice = ({
+  notice,
+  t,
+  dayjs,
+  lang,
+  showAlert,
+  markReadAndGo,
+  handleCoupleLink
+}) => {
   const [proPic, setPropic] = useState(
     notice.fromProfile ? notice.fromProfile.profilePic : null
   );
@@ -30,9 +38,36 @@ const Notice = ({ notice, t, dayjs, lang, showAlert, markReadAndGo }) => {
         </span>
       </div>
     );
-  } else if (!notice.fromProfile) {
-    return null;
-  } else {
+  }
+  if (notice.type === "couple") {
+    return (
+      <div
+        className={notice.read ? "item read" : "item unread"}
+        key={notice.id}
+        onClick={() => handleCoupleLink(notice.coupleProID)}
+      >
+        <span>
+          <span className="avatar">
+            <img src={NoProfileImg} alt="" />
+          </span>
+          <div>
+            <span className="text">
+              {notice.name +
+                " " +
+                t(
+                  "and you have created a Couple's Profile. Click here to enjoy."
+                )}
+            </span>
+            <span className="when">
+              {dayjs(notice.date)
+                .locale(lang)
+                .fromNow()}
+            </span>
+          </div>
+        </span>
+      </div>
+    );
+  } else if (notice.fromProfile) {
     return (
       <div
         className={notice.read ? "item read" : "item unread"}
@@ -74,5 +109,7 @@ const Notice = ({ notice, t, dayjs, lang, showAlert, markReadAndGo }) => {
       </div>
     );
   }
+
+  return null;
 };
 export default Notice;

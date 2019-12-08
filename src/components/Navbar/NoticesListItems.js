@@ -149,6 +149,7 @@ class NoticesListItems extends Component {
       dayjs={dayjs}
       lang={lang}
       showAlert={this.props.showAlert}
+      handleCoupleLink={this.props.handleCoupleLink}
       markReadAndGo={this.markReadAndGo}
     />
   );

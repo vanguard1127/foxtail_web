@@ -32,11 +32,7 @@ class DevTools extends Component {
         window.location.replace("/members");
       })
       .catch(res => {
-        const errors = res.map(error => {
-          return error.message;
-        });
-
-        return errors;
+        console.error(res);
       });
 
     // }

@@ -19,6 +19,7 @@ class NoticesMenu extends Component {
       ErrorHandler,
       history,
       showAlert,
+      handleCoupleLink,
       readNotices,
       limit,
       skip,
@@ -78,6 +79,7 @@ class NoticesMenu extends Component {
                 t={t}
                 ErrorHandler={ErrorHandler}
                 showAlert={showAlert}
+                handleCoupleLink={handleCoupleLink}
                 readNotices={readNotices}
                 limit={limit}
                 skip={skip}

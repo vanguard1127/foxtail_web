@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { READ_NOTIFICATION, GET_COUNTS } from "../../queries";
+import { READ_NOTIFICATION, GET_COUNTS, CONVERT_COUPLE } from "../../queries";
 import NoticesMenu from "./NoticesMenu";
 import InboxItem from "./InboxItem";
 import Alert from "./Alert";
 import MyAccountItem from "./MyAccountItem";
+import Spinner from "../common/Spinner";
 
 const UserToolbar = ({
   currentuser,
@@ -21,28 +22,6 @@ const UserToolbar = ({
   const [alertVisible, setAlertVisible] = useState(true);
   const [alert, setAlert] = useState(counts.alert);
   const [skip, setSkip] = useState(0);
-
-  const skipForward = () => {
-    const newSkip = skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT);
-    setSkip(newSkip);
-    return newSkip;
-  };
-
-  const resetSkip = () => {
-    setSkip(0);
-  };
-
-  const showAlert = alert => {
-    setAlertVisible(true);
-    setAlert(alert);
-  };
-
-  const handleCloseAlert = () => {
-    readNotices(alert.id);
-    setAlertVisible(false);
-    setAlert(null);
-  };
-
   const [updateNotifications, { loading: mutationLoading }] = useMutation(
     READ_NOTIFICATION,
     {
@@ -65,6 +44,53 @@ const UserToolbar = ({
       }
     }
   );
+  const [
+    convertToCouple,
+    { loading: cplLoading, data: isCoupleOK }
+  ] = useMutation(CONVERT_COUPLE, {
+    update(cache) {
+      const { getCounts } = cache.readQuery({
+        query: GET_COUNTS
+      });
+
+      let newCounts = { ...getCounts };
+      if (newCounts.alert && !newCounts.alert.read) {
+        newCounts.alert = null;
+
+        cache.writeQuery({
+          query: GET_COUNTS,
+          data: {
+            getCounts: { ...newCounts }
+          }
+        });
+      }
+    }
+  });
+
+  const skipForward = () => {
+    const newSkip = skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT);
+    setSkip(newSkip);
+    return newSkip;
+  };
+
+  const resetSkip = () => {
+    setSkip(0);
+  };
+
+  const showAlert = alert => {
+    setAlertVisible(true);
+    setAlert(alert);
+  };
+
+  const handleCoupleLink = coupleProID => {
+    convertToCouple({ variables: { coupleProID } });
+  };
+
+  const handleCloseAlert = () => {
+    readNotices(alert.id);
+    setAlertVisible(false);
+    setAlert(null);
+  };
 
   const readNotices = notificationID => {
     updateNotifications({
@@ -73,7 +99,14 @@ const UserToolbar = ({
       this.props.ErrorHandler.catchErrors(res);
     });
   };
-
+  if (cplLoading) {
+    document.title = t("common:Loading") + "...";
+    return <Spinner message={t("common:Loading")} size="large" />;
+  }
+  if (isCoupleOK) {
+    console.log("Couple Account Being Created");
+    window.location.reload(false);
+  }
   return (
     <div className="function">
       {alertVisible && counts.alert && (
@@ -112,6 +145,7 @@ const UserToolbar = ({
             count={noticesCount}
             t={t}
             showAlert={showAlert}
+            handleCoupleLink={handleCoupleLink}
             readNotices={readNotices}
             limit={parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)}
             skip={skip}

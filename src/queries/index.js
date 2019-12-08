@@ -280,6 +280,12 @@ export const READ_NOTIFICATION = gql`
   }
 `;
 
+export const CONVERT_COUPLE = gql`
+  mutation($coupleProID: ID!) {
+    convertToCouple(coupleProID: $coupleProID)
+  }
+`;
+
 export const INVITE_PROFILES = gql`
   mutation($chatID: ID!, $invitedProfiles: [ID]!) {
     inviteProfile(chatID: $chatID, invitedProfiles: $invitedProfiles)
@@ -712,6 +718,7 @@ export const GET_NOTIFICATIONS = gql`
         body
         name
         event
+        coupleProID
         fromProfile {
           profilePic
           profileName
