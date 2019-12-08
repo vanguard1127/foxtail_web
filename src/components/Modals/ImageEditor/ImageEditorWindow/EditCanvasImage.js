@@ -187,6 +187,14 @@ class EditCanvasImage extends PureComponent {
           pixelRatio: this.pixelRatio
         });
 
+        if (!dataURL) {
+          this.props.ErrorHandler.catchErrors({
+            error: "ERROR: dataObjURL empty:",
+            dataURL,
+            this.groupRef
+          });
+        }
+
         const blobData = await this.dataURItoBlob(dataURL);
         const file = {
           filename: this.props.imageObject.name,
