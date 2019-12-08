@@ -191,7 +191,7 @@ class EditCanvasImage extends PureComponent {
           this.props.ErrorHandler.catchErrors({
             error: "ERROR: dataObjURL empty:",
             dataURL,
-            this.groupRef
+            group: this.groupRef
           });
         }
 
