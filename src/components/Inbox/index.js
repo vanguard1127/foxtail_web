@@ -92,6 +92,9 @@ class InboxPage extends Component {
   };
 
   closeChat = () => {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
     this.props.history.replace({ state: {} });
     this.setState({ chatOpen: false, chatID: null });
   };
@@ -143,6 +146,9 @@ class InboxPage extends Component {
   handleChatClick = (chatID, unSeenCount) => {
     const { ErrorHandler } = this.props;
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
     if (this.mounted) {
       const { cache } = this.props.client;
       deleteFromCache({ cache, query: "getMessages" });
@@ -201,6 +207,34 @@ class InboxPage extends Component {
         }
       });
     }
+  };
+
+  subscribeToMessages = subscribeToMore => {
+    this.unsubscribe = subscribeToMore({
+      document: NEW_MESSAGE_SUB,
+      variables: {
+        chatID: this.state.chatID
+      },
+      updateQuery: (prev, { subscriptionData }) => {
+        const { newMessageSubscribe } = subscriptionData.data;
+        if (!newMessageSubscribe) {
+          return prev;
+        }
+
+        const newData = produce(prev, draftState => {
+          if (draftState.getMessages.messages) {
+            draftState.getMessages.messages = [
+              newMessageSubscribe,
+              ...draftState.getMessages.messages
+            ];
+          } else {
+            draftState.getMessages.messages = [newMessageSubscribe];
+          }
+        });
+
+        return newData;
+      }
+    });
   };
 
   render() {
@@ -362,37 +396,9 @@ class InboxPage extends Component {
                           }}
                           fetchMore={fetchMore}
                           cache={this.props.client.cache}
-                          subscribeToMore={() => {
-                            subscribeToMore({
-                              document: NEW_MESSAGE_SUB,
-                              variables: {
-                                chatID: chatID
-                              },
-                              updateQuery: (prev, { subscriptionData }) => {
-                                const {
-                                  newMessageSubscribe
-                                } = subscriptionData.data;
-                                if (!newMessageSubscribe) {
-                                  return prev;
-                                }
-
-                                const newData = produce(prev, draftState => {
-                                  if (draftState.getMessages.messages) {
-                                    draftState.getMessages.messages = [
-                                      newMessageSubscribe,
-                                      ...draftState.getMessages.messages
-                                    ];
-                                  } else {
-                                    draftState.getMessages.messages = [
-                                      newMessageSubscribe
-                                    ];
-                                  }
-                                });
-
-                                return newData;
-                              }
-                            });
-                          }}
+                          subscribeToMore={() =>
+                            this.subscribeToMessages(subscribeToMore)
+                          }
                         />
                         <Mutation
                           mutation={REMOVE_SELF}

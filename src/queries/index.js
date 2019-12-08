@@ -430,8 +430,8 @@ export const FB_RESOLVE = gql`
 `;
 
 export const FB_RESET_PHONE = gql`
-  mutation($csrf: String!, $code: String!, $token: String) {
-    fbResetPhone(csrf: $csrf, code: $code, token: $token)
+  mutation($csrf: String!, $code: String!, $token: String, $password: String) {
+    fbResetPhone(csrf: $csrf, code: $code, token: $token, password: $password)
   }
 `;
 
