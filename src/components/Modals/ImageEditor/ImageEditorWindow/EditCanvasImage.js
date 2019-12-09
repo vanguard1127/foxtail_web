@@ -176,7 +176,7 @@ class EditCanvasImage extends PureComponent {
 
         const x = this.groupRef.x() - scaledImgWidth / 2;
         const y = this.groupRef.y() - scaledImgHeight / 2;
-
+        console.log("Start");
         const dataURL = this.groupRef.toDataURL({
           mimeType: "image/jpeg",
           x,

@@ -74,8 +74,8 @@ class MembersList extends PureComponent {
               category: "Event",
               action: "Invites Sent"
             });
-            close();
             toast.success(t("common:invitesent"));
+            close();
           }
         })
         .catch(res => {
@@ -89,8 +89,8 @@ class MembersList extends PureComponent {
               category: "Chat",
               action: "Invites Sent"
             });
-            close();
             toast.success(t("common:invitesent"));
+            close();
           }
         })
         .catch(res => {
@@ -109,8 +109,8 @@ class MembersList extends PureComponent {
               category: "Event",
               action: "Remove Member"
             });
-            close();
             toast.success(t("common:memsremove"));
+            close();
           }
         })
         .catch(res => {
@@ -124,8 +124,8 @@ class MembersList extends PureComponent {
               category: "Chat",
               action: "Remove Member"
             });
-            close();
             toast.success(t("common:removpros"));
+            close();
           }
         })
         .catch(res => {

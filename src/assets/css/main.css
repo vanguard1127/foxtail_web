@@ -5819,7 +5819,7 @@ section.popup-content .modal-popup .m-head {
 }
 
 section.popup-content .modal-popup .m-head .close::before {
-  content: "\e804";
+  content: "\e805";
   font-family: "foxtail-icon";
   position: absolute;
   right: 15px;
@@ -6394,7 +6394,7 @@ section.couple-popup-content .modal-popup .m-head {
 }
 
 section.couple-popup-content .modal-popup .m-head .close::before {
-  content: "\e804";
+  content: "\e805";
   font-family: "foxtail-icon";
   position: absolute;
   right: 15px;
@@ -6531,7 +6531,7 @@ section.invite-popup-content .modal-popup .m-head {
 }
 
 section.invite-popup-content .modal-popup .m-head .close::before {
-  content: "\e804";
+  content: "\e805";
   font-family: "foxtail-icon";
   position: absolute;
   right: 15px;
@@ -8398,7 +8398,7 @@ section.not-found .icon i.nico.cogs::before {
 }
 
 section.not-found .icon i.nico.x::before {
-  content: "\e804";
+  content: "\e805";
 }
 
 section.not-found span.head.nopad {

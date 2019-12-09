@@ -378,6 +378,7 @@ class InboxPage extends Component {
                           history={history}
                           setBlockModalVisible={this.setBlockModalVisible}
                           lang={lang}
+                          ReactGA={ReactGA}
                           isOwner={
                             chat &&
                             chat.ownerProfile.id === currentuser.profileID

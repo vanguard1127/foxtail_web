@@ -29,6 +29,7 @@ class ChatActions extends Component {
     } = this.props;
 
     const { invDropOpen, remDropOpen } = this.state;
+    console.log("RECT", ReactGA);
     return (
       <ul>
         <li
@@ -56,7 +57,7 @@ class ChatActions extends Component {
           onClick={() => this.setState({ invDropOpen: !invDropOpen })}
         >
           <span>{t("invitemem")}</span>
-        </li>{" "}
+        </li>
         {invDropOpen && (
           <MembersDropdown
             targetID={chatID}
