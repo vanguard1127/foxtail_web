@@ -289,9 +289,7 @@ class InboxPage extends Component {
                 t={t}
                 history={this.props.history}
                 client={this.props.client}
-                readChat={(id, unSeenCount) =>
-                  this.handleChatClick(id, unSeenCount)
-                }
+                readChat={this.handleChatClick}
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
