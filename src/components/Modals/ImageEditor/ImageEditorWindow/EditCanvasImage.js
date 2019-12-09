@@ -13,7 +13,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import { Spring } from "react-spring/renderprops";
 import { toast } from "react-toastify";
-import { async } from "q";
 
 class EditCanvasImage extends PureComponent {
   lastDist = 0;
@@ -178,34 +177,28 @@ class EditCanvasImage extends PureComponent {
         const x = this.groupRef.x() - scaledImgWidth / 2;
         const y = this.groupRef.y() - scaledImgHeight / 2;
 
-        const dataURL = await this.groupRef.toDataURL(
-          {
-            mimeType: "image/jpeg",
-            x,
-            y,
-            width: scaledImgWidth,
-            height: scaledImgHeight,
-            quality: 1,
-            pixelRatio: this.pixelRatio
-          },
-          async dataURL => {
-            if (!dataURL) {
-              this.props.ErrorHandler.catchErrors({
-                error: "ERROR: dataObjURL empty:",
-                dataURL,
-                group: this.groupRef
-              });
-            }
+        const dataURL = await this.groupRef.toDataURL({
+          mimeType: "image/jpeg",
+          x,
+          y,
+          width: scaledImgWidth,
+          height: scaledImgHeight,
+          quality: 1,
+          pixelRatio: this.pixelRatio
+        });
 
-            const blobData = await this.dataURItoBlob(dataURL);
-            const file = {
-              filename: this.props.imageObject.name,
-              filetype: "image/jpeg",
-              filebody: blobData
-            };
-            await this.handleUpload(file);
-          }
-        );
+        console.log("dataURL", dataURL);
+
+        const blobData = await this.dataURItoBlob(dataURL);
+        console.log("blobData", blobData);
+        const file = {
+          filename: this.props.imageObject.name,
+          filetype: "image/jpeg",
+          filebody: blobData
+        };
+        console.log("b3fore", file);
+        await this.handleUpload(file);
+        console.log("after", file);
       });
     }
   };
@@ -218,6 +211,7 @@ class EditCanvasImage extends PureComponent {
       uploadToS3,
       close
     } = this.props;
+    console.log("during", file);
     if (!file.filename || !file.filetype) {
       this.props.ErrorHandler.catchErrors({
         error: "ERROR: File not loaded properly. File object:",
