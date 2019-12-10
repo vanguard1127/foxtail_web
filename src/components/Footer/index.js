@@ -39,7 +39,7 @@ class Footer extends Component {
               <div className="logo">
                 <span />
               </div>
-              <div className="medias">
+              {/* <div className="medias">
                 <ul>
                   <li className="facebook">
                     <a
@@ -54,7 +54,7 @@ class Footer extends Component {
                   </li>
                   <li className="twitter">
                     <a
-                      href="https://www.facebook.com/Foxtail-1629223060455218/"
+                      href="https://twitter.com/foxtailapp"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -64,7 +64,7 @@ class Footer extends Component {
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

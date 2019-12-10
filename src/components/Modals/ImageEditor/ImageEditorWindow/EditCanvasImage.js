@@ -186,14 +186,30 @@ class EditCanvasImage extends PureComponent {
           quality: 1,
           pixelRatio: this.pixelRatio
         });
+        if (!dataURL || dataURL === "") {
+          this.props.ErrorHandler.catchErrors({
+            error: "ERROR: Data url empty",
+            dataURL
+          });
+        }
         // console.log("dataURL", dataURL);
         const blobData = this.dataURItoBlob(dataURL);
         //   console.log("blobData", blobData);
+
         const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",
           filebody: blobData
         };
+        if (!file.filename || !file.filetype) {
+          this.props.ErrorHandler.catchErrors({
+            error: "Sending ERROR: File not loaded properly. File object:",
+            file,
+            blobData,
+            dataURL
+          });
+          window.location.reload(false);
+        }
         //  console.log("file", file);
         await this.handleUpload(file);
         //   console.log("After", file);
@@ -210,13 +226,7 @@ class EditCanvasImage extends PureComponent {
       close
     } = this.props;
     // console.log("dur", file);
-    if (!file.filename || !file.filetype) {
-      this.props.ErrorHandler.catchErrors({
-        error: "ERROR: File not loaded properly. File object:",
-        file
-      });
-      window.location.reload(false);
-    }
+
     setS3PhotoParams(file.filename, file.filetype);
 
     await signS3()
@@ -224,7 +234,7 @@ class EditCanvasImage extends PureComponent {
         const { signedRequest, key, url } = data.signS3;
         if (signedRequest === "https://s3.amazonaws.com/") {
           this.props.ErrorHandler.catchErrors({
-            error: "ERROR: File not loaded properly. File object:",
+            error: "Recieve ERROR: File not loaded properly. File object:",
             file
           });
           window.location.reload(false);
