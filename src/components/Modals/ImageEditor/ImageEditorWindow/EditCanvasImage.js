@@ -226,8 +226,7 @@ class EditCanvasImage extends PureComponent {
       close
     } = this.props;
     // console.log("dur", file);
-
-    setS3PhotoParams(file.filename, file.filetype);
+    await setS3PhotoParams(file.filename, file.filetype);
 
     await signS3()
       .then(async ({ data }) => {
@@ -239,6 +238,7 @@ class EditCanvasImage extends PureComponent {
           });
           window.location.reload(false);
         }
+
         await uploadToS3(file.filebody, signedRequest);
 
         await handlePhotoListChange({ file, key, url });

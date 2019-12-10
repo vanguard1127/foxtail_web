@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import MyAccountMenu from "./MyAccountMenu";
 import Menu from "../common/Menu";
-const NoProfileImg = require("../../assets/img/elements/no-profile.png");
 
 const MyAccountItem = ({ currentuser, setRef, t }) => {
   return (
