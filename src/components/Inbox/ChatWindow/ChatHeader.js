@@ -62,7 +62,7 @@ class ChatHeader extends PureComponent {
         chatTitleExtra = ` +${currentChat.participants.length - 2}`;
       }
     }
-    console.log("CHASTT", ReactGA);
+
     return (
       <div className="navbar">
         <div className="user">

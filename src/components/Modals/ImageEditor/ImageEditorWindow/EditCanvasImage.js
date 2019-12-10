@@ -176,7 +176,7 @@ class EditCanvasImage extends PureComponent {
 
         const x = this.groupRef.x() - scaledImgWidth / 2;
         const y = this.groupRef.y() - scaledImgHeight / 2;
-        console.log("Start");
+        //   console.log("Start");
         const dataURL = this.groupRef.toDataURL({
           mimeType: "image/jpeg",
           x,
@@ -186,17 +186,17 @@ class EditCanvasImage extends PureComponent {
           quality: 1,
           pixelRatio: this.pixelRatio
         });
-        console.log("dataURL", dataURL);
+        // console.log("dataURL", dataURL);
         const blobData = this.dataURItoBlob(dataURL);
-        console.log("blobData", blobData);
+        //   console.log("blobData", blobData);
         const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",
           filebody: blobData
         };
-        console.log("file", file);
+        //  console.log("file", file);
         await this.handleUpload(file);
-        console.log("After", file);
+        //   console.log("After", file);
       });
     }
   };
@@ -209,7 +209,7 @@ class EditCanvasImage extends PureComponent {
       uploadToS3,
       close
     } = this.props;
-    console.log("dur", file);
+    // console.log("dur", file);
     if (!file.filename || !file.filetype) {
       this.props.ErrorHandler.catchErrors({
         error: "ERROR: File not loaded properly. File object:",

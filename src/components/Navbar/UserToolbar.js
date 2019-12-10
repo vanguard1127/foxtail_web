@@ -104,7 +104,6 @@ const UserToolbar = ({
     return <Spinner message={t("common:Loading")} size="large" />;
   }
   if (isCoupleOK) {
-    console.log("Couple Account Being Created");
     window.location.reload(false);
   }
   return (

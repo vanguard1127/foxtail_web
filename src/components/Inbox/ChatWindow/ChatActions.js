@@ -29,7 +29,7 @@ class ChatActions extends Component {
     } = this.props;
 
     const { invDropOpen, remDropOpen } = this.state;
-    console.log("RECT", ReactGA);
+
     return (
       <ul>
         <li
