@@ -245,38 +245,38 @@ const materialTheme = createMuiTheme({
   overrides: {
     palette: {
       primary: {
-        main: "#cf003c"
+        main: "#CB0032"
       }
     },
     MuiTypography: {
-      colorPrimary: { color: "#E91E63" }
+      colorPrimary: { color: "#CB0032" }
     },
     MuiPickersToolbar: {
       toolbar: {
-        backgroundColor: "#E91E63"
+        backgroundColor: "#CB0032"
       }
     },
     MuiPickerDTTabs: {
       tabs: {
-        backgroundColor: "#E91E63"
+        backgroundColor: "#CB0032"
       }
     },
     PrivateTabIndicator: {
       colorSecondary: {
-        backgroundColor: "#673ab7"
+        backgroundColor: "#CB0032"
       }
     },
     MuiPickersMonth: {
       monthSelected: {
-        color: " #E91E63"
+        color: " #CB0032"
       }
     },
     MuiPickersDay: {
       day: {
-        color: "#673ab7"
+        color: "#CB0032"
       },
       daySelected: {
-        backgroundColor: "#673ab7"
+        backgroundColor: "#CB0032"
       },
       dayDisabled: {
         color: "##616d78"
@@ -288,13 +288,13 @@ const materialTheme = createMuiTheme({
     MuiCircularProgress: { color: "#fff" },
     MuiPickersModal: {
       dialogAction: {
-        color: "#E91E63"
+        color: "#CB0032"
       }
     },
-    MuiPickersClock: { pin: { backgroundColor: "#673ab7" } },
+    MuiPickersClock: { pin: { backgroundColor: "#CB0032" } },
     MuiPickersClockPointer: {
-      pointer: { backgroundColor: "#673ab7" },
-      thumb: { border: "14px solid #673ab7" }
+      pointer: { backgroundColor: "#CB0032" },
+      thumb: { border: "14px solid #CB0032" }
     }
   }
 });

@@ -129,6 +129,7 @@ class NoticesListItems extends Component {
             pathname: "/inbox",
             state: { chatID: targetID }
           });
+          window.location.reload(false);
           break;
         case "event":
           this.props.history.replace(`/event/${targetID}`);

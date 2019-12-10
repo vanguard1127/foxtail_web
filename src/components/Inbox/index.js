@@ -111,6 +111,7 @@ class InboxPage extends Component {
             category: "Chat",
             action: "Remove Self"
           });
+          this.toggleDialog();
           this.closeChat();
         }
       })
@@ -437,7 +438,7 @@ class InboxPage extends Component {
                                 {showModal && (
                                   <Modal
                                     header={title}
-                                    close={() => this.toggleDialog()}
+                                    close={this.toggleDialog}
                                     description={msg}
                                     okSpan={
                                       <span
