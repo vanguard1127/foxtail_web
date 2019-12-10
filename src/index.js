@@ -58,7 +58,6 @@ import ProfilePage from "./components/Profile/";
 import InboxPage from "./components/Inbox/";
 import SearchEvents from "./components/SearchEvents";
 import { preventContextMenu } from "./utils/image";
-//the firebase auth kit
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
