@@ -193,13 +193,7 @@ class SettingsPage extends Component {
       this.handleSubmit(this.updateSettings);
     });
     this.mounted = true;
-    if (
-      errors.about !== null ||
-      errors.kinks !== null ||
-      errors.profilePic !== null
-    ) {
-      this.showPleaseComplete();
-    }
+
     window.scrollTo(0, 1);
   }
 
@@ -646,22 +640,6 @@ class SettingsPage extends Component {
     return word === null;
   };
 
-  showPleaseComplete = () => {
-    if (!this.props.toast.isActive("plscomplete")) {
-      this.props.toast.info(
-        <div>
-          {this.props.t("common:plscomplete")}
-          <br />
-          {this.props.t("common:plscompleteExample")}
-        </div>,
-        {
-          toastId: "plscomplete",
-          autoClose: false
-        }
-      );
-    }
-  };
-
   InputFeedback = error =>
     error ? (
       <div className="input-feedback" style={{ color: "red" }}>
@@ -982,41 +960,29 @@ class SettingsPage extends Component {
                         {(errors.about !== null ||
                           errors.kinks !== null ||
                           errors.profilePic !== null) && (
-                          <span
-                            className="message"
-                            onClick={this.showPleaseComplete}
-                          >
+                          <span className="message">
                             {t("common:plscomplete")}
                           </span>
                         )}
                         <div className="settings-content">
                           <div className="page-section mtop">
-                            <Preferences
-                              distance={distance}
-                              distanceMetric={distanceMetric}
-                              ageRange={ageRange}
-                              interestedIn={interestedIn}
-                              city={city}
-                              isBlackMember={currentuser.blackMember.active}
-                              setValue={({ name, value, doRefetch }) =>
+                            <MyProfile
+                              kinks={kinks}
+                              about={about}
+                              togglePopup={this.toggleKinksPopup}
+                              setValue={({ name, value, noSave }) =>
                                 this.setValue({
                                   name,
                                   value,
                                   updateSettings,
-                                  doRefetch
-                                })
-                              }
-                              setLocationValues={({ lat, long, city }) =>
-                                this.setLocationValues({
-                                  lat,
-                                  long,
-                                  city,
-                                  updateSettings
+                                  noSave
                                 })
                               }
                               t={t}
+                              errors={errors}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                               lang={lang}
+                              sexuality={sexuality}
                             />
                           </div>
 
@@ -1083,27 +1049,36 @@ class SettingsPage extends Component {
                               toggleScroll={this.toggleScroll}
                             />
                           </div>
-
                           <div className="page-section mtop">
-                            <MyProfile
-                              kinks={kinks}
-                              about={about}
-                              togglePopup={this.toggleKinksPopup}
-                              setValue={({ name, value, noSave }) =>
+                            <Preferences
+                              distance={distance}
+                              distanceMetric={distanceMetric}
+                              ageRange={ageRange}
+                              interestedIn={interestedIn}
+                              city={city}
+                              isBlackMember={currentuser.blackMember.active}
+                              setValue={({ name, value, doRefetch }) =>
                                 this.setValue({
                                   name,
                                   value,
                                   updateSettings,
-                                  noSave
+                                  doRefetch
+                                })
+                              }
+                              setLocationValues={({ lat, long, city }) =>
+                                this.setLocationValues({
+                                  lat,
+                                  long,
+                                  city,
+                                  updateSettings
                                 })
                               }
                               t={t}
-                              errors={errors}
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                               lang={lang}
-                              sexuality={sexuality}
                             />
                           </div>
+
                           <div className="page-section mtop">
                             <AppSettings
                               setValue={({ name, value }) =>

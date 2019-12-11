@@ -4786,17 +4786,11 @@ section.settings .deactivate span {
 }
 
 section.settings .message {
-  color: #ff1b03;
+  background-color: #cf003c;
+  color: white;
   font-size: 24px;
   line-height: 28px;
   padding: 10px;
-  cursor: pointer;
-  -webkit-animation-name: opacity;
-  -webkit-animation-duration: 3s;
-  -webkit-animation-iteration-count: infinite;
-  animation-name: opacity;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
   display: flex;
   justify-content: center;
   margin-top: 25px;

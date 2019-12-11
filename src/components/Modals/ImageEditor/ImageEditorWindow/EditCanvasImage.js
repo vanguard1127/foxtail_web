@@ -143,7 +143,7 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
-  dataURItoBlob = dataURI => {
+  dataURItoBlob = async dataURI => {
     var binary = atob(dataURI.split(",")[1]);
     var array = [];
     for (var i = 0; i < binary.length; i++) {
@@ -193,23 +193,25 @@ class EditCanvasImage extends PureComponent {
           });
         }
         // console.log("dataURL", dataURL);
-        const blobData = this.dataURItoBlob(dataURL);
+        // const blobData = await this.dataURItoBlob(dataURL);
+        const blobResp = await fetch(dataURL);
+        const blobData = await blobResp.blob();
         //   console.log("blobData", blobData);
+        if (Object.getOwnPropertyNames(blobData).length < 0) {
+          this.props.ErrorHandler.catchErrors({
+            error: "Data Blob ERROR: File not loaded properly. File object:",
+            blobData,
+            dataURL
+          });
+          window.location.reload(false);
+        }
 
         const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",
           filebody: blobData
         };
-        if (!file.filename || !file.filetype) {
-          this.props.ErrorHandler.catchErrors({
-            error: "Sending ERROR: File not loaded properly. File object:",
-            file,
-            blobData,
-            dataURL
-          });
-          window.location.reload(false);
-        }
+
         //  console.log("file", file);
         await this.handleUpload(file);
         //   console.log("After", file);
