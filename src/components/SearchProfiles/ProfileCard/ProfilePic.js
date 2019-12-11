@@ -20,6 +20,7 @@ const ProfilePic = ({ profilePic }) => {
           setLoading(false);
         }}
         onError={() => {
+          console.log("test", proPic);
           setLoading(false);
           setPropic(NoProfileImg);
         }}

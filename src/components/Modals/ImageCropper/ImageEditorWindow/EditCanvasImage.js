@@ -76,14 +76,14 @@ class EditCanvasImage extends PureComponent {
     // });
   };
 
-  dataURItoBlob = dataURI => {
-    var binary = atob(dataURI.split(",")[1]);
-    var array = [];
-    for (var i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
-  };
+  // dataURItoBlob = dataURI => {
+  //   var binary = atob(dataURI.split(",")[1]);
+  //   var array = [];
+  //   for (var i = 0; i < binary.length; i++) {
+  //     array.push(binary.charCodeAt(i));
+  //   }
+  //   return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
+  // };
 
   handleExportClick = async () => {
     const { uploading } = this.state;
@@ -92,7 +92,17 @@ class EditCanvasImage extends PureComponent {
         const dataURL = await this.cropper
           .getCroppedCanvas({ width: 250, height: 250 })
           .toDataURL();
-        const blobData = await this.dataURItoBlob(dataURL);
+        const blobResp = await fetch(dataURL);
+        const blobData = await blobResp.blob();
+        //   console.log("blobData", blobData);
+        if (Object.getOwnPropertyNames(blobData).length < 0) {
+          this.props.ErrorHandler.catchErrors({
+            error: "Data Blob ERROR: File not loaded properly. File object:",
+            blobData,
+            dataURL
+          });
+          window.location.reload(false);
+        }
         const file = {
           filename: "",
           filetype: "image/jpeg",

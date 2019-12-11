@@ -4,7 +4,7 @@ import { kinkOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 
-const NoEventImg = require("../../../assets/img/elements/no-eve-image.png");
+const NoEventImg = require("../../../assets/img/elements/no-eve-image.jpg");
 
 class EventInfo extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -87,9 +87,7 @@ class EventInfo extends Component {
               <span className="head">{t("toexpect")}:</span>
               <span className="title">
                 {kinks.reduce(function(result, kink, idx) {
-                  const kinkObj = kinkOptions.find(
-                    el => el.value === kink
-                  );
+                  const kinkObj = kinkOptions.find(el => el.value === kink);
                   if (idx !== kinks.length - 1) {
                     result.push(t(kinkObj.label) + ", ");
                   } else {

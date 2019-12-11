@@ -5,7 +5,7 @@ import AttendEvent from "./AttendEvent";
 import EventShare from "../Header/EventShare";
 import EditEventBtn from "./EditEventBtn";
 
-const NoEventImg = require("../../../assets/img/elements/no-eve-image.png");
+const NoEventImg = require("../../../assets/img/elements/no-eve-image.jpg");
 
 class EventInfoMobile extends Component {
   shouldComponentUpdate(nextProps) {
@@ -94,9 +94,7 @@ class EventInfoMobile extends Component {
               <span className="title">
                 {" "}
                 {kinks.reduce(function(result, kink, idx) {
-                  const kinkObj = kinkOptions.find(
-                    el => el.value === kink
-                  );
+                  const kinkObj = kinkOptions.find(el => el.value === kink);
                   if (idx !== kinks.length - 1) {
                     result.push(t(kinkObj.label) + ", ");
                   } else {

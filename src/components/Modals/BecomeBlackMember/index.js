@@ -2,7 +2,7 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import Modal from "../../common/Modal";
 import "./BecomeBlackMember.css";
-import BecomeBlackMemberImage from "../../../assets/img/elements/become-black-member.png";
+import BecomeBlackMemberImage from "../../../assets/img/elements/become-black-member.jpg";
 
 const BecomeBlackMember = ({
   close,
@@ -18,7 +18,6 @@ const BecomeBlackMember = ({
         className="upgrade"
         style={{ backgroundImage: `url(${BecomeBlackMemberImage})` }}
       >
-        <div className="backgound-opacity"></div>
         <div className="upgrade-content">
           <div className="top-content">
             <div className="vanish-scroll" style={{ backgroundColor: "#fff" }}>
