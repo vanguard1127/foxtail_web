@@ -25,7 +25,8 @@ class NoticesMenu extends Component {
       skip,
       recount,
       skipForward,
-      resetSkip
+      resetSkip,
+      dayjs
     } = this.props;
 
     return (
@@ -87,6 +88,7 @@ class NoticesMenu extends Component {
                 notifications={data.getNotifications.notifications}
                 skipForward={skipForward}
                 resetSkip={resetSkip}
+                dayjs={dayjs}
               />
             );
           }}

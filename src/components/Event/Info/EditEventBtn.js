@@ -33,7 +33,8 @@ class EditEventBtn extends PureComponent {
       refetch,
       lang,
       t,
-      ReactGA
+      ReactGA,
+      dayjs
     } = this.props;
     this.props.ErrorHandler.setBreadcrumb("Open Edit Event");
     return (
@@ -51,6 +52,7 @@ class EditEventBtn extends PureComponent {
             refetch={refetch}
             lang={lang}
             ReactGA={ReactGA}
+            dayjs={dayjs}
           />
         ) : null}
       </Fragment>

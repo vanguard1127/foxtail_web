@@ -35,7 +35,15 @@ class SearchProfiles extends Component {
   };
   render() {
     const { shareModalVisible } = this.state;
-    const { t, ErrorHandler, ReactGA, tReady, refetch, session } = this.props;
+    const {
+      t,
+      ErrorHandler,
+      ReactGA,
+      tReady,
+      refetch,
+      session,
+      dayjs
+    } = this.props;
     if (!tReady) {
       return <Spinner />;
     }
@@ -70,6 +78,7 @@ class SearchProfiles extends Component {
                 session={session}
                 refetch={refetch}
                 toggleShareModal={this.toggleShareModal}
+                dayjs={dayjs}
               />
               {shareModalVisible && (
                 <ShareModal

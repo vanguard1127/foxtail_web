@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import { NEW_NOTICE_SUB } from "../../queries";
 import { Waypoint } from "react-waypoint";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import getLang from "../../utils/getLang";
 import Notice from "./Notice";
 const lang = getLang();
-require("dayjs/locale/" + lang);
-dayjs.extend(relativeTime);
 
 class NoticesListItems extends Component {
   state = {
@@ -147,7 +143,7 @@ class NoticesListItems extends Component {
       key={notice.id}
       notice={notice}
       t={this.props.t}
-      dayjs={dayjs}
+      dayjs={this.props.dayjs}
       lang={lang}
       showAlert={this.props.showAlert}
       handleCoupleLink={this.props.handleCoupleLink}

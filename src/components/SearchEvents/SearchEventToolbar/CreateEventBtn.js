@@ -14,7 +14,7 @@ class CreateEventBtn extends PureComponent {
     );
   };
   render() {
-    const { lang, t, ErrorHandler, history, ReactGA } = this.props;
+    const { lang, t, ErrorHandler, history, ReactGA, dayjs } = this.props;
     ErrorHandler.setBreadcrumb("Open Create Event");
     return (
       <Fragment>
@@ -28,6 +28,7 @@ class CreateEventBtn extends PureComponent {
             lang={lang}
             history={history}
             ReactGA={ReactGA}
+            dayjs={dayjs}
           />
         ) : null}
       </Fragment>

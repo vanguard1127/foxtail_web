@@ -132,7 +132,7 @@ class MessageList extends Component {
   render() {
     const { currentUserID, t, dayjs, lang, messages } = this.props;
     const { fetching, hasMoreItems } = this.state;
-
+    // console.log(messages);
     const messageElements = _.flatten(
       _.chain(messages)
         .groupBy(datum =>
@@ -213,7 +213,7 @@ class MessageList extends Component {
         })
         .value()
     );
-
+    //  console.log("Final", messageElements);
     return (
       <div>
         {hasMoreItems && (

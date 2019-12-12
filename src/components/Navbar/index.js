@@ -42,7 +42,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const { session, history, t, tReady } = this.props;
+    const { session, history, t, tReady, dayjs } = this.props;
     if (!tReady) {
       return <Spinner />;
     }
@@ -50,7 +50,7 @@ class Navbar extends Component {
     return (
       <Fragment>
         {session && session.currentuser ? (
-          <NavbarAuth session={session} t={t} history={history} />
+          <NavbarAuth session={session} t={t} history={history} dayjs={dayjs} />
         ) : (
           history.push("/")
         )}
@@ -87,7 +87,6 @@ class NavbarAuth extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const token = localStorage.getItem("token");
   }
 
   componentWillUnmount() {
@@ -104,7 +103,7 @@ class NavbarAuth extends PureComponent {
     let href = window.location.href.split("/");
     href = href[3];
 
-    const { session, t, history } = this.props;
+    const { session, t, history, dayjs } = this.props;
     const { mobileMenu } = this.state;
     const isBlack = session.currentuser.blackMember.active ? true : false;
     const isCouple =
@@ -358,6 +357,7 @@ class NavbarAuth extends PureComponent {
                         msgAudio={msgAudio}
                         blinkInbox={newMsg}
                         history={history}
+                        dayjs={dayjs}
                       />
                     )}
                   </div>

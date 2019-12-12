@@ -16,7 +16,8 @@ const UserToolbar = ({
   refetch,
   ErrorHandler,
   blinkInbox,
-  history
+  history,
+  dayjs
 }) => {
   let { msgsCount, noticesCount } = counts;
   const [alertVisible, setAlertVisible] = useState(true);
@@ -151,6 +152,7 @@ const UserToolbar = ({
             recount={refetch}
             skipForward={skipForward}
             resetSkip={resetSkip}
+            dayjs={dayjs}
           />
         )}
       </ErrorHandler.ErrorBoundary>

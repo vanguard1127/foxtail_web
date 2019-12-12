@@ -134,6 +134,7 @@ class EventInfoMobile extends Component {
                 refetch={refetch}
                 ReactGA={ReactGA}
                 lang={lang}
+                dayjs={dayjs}
               />
               <div className="join-event">
                 <span onClick={() => openDelete()}>{t("canevent")}</span>

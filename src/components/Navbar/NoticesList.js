@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import getLang from "../../utils/getLang";
 import NoticesListItems from "./NoticesListItems";
-const lang = getLang();
-require("dayjs/locale/" + lang);
-dayjs.extend(relativeTime);
 
 class NoticesList extends Component {
   state = {
@@ -41,7 +35,8 @@ class NoticesList extends Component {
       showAlert,
       handleCoupleLink,
       skipForward,
-      resetSkip
+      resetSkip,
+      dayjs
     } = this.props;
     const { notifications } = this.state;
     return (
@@ -60,6 +55,7 @@ class NoticesList extends Component {
         handleCoupleLink={handleCoupleLink}
         skipForward={skipForward}
         resetSkip={resetSkip}
+        dayjs={dayjs}
       />
     );
   }

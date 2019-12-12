@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import dayjs from "dayjs";
 
 import { withTranslation } from "react-i18next";
 import produce from "immer";
@@ -22,9 +21,6 @@ import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
 import deleteFromCache from "../../utils/deleteFromCache";
-import getLang from "../../utils/getLang";
-const lang = getLang();
-require("dayjs/locale/" + lang);
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class InboxPage extends Component {
@@ -251,7 +247,7 @@ class InboxPage extends Component {
       isBlock
     } = this.state;
 
-    const { t, ReactGA, session, history, tReady } = this.props;
+    const { t, ReactGA, session, history, tReady, dayjs, lang } = this.props;
 
     if (!tReady || !session) {
       return <Spinner />;

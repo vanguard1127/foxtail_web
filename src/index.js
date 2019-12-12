@@ -7,9 +7,7 @@ import "react-image-lightbox/style.css";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "rc-slider/assets/index.css";
-import React from "react";
-import ReactGA from "react-ga";
-import { render } from "react-dom";
+import { hydrate, render } from "react-dom";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,6 +15,8 @@ import {
   withRouter,
   Redirect
 } from "react-router-dom";
+import React from "react";
+import ReactGA from "react-ga";
 import { ToastContainer, toast } from "react-toastify";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";
@@ -61,6 +61,17 @@ import { preventContextMenu } from "./utils/image";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import getLang from "./utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
+
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_DNS,
+  ignoreErrors: ["Client:", "authenticated"]
+});
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -73,13 +84,11 @@ firebase.initializeApp({
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 });
 
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DNS,
-  ignoreErrors: ["Client:", "authenticated"]
-});
-
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
+
+dayjs.extend(relativeTime);
+dayjs.extend(advancedFormat);
 
 const wsLink = new WebSocketLink({
   uri: process.env.REACT_APP_WS_URL,
@@ -117,10 +126,10 @@ const afterwareLink = new ApolloLink((operation, forward) => {
     if (headers) {
       const token = headers.get("authorization");
       const refreshToken = headers.get("x-refresh-token");
-      const lang = headers.get("lang");
+      const headerlang = headers.get("lang");
 
-      if (lang) {
-        localStorage.setItem("i18nextLng", lang);
+      if (headerlang) {
+        localStorage.setItem("i18nextLng", headerlang);
       }
 
       if (token) {
@@ -311,7 +320,7 @@ const Wrapper = withRouter(props => {
       location.pathname === "/" &&
       (!location.search || location.search.includes("="))
     ) {
-      return <Landing {...props} ReactGA={ReactGA} />;
+      return <Landing {...props} ReactGA={ReactGA} lang={lang} />;
     } else if (location.pathname === "/tos") {
       return <ToS history={props.history} />;
     } else if (location.pathname === "/about") {
@@ -349,7 +358,7 @@ const Body = withAuth(session => session && session.currentuser)(
     <div className="layout">
       <IdleTimer />
       <header className="topbar">
-        <Navbar ErrorHandler={ErrorHandler} session={session} />
+        <Navbar ErrorHandler={ErrorHandler} session={session} dayjs={dayjs} />
       </header>
       <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
         <Switch>
@@ -362,6 +371,7 @@ const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
               />
             )}
             exact
@@ -374,6 +384,8 @@ const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
             exact
@@ -386,6 +398,8 @@ const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
           />
@@ -397,6 +411,7 @@ const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
               />
             )}
           />
@@ -409,6 +424,8 @@ const Body = withAuth(session => session && session.currentuser)(
                 ErrorHandler={ErrorHandler}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
           />
@@ -421,6 +438,8 @@ const Body = withAuth(session => session && session.currentuser)(
                 ErrorHandler={ErrorHandler}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
           />
@@ -432,6 +451,8 @@ const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
           />
@@ -452,16 +473,30 @@ window.scrollTo(0, 1);
 //prevent context menu
 document.addEventListener("contextmenu", preventContextMenu);
 
-render(
-  <ApolloProvider client={client}>
-    <MuiPickersUtilsProvider utils={DayJsUtils}>
-      <ThemeProvider theme={materialTheme}>
-        <Root />
-      </ThemeProvider>
-    </MuiPickersUtilsProvider>
-  </ApolloProvider>,
-  document.getElementById("root")
-);
+const rootElement = document.getElementById("root");
+if (rootElement.hasChildNodes()) {
+  hydrate(
+    <ApolloProvider client={client}>
+      <MuiPickersUtilsProvider utils={DayJsUtils}>
+        <ThemeProvider theme={materialTheme}>
+          <Root />
+        </ThemeProvider>
+      </MuiPickersUtilsProvider>
+    </ApolloProvider>,
+    rootElement
+  );
+} else {
+  render(
+    <ApolloProvider client={client}>
+      <MuiPickersUtilsProvider utils={DayJsUtils}>
+        <ThemeProvider theme={materialTheme}>
+          <Root />
+        </ThemeProvider>
+      </MuiPickersUtilsProvider>
+    </ApolloProvider>,
+    rootElement
+  );
+}
 
 if (process.env.NODE_ENV !== "production") {
   OfflinePluginRuntime.install({

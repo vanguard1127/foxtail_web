@@ -1,15 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import dayjs from "dayjs";
 import { Query } from "react-apollo";
 import { toast } from "react-toastify";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
 import SettingsPage from "./SettingsPage";
-import getLang from "../../utils/getLang";
-const lang = getLang();
-require("dayjs/locale/" + lang);
 class Settings extends Component {
   shouldComponentUpdate(nextProps) {
     if (
@@ -39,7 +35,9 @@ class Settings extends Component {
       location,
       history,
       ReactGA,
-      tReady
+      tReady,
+      dayjs,
+      lang
     } = this.props;
     if (!tReady) {
       return <Spinner />;

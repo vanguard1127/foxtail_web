@@ -35,7 +35,7 @@ class SignupButton extends PureComponent {
                 alert(failmsg);
                 return;
               }
-
+              console.log("data.fbResolve", data.fbResolve);
               localStorage.setItem(
                 "token",
                 data.fbResolve.find(token => token.access === "auth").token

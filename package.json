@@ -14,7 +14,8 @@
     "test": "jest --config=jest.config.json",
     "flow": "flow",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run stage"
+    "heroku-postbuild": "npm run stage",
+    "postbuild": "react-snap"
   },
   "dependencies": {
     "@date-io/dayjs": "^1.3.11",
@@ -74,6 +75,7 @@
     "react-scroll-up-button": "^1.6.4",
     "react-select": "^3.0.8",
     "react-share": "^3.0.1",
+    "react-snap": "^1.23.0",
     "react-spinners": "^0.6.1",
     "react-spring": "^8.0.27",
     "react-stripe-checkout": "^2.6.3",
@@ -126,5 +128,8 @@
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
+  },
+  "reactSnap": {
+    "inlineCss": true
   }
 }

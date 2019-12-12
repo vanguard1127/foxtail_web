@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import dayjs from "dayjs";
 import withLocation from "../HOCs/withLocation";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
@@ -7,9 +6,6 @@ import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
 import { kinkOptions } from "../../docs/options";
-import getLang from "../../utils/getLang";
-const lang = getLang();
-require("dayjs/locale/" + lang);
 export const Context = React.createContext();
 class SearchProfilesPage extends Component {
   state = {
@@ -106,7 +102,8 @@ class SearchProfilesPage extends Component {
       history,
       locationErr,
       ReactGA,
-      toggleShareModal
+      toggleShareModal,
+      dayjs
     } = this.props;
 
     const {

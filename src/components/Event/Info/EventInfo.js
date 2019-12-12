@@ -128,6 +128,7 @@ class EventInfo extends Component {
                 lang={lang}
                 ReactGA={ReactGA}
                 toggleScroll={toggleScroll}
+                dayjs={dayjs}
               />
               <div className="join-event">
                 <span onClick={() => openDelete()}>{t("canevent")}</span>

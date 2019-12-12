@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import { DateTimePicker } from "@material-ui/pickers";
 import * as yup from "yup";
-import dayjs from "dayjs";
 import axios from "axios";
 import { Mutation } from "react-apollo";
 import { SIGNS3, CREATE_EVENT } from "../../../queries";
@@ -282,7 +281,7 @@ class CreateEvent extends Component {
   };
 
   render() {
-    const { close, t, ErrorHandler, eventID, lang, tReady } = this.props;
+    const { close, t, ErrorHandler, eventID, lang, tReady, dayjs } = this.props;
     const {
       eventname,
       tagline,

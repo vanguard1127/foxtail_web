@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Query, Mutation } from "react-apollo";
-import dayjs from "dayjs";
 import {
   disableBodyScroll,
   enableBodyScroll,
@@ -20,9 +19,7 @@ import EventInfo from "./Info/EventInfo";
 import { flagOptions } from "../../docs/options";
 import { toast } from "react-toastify";
 import ShareModal from "../Modals/Share";
-import getLang from "../../utils/getLang";
-const lang = getLang();
-require("dayjs/locale/" + lang);
+
 class EventPage extends Component {
   state = {
     visible: false,
@@ -119,7 +116,16 @@ class EventPage extends Component {
   render() {
     const { id } = this.props.match.params;
     const { blockModalVisible, showDelete, shareModalVisible } = this.state;
-    const { session, history, t, ErrorHandler, ReactGA, tReady } = this.props;
+    const {
+      session,
+      history,
+      t,
+      ErrorHandler,
+      ReactGA,
+      tReady,
+      dayjs,
+      lang
+    } = this.props;
     if (!tReady) {
       return <Spinner />;
     }

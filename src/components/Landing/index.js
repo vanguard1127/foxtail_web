@@ -4,9 +4,10 @@ import LoginButton from "./LoginButton";
 import withAuth from "../HOCs/withAuth";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
 import * as ErrorHandler from "../common/ErrorHandler";
-import CountUp from "react-countup";
-import { Query } from "react-apollo";
-import { GET_DEMO_COUNTS } from "../../queries";
+//TODO:FIx when ready
+// import CountUp from "react-countup";
+// import { Query } from "react-apollo";
+// import { GET_DEMO_COUNTS } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
 import ResetPassModal from "../Modals/ResetPassword";
 import ContactUsModal from "../Modals/ContactUs";
@@ -14,9 +15,6 @@ import Spinner from "../common/Spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { withTranslation } from "react-i18next";
-import getLang from "../../utils/getLang";
-const lang = getLang();
-require("dayjs/locale/" + lang);
 
 class Landing extends PureComponent {
   constructor(props) {
@@ -39,7 +37,7 @@ class Landing extends PureComponent {
   };
 
   render() {
-    const { t, location, history, session, ReactGA, tReady } = this.props;
+    const { t, location, history, session, ReactGA, tReady, lang } = this.props;
     const {
       resetPhoneVisible,
       token,
