@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Waypoint } from "react-waypoint";
 import Message from "./Message.js";
-import _ from "lodash";
 import DateItem from "./DateItem";
 
 class MessageList extends Component {
@@ -128,92 +127,107 @@ class MessageList extends Component {
       });
     }
   };
+  groupBy = function(arr, criteria) {
+    return arr.reduce(function(obj, item) {
+      // Check if the criteria is a function to run on the item or a property of it
+      var key =
+        typeof criteria === "function" ? criteria(item) : item[criteria];
+
+      // If the key doesn't exist yet, create it
+      if (!Object.prototype.hasOwnProperty.call(obj, key)) {
+        obj[key] = [];
+      }
+
+      // Push the value to the object
+      obj[key].push(item);
+
+      // Return the object to the next item in the loop
+      return obj;
+    }, {});
+  };
+
+  objectMap = object => {
+    return Object.keys(object).reduce(function(result, key) {
+      result.push({ date: key, messages: object[key] });
+      return result;
+    }, []);
+  };
 
   render() {
     const { currentUserID, t, dayjs, lang, messages } = this.props;
     const { fetching, hasMoreItems } = this.state;
-    // console.log(messages);
-    const messageElements = _.flatten(
-      _.chain(messages)
-        .groupBy(datum =>
-          dayjs(datum.createdAt)
-            .locale(lang)
-            .format("dddd, MMMM D, YYYY")
-            .toLocaleUpperCase()
-        )
-        .map((messages, date) => ({ date, messages })) //using ES6 shorthand to generate the objects
-        .reverse() // Reverse so latest date is on the bottom
-        .map((item, index) => {
-          const messageElements = item.messages
-            .map(message => {
-              let props = {
-                key: message.id,
-                message,
-                currentUserID,
-                t
-              };
-
-              if (message.type === "alert") {
-                return (
-                  <div
-                    style={{
-                      margin: "0 -20px 0 -20px",
-                      background: "#ffffff70",
-                      padding: "20px 0",
-                      textAlign: "center"
-                    }}
-                    key={message.id}
-                  >
-                    {message.text}
-                  </div>
-                );
-              } else if (message.type === "left") {
-                return (
-                  <div
-                    style={{
-                      margin: "0 -20px 0 -20px",
-                      background: "#ffffff70",
-                      padding: "20px 0",
-                      textAlign: "center"
-                    }}
-                    key={message.id}
-                  >
-                    {message.text + " " + t("leftchat")}
-                  </div>
-                );
-              }
-              return (
-                <Message
-                  key={message.id}
-                  {...props}
-                  dayjs={dayjs}
-                  lang={lang}
-                />
-              );
-            })
-            .reverse();
-          // At the start of every date group insert a date element.
-          const dateElement = (
-            <DateItem
-              stickZIndex={index + 10}
-              onAbove={() => {
-                this.onDateWaypointPostion(index, "above");
-              }}
-              onInside={() => {
-                this.onDateWaypointPostion(index, "inside");
-              }}
-              // Keys won't collied because DateItems's dates are days appart from each other
-              key={`messageDate-${item.date}`}
-              hasMoreItems={this.hasMoreItems}
-            >
-              {item.date}
-            </DateItem>
-          );
-          return [dateElement].concat(messageElements);
-        })
-        .value()
+    const group = this.groupBy(messages, datum =>
+      dayjs(datum.createdAt)
+        .locale(lang)
+        .format("dddd, MMMM D, YYYY")
+        .toLocaleUpperCase()
     );
-    //  console.log("Final", messageElements);
+    const messageElements = this.objectMap(group)
+      .reverse()
+      .map((item, index) => {
+        const messageElements = item.messages
+          .map(message => {
+            let props = {
+              key: message.id,
+              message,
+              currentUserID,
+              t
+            };
+
+            if (message.type === "alert") {
+              return (
+                <div
+                  style={{
+                    margin: "0 -20px 0 -20px",
+                    background: "#ffffff70",
+                    padding: "20px 0",
+                    textAlign: "center"
+                  }}
+                  key={message.id}
+                >
+                  {message.text}
+                </div>
+              );
+            } else if (message.type === "left") {
+              return (
+                <div
+                  style={{
+                    margin: "0 -20px 0 -20px",
+                    background: "#ffffff70",
+                    padding: "20px 0",
+                    textAlign: "center"
+                  }}
+                  key={message.id}
+                >
+                  {message.text + " " + t("leftchat")}
+                </div>
+              );
+            }
+            return (
+              <Message key={message.id} {...props} dayjs={dayjs} lang={lang} />
+            );
+          })
+          .reverse();
+        // At the start of every date group insert a date element.
+        const dateElement = (
+          <DateItem
+            stickZIndex={index + 10}
+            onAbove={() => {
+              this.onDateWaypointPostion(index, "above");
+            }}
+            onInside={() => {
+              this.onDateWaypointPostion(index, "inside");
+            }}
+            // Keys won't collied because DateItems's dates are days appart from each other
+            key={`messageDate-${item.date}`}
+            hasMoreItems={this.hasMoreItems}
+          >
+            {item.date}
+          </DateItem>
+        );
+        return [dateElement].concat(messageElements);
+      })
+      .reduce((a, b) => a.concat(b), []);
     return (
       <div>
         {hasMoreItems && (

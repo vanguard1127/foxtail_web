@@ -1,9 +1,7 @@
 @import url("../css/reset.css");
 @import url("../css/grid.css");
 @import url("../css/fonts.css");
-@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500,700");
-@import url("https://fonts.googleapis.com/css?family=Poppins:400,500");
-@import url("https://fonts.googleapis.com/css?family=Kaushan+Script:400,500");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500,700|Poppins:400,500|Kaushan+Script:400,500");
 
 html {
   height: 100%;
