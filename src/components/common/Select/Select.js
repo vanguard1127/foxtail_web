@@ -24,12 +24,12 @@ class Select extends PureComponent {
     selectedOptions: this.props.defaultOptionValues
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     document.addEventListener("mousedown", this.handleClickOutside, false);
     document.addEventListener("touchstart", this.handleClickOutside, false);
   }
 
-  componentWillUpdate(prevProps, prevState) {
+  UNSAFE_componentWillUpdate(prevProps, prevState) {
     if (this.listContainerRef) {
       this.scrollPosition = this.listContainerRef.scrollTop;
     }
