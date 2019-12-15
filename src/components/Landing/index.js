@@ -3,13 +3,6 @@ import Signup from "./Signup";
 import LoginButton from "./LoginButton";
 import withAuth from "../HOCs/withAuth";
 import * as ErrorHandler from "../common/ErrorHandler";
-<<<<<<< HEAD
-//TODO:FIx when ready
-// import CountUp from "react-countup";
-// import { Query } from "react-apollo";
-// import { GET_DEMO_COUNTS } from "../../queries";
-=======
->>>>>>> dev-Ilya
 import ResetPhoneModal from "../Modals/ResetPhone";
 import ResetPassModal from "../Modals/ResetPassword";
 import ContactUsModal from "../Modals/ContactUs";
@@ -17,11 +10,8 @@ import Spinner from "../common/Spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { withTranslation } from "react-i18next";
-<<<<<<< HEAD
-=======
 import FooterLanding from "../Footer/FooterLanding";
 import Header from "../Header";
->>>>>>> dev-Ilya
 
 class Landing extends PureComponent {
   constructor(props) {
