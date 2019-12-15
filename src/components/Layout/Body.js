@@ -13,12 +13,13 @@ import ProfilePage from "../Profile/";
 import InboxPage from "../Inbox/";
 import SearchEvents from "../SearchEvents";
 import { ToastContainer } from "react-toastify";
+import dayjs from "dayjs";
 export const Body = withAuth(session => session && session.currentuser)(
   ({ showFooter, session, refetch }) => (
     <div className="layout">
       <IdleTimer />
       <header className="topbar">
-        <Navbar ErrorHandler={ErrorHandler} session={session} />
+        <Navbar ErrorHandler={ErrorHandler} session={session} dayjs={dayjs} />
       </header>
       <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
         <Switch>
@@ -31,6 +32,7 @@ export const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
               />
             )}
             exact
@@ -43,6 +45,8 @@ export const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
             exact
@@ -55,6 +59,8 @@ export const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
           />
@@ -66,6 +72,7 @@ export const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
               />
             )}
           />
@@ -78,6 +85,8 @@ export const Body = withAuth(session => session && session.currentuser)(
                 ErrorHandler={ErrorHandler}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
           />
@@ -90,6 +99,8 @@ export const Body = withAuth(session => session && session.currentuser)(
                 ErrorHandler={ErrorHandler}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
           />
@@ -101,6 +112,8 @@ export const Body = withAuth(session => session && session.currentuser)(
                 ReactGA={ReactGA}
                 session={session}
                 refetch={refetch}
+                dayjs={dayjs}
+                lang={lang}
               />
             )}
           />

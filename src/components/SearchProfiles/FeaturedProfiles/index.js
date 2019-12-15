@@ -3,7 +3,7 @@ import OwlCarousel from "react-owl-carousel";
 import FeaturedCard from "./FeaturedCard";
 import arraysEqual from "../../../utils/arraysEqual";
 
-class FeaturedDiv extends Component {
+class FeaturedProfiles extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       this.props.featuredProfiles !== nextProps.featuredProfiles ||
@@ -94,4 +94,4 @@ class FeaturedDiv extends Component {
   }
 }
 
-export default FeaturedDiv;
+export default FeaturedProfiles;

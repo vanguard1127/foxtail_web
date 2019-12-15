@@ -20,7 +20,7 @@ export const Wrapper = withRouter(props => {
       location.pathname === "/" &&
       (!location.search || location.search.includes("="))
     ) {
-      return <Landing {...props} ReactGA={ReactGA} />;
+      return <Landing {...props} ReactGA={ReactGA} lang={props.lang} />;
     } else if (location.pathname === "/tos") {
       return <ToS history={props.history} />;
     } else if (location.pathname === "/about") {
@@ -47,7 +47,9 @@ export const Wrapper = withRouter(props => {
     let showFooter =
       location.pathname && location.pathname.match(/^\/inbox/) === null;
 
-    return <Body showFooter={showFooter} location={location} />;
+    return (
+      <Body showFooter={showFooter} location={location} dayjs={props.dayjs} />
+    );
   } else {
     return null;
   }

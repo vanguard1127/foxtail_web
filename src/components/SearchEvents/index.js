@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { withRouter } from "react-router-dom";
 import { Query, withApollo } from "react-apollo";
-import dayjs from "dayjs";
 import {
   disableBodyScroll,
   enableBodyScroll,
@@ -18,9 +17,6 @@ import Header from "./Header";
 import EventsList from "./EventsList";
 import Spinner from "../common/Spinner";
 import deleteFromCache from "../../utils/deleteFromCache";
-import getLang from "../../utils/getLang";
-const lang = getLang();
-require("dayjs/locale/" + lang);
 
 class SearchEvents extends Component {
   state = {
@@ -228,10 +224,11 @@ class SearchEvents extends Component {
       t,
       ErrorHandler,
       session,
-      refetch,
       history,
       ReactGA,
-      tReady
+      tReady,
+      dayjs,
+      lang
     } = this.props;
     if (!tReady || !session || (!lat && !elapse)) {
       return <Spinner />;
@@ -266,6 +263,7 @@ class SearchEvents extends Component {
                 history={history}
                 ReactGA={ReactGA}
                 toggleScroll={this.toggleScroll}
+                dayjs={dayjs}
               />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>

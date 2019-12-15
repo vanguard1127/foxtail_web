@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import { Query, Mutation, withApollo } from "react-apollo";
 import { toast } from "react-toastify";
-import dayjs from "dayjs";
 import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import KinksSection from "./KinksSection";
@@ -17,9 +16,6 @@ import BlockModal from "../Modals/Block";
 import ShareModal from "../Modals/Share";
 import Modal from "../common/Modal";
 import { flagOptions } from "../../docs/options";
-import getLang from "../../utils/getLang";
-const lang = getLang();
-require("dayjs/locale/" + lang);
 class ProfilePage extends Component {
   state = {
     shareModalVisible: false,
@@ -164,7 +160,7 @@ class ProfilePage extends Component {
       chatID,
       matched
     } = this.state;
-    const { t, ErrorHandler, session, ReactGA, tReady } = this.props;
+    const { t, ErrorHandler, session, ReactGA, tReady, dayjs } = this.props;
 
     if (!tReady) {
       return <Spinner />;

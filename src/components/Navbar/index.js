@@ -33,7 +33,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const { session, history, t, tReady } = this.props;
+    const { session, history, t, tReady, dayjs } = this.props;
     if (!tReady) {
       return <Spinner />;
     }
@@ -41,7 +41,7 @@ class Navbar extends Component {
     return (
       <Fragment>
         {session && session.currentuser ? (
-          <NavbarAuth session={session} t={t} history={history} />
+          <NavbarAuth session={session} t={t} history={history} dayjs={dayjs} />
         ) : (
           history.push("/")
         )}

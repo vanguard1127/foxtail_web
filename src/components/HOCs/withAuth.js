@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReCaptcha from "../Modals/ReCaptcha";
 import i18next from "i18next";
+import dayjs from "dayjs";
 
 import { ApolloConsumer } from "react-apollo";
 import { GET_CURRENT_USER, CONFIRM_EMAIL } from "../../queries";
@@ -153,7 +154,11 @@ const withAuth = conditionFunc => Component => props => {
                   }
                 }
                 if (conditionFunc(data)) {
+                  const yesterday = dayjs().subtract(1, "day");
+                  const createdAt = dayjs(data.currentuser.createdAt);
+                  const isPreview = createdAt.isAfter(yesterday);
                   if (
+                    !isPreview &&
                     !data.currentuser.isProfileOK &&
                     ~window.location.href.indexOf("/settings") === 0
                   ) {
@@ -193,6 +198,13 @@ const withAuth = conditionFunc => Component => props => {
                           }}
                         />
                       );
+                    }
+                  }
+                  if (isPreview && !data.currentuser.isProfileOK) {
+                    if (!toast.isActive("previewmsg")) {
+                      toast.info(i18next.t("common:previewmsg"), {
+                        toastId: "previewmsg"
+                      });
                     }
                   }
                 }

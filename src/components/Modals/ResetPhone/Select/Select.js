@@ -20,7 +20,7 @@ class Select extends PureComponent {
   };
 
   //TODO:Find replacment
-  UNSAFE_componentWillMount() {
+  componentWillMount() {
     document.addEventListener("mousedown", this.handleClickOutside, false);
     document.addEventListener("touchstart", this.handleClickOutside, false);
   }

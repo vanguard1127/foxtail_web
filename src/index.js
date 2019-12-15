@@ -1,15 +1,18 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-import "./assets/css/main.css";
-import "./docs/manifest.json";
-import "./assets/favicon.ico";
-import "react-image-lightbox/style.css";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
-import "rc-slider/assets/index.css";
+import(/* webpackPreload: true */ "core-js/stable");
+import(/* webpackPreload: true */ "regenerator-runtime/runtime");
+import(/* webpackPreload: true */ "./assets/css/main.css");
+import(/* webpackPreload: true */ "./docs/manifest.json");
+import(/* webpackPreload: true */ "./assets/favicon.ico");
+import(/* webpackPreload: true */ "react-image-lightbox/style.css");
+import(/* webpackPreload: true */ "owl.carousel/dist/assets/owl.carousel.css");
+import(
+  /* webpackPreload: true */ "owl.carousel/dist/assets/owl.theme.default.css"
+);
+import(/* webpackPreload: true */ "@fortawesome/fontawesome-free/js/all");
+import(/* webpackPreload: true */ "rc-slider/assets/index.css");
 import React from "react";
 import ReactGA from "react-ga";
-import { render } from "react-dom";
+import { hydrate, render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";
@@ -24,6 +27,18 @@ import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import { cache, link } from "./utils/links";
 import { materialTheme } from "./utils/materialTheme";
 import { Wrapper } from "./components/layout/Wraper";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import getLang from "./utils/getLang";
+const lang = getLang();
+require("dayjs/locale/" + lang);
+
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_DNS,
+  ignoreErrors: ["Client:", "authenticated"]
+});
+
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -35,13 +50,11 @@ firebase.initializeApp({
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 });
 
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DNS,
-  ignoreErrors: ["Client:", "authenticated"]
-});
-
 ReactGA.initialize("UA-106316956-1");
 ReactGA.pageview(window.location.pathname + window.location.search);
+
+dayjs.extend(relativeTime);
+dayjs.extend(advancedFormat);
 
 const client = new ApolloClient({
   link,
@@ -51,7 +64,7 @@ const client = new ApolloClient({
 
 const Root = () => (
   <Router>
-    <Wrapper />
+    <Wrapper lang={lang} dayjs={dayjs} />
   </Router>
 );
 
@@ -63,16 +76,30 @@ window.scrollTo(0, 1);
 //prevent context menu
 document.addEventListener("contextmenu", preventContextMenu);
 
-render(
-  <ApolloProvider client={client}>
-    <MuiPickersUtilsProvider utils={DayJsUtils}>
-      <ThemeProvider theme={materialTheme}>
-        <Root />
-      </ThemeProvider>
-    </MuiPickersUtilsProvider>
-  </ApolloProvider>,
-  document.getElementById("root")
-);
+const rootElement = document.getElementById("root");
+if (rootElement.hasChildNodes()) {
+  hydrate(
+    <ApolloProvider client={client}>
+      <MuiPickersUtilsProvider utils={DayJsUtils}>
+        <ThemeProvider theme={materialTheme}>
+          <Root />
+        </ThemeProvider>
+      </MuiPickersUtilsProvider>
+    </ApolloProvider>,
+    rootElement
+  );
+} else {
+  render(
+    <ApolloProvider client={client}>
+      <MuiPickersUtilsProvider utils={DayJsUtils}>
+        <ThemeProvider theme={materialTheme}>
+          <Root />
+        </ThemeProvider>
+      </MuiPickersUtilsProvider>
+    </ApolloProvider>,
+    rootElement
+  );
+}
 
 if (process.env.NODE_ENV !== "production") {
   OfflinePluginRuntime.install({

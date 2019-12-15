@@ -306,6 +306,7 @@ class NavbarAuth extends PureComponent {
                         msgAudio={msgAudio}
                         blinkInbox={newMsg}
                         history={history}
+                        dayjs={this.props.dayjs}
                       />
                     )}
                   </div>

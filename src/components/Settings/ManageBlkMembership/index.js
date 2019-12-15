@@ -26,9 +26,7 @@ class ManageBlackSub extends Component {
         <div className="content mtop">
           <div className="row">
             <div className="col-md-12">
-              <span className="heading">
-                {t("ManageBlackSub")} <i>- ({t("vertitle")})</i>
-              </span>
+              <span className="heading">{t("ManageBlackSub")}</span>
             </div>
             {ccLast4 && (
               <div className="col-md-12">
