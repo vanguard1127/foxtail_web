@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const OfflinePlugin = require("offline-plugin");
-
+const webpack = require("webpack");
 module.exports = {
   entry: { main: "./src/index.js" },
   output: {
@@ -46,6 +46,20 @@ module.exports = {
       {
         test: /\.hbs$/,
         use: ["handlebars-loader"]
+      },
+      {
+        // Exposes jQuery for use outside Webpack build
+        test: require.resolve("jquery"),
+        use: [
+          {
+            loader: "expose-loader",
+            options: "jQuery"
+          },
+          {
+            loader: "expose-loader",
+            options: "$"
+          }
+        ]
       }
     ]
   },
@@ -81,6 +95,10 @@ module.exports = {
         events: true,
         minify: true
       }
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
     })
   ]
 };

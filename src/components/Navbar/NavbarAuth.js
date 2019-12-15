@@ -1,56 +1,12 @@
-import React, { Fragment, Component, PureComponent } from "react";
-import { withRouter } from "react-router-dom";
-import { withTranslation } from "react-i18next";
-import Spinner from "../common/Spinner";
-import NavbarAuth from "./NavbarAuth";
-class Navbar extends Component {
-  shouldComponentUpdate(nextProps) {
-    const { session, location } = this.props;
-    if (session) {
-      if (nextProps.session === undefined) {
-        return true;
-      }
-      if (session.currentuser && nextProps.session.currentuser) {
-        if (
-          session.currentuser.username !==
-            nextProps.session.currentuser.username ||
-          session.currentuser.userID !== nextProps.session.currentuser.userID ||
-          session.currentuser.profilePic !==
-            nextProps.session.currentuser.profilePic
-        ) {
-          return true;
-        }
-      }
-    }
-    if (
-      location.pathname !== nextProps.location.pathname ||
-      this.props.t !== nextProps.t ||
-      this.props.tReady !== nextProps.tReady
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  render() {
-    const { session, history, t, tReady, dayjs } = this.props;
-    if (!tReady) {
-      return <Spinner />;
-    }
-
-    return (
-      <Fragment>
-        {session && session.currentuser ? (
-          <NavbarAuth session={session} t={t} history={history} dayjs={dayjs} />
-        ) : (
-          history.push("/")
-        )}
-      </Fragment>
-    );
-  }
-}
-
-<<<<<<< HEAD
+import React, { PureComponent } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { GET_COUNTS, NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../queries";
+import { Query } from "react-apollo";
+import { NavLink } from "react-router-dom";
+import UserToolbar from "./UserToolbar";
+import * as ErrorHandler from "../common/ErrorHandler";
+import Logout from "./LogoutLink";
+var msgAudio = new Audio(require("../../assets/audio/msg.mp3"));
 class NavbarAuth extends PureComponent {
   unsubscribe;
   unsubscribe2;
@@ -79,9 +35,10 @@ class NavbarAuth extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    const token = localStorage.getItem("token");
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillMount() {
     this.mounted = false;
     if (this.unsubscribe) {
       this.unsubscribe();
@@ -95,7 +52,7 @@ class NavbarAuth extends PureComponent {
     let href = window.location.href.split("/");
     href = href[3];
 
-    const { session, t, history, dayjs } = this.props;
+    const { session, t, history } = this.props;
     const { mobileMenu } = this.state;
     const isBlack = session.currentuser.blackMember.active ? true : false;
     const isCouple =
@@ -349,7 +306,7 @@ class NavbarAuth extends PureComponent {
                         msgAudio={msgAudio}
                         blinkInbox={newMsg}
                         history={history}
-                        dayjs={dayjs}
+                        dayjs={this.props.dayjs}
                       />
                     )}
                   </div>
@@ -362,7 +319,4 @@ class NavbarAuth extends PureComponent {
     );
   }
 }
-
-=======
->>>>>>> dev-Ilya
-export default withTranslation("common")(withRouter(Navbar));
+export default NavbarAuth;
