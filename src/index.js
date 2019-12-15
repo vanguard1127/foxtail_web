@@ -8,7 +8,6 @@ import(/* webpackPreload: true */ "owl.carousel/dist/assets/owl.carousel.css");
 import(
   /* webpackPreload: true */ "owl.carousel/dist/assets/owl.theme.default.css"
 );
-import(/* webpackPreload: true */ "@fortawesome/fontawesome-free/js/all");
 import(/* webpackPreload: true */ "rc-slider/assets/index.css");
 import React from "react";
 import ReactGA from "react-ga";
