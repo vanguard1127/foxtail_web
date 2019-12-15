@@ -15,7 +15,7 @@ import SearchEvents from "../SearchEvents";
 import { ToastContainer } from "react-toastify";
 import dayjs from "dayjs";
 export const Body = withAuth(session => session && session.currentuser)(
-  ({ showFooter, session, refetch }) => (
+  ({ showFooter, session, refetch, lang }) => (
     <div className="layout">
       <IdleTimer />
       <header className="topbar">

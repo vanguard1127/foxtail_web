@@ -48,7 +48,12 @@ export const Wrapper = withRouter(props => {
       location.pathname && location.pathname.match(/^\/inbox/) === null;
 
     return (
-      <Body showFooter={showFooter} location={location} dayjs={props.dayjs} />
+      <Body
+        showFooter={showFooter}
+        location={location}
+        dayjs={props.dayjs}
+        lang={props.lang}
+      />
     );
   } else {
     return null;
