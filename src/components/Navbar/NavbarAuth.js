@@ -35,7 +35,6 @@ class NavbarAuth extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const token = localStorage.getItem("token");
   }
 
   UNSAFE_componentWillMount() {

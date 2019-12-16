@@ -2,7 +2,7 @@
   "extends": ["react-app", "eslint:recommended", "plugin:react/recommended"],
   "parser": "babel-eslint",
   "parserOptions": { "ecmsVersion": "6", "sourceType": "module" },
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "react-hooks", "jsx-a11y"],
   "rules": {
     "prettier/prettier": "error",
     "react/display-name": 0,

@@ -82,8 +82,14 @@ export const cache = new InMemoryCache({
   freezeResults: true
 });
 
+const defaults = {
+  getNotifications: []
+  }
+;
+
 const stateLink = withClientState({
-  cache
+  cache,
+  defaults
 });
 
 const errorLink = onError(

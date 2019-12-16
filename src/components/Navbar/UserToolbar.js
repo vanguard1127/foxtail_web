@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { READ_NOTIFICATION, GET_COUNTS, CONVERT_COUPLE } from "../../queries";
+import produce from "immer";
+import { READ_NOTIFICATION, GET_COUNTS, CONVERT_COUPLE,GET_NOTIFICATIONS } from "../../queries";
 import NoticesMenu from "./NoticesMenu";
 import InboxItem from "./InboxItem";
 import Alert from "./Alert";
@@ -23,28 +24,33 @@ const UserToolbar = ({
   const [alertVisible, setAlertVisible] = useState(true);
   const [alert, setAlert] = useState(counts.alert);
   const [skip, setSkip] = useState(0);
-  const [updateNotifications, { loading: mutationLoading }] = useMutation(
+  const [notificationID, setNotificationID] = useState(null);
+  const [updateNotifications, {client, loading: mutationLoading }] = useMutation(
     READ_NOTIFICATION,
     {
       update(cache) {
-        const { getCounts } = cache.readQuery({
-          query: GET_COUNTS
-        });
-
-        let newCounts = { ...getCounts };
-        if (newCounts.alert && !newCounts.alert.read) {
-          newCounts.alert = null;
-
-          cache.writeQuery({
-            query: GET_COUNTS,
-            data: {
-              getCounts: { ...newCounts }
-            }
-          });
-        }
+        updateRead(cache);
       }
     }
   );
+  const updateRead = cache => {
+    const { getCounts } = cache.readQuery({
+      query: GET_COUNTS
+    });
+
+    let newCounts = { ...getCounts };
+    if (newCounts.alert && !newCounts.alert.read) {
+      newCounts.alert = null;
+
+      cache.writeQuery({
+        query: GET_COUNTS,
+        data: {
+          getCounts: { ...newCounts }
+        }
+      });
+    }
+  };
+
   const [
     convertToCouple,
     { loading: cplLoading, data: isCoupleOK }
@@ -94,8 +100,32 @@ const UserToolbar = ({
   };
 
   const readNotices = notificationID => {
+    setNotificationID(notificationID);
     updateNotifications({
       variables: { notificationID }
+    }).then(()=>{
+  const {
+      getNotifications,
+      getNotifications: { notifications }
+    } = client.cache.readQuery({
+      query: GET_NOTIFICATIONS,
+      variables: {
+            limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT),
+        skip
+      }
+    });
+    const newNotifications = produce(notifications, draftState => {
+         var readNotice = draftState.find(notice => notice.id === notificationID);
+    if (readNotice) readNotice.read = true;
+    });
+
+    client.cache.writeQuery({
+      query: GET_NOTIFICATIONS,
+      variables: { limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT) },
+      data: {
+        getNotifications: { ...getNotifications, notifications:newNotifications }
+      }
+    });
     }).catch(res => {
       this.props.ErrorHandler.catchErrors(res);
     });

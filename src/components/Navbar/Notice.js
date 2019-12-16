@@ -94,7 +94,7 @@ const Notice = ({
             <span className="text">
               <b>
                 {notice.fromProfile ? notice.fromProfile.profileName : ""}
-                {notice.name}{" "}
+                {notice.name}
               </b>
               {t(notice.text)}
               {notice.event && " " + notice.event}

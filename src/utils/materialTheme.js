@@ -37,7 +37,7 @@ export const materialTheme = createMuiTheme({
         backgroundColor: "#CB0032"
       },
       dayDisabled: {
-        color: "##616d78"
+        color: "#616d78"
       },
       current: {
         color: "#cf003c"
