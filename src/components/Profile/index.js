@@ -214,7 +214,7 @@ class ProfilePage extends Component {
                 if (loading) {
                   document.title = t("common:Loading") + "...";
                   return <Spinner message={t("common:Loading")} size="large" />;
-                } else if (!data || !data.profile) {
+                } else if (!data || !data.profile||data.profile.users.length===0) {
                   return (
                     <section className="not-found">
                       <div className="container">

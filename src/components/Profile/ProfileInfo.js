@@ -16,17 +16,15 @@ class ProfileInfo extends Component {
     if (users[1]) {
       userInfoStyle += " couple";
     }
+
     return (
       <ErrorBoundary>
         <div className={userInfoStyle}>
           <div>
-            {" "}
             <Tooltip title={profileName} placement="top">
               <span className="name">
                 {users[1] && (
-                  <span
-                    className={"sex " + users[0].sex + " userInfoHeader"}
-                  />
+                  <span className={"sex " + users[0].sex + " userInfoHeader"} />
                 )}
                 &nbsp;{users[0].username},&nbsp;{" "}
               </span>
@@ -46,11 +44,8 @@ class ProfileInfo extends Component {
           {users[1] && (
             <div>
               <span>
-                {" "}
                 {users[1] && (
-                  <span
-                    className={"sex " + users[1].sex + " userInfoHeader"}
-                  />
+                  <span className={"sex " + users[1].sex + " userInfoHeader"} />
                 )}
                 &nbsp;{users[1].username},&nbsp;{" "}
               </span>

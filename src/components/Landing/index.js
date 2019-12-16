@@ -38,16 +38,16 @@ class Landing extends PureComponent {
   };
   resetPhoneClick() {
     this.setState({
-      resetPhoneVisible: !resetPhoneVisible
+      resetPhoneVisible: !this.state.resetPhoneVisible
     });
   }
   resetPassClick() {
     this.setState({
-      resetPassVisible: !resetPassVisible
+      resetPassVisible: !this.state.resetPassVisible
     });
   }
   termsClick() {
-    this.setState({ tooltip: !tooltip });
+    this.setState({ tooltip: !this.state.tooltip });
   }
   render() {
     const { t, location, history, session, ReactGA, tReady, lang } = this.props;
