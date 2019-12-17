@@ -1,14 +1,3 @@
-import(/* webpackPreload: true */ "core-js/stable");
-import(/* webpackPreload: true */ "regenerator-runtime/runtime");
-import(/* webpackPreload: true */ "./assets/css/main.css");
-import(/* webpackPreload: true */ "./docs/manifest.json");
-import(/* webpackPreload: true */ "./assets/favicon.ico");
-import(/* webpackPreload: true */ "react-image-lightbox/style.css");
-import(/* webpackPreload: true */ "owl.carousel/dist/assets/owl.carousel.css");
-import(
-  /* webpackPreload: true */ "owl.carousel/dist/assets/owl.theme.default.css"
-);
-import(/* webpackPreload: true */ "rc-slider/assets/index.css");
 import React from "react";
 import ReactGA from "react-ga";
 import { hydrate, render } from "react-dom";
@@ -30,6 +19,17 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import getLang from "./utils/getLang";
+import(/* webpackPreload: true */ "core-js/stable");
+import(/* webpackPreload: true */ "regenerator-runtime/runtime");
+import(/* webpackPreload: true */ "./assets/css/main.css");
+import(/* webpackPreload: true */ "./docs/manifest.json");
+import(/* webpackPreload: true */ "./assets/favicon.ico");
+import(/* webpackPreload: true */ "react-image-lightbox/style.css");
+import(/* webpackPreload: true */ "owl.carousel/dist/assets/owl.carousel.css");
+import(
+  /* webpackPreload: true */ "owl.carousel/dist/assets/owl.theme.default.css"
+);
+import(/* webpackPreload: true */ "rc-slider/assets/index.css");
 const lang = getLang();
 require("dayjs/locale/" + lang);
 
@@ -60,7 +60,7 @@ const client = new ApolloClient({
   cache,
   assumeImmutableResults: true
 });
-
+client.resetStore();
 const Root = () => (
   <Router>
     <Wrapper lang={lang} dayjs={dayjs} />

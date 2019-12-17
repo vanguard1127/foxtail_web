@@ -40,11 +40,7 @@ class NoticesMenu extends Component {
         }
         closeAction={recount}
       >
-        <Query
-          query={GET_NOTIFICATIONS}
-          variables={{ limit, skip }}
-          fetchPolicy="network-only"
-        >
+        <Query query={GET_NOTIFICATIONS} variables={{ limit, skip }}>
           {({ data, loading, error, subscribeToMore, fetchMore }) => {
             if (
               loading ||

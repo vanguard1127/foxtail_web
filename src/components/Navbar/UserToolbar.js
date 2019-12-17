@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import produce from "immer";
-import { READ_NOTIFICATION, GET_COUNTS, CONVERT_COUPLE,GET_NOTIFICATIONS } from "../../queries";
+import {
+  READ_NOTIFICATION,
+  GET_COUNTS,
+  CONVERT_COUPLE,
+  GET_NOTIFICATIONS
+} from "../../queries";
 import NoticesMenu from "./NoticesMenu";
 import InboxItem from "./InboxItem";
 import Alert from "./Alert";
@@ -25,14 +30,14 @@ const UserToolbar = ({
   const [alert, setAlert] = useState(counts.alert);
   const [skip, setSkip] = useState(0);
   const [notificationID, setNotificationID] = useState(null);
-  const [updateNotifications, {client, loading: mutationLoading }] = useMutation(
-    READ_NOTIFICATION,
-    {
-      update(cache) {
-        updateRead(cache);
-      }
+  const [
+    updateNotifications,
+    { client, loading: mutationLoading }
+  ] = useMutation(READ_NOTIFICATION, {
+    update(cache) {
+      updateRead(cache);
     }
-  );
+  });
   const updateRead = cache => {
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS
@@ -103,32 +108,73 @@ const UserToolbar = ({
     setNotificationID(notificationID);
     updateNotifications({
       variables: { notificationID }
-    }).then(()=>{
-  const {
-      getNotifications,
-      getNotifications: { notifications }
-    } = client.cache.readQuery({
-      query: GET_NOTIFICATIONS,
-      variables: {
-            limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT),
-        skip
-      }
-    });
-    const newNotifications = produce(notifications, draftState => {
-         var readNotice = draftState.find(notice => notice.id === notificationID);
-    if (readNotice) readNotice.read = true;
-    });
+    })
+      .then(() => {
+        const { cache } = client;
+        let query = "getNotifications";
+        let found = false;
+        //find in cache
+        Object.keys(cache.data.data).forEach(key => {
+          if (key === "ROOT_QUERY") {
+            Object.keys(cache.data.data[key]).forEach(subkey => {
+              if (!found && subkey.match(query)) {
+                found = true;
+              }
+            });
+          } else {
+            if (!found && key.match(query)) {
+              found = true;
+            }
+          }
+        });
 
-    client.cache.writeQuery({
-      query: GET_NOTIFICATIONS,
-      variables: { limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT) },
-      data: {
-        getNotifications: { ...getNotifications, notifications:newNotifications }
-      }
-    });
-    }).catch(res => {
-      this.props.ErrorHandler.catchErrors(res);
-    });
+        if (!found) {
+          return;
+        }
+        console.log("CAHCE", cache);
+        const {
+          getNotifications,
+          getNotifications: { notifications }
+        } = cache.readQuery({
+          query: GET_NOTIFICATIONS,
+          variables: {
+            limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT),
+            skip
+          }
+        });
+        console.log("IN", getNotifications);
+        const newNotifications = produce(notifications, draftState => {
+          var readNotice = draftState.find(
+            notice => notice.id === notificationID
+          );
+          //TODO: Change to true
+          if (readNotice) readNotice.read = true;
+        });
+
+        console.log("OUT", {
+          getNotifications: {
+            ...getNotifications,
+            notifications: newNotifications
+          }
+        });
+        cache.writeQuery({
+          query: GET_NOTIFICATIONS,
+          variables: {
+            limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT),
+            skip
+          },
+          data: {
+            getNotifications: {
+              ...getNotifications,
+              notifications: newNotifications
+            }
+          }
+        });
+      })
+      .catch(res => {
+        console.error(res);
+        ErrorHandler.catchErrors(res);
+      });
   };
   if (cplLoading) {
     document.title = t("common:Loading") + "...";

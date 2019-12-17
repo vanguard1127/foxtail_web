@@ -1,3 +1,4 @@
+import React from "react";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
@@ -7,7 +8,9 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 import tokenHandler from "./tokenHandler";
 import { toast } from "react-toastify";
+import * as Sentry from "@sentry/browser";
 import i18n from "../i18n";
+
 const wsLink = new WebSocketLink({
   uri: process.env.REACT_APP_WS_URL,
   options: {
@@ -82,14 +85,8 @@ export const cache = new InMemoryCache({
   freezeResults: true
 });
 
-const defaults = {
-  getNotifications: []
-  }
-;
-
 const stateLink = withClientState({
-  cache,
-  defaults
+  cache
 });
 
 const errorLink = onError(
