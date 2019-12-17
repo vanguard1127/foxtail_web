@@ -275,8 +275,8 @@ export const BLOCK_PROFILE = gql`
 `;
 
 export const READ_NOTIFICATION = gql`
-  mutation($notificationID: String!) {
-    readNotification(notificationID: $notificationID)
+  mutation($notificationID: String!, $both: Boolean) {
+    readNotification(notificationID: $notificationID, both: $both)
   }
 `;
 
@@ -705,8 +705,9 @@ export const GET_EVENT_PARTICIPANTS = gql`
 `;
 
 export const GET_NOTIFICATIONS = gql`
-  query($limit: Int!, $skip: Int!) {
-    getNotifications(limit: $limit, skip: $skip) {
+  query($limit: Int!, $cursor: String) {
+    getNotifications(limit: $limit, cursor: $cursor)
+      @connection(key: "getNotifications") {
       notifications {
         id
         seen

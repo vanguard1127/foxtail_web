@@ -60,7 +60,7 @@ const client = new ApolloClient({
   cache,
   assumeImmutableResults: true
 });
-client.resetStore();
+
 const Root = () => (
   <Router>
     <Wrapper lang={lang} dayjs={dayjs} />

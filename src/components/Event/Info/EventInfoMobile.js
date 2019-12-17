@@ -4,8 +4,7 @@ import { kinkOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EventShare from "../Header/EventShare";
 import EditEventBtn from "./EditEventBtn";
-
-const NoEventImg = require("../../../assets/img/elements/no-eve-image.jpg");
+import NoEventImg from "../../../assets/img/elements/no-eve-image.jpg";
 
 class EventInfoMobile extends Component {
   shouldComponentUpdate(nextProps) {
@@ -67,21 +66,16 @@ class EventInfoMobile extends Component {
               <span className="title">
                 {dayjs(startTime)
                   .locale(lang)
-                  .format("DD MMMM YYYY, dddd")
+                  .format("DD MMMM YYYY @ HH:mm")
                   .toString()}
               </span>
             </li>
             <li>
-              <span className="head">{t("eveend")} :</span>
+              <span className="head">{t("eveend")}:</span>
               <span className="title">
-                {dayjs(startTime)
-                  .locale(lang)
-                  .format("HH:mm")
-                  .toString()}{" "}
-                -{" "}
                 {dayjs(endTime)
                   .locale(lang)
-                  .format("HH:mm")
+                  .format("DD MMMM YYYY @ HH:mm")
                   .toString()}
               </span>
             </li>

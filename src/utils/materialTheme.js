@@ -6,6 +6,10 @@ export const materialTheme = createMuiTheme({
         main: "#CB0032"
       }
     },
+    MuiCircularProgress: {
+      colorPrimary: { color: "#CB0032" },
+      color: "#fff"
+    },
     MuiTypography: {
       colorPrimary: { color: "#CB0032" }
     },
@@ -43,7 +47,6 @@ export const materialTheme = createMuiTheme({
         color: "#cf003c"
       }
     },
-    MuiCircularProgress: { color: "#fff" },
     MuiPickersModal: {
       dialogAction: {
         color: "#CB0032"

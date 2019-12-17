@@ -1,6 +1,5 @@
 import React from "react";
-
-const NoProfileImg = require("../../../../assets/img/elements/no-profile.png");
+import NoProfileImg from "../../../../assets/img/elements/no-profile.png";
 const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
   const messageText = message.text;
   return (

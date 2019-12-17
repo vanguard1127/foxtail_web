@@ -66,6 +66,8 @@ module.exports = {
       template: "src/page-template.hbs",
       description: "FREE | Private | 18+ Fun",
       filename: "index.html",
+      httpsurl: "https://foxtail-stage-netlify.com",
+      appleicon: "./src/assets/img/logo/foxtail-apple-touch-icon.png",
       favicon: "./src/assets/favicon.ico",
       manifest: "./src/assets/manifest.json"
     }),

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
+import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
 const EventCreator = ({ ownerProfile, createdAt, history, t, dayjs, lang }) => {
   const [proPic, setPropic] = useState(ownerProfile.profilePic);

@@ -162,6 +162,7 @@ class Landing extends PureComponent {
           t={t}
           resetPassClick={this.resetPassClick}
           resetPhoneClick={this.resetPhoneClick}
+          history={history}
           termsClick={this.termsClick}
           toggleContactModal={this.toggleContactModal}
           tooltip={tooltip}

@@ -1,97 +1,87 @@
-import React, { Component } from "react";
+import React from "react";
 import { Query } from "react-apollo";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { GET_NOTIFICATIONS } from "../../queries";
 import Menu from "../common/Menu";
 import NoticesList from "./NoticesList";
 
-class NoticesMenu extends Component {
-  shouldComponentUpdate(nextProps) {
-    if (this.props.t !== nextProps.t || this.props.count !== nextProps.count) {
-      return true;
-    }
-    return false;
-  }
-
-  render() {
-    const {
-      t,
-      count,
-      ErrorHandler,
-      history,
-      showAlert,
-      handleCoupleLink,
-      readNotices,
-      limit,
-      skip,
-      recount,
-      skipForward,
-      resetSkip,
-      dayjs
-    } = this.props;
-
-    return (
-      <Menu
-        activeStyle="notification active"
-        notActiveStyle={count > 0 ? "notification active" : "notification"}
-        menuOpener={
-          <span className="icon alert">
-            {count > 0 && <span className="count">{count}</span>}
-          </span>
-        }
-        closeAction={recount}
+const NoticesMenu = ({
+  t,
+  count,
+  ErrorHandler,
+  history,
+  showAlert,
+  handleCoupleLink,
+  readNotices,
+  recount,
+  dayjs
+}) => {
+  return (
+    <Menu
+      activeStyle="notification active"
+      notActiveStyle={count > 0 ? "notification active" : "notification"}
+      menuOpener={
+        <span className="icon alert">
+          {count > 0 && <span className="count">{count}</span>}
+        </span>
+      }
+      closeAction={recount}
+    >
+      <Query
+        query={GET_NOTIFICATIONS}
+        variables={{ limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT) }}
       >
-        <Query query={GET_NOTIFICATIONS} variables={{ limit, skip }}>
-          {({ data, loading, error, subscribeToMore, fetchMore }) => {
-            if (
-              loading ||
-              !data ||
-              !data.getNotifications ||
-              !data.getNotifications.notifications
-            ) {
-              return (
-                <div className="toggle toggleNotifications">
-                  <div className="notification open">
-                    <div className="item" key="na">
-                      <span className="text">{t("Loading")}...</span>
-                    </div>
+        {({ data, loading, error, subscribeToMore, fetchMore }) => {
+          if (
+            loading ||
+            !data ||
+            !data.getNotifications ||
+            !data.getNotifications.notifications
+          ) {
+            return (
+              <div className="toggle toggleNotifications">
+                <div className="notification open">
+                  <div className="item" key="na">
+                    <span className="text">
+                      {t("Loading")}...
+                      <span style={{ float: "right" }}>
+                        <CircularProgress size={16} />
+                      </span>
+                    </span>
                   </div>
                 </div>
-              );
-            } else if (error) {
-              return (
-                <ErrorHandler.report
-                  error={error}
-                  calledName={"getNotifications"}
-                />
-              );
-            } else if (!data.getNotifications.notifications.length === 0) {
-              return <div>{t("nonots")} :)</div>;
-            }
-
+              </div>
+            );
+          } else if (error) {
             return (
-              <NoticesList
-                history={history}
-                subscribeToMore={subscribeToMore}
-                fetchMore={fetchMore}
-                t={t}
-                ErrorHandler={ErrorHandler}
-                showAlert={showAlert}
-                handleCoupleLink={handleCoupleLink}
-                readNotices={readNotices}
-                limit={limit}
-                skip={skip}
-                recount={recount}
-                notifications={data.getNotifications.notifications}
-                skipForward={skipForward}
-                resetSkip={resetSkip}
-                dayjs={dayjs}
+              <ErrorHandler.report
+                error={error}
+                calledName={"getNotifications"}
               />
             );
-          }}
-        </Query>
-      </Menu>
-    );
-  }
-}
+          } else if (!data.getNotifications.notifications.length === 0) {
+            return <div>{t("nonots")} :)</div>;
+          }
+
+          return (
+            <NoticesList
+              history={history}
+              subscribeToMore={subscribeToMore}
+              fetchMore={fetchMore}
+              t={t}
+              ErrorHandler={ErrorHandler}
+              showAlert={showAlert}
+              handleCoupleLink={handleCoupleLink}
+              readNotices={readNotices}
+              recount={recount}
+              notifications={data.getNotifications.notifications}
+              dayjs={dayjs}
+            />
+          );
+        }}
+      </Query>
+    </Menu>
+  );
+};
 
 export default NoticesMenu;

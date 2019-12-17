@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
+import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
 const EventCreator = ({ ownerProfile }) => {
   const [proPic, setPropic] = useState(ownerProfile.profilePic);

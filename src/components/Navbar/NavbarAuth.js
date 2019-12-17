@@ -6,7 +6,8 @@ import { NavLink } from "react-router-dom";
 import UserToolbar from "./UserToolbar";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Logout from "./LogoutLink";
-var msgAudio = new Audio(require("../../assets/audio/msg.mp3"));
+import msgSound from "../../assets/audio/msg.mp3";
+var msgAudio = new Audio(msgSound);
 class NavbarAuth extends PureComponent {
   unsubscribe;
   unsubscribe2;

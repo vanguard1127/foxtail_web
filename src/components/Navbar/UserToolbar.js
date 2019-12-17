@@ -28,16 +28,15 @@ const UserToolbar = ({
   let { msgsCount, noticesCount } = counts;
   const [alertVisible, setAlertVisible] = useState(true);
   const [alert, setAlert] = useState(counts.alert);
-  const [skip, setSkip] = useState(0);
   const [notificationID, setNotificationID] = useState(null);
-  const [
-    updateNotifications,
-    { client, loading: mutationLoading }
-  ] = useMutation(READ_NOTIFICATION, {
-    update(cache) {
-      updateRead(cache);
+  const [updateNotifications, { loading: mutationLoading }] = useMutation(
+    READ_NOTIFICATION,
+    {
+      update(cache) {
+        updateRead(cache);
+      }
     }
-  });
+  );
   const updateRead = cache => {
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS
@@ -79,16 +78,6 @@ const UserToolbar = ({
     }
   });
 
-  const skipForward = () => {
-    const newSkip = skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT);
-    setSkip(newSkip);
-    return newSkip;
-  };
-
-  const resetSkip = () => {
-    setSkip(0);
-  };
-
   const showAlert = alert => {
     setAlertVisible(true);
     setAlert(alert);
@@ -107,10 +96,8 @@ const UserToolbar = ({
   const readNotices = notificationID => {
     setNotificationID(notificationID);
     updateNotifications({
-      variables: { notificationID }
-    })
-      .then(() => {
-        const { cache } = client;
+      variables: { notificationID, both: true },
+      update: cache => {
         let query = "getNotifications";
         let found = false;
         //find in cache
@@ -131,38 +118,40 @@ const UserToolbar = ({
         if (!found) {
           return;
         }
-        console.log("CAHCE", cache);
+
         const {
           getNotifications,
           getNotifications: { notifications }
         } = cache.readQuery({
-          query: GET_NOTIFICATIONS,
-          variables: {
-            limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT),
-            skip
-          }
+          query: GET_NOTIFICATIONS
         });
-        console.log("IN", getNotifications);
+
         const newNotifications = produce(notifications, draftState => {
           var readNotice = draftState.find(
             notice => notice.id === notificationID
           );
-          //TODO: Change to true
-          if (readNotice) readNotice.read = true;
-        });
 
-        console.log("OUT", {
-          getNotifications: {
-            ...getNotifications,
-            notifications: newNotifications
+          if (readNotice) {
+            readNotice.read = true;
+            if (!readNotice.seen) {
+              const { getCounts } = cache.readQuery({
+                query: GET_COUNTS
+              });
+
+              let newCounts = { ...getCounts };
+              newCounts.noticesCount -= 1;
+              cache.writeQuery({
+                query: GET_COUNTS,
+                data: {
+                  getCounts: { ...newCounts }
+                }
+              });
+            }
           }
         });
+
         cache.writeQuery({
           query: GET_NOTIFICATIONS,
-          variables: {
-            limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT),
-            skip
-          },
           data: {
             getNotifications: {
               ...getNotifications,
@@ -170,11 +159,8 @@ const UserToolbar = ({
             }
           }
         });
-      })
-      .catch(res => {
-        console.error(res);
-        ErrorHandler.catchErrors(res);
-      });
+      }
+    });
   };
   if (cplLoading) {
     document.title = t("common:Loading") + "...";
@@ -223,11 +209,7 @@ const UserToolbar = ({
             showAlert={showAlert}
             handleCoupleLink={handleCoupleLink}
             readNotices={readNotices}
-            limit={parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)}
-            skip={skip}
             recount={refetch}
-            skipForward={skipForward}
-            resetSkip={resetSkip}
             dayjs={dayjs}
           />
         )}
