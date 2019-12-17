@@ -28,7 +28,6 @@ const UserToolbar = ({
   let { msgsCount, noticesCount } = counts;
   const [alertVisible, setAlertVisible] = useState(true);
   const [alert, setAlert] = useState(counts.alert);
-  const [notificationID, setNotificationID] = useState(null);
   const [updateNotifications, { loading: mutationLoading }] = useMutation(
     READ_NOTIFICATION,
     {
@@ -94,7 +93,6 @@ const UserToolbar = ({
   };
 
   const readNotices = notificationID => {
-    setNotificationID(notificationID);
     updateNotifications({
       variables: { notificationID, both: true },
       update: cache => {

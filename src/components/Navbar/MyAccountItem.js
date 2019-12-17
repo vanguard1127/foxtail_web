@@ -18,7 +18,7 @@ const MyAccountItem = ({ currentuser, setRef, t }) => {
               </div>
             )}
             <img
-              src={proPic}
+              src={currentuser.profilePic || proPic}
               onLoad={() => {
                 setLoading(false);
               }}

@@ -79,7 +79,7 @@ module.exports = {
       httpsurl: "https://foxtailapp.com",
       favicon: "./src/assets/favicon.ico",
       appleicon: "./src/assets/img/logo/foxtail-apple-touch-icon.png",
-      manifest: "./src/assets/manifest.json"
+      manifest: "/manifest.json"
     }),
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css"

@@ -13,7 +13,6 @@ const ManageBlackSub = ({
   toggleCCModal,
   ReactGA
 }) => {
-  console.log("hjj", currentuser.blackMember.renewalDate);
   return (
     <ErrorHandler.ErrorBoundary>
       <div className="content mtop">

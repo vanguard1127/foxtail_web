@@ -115,11 +115,18 @@ class NoticesList extends Component {
 
       switch (type) {
         case "chat":
-          this.props.history.replace({
-            pathname: "/inbox",
-            state: { chatID: targetID }
-          });
-          window.location.reload(false);
+          if (~window.location.href.indexOf("/inbox")) {
+            this.props.history.replace({
+              pathname: "/inbox",
+              state: { chatID: targetID }
+            });
+            window.location.reload(false);
+          } else {
+            this.props.history.replace({
+              pathname: "/inbox",
+              state: { chatID: targetID }
+            });
+          }
           break;
         case "event":
           this.props.history.replace(`/event/${targetID}`);

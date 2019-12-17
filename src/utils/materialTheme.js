@@ -10,6 +10,9 @@ export const materialTheme = createMuiTheme({
       colorPrimary: { color: "#CB0032" },
       color: "#fff"
     },
+    MuiButton: {
+      textPrimary: { color: "#5f00a4" }
+    },
     MuiTypography: {
       colorPrimary: { color: "#CB0032" }
     },

@@ -69,7 +69,7 @@ module.exports = {
       httpsurl: "https://foxtail-stage-netlify.com",
       appleicon: "./src/assets/img/logo/foxtail-apple-touch-icon.png",
       favicon: "./src/assets/favicon.ico",
-      manifest: "./src/assets/manifest.json"
+      manifest: "/manifest.json"
     }),
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css"

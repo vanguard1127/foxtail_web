@@ -186,7 +186,7 @@ class SettingsPage extends Component {
   }
 
   componentDidMount() {
-    const { history, errors } = this.props;
+    const { history } = this.props;
     history.replace({ state: {} });
     window.ALLOWCONTEXTMENU = true;
     window.addEventListener("beforeunload", () => {
