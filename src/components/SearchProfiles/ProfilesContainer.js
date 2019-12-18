@@ -318,7 +318,7 @@ class ProfilesContainer extends Component {
         }}
         fetchPolicy="cache-first"
       >
-        {({ data, loading, fetchMore, error }) => {
+        {({ data, loading, fetchMore, error, refetch }) => {
           if (loading) {
             document.title = t("common:Loading") + "...";
             return <Spinner page="searchProfiles" title={t("allmems")} />;
@@ -334,7 +334,12 @@ class ProfilesContainer extends Component {
               />
             );
           }
-
+          const fewsecsago = dayjs().subtract(30, "seconds");
+          const pullTime = dayjs(data.searchProfiles.pullTime);
+          const needRefetch = pullTime.isBefore(fewsecsago);
+          if (needRefetch) {
+            refetch();
+          }
           if (data.searchProfiles.message === "invisible") {
             return (
               <section className="not-found">

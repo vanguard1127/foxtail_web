@@ -16,13 +16,13 @@ const ProfilePic = ({ profilePic }) => {
         </div>
       )}
       <img
+        alt="profilePic"
         src={proPic}
         onLoad={() => {
           setLoading(false);
         }}
         onError={err => {
           Sentry.captureException({ error: err, proPic });
-          console.log("test", err, proPic);
           setPropic(NoProfileImg);
           setLoading(false);
         }}

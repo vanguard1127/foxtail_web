@@ -465,7 +465,11 @@ export const SEARCH_EVENTS = gql`
     $kinks: [String]
     $limit: Int!
     $skip: Int!
-  ) {
+  )
+    @connection(
+      key: "searchEvents"
+      filter: ["long", "lat", "maxDistance", "kinks"]
+    ) {
     searchEvents(
       long: $long
       lat: $lat
@@ -507,7 +511,11 @@ export const SEARCH_PROFILES = gql`
     $ageRange: [Int]!
     $limit: Int!
     $skip: Int!
-  ) {
+  )
+    @connection(
+      key: "searchProfiles"
+      filter: ["long", "lat", "distance", "interestedIn", "ageRange"]
+    ) {
     searchProfiles(
       long: $long
       lat: $lat
@@ -517,6 +525,7 @@ export const SEARCH_PROFILES = gql`
       limit: $limit
       skip: $skip
     ) {
+      pullTime
       message
       profiles {
         id
@@ -576,7 +585,7 @@ export const SEARCH_PROFILES = gql`
 
 export const GET_EVENT = gql`
   query($id: ID!) {
-    event(id: $id) {
+    event(id: $id) @connection(key: "event", filter: ["id"]) {
       id
       eventname
       type
@@ -926,7 +935,7 @@ export const GENERATE_CODE = gql`
 
 export const GET_PROFILE = gql`
   query($id: ID!) {
-    profile(id: $id) {
+    profile(id: $id) @connection(key: "profile", filter: ["id"]) {
       id
       about
       kinks
