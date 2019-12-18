@@ -7,8 +7,8 @@ class ResetPasswordBtn extends PureComponent {
     const { t, close, ErrorHandler, callback, ReactGA } = this.props;
 
     resetPassword()
-      .then(({ resetPassword }) => {
-        if (resetPassword) {
+      .then(({ data }) => {
+        if (data.resetPassword) {
           alert(t("2fasuccess"));
           ReactGA.event({
             category: "Reset Password",

@@ -22,7 +22,6 @@ const ProfilePic = ({ profilePic }) => {
           setLoading(false);
         }}
         onError={err => {
-          Sentry.captureException({ error: err, proPic });
           setPropic(NoProfileImg);
           setLoading(false);
         }}
