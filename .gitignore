@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+# history
+/.history
+
 # testing
 /coverage
 

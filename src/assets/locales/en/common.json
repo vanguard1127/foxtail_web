@@ -108,8 +108,8 @@
   "Black Membership has been canceled and you will no longer be charged. You still have use of all Black features until the end of your billing cycle.": "Black Membership has been canceled and you will no longer be charged. You still have use of all Black features until the end of your billing cycle.",
   "Credit card information has been updated.": "Credit card information has been updated.",
   "Thank you for upgrading to Black Membership. Your renewal date is ": "Thank you for upgrading to Black Membership. Your renewal date is ",
-  "Congratulations! Someone has joined using your referal code. We've upgraded you to Black Membership for 1 week (if you already have Black Membership, we've extended it by 1 week). We will add more weeks, the more you share Foxtail. Thanks for sharing!.": "Congratulations! Someone has joined using your referal code. We've upgraded you to Black Membership for 1 week (if you already have Black Membership, we've extended it by 1 week). We will add more weeks, the more you share Foxtail. Thanks for sharing!.",
-  "Please check your inbox to confirm your email before contacting members! *Check your spam, just in case": "Please check your inbox to confirm your email before contacting members! *Check your spam, just in case",
+  "Congratulations! Someone has joined using your referal code. We've upgraded you to Black Membership for 1 week (if you already have Black Membership, we've extended it by 1 week). We will add more weeks, the more you share Foxtail. Thanks for sharing!": "Congratulations! Someone has joined using your referal code. We've upgraded you to Black Membership for 1 week (if you already have Black Membership, we've extended it by 1 week). We will add more weeks, the more you share Foxtail. Thanks for sharing!",
+  "You are free to take a sneak peek for 24 hours before finishing your profile. Please confirm your email before contacting members! *Check your spam, just in case": "You are free to take a sneak peek for 24 hours before finishing your profile. Please confirm your email before contacting members! *Check your spam, just in case",
   "and you have created a Couple's Profile! Please complete your profile together. Enjoy!": "and you have created a Couple's Profile! Please complete your profile together. Enjoy!",
   "This account has been flagged for review. Please contact support at support@foxtailapp.com if this is a mistake.": "This account has been flagged for review. Please contact support at support@foxtailapp.com if this is a mistake.",
   "Profile not found": "Profile not found",
@@ -143,7 +143,6 @@
   "Sorry, not type selected!": "Sorry, not type selected!",
   "You may only flag this once!": "You may only flag this once!",
   "Filter not found.": "Filter not found.",
-  "User doesn`t exist in our system.": "User doesn`t exist in our system.",
   "Invalid mobile number!": "Invalid mobile number!",
   "Phone verification failed, please check your number and try again.": "Phone verification failed, please check your number and try again.",
   "Chat room closed.": "Chat room closed.",
@@ -276,5 +275,6 @@
   "and you have created a Couple's Profile. Click here to enjoy.": "and you have created a Couple's Profile. Click here to enjoy.",
   "This Couple's Profile is no longer active.": "This Couple's Profile is no longer active.",
   "Error updating file or file invalid": "Error updating file or file invalid",
-  "previewmsg": "One Day Preview - Please complete your profile to continue using Foxtail"
+  "previewmsg": "One Day Preview - Please complete your profile to continue using Foxtail",
+  "Please complete your profile to use this feature": "Please complete your profile to use this feature"
 }

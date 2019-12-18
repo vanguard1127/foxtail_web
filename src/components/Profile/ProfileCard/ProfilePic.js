@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
+import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
 const ProfilePic = ({ profilePic }) => {
   const [loading, setLoading] = useState(true);

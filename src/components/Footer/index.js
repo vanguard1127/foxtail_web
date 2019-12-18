@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import RulesModal from "../Modals/Rules";
 import ContactUsModal from "../Modals/ContactUs";
-
+import FooterLinks from "./FooterLinks";
 import { withTranslation } from "react-i18next";
 
 class Footer extends Component {
-  state = { showRulesModal: false, showContactModal: false };
+  constructor(props) {
+    super(props);
+    this.state = { showRulesModal: false, showContactModal: false };
+    this.toggleContactModal = this.toggleContactModal.bind(this);
+    this.toggleRuleModal = this.toggleRuleModal.bind(this);
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.showRulesModal !== nextState.showRulesModal ||
@@ -39,71 +44,14 @@ class Footer extends Component {
               <div className="logo">
                 <span />
               </div>
-              {/* <div className="medias">
-                <ul>
-                  <li className="facebook">
-                    <a
-                      href="https://fb.me/foxtailapp"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span aria-label="facebook share">
-                        <i />
-                      </span>
-                    </a>
-                  </li>
-                  <li className="twitter">
-                    <a
-                      href="https://twitter.com/foxtailapp"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span aria-label="twitter share">
-                        <i />
-                      </span>
-                    </a>
-                  </li>
-                </ul>
-              </div> */}
             </div>
           </div>
         </div>
-        <div className="copyright">
-          <div className="container">
-            <div className="col-md-12">
-              <span className="text">
-                © {new Date().getFullYear()} Foxtail App Inc. {t("register")}.
-              </span>
-              <div className="menu">
-                <ul>
-                  <li>
-                    <span onClick={this.toggleRuleModal}>{t("Rules")}</span>
-                  </li>
-                  <li>
-                    <span onClick={() => window.location.replace("/faq")}>
-                      {t("FAQ")}
-                    </span>
-                  </li>
-                  <li>
-                    <span onClick={() => window.location.replace("/tos")}>
-                      {t("termscon")}
-                    </span>
-                  </li>
-                  <li>
-                    <span onClick={() => window.location.replace("/privacy")}>
-                      {t("privacy")}
-                    </span>
-                  </li>{" "}
-                  <li>
-                    <span onClick={this.toggleContactModal}>
-                      {t("contact")}
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        <FooterLinks
+          toggleContactModal={this.toggleContactModal}
+          toggleRuleModal={this.toggleRuleModal}
+          t={t}
+        />
         {showRulesModal && <RulesModal close={this.toggleRuleModal} t={t} />}
         {showContactModal && (
           <ContactUsModal

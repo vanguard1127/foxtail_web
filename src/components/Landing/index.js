@@ -2,12 +2,7 @@ import React, { PureComponent } from "react";
 import Signup from "./Signup";
 import LoginButton from "./LoginButton";
 import withAuth from "../HOCs/withAuth";
-import LanguageControl from "../common/LanguageControl/LanguageControl";
 import * as ErrorHandler from "../common/ErrorHandler";
-//TODO:FIx when ready
-// import CountUp from "react-countup";
-// import { Query } from "react-apollo";
-// import { GET_DEMO_COUNTS } from "../../queries";
 import ResetPhoneModal from "../Modals/ResetPhone";
 import ResetPassModal from "../Modals/ResetPassword";
 import ContactUsModal from "../Modals/ContactUs";
@@ -15,6 +10,8 @@ import Spinner from "../common/Spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { withTranslation } from "react-i18next";
+import FooterLanding from "../Footer/FooterLanding";
+import Header from "../Header";
 
 class Landing extends PureComponent {
   constructor(props) {
@@ -26,6 +23,10 @@ class Landing extends PureComponent {
       tooltip: false,
       showContactModal: false
     };
+    this.resetPassClick = this.resetPassClick.bind(this);
+    this.resetPhoneClick = this.resetPhoneClick.bind(this);
+    this.termsClick = this.termsClick.bind(this);
+    this.toggleContactModal = this.toggleContactModal.bind(this);
   }
 
   componentDidMount() {
@@ -35,7 +36,19 @@ class Landing extends PureComponent {
   toggleContactModal = () => {
     this.setState({ showContactModal: !this.state.showContactModal });
   };
-
+  resetPhoneClick() {
+    this.setState({
+      resetPhoneVisible: !this.state.resetPhoneVisible
+    });
+  }
+  resetPassClick() {
+    this.setState({
+      resetPassVisible: !this.state.resetPassVisible
+    });
+  }
+  termsClick() {
+    this.setState({ tooltip: !this.state.tooltip });
+  }
   render() {
     const { t, location, history, session, ReactGA, tReady, lang } = this.props;
     const {
@@ -91,41 +104,7 @@ class Landing extends PureComponent {
     }
     return (
       <>
-        <header className="topbar landing">
-          <div className="container">
-            <div className="col-md-12">
-              <div className="row">
-                <div className="col-md-4">
-                  <div className="logo">
-                    <span />
-                  </div>
-                  <span className="subtitle">{t("common:stray")}</span>
-                </div>
-                <div className="offset-md-3 col-md-5">
-                  <div className="content">
-                    <span className="mobilesubtitle">{t("common:stray")}</span>
-
-                    <span className="login">
-                      <ErrorHandler.ErrorBoundary>
-                        <LoginButton
-                          t={t}
-                          history={history}
-                          ErrorHandler={ErrorHandler}
-                          lang={lang}
-                          reactga={ReactGA}
-                        />
-                      </ErrorHandler.ErrorBoundary>
-                    </span>
-                    <ErrorHandler.ErrorBoundary>
-                      <LanguageControl lang={lang} />
-                    </ErrorHandler.ErrorBoundary>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-
+        <Header lang={lang} history={history} t={t} reactga={ReactGA} />
         <main>
           <section className="landing">
             <div className="container">
@@ -155,75 +134,6 @@ class Landing extends PureComponent {
                           />
                         </ErrorHandler.ErrorBoundary>
                       </div>
-                      {/* <Query
-                        query={GET_DEMO_COUNTS}
-                        fetchPolicy="cache-first"
-                        errorPolicy="ignore"
-                      >
-                        {({ data, loading, error }) => {
-                          if (loading || !data) {
-                            return null;
-                          } else if (error) {
-                            console.error(error);
-                            return null;
-                          }
-                          let malesNum = 0,
-                            femalesNum = 0,
-                            couplesNum = 0;
-
-                          if (!loading && data && data.getDemoCounts) {
-                            malesNum = data.getDemoCounts.malesNum;
-                            femalesNum = data.getDemoCounts.femalesNum;
-                            couplesNum = data.getDemoCounts.couplesNum;
-                          }
-
-                          return (
-                            <div className="stats">
-                              <div className="head">
-                                <span> {t("Welcome")}</span>{" "}
-                                <span> {t("Foxtail Stats")}</span>
-                              </div>
-                              <ErrorHandler.ErrorBoundary>
-                                <ul>
-                                  <li>
-                                    <span className="counter">
-                                      {" "}
-                                      <CountUp
-                                        end={femalesNum}
-                                        duration={1.75}
-                                        separator=","
-                                      />
-                                    </span>
-                                    <span>{t("Female Members")}</span>
-                                  </li>
-                                  <li>
-                                    <span className="counter">
-                                      <CountUp
-                                        end={malesNum}
-                                        duration={1.75}
-                                        separator=","
-                                      />
-                                    </span>
-                                    <span>{t("Male Members")}</span>
-                                  </li>
-
-                                  <li>
-                                    <span className="counter">
-                                      {" "}
-                                      <CountUp
-                                        end={couplesNum}
-                                        duration={1.75}
-                                        separator=","
-                                      />
-                                    </span>
-                                    <span>{t("common:cplpros")}</span>
-                                  </li>
-                                </ul>
-                              </ErrorHandler.ErrorBoundary>
-                            </div>
-                          );
-                        }}
-                      </Query> */}
                     </div>
                   </div>
                   <div className="col-lg-5 col-md-12">
@@ -248,105 +158,15 @@ class Landing extends PureComponent {
             </div>
           </section>
         </main>
-
-        <footer className="landing">
-          <div className="container">
-            <div className="col-md-12">
-              <div className="row">
-                <div className="col-md-4">
-                  <span className="created">
-                    Foxtail © 2019 {t("Created by")} <span>Foxtail</span>
-                  </span>
-                </div>
-                <div className="offset-md-2 col-md-6">
-                  <div className="links">
-                    <ul>
-                      <li>
-                        <span
-                          onClick={() => {
-                            this.setState({
-                              resetPhoneVisible: !resetPhoneVisible
-                            });
-                          }}
-                        >
-                          {t("resetphone")}
-                        </span>
-                      </li>
-                      <li>
-                        <span
-                          onClick={() => {
-                            this.setState({
-                              resetPassVisible: !resetPassVisible
-                            });
-                          }}
-                        >
-                          {t("resetpass")}
-                        </span>
-                      </li>
-                      <li style={{ zIndex: 0 }}>
-                        {tooltip && (
-                          <div className="tooltip">
-                            <span className="tooltiptext show">
-                              <div>
-                                {" "}
-                                <span onClick={() => history.push("/tos")}>
-                                  {t("common:Terms")}
-                                </span>
-                              </div>
-                              <div>
-                                {" "}
-                                <span onClick={() => history.push("/privacy")}>
-                                  {t("common:Privacy")}
-                                </span>
-                              </div>
-                              <div>
-                                {" "}
-                                <span onClick={() => history.push("/antispam")}>
-                                  {t("antispam")}
-                                </span>
-                              </div>
-                              <div>
-                                {" "}
-                                <span
-                                  onClick={() =>
-                                    history.push("/lawenforcement")
-                                  }
-                                >
-                                  {t("lawenf")}
-                                </span>
-                              </div>
-                            </span>
-                          </div>
-                        )}
-                        <span
-                          onClick={() => this.setState({ tooltip: !tooltip })}
-                        >
-                          {t("common:Terms") + " "}
-                          {tooltip ? "▽" : "△"}
-                        </span>
-                      </li>
-                      <li>
-                        <span onClick={() => history.push("/faq")}>
-                          {t("FAQ")}
-                        </span>
-                      </li>
-                      <li>
-                        <span onClick={() => history.push("/about")}>
-                          {t("About")}
-                        </span>
-                      </li>
-                      <li>
-                        <span onClick={this.toggleContactModal}>
-                          {t("contact")}
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <FooterLanding
+          t={t}
+          resetPassClick={this.resetPassClick}
+          resetPhoneClick={this.resetPhoneClick}
+          history={history}
+          termsClick={this.termsClick}
+          toggleContactModal={this.toggleContactModal}
+          tooltip={tooltip}
+        />
         {resetPassVisible && (
           <ResetPassModal
             t={t}
@@ -375,7 +195,7 @@ class Landing extends PureComponent {
         )}
         {showContactModal && (
           <ContactUsModal
-            close={() => this.toggleContactModal()}
+            close={this.toggleContactModal}
             guest={true}
             header={t("common:Send us a Message")}
             description={t("common:Questions/Comments/Suggestions/etc...")}

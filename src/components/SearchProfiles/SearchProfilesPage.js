@@ -44,7 +44,7 @@ class SearchProfilesPage extends Component {
   }
 
   //TODO: figure out
-  componentWillUpdate(nextProps) {
+  UNSAFE_componentWillUpdate(nextProps) {
     if (
       this.props.location.lat === undefined &&
       nextProps.location.lat !== undefined

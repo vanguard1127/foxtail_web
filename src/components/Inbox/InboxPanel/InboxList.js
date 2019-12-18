@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { Waypoint } from "react-waypoint";
 import TimeAgo from "../../../utils/TimeAgo";
-
-const NoProfileImg = require("../../../assets/img/elements/no-profile.png");
+import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
 class InboxList extends PureComponent {
   unsubscribe;

@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
-const NoProfileImg = require("../../../../assets/img/elements/no-profile.png");
+import NoProfileImg from "../../../../assets/img/elements/no-profile.png";
 
 const Message = React.forwardRef(
   ({ message, currentUserID, t, dayjs, lang }, ref) => {

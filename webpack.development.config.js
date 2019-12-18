@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const OfflinePlugin = require("offline-plugin");
+const webpack = require("webpack");
 module.exports = {
   entry: { main: "./src/index.js" },
   output: {
@@ -44,6 +45,20 @@ module.exports = {
       {
         test: /\.hbs$/,
         use: ["handlebars-loader"]
+      },
+      {
+        // Exposes jQuery for use outside Webpack build
+        test: require.resolve("jquery"),
+        use: [
+          {
+            loader: "expose-loader",
+            options: "jQuery"
+          },
+          {
+            loader: "expose-loader",
+            options: "$"
+          }
+        ]
       }
     ]
   },
@@ -63,8 +78,10 @@ module.exports = {
       template: "src/page-template.hbs",
       description: "FREE | Private | 18+ Fun",
       filename: "index.html",
+      httpsurl: "https://localhost:1234",
+      appleicon: "./src/assets/img/logo/foxtail-apple-touch-icon.png",
       favicon: "./src/assets/favicon.ico",
-      manifest: "./src/assets/manifest.json"
+      manifest: "/manifest.json"
     }),
     new CopyPlugin([
       { from: "src/assets/locales", to: "locales", toType: "dir" },
@@ -79,6 +96,10 @@ module.exports = {
         events: true,
         minify: true
       }
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
     })
   ]
 };
