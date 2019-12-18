@@ -14,7 +14,7 @@ import "firebase/auth";
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import { cache, link } from "./utils/links";
 import { materialTheme } from "./utils/materialTheme";
-import { Wrapper } from "./components/layout/Wraper";
+import { Wrapper } from "./components/Layout/Wrapper";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";

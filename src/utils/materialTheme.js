@@ -7,8 +7,7 @@ export const materialTheme = createMuiTheme({
       }
     },
     MuiCircularProgress: {
-      colorPrimary: { color: "#CB0032" },
-      color: "#fff"
+      colorPrimary: { color: "#CB0032" }
     },
     MuiButton: {
       textPrimary: { color: "#5f00a4" }
