@@ -15,7 +15,7 @@ class KonvaImage extends PureComponent {
   }
 
   componentDidMount() {
-    const importImage = require("./" + this.props.src);
+    const importImage = this.props.src;
     const image = new window.Image();
     // here we've taken 30% size of image and lessthan 400 widht - 20%
     const konvaImageScale = window.innerWidth > 400 ? 0.2 : 0.1;

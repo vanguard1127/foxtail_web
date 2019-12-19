@@ -57,6 +57,7 @@ class ProfilesContainer extends Component {
   }
 
   componentWillUnmount() {
+    //TODO: Delete after solve image issue cache replace
     deleteFromCache({
       cache: this.props.client.cache,
       query: "searchProfiles"
@@ -334,27 +335,7 @@ class ProfilesContainer extends Component {
               />
             );
           }
-          const hourago = dayjs().subtract(59, "minute");
-          const pullTime = dayjs(data.searchProfiles.pullTime);
-          const needRefetch = pullTime.isBefore(hourago);
-          if (needRefetch) {
-            refetch();
-          }
-          if (data.searchProfiles.message === "invisible") {
-            return (
-              <section className="not-found">
-                <div className="container">
-                  <div className="col-md-12">
-                    <div className="icon">
-                      <i className="nico blackmember" />
-                    </div>
-                    <span className="head">{t("cantsee")}</span>
-                    <span className="description">{t("cantseeinstr")}</span>
-                  </div>
-                </div>
-              </section>
-            );
-          }
+
           if (
             data === undefined ||
             data.searchProfiles === null ||
@@ -384,6 +365,32 @@ class ProfilesContainer extends Component {
                     >
                       {t("Invite Your Friends")}
                     </span>
+                  </div>
+                </div>
+              </section>
+            );
+          }
+          //TODO: finish testing
+          {
+            /* const hourago = dayjs().subtract(5, "second");
+          const pullTime = dayjs(data.searchProfiles.pullTime);
+          const needRefetch = pullTime.isBefore(hourago);
+          if (needRefetch) {
+            console.log("refetch");
+            refetch();
+            this.setState({ skip: 1 });
+          } */
+          }
+          if (data.searchProfiles.message === "invisible") {
+            return (
+              <section className="not-found">
+                <div className="container">
+                  <div className="col-md-12">
+                    <div className="icon">
+                      <i className="nico blackmember" />
+                    </div>
+                    <span className="head">{t("cantsee")}</span>
+                    <span className="description">{t("cantseeinstr")}</span>
                   </div>
                 </div>
               </section>

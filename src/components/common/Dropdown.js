@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Select from "./Select";
+import { catchErrors } from "../common/ErrorHandler";
 
 class Dropdown extends Component {
   state = {
@@ -64,8 +65,7 @@ class Dropdown extends Component {
         }
       })
       .catch(error => {
-        const ErrorHandler = require("../common/ErrorHandler");
-        ErrorHandler.catchErrors(error); /* Error handling */
+        catchErrors(error); /* Error handling */
       });
   };
 
