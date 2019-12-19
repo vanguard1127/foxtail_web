@@ -621,7 +621,7 @@ export const GET_EVENT = gql`
 
 export const GET_INBOX = gql`
   query($limit: Int!, $skip: Int!) {
-    getInbox(limit: $limit, skip: $skip) {
+    getInbox(limit: $limit, skip: $skip) @connection(key: "getInbox") {
       id
       text
       fromUser {

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactGA from "react-ga";
-import { hydrate, render } from "react-dom";
+import { render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";
@@ -30,7 +30,7 @@ import(
 );
 import("rc-slider/assets/index.css" /* webpackPreload: true */);
 const lang = getLang();
-require("dayjs/locale/" + lang);
+import("dayjs/locale/" + lang);
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS,
@@ -74,30 +74,16 @@ window.scrollTo(0, 1);
 //prevent context menu
 document.addEventListener("contextmenu", preventContextMenu);
 
-const rootElement = document.getElementById("root");
-if (rootElement.hasChildNodes()) {
-  hydrate(
-    <ApolloProvider client={client}>
-      <MuiPickersUtilsProvider utils={DayJsUtils}>
-        <ThemeProvider theme={materialTheme}>
-          <Root />
-        </ThemeProvider>
-      </MuiPickersUtilsProvider>
-    </ApolloProvider>,
-    rootElement
-  );
-} else {
-  render(
-    <ApolloProvider client={client}>
-      <MuiPickersUtilsProvider utils={DayJsUtils}>
-        <ThemeProvider theme={materialTheme}>
-          <Root />
-        </ThemeProvider>
-      </MuiPickersUtilsProvider>
-    </ApolloProvider>,
-    rootElement
-  );
-}
+render(
+  <ApolloProvider client={client}>
+    <MuiPickersUtilsProvider utils={DayJsUtils}>
+      <ThemeProvider theme={materialTheme}>
+        <Root />
+      </ThemeProvider>
+    </MuiPickersUtilsProvider>
+  </ApolloProvider>,
+  document.getElementById("root")
+);
 
 if (process.env.NODE_ENV !== "production") {
   OfflinePluginRuntime.install({

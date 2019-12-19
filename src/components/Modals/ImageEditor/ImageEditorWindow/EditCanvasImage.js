@@ -387,11 +387,7 @@ class EditCanvasImage extends PureComponent {
         onClick={() => this.handleStickerClick(props.id, props.name, props.src)}
         style={{ padding: 5 }}
       >
-        <img
-          style={{ maxHeight: "66px" }}
-          src={require("./" + props.src)}
-          alt="imagepic"
-        />
+        <img style={{ maxHeight: "66px" }} src={props.src} alt="imagepic" />
       </div>
     );
 
