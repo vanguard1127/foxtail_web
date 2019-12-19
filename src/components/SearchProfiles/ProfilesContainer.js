@@ -334,9 +334,9 @@ class ProfilesContainer extends Component {
               />
             );
           }
-          const fewsecsago = dayjs().subtract(30, "seconds");
+          const hourago = dayjs().subtract(59, "minute");
           const pullTime = dayjs(data.searchProfiles.pullTime);
-          const needRefetch = pullTime.isBefore(fewsecsago);
+          const needRefetch = pullTime.isBefore(hourago);
           if (needRefetch) {
             refetch();
           }

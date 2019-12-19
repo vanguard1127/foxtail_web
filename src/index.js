@@ -19,17 +19,16 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import getLang from "./utils/getLang";
-import(/* webpackPreload: true */ "core-js/stable");
-import(/* webpackPreload: true */ "regenerator-runtime/runtime");
-import(/* webpackPreload: true */ "./assets/css/main.css");
-import(/* webpackPreload: true */ "./docs/manifest.json");
-import(/* webpackPreload: true */ "./assets/favicon.ico");
-import(/* webpackPreload: true */ "react-image-lightbox/style.css");
-import(/* webpackPreload: true */ "owl.carousel/dist/assets/owl.carousel.css");
+import("core-js/stable" /* webpackPreload: true */);
+import("regenerator-runtime/runtime" /* webpackPreload: true */);
+import("./assets/css/main.css" /* webpackPreload: true */);
+import("./assets/favicon.ico" /* webpackPreload: true */);
+import("react-image-lightbox/style.css" /* webpackPreload: true */);
+import("owl.carousel/dist/assets/owl.carousel.css" /* webpackPreload: true */);
 import(
-  /* webpackPreload: true */ "owl.carousel/dist/assets/owl.theme.default.css"
+  "owl.carousel/dist/assets/owl.theme.default.css" /* webpackPreload: true */
 );
-import(/* webpackPreload: true */ "rc-slider/assets/index.css");
+import("rc-slider/assets/index.css" /* webpackPreload: true */);
 const lang = getLang();
 require("dayjs/locale/" + lang);
 

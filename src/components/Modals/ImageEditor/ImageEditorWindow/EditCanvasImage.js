@@ -13,6 +13,13 @@ import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import { Spring } from "react-spring/renderprops";
 import { toast } from "react-toastify";
+import Mask1 from "../../../../assets/img/elements/masks/mask_1.png";
+import Mask2 from "../../../../assets/img/elements/masks/mask_2.png";
+import Mask3 from "../../../../assets/img/elements/masks/mask_3.png";
+import Mask4 from "../../../../assets/img/elements/masks/mask_4.png";
+import Mask5 from "../../../../assets/img/elements/masks/mask_5.png";
+import Mask6 from "../../../../assets/img/elements/masks/mask_6.png";
+import Mask7 from "../../../../assets/img/elements/masks/mask_7.png";
 
 class EditCanvasImage extends PureComponent {
   lastDist = 0;
@@ -578,32 +585,37 @@ class EditCanvasImage extends PureComponent {
                         <Sticker
                           id="1"
                           name={`${Date.now()}str1`}
-                          src="test_mask_1.png"
+                          src={Mask1}
                         />
                         <Sticker
                           id="2"
                           name={`${Date.now()}str2`}
-                          src="test_mask_2.png"
+                          src={Mask2}
                         />
                         <Sticker
                           id="3"
                           name={`${Date.now()}str3`}
-                          src="test_mask_3.png"
+                          src={Mask3}
                         />
                         <Sticker
                           id="4"
                           name={`${Date.now()}str4`}
-                          src="test_mask_4.png"
+                          src={Mask4}
                         />
                         <Sticker
                           id="5"
                           name={`${Date.now()}str5`}
-                          src="test_mask_5.png"
+                          src={Mask5}
                         />
                         <Sticker
                           id="6"
                           name={`${Date.now()}str6`}
-                          src="test_mask_6.png"
+                          src={Mask6}
+                        />
+                        <Sticker
+                          id="7"
+                          name={`${Date.now()}str7`}
+                          src={Mask7}
                         />
                       </div>
                       <div className="edit-canvas-stickers-div-close-button-div">

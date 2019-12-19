@@ -1,10 +1,13 @@
 const path = require("path");
+const TerserJSPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const OfflinePlugin = require("offline-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const webpack = require("webpack");
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -64,10 +67,23 @@ module.exports = {
     ]
   },
   optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCssAssetsPlugin({})],
     splitChunks: {
       chunks: "all",
       minSize: 10000,
-      automaticNameDelimiter: "_"
+      automaticNameDelimiter: "_",
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        styles: {
+          name: "styles",
+          test: /\.css$/,
+          chunks: "all",
+          enforce: true
+        }
+      }
     }
   },
   plugins: [
@@ -80,6 +96,17 @@ module.exports = {
       favicon: "./src/assets/favicon.ico",
       appleicon: "./src/assets/img/logo/foxtail-apple-touch-icon.png",
       manifest: "/manifest.json"
+    }),
+    new PreloadWebpackPlugin({
+      rel: "preload",
+      as(entry) {
+        if (/\.css$/.test(entry)) return "style";
+        if (/\.woff$/.test(entry)) return "font";
+        if (/\.png$/.test(entry)) return "image";
+        if (/\.jpg$/.test(entry)) return "image";
+        return "script";
+      },
+      media: "(min-width: 600px)"
     }),
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css"
