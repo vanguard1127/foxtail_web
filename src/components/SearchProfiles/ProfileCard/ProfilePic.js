@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-//TODO: Remove Sentry when tested pohoti issue
-import * as Sentry from "@sentry/browser";
 import NoProfileImg from "../../../../src/assets/img/elements/no-profile.png";
 const ProfilePic = ({ profilePic }) => {
   const [loading, setLoading] = useState(true);
