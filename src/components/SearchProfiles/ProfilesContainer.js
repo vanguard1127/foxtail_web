@@ -371,15 +371,13 @@ class ProfilesContainer extends Component {
             );
           }
           //TODO: finish testing
-          {
-            /* const hourago = dayjs().subtract(5, "second");
+          const hourago = dayjs().subtract(59, "minute");
           const pullTime = dayjs(data.searchProfiles.pullTime);
           const needRefetch = pullTime.isBefore(hourago);
           if (needRefetch) {
-            console.log("refetch");
+            console.log("REFRSH");
             refetch();
-            this.setState({ skip: 1 });
-          } */
+            window.location.reload(false);
           }
           if (data.searchProfiles.message === "invisible") {
             return (

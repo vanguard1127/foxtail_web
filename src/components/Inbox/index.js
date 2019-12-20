@@ -254,18 +254,6 @@ class InboxPage extends Component {
     }
 
     const { currentuser } = session;
-    // if (currentuser.tours.indexOf("i") < 0) {
-    //   ErrorHandler.setBreadcrumb("Opened Tour: Inbox");
-    //   return (
-    //     <div>
-    //       <Tour
-    //         ErrorHandler={ErrorHandler}
-    //         refetchUser={this.props.refetch}
-    //         session={session}
-    //       />
-    //     </div>
-    //   );
-    // }
 
     return (
       <>

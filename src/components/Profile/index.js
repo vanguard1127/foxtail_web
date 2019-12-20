@@ -167,22 +167,6 @@ class ProfilePage extends Component {
     }
     ErrorHandler.setBreadcrumb("Open Profile:" + id);
 
-    // if (
-    //   id === "tour" &&
-    //   session &&
-    //   session.currentuser.tours.indexOf("p") < 0
-    // ) {
-    //   ErrorHandler.setBreadcrumb("Opened Tour: Profile");
-    //   return (
-    //     <div>
-    //       <Tour
-    //         ErrorHandler={ErrorHandler}
-    //         refetchUser={this.props.refetch}
-    //         session={session}
-    //       />
-    //     </div>
-    //   );
-    // }
     return (
       <Mutation
         mutation={LIKE_PROFILE}
@@ -214,7 +198,11 @@ class ProfilePage extends Component {
                 if (loading) {
                   document.title = t("common:Loading") + "...";
                   return <Spinner message={t("common:Loading")} size="large" />;
-                } else if (!data || !data.profile||data.profile.users.length===0) {
+                } else if (
+                  !data ||
+                  !data.profile ||
+                  data.profile.users.length === 0
+                ) {
                   return (
                     <section className="not-found">
                       <div className="container">

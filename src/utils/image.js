@@ -1,6 +1,6 @@
 import i18n from "i18next";
 export const preventContextMenu = e => {
-  if(window.ALLOWCONTEXTMENU){
+  if (e.target.type === "text" || e.target.type === "textarea") {
     return;
   }
   e.stopPropagation();

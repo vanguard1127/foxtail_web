@@ -151,7 +151,7 @@
   "Alphanumeric characters only": "Alphanumeric characters only",
   "Chat not found.": "Chat not found.",
   "Chat is no longer available.": "Chat is no longer available.",
-  "Can't remove the owner!": "Can't remove the owner!",
+  "Can't remove the owner.": "Can't remove the owner.",
   "Event no longer available.": "Event no longer available.",
   "Event not found.": "Event not found.",
   "Private Event = You must be invited to join.": "Private Event = You must be invited to join.",
@@ -262,7 +262,7 @@
   "Daily Direct Message Limit Reached. *Only 5 allowed daily.": "Daily Direct Message Limit Reached. *Only 5 allowed daily.",
   "updphone": "Update Phone Login",
   "update": "Update",
-  "Can't report yourself": "Can't report yourself",
+  "Can't report yourself. But if you think you should be reported, please contact us at support@foxtailapp.com we'd love to hear from you.": "Can't report yourself. But if you think you should be reported, please contact us at support@foxtailapp.com we'd love to hear from you.",
   "Error processing your credit card. Please check and try again. If you continue to have problems, please contact us at support@foxtailapp.com": "Error processing your credit card. Please check and try again. If you continue to have problems, please contact us at support@foxtailapp.com",
   "Profile": "Profile",
   "View": "View",
@@ -276,5 +276,6 @@
   "This Couple's Profile is no longer active.": "This Couple's Profile is no longer active.",
   "Error updating file or file invalid": "Error updating file or file invalid",
   "previewmsg": "One Day Preview - Please complete your profile to continue using Foxtail",
-  "Please complete your profile to use this feature": "Please complete your profile to use this feature"
+  "Please complete your profile to use this feature": "Please complete your profile to use this feature",
+  "Inactive - Please contact support at support@foxtailapp.com for help.": "Inactive - Please contact support at support@foxtailapp.com for help."
 }

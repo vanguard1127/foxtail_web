@@ -188,7 +188,6 @@ class SettingsPage extends Component {
   componentDidMount() {
     const { history } = this.props;
     history.replace({ state: {} });
-    window.ALLOWCONTEXTMENU = true;
     window.addEventListener("beforeunload", () => {
       this.handleSubmit(this.updateSettings);
     });
@@ -204,7 +203,6 @@ class SettingsPage extends Component {
     });
     clearAllBodyScrollLocks();
     this.mounted = false;
-    window.ALLOWCONTEXTMENU = false;
   }
 
   handlePhotoListChange = ({ file, key, url, isPrivate, isDeleted }) => {

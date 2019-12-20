@@ -29,22 +29,22 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        use: ["cache-loader", MiniCssExtractPlugin.loader, "css-loader"]
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
         exclude: ["/src/assets/favicon.ico", "/src/assets/static"],
-        use: ["file-loader"]
+        use: ["cache-loader", "file-loader"]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         exclude: /node_modules/,
-        use: ["file-loader"]
+        use: ["cache-loader", "file-loader"]
       },
       {
         test: /\.(wav|mp3)$/,
         exclude: /node_modules/,
-        use: ["file-loader"]
+        use: ["cache-loader", "file-loader"]
       },
       {
         test: /\.hbs$/,
@@ -54,6 +54,7 @@ module.exports = {
         // Exposes jQuery for use outside Webpack build
         test: require.resolve("jquery"),
         use: [
+          "cache-loader",
           {
             loader: "expose-loader",
             options: "jQuery"
@@ -75,7 +76,8 @@ module.exports = {
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10
+          name: "vendors",
+          chunks: "all"
         },
         styles: {
           name: "styles",

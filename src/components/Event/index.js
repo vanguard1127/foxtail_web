@@ -129,22 +129,7 @@ class EventPage extends Component {
     if (!tReady) {
       return <Spinner />;
     }
-    // if (
-    //   id === "tour" &&
-    //   session &&
-    //   session.currentuser.tours.indexOf("e") < 0
-    // ) {
-    //   ErrorHandler.setBreadcrumb("Opened Tour: Event");
-    //   return (
-    //     <div>
-    //       <Tour
-    //         ErrorHandler={ErrorHandler}
-    //         refetchUser={this.props.refetch}
-    //         session={session}
-    //       />
-    //     </div>
-    //   );
-    // }
+
     return (
       <Query
         query={GET_EVENT}

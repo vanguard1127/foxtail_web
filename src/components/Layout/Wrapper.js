@@ -8,9 +8,7 @@ import { withRouter } from "react-router-dom";
 //   loader: () => import("./Body")
 // });
 import { Body } from "./Body";
-const Landing = LoadableComponent({
-  loader: () => import("../Landing/")
-});
+import Landing from "../Landing/";
 const About = LoadableComponent({
   loader: () => import("../Information/About")
 });
