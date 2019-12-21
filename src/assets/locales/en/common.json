@@ -175,7 +175,7 @@
   "You must be at least 18 years old to join.": "You must be at least 18 years old to join.",
   "Username may only contain letters and numbers.": "Username may only contain letters and numbers.",
   "Password may only contain letters and numbers.": "Password may only contain letters and numbers.",
-  "Invalid login information.": "Invalid login information.",
+  "Invalid Login - Please contact us at support@foxtailapp.com if you are having problems logging in.": "Invalid Login - Please contact us at support@foxtailapp.com if you are having problems logging in.",
   "Event description should be between 3 and 120 characters.": "Event description should be between 3 and 120 characters.",
   "Invalid age range selection.": "Invalid age range selection.",
   "Invalid interested in selction.": "Invalid interested in selection.",
@@ -276,6 +276,5 @@
   "This Couple's Profile is no longer active.": "This Couple's Profile is no longer active.",
   "Error updating file or file invalid": "Error updating file or file invalid",
   "previewmsg": "One Day Preview - Please complete your profile to continue using Foxtail",
-  "Please complete your profile to use this feature": "Please complete your profile to use this feature",
-  "Inactive - Please contact support at support@foxtailapp.com for help.": "Inactive - Please contact support at support@foxtailapp.com for help."
+  "Please complete your profile to use this feature": "Please complete your profile to use this feature"
 }

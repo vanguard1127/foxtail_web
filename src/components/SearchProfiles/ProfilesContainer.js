@@ -57,11 +57,6 @@ class ProfilesContainer extends Component {
   }
 
   componentWillUnmount() {
-    //TODO: Delete after solve image issue cache replace
-    deleteFromCache({
-      cache: this.props.client.cache,
-      query: "searchProfiles"
-    });
     this.mounted = false;
   }
 
@@ -344,6 +339,21 @@ class ProfilesContainer extends Component {
               data.searchProfiles.featuredProfiles.length === 0) ||
             !data
           ) {
+            if (data.searchProfiles.message === "invisible") {
+              return (
+                <section className="not-found">
+                  <div className="container">
+                    <div className="col-md-12">
+                      <div className="icon">
+                        <i className="nico blackmember" />
+                      </div>
+                      <span className="head">{t("cantsee")}</span>
+                      <span className="description">{t("cantseeinstr")}</span>
+                    </div>
+                  </div>
+                </section>
+              );
+            }
             return (
               <section className="not-found">
                 <div className="container">
@@ -370,29 +380,13 @@ class ProfilesContainer extends Component {
               </section>
             );
           }
-          //TODO: finish testing
+
           const hourago = dayjs().subtract(59, "minute");
           const pullTime = dayjs(data.searchProfiles.pullTime);
           const needRefetch = pullTime.isBefore(hourago);
           if (needRefetch) {
-            console.log("REFRSH");
             refetch();
             window.location.reload(false);
-          }
-          if (data.searchProfiles.message === "invisible") {
-            return (
-              <section className="not-found">
-                <div className="container">
-                  <div className="col-md-12">
-                    <div className="icon">
-                      <i className="nico blackmember" />
-                    </div>
-                    <span className="head">{t("cantsee")}</span>
-                    <span className="description">{t("cantseeinstr")}</span>
-                  </div>
-                </div>
-              </section>
-            );
           }
 
           const result = data.searchProfiles;

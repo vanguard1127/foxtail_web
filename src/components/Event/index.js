@@ -70,14 +70,14 @@ class EventPage extends Component {
   };
 
   deleteEvent(deleteEvent) {
-    this.props.ErrorHandler.setBreadcrumb("Delete Event");
+    this.props.ErrorHandler.setBreadcrumb("Cancel Event");
     deleteEvent()
       .then(({ data }) => {
         this.props.ReactGA.event({
           category: "Event",
           action: "Deleted Event"
         });
-        toast.success("Event Deleted");
+        toast.success(this.props.t("Event Canceled"));
         this.props.history.push("/events");
       })
       .catch(res => {
@@ -297,7 +297,7 @@ class EventPage extends Component {
                         className="color"
                         onClick={() => this.deleteEvent(deleteEvent)}
                       >
-                        {t("common:Delete")}
+                        {t("common:Cancel")}
                       </span>
                     );
                     return (
