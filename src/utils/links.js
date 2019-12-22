@@ -105,13 +105,13 @@ const errorLink = onError(
         } else {
           if (process.env.NODE_ENV !== "production") {
             console.error("GQL ERROR:", message);
-            Sentry.withScope(scope => {
-              scope.setLevel("error");
-              scope.setTag("resolver", path);
-              scope.setFingerprint([window.location.pathname]);
-              Sentry.captureException(message);
-            });
           }
+          Sentry.withScope(scope => {
+            scope.setLevel("error");
+            scope.setTag("resolver", path);
+            scope.setFingerprint([window.location.pathname]);
+            Sentry.captureException(message);
+          });
           if (!toast.isActive("err")) {
             toast.info(
               <span>
@@ -148,6 +148,11 @@ const errorLink = onError(
               toastId: "networkError"
             }
           );
+          Sentry.withScope(scope => {
+            scope.setLevel("error");
+            scope.setFingerprint([window.location.pathname]);
+            Sentry.captureException(networkError);
+          });
           if (process.env.NODE_ENV !== "production") {
             console.error("Network Error:", networkError);
           }

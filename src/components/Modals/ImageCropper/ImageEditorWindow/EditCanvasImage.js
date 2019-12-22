@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import RotateIcon from "@material-ui/icons/RotateRight";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -21,7 +22,8 @@ class EditCanvasImage extends PureComponent {
       imageWidth: 0,
       imageHeight: 0,
       init_x: 0,
-      init_y: 0
+      init_y: 0,
+      cropperReady: false
     };
     this.pixelRatio = 1;
   }
@@ -94,7 +96,7 @@ class EditCanvasImage extends PureComponent {
           .toDataURL();
         const blobResp = await fetch(dataURL);
         const blobData = await blobResp.blob();
-        //   console.log("blobData", blobData);
+
         if (Object.getOwnPropertyNames(blobData).length < 0) {
           this.props.ErrorHandler.catchErrors({
             error: "Data Blob ERROR: File not loaded properly. File object:",
@@ -181,7 +183,7 @@ class EditCanvasImage extends PureComponent {
   };
 
   render() {
-    const { uploading, height, width } = this.state;
+    const { uploading, height, width, cropperReady } = this.state;
     const { t, imgUrl, close } = this.props;
 
     return (
@@ -206,50 +208,58 @@ class EditCanvasImage extends PureComponent {
               // Cropper.js options
               aspectRatio={1}
               guides={false}
+              ready={() => this.setState({ cropperReady: true })}
             />
           </div>
-
-          <div className="edit-canvas-action-bar-wrapper">
-            <div className="edit-canvas-action-bar">
-              <div className="edit-canvas-action-div">
+          {cropperReady && (
+            <div className="edit-canvas-action-bar-wrapper">
+              <div className="edit-canvas-action-bar">
+                <div className="edit-canvas-action-div">
+                  <IconButton
+                    className="edit-canvas-action-icon-button"
+                    onClick={() => this.handleScale(true)}
+                  >
+                    <AddIcon className="edit-canvas-action-icon" />
+                  </IconButton>
+                  <IconButton
+                    className="edit-canvas-action-icon-button"
+                    onClick={() => this.handleScale(false)}
+                  >
+                    <RemoveIcon className="edit-canvas-action-icon" />
+                  </IconButton>
+                </div>
                 <IconButton
                   className="edit-canvas-action-icon-button"
-                  onClick={() => this.handleScale(true)}
+                  onClick={this.rotate}
                 >
-                  <AddIcon className="edit-canvas-action-icon" />
-                </IconButton>
-                <IconButton
-                  className="edit-canvas-action-icon-button"
-                  onClick={() => this.handleScale(false)}
-                >
-                  <RemoveIcon className="edit-canvas-action-icon" />
+                  <RotateIcon className="edit-canvas-action-icon" />
                 </IconButton>
               </div>
-              <IconButton
-                className="edit-canvas-action-icon-button"
-                onClick={this.rotate}
-              >
-                <RotateIcon className="edit-canvas-action-icon" />
-              </IconButton>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="edit-canvas-dialog-topbar">
           <div>
             <span style={{ fontSize: "20px", color: "white" }}>
-              {t("Profile Picture Selector")}
+              {cropperReady ? (
+                t("Profile Picture Selector")
+              ) : (
+                <CircularProgress />
+              )}
             </span>
           </div>
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleExportClick}
-              className="green-button-small"
-            >
-              {!uploading ? t("Save") : t("Uploading")}
-            </Button>
+            {cropperReady && (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleExportClick}
+                className="green-button-small"
+              >
+                {!uploading ? t("Save") : t("Uploading")}
+              </Button>
+            )}
             <Button
               style={{ color: "white", marginLeft: "8px" }}
               onClick={close}
