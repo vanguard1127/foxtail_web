@@ -208,7 +208,14 @@ class SettingsPage extends Component {
   handlePhotoListChange = ({ file, key, url, isPrivate, isDeleted }) => {
     const { t, toast } = this.props;
     this.isPhotoChanged = true;
-    this.setErrorHandler("Photo list updated", isPrivate, isDeleted, key);
+    this.setErrorHandler(
+      "Photo list updated isPrivate:" +
+        isPrivate +
+        "isDeleted:" +
+        isDeleted +
+        "key:" +
+        key
+    );
     if (!file) {
       this.setErrorHandler("no file");
       return;
@@ -222,6 +229,7 @@ class SettingsPage extends Component {
             this.setErrorHandler("no private photos available for delete");
             return;
           }
+
           privatePhotos = privatePhotos.filter(
             x => x.id.toString() !== file.id.toString()
           );
@@ -233,7 +241,8 @@ class SettingsPage extends Component {
             {
               uid: Date.now(),
               key,
-              url
+              url,
+              id: Date.now()
             }
           ];
         }
@@ -269,7 +278,8 @@ class SettingsPage extends Component {
             {
               uid: Date.now(),
               key,
-              url
+              url,
+              id: Date.now()
             }
           ];
         }

@@ -385,8 +385,10 @@ class ProfilesContainer extends Component {
           const pullTime = dayjs(data.searchProfiles.pullTime);
           const needRefetch = pullTime.isBefore(hourago);
           if (needRefetch) {
+            //TODO:REmove when fixed
+            console.log("REFETCH");
             refetch();
-            window.location.reload(false);
+            window.location.reload(true);
           }
 
           const result = data.searchProfiles;

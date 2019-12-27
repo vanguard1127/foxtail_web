@@ -1,10 +1,10 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import ConfirmPhone from "../Modals/ConfirmPhone";
 
-class FirebaseAuth extends React.PureComponent {
+class FirebaseAuth extends PureComponent {
   state = {
     showPhoneDialog: false
   };
@@ -36,6 +36,7 @@ class FirebaseAuth extends React.PureComponent {
   };
 
   async sendCode(phone) {
+    this.props.ErrorHandler.setBreadcrumb("send code");
     var appVerifier = window.recaptchaVerifier;
     return appVerifier.render().then(function(widgetId) {
       return firebase
@@ -48,6 +49,7 @@ class FirebaseAuth extends React.PureComponent {
   }
 
   async confirmPhone(code) {
+    this.props.ErrorHandler.setBreadcrumb("confirm phone");
     return window.confirmationResult.confirm(code).then(async result => {
       return await result.user.getIdToken();
     });

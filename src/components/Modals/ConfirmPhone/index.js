@@ -102,8 +102,9 @@ class ConfirmPhone extends PureComponent {
     ) : null;
 
   submitPhone = () => {
-    const { sendConfirmationMessage } = this.props;
+    const { sendConfirmationMessage, ErrorHandler } = this.props;
     const { code, phoneNumber, isValid } = this.state;
+    ErrorHandler.setBreadcrumb("submit phone clicked");
     if (!isValid) {
       return;
     }
@@ -129,8 +130,9 @@ class ConfirmPhone extends PureComponent {
   };
 
   verifyCode = () => {
-    const { confirmPhone, onSuccess } = this.props;
+    const { confirmPhone, onSuccess, ErrorHandler } = this.props;
     const { vcode, password } = this.state;
+    ErrorHandler.setBreadcrumb("verify code clicked");
     this.setState({
       sending: true,
       error: false,
@@ -158,16 +160,7 @@ class ConfirmPhone extends PureComponent {
   };
 
   renderPhoneInput() {
-    const {
-      close,
-      t,
-      ErrorHandler,
-      token,
-      history,
-      lang,
-      tReady,
-      sendConfirmationMessage
-    } = this.props;
+    const { close, t, ErrorHandler, sendConfirmationMessage } = this.props;
     const {
       code,
       phoneNumber,
@@ -245,6 +238,7 @@ class ConfirmPhone extends PureComponent {
               className={!isValid ? "disabled" : "color"}
               tabIndex="4"
               onClick={() => {
+                ErrorHandler.setBreadcrumb("send confirmation code");
                 if (!isValid) {
                   return;
                 }
@@ -484,7 +478,7 @@ class ConfirmPhone extends PureComponent {
                   </div>
                 </div>
               </div>
-            </section>{" "}
+            </section>
           </div>
         )}
       </Spring>
