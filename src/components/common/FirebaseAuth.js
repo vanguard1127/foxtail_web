@@ -36,7 +36,6 @@ class FirebaseAuth extends PureComponent {
   };
 
   async sendCode(phone) {
-    this.props.ErrorHandler.setBreadcrumb("send code");
     var appVerifier = window.recaptchaVerifier;
     return appVerifier.render().then(function(widgetId) {
       return firebase
@@ -49,7 +48,6 @@ class FirebaseAuth extends PureComponent {
   }
 
   async confirmPhone(code) {
-    this.props.ErrorHandler.setBreadcrumb("confirm phone");
     return window.confirmationResult.confirm(code).then(async result => {
       return await result.user.getIdToken();
     });
