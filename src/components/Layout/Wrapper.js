@@ -33,6 +33,9 @@ const ReCaptcha = LoadableComponent({
 const ShortLinkRedirect = LoadableComponent({
   loader: () => import("../Redirect/ShortLinkRedirect")
 });
+const PicsCompliance = LoadableComponent({
+  loader: () => import("../Information/PicsCompliance")
+});
 export const Wrapper = withRouter(props => {
   let location = props.location;
   if (location.pathname) {
@@ -49,6 +52,8 @@ export const Wrapper = withRouter(props => {
       return <FAQ history={props.history} />;
     } else if (location.pathname === "/privacy") {
       return <Privacy history={props.history} />;
+    } else if (location.pathname === "/2257") {
+      return <PicsCompliance history={props.history} />;
     } else if (location.pathname === "/antispam") {
       return <AntiSpam history={props.history} />;
     } else if (location.pathname === "/lawenforcement") {

@@ -985,7 +985,7 @@ const ToS = () => (
       <p>
         Notifying LOV of Copyright Infringement: To provide LOV notice of an
         infringement, you must provide a written communication to the attention
-        of "DMCA Infringement Notification Dept." care of{" "}
+        of "DMCA Infringement Notification Dept." care of
         <a href="mailto=support@foxtailapp.com">support@foxtailapp.com</a> that
         sets forth the information specified by the DMCA
         (http://www.copyright.gov/title17/92chap5.html#512). Please note that
@@ -997,7 +997,7 @@ const ToS = () => (
         Providing LOV with Counter-Notification: If you feel that your material
         does not constitute infringement, you may provide LOV with a counter
         notification by written communication to the attention of "DMCA Counter
-        Notification Dept." at{" "}
+        Notification Dept." at
         <a href="mailto=support@foxtailapp.com">support@foxtailapp.com</a> that
         sets forth all of the necessary information required by the DMCA
         (http://www.copyright.gov/title17/92chap5.html#512). Please note that

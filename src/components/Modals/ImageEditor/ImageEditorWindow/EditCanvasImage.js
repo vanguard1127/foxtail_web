@@ -656,7 +656,7 @@ class EditCanvasImage extends PureComponent {
                   onClick={this.toggleCert}
                 >
                   {t(
-                    "I certify, I have explicit permission to post this image on Foxtail"
+                    "I certify, I have explicit permission to post this image on Foxtail (If required, comply with 18 USC 2257)"
                   )}
                 </Button>
               )}

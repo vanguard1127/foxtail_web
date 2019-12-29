@@ -38,19 +38,21 @@ const FooterLanding = ({
                             </span>
                           </div>
                           <div>
-                            {" "}
                             <span onClick={() => history.push("/privacy")}>
                               {t("common:Privacy")}
                             </span>
                           </div>
                           <div>
-                            {" "}
+                            <span onClick={() => history.push("/2257")}>
+                              {t("common:2257Compliance")}
+                            </span>
+                          </div>
+                          <div>
                             <span onClick={() => history.push("/antispam")}>
                               {t("antispam")}
                             </span>
                           </div>
                           <div>
-                            {" "}
                             <span
                               onClick={() => history.push("/lawenforcement")}
                             >
