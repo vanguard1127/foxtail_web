@@ -80,7 +80,9 @@ class LoginButton extends PureComponent {
               onResponse={resp => this.handleFirebaseReturn(resp, fbResolve)}
               title={t("welcomeback")}
             >
-              <a className="login-btn">{t("loginBtn")}</a>
+              <a className="login-btn" id="login-btn">
+                {t("loginBtn")}
+              </a>
             </FirebaseAuth>
           );
         }}

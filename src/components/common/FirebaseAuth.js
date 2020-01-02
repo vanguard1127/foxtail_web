@@ -10,6 +10,9 @@ class FirebaseAuth extends PureComponent {
   };
 
   componentDidMount() {
+    if (process.env.NODE_ENV !== "production") {
+      firebase.auth().settings.appVerificationDisabled = true;
+    }
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
       "recaptcha-container",
       {

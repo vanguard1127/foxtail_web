@@ -30,3 +30,6 @@ yarn-error.log*
 .editorconfig
 *.iml
 *.xml
+
+/cypress
+cypress.json

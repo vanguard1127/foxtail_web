@@ -363,6 +363,7 @@ class ConfirmPhone extends PureComponent {
         <span className="description">{t("entercode")}</span>
         <div className="input code">
           <input
+            name="vcode"
             type="text"
             placeholder={t("vcode")}
             onChange={e => {
