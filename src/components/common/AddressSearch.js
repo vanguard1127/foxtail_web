@@ -139,6 +139,7 @@ class AddressSearch extends Component {
             <div className="search" style={{ position: "relative" }}>
               <div style={{ display: "flex" }}>
                 <input
+                  id="search-location"
                   aria-label="search location"
                   {...getInputProps({
                     placeholder,

@@ -31,5 +31,3 @@ yarn-error.log*
 *.iml
 *.xml
 
-/cypress
-cypress.json
