@@ -381,15 +381,16 @@ class ProfilesContainer extends Component {
             );
           }
 
-          const hourago = dayjs().subtract(50, "minute");
+          {
+            /* const hourago = dayjs().subtract(50, "minute");
           const pullTime = dayjs(data.searchProfiles.pullTime);
           const needRefetch = pullTime.isBefore(hourago);
-          console.log(data.searchProfiles, needRefetch);
+
           if (needRefetch) {
             //TODO:REmove when fixed
-            console.log("REFETCH");
             refetch();
             window.location.reload(true);
+          } */
           }
 
           const result = data.searchProfiles;
