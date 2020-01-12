@@ -14,7 +14,7 @@ const ProfilePic = ({ profilePic }) => {
         </div>
       )}
       <img
-        alt="profilePic"
+        alt=""
         src={proPic}
         onLoad={() => {
           setLoading(false);

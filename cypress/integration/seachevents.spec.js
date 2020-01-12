@@ -49,5 +49,6 @@ describe("The Events Page", function() {
     cy.get(".MuiPickersClock-squareMask").click();
     cy.get(".MuiPickersClock-squareMask").click();
     cy.get("#create-btn").click();
+    cy.wait(5000);
   });
 });

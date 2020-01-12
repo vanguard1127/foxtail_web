@@ -525,7 +525,6 @@ export const SEARCH_PROFILES = gql`
       limit: $limit
       skip: $skip
     ) {
-      pullTime
       message
       profiles {
         id
