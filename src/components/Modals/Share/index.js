@@ -121,7 +121,8 @@ class Share extends Component {
                 <div
                   style={{
                     justifyContent: "center",
-                    display: "flex"
+                    display: "flex",
+                    flexDirection: "column"
                   }}
                 >
                   <div
@@ -168,6 +169,18 @@ class Share extends Component {
                     <EmailShareButton url={refUrl} subject={title} body={body}>
                       <EmailIcon size={32} round />
                     </EmailShareButton>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      padding: "10px",
+                      width: "100%"
+                    }}
+                  >
+                    {t(
+                      "*Limited Time - Get $100 for referring 100 members. We'll email you when you reach 100 for payment info."
+                    )}
                   </div>
                 </div>
               </ErrorBoundary>
