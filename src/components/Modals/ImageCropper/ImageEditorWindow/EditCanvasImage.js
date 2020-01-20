@@ -108,7 +108,8 @@ class EditCanvasImage extends PureComponent {
         const file = {
           filename: "",
           filetype: "image/jpeg",
-          filebody: blobData
+          filebody: blobData,
+          dataURL
         };
 
         await this.handleUpload(file);
@@ -128,7 +129,7 @@ class EditCanvasImage extends PureComponent {
     await setS3PhotoParams(file.filename, file.filetype);
     await signS3()
       .then(async ({ data }) => {
-        const { signedRequest, key, url } = data.signS3;
+        const { signedRequest, key } = data.signS3;
 
         if (signedRequest === "https://s3.amazonaws.com/") {
           this.props.ErrorHandler.catchErrors({
@@ -139,7 +140,7 @@ class EditCanvasImage extends PureComponent {
 
         await uploadToS3(file.filebody, signedRequest);
 
-        await setProfilePic({ key, url });
+        await setProfilePic({ key, url: file.dataURL });
         close();
       })
       .catch(res => {

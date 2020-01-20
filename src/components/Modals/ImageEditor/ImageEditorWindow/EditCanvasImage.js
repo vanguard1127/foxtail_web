@@ -229,7 +229,7 @@ class EditCanvasImage extends PureComponent {
 
     await signS3()
       .then(async ({ data }) => {
-        const { signedRequest, key, url } = data.signS3;
+        const { signedRequest, key } = data.signS3;
         if (signedRequest === "https://s3.amazonaws.com/") {
           this.props.ErrorHandler.catchErrors({
             error: "Recieve ERROR: File not loaded properly. File object:",
@@ -238,7 +238,7 @@ class EditCanvasImage extends PureComponent {
           window.location.reload(false);
         }
 
-        handlePhotoListChange({ file, key, url });
+        handlePhotoListChange({ file, key });
 
         uploadToS3(file.filebody, signedRequest);
 
@@ -359,11 +359,8 @@ class EditCanvasImage extends PureComponent {
     const {
       konvaImageList,
       width,
-      height,
       x_pos,
       y_pos,
-      init_x,
-      init_y,
       hideTransformer,
       selectedShapeName,
       uploading,

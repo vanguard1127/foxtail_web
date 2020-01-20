@@ -205,7 +205,7 @@ class SettingsPage extends Component {
     this.mounted = false;
   }
 
-  handlePhotoListChange = ({ file, key, url, isPrivate, isDeleted }) => {
+  handlePhotoListChange = ({ file, key, isPrivate, isDeleted }) => {
     const { t, toast } = this.props;
     this.isPhotoChanged = true;
     this.setErrorHandler(

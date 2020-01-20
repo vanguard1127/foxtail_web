@@ -96,7 +96,7 @@ const Notice = ({
                 {notice.fromProfile ? notice.fromProfile.profileName : ""}
                 {notice.name}
               </b>
-              {t(notice.text)}
+              {" " + t(notice.text)}
               {notice.event && " " + notice.event}
             </span>
             <span className="when">

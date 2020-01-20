@@ -446,7 +446,6 @@ export const SIGNS3 = gql`
     signS3(filename: $filename, filetype: $filetype) {
       key
       signedRequest
-      url
     }
   }
 `;
@@ -635,11 +634,6 @@ export const GET_INBOX = gql`
       profilePic
       chatID
       participants {
-        profileName
-        profilePic
-        id
-      }
-      invited {
         profileName
         profilePic
         id
@@ -906,11 +900,13 @@ export const GET_SETTINGS = gql`
         }
       }
       publicPhotos {
+        smallUrl
         url
         key
         id
       }
       privatePhotos {
+        smallUrl
         url
         key
         id
@@ -941,10 +937,12 @@ export const GET_PROFILE = gql`
       profileName
       interestedIn
       publicPhotos {
+        smallUrl
         url
         id
       }
       privatePhotos {
+        smallUrl
         url
         id
       }

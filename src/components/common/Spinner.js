@@ -22,8 +22,9 @@ class Spinner extends PureComponent {
   }
 
   render() {
-    const { page, title, pastDelay, error, timedOut, retry } = this.props;
+    const { page, title, error, timedOut, retry } = this.props;
     const { displayMessage } = this.state;
+
     if (error) {
       return (
         <div>
@@ -36,7 +37,7 @@ class Spinner extends PureComponent {
           Taking a long time... <button onClick={retry}>Retry</button>
         </div>
       );
-    } else if (!displayMessage || !pastDelay) {
+    } else if (!displayMessage) {
       return null;
     } else if (page === "searchProfiles") {
       return (
