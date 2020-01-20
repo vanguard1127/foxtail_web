@@ -150,15 +150,6 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
-  // dataURItoBlob = async dataURI => {
-  //   var binary = atob(dataURI.split(",")[1]);
-  //   var array = [];
-  //   for (var i = 0; i < binary.length; i++) {
-  //     array.push(binary.charCodeAt(i));
-  //   }
-  //   return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
-  // };
-
   handleExportClick = () => {
     const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
     const { t } = this.props;
@@ -183,7 +174,7 @@ class EditCanvasImage extends PureComponent {
 
         const x = this.groupRef.x() - scaledImgWidth / 2;
         const y = this.groupRef.y() - scaledImgHeight / 2;
-        //   console.log("Start");
+
         const dataURL = this.groupRef.toDataURL({
           mimeType: "image/jpeg",
           x,
@@ -193,17 +184,17 @@ class EditCanvasImage extends PureComponent {
           quality: 1,
           pixelRatio: this.pixelRatio
         });
+
         if (!dataURL || dataURL === "") {
           this.props.ErrorHandler.catchErrors({
             error: "ERROR: Data url empty",
             dataURL
           });
         }
-        // console.log("dataURL", dataURL);
-        // const blobData = await this.dataURItoBlob(dataURL);
+
         const blobResp = await fetch(dataURL);
         const blobData = await blobResp.blob();
-        //   console.log("blobData", blobData);
+
         if (Object.getOwnPropertyNames(blobData).length < 0) {
           this.props.ErrorHandler.catchErrors({
             error: "Data Blob ERROR: File not loaded properly. File object:",
@@ -216,12 +207,11 @@ class EditCanvasImage extends PureComponent {
         const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",
-          filebody: blobData
+          filebody: blobData,
+          dataURL
         };
 
-        //  console.log("file", file);
         await this.handleUpload(file);
-        //   console.log("After", file);
       });
     }
   };
@@ -234,7 +224,7 @@ class EditCanvasImage extends PureComponent {
       uploadToS3,
       close
     } = this.props;
-    // console.log("dur", file);
+
     await setS3PhotoParams(file.filename, file.filetype);
 
     await signS3()
@@ -248,9 +238,10 @@ class EditCanvasImage extends PureComponent {
           window.location.reload(false);
         }
 
-        await uploadToS3(file.filebody, signedRequest);
+        handlePhotoListChange({ file, key, url });
 
-        await handlePhotoListChange({ file, key, url });
+        uploadToS3(file.filebody, signedRequest);
+
         toast.dismiss();
         close();
       })
@@ -656,7 +647,7 @@ class EditCanvasImage extends PureComponent {
                   onClick={this.toggleCert}
                 >
                   {t(
-                    "I certify, I have explicit permission to post this image on Foxtail (If required, comply with 18 USC 2257)"
+                    "I certify, I have explicit permission to post this image on Foxtail"
                   )}
                 </Button>
               )}

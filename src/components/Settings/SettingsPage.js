@@ -241,7 +241,7 @@ class SettingsPage extends Component {
             {
               uid: Date.now(),
               key,
-              url,
+              url: file.dataURL,
               id: Date.now()
             }
           ];
@@ -278,7 +278,7 @@ class SettingsPage extends Component {
             {
               uid: Date.now(),
               key,
-              url,
+              url: file.dataURL,
               id: Date.now()
             }
           ];
