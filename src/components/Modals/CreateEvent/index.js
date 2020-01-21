@@ -436,7 +436,7 @@ class CreateEvent extends Component {
                       </div>
                       <div className="item">
                         <div className="button mtop">
-                          <button onClick={this.togglePage}>
+                          <button onClick={this.togglePage} id="next-btn">
                             {t("common:Next")}
                           </button>
                         </div>
@@ -573,6 +573,7 @@ class CreateEvent extends Component {
                                             signS3
                                           })
                                         }
+                                        id="create-btn"
                                       >
                                         {eventID
                                           ? t("common:updateevent")

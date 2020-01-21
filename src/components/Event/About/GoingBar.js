@@ -19,7 +19,7 @@ class GoingBar extends PureComponent {
       <div className="goings">
         <span className="stats">
           <div className="content" onClick={this.remDropOpen}>
-            <ul >
+            <ul>
               {participants.map(el => (
                 <li key={el.id}>
                   <img src={el.profilePic} alt="" />

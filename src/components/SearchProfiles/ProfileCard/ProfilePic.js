@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-const NoProfileImg = require("../../../../src/assets/img/elements/no-profile.png");
+import NoProfileImg from "../../../../src/assets/img/elements/no-profile.png";
 const ProfilePic = ({ profilePic }) => {
   const [loading, setLoading] = useState(true);
   const [proPic, setPropic] = useState(profilePic);
@@ -15,14 +14,14 @@ const ProfilePic = ({ profilePic }) => {
         </div>
       )}
       <img
+        alt=""
         src={proPic}
         onLoad={() => {
           setLoading(false);
         }}
-        onError={() => {
-          console.log("test", proPic);
-          setLoading(false);
+        onError={err => {
           setPropic(NoProfileImg);
+          setLoading(false);
         }}
       />
     </div>

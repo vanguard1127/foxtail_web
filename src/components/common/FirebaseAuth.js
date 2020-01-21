@@ -1,15 +1,18 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import ConfirmPhone from "../Modals/ConfirmPhone";
 
-class FirebaseAuth extends React.PureComponent {
+class FirebaseAuth extends PureComponent {
   state = {
     showPhoneDialog: false
   };
 
   componentDidMount() {
+    if (process.env.NODE_ENV !== "production") {
+      firebase.auth().settings.appVerificationDisabled = true;
+    }
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
       "recaptcha-container",
       {

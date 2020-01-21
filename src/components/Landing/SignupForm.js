@@ -137,6 +137,7 @@ class SignupForm extends Component {
           <div className="form-fields">
             <div className="input username">
               <input
+                name="username"
                 aria-label="username"
                 placeholder={t("userLbl")}
                 type="text"
@@ -159,6 +160,7 @@ class SignupForm extends Component {
             </div>
             <div className="input email">
               <input
+                name="email"
                 aria-label="email"
                 placeholder={t("emailLbl")}
                 type="email"
@@ -175,6 +177,7 @@ class SignupForm extends Component {
             </div>
             <div className="input">
               <DatePicker
+                name="birthday"
                 autoOk
                 disableFuture
                 openTo="year"

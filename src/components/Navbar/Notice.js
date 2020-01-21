@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const NoProfileImg = require("../../assets/img/elements/no-profile.png");
+import NoProfileImg from "../../assets/img/elements/no-profile.png";
 
 const Notice = ({
   notice,
@@ -94,9 +94,9 @@ const Notice = ({
             <span className="text">
               <b>
                 {notice.fromProfile ? notice.fromProfile.profileName : ""}
-                {notice.name}{" "}
+                {notice.name}
               </b>
-              {t(notice.text)}
+              {" " + t(notice.text)}
               {notice.event && " " + notice.event}
             </span>
             <span className="when">

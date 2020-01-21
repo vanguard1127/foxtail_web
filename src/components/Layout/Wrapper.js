@@ -1,18 +1,41 @@
 import React from "react";
 import ReactGA from "react-ga";
+import LoadableComponent from "../HOCs/LoadableComponent";
 import DevTools from "../../DevTools";
 import NotFound from "../common/NotFound";
 import { withRouter } from "react-router-dom";
-import Landing from "../Landing";
-import About from "../Information/About";
-import FAQ from "../Information/FAQ";
-import Privacy from "../Information/Privacy";
-import AntiSpam from "../Information/AntiSpam";
-import ToS from "../Information/ToS";
-import LawEnforce from "../Information/LawEnforce";
-import ReCaptcha from "../Modals/ReCaptcha";
-import ShortLinkRedirect from "../Redirect/ShortLinkRedirect";
+// const LawEnforce = LoadableComponent({
+//   loader: () => import("./Body")
+// });
 import { Body } from "./Body";
+import Landing from "../Landing/";
+const About = LoadableComponent({
+  loader: () => import("../Information/About")
+});
+const FAQ = LoadableComponent({
+  loader: () => import("../Information/FAQ")
+});
+const Privacy = LoadableComponent({
+  loader: () => import("../Information/Privacy")
+});
+const AntiSpam = LoadableComponent({
+  loader: () => import("../Information/AntiSpam")
+});
+const ToS = LoadableComponent({
+  loader: () => import("../Information/ToS")
+});
+const LawEnforce = LoadableComponent({
+  loader: () => import("../Information/LawEnforce")
+});
+const ReCaptcha = LoadableComponent({
+  loader: () => import("../Modals/ReCaptcha")
+});
+const ShortLinkRedirect = LoadableComponent({
+  loader: () => import("../Redirect/ShortLinkRedirect")
+});
+const PicsCompliance = LoadableComponent({
+  loader: () => import("../Information/PicsCompliance")
+});
 export const Wrapper = withRouter(props => {
   let location = props.location;
   if (location.pathname) {
@@ -29,6 +52,8 @@ export const Wrapper = withRouter(props => {
       return <FAQ history={props.history} />;
     } else if (location.pathname === "/privacy") {
       return <Privacy history={props.history} />;
+    } else if (location.pathname === "/2257") {
+      return <PicsCompliance history={props.history} />;
     } else if (location.pathname === "/antispam") {
       return <AntiSpam history={props.history} />;
     } else if (location.pathname === "/lawenforcement") {

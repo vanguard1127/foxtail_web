@@ -9,8 +9,7 @@ import {
 import { Mutation } from "react-apollo";
 import { CREATE_SUBSCRIPTION } from "../../../queries";
 import "./CreditCard.css";
-
-const CCLogosPng = require("../../../assets/img/elements/cclogos.png");
+import CCLogosPng from "../../../assets/img/elements/cclogos.png";
 const intialState = {
   ccnum: "",
   exp: "",

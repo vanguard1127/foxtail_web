@@ -4,12 +4,14 @@ import { Query } from "react-apollo";
 import { GET_SEARCH_SETTINGS } from "../../queries";
 import SearchProfilesPage from "./SearchProfilesPage";
 import ShareModal from "../Modals/Share";
+import OnboardModal from "../Modals/Onboard";
 import Spinner from "../common/Spinner";
 import { withTranslation } from "react-i18next";
 
 class SearchProfiles extends Component {
   state = {
-    shareModalVisible: false
+    shareModalVisible: false,
+    onboardModalVisible: true
   };
   componentDidMount() {
     window.scrollTo(0, 1);
@@ -17,12 +19,14 @@ class SearchProfiles extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.tReady !== nextProps.tReady ||
-      this.state.shareModalVisible !== nextState.shareModalVisible
+      this.state.shareModalVisible !== nextState.shareModalVisible ||
+      this.state.onboardModalVisible !== nextState.onboardModalVisible
     ) {
       return true;
     }
     return false;
   }
+
   toggleShareModal = () => {
     this.props.ErrorHandler.setBreadcrumb("Share Modal Toggled:");
     if (!this.state.shareModalVisible) {
@@ -33,8 +37,9 @@ class SearchProfiles extends Component {
     }
     this.setState({ shareModalVisible: !this.state.shareModalVisible });
   };
+
   render() {
-    const { shareModalVisible } = this.state;
+    const { shareModalVisible, onboardModalVisible } = this.state;
     const {
       t,
       ErrorHandler,
@@ -89,6 +94,13 @@ class SearchProfiles extends Component {
                   t={t}
                 />
               )}
+              {/* {onboardModalVisible && (
+                <OnboardModal
+                  visible={shareModalVisible}
+                  ErrorHandler={ErrorHandler}
+                  t={t}
+                />
+              )} */}
             </>
           );
         }}

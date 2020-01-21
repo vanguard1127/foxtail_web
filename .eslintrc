@@ -1,8 +1,13 @@
 {
-  "extends": ["react-app", "eslint:recommended", "plugin:react/recommended"],
+  "extends": [
+    "react-app",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:cypress/recommended"
+  ],
   "parser": "babel-eslint",
   "parserOptions": { "ecmsVersion": "6", "sourceType": "module" },
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "react-hooks", "jsx-a11y", "cypress"],
   "rules": {
     "prettier/prettier": "error",
     "react/display-name": 0,

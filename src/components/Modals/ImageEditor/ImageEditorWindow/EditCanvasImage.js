@@ -13,6 +13,13 @@ import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import { Spring } from "react-spring/renderprops";
 import { toast } from "react-toastify";
+import Mask1 from "../../../../assets/img/elements/masks/mask_1.png";
+import Mask2 from "../../../../assets/img/elements/masks/mask_2.png";
+import Mask3 from "../../../../assets/img/elements/masks/mask_3.png";
+import Mask4 from "../../../../assets/img/elements/masks/mask_4.png";
+import Mask5 from "../../../../assets/img/elements/masks/mask_5.png";
+import Mask6 from "../../../../assets/img/elements/masks/mask_6.png";
+import Mask7 from "../../../../assets/img/elements/masks/mask_7.png";
 
 class EditCanvasImage extends PureComponent {
   lastDist = 0;
@@ -143,18 +150,9 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
-  // dataURItoBlob = async dataURI => {
-  //   var binary = atob(dataURI.split(",")[1]);
-  //   var array = [];
-  //   for (var i = 0; i < binary.length; i++) {
-  //     array.push(binary.charCodeAt(i));
-  //   }
-  //   return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
-  // };
-
   handleExportClick = () => {
     const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
-    const { t } = this.props;
+    const { t, handleUpload, close } = this.props;
     if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, async () => {
         if (!toast.isActive("upload")) {
@@ -176,7 +174,7 @@ class EditCanvasImage extends PureComponent {
 
         const x = this.groupRef.x() - scaledImgWidth / 2;
         const y = this.groupRef.y() - scaledImgHeight / 2;
-        //   console.log("Start");
+
         const dataURL = this.groupRef.toDataURL({
           mimeType: "image/jpeg",
           x,
@@ -186,17 +184,17 @@ class EditCanvasImage extends PureComponent {
           quality: 1,
           pixelRatio: this.pixelRatio
         });
+
         if (!dataURL || dataURL === "") {
           this.props.ErrorHandler.catchErrors({
             error: "ERROR: Data url empty",
             dataURL
           });
         }
-        // console.log("dataURL", dataURL);
-        // const blobData = await this.dataURItoBlob(dataURL);
+
         const blobResp = await fetch(dataURL);
         const blobData = await blobResp.blob();
-        //   console.log("blobData", blobData);
+
         if (Object.getOwnPropertyNames(blobData).length < 0) {
           this.props.ErrorHandler.catchErrors({
             error: "Data Blob ERROR: File not loaded properly. File object:",
@@ -209,49 +207,36 @@ class EditCanvasImage extends PureComponent {
         const file = {
           filename: this.props.imageObject.name,
           filetype: "image/jpeg",
-          filebody: blobData
+          filebody: blobData,
+          dataURL
         };
 
-        //  console.log("file", file);
-        await this.handleUpload(file);
-        //   console.log("After", file);
+        await handleUpload(file);
+        toast.dismiss();
+        close();
       });
     }
   };
 
-  handleUpload = async file => {
-    const {
-      signS3,
-      handlePhotoListChange,
-      setS3PhotoParams,
-      uploadToS3,
-      close
-    } = this.props;
-    // console.log("dur", file);
-    await setS3PhotoParams(file.filename, file.filetype);
+  // handleUpload = async file => {
+  //   const { signS3, handlePhotoListChange, uploadToS3, close } = this.props;
 
-    await signS3()
-      .then(async ({ data }) => {
-        const { signedRequest, key, url } = data.signS3;
-        if (signedRequest === "https://s3.amazonaws.com/") {
-          this.props.ErrorHandler.catchErrors({
-            error: "Recieve ERROR: File not loaded properly. File object:",
-            file
-          });
-          window.location.reload(false);
-        }
+  //   await signS3()
+  //     .then(async ({ data }) => {
+  //       const { signedRequest, key } = data.signS3;
 
-        await uploadToS3(file.filebody, signedRequest);
+  //       handlePhotoListChange({ file, key });
 
-        await handlePhotoListChange({ file, key, url });
-        toast.dismiss();
-        close();
-      })
-      .catch(res => {
-        console.error(res);
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-      });
-  };
+  //       uploadToS3(file.filebody, signedRequest);
+
+  //       toast.dismiss();
+  //       close();
+  //     })
+  //     .catch(res => {
+  //       console.error(res);
+  //       this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+  //     });
+  // };
 
   handleDragStart = e => {
     const shapeName = e.target.attrs.name;
@@ -361,11 +346,8 @@ class EditCanvasImage extends PureComponent {
     const {
       konvaImageList,
       width,
-      height,
       x_pos,
       y_pos,
-      init_x,
-      init_y,
       hideTransformer,
       selectedShapeName,
       uploading,
@@ -380,11 +362,7 @@ class EditCanvasImage extends PureComponent {
         onClick={() => this.handleStickerClick(props.id, props.name, props.src)}
         style={{ padding: 5 }}
       >
-        <img
-          style={{ maxHeight: "66px" }}
-          src={require("./" + props.src)}
-          alt="imagepic"
-        />
+        <img style={{ maxHeight: "66px" }} src={props.src} alt="imagepic" />
       </div>
     );
 
@@ -578,32 +556,37 @@ class EditCanvasImage extends PureComponent {
                         <Sticker
                           id="1"
                           name={`${Date.now()}str1`}
-                          src="test_mask_1.png"
+                          src={Mask1}
                         />
                         <Sticker
                           id="2"
                           name={`${Date.now()}str2`}
-                          src="test_mask_2.png"
+                          src={Mask2}
                         />
                         <Sticker
                           id="3"
                           name={`${Date.now()}str3`}
-                          src="test_mask_3.png"
+                          src={Mask3}
                         />
                         <Sticker
                           id="4"
                           name={`${Date.now()}str4`}
-                          src="test_mask_4.png"
+                          src={Mask4}
                         />
                         <Sticker
                           id="5"
                           name={`${Date.now()}str5`}
-                          src="test_mask_5.png"
+                          src={Mask5}
                         />
                         <Sticker
                           id="6"
                           name={`${Date.now()}str6`}
-                          src="test_mask_6.png"
+                          src={Mask6}
+                        />
+                        <Sticker
+                          id="7"
+                          name={`${Date.now()}str7`}
+                          src={Mask7}
                         />
                       </div>
                       <div className="edit-canvas-stickers-div-close-button-div">

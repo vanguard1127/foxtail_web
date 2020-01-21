@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import(/* webpackPreload: true */ "core-js/stable");
 import(/* webpackPreload: true */ "regenerator-runtime/runtime");
 import(/* webpackPreload: true */ "./assets/css/main.css");
@@ -12,6 +13,11 @@ import(/* webpackPreload: true */ "rc-slider/assets/index.css");
 import React from "react";
 import ReactGA from "react-ga";
 import { hydrate, render } from "react-dom";
+=======
+import React from "react";
+import ReactGA from "react-ga";
+import { render } from "react-dom";
+>>>>>>> master
 import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";
@@ -25,13 +31,27 @@ import "firebase/auth";
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import { cache, link } from "./utils/links";
 import { materialTheme } from "./utils/materialTheme";
+<<<<<<< HEAD
 import { Wrapper } from "./components/layout/Wraper";
+=======
+import { Wrapper } from "./components/Layout/Wrapper";
+>>>>>>> master
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import getLang from "./utils/getLang";
+import("core-js/stable" /* webpackPreload: true */);
+import("regenerator-runtime/runtime" /* webpackPreload: true */);
+import("./assets/css/main.css" /* webpackPreload: true */);
+import("./assets/favicon.ico" /* webpackPreload: true */);
+import("react-image-lightbox/style.css" /* webpackPreload: true */);
+import("owl.carousel/dist/assets/owl.carousel.css" /* webpackPreload: true */);
+import(
+  "owl.carousel/dist/assets/owl.theme.default.css" /* webpackPreload: true */
+);
+import("rc-slider/assets/index.css" /* webpackPreload: true */);
 const lang = getLang();
-require("dayjs/locale/" + lang);
+import("dayjs/locale/" + lang);
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DNS,
@@ -75,30 +95,16 @@ window.scrollTo(0, 1);
 //prevent context menu
 document.addEventListener("contextmenu", preventContextMenu);
 
-const rootElement = document.getElementById("root");
-if (rootElement.hasChildNodes()) {
-  hydrate(
-    <ApolloProvider client={client}>
-      <MuiPickersUtilsProvider utils={DayJsUtils}>
-        <ThemeProvider theme={materialTheme}>
-          <Root />
-        </ThemeProvider>
-      </MuiPickersUtilsProvider>
-    </ApolloProvider>,
-    rootElement
-  );
-} else {
-  render(
-    <ApolloProvider client={client}>
-      <MuiPickersUtilsProvider utils={DayJsUtils}>
-        <ThemeProvider theme={materialTheme}>
-          <Root />
-        </ThemeProvider>
-      </MuiPickersUtilsProvider>
-    </ApolloProvider>,
-    rootElement
-  );
-}
+render(
+  <ApolloProvider client={client}>
+    <MuiPickersUtilsProvider utils={DayJsUtils}>
+      <ThemeProvider theme={materialTheme}>
+        <Root />
+      </ThemeProvider>
+    </MuiPickersUtilsProvider>
+  </ApolloProvider>,
+  document.getElementById("root")
+);
 
 if (process.env.NODE_ENV !== "production") {
   OfflinePluginRuntime.install({

@@ -3,16 +3,25 @@
 
 <head>
   <title>{{htmlWebpackPlugin.options.title}}</title>
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="{{htmlWebpackPlugin.options.manifest}}">
+  <link rel="canonical" href="{{htmlWebpackPlugin.options.httpsurl}}" />
+  <link rel="apple-touch-icon" href="{{htmlWebpackPlugin.options.appleicon}}">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#791b7d" />
   <meta name="description" content="{{htmlWebpackPlugin.options.description}}">
+<<<<<<< HEAD
   <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpBXHel1_9VsBUNJ-TrBwXrQ8uYtLYdEo&libraries=places"></script>
   <meta name="trafficjunky-site-verification" content="us975w1t0" />
+=======
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpBXHel1_9VsBUNJ-TrBwXrQ8uYtLYdEo&libraries=places"></script>
+  <meta name="trafficjunky-site-verification" content="us975w1t0" />
+  <meta name="p:domain_verify" content="3615a67be6865330aa5835fa6e1c3d90" />
+>>>>>>> master
 </head>
 
 <body>

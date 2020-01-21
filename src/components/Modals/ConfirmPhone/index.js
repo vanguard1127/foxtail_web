@@ -101,17 +101,66 @@ class ConfirmPhone extends PureComponent {
       </div>
     ) : null;
 
+  submitPhone = () => {
+    const { sendConfirmationMessage, ErrorHandler } = this.props;
+    const { code, phoneNumber, isValid } = this.state;
+    ErrorHandler.setBreadcrumb("submit phone clicked");
+    if (!isValid) {
+      return;
+    }
+    this.setState({
+      sending: true,
+      error: false,
+      confirm: false
+    });
+    sendConfirmationMessage(code + phoneNumber)
+      .then(() => {
+        this.setState({
+          sending: false,
+          error: false,
+          confirm: true
+        });
+      })
+      .catch(err => {
+        this.setState({
+          sending: false,
+          errors: { phoneNumber: err.message }
+        });
+      });
+  };
+
+  verifyCode = () => {
+    const { confirmPhone, onSuccess, ErrorHandler } = this.props;
+    const { vcode, password } = this.state;
+    ErrorHandler.setBreadcrumb("verify code clicked");
+    this.setState({
+      sending: true,
+      error: false,
+      confirm: true
+    });
+    confirmPhone(vcode)
+      .then(result => {
+        this.setState(
+          {
+            sending: false,
+            error: false,
+            confirm: true
+          },
+          () => {
+            onSuccess(result, password);
+          }
+        );
+      })
+      .catch(err => {
+        this.setState({
+          sending: false,
+          error: err.message
+        });
+      });
+  };
+
   renderPhoneInput() {
-    const {
-      close,
-      t,
-      ErrorHandler,
-      token,
-      history,
-      lang,
-      tReady,
-      sendConfirmationMessage
-    } = this.props;
+    const { close, t, ErrorHandler, sendConfirmationMessage } = this.props;
     const {
       code,
       phoneNumber,
@@ -189,6 +238,7 @@ class ConfirmPhone extends PureComponent {
               className={!isValid ? "disabled" : "color"}
               tabIndex="4"
               onClick={() => {
+                ErrorHandler.setBreadcrumb("send confirmation code");
                 if (!isValid) {
                   return;
                 }
@@ -225,14 +275,8 @@ class ConfirmPhone extends PureComponent {
   }
 
   renderLogin() {
-    const {
-      close,
-      t,
-      ErrorHandler,
-      sendConfirmationMessage,
-      noPass
-    } = this.props;
-    const { code, phoneNumber, password, isValid, errors } = this.state;
+    const { close, t, ErrorHandler, noPass } = this.props;
+    const { code, phoneNumber, password, errors } = this.state;
 
     return (
       <>
@@ -286,36 +330,14 @@ class ConfirmPhone extends PureComponent {
         )}
         <div className="submit">
           <ErrorHandler.ErrorBoundary>
-            <span
+            <button
+              type="submit"
               tabIndex="3"
               className="color"
-              onClick={() => {
-                if (!isValid) {
-                  return;
-                }
-                this.setState({
-                  sending: true,
-                  error: false,
-                  confirm: false
-                });
-                sendConfirmationMessage(code + phoneNumber)
-                  .then(() => {
-                    this.setState({
-                      sending: false,
-                      error: false,
-                      confirm: true
-                    });
-                  })
-                  .catch(err => {
-                    this.setState({
-                      sending: false,
-                      errors: { phoneNumber: err.message }
-                    });
-                  });
-              }}
+              onClick={this.submitPhone}
             >
               {t("sendvcode")}
-            </span>
+            </button>
           </ErrorHandler.ErrorBoundary>
           <span className="border" onClick={close}>
             {t("common:Cancel")}
@@ -334,13 +356,14 @@ class ConfirmPhone extends PureComponent {
   }
 
   renderCodeInput() {
-    const { close, t, ErrorHandler, confirmPhone, onSuccess } = this.props;
-    const { vcode, password, isValid } = this.state;
+    const { close, t } = this.props;
+    const { vcode } = this.state;
     return (
       <>
         <span className="description">{t("entercode")}</span>
         <div className="input code">
           <input
+            name="vcode"
             type="text"
             placeholder={t("vcode")}
             onChange={e => {
@@ -360,37 +383,9 @@ class ConfirmPhone extends PureComponent {
           )}
         </div>
         <div className="submit">
-          <span
-            className="color"
-            onClick={() => {
-              this.setState({
-                sending: true,
-                error: false,
-                confirm: true
-              });
-              confirmPhone(vcode)
-                .then(result => {
-                  this.setState(
-                    {
-                      sending: false,
-                      error: false,
-                      confirm: true
-                    },
-                    () => {
-                      onSuccess(result, password);
-                    }
-                  );
-                })
-                .catch(err => {
-                  this.setState({
-                    sending: false,
-                    error: err.message
-                  });
-                });
-            }}
-          >
+          <button type="submit" className="color" onClick={this.verifyCode}>
             {t("confirmphone")}
-          </span>
+          </button>
           <span className="border" onClick={close}>
             {t("common:Cancel")}
           </span>
@@ -403,10 +398,7 @@ class ConfirmPhone extends PureComponent {
     const {
       close,
       t,
-      ErrorHandler,
       token,
-      history,
-      lang,
       tReady,
       sendConfirmationMessage,
       type,
@@ -487,7 +479,7 @@ class ConfirmPhone extends PureComponent {
                   </div>
                 </div>
               </div>
-            </section>{" "}
+            </section>
           </div>
         )}
       </Spring>

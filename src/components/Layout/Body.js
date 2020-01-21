@@ -1,19 +1,35 @@
 import Navbar from "../Navbar/";
 import React from "react";
 import ReactGA from "react-ga";
+import LoadableComponent from "../HOCs/LoadableComponent";
 import * as ErrorHandler from "../common/ErrorHandler";
 import { Route, Switch, Redirect } from "react-router-dom";
 import withAuth from "../HOCs/withAuth";
 import IdleTimer from "../HOCs/IdleTimer";
-import Footer from "../Footer/";
-import ProfileSearch from "../SearchProfiles/";
-import Settings from "../Settings/";
-import EventPage from "../Event";
-import ProfilePage from "../Profile/";
-import InboxPage from "../Inbox/";
-import SearchEvents from "../SearchEvents";
 import { ToastContainer } from "react-toastify";
 import dayjs from "dayjs";
+const ProfileSearch = LoadableComponent({
+  loader: () => import("../SearchProfiles/")
+});
+const Footer = LoadableComponent({
+  loader: () => import("../Footer/")
+});
+const Settings = LoadableComponent({
+  loader: () => import("../Settings/")
+});
+const EventPage = LoadableComponent({
+  loader: () => import("../Event/")
+});
+const ProfilePage = LoadableComponent({
+  loader: () => import("../Profile/")
+});
+const InboxPage = LoadableComponent({
+  loader: () => import("../Inbox/")
+});
+const SearchEvents = LoadableComponent({
+  loader: () => import("../SearchEvents/")
+});
+
 export const Body = withAuth(session => session && session.currentuser)(
   ({ showFooter, session, refetch, lang }) => (
     <div className="layout">

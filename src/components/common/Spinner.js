@@ -22,13 +22,24 @@ class Spinner extends PureComponent {
   }
 
   render() {
-    const { page, title } = this.props;
+    const { page, title, error, timedOut, retry } = this.props;
     const { displayMessage } = this.state;
 
-    if (!displayMessage) {
+    if (error) {
+      return (
+        <div>
+          Error! <button onClick={retry}>Retry</button>
+        </div>
+      );
+    } else if (timedOut) {
+      return (
+        <div>
+          Taking a long time... <button onClick={retry}>Retry</button>
+        </div>
+      );
+    } else if (!displayMessage) {
       return null;
-    }
-    if (page === "searchProfiles") {
+    } else if (page === "searchProfiles") {
       return (
         <section className="members">
           <div className="container">

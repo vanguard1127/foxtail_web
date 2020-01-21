@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import RulesModal from "../Modals/Rules";
 import ContactUsModal from "../Modals/ContactUs";
-import Copyright from "./Copyright";
+import FooterLinks from "./FooterLinks";
 import { withTranslation } from "react-i18next";
 
 class Footer extends Component {
@@ -47,7 +47,11 @@ class Footer extends Component {
             </div>
           </div>
         </div>
-        <Copyright toggleContactModal={this.toggleContactModal} t={t} />
+        <FooterLinks
+          toggleContactModal={this.toggleContactModal}
+          toggleRuleModal={this.toggleRuleModal}
+          t={t}
+        />
         {showRulesModal && <RulesModal close={this.toggleRuleModal} t={t} />}
         {showContactModal && (
           <ContactUsModal

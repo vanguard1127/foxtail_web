@@ -17,6 +17,7 @@ class SignupButton extends PureComponent {
   handleFirebaseReturn = ({ code, password }) => {
     if (this.mounted) {
       const { ErrorHandler, history, ReactGA, t } = this.props;
+      ErrorHandler.setBreadcrumb("Signup Button pressed");
       this.setState(
         {
           code,
@@ -27,6 +28,7 @@ class SignupButton extends PureComponent {
             .then(({ data }) => {
               const { isCouple } = this.props.createData;
               if (data.fbResolve === null) {
+                ErrorHandler.setBreadcrumb("Signup Failed");
                 ReactGA.event({
                   category: "Signup",
                   action: "Fail"
@@ -35,7 +37,7 @@ class SignupButton extends PureComponent {
                 alert(failmsg);
                 return;
               }
-              console.log("data.fbResolve", data.fbResolve);
+
               localStorage.setItem(
                 "token",
                 data.fbResolve.find(token => token.access === "auth").token
@@ -46,6 +48,7 @@ class SignupButton extends PureComponent {
               );
 
               if (isCouple) {
+                ErrorHandler.setBreadcrumb("Signup OK, Couple");
                 ReactGA.event({
                   category: "Signup",
                   action: "Couple"
@@ -55,6 +58,7 @@ class SignupButton extends PureComponent {
                   state: { couple: true, initial: true }
                 });
               } else {
+                ErrorHandler.setBreadcrumb("Signup OK, Single");
                 ReactGA.event({
                   category: "Signup",
                   action: "Success"

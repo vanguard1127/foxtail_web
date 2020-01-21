@@ -186,9 +186,8 @@ class SettingsPage extends Component {
   }
 
   componentDidMount() {
-    const { history, errors } = this.props;
+    const { history } = this.props;
     history.replace({ state: {} });
-    window.ALLOWCONTEXTMENU = true;
     window.addEventListener("beforeunload", () => {
       this.handleSubmit(this.updateSettings);
     });
@@ -204,18 +203,33 @@ class SettingsPage extends Component {
     });
     clearAllBodyScrollLocks();
     this.mounted = false;
-    window.ALLOWCONTEXTMENU = false;
   }
 
-  handlePhotoListChange = ({ file, key, url, isPrivate, isDeleted }) => {
+  handlePhotoListChange = ({ file, key, isPrivate, isDeleted }) => {
     const { t, toast } = this.props;
     this.isPhotoChanged = true;
-    this.setErrorHandler("Photo list updated");
+    this.setErrorHandler(
+      "Photo list updated isPrivate:" +
+        isPrivate +
+        "isDeleted:" +
+        isDeleted +
+        "key:" +
+        key
+    );
+    if (!file) {
+      this.setErrorHandler("no file");
+      return;
+    }
     if (isPrivate) {
       let { privatePhotos } = this.state;
 
       if (this.mounted) {
         if (isDeleted) {
+          if (!privatePhotos || privatePhotos.length === 0) {
+            this.setErrorHandler("no private photos available for delete");
+            return;
+          }
+
           privatePhotos = privatePhotos.filter(
             x => x.id.toString() !== file.id.toString()
           );
@@ -227,10 +241,12 @@ class SettingsPage extends Component {
             {
               uid: Date.now(),
               key,
-              url
+              url: file.dataURL,
+              id: Date.now()
             }
           ];
         }
+
         this.setState(
           {
             privatePhotos,
@@ -248,6 +264,10 @@ class SettingsPage extends Component {
 
       if (this.mounted) {
         if (isDeleted) {
+          if (!publicPhotos || publicPhotos.length === 0) {
+            this.setErrorHandler("no public photos available for delete");
+            return;
+          }
           publicPhotos = publicPhotos.filter(
             x => x.id.toString() !== file.id.toString()
           );
@@ -258,10 +278,12 @@ class SettingsPage extends Component {
             {
               uid: Date.now(),
               key,
-              url
+              url: file.dataURL,
+              id: Date.now()
             }
           ];
         }
+
         this.setState(
           {
             publicPhotos,
@@ -270,7 +292,8 @@ class SettingsPage extends Component {
             publicPhotoList: publicPhotos.map(file => JSON.stringify(file))
           },
           () => {
-            this.fillInErrors();
+            this.handleSubmit(this.updateSettings);
+            this.fillInErrors(true);
           }
         );
       }
@@ -1318,7 +1341,6 @@ class SettingsPage extends Component {
                         >
                           {"Remove Password"}
                         </Button>
-                        {"  "}
                         <Button
                           variant="contained"
                           color="secondary"

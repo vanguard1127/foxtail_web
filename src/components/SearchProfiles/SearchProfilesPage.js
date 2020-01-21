@@ -119,15 +119,6 @@ class SearchProfilesPage extends Component {
       elapse
     } = this.state;
 
-    // if (session && session.currentuser.tours.indexOf("sp") < 0) {
-    //   ErrorHandler.setBreadcrumb("Opened Tour: Search Profiles");
-    //   return (
-    //     <div>
-    //       <Tour ErrorHandler={ErrorHandler} refetchUser={refetch} />
-    //     </div>
-    //   );
-    // }
-
     let body = null;
     if ((!lat && !elapse) || !session) {
       body = <Spinner message={t("common:Loading")} size="large" />;

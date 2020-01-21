@@ -206,7 +206,7 @@ class BlockModal extends Component {
                         className={"color"}
                         disabled={reason === "" || loading}
                       >
-                        {t("repblock")}
+                        {t("report")}
                       </span>
                     );
                   }}

@@ -161,6 +161,7 @@ class ResetPhone extends PureComponent {
                               ErrorHandler={ErrorHandler}
                               lang={lang}
                               ReactGA={ReactGA}
+                              close={close}
                             />
                           </ErrorHandler.ErrorBoundary>
                           <button className="border" onClick={close}>

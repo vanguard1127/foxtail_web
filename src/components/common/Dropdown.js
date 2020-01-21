@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Select from "./Select";
+import { catchErrors } from "../common/ErrorHandler";
 
 class Dropdown extends Component {
   state = {
@@ -44,28 +45,27 @@ class Dropdown extends Component {
     }
 
     import("../../docs/options/" + lang)
-      .then(els => {
-        let ops;
+      .then(dictionary => {
+        let options;
         if (this.props.type === "sex") {
-          ops = els.sexSingleOptions;
+          options = dictionary.sexSingleOptions;
         } else if (this.props.type === "lang") {
-          ops = els.langOptions;
+          options = dictionary.langOptions;
         } else if (this.props.type === "sexuality") {
-          ops = els.sexualityOptions;
+          options = dictionary.sexualityOptions;
         } else if (this.props.type === "eventType") {
-          ops = els.eventTypeOptions;
+          options = dictionary.eventTypeOptions;
         } else if (this.props.type === "payType") {
-          ops = els.payTypeOptions;
+          options = dictionary.payTypeOptions;
         } else {
-          ops = els.sexOptions;
+          options = dictionary.sexOptions;
         }
         if (this.mounted) {
-          this.setState({ options: ops, isLoading: false });
+          this.setState({ options, isLoading: false });
         }
       })
       .catch(error => {
-        const ErrorHandler = require("../common/ErrorHandler");
-        ErrorHandler.catchErrors(error); /* Error handling */
+        catchErrors(error); /* Error handling */
       });
   };
 

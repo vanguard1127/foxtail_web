@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-class Copyright extends Component {
+class FooterLinks extends Component {
   render() {
     const { t } = this.props;
     return (
@@ -43,4 +43,4 @@ class Copyright extends Component {
   }
 }
 
-export default Copyright;
+export default FooterLinks;

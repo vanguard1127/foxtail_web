@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { READ_NOTIFICATION, GET_COUNTS, CONVERT_COUPLE } from "../../queries";
+import produce from "immer";
+import {
+  READ_NOTIFICATION,
+  GET_COUNTS,
+  CONVERT_COUPLE,
+  GET_NOTIFICATIONS
+} from "../../queries";
 import NoticesMenu from "./NoticesMenu";
 import InboxItem from "./InboxItem";
 import Alert from "./Alert";
@@ -22,29 +28,32 @@ const UserToolbar = ({
   let { msgsCount, noticesCount } = counts;
   const [alertVisible, setAlertVisible] = useState(true);
   const [alert, setAlert] = useState(counts.alert);
-  const [skip, setSkip] = useState(0);
   const [updateNotifications, { loading: mutationLoading }] = useMutation(
     READ_NOTIFICATION,
     {
       update(cache) {
-        const { getCounts } = cache.readQuery({
-          query: GET_COUNTS
-        });
-
-        let newCounts = { ...getCounts };
-        if (newCounts.alert && !newCounts.alert.read) {
-          newCounts.alert = null;
-
-          cache.writeQuery({
-            query: GET_COUNTS,
-            data: {
-              getCounts: { ...newCounts }
-            }
-          });
-        }
+        updateRead(cache);
       }
     }
   );
+  const updateRead = cache => {
+    const { getCounts } = cache.readQuery({
+      query: GET_COUNTS
+    });
+
+    let newCounts = { ...getCounts };
+    if (newCounts.alert && !newCounts.alert.read) {
+      newCounts.alert = null;
+
+      cache.writeQuery({
+        query: GET_COUNTS,
+        data: {
+          getCounts: { ...newCounts }
+        }
+      });
+    }
+  };
+
   const [
     convertToCouple,
     { loading: cplLoading, data: isCoupleOK }
@@ -68,16 +77,6 @@ const UserToolbar = ({
     }
   });
 
-  const skipForward = () => {
-    const newSkip = skip + parseInt(process.env.REACT_APP_NOTICELIST_LIMIT);
-    setSkip(newSkip);
-    return newSkip;
-  };
-
-  const resetSkip = () => {
-    setSkip(0);
-  };
-
   const showAlert = alert => {
     setAlertVisible(true);
     setAlert(alert);
@@ -95,9 +94,70 @@ const UserToolbar = ({
 
   const readNotices = notificationID => {
     updateNotifications({
-      variables: { notificationID }
-    }).catch(res => {
-      this.props.ErrorHandler.catchErrors(res);
+      variables: { notificationID, both: true },
+      update: cache => {
+        let query = "getNotifications";
+        let found = false;
+        //find in cache
+        Object.keys(cache.data.data).forEach(key => {
+          if (key === "ROOT_QUERY") {
+            Object.keys(cache.data.data[key]).forEach(subkey => {
+              if (!found && subkey.match(query)) {
+                found = true;
+              }
+            });
+          } else {
+            if (!found && key.match(query)) {
+              found = true;
+            }
+          }
+        });
+
+        if (!found) {
+          return;
+        }
+
+        const {
+          getNotifications,
+          getNotifications: { notifications }
+        } = cache.readQuery({
+          query: GET_NOTIFICATIONS
+        });
+
+        const newNotifications = produce(notifications, draftState => {
+          var readNotice = draftState.find(
+            notice => notice.id === notificationID
+          );
+
+          if (readNotice) {
+            readNotice.read = true;
+            if (!readNotice.seen) {
+              const { getCounts } = cache.readQuery({
+                query: GET_COUNTS
+              });
+
+              let newCounts = { ...getCounts };
+              newCounts.noticesCount -= 1;
+              cache.writeQuery({
+                query: GET_COUNTS,
+                data: {
+                  getCounts: { ...newCounts }
+                }
+              });
+            }
+          }
+        });
+
+        cache.writeQuery({
+          query: GET_NOTIFICATIONS,
+          data: {
+            getNotifications: {
+              ...getNotifications,
+              notifications: newNotifications
+            }
+          }
+        });
+      }
     });
   };
   if (cplLoading) {
@@ -147,11 +207,7 @@ const UserToolbar = ({
             showAlert={showAlert}
             handleCoupleLink={handleCoupleLink}
             readNotices={readNotices}
-            limit={parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)}
-            skip={skip}
             recount={refetch}
-            skipForward={skipForward}
-            resetSkip={resetSkip}
             dayjs={dayjs}
           />
         )}

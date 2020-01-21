@@ -57,10 +57,6 @@ class ProfilesContainer extends Component {
   }
 
   componentWillUnmount() {
-    deleteFromCache({
-      cache: this.props.client.cache,
-      query: "searchProfiles"
-    });
     this.mounted = false;
   }
 
@@ -318,7 +314,7 @@ class ProfilesContainer extends Component {
         }}
         fetchPolicy="cache-first"
       >
-        {({ data, loading, fetchMore, error }) => {
+        {({ data, loading, fetchMore, error, refetch }) => {
           if (loading) {
             document.title = t("common:Loading") + "...";
             return <Spinner page="searchProfiles" title={t("allmems")} />;
@@ -335,21 +331,6 @@ class ProfilesContainer extends Component {
             );
           }
 
-          if (data.searchProfiles.message === "invisible") {
-            return (
-              <section className="not-found">
-                <div className="container">
-                  <div className="col-md-12">
-                    <div className="icon">
-                      <i className="nico blackmember" />
-                    </div>
-                    <span className="head">{t("cantsee")}</span>
-                    <span className="description">{t("cantseeinstr")}</span>
-                  </div>
-                </div>
-              </section>
-            );
-          }
           if (
             data === undefined ||
             data.searchProfiles === null ||
@@ -358,6 +339,21 @@ class ProfilesContainer extends Component {
               data.searchProfiles.featuredProfiles.length === 0) ||
             !data
           ) {
+            if (data.searchProfiles.message === "invisible") {
+              return (
+                <section className="not-found">
+                  <div className="container">
+                    <div className="col-md-12">
+                      <div className="icon">
+                        <i className="nico blackmember" />
+                      </div>
+                      <span className="head">{t("cantsee")}</span>
+                      <span className="description">{t("cantseeinstr")}</span>
+                    </div>
+                  </div>
+                </section>
+              );
+            }
             return (
               <section className="not-found">
                 <div className="container">

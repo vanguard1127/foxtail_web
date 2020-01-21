@@ -1,9 +1,10 @@
+import axios from "axios";
 const refreshToken = ({ operation, forward }) => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) {
     return;
   }
-  const axios = require("axios");
+
   axios
     .post(process.env.REACT_APP_HTTPS_URL + "/refresh", {
       refreshToken

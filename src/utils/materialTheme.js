@@ -6,6 +6,12 @@ export const materialTheme = createMuiTheme({
         main: "#CB0032"
       }
     },
+    MuiCircularProgress: {
+      colorPrimary: { color: "#CB0032" }
+    },
+    MuiButton: {
+      textPrimary: { color: "#5f00a4" }
+    },
     MuiTypography: {
       colorPrimary: { color: "#CB0032" }
     },
@@ -37,13 +43,12 @@ export const materialTheme = createMuiTheme({
         backgroundColor: "#CB0032"
       },
       dayDisabled: {
-        color: "##616d78"
+        color: "#616d78"
       },
       current: {
         color: "#cf003c"
       }
     },
-    MuiCircularProgress: { color: "#fff" },
     MuiPickersModal: {
       dialogAction: {
         color: "#CB0032"

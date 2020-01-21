@@ -1,3 +1,4 @@
+import React from "react";
 import { WebSocketLink } from "apollo-link-ws";
 import { HttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
@@ -7,7 +8,9 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 import tokenHandler from "./tokenHandler";
 import { toast } from "react-toastify";
+import * as Sentry from "@sentry/browser";
 import i18n from "../i18n";
+
 const wsLink = new WebSocketLink({
   uri: process.env.REACT_APP_WS_URL,
   options: {
@@ -102,13 +105,13 @@ const errorLink = onError(
         } else {
           if (process.env.NODE_ENV !== "production") {
             console.error("GQL ERROR:", message);
-            Sentry.withScope(scope => {
-              scope.setLevel("error");
-              scope.setTag("resolver", path);
-              scope.setFingerprint([window.location.pathname]);
-              Sentry.captureException(message);
-            });
           }
+          Sentry.withScope(scope => {
+            scope.setLevel("error");
+            scope.setTag("resolver", path);
+            scope.setFingerprint([window.location.pathname]);
+            Sentry.captureException(message);
+          });
           if (!toast.isActive("err")) {
             toast.info(
               <span>
@@ -145,6 +148,11 @@ const errorLink = onError(
               toastId: "networkError"
             }
           );
+          Sentry.withScope(scope => {
+            scope.setLevel("error");
+            scope.setFingerprint([window.location.pathname]);
+            Sentry.captureException(networkError);
+          });
           if (process.env.NODE_ENV !== "production") {
             console.error("Network Error:", networkError);
           }

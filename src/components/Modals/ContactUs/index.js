@@ -157,14 +157,16 @@ class ContactUs extends Component {
                         {cancelText}
                       </button>
                     )}
-                    <button
-                      className="border"
-                      type="submit"
-                      onClick={e => this.handleSubmit(e, messageAdmin, false)}
-                      disabled={sending}
-                    >
-                      {okText}
-                    </button>
+                    {text.trim() && (
+                      <button
+                        className="border"
+                        type="submit"
+                        onClick={e => this.handleSubmit(e, messageAdmin, false)}
+                        disabled={sending}
+                      >
+                        {okText}
+                      </button>
+                    )}
                   </>
                 );
               }}

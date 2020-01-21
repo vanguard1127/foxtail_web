@@ -112,6 +112,9 @@ class Select extends PureComponent {
       this.setState({ menuOpen: true });
       return;
     }
+    if (this.state.menuOpen) {
+      if (this.props.onClose) this.props.onClose();
+    }
     this.setState({ menuOpen: !this.state.menuOpen });
   };
 

@@ -339,7 +339,6 @@ class MembersList extends PureComponent {
     });
     return (
       <div>
-        {" "}
         {membersList}
         <div style={{ height: "2vh", backgroundColor: "#fff" }}>
           {showActionButton && actionButton}

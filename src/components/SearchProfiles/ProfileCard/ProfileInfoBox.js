@@ -21,9 +21,7 @@ class ProfileInfoBox extends PureComponent {
         <span className="detail">
           <ul>
             <li className={"sex " + users[0].sex}>
-              <span
-                className={"sex " + users[0].sex + " profileCardSymbol"}
-              />
+              <span className={"sex " + users[0].sex + " profileCardSymbol"} />
               &nbsp;
               {dayjs().diff(users[0].dob, "years")}
             </li>

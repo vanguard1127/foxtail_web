@@ -275,8 +275,8 @@ export const BLOCK_PROFILE = gql`
 `;
 
 export const READ_NOTIFICATION = gql`
-  mutation($notificationID: String!) {
-    readNotification(notificationID: $notificationID)
+  mutation($notificationID: String!, $both: Boolean) {
+    readNotification(notificationID: $notificationID, both: $both)
   }
 `;
 
@@ -446,7 +446,6 @@ export const SIGNS3 = gql`
     signS3(filename: $filename, filetype: $filetype) {
       key
       signedRequest
-      url
     }
   }
 `;
@@ -465,7 +464,11 @@ export const SEARCH_EVENTS = gql`
     $kinks: [String]
     $limit: Int!
     $skip: Int!
-  ) {
+  )
+    @connection(
+      key: "searchEvents"
+      filter: ["long", "lat", "maxDistance", "kinks"]
+    ) {
     searchEvents(
       long: $long
       lat: $lat
@@ -507,7 +510,11 @@ export const SEARCH_PROFILES = gql`
     $ageRange: [Int]!
     $limit: Int!
     $skip: Int!
-  ) {
+  )
+    @connection(
+      key: "searchProfiles"
+      filter: ["long", "lat", "distance", "interestedIn", "ageRange"]
+    ) {
     searchProfiles(
       long: $long
       lat: $lat
@@ -576,7 +583,7 @@ export const SEARCH_PROFILES = gql`
 
 export const GET_EVENT = gql`
   query($id: ID!) {
-    event(id: $id) {
+    event(id: $id) @connection(key: "event", filter: ["id"]) {
       id
       eventname
       type
@@ -612,7 +619,7 @@ export const GET_EVENT = gql`
 
 export const GET_INBOX = gql`
   query($limit: Int!, $skip: Int!) {
-    getInbox(limit: $limit, skip: $skip) {
+    getInbox(limit: $limit, skip: $skip) @connection(key: "getInbox") {
       id
       text
       fromUser {
@@ -627,11 +634,6 @@ export const GET_INBOX = gql`
       profilePic
       chatID
       participants {
-        profileName
-        profilePic
-        id
-      }
-      invited {
         profileName
         profilePic
         id
@@ -705,8 +707,9 @@ export const GET_EVENT_PARTICIPANTS = gql`
 `;
 
 export const GET_NOTIFICATIONS = gql`
-  query($limit: Int!, $skip: Int!) {
-    getNotifications(limit: $limit, skip: $skip) {
+  query($limit: Int!, $cursor: String) {
+    getNotifications(limit: $limit, cursor: $cursor)
+      @connection(key: "getNotifications") {
       notifications {
         id
         seen
@@ -834,7 +837,6 @@ export const GET_CURRENT_USER = gql`
       }
       isProfileOK
       isEmailOK
-      tours
       announcement
       distanceMetric
       coupleProfileName
@@ -898,11 +900,13 @@ export const GET_SETTINGS = gql`
         }
       }
       publicPhotos {
+        smallUrl
         url
         key
         id
       }
       privatePhotos {
+        smallUrl
         url
         key
         id
@@ -925,7 +929,7 @@ export const GENERATE_CODE = gql`
 
 export const GET_PROFILE = gql`
   query($id: ID!) {
-    profile(id: $id) {
+    profile(id: $id) @connection(key: "profile", filter: ["id"]) {
       id
       about
       kinks
@@ -933,10 +937,12 @@ export const GET_PROFILE = gql`
       profileName
       interestedIn
       publicPhotos {
+        smallUrl
         url
         id
       }
       privatePhotos {
+        smallUrl
         url
         id
       }

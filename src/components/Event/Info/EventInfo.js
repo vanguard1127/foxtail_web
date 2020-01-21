@@ -3,8 +3,7 @@ import { formatedMilesToKm } from "../../../utils/distanceMetric";
 import { kinkOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
-
-const NoEventImg = require("../../../assets/img/elements/no-eve-image.jpg");
+import NoEventImg from "../../../assets/img/elements/no-eve-image.jpg";
 
 class EventInfo extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -71,7 +70,7 @@ class EventInfo extends Component {
               </span>
             </li>
             <li>
-              <span className="head">{t("eveend")} :</span>
+              <span className="head">{t("eveend")}:</span>
               <span className="title">
                 {dayjs(endTime)
                   .locale(lang)

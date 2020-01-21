@@ -60,7 +60,8 @@ class UploadComponent extends PureComponent {
     }
   };
 
-  deleteFile = index => {
+  deleteFile = e => {
+    const index = e.target.closest("div").getAttribute("index");
     let img = this.props.photos[index];
 
     if (img.uid) {
@@ -69,9 +70,9 @@ class UploadComponent extends PureComponent {
     this.props.deleteImg({ file: img });
   };
   //modal
-  handleClickOpen = index => {
+  handleClickOpen = e => {
+    const index = e.target.closest("div").getAttribute("index");
     let img = this.props.photos[index];
-
     if (this.mounted) {
       this.setState(
         {
@@ -83,7 +84,8 @@ class UploadComponent extends PureComponent {
     }
   };
 
-  handleClickProPic = ({ index }) => {
+  handleClickProPic = e => {
+    const index = e.target.closest("div").getAttribute("index");
     let img = this.props.photos[index];
     this.props.showCropper(process.env.REACT_APP_S3_BUCKET_URL + img.key);
   };
@@ -110,7 +112,7 @@ class UploadComponent extends PureComponent {
   };
 
   render() {
-    const { classes, photos, t, setProfilePic, isBlackMember } = this.props;
+    const { classes, photos, t, isBlackMember } = this.props;
     const { selectedImg, previewVisible, mobileBtnsActive } = this.state;
     return (
       <div className="header-container">
@@ -125,16 +127,18 @@ class UploadComponent extends PureComponent {
                   />
                 </div>
 
-                <div title={t("deletepic")} className="delete box">
+                <div
+                  title={t("deletepic")}
+                  className="delete box"
+                  index={index}
+                >
                   <DeleteIcon
                     style={{
                       cursor: "pointer",
                       fontSize: "40px",
                       color: "#999"
                     }}
-                    onClick={() => {
-                      this.deleteFile(index);
-                    }}
+                    onClick={this.deleteFile}
                   />
                 </div>
               </div>
@@ -147,7 +151,7 @@ class UploadComponent extends PureComponent {
               >
                 <img
                   className="img-box"
-                  src={file.url}
+                  src={file.smallUrl || file.url}
                   onLoad={this.switchLoader}
                   alt=""
                   onClick={this.toggleMobileBtns}
@@ -160,36 +164,27 @@ class UploadComponent extends PureComponent {
                   >
                     <span className="tooltiptext show">
                       <div className="mobilebtns">
-                        <div title={t("deletepic")}>
+                        <div title={t("deletepic")} index={index}>
                           <DeleteIcon
                             style={{ cursor: "pointer", fontSize: 30 }}
-                            onClick={() => {
-                              this.deleteFile(index);
-                            }}
+                            onClick={this.deleteFile}
                           />
                           {t("common:Delete")}
                         </div>
                         {!this.props.isPrivate && (
-                          <div title={t("updatepro")}>
+                          <div title={t("updatepro")} index={index}>
                             <StarIcon
                               style={{ cursor: "pointer", fontSize: 30 }}
-                              onClick={() => {
-                                this.handleClickProPic({
-                                  index,
-                                  setProfilePic
-                                });
-                              }}
+                              onClick={this.handleClickProPic}
                             />
 
                             {t("common:Profile")}
                           </div>
                         )}{" "}
-                        <div title={t("viewpic")}>
+                        <div title={t("viewpic")} index={index}>
                           <ViewIcon
                             style={{ cursor: "pointer", fontSize: 30 }}
-                            onClick={() => {
-                              this.handleClickOpen(index);
-                            }}
+                            onClick={this.handleClickOpen}
                           />
                           {t("common:View")}
                         </div>
@@ -198,30 +193,24 @@ class UploadComponent extends PureComponent {
                   </div>
                 )}
                 <div className="btns">
-                  <div title={t("deletepic")}>
+                  <div title={t("deletepic")} index={index}>
                     <DeleteIcon
                       style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        this.deleteFile(index);
-                      }}
+                      onClick={this.deleteFile}
                     />
                   </div>
                   {!this.props.isPrivate && (
-                    <div title={t("updatepro")}>
+                    <div title={t("updatepro")} index={index}>
                       <StarIcon
                         style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          this.handleClickProPic({ index, setProfilePic });
-                        }}
+                        onClick={this.handleClickProPic}
                       />
                     </div>
                   )}{" "}
-                  <div title={t("viewpic")}>
+                  <div title={t("viewpic")} index={index}>
                     <ViewIcon
                       style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        this.handleClickOpen(index);
-                      }}
+                      onClick={this.handleClickOpen}
                     />
                   </div>
                 </div>

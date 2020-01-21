@@ -78,8 +78,10 @@ module.exports = {
       template: "src/page-template.hbs",
       description: "FREE | Private | 18+ Fun",
       filename: "index.html",
+      httpsurl: "https://localhost:1234",
+      appleicon: "./src/assets/img/logo/foxtail-apple-touch-icon.png",
       favicon: "./src/assets/favicon.ico",
-      manifest: "./src/assets/manifest.json"
+      manifest: "/manifest.json"
     }),
     new CopyPlugin([
       { from: "src/assets/locales", to: "locales", toType: "dir" },

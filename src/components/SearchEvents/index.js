@@ -236,15 +236,6 @@ class SearchEvents extends Component {
     const distanceMetric = session.currentuser.distanceMetric;
     ErrorHandler.setBreadcrumb("Search Events");
 
-    // if (session && session.currentuser.tours.indexOf("se") < 0) {
-    //   ErrorHandler.setBreadcrumb("Opened Tour: Search Events");
-    //   return (
-    //     <div>
-    //       <Tour ErrorHandler={ErrorHandler} refetchUser={refetch} />
-    //     </div>
-    //   );
-    // }
-
     return (
       <>
         <>

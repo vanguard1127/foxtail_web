@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import OwlCarousel from "react-owl-carousel";
 import { toast } from "react-toastify";
 import Lightbox from "react-image-lightbox";
-const NoPictureImg = require("../../assets/img/elements/no-picture.png");
+import NoPictureImg from "../../assets/img/elements/no-picture.png";
 
 class PhotoSlider extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -32,10 +32,10 @@ class PhotoSlider extends Component {
     }
   }
 
-  handleClickOpen = img => {
+  handleClickOpen = e => {
     if (this.mounted) {
       this.setState({
-        selectedImg: img,
+        selectedImg: e.target.getAttribute("fullurl"),
         previewVisible: true
       });
     }
@@ -95,8 +95,8 @@ class PhotoSlider extends Component {
             {photos.map(photo => (
               <div className="item" key={Math.random()}>
                 {photo.url !== "private" ? (
-                  <div onClick={() => this.handleClickOpen(photo.url)}>
-                    <img src={photo.url} alt="" />
+                  <div onClick={this.handleClickOpen} fullurl={photo.url}>
+                    <img src={photo.smallUrl} alt="" />
                   </div>
                 ) : (
                   <div onClick={this.warnPrivate.bind(this)}>
