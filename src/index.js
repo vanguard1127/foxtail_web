@@ -1,23 +1,6 @@
-<<<<<<< HEAD
-import(/* webpackPreload: true */ "core-js/stable");
-import(/* webpackPreload: true */ "regenerator-runtime/runtime");
-import(/* webpackPreload: true */ "./assets/css/main.css");
-import(/* webpackPreload: true */ "./docs/manifest.json");
-import(/* webpackPreload: true */ "./assets/favicon.ico");
-import(/* webpackPreload: true */ "react-image-lightbox/style.css");
-import(/* webpackPreload: true */ "owl.carousel/dist/assets/owl.carousel.css");
-import(
-  /* webpackPreload: true */ "owl.carousel/dist/assets/owl.theme.default.css"
-);
-import(/* webpackPreload: true */ "rc-slider/assets/index.css");
-import React from "react";
-import ReactGA from "react-ga";
-import { hydrate, render } from "react-dom";
-=======
 import React from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
->>>>>>> master
 import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-client";
@@ -31,11 +14,7 @@ import "firebase/auth";
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import { cache, link } from "./utils/links";
 import { materialTheme } from "./utils/materialTheme";
-<<<<<<< HEAD
-import { Wrapper } from "./components/layout/Wraper";
-=======
 import { Wrapper } from "./components/Layout/Wrapper";
->>>>>>> master
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
