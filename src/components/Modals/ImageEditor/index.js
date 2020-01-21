@@ -20,8 +20,7 @@ class ImageEditor extends Component {
       close,
       file,
       handlePhotoListChange,
-      setS3PhotoParams,
-      uploadToS3,
+      handleUpload,
       signS3,
       t,
       ErrorHandler,
@@ -37,8 +36,7 @@ class ImageEditor extends Component {
             <ErrorHandler.ErrorBoundary>
               <EditCanvasImage
                 imageObject={file}
-                setS3PhotoParams={setS3PhotoParams}
-                uploadToS3={uploadToS3}
+                handleUpload={handleUpload}
                 signS3={signS3}
                 handlePhotoListChange={handlePhotoListChange}
                 close={close}

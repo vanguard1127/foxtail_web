@@ -4924,6 +4924,12 @@ section.settings .page .content span.heading {
   font-size: 30px;
 }
 
+.page .description {
+  color: #373737;
+    padding-bottom: 17px;
+    text-align: center;
+}
+
 .page .content span.heading i {
   font-weight: 400;
   text-transform: none;
@@ -8252,6 +8258,10 @@ ul.black-member li::before {
 }
 section.login-modal .popup form .form-content{
   margin: 0 30px;
+}
+
+section.login-modal .popup form .form-content.fullscreen{
+  margin: 0 !important;
 }
 
 section.login-modal .popup form .form-content .example-image {

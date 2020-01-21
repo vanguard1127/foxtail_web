@@ -53,7 +53,8 @@ class Modal extends Component {
       noHeader,
       noFade,
       showLoader,
-      scrollable
+      scrollable,
+      width
     } = this.props;
 
     return (
@@ -83,27 +84,28 @@ class Modal extends Component {
                       style={{ height: "100vh", padding: "unset" }}
                     >
                       {showLoader && <Spinner />}
-                      <form>
-                        <div className="form-content">
-                          {children}
-                          {description && (
-                            <span className="description">{description}</span>
-                          )}
-                          {okSpan && (
-                            <button type="submit" className="submit">
-                              {okSpan}
-                            </button>
-                          )}
-                          {cancelSpan && (
-                            <button className="submit">{cancelSpan}</button>
-                          )}
-                        </div>
-                      </form>
+
+                      <div className="form-content fullscreen">
+                        {children}
+                        {description && (
+                          <span className="description">{description}</span>
+                        )}
+                        {okSpan && (
+                          <button type="submit" className="submit">
+                            {okSpan}
+                          </button>
+                        )}
+                        {cancelSpan && (
+                          <button className="submit">{cancelSpan}</button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div style={fullWidth ? {} : { maxWidth: "520px" }}>
+                <div
+                  style={fullWidth || width ? { width } : { maxWidth: "520px" }}
+                >
                   <div
                     className={`${
                       scrollable || fullWidth ? "popup full" : "popup"

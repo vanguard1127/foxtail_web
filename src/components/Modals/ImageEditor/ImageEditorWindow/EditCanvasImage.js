@@ -152,7 +152,7 @@ class EditCanvasImage extends PureComponent {
 
   handleExportClick = () => {
     const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
-    const { t } = this.props;
+    const { t, handleUpload, close } = this.props;
     if (this.mounted && !uploading && this.SourceImageRef) {
       this.setState({ hideTransformer: true, uploading: true }, async () => {
         if (!toast.isActive("upload")) {
@@ -211,45 +211,32 @@ class EditCanvasImage extends PureComponent {
           dataURL
         };
 
-        await this.handleUpload(file);
+        await handleUpload(file);
+        toast.dismiss();
+        close();
       });
     }
   };
 
-  handleUpload = async file => {
-    const {
-      signS3,
-      handlePhotoListChange,
-      setS3PhotoParams,
-      uploadToS3,
-      close
-    } = this.props;
+  // handleUpload = async file => {
+  //   const { signS3, handlePhotoListChange, uploadToS3, close } = this.props;
 
-    await setS3PhotoParams(file.filename, file.filetype);
+  //   await signS3()
+  //     .then(async ({ data }) => {
+  //       const { signedRequest, key } = data.signS3;
 
-    await signS3()
-      .then(async ({ data }) => {
-        const { signedRequest, key } = data.signS3;
-        if (signedRequest === "https://s3.amazonaws.com/") {
-          this.props.ErrorHandler.catchErrors({
-            error: "Recieve ERROR: File not loaded properly. File object:",
-            file
-          });
-          window.location.reload(false);
-        }
+  //       handlePhotoListChange({ file, key });
 
-        handlePhotoListChange({ file, key });
+  //       uploadToS3(file.filebody, signedRequest);
 
-        uploadToS3(file.filebody, signedRequest);
-
-        toast.dismiss();
-        close();
-      })
-      .catch(res => {
-        console.error(res);
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-      });
-  };
+  //       toast.dismiss();
+  //       close();
+  //     })
+  //     .catch(res => {
+  //       console.error(res);
+  //       this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+  //     });
+  // };
 
   handleDragStart = e => {
     const shapeName = e.target.attrs.name;

@@ -112,7 +112,7 @@ class UploadComponent extends PureComponent {
   };
 
   render() {
-    const { classes, photos, t, setProfilePic, isBlackMember } = this.props;
+    const { classes, photos, t, isBlackMember } = this.props;
     const { selectedImg, previewVisible, mobileBtnsActive } = this.state;
     return (
       <div className="header-container">
