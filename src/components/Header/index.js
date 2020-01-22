@@ -6,7 +6,7 @@ class Header extends Component {
   render() {
     const { t, history, lang, reactga } = this.props;
     return (
-      <header className="topbar landing">
+      <header className={this.props.headerClasses.join(' ')}>
         <div className="container">
           <div className="col-md-12">
             <div className="row">

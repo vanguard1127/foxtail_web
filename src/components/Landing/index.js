@@ -105,7 +105,7 @@ class Landing extends PureComponent {
     }
     return (
       <>
-        <Header lang={lang} history={history} t={t} reactga={ReactGA} />
+        <Header headerClasses={['landing']} lang={lang} history={history} t={t} reactga={ReactGA} />
         <main>
           <section className="landing">
             <div className="container">

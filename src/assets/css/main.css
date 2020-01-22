@@ -100,7 +100,7 @@ header .logo span {
   cursor: pointer;
 }
 
-header.landing .logo span,
+
 header .logo.white span {
   background-image: url("../img/logo/logo-white.svg");
   pointer-events: none;
@@ -6650,169 +6650,6 @@ section.invite-popup-content .invite-members .apply-content span:hover {
   background-color: #1fba3d;
 }
 
-/*---- LANDING ----*/
-
-header.landing {
-  width: 100%;
-  background: none;
-  position: absolute;
-  z-index: 100;
-  top: 20px;
-  left: 0;
-  box-shadow: none;
-}
-
-
-
-
-header.landing .logo {
-  width: 117px;
-  height: 72px;
-  top: 0;
-  margin: 0 auto;
-}
-
-header.landing .logo a {
-  background-image: url("../img/logo/logo-white.svg");
-}
-
-
-
-header.landing .login {
-  display: none;
-}
-
-header.landing a.login-btn{
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  border-radius: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  color: #fff !important;
-  padding: 0 30px;
-  transition: 0.3s all;
-  cursor: pointer;
-  width: 100%;
-  display: block;
-  float: left;
-}
-
-header.landing a.login-btn:hover{
-  background-color: #ffff;
-  color: #b40132 !important;
-  box-shadow: 0 50px 91px 0 rgba(0, 0, 0, 0.1);
-}
-
-header.landing .content {
-  margin-top: 20px;
-  float: right;
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-header.landing .content .language-choose {
-  float: left;
-  margin-left: 10px;
-  height: 40px;
-  border-radius: 1px;
-  padding: 5px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  transition: 0.3s all;
-  cursor: pointer;
-  display: inline-block;
-  top: -65px;
-  position: absolute;
-  right: 0;
-}
-header.landing .content .language-dropdown.click {
-  display: inline-block;
-  visibility: visible;
-}
-
-header.landing .content .language-choose.click {
-  background-color: #fff;
-  border-radius: 1px 1px 0 0;
-}
-
-header.landing .content .language-choose:hover {
-  background-color: #fff;
-  box-shadow: 0 50px 91px 0 rgba(0, 0, 0, 0.1);
-}
-
-header.landing .content .language-choose i.flag {
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-  float: left;
-  background-size: 100%;
-  background-repeat: no-repeat;
-}
-
-header.landing .content .language-dropdown ul li i.flag.en,
-header.landing .content .language-choose i.flag.en {
-  background-image: url("../img/flag/en.png");
-}
-
-header.landing .content .language-dropdown ul li i.flag.de,
-header.landing .content .language-choose i.flag.de {
-  background-image: url("../img/flag/de.png");
-}
-
-header.landing .content .language-dropdown {
-  position: absolute;
-  right: 0;
-  top: -26px;
-  background-color: #fff;
-  border-radius: 0 0 1px 1px;
-  width: 52px;
-  display: none;
-  visibility: hidden;
-  background-color: #ffff;
-  box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
-}
-
-header.landing .content .language-dropdown ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-header.landing .content .language-dropdown ul li {
-  width: 100%;
-  display: block;
-  float: left;
-  padding: 5px 11px;
-}
-
-header.landing .content .language-dropdown ul li i.flag {
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-  float: left;
-  background-size: 100%;
-  background-repeat: no-repeat;
-}
-
-header.landing .subtitle {
-  display: none;
-  color: #fff;
-  float: right;
-  font-size: 26px;
-  font-family: "Kaushan Script";
-}
-
-header.landing .content span.mobilesubtitle {
-  display: flex;
-  color: #fff;
-  font-size: 26px;
-  font-family: "Kaushan Script";
-  justify-content: center;
-}
-
 footer.landing .tooltip {
   position: relative;
   float: right;
@@ -8176,19 +8013,7 @@ section.not-found span.description {
     min-width: 90vw;
   }
 
-  header.landing .subtitle {
-    display: block;
-    position: absolute;
-    margin: 14px 0 0 20px;
-  }
-  header.landing .content span.mobilesubtitle {
-    display: none;
-  }
 
-
-  header.landing .login {
-    display: unset;
-  }
 
   section.profile .avatar-content.no-btns {
     margin-bottom: 28%;
@@ -8200,14 +8025,7 @@ section.not-found span.description {
   header .function .inbox {
     padding-right: 20px;
   }
-  header.landing .content .language-choose {
-    position: inherit;
-    top: inherit;
-    right: inherit;
-  }
-  header.landing .content .language-dropdown {
-    top: 39px;
-  }
+
 
   header ul.menu li a::before {
     display: none;
@@ -8712,13 +8530,6 @@ section.not-found span.description {
 
  
 
-  header.landing {
-    top: 35px;
-  }
-  header.landing .logo {
-    top: 6px;
-    margin: 0;
-  }
   
 
   footer.landing {
@@ -8734,29 +8545,14 @@ section.not-found span.description {
     text-align: right;
   }
 
-  header.landing .content {
-    width: auto;
-  }
 
-  header.landing a.login-btn {
-    width: auto;
-  }
-
-  header.landing .content .language-choose {
-    display: inline-block;
-    visibility: visible;
-  }
 } */
 
 /* @media only screen and (min-width: 992px) {
   section.login-modal .popup-container {
     min-width: 70vw;
   }
-  header.landing .subtitle {
-    display: block;
-    position: relative;
-    margin: 18px 64px 0 0;
-  }
+
   section.profile .avatar-content.no-btns {
     margin-bottom: 0%;
   }
@@ -8772,10 +8568,7 @@ section.not-found span.description {
     height: 300px;
   }
 
-  header.landing .logo {
-    width: 200px;
-    height: 120px;
-  }
+
 
   header ul.menu li {
     margin-right: 40px;
@@ -8866,9 +8659,7 @@ section.not-found span.description {
     bottom: 0;
   }
 
-  header.landing a.login-btn{
-    width: auto;
-  }
+ 
 
   section.couple-popup-content .create-profile .choose-box .select-checkbox input + label span {
     float: left;
