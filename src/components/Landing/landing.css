@@ -1,0 +1,621 @@
+section.landing .register-form form .form-content span.tip::before {
+  content: "\f29c";
+  font-family: "foxtail-icon";
+  color: #acacac;
+  font-size: 14px;
+}
+
+section.landing .register-form form .form-content span.tip {
+  float: right;
+  right: 4px;
+}
+
+section.landing .mobile-login {
+  display: block;
+}
+
+section.landing a.login-btn {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #fff !important;
+  padding: 0 30px;
+  transition: 0.3s all;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+section.landing a.login-btn:hover {
+  background-color: #ffff;
+  color: #b40132 !important;
+  box-shadow: 0 50px 91px 0 rgba(0, 0, 0, 0.1);
+}
+
+section.landing {
+  width: 100%;
+  display: block;
+  float: left;
+  position: relative;
+}
+
+section.landing::before {
+  content: "";
+  width: 100%;
+  height: 1073px;
+  display: inline-block;
+  float: left;
+  background-size: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/img/elements/landing-vector@2x.jpg");
+}
+
+section.landing .left {
+  width: 100%;
+  display: inline-block;
+  float: left;
+  position: relative;
+  top: 160px;
+  z-index: 9999;
+}
+
+section.landing .left .welcome-text {
+  width: 100%;
+  display: block;
+  /* float: left; */
+  text-align: center;
+}
+
+section.landing .left .welcome-text br {
+  display: none;
+  visibility: hidden;
+}
+
+section.landing .left .welcome-text h1 {
+  padding: 0 0 10px 0;
+  margin: 0;
+  width: 100%;
+  display: block;
+  float: left;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: #fff;
+  line-height: 35px;
+  font-family: "Roboto";
+}
+
+section.landing .left .welcome-text h1 span.divider {
+  font-weight: normal;
+  padding: 20px;
+  font-size: 50px;
+}
+
+section.landing .left .stats {
+  width: 100%;
+  float: left;
+  margin-top: 70px;
+  display: none;
+  visibility: hidden;
+}
+
+section.landing .left .stats .head {
+  width: 100%;
+  display: block;
+  float: left;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+section.landing .left .stats .head span {
+  width: 100%;
+  display: block;
+  text-transform: uppercase;
+  float: left;
+}
+
+section.landing .left .stats .head span:first-child {
+  font-size: 16px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+section.landing .left .stats .head span:nth-child(2) {
+  font-size: 20px;
+  color: #fff;
+  line-height: 20px;
+  padding-top: 3px;
+  font-weight: 700;
+}
+
+section.landing .left .stats ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 25px 0 0 0;
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+section.landing .left .stats ul li {
+  width: 33.33%;
+  float: left;
+  display: inline-block;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+section.landing .left .stats ul li:nth-child(2),
+section.landing .left .stats ul li:nth-child(3) {
+  padding-left: 30px;
+}
+
+section.landing .left .stats ul li:last-child {
+  border-right: none;
+}
+
+section.landing .left .stats ul li span {
+  width: 100%;
+  display: block;
+  float: left;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+section.landing .left .stats ul li span:first-child {
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 23px;
+  padding-bottom: 5px;
+}
+
+section.landing .left .stats ul li span:nth-child(2) {
+  font-size: 15px;
+  line-height: 16px;
+}
+
+section.landing .register-form {
+  width: 100%;
+  display: block;
+  float: left;
+  background-color: #fff;
+  box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
+  padding: 20px 20px;
+  border-radius: 2px;
+  position: relative;
+  top: 180px;
+  /*z-index: 999;*/
+}
+
+section.landing .register-form .head {
+  font-size: 20px;
+  font-family: "Poppins";
+  color: #321935;
+  line-height: 35px;
+  border-bottom: 1px solid #dcdfe4;
+  padding-bottom: 10px;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+  width: 100%;
+  display: block;
+  float: left;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+section.landing .register-form .head b {
+  font-style: normal;
+  color: #cf003c;
+  font-weight: 400;
+}
+
+section.landing .register-form form {
+  width: 100%;
+  display: block;
+  float: left;
+  padding: 0;
+  margin: 0;
+}
+
+section.landing .register-form form .form-content {
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+section.landing .register-form form .form-content .input {
+  width: 100%;
+  display: block;
+  float: left;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+section.landing .register-form form .form-content .input::before {
+  content: "";
+  font-family: "foxtail-icon";
+  color: #e5e7ee;
+  font-size: 18px;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+
+section.landing .register-form form .form-content .input.username::before {
+  content: "\e815";
+  left: 18px;
+  top: 14px;
+}
+
+section.landing .register-form form .form-content .input.email::before {
+  content: "\e80c";
+  font-size: 20px;
+  top: 12px;
+}
+
+section.landing .register-form form .form-content .input input {
+  width: 100%;
+  display: block;
+  float: left;
+  outline: none;
+  border: 1px solid #e9ebec;
+  border-radius: 2px;
+  height: 52px;
+  padding: 2px 20px 0 46px;
+  font-family: "Roboto";
+  color: #414141;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+}
+
+section.landing .register-form form .form-content .input input::-webkit-input-placeholder {
+  color: #8c909d;
+}
+
+section.landing .register-form form .form-content .input input::-moz-placeholder {
+  color: #8c909d;
+}
+
+section.landing .register-form form .form-content .input input:-ms-input-placeholder {
+  color: #8c909d;
+}
+
+section.landing .register-form form .form-content .input input:-moz-placeholder {
+  color: #8c909d;
+}
+
+section.landing .register-form form .form-content .dropdown {
+  width: 100%;
+  position: relative;
+  float: left;
+  margin-bottom: 15px;
+}
+
+section.landing .register-form form .form-content .dropdown.nobottom {
+  margin-bottom: none;
+}
+
+section.landing .register-form form .form-content .dropdown select {
+  width: 100%;
+  height: 70px;
+  display: block;
+  float: left;
+  outline: none;
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
+  padding: 20px 20px 0 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+  font-family: "Roboto Condensed";
+  font-size: 14px;
+  color: #333333;
+  font-weight: 400;
+}
+
+section.landing .register-form form .form-content .dropdown label {
+  top: 9px;
+  left: 15px;
+  font-family: "Roboto";
+  font-size: 13px;
+  line-height: 17px;
+  color: #8c909d;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+  z-index: 100;
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  margin: 0;
+  z-index: 1;
+}
+
+section.landing
+  .register-form
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  font-size: 13px;
+  color: #1e1e2b;
+  padding: 19px 19px 0 14px;
+}
+
+section.landing .register-form form .form-content .dropdown .select2-container--default .select2-selection--single,
+section.landing .register-form form .select2-container--default .select2-selection--multiple {
+  height: 50px;
+  border-color: #e9ebec !important;
+}
+
+section.landing .register-form form .select2-container--default .select2-selection--multiple {
+  padding-top: 3px;
+}
+
+section.landing
+  .register-form
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--single
+  .select2-selection__choice,
+section.landing
+  .register-form
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice {
+  background-color: #fff;
+  border: none;
+  margin-top: 20px !important;
+}
+
+section.landing
+  .register-form
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice:first-child {
+  padding-left: 0;
+}
+
+section.landing
+  .register-form
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice {
+  margin-right: 0;
+  color: #1e1e2b;
+  padding-right: 0px;
+}
+
+section.landing
+  .register-form
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-search--inline
+  .select2-search__field {
+  top: 19px;
+  font-size: 13px;
+  color: #1e1e2b;
+}
+
+section.landing
+  .register-form
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice__remove {
+  display: none;
+  visibility: hidden;
+}
+
+section.landing .register-form form .form-content .couple-choose {
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+section.landing .register-form form .form-content .couple-choose input {
+  display: none;
+}
+
+section.landing .register-form form .form-content .couple-choose input + label span {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #e9ebec;
+  position: relative;
+  float: left;
+  background: inherit;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+section.landing .register-form form .form-content .couple-choose label b {
+  padding-left: 10px;
+  display: inline-block;
+  float: left;
+  font-style: normal;
+  line-height: 26px;
+  color: #212121;
+  font-size: 14px;
+  font-weight: 400;
+  user-select: none;
+}
+
+section.landing .register-form form .form-content .couple-choose input:checked + label span:before {
+  content: "\e804";
+  font-family: "foxtail-icon";
+  color: #cb0032;
+  font-size: 10px;
+  text-align: center;
+  display: inline-block;
+  float: left;
+  width: 100%;
+  line-height: 24px;
+}
+
+section.landing .register-form form .form-content .submit {
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+section.landing .register-form form .form-content .input-feedback {
+  color: red;
+}
+
+section.landing .register-form form .form-content .submit .btn {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  display: inline-block;
+  font-size: 18px;
+  color: #fff !important;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-image: -webkit-linear-gradient(131deg, #f70016 0%, #900076 100%);
+  background-image: -o-linear-gradient(131deg, #f70016 0%, #900076 100%);
+  background-image: linear-gradient(221deg, #f70016 0%, #900076 100%);
+  transition: 0.3s all;
+}
+
+section.landing .register-form form .form-content .submit .btn:hover {
+  transform: translateY(-1px);
+}
+
+section.landing .register-form form .form-content .disclaim,
+section.landing .register-form form .form-content .terms {
+  width: 100%;
+  display: block;
+  float: left;
+  text-align: center;
+  font-size: 13px;
+  color: #5a5a5a;
+  letter-spacing: -0.3px;
+  padding-top: 15px;
+}
+
+section.landing .register-form form .form-content .disclaim {
+  padding-left: 5px;
+}
+
+section.landing .register-form form .form-content .terms span {
+  text-decoration: underline;
+  padding-left: 5px;
+  cursor: pointer;
+}
+
+section.landing .register-form form .form-content .terms span:hover {
+  color: #b50131;
+}
+
+section.landing .register-form form .form-content .input.birthday .gj-datepicker-md [role="right-icon"] {
+  display: none;
+  visibility: hidden;
+}
+
+section.landing .register-form form .select2-container--default .select2-selection--multiple {
+  height: 50px;
+  border-color: #e9ebec !important;
+}
+
+section.landing .register-form form .select2-container--default .select2-selection--multiple {
+  padding-top: 3px;
+}
+
+@media only screen and (min-width: 768px) {
+  section.landing .mobile-login {
+    display: none;
+  }
+  section.landing .left {
+    top: 175px;
+    z-index: 0;
+  }
+  section.landing .register-form {
+    top: 200px;
+  }
+  section.landing .left .welcome-text h1 {
+    padding-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+  section.landing .register-form {
+    padding: 20px 30px 30px 30px;
+  }
+  section.landing .register-form .head {
+    font-size: 25px;
+    margin-bottom: 25px;
+  }
+  section.landing .register-form .select-list {
+    top: 53px !important;
+  }
+  section.landing a.login-btn {
+    width: auto;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  section.landing a.login-btn {
+    width: auto;
+  }
+  section.landing .left {
+    top: 280px;
+  }
+  section.landing .left .welcome-text h1 {
+    font-size: 38px;
+    line-height: 42px;
+    padding-bottom: 15px;
+  }
+  section.landing .left .stats {
+    display: inline-block;
+    visibility: visible;
+  }
+  footer.landing {
+    top: 480px;
+  }
+  section.landing .register-form .head {
+    font-size: 23px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  section.landing .left .welcome-text {
+    text-align: left;
+  }
+  section.landing .left {
+    top: 320px;
+  }
+  section.landing .register-form .head {
+    font-size: 25px;
+  }
+}

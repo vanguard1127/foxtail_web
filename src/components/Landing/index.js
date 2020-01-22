@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { withTranslation } from "react-i18next";
 import FooterLanding from "../Footer/FooterLanding";
 import Header from "../Header";
+import './landing.css'
 
 class Landing extends PureComponent {
   constructor(props) {
