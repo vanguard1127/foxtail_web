@@ -14,7 +14,6 @@ class ImageEditor extends Component {
     }
     return false;
   }
-
   render() {
     const {
       close,

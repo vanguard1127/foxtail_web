@@ -205,6 +205,27 @@ class SettingsPage extends Component {
     this.mounted = false;
   }
 
+  handleUpload = async (file, signS3, close) => {
+    await signS3()
+      .then(async ({ data }) => {
+        const { signedRequest, key } = data.signS3;
+
+        this.handlePhotoListChange({
+          file,
+          key,
+          isDeleted: false
+        });
+        this.uploadToS3(file.filebody, signedRequest);
+
+        this.props.toast.dismiss();
+        close();
+      })
+      .catch(res => {
+        console.error(res);
+        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
+      });
+  };
+
   handlePhotoListChange = ({ file, key, isPrivate, isDeleted }) => {
     const { t, toast } = this.props;
     this.isPhotoChanged = true;
@@ -490,7 +511,6 @@ class SettingsPage extends Component {
 
   toggleImgCropperPopup = url => {
     this.setErrorHandler("Toggle image cropper");
-
     if (this.mounted) {
       this.setState(
         {
@@ -1193,15 +1213,12 @@ class SettingsPage extends Component {
                     return (
                       <ImageEditor
                         file={fileRecieved}
-                        handlePhotoListChange={({ file, key, url }) =>
-                          this.handlePhotoListChange({
+                        handleUpload={file =>
+                          this.handleUpload(
                             file,
-                            key,
-                            url,
-                            isPrivate,
-                            isDeleted: false,
-                            updateSettings
-                          })
+                            signS3,
+                            this.toggleImgEditorPopup
+                          )
                         }
                         setS3PhotoParams={this.setS3PhotoParams}
                         uploadToS3={this.uploadToS3}
