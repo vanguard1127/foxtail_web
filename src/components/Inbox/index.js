@@ -21,6 +21,7 @@ import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
 import deleteFromCache from "../../utils/deleteFromCache";
+import './inbox.css'
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class InboxPage extends Component {

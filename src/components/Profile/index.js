@@ -16,6 +16,7 @@ import BlockModal from "../Modals/Block";
 import ShareModal from "../Modals/Share";
 import Modal from "../common/Modal";
 import { flagOptions } from "../../docs/options";
+import './profile.css'
 class ProfilePage extends Component {
   state = {
     shareModalVisible: false,
