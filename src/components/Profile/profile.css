@@ -561,7 +561,7 @@ section.profile .avatar-card.full-verified::before {
   top: -4px;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/elements/full-verified-badge.png");
+  background-image: url("../../assets/img/elements/full-verified-badge.png");
   z-index: 999;
 }
 
@@ -574,7 +574,7 @@ section.profile .avatar-card.std-verified::before {
   top: -4px;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/elements/std-badge-verified.png");
+  background-image: url("../../assets/img/elements/std-badge-verified.png");
   z-index: 999;
 }
 
@@ -587,7 +587,7 @@ section.profile .avatar-card.profile-verified::after {
   top: -4px;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/elements/profile-badge-verified.png");
+  background-image: url("../../assets/img/elements/profile-badge-verified.png");
   z-index: 999;
 }
 
