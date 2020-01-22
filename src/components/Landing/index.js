@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { withTranslation } from "react-i18next";
 import FooterLanding from "../Footer/FooterLanding";
 import Header from "../Header";
+import './landing.css'
 
 class Landing extends PureComponent {
   constructor(props) {
@@ -104,7 +105,7 @@ class Landing extends PureComponent {
     }
     return (
       <>
-        <Header lang={lang} history={history} t={t} reactga={ReactGA} />
+        <Header headerClasses={['landing']} lang={lang} history={history} t={t} reactga={ReactGA} />
         <main>
           <section className="landing">
             <div className="container">
