@@ -53,7 +53,7 @@ class UploadComponent extends PureComponent {
       if (file.size > 4000000) {
         alert(this.props.t("only4mb"));
       } else {
-        this.props.showEditor(file, this.props.isPrivate);
+        this.props.showEditor(file);
       }
     } else {
       alert(this.props.t("onlyimg"));

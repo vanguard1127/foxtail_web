@@ -213,8 +213,6 @@ class EditCanvasImage extends PureComponent {
           };
 
           await handleUpload(file);
-          toast.dismiss();
-          close();
         } catch (e) {
           this.props.ErrorHandler.catchErrors(e);
         }

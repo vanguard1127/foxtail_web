@@ -30,7 +30,7 @@ const RulesModal = ({ t, close }) => {
                     <li>{t("Anything involving sexual acts with minors")}</li>
                     <li>
                       {t(
-                        "Anything that is illegal in your juristdion. It is your responsioility to abide by your local laws."
+                        "Anything that is illegal in your area. It is your responsibility to abide by your local laws."
                       )}
                     </li>
                   </ul>

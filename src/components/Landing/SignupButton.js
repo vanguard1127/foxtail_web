@@ -54,7 +54,7 @@ class SignupButton extends PureComponent {
                   action: "Couple"
                 });
                 history.push({
-                  pathname: "/settings",
+                  pathname: "/get-started",
                   state: { couple: true, initial: true }
                 });
               } else {
@@ -64,7 +64,7 @@ class SignupButton extends PureComponent {
                   action: "Success"
                 });
                 history.push({
-                  pathname: "/settings",
+                  pathname: "/get-started",
                   state: { initial: true }
                 });
               }

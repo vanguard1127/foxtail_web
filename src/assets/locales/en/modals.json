@@ -63,7 +63,7 @@
   "evetype": "Event Type",
   "kinkselect": "Kinks",
   "playselect": "Play List",
-  "setkinks": "What are you into?",
+  "setkinks": "What are you into or curious to try?",
   "setplay": "What kind of play will be allowed?",
   "searchkinks": "Search kinks",
   "writemsg": "Write Message Here",
@@ -182,5 +182,6 @@
   "whennewmember": " When a new member joins from one of your share links you will be notified.",
   "pleasenoteactive": "Please note - Black membership is activated once the member finishes their profile. Your Black membership will cancel 1 week later unless you get more referrals.",
   "Share Foxtail and Get 1 week FREE Black Membership.": "Share Foxtail and Get 1 week FREE Black Membership.",
-  "*Limited Time - Get $100 for referring 100 members. We'll email you when you reach 100 for payment info.": "*Limited Time - Get $100 for referring 100 members. We'll email you when you reach 100 for payment info."
+  "*Limited Time - Get $100 for referring 100 members. We'll email you when you reach 100 for payment info.": "*Limited Time - Get $100 for referring 100 members. We'll email you when you reach 100 for payment info.",
+  "Anything that is illegal in your area. It is your responsibility to abide by your local laws.": "Anything that is illegal in your area. It is your responsibility to abide by your local laws."
 }

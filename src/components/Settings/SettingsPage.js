@@ -205,7 +205,7 @@ class SettingsPage extends Component {
     this.mounted = false;
   }
 
-  handleUpload = async (file, signS3, close) => {
+  handleUpload = async (file, signS3, isPrivate) => {
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;
@@ -213,12 +213,14 @@ class SettingsPage extends Component {
         this.handlePhotoListChange({
           file,
           key,
+          isPrivate,
           isDeleted: false
         });
         this.uploadToS3(file.filebody, signedRequest);
 
         this.props.toast.dismiss();
-        close();
+
+        this.toggleImgEditorPopup();
       })
       .catch(res => {
         console.error(res);
@@ -1070,7 +1072,9 @@ class SettingsPage extends Component {
                           <div className="page-section mtop">
                             <Photos
                               isPrivate={true}
-                              showEditor={this.toggleImgEditorPopup}
+                              showEditor={file =>
+                                this.toggleImgEditorPopup(file, true)
+                              }
                               photos={privatePhotos}
                               isBlackMember={currentuser.blackMember.active}
                               deleteImg={({ file, key }) =>
@@ -1214,11 +1218,7 @@ class SettingsPage extends Component {
                       <ImageEditor
                         file={fileRecieved}
                         handleUpload={file =>
-                          this.handleUpload(
-                            file,
-                            signS3,
-                            this.toggleImgEditorPopup
-                          )
+                          this.handleUpload(file, signS3, isPrivate)
                         }
                         setS3PhotoParams={this.setS3PhotoParams}
                         uploadToS3={this.uploadToS3}

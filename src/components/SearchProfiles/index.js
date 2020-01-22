@@ -4,14 +4,12 @@ import { Query } from "react-apollo";
 import { GET_SEARCH_SETTINGS } from "../../queries";
 import SearchProfilesPage from "./SearchProfilesPage";
 import ShareModal from "../Modals/Share";
-import OnboardModal from "../Modals/Onboard";
 import Spinner from "../common/Spinner";
 import { withTranslation } from "react-i18next";
 
 class SearchProfiles extends Component {
   state = {
-    shareModalVisible: false,
-    onboardModalVisible: true
+    shareModalVisible: false
   };
   componentDidMount() {
     window.scrollTo(0, 1);
@@ -19,8 +17,7 @@ class SearchProfiles extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.tReady !== nextProps.tReady ||
-      this.state.shareModalVisible !== nextState.shareModalVisible ||
-      this.state.onboardModalVisible !== nextState.onboardModalVisible
+      this.state.shareModalVisible !== nextState.shareModalVisible
     ) {
       return true;
     }
@@ -39,7 +36,7 @@ class SearchProfiles extends Component {
   };
 
   render() {
-    const { shareModalVisible, onboardModalVisible } = this.state;
+    const { shareModalVisible } = this.state;
     const {
       t,
       ErrorHandler,
@@ -94,13 +91,6 @@ class SearchProfiles extends Component {
                   t={t}
                 />
               )}
-              {/* {onboardModalVisible && (
-                <OnboardModal
-                  visible={shareModalVisible}
-                  ErrorHandler={ErrorHandler}
-                  t={t}
-                />
-              )} */}
             </>
           );
         }}

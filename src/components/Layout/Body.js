@@ -29,7 +29,9 @@ const InboxPage = LoadableComponent({
 const SearchEvents = LoadableComponent({
   loader: () => import("../SearchEvents/")
 });
-
+const Onboard = LoadableComponent({
+  loader: () => import("../Modals/Onboard")
+});
 export const Body = withAuth(session => session && session.currentuser)(
   ({ showFooter, session, refetch, lang }) => (
     <div className="layout">
@@ -131,6 +133,12 @@ export const Body = withAuth(session => session && session.currentuser)(
                 dayjs={dayjs}
                 lang={lang}
               />
+            )}
+          />
+          <Route
+            path="/get-started"
+            render={() => (
+              <Onboard ErrorHandler={ErrorHandler} ReactGA={ReactGA} />
             )}
           />
           <Redirect to="/" />
