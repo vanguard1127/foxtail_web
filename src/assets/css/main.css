@@ -3101,16 +3101,16 @@ section.profile .data-info ul li span.data {
   overflow: hidden;
   white-space: nowrap;
 }
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
   section.profile .data-info ul li span.data {
     max-width: 350px;
   }
-}
-@media (min-width: 768px) and (max-width: 1200px) {
+} */
+/* @media (min-width: 768px) and (max-width: 1200px) {
   section.profile .data-info ul li span.data {
     max-width: 100px;
   }
-}
+} */
 section.profile .data-info ul li span.data.lookfor {
   /* display: inline-block; */
 }
@@ -4593,208 +4593,6 @@ section.event-detail .discuss-content .messages .item .info span.msg {
   white-space: pre-wrap;
 }
 
-/*---- SETTINGS PAGE ----*/
-
-section.settings {
-  width: 100%;
-  display: block;
-  float: left;
-}
-
-section.settings .sidebar {
-  width: 100%;
-  display: block;
-  float: left;
-  background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
-  padding-top: 20px;
-}
-
-section.settings .sidebar .profile-picture-content {
-  width: 100%;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-section.settings .sidebar .profile-picture-content .picture {
-  width: 98px;
-  height: 98px;
-  display: inline-block;
-  float: left;
-  overflow: hidden;
-}
-
-section.settings .sidebar .profile-picture-content .picture img {
-  width: 100%;
-  height: 100%;
-  display: inline-block;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-section.settings .sidebar .upload-btn {
-  width: 100%;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-section.settings .sidebar .upload-btn a {
-  height: 40px;
-  line-height: 40px;
-  display: inline-block;
-  float: left;
-  border-radius: 1px;
-  background: rgba(245, 0, 67, 0.02);
-  border: 1px solid #f50043;
-  color: #f50043;
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  padding: 0 30px;
-  margin-top: 20px;
-  transition: 0.3s all;
-}
-
-section.settings .sidebar .upload-btn a:hover {
-  background-color: #f50043;
-  color: #fff;
-}
-
-section.settings .sidebar .menu {
-  width: 100%;
-  display: block;
-  float: left;
-  padding-bottom: 20px;
-  padding-top: 20px;
-}
-
-section.settings .sidebar .menu ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  display: block;
-  float: left;
-}
-
-section.settings .sidebar .menu ul li {
-  width: 100%;
-  display: block;
-  float: left;
-  border-top: 1px solid #f4f4f4;
-  font-size: 16px;
-  letter-spacing: -0.3px;
-  color: #2a2f35;
-  line-height: 19px;
-  position: relative;
-  transition: 0.3s all;
-}
-
-section.settings .sidebar .menu ul li:last-child {
-  border-bottom: 1px solid #f4f4f4;
-}
-
-section.settings .sidebar .menu ul li span {
-  width: 100%;
-  height: 100%;
-  display: inline-block;
-  float: left;
-  padding: 18px 20px 14px 20px;
-  cursor: pointer;
-}
-
-section.settings .sidebar .menu ul li span.blkIcon {
-  padding:0px;
-  margin:0px 0px 0px 4px;
- width: auto;
- float:none;
- letter-spacing: 0px;
-
-}
-section.settings .sidebar .menu ul li span.blkIcon::before {
-  content: "\e823";
-  font-family: "foxtail-icon";
-  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
-  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
-  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 14px;
-
-}
-
-section.settings .sidebar .menu ul li:hover {
-  color: #f50043;
-}
-
-section.settings .sidebar .menu ul li.active::before {
-  content: "";
-  position: absolute;
-  left: -5px;
-  width: 5px;
-  height: 100%;
-  display: inline-block;
-  float: left;
-  background-color: #f50043;
-  top: 0;
-}
-
-section.settings .page {
-  width: 100%;
-  display: block;
-  float: left;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
-  position: relative;
-}
-
-section.settings .page-section {
-  width: 100%;
-  display: block;
-  float: left;
-  background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
-  padding: 30px;
-  position: relative;
-  margin-top: 15px;
-}
-
-section.settings .deactivate {
-  display: flex !important;
-  justify-content: center;
-  color: #9e9e9e;
-  margin-top: 25px;
-}
-
-section.settings .deactivate span {
-  cursor: pointer;
-}
-
-section.settings .message {
-  background-color: #cf003c;
-  color: white;
-  font-size: 24px;
-  line-height: 28px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  margin-top: 25px;
-  margin-bottom: 25px;
-}
-
 
 @-webkit-keyframes opacity {
   0%{   color: #cf003c;},
@@ -4839,9 +4637,6 @@ section.settings .message {
 }
 
 
-section.settings .select-container .option-counter {
-  right: 55px;
-}
 /*---- FORM ELEMENTS ----*/
 
 input.location-search-input {
@@ -4903,9 +4698,6 @@ input.location-search-input {
   margin-bottom: 15px;
 }
 
-section.settings .page .content span.heading {
-  width: 99% !important;
-}
 
 .page .content span.heading span.tip {
   position: absolute;
@@ -7351,22 +7143,6 @@ a {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
 }
 
-section.settings .rc-slider-rail,
-section.settings .rc-slider-track {
-  height: 8px !important;
-}
-
-section.settings .rc-slider-rail {
-  border: 1px solid #e7e7e7 !important;
-  background-color: #fff !important;
-}
-
-section.settings .rc-slider-handle {
-  width: 20px;
-  height: 20px;
-  margin-top: -6px;
-}
-
 .rc-slider {
   z-index: 100;
   padding: 15px 0 !important;
@@ -7426,11 +7202,7 @@ section.login-modal .popup form::-webkit-scrollbar-corner,
   z-index: auto !important;
 }
 
-section.settings .select-list.multiple {
-  top: 59px !important;
-  margin: 0 0 0 15px;
-  width: calc(100% - 30px) !important;
-}
+
 .upload-box:focus,
 .upload-box:hover {
   border-color: #f50043 !important;
@@ -7466,28 +7238,6 @@ section.kinks-popup .modal-popup .m-body .search input {
   border-radius: 2px;
 }
 
-
-section.settings .profile-bio-textarea {
-  border: 1px solid #e3e3e3;
-  min-height: 120px;
-  margin-bottom: 15px;
-}
-
-section.settings textarea.bio {
-  border: unset !important;
-  z-index: 0;
-  margin-top: 38px;
-  min-height: 80px !important;
-  padding-top: 0 !important;
-}
-
-section.settings div.saving {
-  position: absolute;
-  right: 0px;
-  color: #9d9d9d;
-  font-size: 14px;
-  padding: 5px;
-}
 
 /* REVISION ADD */
 h3.black-head {
@@ -8650,9 +8400,7 @@ section.not-found span.description {
     visibility: hidden;
   }
 
-  section.settings .page-section.mtop:nth-child(1) {
-    margin-top: 0;
-  }
+ 
 
   footer.sticky {
     position: absolute;
@@ -8888,14 +8636,7 @@ img {
   transition: opacity 250ms ease-in;
 }
 
-section.settings .sidebar .menu ul li.highlightTxt {
-  color: #f50043 !important;
-}
 
-section.settings .sidebar .menu ul li.highlightTxt:hover {
-  color: #fff !important;
-  background-color: #f50043 !important;
-}
 
 .sex::before {
   font-size: 15px;
@@ -9157,24 +8898,6 @@ section.login-modal.edit-photo-modal .popup{
   margin: 0 1em 1em 0;
   cursor: pointer;
   color: transparent;
-}
-section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfile {
-  color: #1e1e2b;
-  background: #505050;
-  opacity: 0.6;
-  font-size: 12px;
-  text-align: center;
-  color: white;
-}
-section.settings .sidebar .profile-picture-content .picture:hover > .deleteProfile::before {
-  font-family: "foxtail-icon";
-  content: "\e80a";
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  display: flex;
-  flex: 1;
-  justify-content: center;
 }
 
 .css-times {
