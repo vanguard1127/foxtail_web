@@ -6,6 +6,7 @@ import EmailPhoneResetBtn from "./EmailPhoneResetBtn";
 import ResetPhoneButton from "./ResetPhoneButton";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
+import '../../../assets/css/login-modal.css'
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
 class ResetPhone extends PureComponent {
