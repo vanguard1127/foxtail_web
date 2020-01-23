@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import * as ErrorHandler from "../common/ErrorHandler";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
 import LoginButton from "../Landing/LoginButton";
+import './header.css';
+
 class Header extends Component {
   render() {
     const { t, history, lang, reactga } = this.props;

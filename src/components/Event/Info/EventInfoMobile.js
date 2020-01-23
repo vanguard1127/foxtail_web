@@ -5,6 +5,7 @@ import AttendEvent from "./AttendEvent";
 import EventShare from "../Header/EventShare";
 import EditEventBtn from "./EditEventBtn";
 import NoEventImg from "../../../assets/img/elements/no-eve-image.jpg";
+import './eventInfoMobile.css';
 
 class EventInfoMobile extends Component {
   shouldComponentUpdate(nextProps) {

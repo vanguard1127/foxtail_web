@@ -6,6 +6,7 @@ import {
 } from "../../../queries";
 import { Query } from "react-apollo";
 import MembersList from "./MembersList";
+import './membersDropdown.css'
 
 class MembersDropdown extends PureComponent {
   constructor(props) {

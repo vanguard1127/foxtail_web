@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import '../../assets/css/breadcrumb.css';
 class EventHeader extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.t !== nextProps.t) {
