@@ -19,7 +19,7 @@ import EventInfo from "./Info/EventInfo";
 import { flagOptions } from "../../docs/options";
 import { toast } from "react-toastify";
 import ShareModal from "../Modals/Share";
-
+import './events.css';
 class EventPage extends Component {
   state = {
     visible: false,
