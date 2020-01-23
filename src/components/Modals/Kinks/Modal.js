@@ -4,7 +4,7 @@ import { kinkOptions } from "../../../docs/options";
 import Spinner from "../../common/Spinner";
 import SearchBox from "./SearchBox";
 import Tooltip from "./Tooltip/Tooltip";
-
+import './kinks.css'
 class Kinks extends Component {
   state = { searchText: "" };
   constructor(props) {
