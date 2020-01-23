@@ -5,6 +5,7 @@ import { SEEN_TOUR } from "../../queries";
 import CustomTour from "../common/CustomTour";
 import Spinner from "../common/Spinner";
 import { withRouter, Redirect } from "react-router-dom";
+import './events.css'
 class EventTour extends PureComponent {
   state = {
     isTourOpen: true
