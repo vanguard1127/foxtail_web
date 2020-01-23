@@ -6,6 +6,7 @@ import CustomTour from "../common/CustomTour";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
+import './searchProfiles.css'
 class Tour extends PureComponent {
   state = {
     isTourOpen: true
