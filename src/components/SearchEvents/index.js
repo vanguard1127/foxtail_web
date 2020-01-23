@@ -17,7 +17,7 @@ import Header from "./Header";
 import EventsList from "./EventsList";
 import Spinner from "../common/Spinner";
 import deleteFromCache from "../../utils/deleteFromCache";
-
+import './searchEvents.css'
 class SearchEvents extends Component {
   state = {
     skip: 0,
