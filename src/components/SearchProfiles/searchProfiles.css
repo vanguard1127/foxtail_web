@@ -352,15 +352,15 @@ section.featured-profiles .slider .item.verified .info .image::before {
 }
 
 section.featured-profiles .slider .item.verified.photo .info .image::before {
-  background-image: url("../img/elements/profile-badge-verified.png");
+  background-image: url("../../assets/img/elements/profile-badge-verified.png");
 }
 
 section.featured-profiles .slider .item.verified.std .info .image::before {
-  background-image: url("../img/elements/std-badge-verified.png");
+  background-image: url("../../assets/img/elements/std-badge-verified.png");
 }
 
 section.featured-profiles .slider .item.verified.both .info .image::before {
-  background-image: url("../img/elements/full-verified-badge.png");
+  background-image: url("../../assets/img/elements/full-verified-badge.png");
   width: 58px !important;
 }
 
@@ -718,15 +718,15 @@ section.members .card-item.verified .image::before {
 }
 
 section.members .card-item.verified.photo .image::before {
-  background-image: url("../img/elements/profile-badge-verified.png");
+  background-image: url("../../assets/img/elements/profile-badge-verified.png");
 }
 
 section.members .card-item.verified.std .image::before {
-  background-image: url("../img/elements/std-badge-verified.png");
+  background-image: url("../../assets/img/elements/std-badge-verified.png");
 }
 
 section.members .card-item.verified.both .image::before {
-  background-image: url("../img/elements/full-verified-badge.png");
+  background-image: url("../../assets/img/elements/full-verified-badge.png");
   width: 50px !important;
 }
 

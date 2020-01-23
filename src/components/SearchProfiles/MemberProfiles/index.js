@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProfileCard from "./ProfileCard";
 import { Waypoint } from "react-waypoint";
 import isArrayStringsEqual from "../../../utils/arraysEqual";
-import '../searchProfile.css'
+import '../searchProfiles.css';
 class ProfilesDiv extends Component {
   shouldComponentUpdate(nextProps) {
     if (
