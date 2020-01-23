@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import OwlCarousel from "react-owl-carousel";
 import FeaturedCard from "./FeaturedCard";
 import arraysEqual from "../../../utils/arraysEqual";
-
+import '../searchProfiles.css';
 class FeaturedProfiles extends Component {
   shouldComponentUpdate(nextProps) {
     if (
