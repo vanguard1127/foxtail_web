@@ -1,0 +1,355 @@
+/*---- FOOTER ----*/
+
+footer {
+  width: 100%;
+  display: block;
+  float: left;
+  margin-top: 50px;
+}
+
+footer .brand {
+  width: 100%;
+  height: 70px;
+  display: block;
+  float: left;
+  background-image: -webkit-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
+  background-image: -o-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
+  background-image: linear-gradient(226deg, #f70016 0%, #5f00a4 100%);
+}
+
+footer .brand .logo {
+  width: 100px;
+  height: 60px;
+  overflow: hidden;
+  float: left;
+}
+
+footer .brand .logo span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/img/logo/logo-white.svg");
+}
+
+footer .brand .medias {
+  float: right;
+  margin-top: 15px;
+}
+
+footer .brand .medias ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer .brand .medias ul li {
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.14);
+  display: inline-block;
+  float: left;
+  border-radius: 100px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+footer .brand .medias ul li span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+  cursor: pointer;
+}
+
+footer .brand .medias ul li:last-child {
+  margin-right: 0;
+}
+
+footer .brand .medias ul li i::before {
+  content: "";
+  font-family: "foxtail-icon";
+  font-size: 14px;
+  line-height: 43px;
+  font-style: normal;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  float: left;
+  display: block;
+}
+
+footer .brand .medias ul li.facebook i::before {
+  content: "\e816";
+  color: #0050b5;
+  right: 0;
+}
+
+footer .brand .medias ul li.twitter i::before {
+  content: "\e819";
+  color: #00a9ff;
+}
+
+footer .brand .medias ul li.mail i::before {
+  content: "\e80c";
+  color: #f50043;
+  font-size: 17px;
+}
+
+footer .copyright {
+  width: 100%;
+  display: block;
+  float: left;
+  padding-top: 22px;
+  padding-bottom: 22px;
+  background-color: #fff;
+}
+
+footer .copyright span.text {
+  float: left;
+  display: inline-block;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.7);
+  letter-spacing: -0.3px;
+  line-height: 16px;
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+}
+
+footer .copyright .menu {
+  float: left;
+  margin-top: 8px;
+  width: 100%;
+}
+
+footer .copyright .menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+footer .copyright .menu ul li {
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.7);
+  letter-spacing: -0.3px;
+  line-height: 16px;
+  display: inline-block;
+}
+
+footer .copyright .menu ul li span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  padding-right: 15px;
+  cursor: pointer;
+}
+
+footer .copyright .menu ul li:hover {
+  color: #cf003c;
+}
+
+footer .copyright .menu ul li:last-child span {
+  padding-right: 0;
+}
+
+footer.landing .tooltip {
+  position: relative;
+  float: right;
+  right: 4px;
+}
+
+@media only screen and (max-width: 600px) {
+  footer.landing .tooltip {
+    right: 95px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  footer.landing .tooltip {
+    right: 120px;
+  }
+}
+
+footer.landing .tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 16px;
+  padding: 8px !important;
+  line-height: 25px;
+  border: 0 !important;
+  min-height: 28px;
+  z-index: 99999999999;
+}
+
+footer.landing .tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+footer.landing .tooltip .tooltiptext.show {
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0px !important;
+}
+
+footer.landing .tooltip .tooltiptext-right {
+  top: -5px;
+  left: 105%;
+}
+
+footer.landing .tooltip .tooltiptext-left {
+  left: -10vw;
+}
+
+footer.landing .tooltip .tooltiptext-top {
+  width: auto;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+footer.landing .tooltip .tooltiptext-bottom {
+  max-width: 300px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+footer.landing .tooltip .tooltiptext div {
+  width: max-content;
+  z-index: 99999999999;
+}
+
+footer.landing {
+  width: 100%;
+  display: block;
+  float: left;
+  position: relative;
+  top: 370px;
+  margin-bottom: 50px;
+}
+
+footer.landing span.created {
+  width: 100%;
+  display: block;
+  float: left;
+  font-size: 14px;
+  color: #2f2f2f;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+footer.landing span.created span {
+  color: #b50131;
+}
+
+footer.landing .links ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+footer.landing .links ul li {
+  display: inline-block;
+  width: auto;
+  color: #9298a4;
+  font-size: 14px;
+  transition: 0.3s all;
+}
+
+footer.landing .links ul li:last-child span {
+  padding-right: 0;
+}
+
+footer.landing .links ul li a,
+footer.landing .links ul li span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+  padding: 0 13px;
+  cursor: pointer;
+}
+
+footer.landing .links ul li:hover {
+  color: #b50131;
+}
+
+footer.landing .links ul li span div:hover {
+  color: #b50131;
+}
+
+footer.landing .tooltip .tooltiptext.show {
+  position: absolute;
+  left: -10vw;
+}
+
+@media only screen and (min-width: 768px) {
+  footer.landing {
+    top: 420px;
+    margin-bottom: 30px;
+  }
+  footer.landing span.created {
+    text-align: left;
+  }
+  footer.landing .links ul {
+    float: right;
+    text-align: right;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  footer.landing {
+    top: 470px;
+    margin-bottom: 40px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  footer .copyright span.text {
+    width: auto;
+    float: left;
+    margin-top: 0;
+    text-align: left;
+    margin-top: 0;
+    max-width: 50%;
+  }
+  footer .copyright .menu {
+    margin-top: 0;
+    float: right;
+    width: auto;
+    max-width: 50%;
+  }
+  footer .copyright .menu ul {
+    width: auto;
+    text-align: left;
+  }
+  footer .copyright .menu ul li {
+    float: left;
+  }
+}

@@ -1,0 +1,716 @@
+/*---- HEADER ----*/
+
+/* LOGO */
+
+header.topbar {
+  width: 100%;
+  height: 65px;
+  background-color: #fff;
+  display: block;
+  float: left;
+  position: relative;
+  z-index: auto;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.3);
+}
+
+header .logo {
+  width: 100px;
+  height: 60px;
+  margin: 0 auto;
+  position: relative;
+  top: -5px;
+}
+
+header .logo span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/img/logo/logo-color.svg");
+  cursor: pointer;
+}
+
+header .logo.white span {
+  background-image: url("../../assets/img/logo/logo-white.svg");
+  pointer-events: none;
+  cursor: default;
+}
+
+/* MENU */
+
+header ul.menu {
+  width: 100%;
+  height: 100%;
+  display: block;
+  float: left;
+  list-style-type: none;
+  padding: 0;
+}
+
+header ul.menu li {
+  height: 100%;
+  display: flex;
+  float: left;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 700;
+  color: #464648;
+  letter-spacing: -0.13px;
+  margin-right: 30px;
+}
+
+header ul.menu li a::before {
+  content: "";
+  font-family: "foxtail-icon";
+  color: #d6dde4;
+  float: left;
+  padding-right: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+header ul.menu li:first-child a::before {
+  content: "\e80e";
+  font-size: 23px;
+  top: -1px;
+}
+
+header ul.menu li:nth-child(2) a::before {
+  content: "\f4c5";
+  font-size: 18px;
+  top: 0px;
+}
+
+header ul.menu li a.active::before,
+header ul.menu li a.active div::before {
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(to left, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+header ul.menu li a.active {
+  color: #cf003c !important;
+}
+
+header ul.menu li a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* FUNCTION */
+
+header .function {
+  float: right;
+}
+
+header .function .inbox {
+  float: left;
+  padding-right: 15px;
+  border-right: 1px solid #eaeaea;
+}
+
+/* header .function .inbox.hidden-mobile {
+      display: inline-block !important;
+      visibility: visible !important;
+    } */
+
+header .function .inbox span.icon {
+  float: left;
+  height: 65px;
+  padding-top: 17px;
+  position: relative;
+  display: inline-block;
+}
+
+header .function .inbox span.icon::before {
+  content: "\e80c";
+  font-family: "foxtail-icon";
+  color: #d6dde4;
+  font-size: 24px;
+  padding-right: 10px;
+}
+
+header .function .active .inbox span.text {
+  color: #cf003c !important;
+}
+
+header .function .active .inbox span.icon::before {
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header .function .inbox span.icon.blink::before {
+  -webkit-animation: FLASH_INBOX 2s infinite;
+  /* Safari 4+ */
+  -moz-animation: FLASH_INBOX 2s infinite;
+  /* Fx 5+ */
+  -o-animation: FLASH_INBOX 2s infinite;
+  /* Opera 12+ */
+  animation: FLASH_INBOX 2s infinite;
+  /* IE 10+, Fx 29+ */
+}
+
+header .function .inbox.active span.icon::before {
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header .function .inbox span.icon span.count {
+  display: none;
+  visibility: hidden;
+}
+
+header .function .inbox.new span.icon span.count {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 5px;
+  top: 18px;
+  border-radius: 100px;
+  background: #ffcb02;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.22);
+  display: inline-block;
+  visibility: visible;
+  float: right;
+  text-align: center;
+  line-height: 15px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+}
+
+header .function .inbox span.text {
+  font-size: 15px;
+  color: #464648;
+  font-weight: 700;
+  line-height: 65px;
+  position: relative;
+  top: 4px;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+header .function .inbox.active span.text {
+  color: #cf003c;
+  margin-top: 0;
+}
+
+header .function .notification {
+  float: left;
+  padding-right: 15px;
+  padding-left: 15px;
+  cursor: pointer;
+}
+
+header .function .notification span.icon {
+  float: left;
+  height: 65px;
+  padding-top: 13px;
+  position: relative;
+}
+
+header .function .notification span.icon::before {
+  content: "\e80f";
+  font-family: "foxtail-icon";
+  color: #d6dde4;
+  font-size: 28px;
+}
+
+header .function .notification.active span.icon::before {
+  background-image: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: -o-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
+  background-image: linear-gradient(118deg, #f70016 7%, #5f00a4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header .function .notification span.icon span.count {
+  display: none;
+  visibility: hidden;
+}
+
+header .function .notification.active span.icon span.count {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: -5px;
+  top: 18px;
+  border-radius: 100px;
+  background: #ffcb02;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.22);
+  display: inline-block;
+  visibility: visible;
+  float: right;
+  text-align: center;
+  line-height: 15px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+}
+
+header .function .user {
+  float: right;
+  cursor: pointer;
+}
+
+header .function .user span.avatar {
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  float: left;
+  border-radius: 100px;
+  overflow: hidden;
+  margin-right: 10px;
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+header .function .user span.avatar img {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+header .function .user span.username {
+  float: left;
+  font-size: 15px;
+  color: #464648;
+  letter-spacing: -0.3px;
+  line-height: 71px;
+  max-width: 85px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 6px;
+}
+
+header .function .user span.username::after {
+  content: "\f004";
+  font-family: "foxtail-icon";
+  color: #d6dde4;
+  font-size: 14px;
+  position: absolute;
+  right: 0;
+  float: left;
+  padding-top: 1px;
+  padding: 0 4px;
+}
+
+/* TOGGLE */
+
+header .toggle {
+  position: absolute;
+  width: 100%;
+  padding: 0 15px;
+  top: 65px;
+  left: 0;
+}
+
+/* NOTIFICATION */
+
+header .toggle .notification {
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #fff;
+  float: left;
+  position: relative;
+  top: 6px;
+  right: inherit;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 15px 65px 0 rgba(17, 25, 40, 0.12);
+  border-radius: 3px;
+  padding: 5px 15px;
+  display: none;
+  visibility: hidden;
+  z-index: 99999999 !important;
+}
+
+header .toggle .notification.open {
+  display: inline-block;
+  visibility: visible;
+}
+
+header .toggle .notification::-webkit-scrollbar {
+  width: 9px;
+  height: 10px;
+  border: none;
+  background-color: inherit;
+  overflow: hidden;
+  border-radius: 0 3px 3px 0;
+}
+
+header .toggle .notification::-webkit-scrollbar-thumb {
+  background: #ececec;
+  border: none;
+}
+
+header .toggle .notification::-webkit-scrollbar-corner {
+  background: inherit;
+}
+
+header .toggle .notification .item {
+  width: 100%;
+  display: block;
+  float: left;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+header .toggle .notification .item.unread::after {
+  content: "\f10c";
+  font-family: "foxtail-icon";
+  color: #d4d4d4;
+  font-size: 14px;
+  position: relative;
+  right: 14px;
+  top: 7px;
+  display: flex;
+}
+
+header .toggle .notification .item.read::after {
+  content: "\f111";
+  font-family: "foxtail-icon";
+  color: #d4d4d4;
+  font-size: 14px;
+  position: relative;
+  right: 14px;
+  top: 7px;
+  display: flex;
+}
+
+header .toggle .notification .item span.avatar {
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  float: left;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+header .toggle .notification .item span.avatar img {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+}
+
+header .toggle .notification .item div {
+  width: calc(100% - 46px);
+  margin-left: 10px;
+  display: inline-block;
+  float: left;
+}
+
+header .toggle .notification .item div span {
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+header .toggle .notification .item div span.text {
+  display: -webkit-box;
+  max-width: 190px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  color: #464648;
+  letter-spacing: -0.12px;
+  line-height: 18px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-top: 0;
+}
+
+header .toggle .notification .item div span.text b {
+  font-weight: 700;
+  font-style: normal;
+  color: #f50043;
+}
+
+header .toggle .notification .item div span.when {
+  font-size: 12px;
+  color: #8e8e8e;
+  letter-spacing: -0.2px;
+  line-height: 14px;
+}
+
+/* DROPDOWN */
+
+header .toggle .dropdown {
+  width: 180px;
+  background-color: #fff;
+  float: left;
+  position: relative;
+  top: 6px;
+  right: 12px;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 15px 65px 0 rgba(17, 25, 40, 0.12);
+  border-radius: 3px;
+  padding: 5px 0;
+  display: none !important;
+  visibility: hidden !important;
+  z-index: 99999999 !important;
+}
+
+header .toggle .dropdown ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+header .toggle .dropdown ul li {
+  width: 100%;
+  display: block;
+  float: left;
+  font-size: 14px;
+  letter-spacing: -0.3px;
+  color: #464648;
+  padding: 5px 15px;
+  transition: 0.3s all;
+  display: "flex";
+  flex: 1;
+  cursor: pointer;
+}
+
+header .toggle .dropdown ul li.border {
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  color: #f50043;
+  padding: 8px 15px;
+}
+
+header .toggle .dropdown ul li a {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+}
+
+header .toggle .dropdown ul li:hover {
+  color: #f50043;
+}
+
+/* MOBILE MENU */
+
+header .mobile-menu {
+  position: absolute;
+  top: 23px;
+  float: left;
+  z-index: 1;
+}
+
+.menu-shown header .mobile-menu {
+  z-index: 11111;
+}
+
+header .mobile-toggle {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 1010;
+  left: 0;
+  top: 0;
+  display: none;
+  visibility: hidden;
+  background-image: -webkit-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
+  background-image: -o-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
+  background-image: linear-gradient(226deg, #f70016 0%, #5f00a4 100%);
+}
+
+header .mobile-toggle.show {
+  display: inline-block;
+  visibility: visible;
+}
+
+header .mobile-toggle div.inbox {
+  width: fit-content;
+}
+
+header .mobile-toggle .count {
+  width: 15px;
+  height: 15px;
+  position: relative;
+  top: -8px;
+  border-radius: 100px;
+  background: #ffcb02;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.22);
+  display: inline-block;
+  visibility: visible;
+  float: right;
+  text-align: center;
+  line-height: 15px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+  padding: 0 !important;
+}
+
+header .mobile-toggle ul {
+  list-style-type: none;
+  padding: 80px 0 0 0;
+  margin: 0;
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+header .mobile-toggle ul li {
+  width: 100%;
+  display: block;
+  float: left;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 0 15px;
+}
+
+header .mobile-toggle ul li {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+header .mobile-toggle ul li span,
+header .mobile-toggle ul li a {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+  padding: 15px 0;
+  cursor: pointer;
+}
+
+header .mobile-toggle ul li:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media only screen and (min-width: 768px) {
+  header .function .notification {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  header .function .inbox {
+    padding-right: 20px;
+  }
+  header ul.menu li a::before {
+    display: none;
+    visibility: hidden;
+  }
+  header .function .notification {
+    border-right: 1px solid #eaeaea;
+  }
+  header .function .user span.username {
+    display: none;
+    visibility: hidden;
+    cursor: pointer;
+  }
+  header .function .user span.avatar {
+    margin-right: 0;
+    cursor: pointer;
+  }
+  header .mobile-toggle,
+  header .mobile-menu {
+    display: none;
+    visibility: hidden;
+    z-index: 1;
+  }
+  header .toggle {
+    width: initial;
+    right: -30px;
+    left: initial;
+  }
+  header .toggleNotifications {
+    right: 42px;
+  }
+  header .toggleNotifications .notification {
+    right: 0px !important;
+  }
+  header .toggle .invite-member,
+  header .toggle .notification {
+    width: 310px;
+    right: 71px;
+  }
+  header .function .notification span.icon {
+    padding-top: 17px;
+  }
+  header .function .notification span.icon::before {
+    font-size: 24px;
+  }
+  header .toggle .dropdown.open {
+    display: inline-block !important;
+    visibility: visible !important;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  header ul.menu li {
+    margin-right: 40px;
+  }
+  header ul.menu li a::before {
+    display: flex;
+    visibility: visible;
+  }
+  header .function .inbox span.icon {
+    display: inline-block;
+    visibility: visible;
+  }
+  header .function .user span.username {
+    display: inline-block;
+    visibility: visible;
+  }
+  header .function .user span.avatar {
+    margin-right: 10px;
+  }
+  header .toggle .invite-member,
+  header .toggle .notification {
+    right: 134px;
+  }
+  header .toggle .dropdown {
+    right: 0;
+  }
+  header .function {
+    padding-right: 20px;
+  }
+  header .toggle {
+    right: -15px;
+  }
+  header .toggleNotifications {
+    right: 106px;
+  }
+}
+
+@media (max-width: 768px) {
+  header .logo {
+    z-index: 1;
+  }
+}

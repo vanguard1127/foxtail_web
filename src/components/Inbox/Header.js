@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { NavLink } from "react-router-dom";
+import '../../assets/css/breadcrumb.css';
 class InboxHeader extends PureComponent {
   render() {
     const { t, chatOpen, closeChat, toggleRuleModal } = this.props;
