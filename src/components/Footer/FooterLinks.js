@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import './footerLanding.css';
 class FooterLinks extends Component {
   render() {
     const { t } = this.props;

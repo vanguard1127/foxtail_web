@@ -37,12 +37,12 @@ header .logo span {
   float: left;
   background-size: 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/logo/logo-color.svg");
+  background-image: url("../../assets/img/logo/logo-color.svg");
   cursor: pointer;
 }
 
 header .logo.white span {
-  background-image: url("../img/logo/logo-white.svg");
+  background-image: url("../../assets/img/logo/logo-white.svg");
   pointer-events: none;
   cursor: default;
 }

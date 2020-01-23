@@ -3,7 +3,7 @@ import RulesModal from "../Modals/Rules";
 import ContactUsModal from "../Modals/ContactUs";
 import FooterLinks from "./FooterLinks";
 import { withTranslation } from "react-i18next";
-
+import './footer.css' 
 class Footer extends Component {
   constructor(props) {
     super(props);
