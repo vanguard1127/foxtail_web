@@ -124,19 +124,24 @@ const UploadComponent = ({
     setMobileBtnsActive(false);
   };
 
+  const uploadAndClose = file => {
+    handleUpload(file);
+    toggleImgEditorPopup();
+  };
+
   const editorPopup = editorVisible && (
     <ImageEditor
       file={fileRecieved}
-      handlePhotoListChange={({ file, key, url }) =>
+      handlePhotoListChange={({ file, key, url }) => {
         handlePhotoListChange({
           file,
           key,
           url,
           isPrivate,
           isDeleted: false
-        })
-      }
-      handleUpload={handleUpload}
+        });
+      }}
+      handleUpload={uploadAndClose}
       close={toggleImgEditorPopup}
       ErrorHandler={ErrorHandler}
     />
