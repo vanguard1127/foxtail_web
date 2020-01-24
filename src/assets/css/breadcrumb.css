@@ -1,0 +1,84 @@
+/*---- BREADCRUMB GLOBAL ----*/
+
+section.breadcrumb {
+  width: 100%;
+  display: block;
+  float: left;
+  position: relative;
+  background-image: -webkit-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
+  background-image: -o-linear-gradient(136deg, #f70016 0%, #5f00a4 100%);
+  background-image: linear-gradient(226deg, #f70016 0%, #5f00a4 100%);
+  padding: 14px 0 15px 0;
+  overflow: hidden;
+}
+
+section.breadcrumb::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+section.breadcrumb span {
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+section.breadcrumb span.link {
+  text-decoration: underline;
+  display: contents;
+  cursor: pointer;
+}
+
+section.breadcrumb span.head {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  line-height: 34px;
+  font-size: 30px;
+  padding-top: 6px;
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+section.breadcrumb.settings span.head {
+  font-size: 26px;
+}
+
+section.breadcrumb span.head.back::before {
+  content: "\f007";
+  font-family: "foxtail-icon";
+  color: #fff;
+  font-size: 26px;
+  float: left;
+  padding-right: 15px;
+  cursor: pointer;
+}
+
+section.breadcrumb span.title {
+  color: rgba(255, 255, 255, 0.77);
+  font-size: 14px;
+  line-height: 16px;
+  display: none;
+  visibility: hidden;
+}
+
+@media only screen and (min-width: 768px) {
+  section.breadcrumb span.title {
+    display: inline-block;
+    visibility: visible;
+  }
+  section.breadcrumb span.head.back::before {
+    content: "";
+    display: none;
+    visibility: hidden;
+  }
+  section.breadcrumb span.head {
+    padding-top: 0;
+  }
+}

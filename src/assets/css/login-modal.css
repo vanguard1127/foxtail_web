@@ -1,0 +1,583 @@
+section.login-modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgba(41, 1, 10, 0.67);
+  left: 0;
+  top: 0;
+  z-index: 9999999999999;
+  /* padding:15% 0; */
+  display: none;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+section.login-modal .container {
+  z-index: 1;
+}
+
+section.login-modal.verifications {
+  padding: 6% 0;
+}
+
+section.login-modal.acctsetting {
+  padding: 13% 0;
+}
+
+section.login-modal.report {
+  /* padding: 16% 0; */
+}
+
+section.login-modal.rules {
+  padding: 10% 0;
+}
+
+section.login-modal.full-screen-modal .popup form-content {
+  margin: 0;
+}
+
+section.login-modal.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* display: inline-block; */
+  visibility: visible;
+  padding: 0 5%;
+}
+
+section.login-modal .popup-container {
+  display: flex;
+  justify-content: center;
+  min-width: 60vw;
+}
+
+section.login-modal .popup {
+  width: 100%;
+  /* max-height: 88vh; */
+  background-color: #fff;
+  box-shadow: 23px 50px 61px 0 rgba(0, 0, 0, 0.17);
+  border-radius: 4px;
+  padding: 25px 0 30px;
+  display: flex;
+  flex-direction: column;
+  float: left;
+  position: relative;
+}
+
+section.login-modal .popup.full {
+  overflow: auto;
+  width: auto;
+}
+
+section.login-modal.couples .popup.full,
+section.login-modal.black .popup.full,
+section.login-modal.rules .popup.full {
+  padding: 0;
+  max-height: 88vh;
+}
+
+section.login-modal.verifications .popup.full,
+.credit-card section.login-modal .popup {
+  max-height: 88vh;
+}
+
+section.login-modal.create-event .popup form {
+  max-height: 70vh;
+  overflow: auto;
+}
+
+section.login-modal.couples .popup.full .form-content,
+section.login-modal.black .popup.full .form-content,
+section.login-modal.rules .popup.full .form-content {
+  padding: 0px;
+  margin: 0;
+}
+
+section.login-modal .popup a.close::before {
+  content: "\e805";
+  font-family: "foxtail-icon";
+  color: #3d3d3d;
+  font-size: 14px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  cursor: pointer;
+  z-index: 999;
+  transition: 0.3s all;
+}
+
+section.login-modal .popup a.close-fullscreen-popup::before {
+  color: #fff !important;
+}
+
+section.login-modal .popup a.close:hover::before {
+  color: #cb0032;
+}
+
+section.login-modal .popup span.head {
+  width: auto !important;
+  display: block !important;
+  float: left !important;
+  font-size: 25px !important;
+  color: #321935 !important;
+  font-family: "Poppins" !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.3px !important;
+  line-height: 35px !important;
+  padding-bottom: 15px !important;
+  border-bottom: 1px solid #dcdfe4 !important;
+  text-align: center !important;
+  margin: 0 30px !important;
+  margin-bottom: 25px !important;
+}
+
+section.login-modal .popup form {
+  width: 100%;
+  display: block;
+  float: left;
+  padding: 0;
+  margin: 0;
+  /*overflow-y: auto;*/
+}
+
+/* For nested popup */
+
+section.login-modal .popup form .form-content form .form-content .dropdown span {
+  line-height: 0px !important;
+  text-align: start !important;
+  font-size: 13px !important;
+  letter-spacing: 0px !important;
+  width: auto !important;
+}
+
+section.login-modal .popup form .form-content .input {
+  width: 100%;
+  display: block;
+  float: left;
+  position: relative;
+}
+
+section.login-modal .popup form .form-content .input.code {
+  margin-bottom: 15px;
+}
+
+section.login-modal .popup form .form-content .input.password {
+  margin-bottom: 10px;
+}
+
+section.login-modal.confirm-phone .popup span.head {
+  float: none !important;
+  width: auto;
+}
+
+section.login-modal.confirm-phone .popup form .form-content {
+  float: none !important;
+  width: auto;
+}
+
+section.login-modal .popup form .form-content .input input {
+  width: 100%;
+  display: block;
+  float: left;
+  outline: none;
+  border: 1px solid #e9ebec;
+  border-radius: 2px;
+  height: 50px;
+  padding: 2px 20px 0 20px;
+  font-family: "Roboto";
+  color: #414141;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+}
+
+section.login-modal.create-event .popup form .form-content .input input {
+  padding: 15px 20px 0 20px;
+}
+
+section.login-modal .popup form .form-content .input textarea {
+  width: 100%;
+  display: block;
+  float: left;
+  outline: none;
+  border: 1px solid #e9ebec;
+  border-radius: 2px;
+  padding: 2px 20px 0 20px;
+  font-family: "Roboto";
+  color: #414141;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+}
+
+section.login-modal .popup form .form-content .input input::-webkit-input-placeholder {
+  color: #8c909d;
+}
+
+section.login-modal .popup form .form-content .input input::-moz-placeholder {
+  color: #8c909d;
+}
+
+section.login-modal .popup form .form-content .input input:-ms-input-placeholder {
+  color: #8c909d;
+}
+
+section.login-modal .popup form .form-content .input input:-moz-placeholder {
+  color: #8c909d;
+}
+
+section.login-modal .popup form .form-content .dropdown {
+  width: 100px;
+  position: relative;
+  float: left;
+  z-index: 100;
+}
+
+section.login-modal .popup form .form-content .dropdown.wide {
+  width: 100%;
+}
+
+section.login-modal .popup form .form-content .dropdown select {
+  width: 100%;
+  height: 70px;
+  display: block;
+  float: left;
+  outline: none;
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
+  padding: 20px 20px 0 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+  font-family: "Roboto Condensed";
+  font-size: 14px;
+  color: #333333;
+  font-weight: 400;
+}
+
+section.login-modal .popup form .form-content .dropdown::before {
+  content: "";
+  font-family: "foxtail-icon";
+  color: #e5e7ee;
+  font-size: 18px;
+  position: absolute !important;
+  left: 15px;
+  top: 15px;
+  z-index: 999999;
+}
+
+section.login-modal .popup form .form-content .dropdown::after {
+  content: "\f004";
+  font-family: "foxtail-icon";
+  color: #f50043;
+  position: absolute;
+  right: 20px;
+  top: 17px;
+  font-size: 14px;
+  z-index: 99999;
+}
+
+section.login-modal .popup form .form-content .dropdown label {
+  position: absolute;
+  top: 9px;
+  left: 15px;
+  font-family: "Roboto";
+  font-size: 13px;
+  line-height: 17px;
+  color: #8c909d;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+  z-index: 100;
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  margin: 0;
+  z-index: 9999;
+}
+
+section.login-modal .popup form .form-content .dropdown span {
+  position: relative;
+}
+
+section.login-modal.acctsetting .popup form .form-content .dropdown span {
+  position: absolute;
+  top: 25px;
+}
+
+section.login-modal
+  .popup
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  font-size: 14px;
+  color: #1e1e2b;
+  padding: 12px 19px 0 14px;
+}
+
+section.login-modal .popup form .form-content .dropdown .select2-container--default .select2-selection--single {
+  height: 50px;
+  border-color: #e9ebec !important;
+}
+
+section.login-modal
+  .popup
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--single
+  .select2-selection__choice,
+section.login-modal
+  .popup
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice {
+  background-color: #fff;
+  border: none;
+  margin-top: 20px !important;
+}
+
+section.login-modal
+  .popup
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice:first-child {
+  padding-left: 0;
+}
+
+section.login-modal
+  .popup
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice {
+  margin-right: 0;
+  color: #1e1e2b;
+  padding-right: 0px;
+}
+
+section.login-modal
+  .popup
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-search--inline
+  .select2-search__field {
+  top: 19px;
+  font-size: 13px;
+  color: #1e1e2b;
+}
+
+section.login-modal
+  .popup
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice__remove {
+  display: none;
+  visibility: hidden;
+}
+
+section.login-modal .popup form .form-content span.description {
+  width: 100% !important;
+  display: block !important;
+  float: left !important;
+  font-size: 14px !important;
+  color: #232323 !important;
+  letter-spacing: -0.3px !important;
+  line-height: 20px !important;
+  padding-bottom: 15px !important;
+  text-align: center !important;
+  padding-top: 5px !important;
+  /* padding-top: 15px;
+  border-top: 1px solid #e9ebec;
+  margin-top: 12px; */
+}
+
+section.login-modal .popup form .form-content .submit {
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+section.login-modal .popup form .form-content .submit span,
+section.login-modal .popup form .form-content .submit button {
+  width: 100%;
+  line-height: 50px;
+  outline: none;
+  border: none;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: -0.3px;
+  border-radius: 2px;
+  float: left;
+  transition: 0.3s all;
+  cursor: pointer;
+  display: inline-block;
+  cursor: pointer;
+}
+
+section.login-modal .popup form .form-content .submit span.color,
+section.login-modal .popup form .form-content .submit button.color {
+  background-image: -webkit-linear-gradient(119deg, #f70016 0%, #5f00a4 100%);
+  background-image: -o-linear-gradient(119deg, #f70016 0%, #5f00a4 100%);
+  background-image: linear-gradient(209deg, #f70016 0%, #5f00a4 100%);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+section.login-modal .popup form .form-content .submit span.disabled,
+section.login-modal .popup form .form-content .submit button.disabled {
+  background-color: #767676;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+section.login-modal .popup form .form-content .submit span.border,
+section.login-modal .popup form .form-content .submit button.border {
+  background-color: #fff;
+  border: 1px solid #c20046;
+  color: #c20046;
+}
+
+section.login-modal .popup form .form-content .submit span.border:hover,
+section.login-modal .popup form .form-content .submit button.border:hover {
+  background-color: #c20046;
+  color: #fff;
+}
+
+section.login-modal .popup form .form-content .contactus .input {
+  margin-bottom: 10px;
+}
+
+section.login-modal .popup form .form-content .input.recap {
+  margin-top: 10px;
+}
+
+section.login-modal .popup form::-webkit-scrollbar,
+.select-list ul::-webkit-scrollbar {
+  width: 9px !important;
+  height: 10px !important;
+  border: none !important;
+  background-color: inherit !important;
+  overflow: hidden !important;
+  border-radius: 0 3px 3px 0 !important;
+}
+
+section.login-modal .popup form::-webkit-scrollbar-thumb,
+.select-list ul::-webkit-scrollbar-thumb {
+  background: #ececec !important;
+  border: none !important;
+}
+
+section.login-modal .popup form::-webkit-scrollbar-corner,
+.select-list ul::-webkit-scrollbar-corner {
+  background: inherit !important;
+}
+
+section.login-modal .popup form .form-content {
+  margin: 0 30px;
+}
+
+section.login-modal .popup form .form-content.fullscreen {
+  margin: 0 !important;
+}
+
+section.login-modal .popup form .form-content .example-image {
+  width: 100%;
+  display: block !important;
+  float: left;
+  border: 1px solid #e7e7e7;
+  padding: 20px;
+  margin: 0;
+  justify-content: initial;
+}
+
+section.login-modal .popup form .form-content .example-image img {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  float: left;
+}
+
+section.login-modal .popup form .form-content .instructions {
+  width: 100%;
+  display: block;
+  float: left;
+  font-size: 14px;
+  color: #565656;
+  padding-top: 20px;
+}
+
+section.login-modal .popup form .form-content .upload-verify {
+  width: 100%;
+  display: block;
+  float: left;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+  section.login-modal .popup-container {
+    min-width: 90vw;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  section.login-modal .popup-container {
+    min-width: 70vw;
+  }
+}
+
+section.login-modal.edit-photo-modal .popup form::-webkit-scrollbar-thumb {
+  background: initial !important;
+  border: initial !important;
+}
+
+section.login-modal.edit-photo-modal .popup form::-webkit-scrollbar-corner {
+  background: initial !important;
+}
+
+section.login-modal.edit-photo-modal .popup {
+  max-width: initial !important;
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  section.login-modal .popup form::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    width: unset !important;
+    height: unset !important;
+    border: unset !important;
+    background-color: unset !important;
+    overflow: unset !important;
+    border-radius: unset !important;
+  }
+  section.login-modal .popup form::-webkit-scrollbar-thumb,
+  *::-webkit-scrollbar-thumb {
+    background: unset !important;
+    border: unset !important;
+  }
+  section.login-modal .popup form::-webkit-scrollbar-corner,
+  *::-webkit-scrollbar-corner {
+    background: unset !important;
+  }
+}

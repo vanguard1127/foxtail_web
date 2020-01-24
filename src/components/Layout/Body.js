@@ -8,6 +8,7 @@ import withAuth from "../HOCs/withAuth";
 import IdleTimer from "../HOCs/IdleTimer";
 import { ToastContainer } from "react-toastify";
 import dayjs from "dayjs";
+import '../Header/header.css';
 const ProfileSearch = LoadableComponent({
   loader: () => import("../SearchProfiles/")
 });

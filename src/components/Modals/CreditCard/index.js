@@ -3,7 +3,7 @@ import { Spring } from "react-spring/renderprops";
 import Dropdown from "../../common/Dropdown";
 import CCForm from "./CCForm";
 import ShareForm from "./ShareForm";
-
+import '../../../assets/css/login-modal.css'
 export default class PaymentForm extends React.Component {
   state = {
     type: "share"

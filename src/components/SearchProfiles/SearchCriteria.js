@@ -6,7 +6,7 @@ import AddressSearch from "../common/AddressSearch";
 import DistanceSlider from "../common/DistanceSlider";
 import AgeRange from "../common/AgeRange";
 import getCityCountry from "../../utils/getCityCountry";
-
+import './searchProfiles.css'
 class SearchCriteria extends PureComponent {
   state = {
     distance: this.props.distance,

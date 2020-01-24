@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../common/Spinner";
 import SettingsPage from "./SettingsPage";
+import './settings.css';
+import '../../assets/css/breadcrumb.css'
+
 class Settings extends Component {
   shouldComponentUpdate(nextProps) {
     if (
