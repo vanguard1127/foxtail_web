@@ -141,7 +141,8 @@ class ContactUs extends Component {
               variables={{
                 text,
                 name,
-                email
+                email,
+                type: isDelete ? "deleted" : "mail"
               }}
             >
               {(messageAdmin, { loading, error }) => {

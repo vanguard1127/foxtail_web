@@ -37,6 +37,7 @@ class ProfileDetails extends Component {
 
       return t(sexOptions.find(el => el.value === intrst).label) + ", ";
     });
+
     return (
       <ErrorBoundary>
         <div className="data-info">
@@ -57,7 +58,9 @@ class ProfileDetails extends Component {
             <li>
               <span className="head">{t("lookfor")}:</span>
               <Tooltip title={lookingFor} placement="top">
-                <span className="data lookfor">{lookingFor}</span>
+                <span className="data lookfor">
+                  {lookingFor.length > 0 ? lookingFor : "?"}
+                </span>
               </Tooltip>
             </li>
             <li>

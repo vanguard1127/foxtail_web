@@ -12,6 +12,7 @@
   cursor: pointer;
   margin-bottom: 15px;
   user-select: none;
+  background-color: #fff;
 }
 
 .select-container::before {

@@ -100,7 +100,7 @@ class PhotoVerify extends PureComponent {
       tReady,
       ErrorHandler: { ErrorBoundary }
     } = this.props;
-    const { photos, filename, filetype, photoKey } = this.state;
+    const { photos, filetype, photoKey } = this.state;
 
     if (!tReady) {
       return null;
@@ -137,10 +137,7 @@ class PhotoVerify extends PureComponent {
             >
               {submitPhoto => {
                 return (
-                  <Mutation
-                    mutation={SIGNS3}
-                    variables={{ filename, filetype }}
-                  >
+                  <Mutation mutation={SIGNS3} variables={{ filetype }}>
                     {signS3 => {
                       return (
                         <div

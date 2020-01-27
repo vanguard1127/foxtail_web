@@ -298,7 +298,6 @@ class CreateEvent extends Component {
       showKinksPopup,
       errors,
       showInfo,
-      filename,
       filetype,
       removeCurrentImage,
       setOlderImage,
@@ -538,10 +537,7 @@ class CreateEvent extends Component {
                       )}
                       <div className="item">
                         <div className="submit">
-                          <Mutation
-                            mutation={SIGNS3}
-                            variables={{ filename, filetype }}
-                          >
+                          <Mutation mutation={SIGNS3} variables={{ filetype }}>
                             {signS3 => {
                               return (
                                 <Mutation

@@ -51,6 +51,13 @@ const Onboard = ({
     e.preventDefault();
     // if (await validateForm()) {
     //photos[0].url = undefined;
+    delete photos[0].url;
+    // const publicPhotoList = produce(publicPhotos, draftState => {
+    //   draftState = draftState.map(file => {
+    //     delete file.url;
+    //     return file;
+    //   });
+    // });
     updateSettings({
       variables: {
         publicPhotoList: JSON.stringify(photos[0]),
@@ -82,7 +89,7 @@ const Onboard = ({
       return;
     }
 
-    signs3({ variables: { filename: file.filename, filetype: file.filetype } })
+    signs3({ variables: { filetype: file.filetype } })
       .then(({ data }) => {
         const { signedRequest, key } = data.signS3;
         uploadToS3(file, signedRequest);

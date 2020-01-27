@@ -1,5 +1,5 @@
 import React from "react";
-import './footer.css'
+import "./footer.css";
 const FooterLanding = ({
   t,
   tooltip,
@@ -19,7 +19,7 @@ const FooterLanding = ({
                 Foxtail © 2019 {t("Created by")} <span>Foxtail</span>
               </span>
             </div>
-            <div className="offset-md-2 col-md-6">
+            <div className="offset-md-1 col-md-7">
               <div className="links">
                 <ul>
                   <li>

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Mutation, withApollo } from "react-apollo";
 import axios from "axios";
-import produce from "immer";
 import {
   disableBodyScroll,
   enableBodyScroll,
   clearAllBodyScrollLocks
 } from "body-scroll-lock";
 import * as yup from "yup";
+import produce from "immer";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -270,16 +270,18 @@ class SettingsPage extends Component {
             }
           ];
         }
-
+        const privatePhotoList = produce(privatePhotos, draftState => {
+          draftState = draftState.map(file => {
+            delete file.url;
+            return file;
+          });
+        });
         this.setState(
           {
             privatePhotos,
             showModal: false,
             publicPhotoList: undefined,
-            privatePhotoList: privatePhotos.map(file => {
-              file.url = undefined;
-              return JSON.stringify(file);
-            })
+            privatePhotoList: privatePhotoList.map(file => JSON.stringify(file))
           },
           () => {
             this.handleSubmit(this.updateSettings);
@@ -310,25 +312,19 @@ class SettingsPage extends Component {
             }
           ];
         }
-
         const publicPhotoList = produce(publicPhotos, draftState => {
           draftState = draftState.map(file => {
             delete file.url;
-            console.log(file);
             return file;
           });
         });
-        console.log(publicPhotoList);
-        console.log(publicPhotos);
+
         this.setState(
           {
             publicPhotos,
             showModal: false,
             privatePhotoList: undefined,
-            publicPhotoList: publicPhotos.map(file => {
-              file.url = undefined;
-              return JSON.stringify(file);
-            })
+            publicPhotoList: publicPhotoList.map(file => JSON.stringify(file))
           },
           () => {
             this.handleSubmit(this.updateSettings);
@@ -883,7 +879,6 @@ class SettingsPage extends Component {
       includeMsgs,
       lang,
       fileRecieved,
-      filename,
       filetype,
       isPrivate,
       profilePic,
@@ -945,8 +940,7 @@ class SettingsPage extends Component {
           });
       }
     }
-    console.log("publicPhotos", publicPhotos);
-    console.log("publicPhotoList", publicPhotoList);
+
     return (
       <Mutation
         mutation={UPDATE_SETTINGS}
@@ -1229,7 +1223,7 @@ class SettingsPage extends Component {
                 </div>
               </div>
               {showImgEditorPopup && (
-                <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
+                <Mutation mutation={SIGNS3} variables={{ filetype }}>
                   {signS3 => {
                     return (
                       <ImageEditor
@@ -1248,7 +1242,7 @@ class SettingsPage extends Component {
                 </Mutation>
               )}
               {showImgCropperPopup && (
-                <Mutation mutation={SIGNS3} variables={{ filename, filetype }}>
+                <Mutation mutation={SIGNS3} variables={{ filetype }}>
                   {signS3 => {
                     return (
                       <ImageCropper

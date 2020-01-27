@@ -171,8 +171,8 @@ export const SEND_MESSAGE = gql`
 `;
 
 export const MESSAGE_ADMIN = gql`
-  mutation($name: String, $email: String, $text: String!) {
-    messageAdmin(name: $name, email: $email, text: $text)
+  mutation($name: String, $email: String, $text: String!, $type: String) {
+    messageAdmin(name: $name, email: $email, text: $text, type: $type)
   }
 `;
 
@@ -442,8 +442,8 @@ export const FB_RESET_PHONE = gql`
 `;
 
 export const SIGNS3 = gql`
-  mutation($filename: String!, $filetype: String!) {
-    signS3(filename: $filename, filetype: $filetype) {
+  mutation($filetype: String!) {
+    signS3(filetype: $filetype) {
       key
       signedRequest
     }
