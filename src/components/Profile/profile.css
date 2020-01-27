@@ -60,8 +60,8 @@ section.profile .avatar-content {
 
 section.profile .avatar-card {
   width: 80%;
-  display: block;
-  float: left;
+  display: flex;
+  flex-direction: column;
   border-radius: 2px;
   background-color: #fff;
   padding: 15px;
