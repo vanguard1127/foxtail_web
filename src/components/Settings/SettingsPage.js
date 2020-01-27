@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Mutation, withApollo } from "react-apollo";
 import axios from "axios";
+import produce from "immer";
 import {
   disableBodyScroll,
   enableBodyScroll,
@@ -275,7 +276,10 @@ class SettingsPage extends Component {
             privatePhotos,
             showModal: false,
             publicPhotoList: undefined,
-            privatePhotoList: privatePhotos.map(file => JSON.stringify(file))
+            privatePhotoList: privatePhotos.map(file => {
+              file.url = undefined;
+              return JSON.stringify(file);
+            })
           },
           () => {
             this.handleSubmit(this.updateSettings);
@@ -307,12 +311,24 @@ class SettingsPage extends Component {
           ];
         }
 
+        const publicPhotoList = produce(publicPhotos, draftState => {
+          draftState = draftState.map(file => {
+            delete file.url;
+            console.log(file);
+            return file;
+          });
+        });
+        console.log(publicPhotoList);
+        console.log(publicPhotos);
         this.setState(
           {
             publicPhotos,
             showModal: false,
             privatePhotoList: undefined,
-            publicPhotoList: publicPhotos.map(file => JSON.stringify(file))
+            publicPhotoList: publicPhotos.map(file => {
+              file.url = undefined;
+              return JSON.stringify(file);
+            })
           },
           () => {
             this.handleSubmit(this.updateSettings);
@@ -929,7 +945,8 @@ class SettingsPage extends Component {
           });
       }
     }
-
+    console.log("publicPhotos", publicPhotos);
+    console.log("publicPhotoList", publicPhotoList);
     return (
       <Mutation
         mutation={UPDATE_SETTINGS}

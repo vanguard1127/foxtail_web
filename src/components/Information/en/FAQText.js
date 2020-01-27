@@ -1,12 +1,6 @@
 import React from "react";
-import { Mutation } from "react-apollo";
-import { SEEN_TOUR } from "../../../queries";
 
 const FAQ = () => {
-  const seenTourNotify = seenTour => {
-    seenTour();
-    alert("Tour Reset. Please visit the app to see the tours.");
-  };
   return (
     <div>
       <ul>
@@ -134,33 +128,6 @@ const FAQ = () => {
             and reply to messages, search for members, and attend events. And if
             you want more, you can easily upgrade to "BLACK" membership for a
             small monthly cost.
-          </p>
-        </li>
-        <li>
-          <p>Can I see the tutorial again?</p>
-          <p>
-            Sure. Once logged in. Click here:{" "}
-            <Mutation
-              mutation={SEEN_TOUR}
-              variables={{
-                tour: "reset"
-              }}
-            >
-              {seenTour => {
-                return (
-                  <span
-                    onClick={() => seenTourNotify(seenTour)}
-                    style={{
-                      textDecoration: "underline",
-                      color: "blue",
-                      cursor: "pointer"
-                    }}
-                  >
-                    Reset Tour
-                  </span>
-                );
-              }}
-            </Mutation>
           </p>
         </li>
       </ul>

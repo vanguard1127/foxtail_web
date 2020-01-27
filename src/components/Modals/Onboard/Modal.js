@@ -50,7 +50,7 @@ const Onboard = ({
   const handleSubmit = async e => {
     e.preventDefault();
     // if (await validateForm()) {
-    photos[0].url = undefined;
+    //photos[0].url = undefined;
     updateSettings({
       variables: {
         publicPhotoList: JSON.stringify(photos[0]),
@@ -61,6 +61,7 @@ const Onboard = ({
     })
       .then(data => {
         if (data.updateSettings) {
+          console.log("OJOJOJ");
           ReactGA.event({
             category: "Onboarding",
             action: "Complete"
