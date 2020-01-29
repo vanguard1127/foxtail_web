@@ -24,7 +24,7 @@ const Onboard = ({
   const [photoList, setPhotoList] = useState([]);
   const [photoFile, setPhotoFile] = useState(undefined);
   const [kinkPopupVisible, setKinkPopupVisible] = useState(false);
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(0);
   const [errors] = useState({});
 
   const [signs3] = useMutation(SIGNS3);
@@ -76,18 +76,6 @@ const Onboard = ({
     }
     handleUploadToS3(photoFile.filebody)
       .then(key => {
-        //TODO:UNDIO
-        console.log("3");
-        console.log(
-          "KEY",
-          key,
-          "SUBMIOT",
-          photoList.map(file => {
-            file.url = undefined;
-            file.key = key;
-            return JSON.stringify(file);
-          })
-        );
         updateSettings({
           variables: {
             publicPhotoList: photoList.map(file => {
@@ -96,8 +84,8 @@ const Onboard = ({
               return JSON.stringify(file);
             }),
             profilePic: photoList[0].key,
-            about: "sdfjhfkjsdhnfkesjfhnwefuhwefuewifewrhfurefhirue",
-            kinks: ["spanking"]
+            about,
+            kinks
           }
         }).then(({ data }) => {
           if (data.updateSettings) {
@@ -106,14 +94,16 @@ const Onboard = ({
               action: "Complete"
             });
             refetch();
-            history.push("/members");
+            history.push({
+              pathname: "/members",
+              state: { initial: true }
+            });
           } else {
             ErrorHandler.catchErrors("Onboarding error occured");
           }
         });
       })
       .catch(res => {
-        console.log(res);
         ErrorHandler.catchErrors(res);
       });
   };
@@ -134,14 +124,12 @@ const Onboard = ({
 
       return key;
     } catch (res) {
-      console.log(res);
       ErrorHandler.catchErrors(res);
     }
   }
 
   const uploadToS3 = async (filebody, signedRequest) => {
     try {
-      console.log("GO", filebody);
       //ORIGINAL
       const options = {
         headers: {

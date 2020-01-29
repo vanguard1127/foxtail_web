@@ -5,7 +5,7 @@ import OnboardModal from "./Modal";
 import Spinner from "../../common/Spinner";
 import { withRouter } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
-class Tour extends PureComponent {
+class Onboard extends PureComponent {
   componentDidMount() {
     this.mounted = true;
   }
@@ -14,11 +14,13 @@ class Tour extends PureComponent {
   }
 
   render() {
-    const { t, tReady, ReactGA, history, refetch } = this.props;
+    const { t, tReady, ReactGA, history, refetch, location } = this.props;
     if (!tReady) {
       return <Spinner />;
     }
-
+    if (!location.state) {
+      history.push("/settings");
+    }
     return (
       <div>
         <OnboardModal
@@ -728,4 +730,4 @@ class Tour extends PureComponent {
   }
 }
 
-export default withRouter(withTranslation("searchprofiles")(Tour));
+export default withRouter(withTranslation("searchprofiles")(Onboard));

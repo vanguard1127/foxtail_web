@@ -2,14 +2,18 @@
 import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { GET_SEARCH_SETTINGS } from "../../queries";
+import { withRouter } from "react-router-dom";
 import SearchProfilesPage from "./SearchProfilesPage";
 import ShareModal from "../Modals/Share";
+import WelcomeModal from "../Modals/Welcome";
 import Spinner from "../common/Spinner";
 import { withTranslation } from "react-i18next";
 
 class SearchProfiles extends Component {
   state = {
-    shareModalVisible: false
+    shareModalVisible: false,
+    welcomeModalVisible:
+      this.props.location.state && this.props.location.state.initial
   };
   componentDidMount() {
     window.scrollTo(0, 1);
@@ -17,7 +21,8 @@ class SearchProfiles extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.tReady !== nextProps.tReady ||
-      this.state.shareModalVisible !== nextState.shareModalVisible
+      this.state.shareModalVisible !== nextState.shareModalVisible ||
+      this.state.welcomeModalVisible !== nextState.welcomeModalVisible
     ) {
       return true;
     }
@@ -35,8 +40,20 @@ class SearchProfiles extends Component {
     this.setState({ shareModalVisible: !this.state.shareModalVisible });
   };
 
+  toggleWelcomeModal = () => {
+    this.props.ErrorHandler.setBreadcrumb("Welcome Modal Toggled:");
+    if (!this.state.welcomeModalVisible) {
+      this.props.ReactGA.event({
+        category: "Welcome Messages Seen",
+        action: "Welcome Modal"
+      });
+    }
+    this.props.history.replace({ state: {} });
+    this.setState({ welcomeModalVisible: !this.state.welcomeModalVisible });
+  };
+
   render() {
-    const { shareModalVisible } = this.state;
+    const { shareModalVisible, welcomeModalVisible } = this.state;
     const {
       t,
       ErrorHandler,
@@ -46,6 +63,7 @@ class SearchProfiles extends Component {
       session,
       dayjs
     } = this.props;
+
     if (!tReady) {
       return <Spinner />;
     }
@@ -82,6 +100,14 @@ class SearchProfiles extends Component {
                 toggleShareModal={this.toggleShareModal}
                 dayjs={dayjs}
               />
+              {welcomeModalVisible && (
+                <WelcomeModal
+                  visible={welcomeModalVisible}
+                  close={this.toggleWelcomeModal}
+                  ErrorBoundary={ErrorHandler.ErrorBoundary}
+                  t={t}
+                />
+              )}
               {shareModalVisible && (
                 <ShareModal
                   userID={session.currentuser.userID}
@@ -99,4 +125,4 @@ class SearchProfiles extends Component {
   }
 }
 
-export default withTranslation("searchprofiles")(SearchProfiles);
+export default withRouter(withTranslation("searchprofiles")(SearchProfiles));

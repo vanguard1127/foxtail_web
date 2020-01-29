@@ -903,7 +903,7 @@ class SettingsPage extends Component {
       clearPassDlg,
       verifications
     } = this.state;
-    console.log(profilePic, profilePicUrl, "jhghjjhghj");
+
     const {
       t,
       ErrorHandler,

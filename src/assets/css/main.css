@@ -2103,7 +2103,18 @@ img {
 .SocialMediaShareButton {
   margin: 0 15px;
 }
-
+.icon-box {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.stopwatch::before {
+  content: "\e800";
+  color: #f50043;
+  font-size: 50px;
+  background-image: none;
+  font-family: "foxtail-icon";
+}
 .deleteProfile {
   width: 90px;
   height: 45px;
