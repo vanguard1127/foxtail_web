@@ -15,15 +15,16 @@ const Onboard = ({
   t,
   ErrorHandler,
   tReady,
-  refetch,
   history,
-  ReactGA
+  ReactGA,
+  refetch
 }) => {
   const [about, setAbout] = useState("");
   const [kinks, setKinks] = useState([]);
-  const [photos, setPhotos] = useState([]);
+  const [photoList, setPhotoList] = useState([]);
+  const [photoFile, setPhotoFile] = useState(undefined);
   const [kinkPopupVisible, setKinkPopupVisible] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(2);
   const [errors] = useState({});
 
   const [signs3] = useMutation(SIGNS3);
@@ -47,53 +48,69 @@ const Onboard = ({
     }
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    // if (await validateForm()) {
-    //photos[0].url = undefined;
-    delete photos[0].url;
-    // const publicPhotoList = produce(publicPhotos, draftState => {
-    //   draftState = draftState.map(file => {
-    //     delete file.url;
-    //     return file;
-    //   });
-    // });
-    updateSettings({
-      variables: {
-        publicPhotoList: JSON.stringify(photos[0]),
-        profilePic: photos[0].key,
-        about,
-        kinks
-      }
-    })
-      .then(data => {
-        if (data.updateSettings) {
-          console.log("OJOJOJ");
-          ReactGA.event({
-            category: "Onboarding",
-            action: "Complete"
-          });
-          history.push("/members");
-        } else {
-          ErrorHandler.catchErrors("Onboarding error occured");
-        }
-      })
-      .catch(res => {
-        console.log(res);
-        ErrorHandler.catchErrors(res);
-      });
-  };
-
   const handleUpload = file => {
-    if (file === "") {
+    ErrorHandler.setBreadcrumb("Onboarding upload");
+    if (!file) {
+      ErrorHandler.setBreadcrumb("no file");
       return;
     }
+    setPhotoFile(file);
+    setPhotoList(photoList => {
+      photoList.push({
+        uid: Date.now(),
+        url: file.dataURL,
+        id: Date.now()
+      });
+      return photoList;
+    });
 
-    signs3({ variables: { filetype: file.filetype } })
-      .then(({ data }) => {
-        const { signedRequest, key } = data.signS3;
-        uploadToS3(file, signedRequest);
-        handlePhotoListChange({ file, key });
+    toast.dismiss();
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    // if (await validateForm()) {
+
+    if (photoList.length < 1 || photoFile === undefined) {
+      alert("Please upload an image");
+    }
+    handleUploadToS3(photoFile.filebody)
+      .then(key => {
+        //TODO:UNDIO
+        console.log("3");
+        console.log(
+          "KEY",
+          key,
+          "SUBMIOT",
+          photoList.map(file => {
+            file.url = undefined;
+            file.key = key;
+            return JSON.stringify(file);
+          })
+        );
+        updateSettings({
+          variables: {
+            publicPhotoList: photoList.map(file => {
+              file.url = undefined;
+              file.key = key;
+              return JSON.stringify(file);
+            }),
+            profilePic: photoList[0].key,
+            about: "sdfjhfkjsdhnfkesjfhnwefuhwefuewifewrhfurefhirue",
+            kinks: ["spanking"]
+          }
+        }).then(({ data }) => {
+          if (data.updateSettings) {
+            ReactGA.event({
+              category: "Onboarding",
+              action: "Complete"
+            });
+            refetch();
+            history.push("/members");
+          } else {
+            ErrorHandler.catchErrors("Onboarding error occured");
+          }
+        });
       })
       .catch(res => {
         console.log(res);
@@ -101,19 +118,43 @@ const Onboard = ({
       });
   };
 
-  const uploadToS3 = async (file, signedRequest) => {
+  async function handleUploadToS3(filebody) {
+    if (filebody === "") {
+      return;
+    }
     try {
+      const { data } = await signs3({
+        variables: {
+          filetype: filebody.type
+        }
+      });
+
+      const { signedRequest, key } = data.signS3;
+      uploadToS3(filebody, signedRequest);
+
+      return key;
+    } catch (res) {
+      console.log(res);
+      ErrorHandler.catchErrors(res);
+    }
+  }
+
+  const uploadToS3 = async (filebody, signedRequest) => {
+    try {
+      console.log("GO", filebody);
       //ORIGINAL
       const options = {
         headers: {
-          "Content-Type": file.type
+          "Content-Type": filebody.type
         }
       };
-      const resp = await axios.put(signedRequest, file, options);
+
+      const resp = await axios.put(signedRequest, filebody, options);
       if (resp.status !== 200) {
-        toast.error(t("uploaderror"));
+        this.props.toast.error(this.props.t("uplerr"));
       }
     } catch (e) {
+      console.error(e);
       ErrorHandler.catchErrors(e);
     }
   };
@@ -127,30 +168,6 @@ const Onboard = ({
     e.preventDefault();
 
     setCurrentPage(currentPage - 1);
-  };
-
-  const handlePhotoListChange = ({ file, key, isDeleted }) => {
-    ErrorHandler.setBreadcrumb("isDeleted:" + isDeleted + "key:" + key);
-    if (!file) {
-      ErrorHandler.setBreadcrumb("no file");
-      return;
-    }
-
-    if (isDeleted) {
-      setPhotos([]);
-
-      toast.success(t("photodel"));
-    } else {
-      setPhotos([
-        {
-          uid: Date.now(),
-          key,
-          url: file.dataURL,
-          id: Date.now()
-        }
-      ]);
-      toast.dismiss();
-    }
   };
 
   let body, description;
@@ -211,6 +228,7 @@ const Onboard = ({
   } else {
     description =
       "Please upload a picture of yourself. (Tip: Use the mask feature to conceal your identity)";
+
     body = (
       <div className="content">
         <div className="content">
@@ -218,8 +236,7 @@ const Onboard = ({
             single
             t={t}
             ErrorHandler={ErrorHandler}
-            photos={photos}
-            handlePhotoListChange={handlePhotoListChange}
+            photos={photoList}
             handleUpload={handleUpload}
           />
         </div>

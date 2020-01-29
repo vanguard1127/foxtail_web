@@ -126,7 +126,7 @@ class EditCanvasImage extends PureComponent {
       close
     } = this.props;
     file.filename = "propic.jpg";
-    await setS3PhotoParams(file.filename, file.filetype);
+    await setS3PhotoParams(file.filetype);
     await signS3()
       .then(async ({ data }) => {
         const { signedRequest, key } = data.signS3;

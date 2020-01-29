@@ -57,7 +57,8 @@ dayjs.extend(advancedFormat);
 const client = new ApolloClient({
   link,
   cache,
-  assumeImmutableResults: true
+  assumeImmutableResults: true,
+  connectToDevTools: process.env.NODE_ENV !== "production"
 });
 
 const Root = () => (

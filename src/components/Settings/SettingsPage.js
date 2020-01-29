@@ -206,27 +206,29 @@ class SettingsPage extends Component {
     this.mounted = false;
   }
 
-  handleUpload = async (file, signS3, isPrivate) => {
-    await signS3()
-      .then(async ({ data }) => {
-        const { signedRequest, key } = data.signS3;
+  handleUpload = (file, signS3, isPrivate) => {
+    this.setState({ filetype: file.filetype }, async () => {
+      await signS3()
+        .then(async ({ data }) => {
+          const { signedRequest, key } = data.signS3;
 
-        this.handlePhotoListChange({
-          file,
-          key,
-          isPrivate,
-          isDeleted: false
+          this.handlePhotoListChange({
+            file,
+            key,
+            isPrivate,
+            isDeleted: false
+          });
+          this.uploadToS3(file.filebody, signedRequest);
+
+          this.props.toast.dismiss();
+
+          this.toggleImgEditorPopup();
+        })
+        .catch(res => {
+          console.error(res);
+          this.props.ErrorHandler.catchErrors(res.graphQLErrors);
         });
-        this.uploadToS3(file.filebody, signedRequest);
-
-        this.props.toast.dismiss();
-
-        this.toggleImgEditorPopup();
-      })
-      .catch(res => {
-        console.error(res);
-        this.props.ErrorHandler.catchErrors(res.graphQLErrors);
-      });
+    });
   };
 
   handlePhotoListChange = ({ file, key, isPrivate, isDeleted }) => {
@@ -610,10 +612,9 @@ class SettingsPage extends Component {
     }
   };
 
-  setS3PhotoParams = (name, type) => {
+  setS3PhotoParams = type => {
     if (this.mounted) {
       this.setState({
-        filename: name,
         filetype: type
       });
     }
@@ -902,7 +903,7 @@ class SettingsPage extends Component {
       clearPassDlg,
       verifications
     } = this.state;
-
+    console.log(profilePic, profilePicUrl, "jhghjjhghj");
     const {
       t,
       ErrorHandler,

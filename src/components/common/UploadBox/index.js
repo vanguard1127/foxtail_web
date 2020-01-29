@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Upload from "rc-upload";
-import axios from "axios";
 import "./UploadImageComponentStyle.css";
 import ImageEditor from "../../Modals/ImageEditor";
 import ImageCropper from "../../Modals/ImageCropper";
@@ -132,15 +131,6 @@ const UploadComponent = ({
   const editorPopup = editorVisible && (
     <ImageEditor
       file={fileRecieved}
-      handlePhotoListChange={({ file, key, url }) => {
-        handlePhotoListChange({
-          file,
-          key,
-          url,
-          isPrivate,
-          isDeleted: false
-        });
-      }}
       handleUpload={uploadAndClose}
       close={toggleImgEditorPopup}
       ErrorHandler={ErrorHandler}

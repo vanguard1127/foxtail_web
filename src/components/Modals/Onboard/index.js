@@ -14,14 +14,21 @@ class Tour extends PureComponent {
   }
 
   render() {
-    const { t, tReady } = this.props;
+    const { t, tReady, ReactGA, history, refetch } = this.props;
     if (!tReady) {
       return <Spinner />;
     }
 
     return (
       <div>
-        <OnboardModal visible={true} ErrorHandler={ErrorHandler} t={t} />
+        <OnboardModal
+          visible={true}
+          ErrorHandler={ErrorHandler}
+          t={t}
+          ReactGA={ReactGA}
+          history={history}
+          refetch={refetch}
+        />
         <section className="meet-filter">
           <div className="container" data-tut="criteria">
             <div className="col-md-12">

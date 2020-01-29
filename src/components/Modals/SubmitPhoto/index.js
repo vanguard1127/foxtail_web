@@ -31,7 +31,7 @@ class PhotoVerify extends PureComponent {
 
     const file = photos[0];
 
-    await this.setS3PhotoParams(file.name, file.type);
+    await this.setS3PhotoParams(file.type);
 
     await signS3()
       .then(async ({ data }) => {
@@ -66,10 +66,9 @@ class PhotoVerify extends PureComponent {
       });
   };
 
-  setS3PhotoParams = (name, type) => {
+  setS3PhotoParams = type => {
     if (this.mounted) {
       this.setState({
-        filename: name,
         filetype: type
       });
     }

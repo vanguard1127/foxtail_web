@@ -150,73 +150,78 @@ class EditCanvasImage extends PureComponent {
     }
   };
 
-  handleExportClick = () => {
+  handleExportClick = async () => {
     const { rotation, imageHeight, imageWidth, scale, uploading } = this.state;
     const { t, handleUpload, close } = this.props;
     if (this.mounted && !uploading && this.SourceImageRef) {
-      this.setState({ hideTransformer: true, uploading: true }, async () => {
-        try {
-          if (!toast.isActive("upload")) {
-            toast.success(t("secupload"), {
-              toastId: "upload",
-              autoClose: false,
-              hideProgressBar: false
+      await this.setState(
+        { hideTransformer: true, uploading: true },
+        async () => {
+          try {
+            if (!toast.isActive("upload")) {
+              toast.success(t("secupload"), {
+                toastId: "upload",
+                autoClose: false,
+                hideProgressBar: false
+              });
+            }
+            const rotDegrees = rotation % 360;
+            const scaledImgWidth =
+              rotDegrees === 0 || rotDegrees === 180
+                ? imageWidth * scale
+                : imageHeight * scale;
+            const scaledImgHeight =
+              rotDegrees === 0 || rotDegrees === 180
+                ? imageHeight * scale
+                : imageWidth * scale;
+
+            const x = this.groupRef.x() - scaledImgWidth / 2;
+            const y = this.groupRef.y() - scaledImgHeight / 2;
+
+            const dataURL = this.groupRef.toDataURL({
+              mimeType: "image/jpeg",
+              x,
+              y,
+              width: scaledImgWidth,
+              height: scaledImgHeight,
+              quality: 1,
+              pixelRatio: this.pixelRatio
             });
-          }
-          const rotDegrees = rotation % 360;
-          const scaledImgWidth =
-            rotDegrees === 0 || rotDegrees === 180
-              ? imageWidth * scale
-              : imageHeight * scale;
-          const scaledImgHeight =
-            rotDegrees === 0 || rotDegrees === 180
-              ? imageHeight * scale
-              : imageWidth * scale;
 
-          const x = this.groupRef.x() - scaledImgWidth / 2;
-          const y = this.groupRef.y() - scaledImgHeight / 2;
+            if (!dataURL || dataURL === "") {
+              this.props.ErrorHandler.catchErrors({
+                error: "ERROR: Data url empty",
+                dataURL
+              });
+            }
 
-          const dataURL = this.groupRef.toDataURL({
-            mimeType: "image/jpeg",
-            x,
-            y,
-            width: scaledImgWidth,
-            height: scaledImgHeight,
-            quality: 1,
-            pixelRatio: this.pixelRatio
-          });
+            fetch(dataURL).then(blobResp => {
+              blobResp.blob().then(blobData => {
+                if (Object.getOwnPropertyNames(blobData).length < 0) {
+                  this.props.ErrorHandler.catchErrors({
+                    error:
+                      "Data Blob ERROR: File not loaded properly. File object:",
+                    blobData,
+                    dataURL
+                  });
+                  window.location.reload(false);
+                }
 
-          if (!dataURL || dataURL === "") {
-            this.props.ErrorHandler.catchErrors({
-              error: "ERROR: Data url empty",
-              dataURL
+                const file = {
+                  filename: this.props.imageObject.name,
+                  filetype: "image/jpeg",
+                  filebody: blobData,
+                  dataURL
+                };
+
+                handleUpload(file);
+              });
             });
+          } catch (e) {
+            this.props.ErrorHandler.catchErrors(e);
           }
-
-          const blobResp = await fetch(dataURL);
-          const blobData = await blobResp.blob();
-
-          if (Object.getOwnPropertyNames(blobData).length < 0) {
-            this.props.ErrorHandler.catchErrors({
-              error: "Data Blob ERROR: File not loaded properly. File object:",
-              blobData,
-              dataURL
-            });
-            window.location.reload(false);
-          }
-
-          const file = {
-            filename: this.props.imageObject.name,
-            filetype: "image/jpeg",
-            filebody: blobData,
-            dataURL
-          };
-
-          await handleUpload(file);
-        } catch (e) {
-          this.props.ErrorHandler.catchErrors(e);
         }
-      });
+      );
     }
   };
 

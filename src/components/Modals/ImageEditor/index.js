@@ -18,7 +18,6 @@ class ImageEditor extends Component {
     const {
       close,
       file,
-      handlePhotoListChange,
       handleUpload,
       signS3,
       t,
@@ -37,7 +36,6 @@ class ImageEditor extends Component {
                 imageObject={file}
                 handleUpload={handleUpload}
                 signS3={signS3}
-                handlePhotoListChange={handlePhotoListChange}
                 close={close}
                 t={t}
                 ErrorHandler={ErrorHandler}
