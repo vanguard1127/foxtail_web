@@ -15,5 +15,10 @@
   "Welcome to the Member Search page.": "Welcome to the Member Search page.",
   "Set your preferences to find members you'd like to meet. This uses your current location unless you have Black Membership.": "Set your preferences to find members you'd like to meet. This uses your current location unless you have Black Membership.",
   "Here are all the members that meet your criteria.": "Here are all the members that meet your criteria.",
-  "whenyousee": "When you find someone you're interested in, click their name to go to their profile. **Click this user's profile**"
+  "whenyousee": "When you find someone you're interested in, click their name to go to their profile. **Click this user's profile**",
+  "welcomemsg": "Please confirm your email before contacting members. Check your SPAM, just if you don't see it.",
+  "welcome": "Welcome to Foxtail",
+  "newbonus": "New Member Bonus expires in",
+  "minutes": "minutes",
+  "getthis": "LIKE 3 members to BOOST your profile to the top of their search results!"
 }

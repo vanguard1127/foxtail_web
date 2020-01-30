@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../../common/Modal";
-import { withTranslation } from "react-i18next";
-
+var timer;
 const Welcome = ({ close, t, ErrorBoundary, tReady }) => {
   const [timeLeft, setTimeLeft] = useState(59);
   const [mtimeLeft, setMTimeLeft] = useState(5);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (mtimeLeft === 0) {
-        clearTimeout();
-      }
+    if (mtimeLeft === 0 && timeLeft === 0) {
+      clearTimeout(timer);
+      return;
+    }
+    timer = setTimeout(() => {
       if (timeLeft === 0) {
         setTimeLeft(59);
         setMTimeLeft(mtimeLeft - 1);
@@ -20,13 +20,10 @@ const Welcome = ({ close, t, ErrorBoundary, tReady }) => {
     }, 1000);
   });
 
-  if (!tReady) {
-    return null;
-  }
   const body = t("welcomemsg");
   const header = <div>{t("welcome")}</div>;
   const formattedNumber = ("0" + timeLeft).slice(-2);
-  // let refUrl = `${process.env.REACT_APP_CLIENT_URL}/${data.setFullLink}`;
+
   return (
     <Modal header={header} close={close}>
       <ErrorBoundary>
@@ -34,7 +31,8 @@ const Welcome = ({ close, t, ErrorBoundary, tReady }) => {
           style={{
             justifyContent: "center",
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "column",
+            textAlign: "center"
           }}
         >
           {body}
@@ -42,11 +40,7 @@ const Welcome = ({ close, t, ErrorBoundary, tReady }) => {
           <div className="icon-box">
             <div className="stopwatch" />
           </div>
-          <p
-            style={{
-              textAlign: "center"
-            }}
-          >
+          <p>
             {t("newbonus") + " "}
             <b> {mtimeLeft + ":" + formattedNumber + " " + t("minutes")}</b>
             <br />
@@ -58,4 +52,4 @@ const Welcome = ({ close, t, ErrorBoundary, tReady }) => {
   );
 };
 
-export default withTranslation("modals")(Welcome);
+export default Welcome;

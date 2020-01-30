@@ -22,6 +22,7 @@ const Onboard = ({
   const [about, setAbout] = useState("");
   const [kinks, setKinks] = useState([]);
   const [photoList, setPhotoList] = useState([]);
+  const [saving, setSaving] = useState(false);
   const [photoFile, setPhotoFile] = useState(undefined);
   const [kinkPopupVisible, setKinkPopupVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -70,7 +71,7 @@ const Onboard = ({
   const handleSubmit = e => {
     e.preventDefault();
     // if (await validateForm()) {
-
+    setSaving(true);
     if (photoList.length < 1 || photoFile === undefined) {
       alert("Please upload an image");
     }
@@ -120,7 +121,7 @@ const Onboard = ({
       });
 
       const { signedRequest, key } = data.signS3;
-      uploadToS3(filebody, signedRequest);
+      await uploadToS3(filebody, signedRequest);
 
       return key;
     } catch (res) {
@@ -231,7 +232,7 @@ const Onboard = ({
         <div className="item">
           <div className="submit">
             <button onClick={handleSubmit} className="color">
-              Complete
+              {!saving ? "Complete" : "Saving..."}
             </button>
             <span className="border" onClick={prevPage}>
               {t("Back")}

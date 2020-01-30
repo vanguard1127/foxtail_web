@@ -48,8 +48,8 @@ class SearchProfiles extends Component {
         action: "Welcome Modal"
       });
     }
-    this.props.history.replace({ state: {} });
     this.setState({ welcomeModalVisible: !this.state.welcomeModalVisible });
+    this.props.history.replace({ state: {} });
   };
 
   render() {
