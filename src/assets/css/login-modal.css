@@ -143,7 +143,14 @@ section.login-modal .popup form {
 
 /* For nested popup */
 
-section.login-modal .popup form .form-content form .form-content .dropdown span {
+section.login-modal
+  .popup
+  form
+  .form-content
+  form
+  .form-content
+  .dropdown
+  span {
   line-height: 0px !important;
   text-align: start !important;
   font-size: 13px !important;
@@ -211,7 +218,12 @@ section.login-modal .popup form .form-content .input textarea {
   font-weight: 400;
 }
 
-section.login-modal .popup form .form-content .input input::-webkit-input-placeholder {
+section.login-modal
+  .popup
+  form
+  .form-content
+  .input
+  input::-webkit-input-placeholder {
   color: #8c909d;
 }
 
@@ -219,7 +231,12 @@ section.login-modal .popup form .form-content .input input::-moz-placeholder {
   color: #8c909d;
 }
 
-section.login-modal .popup form .form-content .input input:-ms-input-placeholder {
+section.login-modal
+  .popup
+  form
+  .form-content
+  .input
+  input:-ms-input-placeholder {
   color: #8c909d;
 }
 
@@ -318,7 +335,13 @@ section.login-modal
   padding: 12px 19px 0 14px;
 }
 
-section.login-modal .popup form .form-content .dropdown .select2-container--default .select2-selection--single {
+section.login-modal
+  .popup
+  form
+  .form-content
+  .dropdown
+  .select2-container--default
+  .select2-selection--single {
   height: 50px;
   border-color: #e9ebec !important;
 }
@@ -441,6 +464,11 @@ section.login-modal .popup form .form-content .submit button.color {
   color: #fff;
   margin-bottom: 15px;
   margin-top: 5px;
+}
+
+section.login-modal .popup form .form-content .submit span.color:disabled,
+section.login-modal .popup form .form-content .submit button.color:disabled {
+  background-image: unset;
 }
 
 section.login-modal .popup form .form-content .submit span.disabled,

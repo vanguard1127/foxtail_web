@@ -26,17 +26,9 @@ const Onboard = ({
   const [photoFile, setPhotoFile] = useState(undefined);
   const [kinkPopupVisible, setKinkPopupVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [errors] = useState({});
 
   const [signs3] = useMutation(SIGNS3);
   const [updateSettings] = useMutation(UPDATE_SETTINGS);
-
-  const InputFeedback = error =>
-    error ? (
-      <div className="input-feedback" style={{ color: "red" }}>
-        {error}
-      </div>
-    ) : null;
 
   const toggleKinksPopup = () => {
     setKinkPopupVisible(!kinkPopupVisible);
@@ -70,7 +62,6 @@ const Onboard = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    // if (await validateForm()) {
     setSaving(true);
     if (photoList.length < 1 || photoFile === undefined) {
       alert("Please upload an image");
@@ -172,18 +163,21 @@ const Onboard = ({
             <textarea
               tabIndex="3"
               placeholder={
-                "What are you looking for on Foxtail? Likes/Dislikes? Fantasies?..."
+                "Who are you? What are you looking for on Foxtail? Likes/Dislikes? Fantasies? (Must be at least 20 characters)"
               }
               onChange={el => setAbout(el.target.value)}
               value={about}
             />
           </div>
-          {InputFeedback(t(errors.about))}
         </div>
 
         <div className="item">
           <div className="submit">
-            <button onClick={nextPage} className="color">
+            <button
+              onClick={nextPage}
+              className="color"
+              disabled={!about || about.length < 20}
+            >
               {t("common:Next")}
             </button>
           </div>
@@ -191,7 +185,7 @@ const Onboard = ({
       </div>
     );
   } else if (currentPage === 1) {
-    description = "What are you into or curious to try?";
+    description = "What are you into or curious to try? (At least 1)";
     body = (
       <div className="content">
         <div className="item">
@@ -204,7 +198,11 @@ const Onboard = ({
         </div>
         <div className="item">
           <div className="submit">
-            <button onClick={nextPage} className="color">
+            <button
+              onClick={nextPage}
+              className="color"
+              disabled={!kinks || kinks.length < 1}
+            >
               {t("common:Next")}
             </button>
             <span className="border" onClick={prevPage}>
@@ -216,7 +214,7 @@ const Onboard = ({
     );
   } else {
     description =
-      "Please upload a picture of yourself. (Tip: Use the mask feature to conceal your identity)";
+      "Please upload a picture of yourself. (Tip: The Mask feature conceals your identity)";
 
     body = (
       <div className="content">
@@ -231,7 +229,11 @@ const Onboard = ({
         </div>
         <div className="item">
           <div className="submit">
-            <button onClick={handleSubmit} className="color">
+            <button
+              onClick={handleSubmit}
+              className="color"
+              disabled={!photoFile}
+            >
               {!saving ? "Complete" : "Saving..."}
             </button>
             <span className="border" onClick={prevPage}>
