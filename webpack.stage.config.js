@@ -29,22 +29,22 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ["cache-loader", MiniCssExtractPlugin.loader, "css-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
         exclude: ["/src/assets/favicon.ico", "/src/assets/static"],
-        use: ["cache-loader", "file-loader"]
+        use: ["file-loader"]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         exclude: /node_modules/,
-        use: ["cache-loader", "file-loader"]
+        use: ["file-loader"]
       },
       {
         test: /\.(wav|mp3)$/,
         exclude: /node_modules/,
-        use: ["cache-loader", "file-loader"]
+        use: ["file-loader"]
       },
       {
         test: /\.hbs$/,
@@ -54,7 +54,6 @@ module.exports = {
         // Exposes jQuery for use outside Webpack build
         test: require.resolve("jquery"),
         use: [
-          "cache-loader",
           {
             loader: "expose-loader",
             options: "jQuery"
@@ -121,15 +120,15 @@ module.exports = {
     ]),
     new CleanWebpackPlugin(),
     new Dotenv({ path: "./.env.stage", defaults: true }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    }),
     new OfflinePlugin({
       ServiceWorker: {
         events: true,
         minify: true
       }
-    }),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
     })
   ]
 };

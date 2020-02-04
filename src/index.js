@@ -86,15 +86,13 @@ render(
   document.getElementById("root")
 );
 
-if (process.env.NODE_ENV !== "production") {
-  OfflinePluginRuntime.install({
-    onUpdateReady: () => {
-      // Tells to new SW to take control immediately
-      OfflinePluginRuntime.applyUpdate();
-    },
-    onUpdated: () => {
-      // Reload the webpage to load into the new version
-      window.location.reload();
-    }
-  });
-}
+OfflinePluginRuntime.install({
+  onUpdateReady: () => {
+    // Tells to new SW to take control immediately
+    OfflinePluginRuntime.applyUpdate();
+  },
+  onUpdated: () => {
+    // Reload the webpage to load into the new version
+    window.location.reload();
+  }
+});
