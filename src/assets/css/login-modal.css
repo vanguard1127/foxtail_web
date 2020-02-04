@@ -190,8 +190,8 @@ section.login-modal .popup form .form-content .input input {
   outline: none;
   border: 1px solid #e9ebec;
   border-radius: 2px;
-  height: 50px;
-  padding: 2px 20px 0 20px;
+  height: 50px !important;
+  padding: 2px 20px 0 20px !important;
   font-family: "Roboto";
   color: #414141;
   font-size: 14px;
@@ -245,10 +245,12 @@ section.login-modal .popup form .form-content .input input:-moz-placeholder {
 }
 
 section.login-modal .popup form .form-content .dropdown {
-  width: 100px;
   position: relative;
   float: left;
   z-index: 100;
+}
+section.login-modal .popup form .form-content .dropdown.phone {
+  width: 100px;
 }
 
 section.login-modal .popup form .form-content .dropdown.wide {

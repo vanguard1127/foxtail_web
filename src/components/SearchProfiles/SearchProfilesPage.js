@@ -6,6 +6,7 @@ import { withApollo } from "react-apollo";
 import SearchCriteria from "./SearchCriteria";
 import ProfilesContainer from "./ProfilesContainer";
 import { kinkOptions } from "../../docs/options";
+import deleteFromCache from "../../utils/deleteFromCache";
 export const Context = React.createContext();
 class SearchProfilesPage extends Component {
   state = {
@@ -60,11 +61,17 @@ class SearchProfilesPage extends Component {
 
   componentDidMount() {
     this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
+    this.clearSearchResults();
     this.start = Date.now();
     if (!this.props.location.lat) {
       this.timer = setInterval(() => this.tick(), 3000);
     }
   }
+
+  clearSearchResults = () => {
+    const { cache } = this.props.client;
+    deleteFromCache({ cache, query: "searchProfiles" });
+  };
 
   tick() {
     if (!this.state.elapse) {

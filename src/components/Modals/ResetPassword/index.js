@@ -6,7 +6,7 @@ import EmailPasswordResetBtn from "./EmailPasswordResetBtn";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
 import * as yup from "yup";
-import '../../../assets/css/login-modal.css'
+import "../../../assets/css/login-modal.css";
 class ResetPassword extends PureComponent {
   state = {
     text: "",
@@ -126,7 +126,7 @@ class ResetPassword extends PureComponent {
                             }}
                             defaultOptionValue={code}
                             options={countryCodeOptions}
-                            className={"dropdown"}
+                            className={"dropdown phone"}
                           />
 
                           <div className="phoneText input">

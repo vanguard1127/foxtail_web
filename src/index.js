@@ -1,3 +1,5 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import React from "react";
 import ReactGA from "react-ga";
 import { render } from "react-dom";
@@ -19,8 +21,6 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import getLang from "./utils/getLang";
-import("core-js/stable" /* webpackPreload: true */);
-import("regenerator-runtime/runtime" /* webpackPreload: true */);
 import("./assets/css/main.css" /* webpackPreload: true */);
 import("./assets/favicon.ico" /* webpackPreload: true */);
 import("react-image-lightbox/style.css" /* webpackPreload: true */);

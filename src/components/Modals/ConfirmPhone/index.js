@@ -5,8 +5,7 @@ import { Spring } from "react-spring/renderprops";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import '../../../assets/css/login-modal.css'
-
+import "../../../assets/css/login-modal.css";
 
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
@@ -185,7 +184,7 @@ class ConfirmPhone extends PureComponent {
           }}
           defaultOptionValue={code}
           options={countryCodeOptions}
-          className={"dropdown"}
+          className={"dropdown phone"}
         />
         <div className="phoneText input">
           <input
@@ -293,7 +292,7 @@ class ConfirmPhone extends PureComponent {
           }}
           defaultOptionValue={code}
           options={countryCodeOptions}
-          className={"dropdown"}
+          className={"dropdown phone"}
         />
         <div className="phoneText input">
           <input
