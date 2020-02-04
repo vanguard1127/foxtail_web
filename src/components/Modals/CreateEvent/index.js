@@ -24,7 +24,7 @@ class CreateEvent extends Component {
     description: yup
       .string()
       .min(10, "dec10char")
-      .max(500, "dec500")
+      .max(2500, "dec2500")
       .required("decreq"),
     type: yup.string().required("evetypereq"),
     address: yup
