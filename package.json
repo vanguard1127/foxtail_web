@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node src/index.js",
     "build": "webpack --config webpack.production.config.js",
+    "buildstage": "webpack --config webpack.stage.config.js",
     "builddev": "webpack --config webpack.development.config.js",
     "dev": "webpack-dev-server --config webpack.development.config.js --hot",
     "stage": "webpack --config webpack.stage.config.js",
