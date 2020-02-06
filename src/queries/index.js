@@ -52,6 +52,19 @@ export const NEW_INBOX_SUB = gql`
   }
 `;
 
+export const NEW_INBOX_SUB_COUNT = gql`
+  subscription {
+    newInboxMsgSubscribe {
+      id
+      fromUser {
+        id
+      }
+      chatID
+      type
+    }
+  }
+`;
+
 export const NEW_NOTICE_SUB = gql`
   subscription {
     newNoticeSubscribe {

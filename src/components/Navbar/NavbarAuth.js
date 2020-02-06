@@ -1,11 +1,13 @@
 import React, { PureComponent } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { GET_COUNTS, NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../queries";
+import { GET_COUNTS, NEW_INBOX_SUB_COUNT, NEW_NOTICE_SUB } from "../../queries";
 import { Query } from "react-apollo";
 import { NavLink } from "react-router-dom";
 import UserToolbar from "./UserToolbar";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Logout from "./LogoutLink";
+import deleteFromCache from "../../utils/deleteFromCache";
+import { withApollo } from "react-apollo";
 import msgSound from "../../assets/audio/msg.mp3";
 var msgAudio = new Audio(msgSound);
 class NavbarAuth extends PureComponent {
@@ -48,6 +50,28 @@ class NavbarAuth extends PureComponent {
     }
   }
 
+  openInbox = () => {
+    const { cache } = this.props.client;
+    deleteFromCache({ cache, query: "getInbox" });
+
+    const { getCounts } = cache.readQuery({
+      query: GET_COUNTS
+    });
+
+    let newCounts = { ...getCounts };
+
+    newCounts.newMsg = false;
+
+    cache.writeQuery({
+      query: GET_COUNTS,
+      data: {
+        getCounts: { ...newCounts }
+      }
+    });
+    this.props.history.push("/inbox");
+    this.toggleMobileMenu();
+  };
+
   render() {
     let href = window.location.href.split("/");
     href = href[3];
@@ -81,7 +105,7 @@ class NavbarAuth extends PureComponent {
 
           if (!this.unsubscribe) {
             this.unsubscribe = subscribeToMore({
-              document: NEW_INBOX_SUB,
+              document: NEW_INBOX_SUB_COUNT,
               updateQuery: (prev, { subscriptionData }) => {
                 const { newInboxMsgSubscribe } = subscriptionData.data;
 
@@ -102,13 +126,13 @@ class NavbarAuth extends PureComponent {
                 }
 
                 let newCount = { ...prev.getCounts };
-
+                console.log("new", newInboxMsgSubscribe);
                 if (newInboxMsgSubscribe.type === "new") {
                   newCount.newMsg = true;
                 } else {
                   newCount.msgsCount += 1;
                 }
-
+                console.log("count", newCount.msgsCount);
                 msgAudio.play();
                 return { getCounts: newCount };
               }
@@ -194,12 +218,7 @@ class NavbarAuth extends PureComponent {
                           </span>
                         </li>
                         <li>
-                          <span
-                            onClick={() => {
-                              history.push("/inbox");
-                              this.toggleMobileMenu();
-                            }}
-                          >
+                          <span onClick={this.openInbox}>
                             <div className="inbox">
                               {t("common:Inbox")}
                               {data.getCounts.msgsCount > 0 && (
@@ -319,4 +338,4 @@ class NavbarAuth extends PureComponent {
     );
   }
 }
-export default NavbarAuth;
+export default withApollo(NavbarAuth);

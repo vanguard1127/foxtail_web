@@ -183,7 +183,7 @@ const UserToolbar = ({
       <ErrorHandler.ErrorBoundary>
         <InboxItem
           count={msgsCount}
-          active={href === "inbox" && true}
+          active={href === "inbox"}
           t={t}
           data-name="inbox"
           ref={setRef}

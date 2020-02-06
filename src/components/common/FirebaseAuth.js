@@ -88,6 +88,7 @@ class FirebaseAuth extends PureComponent {
               );
             }}
             close={() => {
+              window.location.reload(true);
               this.setState({
                 showPhoneDialog: false
               });

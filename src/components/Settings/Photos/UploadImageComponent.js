@@ -50,8 +50,8 @@ class UploadComponent extends PureComponent {
     let idxDot = fileName.lastIndexOf(".") + 1;
     let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
     if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
-      if (file.size > 4000000) {
-        alert(this.props.t("only4mb"));
+      if (file.size > 7000000) {
+        alert(this.props.t("only7mb"));
       } else {
         this.props.showEditor(file);
       }

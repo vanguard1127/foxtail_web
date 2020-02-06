@@ -21,7 +21,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import getLang from "./utils/getLang";
-import("./assets/css/main.css" /* webpackPreload: true */);
+import("./assets/css/main.css");
 import("./assets/favicon.ico" /* webpackPreload: true */);
 import("react-image-lightbox/style.css" /* webpackPreload: true */);
 import("owl.carousel/dist/assets/owl.carousel.css" /* webpackPreload: true */);
@@ -70,7 +70,7 @@ const Root = () => (
 window.onresize = function() {
   document.body.height = window.innerHeight;
 };
-window.onresize(); // called to initially set the height.
+//window.onresize(); // called to initially set the height.
 window.scrollTo(0, 1);
 //prevent context menu
 document.addEventListener("contextmenu", preventContextMenu);

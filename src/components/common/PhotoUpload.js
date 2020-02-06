@@ -64,7 +64,7 @@ class PhotoUpload extends Component {
           }
         }}
         labelFileTypeNotAllowed={t("onlyformat")}
-        maxFileSize="5MB"
+        maxFileSize="7MB"
         labelIdle={
           t("drag") +
           " " +

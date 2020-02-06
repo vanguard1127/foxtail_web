@@ -21,7 +21,7 @@ import { flagOptions } from "../../docs/options";
 import * as ErrorHandler from "../common/ErrorHandler";
 import Modal from "../common/Modal";
 import deleteFromCache from "../../utils/deleteFromCache";
-import './inbox.css'
+import "./inbox.css";
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class InboxPage extends Component {
@@ -34,7 +34,6 @@ class InboxPage extends Component {
     msg: "",
     btnText: "",
     title: "",
-    chatOpen: this.props.location.state ? true : false,
     chatID: this.props.location.state ? this.props.location.state.chatID : null,
     showRulesModal: false,
     isBlock: false
@@ -44,7 +43,6 @@ class InboxPage extends Component {
     if (
       this.state.showRulesModal !== nextState.showRulesModal ||
       this.state.blockModalVisible !== nextState.blockModalVisible ||
-      this.state.chatOpen !== nextState.chatOpen ||
       this.state.showModal !== nextState.showModal ||
       this.state.chatID !== nextState.chatID ||
       this.state.isBlock !== nextState.isBlock ||
@@ -93,7 +91,7 @@ class InboxPage extends Component {
       this.unsubscribe();
     }
     this.props.history.replace({ state: {} });
-    this.setState({ chatOpen: false, chatID: null });
+    this.setState({ chatID: null });
   };
 
   handleRemoveSelf = removeSelf => {
@@ -151,7 +149,7 @@ class InboxPage extends Component {
       const { cache } = this.props.client;
       deleteFromCache({ cache, query: "getMessages" });
       this.updateCount(chatID, unSeenCount);
-      this.setState({ unSeenCount, chatID, chatOpen: true });
+      this.setState({ unSeenCount, chatID });
     }
   };
 
@@ -242,14 +240,13 @@ class InboxPage extends Component {
       msg,
       btnText,
       title,
-      chatOpen,
       chatID,
       showRulesModal,
       isBlock
     } = this.state;
 
     const { t, ReactGA, session, history, tReady, dayjs, lang } = this.props;
-
+    const chatOpen = chatID ? true : false;
     if (!tReady || !session) {
       return <Spinner />;
     }
@@ -266,7 +263,7 @@ class InboxPage extends Component {
             toggleRuleModal={this.toggleRuleModal}
           />
         </ErrorHandler.ErrorBoundary>
-        <section className={!chatOpen ? "inbox" : "inbox hide-mobile"}>
+        <section className={!chatID ? "inbox" : "inbox hide-mobile"}>
           <div className="row no-gutters chat-window-wrapper">
             <ErrorHandler.ErrorBoundary>
               <InboxPanel
