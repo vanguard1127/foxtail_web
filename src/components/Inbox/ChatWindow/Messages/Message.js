@@ -30,12 +30,16 @@ const Message = React.forwardRef(
         </NavLink>
         <div className="bubble">{messageText}</div>
         <span className="time">
-          {" "}
-          {message.fromUser.username},{" "}
-          {dayjs(message.createdAt)
+          {message.fromUser.id === currentUserID && message.seenBy > 0
+            ? `Seen by ${message.seenBy}, ${dayjs(message.createdAt)
+                .locale(lang)
+                .format("HH:mm")
+                .toString()}`
+            : `${message.fromUser.username},
+          ${dayjs(message.createdAt)
             .locale(lang)
             .format("HH:mm")
-            .toString()}
+            .toString()}`}
         </span>
       </div>
     );

@@ -23,7 +23,7 @@ class InboxList extends PureComponent {
   };
 
   renderItem = (item, timeAgo) => {
-    const { currentuser, readChat, t } = this.props;
+    const { currentuser, openChat, t } = this.props;
     let title;
     if (item.type === "alert" || item.type === "left") {
       title = "Foxtail";
@@ -57,10 +57,7 @@ class InboxList extends PureComponent {
 
     return (
       <div className="item unread" key={item.chatID}>
-        <span
-          onClick={() => readChat(item.chatID, item.unSeenCount)}
-          className="inbox-item"
-        >
+        <span onClick={() => openChat(item.chatID)} className="inbox-item">
           <span className="img">
             <img
               src={item.profilePic !== "" ? item.profilePic : NoProfileImg}

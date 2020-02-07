@@ -77,7 +77,7 @@ class InboxPanel extends Component {
   };
 
   render() {
-    const { currentuser, t, ErrorHandler, readChat } = this.props;
+    const { currentuser, t, ErrorHandler, openChat } = this.props;
     const { searchTerm, skip } = this.state;
 
     return (
@@ -128,7 +128,12 @@ class InboxPanel extends Component {
                     sessionStorage.getItem("pid") ===
                       newInboxMsgSubscribe.chatID
                   ) {
+                    //TODO: MARK SEEN HERE
+                    console.log(previousResult[chatIndex]);
                     previousResult[chatIndex].unSeenCount = 0;
+                  } else {
+                    console.log(previousResult[chatIndex]);
+                    previousResult[chatIndex].unSeenCount = 1;
                   }
                 }
 
@@ -161,7 +166,7 @@ class InboxPanel extends Component {
                   t={t}
                   messages={messages}
                   fetchData={() => this.fetchData(fetchMore)}
-                  readChat={readChat}
+                  openChat={openChat}
                   currentuser={currentuser}
                   searchTerm={searchTerm}
                 />

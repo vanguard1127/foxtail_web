@@ -56,7 +56,7 @@ class InboxItem extends Component {
             <span className="count">{count}</span>
           </span>
           <span className="text">{t("common:Inbox")}</span>
-        </div>{" "}
+        </div>
       </NavLink>
     );
   }

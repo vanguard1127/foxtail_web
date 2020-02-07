@@ -13,7 +13,8 @@ import {
   REMOVE_SELF,
   GET_MESSAGES,
   GET_COUNTS,
-  NEW_MESSAGE_SUB
+  NEW_MESSAGE_SUB,
+  READ_CHAT
 } from "../../queries";
 import { Mutation, Query, withApollo } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
@@ -25,8 +26,8 @@ import "./inbox.css";
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class InboxPage extends Component {
-  unsubscribe;
   readChat;
+  unsubscribe;
   state = {
     blockModalVisible: false,
     showModal: false,
@@ -137,8 +138,9 @@ class InboxPage extends Component {
       }
     });
   };
-
-  handleChatClick = (chatID, unSeenCount) => {
+  //TODO
+  openChat = chatID => {
+    this.readChat();
     const { ErrorHandler } = this.props;
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
     if (this.unsubscribe) {
@@ -155,9 +157,9 @@ class InboxPage extends Component {
     this.setState({ showRulesModal: !this.state.showRulesModal });
   };
 
-  updateCount = (chatID, unSeenCount) => {
-    console.log("Inbox Subtract Unseen", unSeenCount);
+  updateCount = unSeenCount => {
     const { cache } = this.props.client;
+    const { chatID } = this.state;
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS
     });
@@ -172,6 +174,7 @@ class InboxPage extends Component {
     if (newCounts.msgsCount < 0) {
       newCounts.msgsCount = 0;
     }
+
     cache.writeQuery({
       query: GET_COUNTS,
       data: {
@@ -188,7 +191,7 @@ class InboxPage extends Component {
     });
 
     const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
-    console.log("IMDEX", chatIndex);
+
     if (chatIndex > -1) {
       const newData = produce(getInbox, draftState => {
         draftState[chatIndex].unSeenCount = 0;
@@ -228,6 +231,10 @@ class InboxPage extends Component {
             draftState.getMessages.messages = [newMessageSubscribe];
           }
         });
+        //Marks message seen
+        console.log("polp");
+        this.readChat();
+        console.log("arrow", newData);
 
         return newData;
       }
@@ -267,14 +274,21 @@ class InboxPage extends Component {
         <section className={!chatID ? "inbox" : "inbox hide-mobile"}>
           <div className="row no-gutters chat-window-wrapper">
             <ErrorHandler.ErrorBoundary>
-              <InboxPanel
-                currentuser={currentuser}
-                ErrorHandler={ErrorHandler}
-                t={t}
-                history={this.props.history}
-                client={this.props.client}
-                readChat={this.handleChatClick}
-              />
+              <Mutation mutation={READ_CHAT} variables={{ chatID }}>
+                {readChat => {
+                  this.readChat = readChat;
+                  return (
+                    <InboxPanel
+                      currentuser={currentuser}
+                      ErrorHandler={ErrorHandler}
+                      t={t}
+                      history={this.props.history}
+                      client={this.props.client}
+                      openChat={this.openChat}
+                    />
+                  );
+                }}
+              </Mutation>
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
               {!chatID && (
@@ -349,7 +363,7 @@ class InboxPage extends Component {
                     }
 
                     const { getMessages: chat } = data;
-
+                    console.log("polpolp", chat);
                     return (
                       <>
                         <ChatWindow

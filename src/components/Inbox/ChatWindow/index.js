@@ -15,7 +15,7 @@ class ChatWindow extends PureComponent {
   componentDidMount() {
     const { updateCount, currentChat } = this.props;
     if (updateCount) {
-      updateCount(currentChat.id, currentChat.unSeenCount);
+      updateCount(currentChat.unSeenCount);
     }
   }
 

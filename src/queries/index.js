@@ -46,8 +46,8 @@ export const NEW_INBOX_SUB = gql`
         profilePic
         id
       }
-      unSeenCount
       type
+      unSeenCount
     }
   }
 `;
@@ -765,6 +765,7 @@ export const GET_MESSAGES = gql`
         profilePic
         type
         createdAt
+        seenBy
       }
       unSeenCount
     }
