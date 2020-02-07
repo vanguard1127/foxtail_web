@@ -138,7 +138,7 @@ class InboxPanel extends Component {
           }
 
           let messages = data.getInbox || [];
-          console.log("MESSAGES", messages);
+
           if (error) {
             return (
               <ErrorHandler.report

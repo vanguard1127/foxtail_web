@@ -8,7 +8,6 @@ class InboxItem extends Component {
     if (
       this.props.count !== nextProps.count ||
       this.props.blinkInbox !== nextProps.blinkInbox ||
-      this.props.active !== nextProps.active ||
       this.props.t !== nextProps.t
     ) {
       return true;
@@ -23,14 +22,10 @@ class InboxItem extends Component {
   }
 
   render() {
-    const { active, t, count, blinkInbox } = this.props;
-
+    const { t, count, blinkInbox } = this.props;
     let iconstyle = "inbox hidden-mobile";
     if (count > 0) {
       iconstyle += " new";
-    }
-    if (active) {
-      iconstyle += " active";
     }
 
     return (
@@ -57,9 +52,7 @@ class InboxItem extends Component {
         }}
       >
         <div className={iconstyle} role="heading" aria-level="1">
-          <span
-            className={blinkInbox && !active ? "icon mail blink" : "icon mail"}
-          >
+          <span className={blinkInbox ? "icon mail blink" : "icon mail"}>
             <span className="count">{count}</span>
           </span>
           <span className="text">{t("common:Inbox")}</span>

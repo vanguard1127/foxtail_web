@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { GET_COUNTS, NEW_INBOX_SUB_COUNT, NEW_NOTICE_SUB } from "../../queries";
+import { GET_COUNTS, NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../queries";
 import { Query } from "react-apollo";
 import { NavLink } from "react-router-dom";
 import UserToolbar from "./UserToolbar";
@@ -27,12 +27,6 @@ class NavbarAuth extends PureComponent {
           document.body.classList.remove("menu-shown");
         }
       });
-    }
-  };
-
-  toggleBlink = () => {
-    if (this.mounted) {
-      this.setState({ blinkInbox: !this.state.blinkInbox });
     }
   };
 
@@ -73,9 +67,6 @@ class NavbarAuth extends PureComponent {
   };
 
   render() {
-    let href = window.location.href.split("/");
-    href = href[3];
-
     const { session, t, history } = this.props;
     const { mobileMenu } = this.state;
     const isBlack = session.currentuser.blackMember.active ? true : false;
@@ -105,7 +96,7 @@ class NavbarAuth extends PureComponent {
 
           if (!this.unsubscribe) {
             this.unsubscribe = subscribeToMore({
-              document: NEW_INBOX_SUB_COUNT,
+              document: NEW_INBOX_SUB,
               updateQuery: (prev, { subscriptionData }) => {
                 const { newInboxMsgSubscribe } = subscriptionData.data;
 
@@ -126,13 +117,12 @@ class NavbarAuth extends PureComponent {
                 }
 
                 let newCount = { ...prev.getCounts };
-                console.log("new", newInboxMsgSubscribe);
                 if (newInboxMsgSubscribe.type === "new") {
                   newCount.newMsg = true;
                 } else {
                   newCount.msgsCount += 1;
                 }
-                console.log("count", newCount.msgsCount);
+
                 msgAudio.play();
                 return { getCounts: newCount };
               }
@@ -286,16 +276,15 @@ class NavbarAuth extends PureComponent {
                   </div>
                   <div className="col-md-5 hidden-mobile">
                     <ul className="menu">
-                      <li className={href === "members" ? "active" : ""}>
+                      <li>
                         <NavLink to="/members">
                           <span role="heading" aria-level="1">
                             {t("meetmembers")}
                           </span>
                         </NavLink>
                       </li>
-                      <li className={href === "events" ? "active" : ""}>
+                      <li>
                         <NavLink to="/events">
-                          {" "}
                           <span role="heading" aria-level="1">
                             {t("goevents")}
                           </span>
@@ -317,7 +306,6 @@ class NavbarAuth extends PureComponent {
                     {session && session.currentuser && (
                       <UserToolbar
                         currentuser={session.currentuser}
-                        href={href}
                         t={t}
                         ErrorHandler={ErrorHandler}
                         refetch={refetch}

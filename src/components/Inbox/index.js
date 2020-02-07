@@ -28,7 +28,6 @@ class InboxPage extends Component {
   unsubscribe;
   readChat;
   state = {
-    unSeenCount: 0,
     blockModalVisible: false,
     showModal: false,
     msg: "",
@@ -148,8 +147,7 @@ class InboxPage extends Component {
     if (this.mounted) {
       const { cache } = this.props.client;
       deleteFromCache({ cache, query: "getMessages" });
-      this.updateCount(chatID, unSeenCount);
-      this.setState({ unSeenCount, chatID });
+      this.setState({ chatID });
     }
   };
 
@@ -158,6 +156,7 @@ class InboxPage extends Component {
   };
 
   updateCount = (chatID, unSeenCount) => {
+    console.log("Inbox Subtract Unseen", unSeenCount);
     const { cache } = this.props.client;
     const { getCounts } = cache.readQuery({
       query: GET_COUNTS
@@ -170,7 +169,9 @@ class InboxPage extends Component {
     }
 
     newCounts.msgsCount = newCounts.msgsCount - unSeenCount;
-
+    if (newCounts.msgsCount < 0) {
+      newCounts.msgsCount = 0;
+    }
     cache.writeQuery({
       query: GET_COUNTS,
       data: {
@@ -187,7 +188,7 @@ class InboxPage extends Component {
     });
 
     const chatIndex = getInbox.findIndex(chat => chat.chatID === chatID);
-
+    console.log("IMDEX", chatIndex);
     if (chatIndex > -1) {
       const newData = produce(getInbox, draftState => {
         draftState[chatIndex].unSeenCount = 0;
@@ -353,6 +354,7 @@ class InboxPage extends Component {
                       <>
                         <ChatWindow
                           currentChat={chat}
+                          updateCount={this.updateCount}
                           currentuser={currentuser}
                           t={t}
                           ErrorHandler={ErrorHandler}

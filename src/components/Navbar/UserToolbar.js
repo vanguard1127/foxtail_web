@@ -15,7 +15,6 @@ import Spinner from "../common/Spinner";
 
 const UserToolbar = ({
   currentuser,
-  href,
   t,
   setRef,
   counts,
@@ -167,6 +166,7 @@ const UserToolbar = ({
   if (isCoupleOK) {
     window.location.reload(false);
   }
+
   return (
     <div className="function">
       {alertVisible && counts.alert && (
@@ -183,7 +183,6 @@ const UserToolbar = ({
       <ErrorHandler.ErrorBoundary>
         <InboxItem
           count={msgsCount}
-          active={href === "inbox"}
           t={t}
           data-name="inbox"
           ref={setRef}
