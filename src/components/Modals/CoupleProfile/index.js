@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { withTranslation } from "react-i18next";
 import {
   LINK_PROFILE,
@@ -18,7 +17,7 @@ import Button from "@material-ui/core/Button";
 import Modal from "../../common/Modal";
 import "./CoupleProfile.css";
 import CoupleProfileImage from "../../../assets/img/elements/couple-profile.png";
-
+import copyToClipboard from "../../../utils/copyToClipboard";
 class CoupleProfile extends PureComponent {
   state = { cfmDlgOpen: false, code: "", toLink: false };
 
@@ -39,6 +38,15 @@ class CoupleProfile extends PureComponent {
   toggleDlg = toLink => {
     this.setState({ cfmDlgOpen: !this.state.cfmDlgOpen, toLink });
   };
+
+  // copyToClipboard = code => {
+  //   const textField = document.createElement("textarea");
+  //   textField.innerText = code;
+  //   document.body.appendChild(textField);
+  //   textField.select();
+  //   document.execCommand("copy");
+  //   this.toggleDlg(false);
+  // };
 
   handleLink = (linkProfile, close) => {
     if (this.state.code !== "" && this.state.toLink) {
@@ -177,14 +185,14 @@ class CoupleProfile extends PureComponent {
                     }
                     const cplCode = data.generateCode;
                     return (
-                      <CopyToClipboard text={cplCode}>
-                        <div
-                          className="Couple-code"
-                          onClick={() => this.toggleDlg(false)}
-                        >
-                          <div className="content-code">{cplCode}</div>
-                        </div>
-                      </CopyToClipboard>
+                      <div
+                        className="Couple-code"
+                        onClick={() =>
+                          copyToClipboard(cplCode, this.toggleDlg(false))
+                        }
+                      >
+                        <div className="content-code">{cplCode}</div>
+                      </div>
                     );
                   }}
                 </Query>

@@ -5,8 +5,8 @@ export const ProfileLoader = () => (
     height={145}
     width={390}
     speed={2}
-    primaryColor="#f3f3f3"
-    secondaryColor="#ecebeb"
+    primarycolor="#f3f3f3"
+    secondarycolor="#ecebeb"
     style={{ width: "100%", height: "100%" }}
   >
     <rect x="1.05" y="0.00" rx="0" ry="0" width="125.2" height="141.89" />
@@ -25,8 +25,8 @@ export const EventLoader = () => (
     height={202}
     width={545}
     speed={2}
-    primaryColor="#f3f3f3"
-    secondaryColor="#ecebeb"
+    primarycolor="#f3f3f3"
+    secondarycolor="#ecebeb"
   >
     <rect x="0.69" y="1.67" rx="0" ry="0" width="222" height="202" />
     <rect x="244.69" y="27.67" rx="0" ry="0" width="195" height="22" />
@@ -43,8 +43,8 @@ export const InboxLoader = () => (
     height={80}
     width={441}
     speed={2}
-    primaryColor="#f3f3f3"
-    secondaryColor="#ecebeb"
+    primarycolor="#f3f3f3"
+    secondarycolor="#ecebeb"
   >
     <rect x="104.69" y="78.67" rx="0" ry="0" width="0" height="0" />
     <circle cx="44.19" cy="40.17" r="26.5" />

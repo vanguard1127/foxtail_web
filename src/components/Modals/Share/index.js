@@ -11,14 +11,14 @@ import {
 } from "react-share";
 import { Query } from "react-apollo";
 import { SET_FULL_LINK } from "../../../queries";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import copyToClipboard from "../../../utils/copyToClipboard";
 import Modal from "../../common/Modal";
 import { withTranslation } from "react-i18next";
 import LinkIcon from "@material-ui/icons/Link";
 import { toast } from "react-toastify";
 
 class Share extends Component {
-  referUrl = "";
+  refUrl = "";
 
   shouldComponentUpdate(nextProps) {
     if (
@@ -29,6 +29,10 @@ class Share extends Component {
     }
     return false;
   }
+
+  copy = () => {
+    copyToClipboard(this.refUrl, this.showCopied);
+  };
 
   showCopied = () => {
     if (!toast.isActive("copied")) {
@@ -108,7 +112,7 @@ class Share extends Component {
             return <div>{t("Error occurred please try again.")}</div>;
           }
 
-          let refUrl = `${process.env.REACT_APP_CLIENT_URL}/${data.setFullLink}`;
+          this.refUrl = `${process.env.REACT_APP_CLIENT_URL}/${data.setFullLink}`;
           return (
             <Modal
               header={modalBody}
@@ -133,40 +137,42 @@ class Share extends Component {
                       width: "100%"
                     }}
                   >
-                    <FacebookShareButton url={refUrl} quote={body}>
+                    <FacebookShareButton url={this.refUrl} quote={body}>
                       <FacebookIcon size={32} round />
                     </FacebookShareButton>
-                    <TwitterShareButton url={refUrl} title={body}>
+                    <TwitterShareButton url={this.refUrl} title={body}>
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
                     <RedditShareButton
-                      url={body + refUrl}
+                      url={body + this.refUrl}
                       windowWidth={660}
                       windowHeight={460}
                     >
                       <RedditIcon size={32} round />
                     </RedditShareButton>
                     <div className="SocialMediaShareButton ">
-                      <CopyToClipboard text={refUrl}>
-                        <span
-                          style={{
-                            width: "32px",
-                            height: "32px",
-                            cursor: "pointer"
-                          }}
-                          className="copyIcon"
-                          onClick={this.showCopied}
-                        >
-                          <svg viewBox="0 0 64 64" width="32" height="32">
-                            <g>
-                              <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
-                              <LinkIcon className="linksvg" />
-                            </g>
-                          </svg>
-                        </span>
-                      </CopyToClipboard>
+                      <span
+                        style={{
+                          width: "32px",
+                          height: "32px",
+                          cursor: "pointer"
+                        }}
+                        className="copyIcon"
+                        onClick={this.copy}
+                      >
+                        <svg viewBox="0 0 64 64" width="32" height="32">
+                          <g>
+                            <circle cx="32" cy="32" r="31" fill="#FF8749" />{" "}
+                            <LinkIcon className="linksvg" />
+                          </g>
+                        </svg>
+                      </span>
                     </div>
-                    <EmailShareButton url={refUrl} subject={title} body={body}>
+                    <EmailShareButton
+                      url={this.refUrl}
+                      subject={title}
+                      body={body}
+                    >
                       <EmailIcon size={32} round />
                     </EmailShareButton>
                   </div>

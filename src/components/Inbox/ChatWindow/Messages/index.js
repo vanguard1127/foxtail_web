@@ -203,6 +203,7 @@ class MessageList extends Component {
                 </div>
               );
             }
+            console.log("MESID", message);
             return (
               <Message key={message.id} {...props} dayjs={dayjs} lang={lang} />
             );
@@ -275,7 +276,7 @@ class MessageList extends Component {
             overflow: "hidden"
           }}
         >
-          {messageElements}{" "}
+          {messageElements}
           <div
             style={{
               position: "absolute",

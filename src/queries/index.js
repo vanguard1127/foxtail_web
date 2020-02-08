@@ -46,8 +46,8 @@ export const NEW_INBOX_SUB = gql`
         profilePic
         id
       }
-      type
       unSeenCount
+      type
     }
   }
 `;
