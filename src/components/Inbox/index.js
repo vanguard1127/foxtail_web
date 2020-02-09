@@ -14,7 +14,8 @@ import {
   GET_MESSAGES,
   GET_COUNTS,
   NEW_MESSAGE_SUB,
-  READ_CHAT
+  READ_CHAT,
+  MESSAGE_ACTION_SUB
 } from "../../queries";
 import { Mutation, Query, withApollo } from "react-apollo";
 import ChatWindow from "./ChatWindow/";
@@ -28,6 +29,7 @@ const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 class InboxPage extends Component {
   readChat;
   unsubscribe;
+  unsubscribe2;
   state = {
     blockModalVisible: false,
     showModal: false,
@@ -64,6 +66,9 @@ class InboxPage extends Component {
     if (this.unsubscribe) {
       this.unsubscribe();
     }
+    if (this.unsubscribe2) {
+      this.unsubscribe2();
+    }
     this.mounted = false;
     sessionStorage.setItem("page", null);
     sessionStorage.setItem("pid", null);
@@ -89,6 +94,9 @@ class InboxPage extends Component {
   closeChat = () => {
     if (this.unsubscribe) {
       this.unsubscribe();
+    }
+    if (this.unsubscribe2) {
+      this.unsubscribe2();
     }
     this.props.history.replace({ state: {} });
     this.setState({ chatID: null });
@@ -145,6 +153,9 @@ class InboxPage extends Component {
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
     if (this.unsubscribe) {
       this.unsubscribe();
+    }
+    if (this.unsubscribe2) {
+      this.unsubscribe2();
     }
     if (this.mounted) {
       const { cache } = this.props.client;
@@ -232,13 +243,60 @@ class InboxPage extends Component {
           }
         });
         //Marks message seen
-        console.log("polp");
         this.readChat();
-        console.log("arrow", newData);
 
         return newData;
       }
     });
+
+    if (!this.unsubscribe2) {
+      this.unsubscribe2 = subscribeToMore({
+        document: MESSAGE_ACTION_SUB,
+        updateQuery: (prev, { subscriptionData }) => {
+          const { messageActionSubsubscribe } = subscriptionData.data;
+          console.log("messageActionSubsubscribe", messageActionSubsubscribe);
+          if (!messageActionSubsubscribe) {
+            return prev;
+          }
+          const newData = produce(prev, draftState => {
+            const newMsgs = draftState.getMessages;
+            if (!messageActionSubsubscribe.seenBy) {
+              if (messageActionSubsubscribe.isTyping) {
+                if (!newMsgs.typingList) {
+                  newMsgs.typingList = [messageActionSubsubscribe.name];
+                } else {
+                  newMsgs.typingList.push(messageActionSubsubscribe.name);
+                }
+              } else if (newMsgs.typingList) {
+                newMsgs.typingList = newMsgs.typingList.filter(function(
+                  elem,
+                  i,
+                  rep
+                ) {
+                  return i !== rep.indexOf(messageActionSubsubscribe.name);
+                });
+              }
+              if (newMsgs.typingList) {
+                switch (newMsgs.typingList.length) {
+                  case 0:
+                    newMsgs.typingText = null;
+                    break;
+                  case 1:
+                    newMsgs.typingText =
+                      newMsgs.typingList[0] + " is typing...";
+                    break;
+                  default:
+                    newMsgs.typingText = "Members are typing...";
+                    break;
+                }
+              }
+            }
+          });
+
+          return newData;
+        }
+      });
+    }
   };
 
   render() {
@@ -363,7 +421,7 @@ class InboxPage extends Component {
                     }
 
                     const { getMessages: chat } = data;
-                    console.log("polpolp", chat);
+
                     return (
                       <>
                         <ChatWindow

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { Query } from "react-apollo";
+import produce from "immer";
+import Spinner from "../../common/Spinner";
 import InboxSearchTextBox from "./InboxSearchTextBox";
 import InboxList from "./InboxList";
-import { GET_INBOX, NEW_INBOX_SUB } from "../../../queries";
-import { Query } from "react-apollo";
-import Spinner from "../../common/Spinner";
+import { GET_INBOX, NEW_INBOX_SUB, MESSAGE_ACTION_SUB } from "../../../queries";
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 class InboxPanel extends Component {
   unsubscribe;
+  unsubscribe2;
   state = { searchTerm: "", skip: 0 };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -25,6 +27,9 @@ class InboxPanel extends Component {
   componentWillUnmount() {
     if (this.unsubscribe) {
       this.unsubscribe();
+    }
+    if (this.unsubscribe2) {
+      this.unsubscribe2();
     }
     this.mounted = false;
   }
@@ -142,6 +147,77 @@ class InboxPanel extends Component {
             });
           }
 
+          if (!this.unsubscribe2) {
+            this.unsubscribe2 = subscribeToMore({
+              document: MESSAGE_ACTION_SUB,
+              updateQuery: (prev, { subscriptionData }) => {
+                const { messageActionSubsubscribe } = subscriptionData.data;
+                if (!messageActionSubsubscribe) {
+                  return prev;
+                }
+                const newData = produce(prev.getInbox, draftState => {
+                  const chatIndex = draftState.findIndex(
+                    el => el.chatID === messageActionSubsubscribe.chatID
+                  );
+
+                  if (!messageActionSubsubscribe.seenBy && chatIndex > -1) {
+                    if (messageActionSubsubscribe.isTyping) {
+                      if (!draftState[chatIndex].typingList) {
+                        draftState[chatIndex].typingList = [
+                          messageActionSubsubscribe.name
+                        ];
+                      } else {
+                        draftState[chatIndex].typingList.push(
+                          messageActionSubsubscribe.name
+                        );
+                      }
+                    } else if (draftState[chatIndex].typingList) {
+                      draftState[chatIndex].typingList = draftState[
+                        chatIndex
+                      ].typingList.filter(function(elem, i, rep) {
+                        return (
+                          i !== rep.indexOf(messageActionSubsubscribe.name)
+                        );
+                      });
+                    }
+                    if (draftState[chatIndex].typingList) {
+                      switch (draftState[chatIndex].typingList.length) {
+                        case 0:
+                          draftState[chatIndex].typingText = null;
+                          break;
+                        case 1:
+                          draftState[chatIndex].typingText =
+                            draftState[chatIndex].typingList[0] +
+                            " is typing...";
+                          break;
+                        default:
+                          draftState[chatIndex].typingText =
+                            "Members are typing...";
+                          break;
+                      }
+                    }
+                  }
+                });
+                {
+                  /* if (
+                    sessionStorage.getItem("page") === "inbox" &&
+                    sessionStorage.getItem("pid") ===
+                      messageActionSubsubscribe.chatID
+                  ) {
+                    //TODO: MARK SEEN HERE
+                    console.log(previousResult[chatIndex]);
+                    previousResult[chatIndex].unSeenCount = 0;
+                  } else {
+                    console.log(previousResult[chatIndex]);
+                    previousResult[chatIndex].unSeenCount = 1;
+                  } */
+                }
+
+                return { getInbox: [...newData] };
+              }
+            });
+          }
+
           let messages = data.getInbox || [];
 
           if (error) {
@@ -153,6 +229,7 @@ class InboxPanel extends Component {
               />
             );
           }
+
           return (
             <div className="col-md-4 col-lg-3 col-xl-3">
               <div className="left">

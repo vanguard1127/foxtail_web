@@ -1,6 +1,17 @@
 import gql from "graphql-tag";
 
 /* Subscriptions */
+export const MESSAGE_ACTION_SUB = gql`
+  subscription {
+    messageActionSubsubscribe {
+      name
+      isTyping
+      chatID
+      seenBy
+    }
+  }
+`;
+
 export const NEW_MESSAGE_SUB = gql`
   subscription($chatID: ID!) {
     newMessageSubscribe(chatID: $chatID) {
@@ -450,6 +461,12 @@ export const SIGNS3 = gql`
   }
 `;
 
+export const SET_TYPING = gql`
+  mutation($chatID: ID!, $isTyping: Boolean!) {
+    setTyping(chatID: $chatID, isTyping: $isTyping)
+  }
+`;
+
 export const REMOVE_SELF = gql`
   mutation($chatID: ID!, $isBlock: Boolean) {
     removeSelf(chatID: $chatID, isBlock: $isBlock)
@@ -622,6 +639,8 @@ export const GET_INBOX = gql`
     getInbox(limit: $limit, skip: $skip) @connection(key: "getInbox") {
       id
       text
+      typingText
+      typingList
       fromUser {
         username
         id
@@ -768,6 +787,8 @@ export const GET_MESSAGES = gql`
         seenBy
       }
       unSeenCount
+      typingText
+      typingList
     }
   }
 `;

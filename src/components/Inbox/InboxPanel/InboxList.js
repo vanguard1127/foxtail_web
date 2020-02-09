@@ -72,7 +72,9 @@ class InboxList extends PureComponent {
               {timeAgo}
             </span>
             <span className={item.type !== "new" ? "msg" : "msg new"}>
-              {item.type === "left"
+              {item.typingText
+                ? item.typingText
+                : item.type === "left"
                 ? item.text + " " + t("leftchat")
                 : item.text}
             </span>

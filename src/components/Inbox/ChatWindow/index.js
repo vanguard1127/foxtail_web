@@ -89,6 +89,7 @@ class ChatWindow extends PureComponent {
               dayjs={dayjs}
               lang={lang}
               messages={currentChat.messages}
+              typingText={currentChat.typingText}
               fetchMore={fetchMore}
               subscribeToMore={subscribeToMore}
             />

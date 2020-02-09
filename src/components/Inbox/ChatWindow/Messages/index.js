@@ -24,6 +24,7 @@ class MessageList extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.props.messages.length !== nextProps.messages.length ||
+      this.props.typingText !== nextProps.typingText ||
       this.state.hasMoreItems !== nextState.hasMoreItems ||
       this.state.previousClientHeight !== nextState.previousClientHeight ||
       this.state.previousScrollHeight !== nextState.previousScrollHeight ||
@@ -154,7 +155,7 @@ class MessageList extends Component {
   };
 
   render() {
-    const { currentUserID, t, dayjs, lang, messages } = this.props;
+    const { currentUserID, t, dayjs, lang, messages, typingText } = this.props;
     const { fetching, hasMoreItems } = this.state;
     const group = this.groupBy(messages, datum =>
       dayjs(datum.createdAt)
@@ -203,7 +204,7 @@ class MessageList extends Component {
                 </div>
               );
             }
-            console.log("MESID", message);
+
             return (
               <Message key={message.id} {...props} dayjs={dayjs} lang={lang} />
             );
@@ -229,6 +230,7 @@ class MessageList extends Component {
         return [dateElement].concat(messageElements);
       })
       .reduce((a, b) => a.concat(b), []);
+
     return (
       <div>
         {hasMoreItems && (
@@ -299,12 +301,16 @@ class MessageList extends Component {
           <div
             style={{
               float: "left",
-              clear: "both"
+              clear: "both",
+              fontSize: "14px",
+              color: "#9d9d9d"
             }}
             ref={el => {
               this.messagesEnd = el;
             }}
-          />
+          >
+            {typingText}
+          </div>
         </div>
       </div>
     );

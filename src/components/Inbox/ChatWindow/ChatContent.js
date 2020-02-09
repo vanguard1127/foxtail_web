@@ -14,7 +14,8 @@ class ChatContent extends PureComponent {
       fetchMore,
       messages,
       limit,
-      subscribeToMore
+      subscribeToMore,
+      typingText
     } = this.props;
 
     return (
@@ -36,6 +37,7 @@ class ChatContent extends PureComponent {
           ErrorHandler={ErrorHandler}
           limit={limit}
           subscribeToMore={subscribeToMore}
+          typingText={typingText}
         />
       </div>
     );
