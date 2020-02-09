@@ -254,7 +254,6 @@ class InboxPage extends Component {
         document: MESSAGE_ACTION_SUB,
         updateQuery: (prev, { subscriptionData }) => {
           const { messageActionSubsubscribe } = subscriptionData.data;
-          console.log("messageActionSubsubscribe", messageActionSubsubscribe);
           if (!messageActionSubsubscribe) {
             return prev;
           }
@@ -318,7 +317,6 @@ class InboxPage extends Component {
     }
 
     const { currentuser } = session;
-
     return (
       <>
         <ErrorHandler.ErrorBoundary>
@@ -343,6 +341,8 @@ class InboxPage extends Component {
                       history={this.props.history}
                       client={this.props.client}
                       openChat={this.openChat}
+                      chatID={chatOpen ? chatID : null}
+                      updateCount={this.updateCount}
                     />
                   );
                 }}
@@ -426,7 +426,6 @@ class InboxPage extends Component {
                       <>
                         <ChatWindow
                           currentChat={chat}
-                          updateCount={this.updateCount}
                           currentuser={currentuser}
                           t={t}
                           ErrorHandler={ErrorHandler}

@@ -12,13 +12,6 @@ class ChatWindow extends PureComponent {
     limit: parseInt(process.env.REACT_APP_INBOXMSG_LIMIT)
   };
 
-  componentDidMount() {
-    const { updateCount, currentChat } = this.props;
-    if (updateCount) {
-      updateCount(currentChat.unSeenCount);
-    }
-  }
-
   setValue = ({ name, value }) => {
     this.setState({ [name]: value });
   };

@@ -27,6 +27,7 @@ export const NEW_MESSAGE_SUB = gql`
       profilePic
       type
       createdAt
+      seenBy
     }
   }
 `;
@@ -786,7 +787,6 @@ export const GET_MESSAGES = gql`
         createdAt
         seenBy
       }
-      unSeenCount
       typingText
       typingList
     }

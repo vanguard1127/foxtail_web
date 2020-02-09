@@ -5,14 +5,31 @@ import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
 class InboxList extends PureComponent {
   unsubscribe;
-  state = { chatID: null };
+
   componentDidMount() {
     this.mounted = true;
+    this.updateMsgCount();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.chatID !== this.props.chatID) {
+      this.updateMsgCount();
+    }
   }
 
   componentWillUnmount() {
     this.mounted = false;
   }
+
+  updateMsgCount = () => {
+    const { updateCount, messages, chatID } = this.props;
+    if (updateCount && chatID) {
+      const chatIndex = messages.findIndex(el => el.chatID === chatID);
+      if (chatIndex > -1) {
+        updateCount(messages[chatIndex].unSeenCount);
+      }
+    }
+  };
 
   handleEnd = previousPosition => {
     if (previousPosition === Waypoint.below) {

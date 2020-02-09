@@ -14,7 +14,8 @@ class InboxPanel extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       this.state.searchTerm !== nextState.searchTerm ||
-      this.props.t !== nextProps.t
+      this.props.t !== nextProps.t ||
+      this.props.chatID !== nextProps.chatID
     ) {
       return true;
     }
@@ -82,9 +83,15 @@ class InboxPanel extends Component {
   };
 
   render() {
-    const { currentuser, t, ErrorHandler, openChat } = this.props;
+    const {
+      currentuser,
+      t,
+      ErrorHandler,
+      openChat,
+      chatID,
+      updateCount
+    } = this.props;
     const { searchTerm, skip } = this.state;
-
     return (
       <Query
         query={GET_INBOX}
@@ -115,33 +122,29 @@ class InboxPanel extends Component {
                   return prev;
                 }
 
-                let previousResult = Array.from(prev.getInbox);
+                const previousResult = produce(prev.getInbox, draftState => {
+                  if (draftState) {
+                    const chatIndex = draftState.findIndex(
+                      el => el.chatID === newInboxMsgSubscribe.chatID
+                    );
 
-                if (previousResult) {
-                  const chatIndex = previousResult.findIndex(
-                    el => el.chatID === newInboxMsgSubscribe.chatID
-                  );
-
-                  if (chatIndex > -1) {
-                    previousResult[chatIndex] = newInboxMsgSubscribe;
-                  } else {
-                    previousResult = [newInboxMsgSubscribe, ...previousResult];
+                    if (chatIndex > -1) {
+                      if (
+                        sessionStorage.getItem("page") === "inbox" &&
+                        sessionStorage.getItem("pid") ===
+                          newInboxMsgSubscribe.chatID
+                      ) {
+                        newInboxMsgSubscribe.unSeenCount = 0;
+                      } else {
+                        newInboxMsgSubscribe.unSeenCount =
+                          draftState[chatIndex].unSeenCount + 1;
+                      }
+                      draftState[chatIndex] = newInboxMsgSubscribe;
+                    } else {
+                      draftState = [newInboxMsgSubscribe, ...draftState];
+                    }
                   }
-
-                  if (
-                    sessionStorage.getItem("page") === "inbox" &&
-                    sessionStorage.getItem("pid") ===
-                      newInboxMsgSubscribe.chatID
-                  ) {
-                    //TODO: MARK SEEN HERE
-                    console.log(previousResult[chatIndex]);
-                    previousResult[chatIndex].unSeenCount = 0;
-                  } else {
-                    console.log(previousResult[chatIndex]);
-                    previousResult[chatIndex].unSeenCount = 1;
-                  }
-                }
-
+                });
                 return { getInbox: [...previousResult] };
               }
             });
@@ -198,21 +201,6 @@ class InboxPanel extends Component {
                     }
                   }
                 });
-                {
-                  /* if (
-                    sessionStorage.getItem("page") === "inbox" &&
-                    sessionStorage.getItem("pid") ===
-                      messageActionSubsubscribe.chatID
-                  ) {
-                    //TODO: MARK SEEN HERE
-                    console.log(previousResult[chatIndex]);
-                    previousResult[chatIndex].unSeenCount = 0;
-                  } else {
-                    console.log(previousResult[chatIndex]);
-                    previousResult[chatIndex].unSeenCount = 1;
-                  } */
-                }
-
                 return { getInbox: [...newData] };
               }
             });
@@ -246,6 +234,8 @@ class InboxPanel extends Component {
                   openChat={openChat}
                   currentuser={currentuser}
                   searchTerm={searchTerm}
+                  updateCount={updateCount}
+                  chatID={chatID}
                 />
               </div>
             </div>

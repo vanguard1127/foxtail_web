@@ -17,15 +17,12 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
       setIsTyping(false);
       setTyping({ variables: { isTyping: false, chatID } });
       sendMessage({ variables: { text, chatID } })
-        .then(() => {
-          setText("");
-          setSending(false);
-        })
+        .then(() => {})
         .catch(res => {
           ErrorHandler.catchErrors(res);
-          setText("");
-          setSending(false);
         });
+      setText("");
+      setSending(false);
     }
   };
 
