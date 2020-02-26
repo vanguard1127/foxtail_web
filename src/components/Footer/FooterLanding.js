@@ -16,7 +16,7 @@ const FooterLanding = ({
           <div className="row">
             <div className="col-md-4">
               <span className="created">
-                Foxtail © 2019 {t("Created by")} <span>Foxtail</span>
+                Foxtail © 2020 {t("Created by")} <span>Foxtail</span>
               </span>
             </div>
             <div className="offset-md-1 col-md-7">

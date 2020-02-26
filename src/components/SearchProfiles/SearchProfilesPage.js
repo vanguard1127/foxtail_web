@@ -58,22 +58,29 @@ class SearchProfilesPage extends Component {
       });
     }
   }
-
+  //TODO: REMOVE EXCESS SENTRY
   componentDidMount() {
-    this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
-    this.clearSearchResults();
-    this.start = Date.now();
-    if (!this.props.location.lat) {
-      this.timer = setInterval(() => this.tick(), 3000);
+    try {
+      this.props.ErrorHandler.setBreadcrumb("Search Profile Page");
+      this.clearSearchResults();
+      this.start = Date.now();
+      if (!this.props.location.lat) {
+        this.props.ErrorHandler.setBreadcrumb("timer");
+        this.timer = setInterval(() => this.tick(), 3000);
+      }
+    } catch (res) {
+      this.props.ErrorHandler.catchErrors(res);
     }
   }
 
   clearSearchResults = () => {
+    this.props.ErrorHandler.setBreadcrumb("Clear results");
     const { cache } = this.props.client;
     deleteFromCache({ cache, query: "searchProfiles" });
   };
 
   tick() {
+    this.props.ErrorHandler.setBreadcrumb("tick");
     if (!this.state.elapse) {
       this.setState({
         elapse: true

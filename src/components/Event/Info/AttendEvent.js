@@ -30,11 +30,7 @@ class AttendEvent extends Component {
   handleAttend = toggleAttend => {
     this.props.ErrorHandler.setBreadcrumb("Toggle Attend");
     toggleAttend()
-      .then(async ({ data }) => {
-        if (data.toggleAttendEvent !== null) {
-          await this.props.refetch();
-        }
-      })
+      .then()
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res);
       });
