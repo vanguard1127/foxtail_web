@@ -172,6 +172,7 @@ class Share extends Component {
                       url={this.refUrl}
                       subject={title}
                       body={body}
+                      separator=" "
                     >
                       <EmailIcon size={32} round />
                     </EmailShareButton>

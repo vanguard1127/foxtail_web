@@ -41,10 +41,10 @@ const Welcome = ({ close, t, ErrorBoundary, tReady }) => {
             <div className="stopwatch" />
           </div>
           <p>
-            {t("newbonus") + " "}
-            <b> {mtimeLeft + ":" + formattedNumber + " " + t("minutes")}</b>
-            <br />
             <b style={{ color: "#f50043" }}> {t("getthis")}</b>
+            <br />
+            {t("newbonus") + " "}{" "}
+            <b> {mtimeLeft + ":" + formattedNumber + " " + t("minutes")}</b>
           </p>
         </div>
       </ErrorBoundary>

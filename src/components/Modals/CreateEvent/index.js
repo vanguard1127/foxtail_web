@@ -152,6 +152,7 @@ class CreateEvent extends Component {
     if (await this.validateForm()) {
       if (!toast.isActive("savingeve")) {
         toast(t("savingeve"), {
+          hideProgressBar: false,
           toastId: "savingeve"
         });
       }

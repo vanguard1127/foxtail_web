@@ -114,6 +114,7 @@ class ContactUs extends Component {
       description,
       cancelText,
       okText,
+      belowText,
       tReady
     } = this.props;
     const {
@@ -220,6 +221,7 @@ class ContactUs extends Component {
               }}
               autoFocus
             />
+            {belowText}
           </div>
           {guest && (
             <div className="input recap">

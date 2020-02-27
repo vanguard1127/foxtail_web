@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { withTranslation } from "react-i18next";
 import FooterLanding from "../Footer/FooterLanding";
 import Header from "../Header";
-import './landing.css'
+import "./landing.css";
 
 class Landing extends PureComponent {
   constructor(props) {
@@ -105,7 +105,14 @@ class Landing extends PureComponent {
     }
     return (
       <>
-        <Header headerClasses={['landing']} lang={lang} history={history} t={t} reactga={ReactGA} />
+        <Header
+          headerClasses={["landing"]}
+          lang={lang}
+          history={history}
+          t={t}
+          reactga={ReactGA}
+          toast={toast}
+        />
         <main>
           <section className="landing">
             <div className="container">
@@ -132,6 +139,7 @@ class Landing extends PureComponent {
                             ErrorHandler={ErrorHandler}
                             lang={lang}
                             reactga={ReactGA}
+                            toast={toast}
                           />
                         </ErrorHandler.ErrorBoundary>
                       </div>

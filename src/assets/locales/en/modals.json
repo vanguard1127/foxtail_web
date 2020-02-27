@@ -104,7 +104,7 @@
   "setpass": "Set Password",
   "confirmphone": "Confirm Phone Number",
   "enterphone": "Enter your phone number",
-  "enable2fa": "Enable 2-Factor Authentication (optional but Recommended)",
+  "enable2fa": "Enable 2-Factor Authentication (OPTIONAL but recommended)",
   "sendvcode": "Send verification code",
   "entercode": "Enter the verification code",
   "vcode": "Verification code",

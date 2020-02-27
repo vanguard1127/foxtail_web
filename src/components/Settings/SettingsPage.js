@@ -1214,6 +1214,7 @@ class SettingsPage extends Component {
                                 t={t}
                                 ErrorHandler={ErrorHandler}
                                 history={history}
+                                toggleSharePopup={this.toggleSharePopup}
                               />
                             </>
                           </div>

@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { FB_RESOLVE } from "../../queries";
 import FirebaseAuth from "../common/FirebaseAuth";
+import { toast } from "react-toastify";
 
 const initialState = {
   code: "",
@@ -14,11 +15,14 @@ class LoginButton extends PureComponent {
   }
   componentWillUnmount() {
     this.mounted = false;
+    toast.dismiss();
   }
 
   handleFirebaseReturn = ({ code, password }, fbResolve) => {
     if (this.mounted) {
-      const { reactga, t, ErrorHandler } = this.props;
+      const { reactga, t, ErrorHandler, toast } = this.props;
+
+      toast("Logging in...", { toastId: "loginPop", hideProgressBar: false });
       this.setState(
         {
           code,
@@ -32,6 +36,8 @@ class LoginButton extends PureComponent {
                   category: "Login",
                   action: "Fail"
                 });
+
+                toast.dismiss("loginPop");
                 alert(t("noUserError") + ".");
 
                 return;
@@ -52,6 +58,7 @@ class LoginButton extends PureComponent {
               }
             })
             .catch(res => {
+              toast.dismiss("loginPop");
               ErrorHandler.catchErrors(res);
             });
         }

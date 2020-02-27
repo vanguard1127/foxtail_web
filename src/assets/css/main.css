@@ -9,7 +9,7 @@ html {
 
 body {
   overflow-y: unset;
-  overflow-x: unset;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   -webkit-user-select: none;
 }
@@ -1939,7 +1939,8 @@ img {
   align-self: center;
 }
 
-.fullscreen a {
+.fullscreen a,
+.bluelink {
   color: blue !important;
   text-decoration: underline;
   cursor: pointer;

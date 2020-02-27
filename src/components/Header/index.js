@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import * as ErrorHandler from "../common/ErrorHandler";
 import LanguageControl from "../common/LanguageControl/LanguageControl";
 import LoginButton from "../Landing/LoginButton";
-import './header.css';
+import "./header.css";
 
 class Header extends Component {
   render() {
-    const { t, history, lang, reactga } = this.props;
+    const { t, history, lang, reactga, toast } = this.props;
     return (
-      <header className={this.props.headerClasses.join(' ')}>
+      <header className={this.props.headerClasses.join(" ")}>
         <div className="container">
           <div className="col-md-12">
             <div className="row">
@@ -30,6 +30,7 @@ class Header extends Component {
                         ErrorHandler={ErrorHandler}
                         lang={lang}
                         reactga={reactga}
+                        toast={toast}
                       />
                     </ErrorHandler.ErrorBoundary>
                   </span>

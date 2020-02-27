@@ -27,7 +27,7 @@ class DeactivateAcctBtn extends PureComponent {
     this.setState({ showContactModal: !this.state.showContactModal });
   };
   render() {
-    const { t } = this.props;
+    const { t, toggleSharePopup } = this.props;
     const { showContactModal } = this.state;
     return (
       <div className="content deactivate">
@@ -60,6 +60,18 @@ class DeactivateAcctBtn extends PureComponent {
                               "common:Send Complaint & Keep Profile"
                             )}
                             okText={t("common:Delete My Profile")}
+                            belowText={
+                              <div style={{ textAlign: "center" }}>
+                                No one near you? Consider{" "}
+                                <span
+                                  className="bluelink"
+                                  onClick={toggleSharePopup}
+                                >
+                                  Sharing
+                                </span>{" "}
+                                Foxtail instead.
+                              </div>
+                            }
                           />
                         )}
                       </>
