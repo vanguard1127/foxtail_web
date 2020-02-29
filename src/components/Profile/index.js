@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import { Query, Mutation, withApollo } from "react-apollo";
+import { isMobile } from "react-device-detect";
 import { toast } from "react-toastify";
 import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
@@ -16,7 +17,7 @@ import BlockModal from "../Modals/Block";
 import ShareModal from "../Modals/Share";
 import Modal from "../common/Modal";
 import { flagOptions } from "../../docs/options";
-import './profile.css'
+import "./profile.css";
 class ProfilePage extends Component {
   state = {
     shareModalVisible: false,
@@ -179,7 +180,7 @@ class ProfilePage extends Component {
           return (
             <Query
               query={GET_PROFILE}
-              variables={{ id }}
+              variables={{ id, isMobile }}
               returnPartialData={true}
               fetchPolicy="cache-and-network"
             >

@@ -6,6 +6,7 @@ import {
   enableBodyScroll,
   clearAllBodyScrollLocks
 } from "body-scroll-lock";
+import { isMobile } from "react-device-detect";
 import { GET_EVENT, DELETE_EVENT } from "../../queries";
 import { withTranslation } from "react-i18next";
 import BlockModal from "../Modals/Block";
@@ -19,7 +20,7 @@ import EventInfo from "./Info/EventInfo";
 import { flagOptions } from "../../docs/options";
 import { toast } from "react-toastify";
 import ShareModal from "../Modals/Share";
-import './events.css';
+import "./events.css";
 class EventPage extends Component {
   state = {
     visible: false,
@@ -133,7 +134,7 @@ class EventPage extends Component {
     return (
       <Query
         query={GET_EVENT}
-        variables={{ id }}
+        variables={{ id, isMobile }}
         fetchPolicy="cache-and-network"
         returnPartialData={true}
       >

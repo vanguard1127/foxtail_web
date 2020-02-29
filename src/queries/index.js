@@ -602,8 +602,9 @@ export const SEARCH_PROFILES = gql`
 `;
 
 export const GET_EVENT = gql`
-  query($id: ID!) {
-    event(id: $id) @connection(key: "event", filter: ["id"]) {
+  query($id: ID!, $isMobile: Boolean) {
+    event(id: $id, isMobile: $isMobile)
+      @connection(key: "event", filter: ["id"]) {
       id
       eventname
       type
@@ -952,8 +953,9 @@ export const GENERATE_CODE = gql`
 `;
 
 export const GET_PROFILE = gql`
-  query($id: ID!) {
-    profile(id: $id) @connection(key: "profile", filter: ["id"]) {
+  query($id: ID!, $isMobile: Boolean) {
+    profile(id: $id, isMobile: $isMobile)
+      @connection(key: "profile", filter: ["id"]) {
       id
       about
       kinks
