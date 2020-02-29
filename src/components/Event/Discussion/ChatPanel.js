@@ -49,7 +49,7 @@ class ChatPanel extends PureComponent {
           text
         }}
       >
-        {(postComment, { data, loading, error }) => (
+        {postComment => (
           <div className="send-message">
             <textarea
               value={text}

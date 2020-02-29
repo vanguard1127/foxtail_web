@@ -277,7 +277,14 @@ class ConfirmPhone extends PureComponent {
   }
 
   renderLogin() {
-    const { close, t, ErrorHandler, noPass } = this.props;
+    const {
+      close,
+      t,
+      ErrorHandler,
+      noPass,
+      toggleResetPhone,
+      toggleResetPass
+    } = this.props;
     const { code, phoneNumber, password, errors } = this.state;
 
     return (
@@ -343,6 +350,23 @@ class ConfirmPhone extends PureComponent {
           </ErrorHandler.ErrorBoundary>
           <span className="border" onClick={close}>
             {t("common:Cancel")}
+          </span>
+          <span className="resetText">
+            <div
+              className="bluelink"
+              style={{ display: "inline-block" }}
+              onClick={toggleResetPhone}
+            >
+              Reset Phone
+            </div>{" "}
+            |{" "}
+            <div
+              className="bluelink"
+              style={{ display: "inline-block" }}
+              onClick={toggleResetPass}
+            >
+              Reset Password
+            </div>
           </span>
         </div>
       </>

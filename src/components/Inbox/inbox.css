@@ -34,7 +34,8 @@ section.inbox .left .search {
   display: block;
   float: left;
   background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   overflow: hidden;
   position: relative;
 }
@@ -105,7 +106,8 @@ section.inbox .left .conversations .item {
   display: block;
   float: left;
   background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   border-radius: 2px;
   margin-bottom: 15px;
   transition: all 0.3s ease-in-out;
@@ -245,7 +247,8 @@ section.inbox .right .head {
   display: block;
   float: left;
   background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   overflow: hidden;
   position: relative;
 }
@@ -390,7 +393,8 @@ section.inbox .chat .navbar {
   display: block;
   float: left;
   background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   position: relative;
   padding: 10px 15px;
 }
@@ -430,7 +434,8 @@ section.inbox .chat .navbar .more-dropdown ul {
   display: block;
   float: left;
   background-color: #fff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 15px 65px 0 rgba(17, 25, 40, 0.12);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 15px 65px 0 rgba(17, 25, 40, 0.12);
   padding: 5px 0;
   position: relative;
   z-index: 1000;
@@ -522,7 +527,11 @@ section.inbox .chat .navbar .user .name {
 
 section.inbox .chat .navbar .user .name.couple::after {
   content: "Couple";
-  background-image: -webkit-linear-gradient(top right, #ffc223 0%, #ff8f0f 100%);
+  background-image: -webkit-linear-gradient(
+    top right,
+    #ffc223 0%,
+    #ff8f0f 100%
+  );
   background-image: -o-linear-gradient(top right, #ffc223 0%, #ff8f0f 100%);
   background-image: linear-gradient(to bottom left, #ffc223 0%, #ff8f0f 100%);
   height: 20px;
@@ -624,7 +633,8 @@ section.inbox .chat .content .msg-item .avatar img {
 section.inbox .chat .content .msg-item .bubble {
   max-width: calc(100% - 62px);
   background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   display: inline-block;
   float: left;
   border-radius: 4px;
@@ -657,7 +667,8 @@ section.inbox .chat .content .msg-item.response .avatar {
 
 section.inbox .chat .content .msg-item.response .bubble {
   float: right;
-  text-align: right;
+  text-align: left;
+  white-space: pre-wrap;
   background-color: #3387f9;
   color: #fff;
   box-shadow: none;
@@ -685,7 +696,8 @@ section.inbox .chat .panel .files {
   float: left;
   border-radius: 4px;
   background-color: #fff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   cursor: pointer;
 }
 
@@ -718,14 +730,16 @@ section.inbox .chat .panel .textarea {
   float: left;
 }
 
-section.inbox .chat .panel .textarea input {
+section.inbox .chat .panel .textarea input,
+section.inbox .chat .panel .textarea textarea {
   width: 100%;
   height: 48px;
   border-radius: 4px;
   display: inline-block;
   float: left;
   background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   outline: none;
   border: none;
   resize: none;
@@ -733,6 +747,10 @@ section.inbox .chat .panel .textarea input {
   font-family: "Roboto Condensed";
   font-size: 14px;
   overflow: hidden;
+}
+
+section.inbox .chat .panel .textarea textarea {
+  padding-top: 14px;
 }
 
 section.inbox .chat .panel .send button {
@@ -860,7 +878,8 @@ section.inbox .chat .panel .send button:hover {
   section.inbox .chat .panel .textarea {
     padding-left: 10px;
   }
-  section.inbox .chat .panel .textarea input {
+  section.inbox .chat .panel .textarea input,
+  section.inbox .chat .panel .textarea textarea {
     border-radius: 100px;
   }
   section.inbox .chat .panel .send button {
@@ -873,6 +892,10 @@ section.inbox .chat .panel .send button:hover {
   }
   section.inbox .chat .panel .textarea input {
     padding: 0 130px 0 25px;
+  }
+
+  section.inbox .chat .panel .textarea textarea {
+    padding: 14px 130px 0 25px;
   }
   section.inbox .chat .navbar .user .avatar {
     width: 50px;

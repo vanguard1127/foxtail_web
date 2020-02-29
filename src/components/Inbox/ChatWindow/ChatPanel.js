@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { SEND_MESSAGE, SET_TYPING } from "../../../queries";
 
@@ -9,8 +9,9 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [sendMessage] = useMutation(SEND_MESSAGE);
   const [setTyping] = useMutation(SET_TYPING);
+  const refContainer = useRef(null);
   const submitMessage = e => {
-    e.preventDefault();
+    e && e.preventDefault();
     if (!sending) {
       setSending(true);
       ErrorHandler.setBreadcrumb("Send message (chat)");
@@ -23,6 +24,13 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
         });
       setText("");
       setSending(false);
+    }
+  };
+
+  const onEnterPress = e => {
+    if (e.key === "Enter" && !e.shiftKey && text.trim() && !sending) {
+      e.preventDefault();
+      submitMessage();
     }
   };
 
@@ -47,15 +55,17 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
   };
 
   return (
-    <form onSubmit={submitMessage}>
+    <form onSubmit={submitMessage} ref={refContainer}>
       <div className="panel">
         {/* <div className="files" /> */}
         <div className="textarea">
-          <input
+          <textarea
             placeholder={t("typemsg") + "..."}
             value={text}
             onChange={handleTextChange}
             aria-label="message search"
+            onKeyDown={onEnterPress}
+            rows="1"
           />
         </div>
         <div className="send">

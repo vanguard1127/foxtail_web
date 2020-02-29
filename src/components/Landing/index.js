@@ -112,6 +112,8 @@ class Landing extends PureComponent {
           t={t}
           reactga={ReactGA}
           toast={toast}
+          toggleResetPhone={this.resetPhoneClick}
+          toggleResetPass={this.resetPassClick}
         />
         <main>
           <section className="landing">
@@ -140,6 +142,8 @@ class Landing extends PureComponent {
                             lang={lang}
                             reactga={ReactGA}
                             toast={toast}
+                            toggleResetPhone={this.resetPhoneClick}
+                            toggleResetPass={this.resetPassClick}
                           />
                         </ErrorHandler.ErrorBoundary>
                       </div>

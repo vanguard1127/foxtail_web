@@ -63,7 +63,9 @@ class FirebaseAuth extends PureComponent {
       onResponse,
       children,
       title,
-      noPass
+      noPass,
+      toggleResetPhone,
+      toggleResetPass
     } = this.props;
     return (
       <>
@@ -95,10 +97,11 @@ class FirebaseAuth extends PureComponent {
             }}
             sendCode={this.sendCode}
             noPass={noPass}
+            toggleResetPhone={toggleResetPhone}
+            toggleResetPass={toggleResetPass}
           ></ConfirmPhone>
         ) : null}
         <span onClick={this.signIn}>{children}</span>
-
         <div id="recaptcha-container" style={{ display: "none" }}></div>
       </>
     );

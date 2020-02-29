@@ -68,7 +68,13 @@ class LoginButton extends PureComponent {
 
   render() {
     const { code, password } = this.state;
-    const { t, lang, ErrorHandler } = this.props;
+    const {
+      t,
+      lang,
+      ErrorHandler,
+      toggleResetPhone,
+      toggleResetPass
+    } = this.props;
     return (
       <Mutation
         mutation={FB_RESOLVE}
@@ -86,6 +92,8 @@ class LoginButton extends PureComponent {
               ErrorHandler={ErrorHandler}
               onResponse={resp => this.handleFirebaseReturn(resp, fbResolve)}
               title={t("welcomeback")}
+              toggleResetPhone={toggleResetPhone}
+              toggleResetPass={toggleResetPass}
             >
               <a className="login-btn" id="login-btn">
                 {t("loginBtn")}

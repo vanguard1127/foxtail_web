@@ -424,6 +424,7 @@ export const FB_RESOLVE = gql`
     $dob: String
     $sex: String
     $interestedIn: [String]
+    $isCouple: Boolean
     $refer: String
     $aff: String
   ) {
@@ -438,6 +439,7 @@ export const FB_RESOLVE = gql`
       dob: $dob
       sex: $sex
       interestedIn: $interestedIn
+      isCouple: $isCouple
       refer: $refer
       aff: $aff
     ) {

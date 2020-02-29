@@ -6,7 +6,15 @@ import "./header.css";
 
 class Header extends Component {
   render() {
-    const { t, history, lang, reactga, toast } = this.props;
+    const {
+      t,
+      history,
+      lang,
+      reactga,
+      toast,
+      toggleResetPhone,
+      toggleResetPass
+    } = this.props;
     return (
       <header className={this.props.headerClasses.join(" ")}>
         <div className="container">
@@ -31,6 +39,8 @@ class Header extends Component {
                         lang={lang}
                         reactga={reactga}
                         toast={toast}
+                        toggleResetPhone={toggleResetPhone}
+                        toggleResetPass={toggleResetPass}
                       />
                     </ErrorHandler.ErrorBoundary>
                   </span>

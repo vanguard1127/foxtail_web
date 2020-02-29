@@ -47,6 +47,7 @@ class SignupButton extends PureComponent {
                 data.fbResolve.find(token => token.access === "refresh").token
               );
 
+              //TODO: Consider deleting if not used
               if (isCouple) {
                 ErrorHandler.setBreadcrumb("Signup OK, Couple");
                 ReactGA.event({
