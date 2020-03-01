@@ -109,7 +109,13 @@ class Share extends Component {
             return null;
           }
           if (!data) {
-            return <div>{t("Error occurred please try again.")}</div>;
+            return (
+              <div>
+                {t(
+                  "Error Occurred. Please contact support at support@foxtailapp.com"
+                )}
+              </div>
+            );
           }
 
           this.refUrl = `${process.env.REACT_APP_CLIENT_URL}/${data.setFullLink}`;

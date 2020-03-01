@@ -63,7 +63,6 @@ class FirebaseAuth extends PureComponent {
       onResponse,
       children,
       title,
-      noPass,
       toggleResetPhone,
       toggleResetPass
     } = this.props;
@@ -96,7 +95,6 @@ class FirebaseAuth extends PureComponent {
               });
             }}
             sendCode={this.sendCode}
-            noPass={noPass}
             toggleResetPhone={toggleResetPhone}
             toggleResetPass={toggleResetPass}
           ></ConfirmPhone>

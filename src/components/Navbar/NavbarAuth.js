@@ -70,6 +70,7 @@ class NavbarAuth extends PureComponent {
     const { session, t, history } = this.props;
     const { mobileMenu } = this.state;
     const isBlack = session.currentuser.blackMember.active ? true : false;
+
     const isCouple =
       session.currentuser.coupleProfileName !== null ? true : false;
 

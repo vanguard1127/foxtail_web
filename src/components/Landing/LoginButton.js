@@ -31,6 +31,7 @@ class LoginButton extends PureComponent {
         () => {
           fbResolve()
             .then(async ({ data }) => {
+              console.log("jkkj", data);
               if (data.fbResolve === null) {
                 reactga.event({
                   category: "Login",

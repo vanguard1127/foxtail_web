@@ -200,13 +200,6 @@ const withAuth = conditionFunc => Component => props => {
                       );
                     }
                   }
-                  if (isPreview && !data.currentuser.isProfileOK) {
-                    if (!toast.isActive("previewmsg")) {
-                      toast.info(i18next.t("common:previewmsg"), {
-                        toastId: "previewmsg"
-                      });
-                    }
-                  }
                 }
               }
 

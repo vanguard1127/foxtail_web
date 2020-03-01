@@ -281,7 +281,6 @@ class ConfirmPhone extends PureComponent {
       close,
       t,
       ErrorHandler,
-      noPass,
       toggleResetPhone,
       toggleResetPass
     } = this.props;
@@ -319,24 +318,24 @@ class ConfirmPhone extends PureComponent {
           />
         </div>
         {this.InputFeedback(t(errors.phoneNumber))}
-        {!noPass && (
-          <div className="input password">
-            <input
-              type="password"
-              placeholder={"Password (if you have one)"}
-              tabIndex="2"
-              onChange={e => {
-                this.setValue({
-                  name: "password",
-                  value: e.target.value,
-                  onlyPass: true
-                });
-              }}
-              value={password}
-            />
-            {this.InputFeedback(t(errors.password))}
-          </div>
-        )}
+
+        <div className="input password">
+          <input
+            type="password"
+            placeholder={"Password (if you have one)"}
+            tabIndex="2"
+            onChange={e => {
+              this.setValue({
+                name: "password",
+                value: e.target.value,
+                onlyPass: true
+              });
+            }}
+            value={password}
+          />
+          {this.InputFeedback(t(errors.password))}
+        </div>
+
         <div className="submit">
           <ErrorHandler.ErrorBoundary>
             <button
@@ -351,23 +350,25 @@ class ConfirmPhone extends PureComponent {
           <span className="border" onClick={close}>
             {t("common:Cancel")}
           </span>
-          <span className="resetText">
-            <div
-              className="bluelink"
-              style={{ display: "inline-block" }}
-              onClick={toggleResetPhone}
-            >
-              Reset Phone
-            </div>{" "}
-            |{" "}
-            <div
-              className="bluelink"
-              style={{ display: "inline-block" }}
-              onClick={toggleResetPass}
-            >
-              Reset Password
-            </div>
-          </span>
+          {toggleResetPhone && (
+            <span className="resetText">
+              <div
+                className="bluelink"
+                style={{ display: "inline-block" }}
+                onClick={toggleResetPhone}
+              >
+                Reset Phone
+              </div>{" "}
+              |{" "}
+              <div
+                className="bluelink"
+                style={{ display: "inline-block" }}
+                onClick={toggleResetPass}
+              >
+                Reset Password
+              </div>
+            </span>
+          )}
         </div>
       </>
     );

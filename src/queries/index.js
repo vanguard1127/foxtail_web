@@ -217,7 +217,6 @@ export const UPDATE_SETTINGS = gql`
     $city: String
     $country: String
     $email: String
-    $phone: String
     $username: String
     $sex: String
     $lat: Float
@@ -248,7 +247,6 @@ export const UPDATE_SETTINGS = gql`
       lat: $lat
       long: $long
       email: $email
-      phone: $phone
       username: $username
       sex: $sex
       sexuality: $sexuality
@@ -401,8 +399,12 @@ export const SEND_PHONE_RESET_EMAIL = gql`
 `;
 
 export const RESET_PASSWORD = gql`
-  mutation($password: String!, $token: String) {
-    resetPassword(password: $password, token: $token)
+  mutation($password: String!, $token: String, $currPassword: String) {
+    resetPassword(
+      password: $password
+      token: $token
+      currPassword: $currPassword
+    )
   }
 `;
 

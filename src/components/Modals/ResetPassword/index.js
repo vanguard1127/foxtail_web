@@ -233,7 +233,7 @@ class ResetPassword extends PureComponent {
                         </div>
 
                         <div className="submit">
-                          {isValid && (
+                          {isValid && password && (
                             <ErrorHandler.ErrorBoundary>
                               <ResetPasswordBtn
                                 t={t}

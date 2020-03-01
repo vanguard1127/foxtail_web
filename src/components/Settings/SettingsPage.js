@@ -70,7 +70,6 @@ class SettingsPage extends Component {
     email: undefined,
     sexuality: "",
     sex: undefined,
-    phone: undefined,
     showKinksPopup: false,
     showPhotoVerPopup: false,
     showBlackPopup: this.props.showBlkModal || false,
@@ -110,7 +109,8 @@ class SettingsPage extends Component {
     modalInput: undefined,
     schemaType: "",
     resetPassVisible: false,
-    clearPassDlg: false
+    clearPassDlg: false,
+    currPassword: ""
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -142,7 +142,6 @@ class SettingsPage extends Component {
       this.state.modalDecription !== nextState.modalDecription ||
       this.state.newMsgNotify !== nextState.newMsgNotify ||
       this.state.okAction !== nextState.okAction ||
-      this.state.phone !== nextState.phone ||
       this.state.photoSubmitType !== nextState.photoSubmitType ||
       this.state.publicPhotos !== nextState.publicPhotos ||
       this.state.privatePhotos !== nextState.privatePhotos ||
@@ -178,7 +177,8 @@ class SettingsPage extends Component {
       this.state.modalPlaceholder !== nextState.modalPlaceholder ||
       this.state.errors !== nextState.errors ||
       this.state.resetPassVisible !== nextState.resetPassVisible ||
-      this.state.clearPassDlg !== nextState.clearPassDlg
+      this.state.clearPassDlg !== nextState.clearPassDlg ||
+      this.state.currPassword !== nextState.currPassword
     ) {
       return true;
     }
@@ -343,8 +343,7 @@ class SettingsPage extends Component {
       this.setState({
         username: undefined,
         email: undefined,
-        sex: undefined,
-        phone: undefined
+        sex: undefined
       });
     }
   };
@@ -833,9 +832,23 @@ class SettingsPage extends Component {
   handleDlgBtnClick = resetPassword => {
     resetPassword()
       .then(({ data }) => {
-        this.setState({ clearPassDlg: false, password: null });
-
-        this.props.refetchUser();
+        if (data.resetPassword) {
+          this.setState({
+            clearPassDlg: false,
+            password: "",
+            currPassword: null
+          });
+          alert(this.props.t("common:Password Updated Successfully"));
+          this.props.refetchUser();
+        } else {
+          this.setState({
+            clearPassDlg: false,
+            password: null,
+            currPassword: null
+          });
+          alert(this.props.t("common:Password Removed Successfully"));
+          this.props.refetchUser();
+        }
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res);
@@ -884,7 +897,6 @@ class SettingsPage extends Component {
       isPrivate,
       profilePic,
       profilePicUrl,
-      phone,
       flashCpl,
       showModal,
       modalDecription,
@@ -901,7 +913,8 @@ class SettingsPage extends Component {
       schemaType,
       resetPassVisible,
       clearPassDlg,
-      verifications
+      verifications,
+      currPassword
     } = this.state;
 
     const {
@@ -970,7 +983,6 @@ class SettingsPage extends Component {
           email,
           username,
           sex,
-          phone,
           profilePic,
           sexuality,
           profileID: currentuser.profileID
@@ -1342,7 +1354,49 @@ class SettingsPage extends Component {
                   {modalInput}
                 </Modal>
               )}
-              <Dialog onClose={this.toggleClearPassDlg} open={clearPassDlg}>
+              {clearPassDlg && (
+                <Modal
+                  header={t("removepass")}
+                  close={this.toggleClearPassDlg}
+                  description={t("removepassdes")}
+                  className={modalClassName}
+                  okSpan={
+                    <Mutation
+                      mutation={RESET_PASSWORD}
+                      variables={{
+                        password,
+                        currPassword
+                      }}
+                    >
+                      {resetPassword => (
+                        <span
+                          className="color"
+                          onClick={() => {
+                            this.handleDlgBtnClick(resetPassword);
+                          }}
+                        >
+                          {"Remove Password"}
+                        </span>
+                      )}
+                    </Mutation>
+                  }
+                >
+                  <input
+                    style={{ width: "100%" }}
+                    type="password"
+                    placeholder={"Password (if you have one)"}
+                    onChange={e => {
+                      this.setValue({
+                        name: "currPassword",
+                        value: e.target.value,
+                        noSave: true
+                      });
+                    }}
+                    value={currPassword}
+                  />
+                </Modal>
+              )}
+              {/* <Dialog onClose={this.toggleClearPassDlg} open={clearPassDlg}>
                 <DialogTitle id="alert-dialog-title">
                   {t("removepass")}
                 </DialogTitle>
@@ -1351,13 +1405,27 @@ class SettingsPage extends Component {
                   <DialogContentText id="alert-dialog-description">
                     {t("removepassdes")}
                   </DialogContentText>
+                  <input
+                    style={{ width: "100%" }}
+                    type="password"
+                    placeholder={"Password (if you have one)"}
+                    onChange={e => {
+                      this.setValue({
+                        name: "currPassword",
+                        value: e.target.value,
+                        noSave: true
+                      });
+                    }}
+                    value={currPassword}
+                  />
                 </DialogContent>
 
                 <DialogActions>
                   <Mutation
                     mutation={RESET_PASSWORD}
                     variables={{
-                      password: ""
+                      password,
+                      currPassword
                     }}
                   >
                     {resetPassword => (
@@ -1384,7 +1452,7 @@ class SettingsPage extends Component {
                     )}
                   </Mutation>
                 </DialogActions>
-              </Dialog>
+              </Dialog> */}
               {resetPassVisible && (
                 <ResetPassModal
                   t={t}

@@ -6,6 +6,7 @@ import FirebaseAuth from "../../common/FirebaseAuth";
 
 const initialState = {
   code: "",
+  password: "",
   phone: ""
 };
 
@@ -18,7 +19,7 @@ class ChangePhoneBtn extends PureComponent {
     this.mounted = false;
   }
 
-  handleFBReturn = ({ code }, fbResetPhone) => {
+  handleFBReturn = ({ code, password }, fbResetPhone) => {
     if (!code) {
       return;
     }
@@ -27,13 +28,18 @@ class ChangePhoneBtn extends PureComponent {
     if (this.mounted) {
       this.setState(
         {
-          code
+          code,
+          password
         },
         () => {
           fbResetPhone()
             .then(({ data }) => {
               if (data.fbResetPhone === null) {
                 alert(t("common:tryagain"));
+                return;
+              }
+              if (data.fbResetPhone === false) {
+                alert(t("common:Incorrect information, please try again."));
                 return;
               }
               ReactGA.event({
@@ -51,12 +57,12 @@ class ChangePhoneBtn extends PureComponent {
   };
 
   render() {
-    const { code } = this.state;
+    const { code, password } = this.state;
     const { t, lang, ErrorHandler } = this.props;
     return (
       <Mutation
         mutation={FB_RESET_PHONE}
-        variables={{ csrf: process.env.REACT_APP_CSRF, code }}
+        variables={{ csrf: process.env.REACT_APP_CSRF, code, password }}
       >
         {fbResetPhone => {
           return (
@@ -65,7 +71,6 @@ class ChangePhoneBtn extends PureComponent {
               ErrorHandler={ErrorHandler}
               onResponse={resp => this.handleFBReturn(resp, fbResetPhone)}
               title={t("common:updphone")}
-              noPass
             >
               <div className="verification-box">
                 <span className="clickverify-btn">{t("updatephone")}</span>

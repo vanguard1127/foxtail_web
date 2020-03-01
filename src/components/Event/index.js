@@ -140,7 +140,9 @@ class EventPage extends Component {
       >
         {({ data, loading, error, refetch }) => {
           if (error) {
-            document.title = t("common:Error Occurred");
+            document.title = t(
+              "common:Error Occurred. Please contact support at support@foxtailapp.com"
+            );
             return (
               <ErrorHandler.report
                 error={error}

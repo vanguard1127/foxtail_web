@@ -9,7 +9,7 @@ class ResetPasswordBtn extends PureComponent {
     resetPassword()
       .then(({ data }) => {
         if (data.resetPassword) {
-          alert(t("2fasuccess"));
+          alert(t("Password Updated Successfully"));
           ReactGA.event({
             category: "Reset Password",
             action: "Success"

@@ -167,6 +167,7 @@
   "Max Daily Likes Reached!": "Max Daily Likes Reached!",
   "Please keep name between 1 and 120 characters.": "Please keep name between 1 and 120 characters.",
   "Invalid email.": "Invalid email.",
+  "Incorrect information, please try again.": "Incorrect information, please try again.",
   "Last 4 of credit card only.": "Last 4 of credit card only.",
   "Bio should be a maximum of 2500 characters.": "Bio should be a maximum of 2500 characters.",
   "Phone Number invalid.": "Phone Number invalid.",
@@ -229,7 +230,7 @@
   "Link copied to clipboard": "Link copied to clipboard",
   "Copy referral url": "Copy referral url",
   "Event": "Event",
-  "Error Occurred": "Error Occurred",
+  "Error Occurred. Please contact support at support@foxtailapp.com": "Error Occurred. Please contact support at support@foxtailapp.com",
   "Search Profiles": "Search Profiles",
   "ID Invalid.": "ID Invalid.",
   "Sex has been updated.": "Sex has been updated.",
@@ -238,7 +239,6 @@
   "Profile no longer exists": "Profile no longer exists",
   "Reset email has been sent to you within the last 5 minutes. Please check your spam.": "Reset email has been sent to you within the last 5 minutes. Please check your spam.",
   "Please enter a valid url": "Please enter a valid url",
-  "Error occurred please try again.": "Error occurred please try again.",
   "Uh-oh...": "Uh-oh...",
   "Idle warning - You will be logged out automatically in 1 minute": "Idle warning - You will be logged out automatically in 1 minute",
   "stray": "Stray Together",
@@ -275,7 +275,8 @@
   "and you have created a Couple's Profile. Click here to enjoy.": "and you have created a Couple's Profile. Click here to enjoy.",
   "This Couple's Profile is no longer active.": "This Couple's Profile is no longer active.",
   "Error updating file or file invalid": "Error updating file or file invalid",
-  "previewmsg": "One Day Preview - Please complete your profile to continue using Foxtail",
   "Please complete your profile to use this feature": "Please complete your profile to use this feature",
-  "Limited Time - Get $100 for referring 100 new members. Share using any share button while logged in to be credited. *Referrals must not come from any means that violate any terms or laws.": "Limited Time - Get $100 for referring 100 new members. Share using any share button while logged in to be credited. *Referrals must not come from any means that violate any terms or laws."
+  "Limited Time - Get $100 for referring 100 new members. Share using any share button while logged in to be credited. *Referrals must not come from any means that violate any terms or laws.": "Limited Time - Get $100 for referring 100 new members. Share using any share button while logged in to be credited. *Referrals must not come from any means that violate any terms or laws.",
+  "Password Updated Successfully": "Password Updated Successfully",
+  "Password Removed Successfully": "Password Removed Successfully"
 }

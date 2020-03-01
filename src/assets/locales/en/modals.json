@@ -166,7 +166,6 @@
   "setstart": "Start time may not be after ending time",
   "setend": "End time may not be before starting time",
   "2faenabledes": "Please use a unique password. Reusing passwords across different sites is a security risk.",
-  "2fasuccess": "Password has been updated successfully.",
   "passupfail": "Token has expired or user does not exist in our system.",
   "2faplaceholder": "Enter a secure password",
   "Alphanumeric characters or underscores only": "Alphanumeric characters or underscores only",
