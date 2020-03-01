@@ -8,12 +8,6 @@ import {
 } from "body-scroll-lock";
 import * as yup from "yup";
 import produce from "immer";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
 import ResetPassModal from "../Modals/ResetPassword";
 import { UPDATE_SETTINGS, SIGNS3, RESET_PASSWORD } from "../../queries";
 import ImageEditor from "../Modals/ImageEditor";
@@ -1396,63 +1390,6 @@ class SettingsPage extends Component {
                   />
                 </Modal>
               )}
-              {/* <Dialog onClose={this.toggleClearPassDlg} open={clearPassDlg}>
-                <DialogTitle id="alert-dialog-title">
-                  {t("removepass")}
-                </DialogTitle>
-
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    {t("removepassdes")}
-                  </DialogContentText>
-                  <input
-                    style={{ width: "100%" }}
-                    type="password"
-                    placeholder={"Password (if you have one)"}
-                    onChange={e => {
-                      this.setValue({
-                        name: "currPassword",
-                        value: e.target.value,
-                        noSave: true
-                      });
-                    }}
-                    value={currPassword}
-                  />
-                </DialogContent>
-
-                <DialogActions>
-                  <Mutation
-                    mutation={RESET_PASSWORD}
-                    variables={{
-                      password,
-                      currPassword
-                    }}
-                  >
-                    {resetPassword => (
-                      <>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => {
-                            this.handleDlgBtnClick(resetPassword);
-                          }}
-                        >
-                          {"Remove Password"}
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => {
-                            this.setState({ clearPassDlg: false });
-                          }}
-                        >
-                          {t("common:Cancel")}
-                        </Button>
-                      </>
-                    )}
-                  </Mutation>
-                </DialogActions>
-              </Dialog> */}
               {resetPassVisible && (
                 <ResetPassModal
                   t={t}

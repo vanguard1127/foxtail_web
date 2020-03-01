@@ -91,6 +91,9 @@ class NoticesList extends Component {
   subscribeToInbox = () =>
     (this.unsubscribe = this.props.subscribeToMore({
       document: NEW_NOTICE_SUB,
+      variables: {
+        isMobile: sessionStorage.getItem("isMobile")
+      },
       updateQuery: (prev, { subscriptionData }) => {
         const { newNoticeSubscribe } = subscriptionData.data;
 

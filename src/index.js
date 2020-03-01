@@ -74,7 +74,22 @@ window.onresize = function() {
 window.scrollTo(0, 1);
 //prevent context menu
 document.addEventListener("contextmenu", preventContextMenu);
-
+function detectMob() {
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i
+  ];
+  const isMobile = toMatch.some(toMatchItem => {
+    return navigator.userAgent.match(toMatchItem);
+  });
+  sessionStorage.setItem("isMobile", isMobile);
+}
+detectMob();
 render(
   <ApolloProvider client={client}>
     <MuiPickersUtilsProvider utils={DayJsUtils}>

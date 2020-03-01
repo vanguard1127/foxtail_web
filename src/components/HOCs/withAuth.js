@@ -9,13 +9,20 @@ import dayjs from "dayjs";
 
 import { ApolloConsumer } from "react-apollo";
 import { GET_CURRENT_USER, CONFIRM_EMAIL } from "../../queries";
+
 const withAuth = conditionFunc => Component => props => {
   const { location } = props;
   return (
     <ApolloConsumer>
       {client => {
         return (
-          <Query query={GET_CURRENT_USER} fetchPolicy="cache-first">
+          <Query
+            query={GET_CURRENT_USER}
+            variables={{
+              isMobile: sessionStorage.getItem("isMobile")
+            }}
+            fetchPolicy="cache-first"
+          >
             {({ data, loading, refetch, error }) => {
               if (loading) {
                 return null;

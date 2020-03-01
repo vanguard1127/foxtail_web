@@ -29,7 +29,10 @@ const NoticesMenu = ({
     >
       <Query
         query={GET_NOTIFICATIONS}
-        variables={{ limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT) }}
+        variables={{
+          limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT),
+          isMobile: sessionStorage.getItem("isMobile")
+        }}
       >
         {({ data, loading, error, subscribeToMore, fetchMore }) => {
           if (

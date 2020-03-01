@@ -6,7 +6,6 @@ import {
   enableBodyScroll,
   clearAllBodyScrollLocks
 } from "body-scroll-lock";
-import { isMobile } from "react-device-detect";
 import { GET_EVENT, DELETE_EVENT } from "../../queries";
 import { withTranslation } from "react-i18next";
 import BlockModal from "../Modals/Block";
@@ -134,7 +133,7 @@ class EventPage extends Component {
     return (
       <Query
         query={GET_EVENT}
-        variables={{ id, isMobile }}
+        variables={{ id, isMobile: sessionStorage.getItem("isMobile") }}
         fetchPolicy="cache-and-network"
         returnPartialData={true}
       >

@@ -155,29 +155,23 @@ const Onboard = ({
     return null;
   }
   if (currentPage === 0) {
-    description = "What's your story?";
+    description =
+      "Please upload a picture of yourself. (Tip: The Mask feature conceals your identity)";
+
     body = (
       <div className="content">
-        <div className="item">
-          <div className="textarea">
-            <textarea
-              tabIndex="3"
-              placeholder={
-                "Who are you? What are you looking for on Foxtail? Likes/Dislikes? Fantasies? (Must be at least 20 characters)"
-              }
-              onChange={el => setAbout(el.target.value)}
-              value={about}
-            />
-          </div>
+        <div className="content">
+          <UploadBox
+            single
+            t={t}
+            ErrorHandler={ErrorHandler}
+            photos={photoList}
+            handleUpload={handleUpload}
+          />
         </div>
-
         <div className="item">
           <div className="submit">
-            <button
-              onClick={nextPage}
-              className="color"
-              disabled={!about || about.length < 20}
-            >
+            <button onClick={nextPage} className="color" disabled={!photoFile}>
               {t("common:Next")}
             </button>
           </div>
@@ -213,26 +207,28 @@ const Onboard = ({
       </div>
     );
   } else {
-    description =
-      "Please upload a picture of yourself. (Tip: The Mask feature conceals your identity)";
-
+    description = "What's your story?";
     body = (
       <div className="content">
-        <div className="content">
-          <UploadBox
-            single
-            t={t}
-            ErrorHandler={ErrorHandler}
-            photos={photoList}
-            handleUpload={handleUpload}
-          />
+        <div className="item">
+          <div className="textarea">
+            <textarea
+              tabIndex="3"
+              placeholder={
+                "Who are you? What are you looking for on Foxtail? Likes/Dislikes? Fantasies? (Must be at least 20 characters)"
+              }
+              onChange={el => setAbout(el.target.value)}
+              value={about}
+            />
+          </div>
         </div>
+
         <div className="item">
           <div className="submit">
             <button
               onClick={handleSubmit}
               className="color"
-              disabled={!photoFile}
+              disabled={!about || about.length < 20}
             >
               {!saving ? "Complete" : "Saving..."}
             </button>

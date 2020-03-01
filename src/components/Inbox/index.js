@@ -130,7 +130,8 @@ class InboxPage extends Component {
       query: GET_INBOX,
       variables: {
         skip: 0,
-        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT)
+        limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
+        isMobile: sessionStorage.getItem("isMobile")
       }
     });
     const updatedInbox = getInbox.filter(x => x.chatID !== chatID);
@@ -139,7 +140,8 @@ class InboxPage extends Component {
       query: GET_INBOX,
       variables: {
         limit: parseInt(process.env.REACT_APP_INBOXLIST_LIMIT),
-        skip: 0
+        skip: 0,
+        isMobile: sessionStorage.getItem("isMobile")
       },
       data: {
         getInbox: [...updatedInbox]
@@ -197,7 +199,8 @@ class InboxPage extends Component {
       query: GET_INBOX,
       variables: {
         limit,
-        skip: 0
+        skip: 0,
+        isMobile: sessionStorage.getItem("isMobile")
       }
     });
 
@@ -211,7 +214,8 @@ class InboxPage extends Component {
         query: GET_INBOX,
         variables: {
           limit,
-          skip: 0
+          skip: 0,
+          isMobile: sessionStorage.getItem("isMobile")
         },
         data: {
           getInbox: [...newData]
@@ -368,7 +372,8 @@ class InboxPage extends Component {
                   variables={{
                     chatID,
                     limit: parseInt(process.env.REACT_APP_CHATMSGS_LIMIT),
-                    cursor: null
+                    cursor: null,
+                    isMobile: sessionStorage.getItem("isMobile")
                   }}
                   fetchPolicy="cache-first"
                 >

@@ -65,8 +65,8 @@ export const NEW_INBOX_SUB = gql`
 `;
 
 export const NEW_NOTICE_SUB = gql`
-  subscription {
-    newNoticeSubscribe {
+  subscription($isMobile: String) {
+    newNoticeSubscribe(isMobile: $isMobile) {
       id
       seen
       read
@@ -604,7 +604,7 @@ export const SEARCH_PROFILES = gql`
 `;
 
 export const GET_EVENT = gql`
-  query($id: ID!, $isMobile: Boolean) {
+  query($id: ID!, $isMobile: String) {
     event(id: $id, isMobile: $isMobile)
       @connection(key: "event", filter: ["id"]) {
       id
@@ -641,8 +641,9 @@ export const GET_EVENT = gql`
 `;
 
 export const GET_INBOX = gql`
-  query($limit: Int!, $skip: Int!) {
-    getInbox(limit: $limit, skip: $skip) @connection(key: "getInbox") {
+  query($limit: Int!, $skip: Int!, $isMobile: String) {
+    getInbox(limit: $limit, skip: $skip, isMobile: $isMobile)
+      @connection(key: "getInbox") {
       id
       text
       typingText
@@ -698,8 +699,20 @@ export const GET_MY_EVENTS = gql`
   }
 `;
 export const GET_FRIENDS = gql`
-  query($limit: Int!, $skip: Int, $chatID: ID, $isEvent: Boolean) {
-    getFriends(limit: $limit, skip: $skip, chatID: $chatID, isEvent: $isEvent) {
+  query(
+    $limit: Int!
+    $skip: Int
+    $chatID: ID
+    $isEvent: Boolean
+    $isMobile: String
+  ) {
+    getFriends(
+      limit: $limit
+      skip: $skip
+      chatID: $chatID
+      isEvent: $isEvent
+      isMobile: $isMobile
+    ) {
       profilePic
       profileName
       id
@@ -708,8 +721,8 @@ export const GET_FRIENDS = gql`
 `;
 
 export const GET_CHAT_PARTICIPANTS = gql`
-  query($chatID: ID!) {
-    chat(id: $chatID) {
+  query($chatID: ID!, $isMobile: String) {
+    chat(id: $chatID, isMobile: $isMobile) {
       participants {
         profilePic
         profileName
@@ -720,8 +733,8 @@ export const GET_CHAT_PARTICIPANTS = gql`
 `;
 
 export const GET_EVENT_PARTICIPANTS = gql`
-  query($eventID: ID) {
-    event(id: $eventID) {
+  query($eventID: ID!, $isMobile: String) {
+    event(id: $eventID, isMobile: $isMobile) {
       participants {
         profilePic
         profileName
@@ -732,8 +745,8 @@ export const GET_EVENT_PARTICIPANTS = gql`
 `;
 
 export const GET_NOTIFICATIONS = gql`
-  query($limit: Int!, $cursor: String) {
-    getNotifications(limit: $limit, cursor: $cursor)
+  query($limit: Int!, $cursor: String, $isMobile: String) {
+    getNotifications(limit: $limit, cursor: $cursor, isMobile: $isMobile)
       @connection(key: "getNotifications") {
       notifications {
         id
@@ -758,8 +771,13 @@ export const GET_NOTIFICATIONS = gql`
 `;
 
 export const GET_MESSAGES = gql`
-  query($chatID: ID!, $limit: Int!, $cursor: String) {
-    getMessages(chatID: $chatID, limit: $limit, cursor: $cursor) {
+  query($chatID: ID!, $limit: Int!, $cursor: String, $isMobile: String) {
+    getMessages(
+      chatID: $chatID
+      limit: $limit
+      cursor: $cursor
+      isMobile: $isMobile
+    ) {
       id
       updatedAt
       ownerProfile {
@@ -852,8 +870,8 @@ export const GET_DEMO_COUNTS = gql`
 `;
 
 export const GET_CURRENT_USER = gql`
-  query {
-    currentuser {
+  query($isMobile: String) {
+    currentuser(isMobile: $isMobile) {
       username
       userID
       profileID
@@ -896,8 +914,8 @@ export const GET_SEARCH_SETTINGS = gql`
 `;
 
 export const GET_SETTINGS = gql`
-  query {
-    getSettings {
+  query($isMobile: String) {
+    getSettings(isMobile: $isMobile) {
       distance
       distanceMetric
       ageRange
@@ -955,7 +973,7 @@ export const GENERATE_CODE = gql`
 `;
 
 export const GET_PROFILE = gql`
-  query($id: ID!, $isMobile: Boolean) {
+  query($id: ID!, $isMobile: String) {
     profile(id: $id, isMobile: $isMobile)
       @connection(key: "profile", filter: ["id"]) {
       id

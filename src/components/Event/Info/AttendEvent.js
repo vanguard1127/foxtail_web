@@ -59,7 +59,7 @@ class AttendEvent extends Component {
 
       const getEvent = cache.readQuery({
         query: GET_EVENT_PARTICIPANTS,
-        variables: { eventID: id }
+        variables: { eventID: id, isMobile: sessionStorage.getItem("isMobile") }
       });
 
       let newData;
@@ -82,7 +82,10 @@ class AttendEvent extends Component {
 
       cache.writeQuery({
         query: GET_EVENT_PARTICIPANTS,
-        variables: { eventID: id },
+        variables: {
+          eventID: id,
+          isMobile: sessionStorage.getItem("isMobile")
+        },
         data: { getEvent: newData }
       });
 

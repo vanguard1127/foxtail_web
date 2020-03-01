@@ -6,7 +6,7 @@ import {
 } from "../../../queries";
 import { Query } from "react-apollo";
 import MembersList from "./MembersList";
-import './membersDropdown.css'
+import "./membersDropdown.css";
 
 class MembersDropdown extends PureComponent {
   constructor(props) {
@@ -54,7 +54,8 @@ class MembersDropdown extends PureComponent {
           variables={{
             limit: parseInt(process.env.REACT_APP_MEMSLIST_LIMIT),
             chatID: targetID,
-            isEvent: targetType === "event"
+            isEvent: targetType === "event",
+            isMobile: sessionStorage.getItem("isMobile")
           }}
         >
           {({ data, loading, error, fetchMore }) => {
@@ -111,7 +112,13 @@ class MembersDropdown extends PureComponent {
       isOwner
     ) {
       return (
-        <Query query={GET_CHAT_PARTICIPANTS} variables={{ chatID: targetID }}>
+        <Query
+          query={GET_CHAT_PARTICIPANTS}
+          variables={{
+            chatID: targetID,
+            isMobile: sessionStorage.getItem("isMobile")
+          }}
+        >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return null;
@@ -158,7 +165,13 @@ class MembersDropdown extends PureComponent {
       !isOwner
     ) {
       return (
-        <Query query={GET_CHAT_PARTICIPANTS} variables={{ chatID: targetID }}>
+        <Query
+          query={GET_CHAT_PARTICIPANTS}
+          variables={{
+            chatID: targetID,
+            isMobile: sessionStorage.getItem("isMobile")
+          }}
+        >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return null;
@@ -206,7 +219,13 @@ class MembersDropdown extends PureComponent {
       isOwner
     ) {
       return (
-        <Query query={GET_EVENT_PARTICIPANTS} variables={{ eventID: targetID }}>
+        <Query
+          query={GET_EVENT_PARTICIPANTS}
+          variables={{
+            eventID: targetID,
+            isMobile: sessionStorage.getItem("isMobile")
+          }}
+        >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return null;
@@ -254,7 +273,13 @@ class MembersDropdown extends PureComponent {
       !isOwner
     ) {
       return (
-        <Query query={GET_EVENT_PARTICIPANTS} variables={{ eventID: targetID }}>
+        <Query
+          query={GET_EVENT_PARTICIPANTS}
+          variables={{
+            eventID: targetID,
+            isMobile: sessionStorage.getItem("isMobile")
+          }}
+        >
           {({ data, loading, error, fetchMore }) => {
             if (loading) {
               return null;

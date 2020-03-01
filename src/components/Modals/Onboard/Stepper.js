@@ -60,9 +60,9 @@ function ColorlibStepIcon(props) {
   const { active, completed } = props;
 
   const icons = {
-    1: <MenuBookIcon />,
+    1: <FaceIcon />,
     2: <FavoriteIcon />,
-    3: <FaceIcon />
+    3: <MenuBookIcon />
   };
 
   return (
@@ -97,7 +97,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ["Bio", "Kinks", "Profile"];
+  return ["Profile", "Kinks", "Bio"];
 }
 
 export default function CustomizedSteppers({ activeStep }) {

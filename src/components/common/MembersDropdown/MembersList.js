@@ -175,12 +175,18 @@ class MembersList extends PureComponent {
 
     const { chat } = cache.readQuery({
       query: GET_CHAT_PARTICIPANTS,
-      variables: { chatID: targetID }
+      variables: {
+        chatID: targetID,
+        isMobile: sessionStorage.getItem("isMobile")
+      }
     });
 
     cache.writeQuery({
       query: GET_CHAT_PARTICIPANTS,
-      variables: { chatID: targetID },
+      variables: {
+        chatID: targetID,
+        isMobile: sessionStorage.getItem("isMobile")
+      },
       data: {
         chat: {
           ...chat,

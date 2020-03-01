@@ -97,7 +97,8 @@ class InboxPanel extends Component {
         query={GET_INBOX}
         variables={{
           skip,
-          limit
+          limit,
+          isMobile: sessionStorage.getItem("isMobile")
         }}
         fetchPolicy="cache-first"
       >

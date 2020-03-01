@@ -133,6 +133,9 @@ class NavbarAuth extends PureComponent {
           if (!this.unsubscribe2) {
             this.unsubscribe2 = subscribeToMore({
               document: NEW_NOTICE_SUB,
+              variables: {
+                isMobile: sessionStorage.getItem("isMobile")
+              },
               updateQuery: (prev, { subscriptionData }) => {
                 const { newNoticeSubscribe } = subscriptionData.data;
                 if (!newNoticeSubscribe) {
