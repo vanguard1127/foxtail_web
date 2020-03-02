@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { SEND_MESSAGE, SET_TYPING } from "../../../queries";
+import axios from "axios";
+import { SEND_MESSAGE } from "../../../queries";
 
 var timer;
 const ChatPanel = ({ chatID, t, ErrorHandler }) => {
@@ -8,15 +9,22 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
   const [sending, setSending] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [sendMessage] = useMutation(SEND_MESSAGE);
-  const [setTyping] = useMutation(SET_TYPING);
   const refContainer = useRef(null);
+  const notifyTyping = isTyping => {
+    const token = localStorage.getItem("token");
+    axios.post(process.env.REACT_APP_HTTPS_URL + "/notify", {
+      token,
+      isTyping,
+      chatID
+    });
+  };
   const submitMessage = e => {
     e && e.preventDefault();
     if (!sending) {
       setSending(true);
       ErrorHandler.setBreadcrumb("Send message (chat)");
       setIsTyping(false);
-      setTyping({ variables: { isTyping: false, chatID } });
+      notifyTyping(false);
       sendMessage({ variables: { text, chatID } })
         .then(() => {})
         .catch(res => {
@@ -39,17 +47,17 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
     if (!isTyping) {
       if (text !== "") {
         setIsTyping(true);
-        setTyping({ variables: { isTyping: true, chatID } });
+        notifyTyping(true);
         timer = setTimeout(() => {
           setIsTyping(false);
-          setTyping({ variables: { isTyping: false, chatID } });
+          notifyTyping(false);
         }, 6000);
       }
     } else {
       clearTimeout(timer);
       timer = setTimeout(() => {
         setIsTyping(false);
-        setTyping({ variables: { isTyping: false, chatID } });
+        notifyTyping(false);
       }, 6000);
     }
   };

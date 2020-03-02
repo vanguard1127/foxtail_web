@@ -98,6 +98,9 @@ class NavbarAuth extends PureComponent {
           if (!this.unsubscribe) {
             this.unsubscribe = subscribeToMore({
               document: NEW_INBOX_SUB,
+              variables: {
+                isMobile: sessionStorage.getItem("isMobile")
+              },
               updateQuery: (prev, { subscriptionData }) => {
                 const { newInboxMsgSubscribe } = subscriptionData.data;
 

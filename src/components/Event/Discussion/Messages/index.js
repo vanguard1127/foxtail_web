@@ -38,7 +38,8 @@ class MessageList extends Component {
     this.unsubscribe = subscribeToMore({
       document: NEW_MESSAGE_SUB,
       variables: {
-        chatID: chatID
+        chatID: chatID,
+        isMobile: sessionStorage.getItem("isMobile")
       },
       updateQuery: (prev, { subscriptionData }) => {
         const { newMessageSubscribe } = subscriptionData.data;

@@ -183,7 +183,7 @@ class SignupForm extends Component {
                 openTo="year"
                 variant="inline"
                 initialFocusedDate={date}
-                emptyLabel={t("Birthday")}
+                placeholder={t("Birthday")}
                 InputProps={{
                   disableUnderline: true
                 }}

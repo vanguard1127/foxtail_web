@@ -13,8 +13,8 @@ export const MESSAGE_ACTION_SUB = gql`
 `;
 
 export const NEW_MESSAGE_SUB = gql`
-  subscription($chatID: ID!) {
-    newMessageSubscribe(chatID: $chatID) {
+  subscription($chatID: ID!, $isMobile: String) {
+    newMessageSubscribe(chatID: $chatID, isMobile: $isMobile) {
       id
       text
       fromUser {
@@ -33,8 +33,8 @@ export const NEW_MESSAGE_SUB = gql`
 `;
 
 export const NEW_INBOX_SUB = gql`
-  subscription {
-    newInboxMsgSubscribe {
+  subscription($isMobile: String) {
+    newInboxMsgSubscribe(isMobile: $isMobile) {
       id
       text
       fromUser {
@@ -463,12 +463,6 @@ export const SIGNS3 = gql`
       key
       signedRequest
     }
-  }
-`;
-
-export const SET_TYPING = gql`
-  mutation($chatID: ID!, $isTyping: Boolean!) {
-    setTyping(chatID: $chatID, isTyping: $isTyping)
   }
 `;
 

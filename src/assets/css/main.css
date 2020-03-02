@@ -2550,6 +2550,7 @@ div.register-form div.form-fields .couple-choose {
   top: 15px;
 }
 
-.datePickerInput input {
+.datePickerInput input::placeholder {
   color: #8c909d !important;
+  opacity: unset !important;
 }

@@ -228,7 +228,8 @@ class InboxPage extends Component {
     this.unsubscribe = subscribeToMore({
       document: NEW_MESSAGE_SUB,
       variables: {
-        chatID: this.state.chatID
+        chatID: this.state.chatID,
+        isMobile: sessionStorage.getItem("isMobile")
       },
       updateQuery: (prev, { subscriptionData }) => {
         const { newMessageSubscribe } = subscriptionData.data;
