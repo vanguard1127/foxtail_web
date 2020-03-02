@@ -31,16 +31,29 @@ class LoginButton extends PureComponent {
         () => {
           fbResolve()
             .then(async ({ data }) => {
-              console.log("jkkj", data);
               if (data.fbResolve === null) {
+                reactga.event({
+                  category: "Login",
+                  action: "No user"
+                });
+
+                toast.dismiss("loginPop");
+                alert(t("noUserError") + ".");
+                window.location.reload();
+                return;
+              } else if (data.fbResolve.length === 0) {
                 reactga.event({
                   category: "Login",
                   action: "Fail"
                 });
 
                 toast.dismiss("loginPop");
-                alert(t("noUserError") + ".");
-
+                alert(
+                  t(
+                    "Invalid Login - Please contact us at support@foxtailapp.com if you are having problems logging in."
+                  )
+                );
+                window.location.reload();
                 return;
               } else {
                 reactga.event({
@@ -61,6 +74,8 @@ class LoginButton extends PureComponent {
             .catch(res => {
               toast.dismiss("loginPop");
               ErrorHandler.catchErrors(res);
+              alert(t("common:error"));
+              window.location.reload();
             });
         }
       );
@@ -93,6 +108,7 @@ class LoginButton extends PureComponent {
               ErrorHandler={ErrorHandler}
               onResponse={resp => this.handleFirebaseReturn(resp, fbResolve)}
               title={t("welcomeback")}
+              t={t}
               toggleResetPhone={toggleResetPhone}
               toggleResetPass={toggleResetPass}
             >

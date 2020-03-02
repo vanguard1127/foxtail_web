@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Slider from "rc-slider";
-import milesToKilometers from "../../utils/distanceMetric";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const SliderWithToolTip = createSliderWithTooltip(Slider);
 
@@ -32,7 +31,10 @@ class DistanceSlider extends Component {
           min={0}
           max={100}
           defaultValue={value}
-          tipFormatter={distance => milesToKilometers(distance, metric)}
+          tipFormatter={distance => {
+            if (metric === "km") return Math.floor(distance / 0.621371);
+            return distance;
+          }}
           className="range-con"
           style={this.props.style}
         />

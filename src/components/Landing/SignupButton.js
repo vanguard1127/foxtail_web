@@ -104,6 +104,7 @@ class SignupButton extends PureComponent {
               ErrorHandler={ErrorHandler}
               onResponse={this.handleFirebaseReturn}
               type="signup"
+              t={t}
               title={t("pleasever")}
             >
               <div className="submit">

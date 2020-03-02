@@ -30,17 +30,21 @@ class ResetPhoneButton extends PureComponent {
         () => {
           fbResetPhone()
             .then(({ data }) => {
-              if (data.fbResetPhone) {
-                alert(t("phoneupd"));
-                ReactGA.event({
-                  category: "Reset Phone",
-                  action: "Success"
-                });
-                history.push("/members");
-              } else {
+              if (data.fbResetPhone === null) {
                 alert(t("passupfail"));
+                window.location.reload();
+                return;
+              } else if (data.fbResetPhone === false) {
+                alert(t("passupfail"));
+                window.location.reload();
+                return;
               }
-              close();
+              alert(t("phoneupd"));
+              ReactGA.event({
+                category: "Reset Phone",
+                action: "Success"
+              });
+              history.push("/members");
             })
             .catch(res => {
               ReactGA.event({
@@ -68,6 +72,7 @@ class ResetPhoneButton extends PureComponent {
             <FirebaseAuth
               language={lang}
               ErrorHandler={ErrorHandler}
+              t={t}
               onResponse={resp => {
                 this.handleFBReturn(resp, fbResetPhone);
               }}

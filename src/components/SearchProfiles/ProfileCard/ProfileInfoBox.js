@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import milesToKilometers from "../../../utils/distanceMetric";
 
 class ProfileInfoBox extends PureComponent {
   render() {
@@ -35,8 +34,7 @@ class ProfileInfoBox extends PureComponent {
               </li>
             )}
             <li>
-              ~ {milesToKilometers(distance, distanceMetric)}{" "}
-              {t(distanceMetric)}
+              ~ {distance} {t(distanceMetric)}
             </li>
           </ul>
         </span>

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import milesToKilometers from "../../../utils/distanceMetric";
 import EventDate from "../../common/Event/EventDate";
 import EventCreator from "./EventCreator";
 import NoEventImg from "../../../assets/img/elements/no-eve-image.jpg";
@@ -59,7 +58,7 @@ class EventCard extends Component {
               <span onClick={this.onEventClick}>{eventname}</span>
             </div>
             <span className="distance">
-              {milesToKilometers(distance, distanceMetric)}{" "}
+              {distance}{" "}
               {t("common:" + (distanceMetric === "mi" ? "miaway" : "kmaway"))}
             </span>
             <div className="goings">

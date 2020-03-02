@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { formatedMilesToKm } from "../../../utils/distanceMetric";
 import { kinkOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EventShare from "../Header/EventShare";
@@ -102,7 +101,11 @@ class EventInfoMobile extends Component {
             <li>
               <span className="head">{t("Away")}:</span>
               <span className="title">
-                {formatedMilesToKm(distance, distanceMetric, t)}
+                `${distance} $
+                {t(
+                  "common:" + (distanceMetric === "mi" ? "miles" : "kilometers")
+                )}
+                `
               </span>
             </li>
             <li>

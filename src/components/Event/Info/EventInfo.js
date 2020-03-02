@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { formatedMilesToKm } from "../../../utils/distanceMetric";
 import { kinkOptions } from "../../../docs/options";
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 import NoEventImg from "../../../assets/img/elements/no-eve-image.jpg";
 
 class EventInfo extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     const { event: eventProps } = this.props;
     const { event: nextEventProps } = nextProps;
 
@@ -99,7 +98,11 @@ class EventInfo extends Component {
             <li>
               <span className="head">{t("Away")}:</span>
               <span className="title">
-                {formatedMilesToKm(distance, distanceMetric, t)}
+                `${distance} $
+                {t(
+                  "common:" + (distanceMetric === "mi" ? "miles" : "kilometers")
+                )}
+                `
               </span>
             </li>
             <li>

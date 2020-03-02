@@ -6,7 +6,7 @@ import AddressSearch from "../common/AddressSearch";
 import DistanceSlider from "../common/DistanceSlider";
 import AgeRange from "../common/AgeRange";
 import getCityCountry from "../../utils/getCityCountry";
-import './searchProfiles.css'
+import "./searchProfiles.css";
 class SearchCriteria extends PureComponent {
   state = {
     distance: this.props.distance,
@@ -64,12 +64,10 @@ class SearchCriteria extends PureComponent {
   handleSubmit = updateSettings => {
     updateSettings()
       .then(() => {
-        {
-          this.props.ReactGA.event({
-            category: "Profile Search",
-            action: "Change criteria"
-          });
-        }
+        this.props.ReactGA.event({
+          category: "Profile Search",
+          action: "Change criteria"
+        });
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res);

@@ -11,8 +11,8 @@ class EmailPasswordResetBtn extends PureComponent {
         close();
       })
       .catch(res => {
-        alert(t("alreadypassmsg"));
         ErrorHandler.catchErrors(res);
+        alert(t("alreadypassmsg"));
         close();
       });
   };

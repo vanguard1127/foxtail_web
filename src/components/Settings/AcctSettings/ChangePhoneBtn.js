@@ -37,9 +37,9 @@ class ChangePhoneBtn extends PureComponent {
               if (data.fbResetPhone === null) {
                 alert(t("common:tryagain"));
                 return;
-              }
-              if (data.fbResetPhone === false) {
+              } else if (data.fbResetPhone === false) {
                 alert(t("common:Incorrect information, please try again."));
+                window.location.reload();
                 return;
               }
               ReactGA.event({
@@ -68,6 +68,7 @@ class ChangePhoneBtn extends PureComponent {
           return (
             <FirebaseAuth
               language={lang}
+              t={t}
               ErrorHandler={ErrorHandler}
               onResponse={resp => this.handleFBReturn(resp, fbResetPhone)}
               title={t("common:updphone")}
