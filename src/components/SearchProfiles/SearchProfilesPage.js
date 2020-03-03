@@ -100,7 +100,6 @@ class SearchProfilesPage extends Component {
     this.props.ErrorHandler.setBreadcrumb(
       "Set Location: lat:" + lat + " long:" + long
     );
-    console.log("LOCATION", long, lat, city, country);
     this.setState({ long, lat, city, country });
   };
 

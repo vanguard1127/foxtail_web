@@ -1375,19 +1375,21 @@ class SettingsPage extends Component {
                     </Mutation>
                   }
                 >
-                  <input
-                    style={{ width: "100%" }}
-                    type="password"
-                    placeholder={"Password (if you have one)"}
-                    onChange={e => {
-                      this.setValue({
-                        name: "currPassword",
-                        value: e.target.value,
-                        noSave: true
-                      });
-                    }}
-                    value={currPassword}
-                  />
+                  <div className="input">
+                    <input
+                      style={{ width: "100%" }}
+                      type="password"
+                      placeholder={"Password (if you have one)"}
+                      onChange={e => {
+                        this.setValue({
+                          name: "currPassword",
+                          value: e.target.value,
+                          noSave: true
+                        });
+                      }}
+                      value={currPassword}
+                    />
+                  </div>
                 </Modal>
               )}
               {resetPassVisible && (

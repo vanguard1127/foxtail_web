@@ -666,8 +666,8 @@ export const GET_INBOX = gql`
 `;
 
 export const GET_MY_EVENTS = gql`
-  query {
-    getMyEvents {
+  query($lat: Float!, $long: Float!) {
+    getMyEvents(lat: $lat, long: $long) {
       id
       eventname
       type

@@ -98,11 +98,10 @@ class EventInfo extends Component {
             <li>
               <span className="head">{t("Away")}:</span>
               <span className="title">
-                `${distance} $
+                {distance}{" "}
                 {t(
                   "common:" + (distanceMetric === "mi" ? "miles" : "kilometers")
                 )}
-                `
               </span>
             </li>
             <li>

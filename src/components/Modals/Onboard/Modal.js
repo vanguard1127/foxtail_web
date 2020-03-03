@@ -66,6 +66,7 @@ const Onboard = ({
     if (photoList.length < 1 || photoFile === undefined) {
       alert("Please upload an image");
     }
+
     handleUploadToS3(photoFile.filebody)
       .then(key => {
         updateSettings({
@@ -79,23 +80,29 @@ const Onboard = ({
             about,
             kinks
           }
-        }).then(({ data }) => {
-          if (data.updateSettings) {
-            ReactGA.event({
-              category: "Onboarding",
-              action: "Complete"
-            });
-            refetch();
-            history.push({
-              pathname: "/members",
-              state: { initial: true }
-            });
-          } else {
-            ErrorHandler.catchErrors("Onboarding error occured");
-          }
-        });
+        })
+          .then(({ data }) => {
+            if (data.updateSettings) {
+              ReactGA.event({
+                category: "Onboarding",
+                action: "Complete"
+              });
+              refetch();
+              history.push({
+                pathname: "/members",
+                state: { initial: true }
+              });
+            } else {
+              setSaving(false);
+              ErrorHandler.catchErrors("Onboarding error occured");
+            }
+          })
+          .catch(res => {
+            setSaving(false);
+          });
       })
       .catch(res => {
+        setSaving(false);
         ErrorHandler.catchErrors(res);
       });
   };

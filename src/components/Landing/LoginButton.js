@@ -31,17 +31,7 @@ class LoginButton extends PureComponent {
         () => {
           fbResolve()
             .then(async ({ data }) => {
-              if (data.fbResolve === null) {
-                reactga.event({
-                  category: "Login",
-                  action: "No user"
-                });
-
-                toast.dismiss("loginPop");
-                alert(t("noUserError") + ".");
-                window.location.reload();
-                return;
-              } else if (data.fbResolve.length === 0) {
+              if (data.fbResolve.length === 0 || data.fbResolve === null) {
                 reactga.event({
                   category: "Login",
                   action: "Fail"

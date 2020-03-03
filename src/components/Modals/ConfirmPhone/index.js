@@ -208,7 +208,7 @@ class ConfirmPhone extends PureComponent {
           <input
             type="password"
             tabIndex="2"
-            placeholder={"Password"}
+            placeholder={"Password (optional)"}
             onChange={e => {
               this.setValue({
                 name: "password",
