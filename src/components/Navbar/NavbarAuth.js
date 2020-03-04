@@ -62,7 +62,12 @@ class NavbarAuth extends PureComponent {
         getCounts: { ...newCounts }
       }
     });
-    this.props.history.push("/inbox");
+    if (window.location.pathname !== "/inbox") {
+      this.props.history.push("/inbox");
+    } else {
+      //TODO: fix when you can rerender inbox
+      window.location.reload(false);
+    }
     this.toggleMobileMenu();
   };
 

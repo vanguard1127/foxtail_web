@@ -1244,10 +1244,6 @@ section.full-screen-modal {
   max-width: unset !important;
 }
 
-.phoneText {
-  width: calc(100% - 100px) !important;
-}
-
 .popup .page .settings-content .content .select_kinks,
 .popup .page form .content .select_kinks {
   margin-bottom: 0px !important;

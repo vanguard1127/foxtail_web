@@ -25,10 +25,6 @@ section.login-modal.acctsetting {
   padding: 13% 0;
 }
 
-section.login-modal.report {
-  /* padding: 16% 0; */
-}
-
 section.login-modal.rules {
   padding: 10% 0;
 }
@@ -251,6 +247,10 @@ section.login-modal .popup form .form-content .dropdown {
 }
 section.login-modal .popup form .form-content .dropdown.phone {
   width: 100px;
+}
+
+section.login-modal .phoneText {
+  width: calc(100% - 100px) !important;
 }
 
 section.login-modal .popup form .form-content .dropdown.wide {
@@ -583,11 +583,24 @@ section.login-modal .popup form .form-content .upload-verify {
   section.login-modal .popup-container {
     min-width: 90vw;
   }
+  section.login-modal .onboarding {
+    width: 50%;
+  }
 }
 
 @media only screen and (min-width: 992px) {
   section.login-modal .popup-container {
     min-width: 70vw;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  section.login-modal .popup form .form-content .dropdown.phone {
+    width: 35%;
+  }
+
+  section.login-modal .phoneText {
+    width: calc(100% - 35%) !important;
   }
 }
 
