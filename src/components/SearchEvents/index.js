@@ -45,7 +45,8 @@ class SearchEvents extends Component {
       this.props.location.lat !== nextProps.location.lat ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady ||
-      this.state.elapse !== nextState.elapse
+      this.state.elapse !== nextState.elapse ||
+      this.state.hasMore !== nextState.hasMore
     ) {
       return true;
     }
@@ -164,6 +165,7 @@ class SearchEvents extends Component {
             this.setState({
               hasMore: false
             });
+            return previousResult;
           }
 
           return {

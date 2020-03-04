@@ -526,6 +526,7 @@ export const SEARCH_PROFILES = gql`
     $ageRange: [Int]!
     $limit: Int!
     $skip: Int!
+    $isMobile: String
   )
     @connection(
       key: "searchProfiles"
@@ -539,6 +540,7 @@ export const SEARCH_PROFILES = gql`
       ageRange: $ageRange
       limit: $limit
       skip: $skip
+      isMobile: $isMobile
     ) {
       message
       profiles {

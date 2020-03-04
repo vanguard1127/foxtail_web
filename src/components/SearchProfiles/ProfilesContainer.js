@@ -23,7 +23,8 @@ class ProfilesContainer extends Component {
     maxLikeDlgVisible: false,
     chatID: null,
     likedProfiles: [],
-    msgdProfiles: []
+    msgdProfiles: [],
+    hasMore: true
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -43,6 +44,7 @@ class ProfilesContainer extends Component {
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
       this.state.maxLikeDlgVisible !== nextState.maxLikeDlgVisible ||
       this.state.chatID !== nextState.chatID ||
+      this.state.hasMore !== nextState.hasMore ||
       !arraysEqual(this.state.likedProfiles, nextState.likedProfiles) ||
       !arraysEqual(this.state.msgdProfiles, nextState.msgdProfiles) ||
       this.props.t !== nextProps.t
@@ -209,8 +211,9 @@ class ProfilesContainer extends Component {
   fetchData = async fetchMore => {
     this.props.ErrorHandler.setBreadcrumb("Fetch more profiles");
     const { long, lat, distance, ageRange, interestedIn } = this.props;
-    const { skip } = this.state;
-    if (this.mounted) {
+    const { skip, hasMore } = this.state;
+
+    if (this.mounted && hasMore) {
       this.setState({ loading: true }, () =>
         fetchMore({
           variables: {
@@ -227,7 +230,13 @@ class ProfilesContainer extends Component {
               loading: false
             });
 
-            if (!fetchMoreResult) {
+            if (
+              !fetchMoreResult ||
+              fetchMoreResult.searchProfiles.profiles.length === 0
+            ) {
+              this.setState({
+                hasMore: false
+              });
               return previousResult;
             }
 
@@ -310,7 +319,8 @@ class ProfilesContainer extends Component {
           ageRange,
           interestedIn,
           limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT),
-          skip: 0
+          skip: 0,
+          isMobile: sessionStorage.getItem("isMobile")
         }}
         fetchPolicy="cache-first"
       >

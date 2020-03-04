@@ -80,7 +80,6 @@ class SearchProfilesPage extends Component {
   };
 
   tick() {
-    this.props.ErrorHandler.setBreadcrumb("tick");
     if (!this.state.elapse) {
       this.setState({
         elapse: true
