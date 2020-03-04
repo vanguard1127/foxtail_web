@@ -63,7 +63,7 @@ section.login-modal .popup {
 
 section.login-modal .popup.full {
   overflow: auto;
-  width: auto;
+  width: 100%;
 }
 
 section.login-modal.couples .popup.full,
@@ -583,7 +583,7 @@ section.login-modal .popup form .form-content .upload-verify {
   section.login-modal .popup-container {
     min-width: 90vw;
   }
-  section.login-modal .onboarding {
+  .onboarding {
     width: 50%;
   }
 }

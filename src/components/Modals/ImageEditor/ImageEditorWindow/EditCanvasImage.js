@@ -105,41 +105,9 @@ class EditCanvasImage extends PureComponent {
       };
     }
 
-    if (x_pos == 0 || y_pos == 0) {
+    if (x_pos === 0 || y_pos === 0) {
       return;
     }
-
-    //TODO: figure out resize
-    // var vx_pos = x_pos;
-
-    // var vimageWidth = imageWidth;
-    // if (vimageWidth * scale < width) {
-    //   if (x_pos - vimageWidth / 2 + vimageWidth * scale > width) {
-    //     vx_pos = width - vimageWidth * scale + vimageWidth / 2;
-    //   }
-    // } else {
-    //   vx_pos = width / 2;
-    //   vimageWidth = width / scale;
-    // }
-    // var vy_pos = y_pos;
-    // var vimageHeight = imageHeight;
-    // if (imageHeight * scale < height) {
-    //   if (y_pos - vimageHeight / 2 + imageHeight * scale > height) {
-    //     vy_pos = height - imageHeight * scale + vimageHeight / 2;
-    //   }
-    // } else {
-    //   vy_pos = height / 2;
-    //   vimageHeight = height / scale;
-    // }
-
-    // this.setState({
-    //   width: width,
-    //   height: height,
-    //   x_pos: vx_pos,
-    //   y_pos: vy_pos,
-    //   imageWidth: vimageWidth,
-    //   imageHeight: vimageHeight
-    // });
   };
 
   handleStageClick = e => {

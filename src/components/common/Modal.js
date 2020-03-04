@@ -49,6 +49,7 @@ class Modal extends Component {
       fullWidth,
       fullScreen,
       className,
+      innerClassName,
       popupClass,
       noHeader,
       noFade,
@@ -104,7 +105,12 @@ class Modal extends Component {
                 </div>
               ) : (
                 <div
-                  style={fullWidth || width ? { width } : { maxWidth: "520px" }}
+                  style={
+                    fullWidth || width
+                      ? { width }
+                      : { maxWidth: "520px", minWidth: "50%" }
+                  }
+                  className={innerClassName}
                 >
                   <div
                     className={`${

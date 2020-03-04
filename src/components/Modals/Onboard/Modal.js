@@ -254,7 +254,8 @@ const Onboard = ({
         header={"Complete Your Profile"}
         close={close}
         disableOffClick
-        className="onboarding"
+        fullWidth
+        innerClassName="onboarding"
       >
         <ErrorHandler.ErrorBoundary>
           <div className="m-body">

@@ -11,12 +11,13 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
   const [sendMessage] = useMutation(SEND_MESSAGE);
   const refContainer = useRef(null);
   const notifyTyping = isTyping => {
-    const token = localStorage.getItem("token");
-    axios.post(process.env.REACT_APP_HTTPS_URL + "/notify", {
-      token,
-      isTyping,
-      chatID
-    });
+    //TODO: fix this
+    // const token = localStorage.getItem("token");
+    // axios.post(process.env.REACT_APP_HTTPS_URL + "/notify", {
+    //   token,
+    //   isTyping,
+    //   chatID
+    // });
   };
   const submitMessage = e => {
     e && e.preventDefault();

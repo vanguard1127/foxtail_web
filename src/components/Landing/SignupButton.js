@@ -47,28 +47,15 @@ class SignupButton extends PureComponent {
                 data.fbResolve.find(token => token.access === "refresh").token
               );
 
-              //TODO: Consider deleting if not used
-              if (isCouple) {
-                ErrorHandler.setBreadcrumb("Signup OK, Couple");
-                ReactGA.event({
-                  category: "Signup",
-                  action: "Couple"
-                });
-                history.push({
-                  pathname: "/get-started",
-                  state: { couple: true, initial: true }
-                });
-              } else {
-                ErrorHandler.setBreadcrumb("Signup OK, Single");
-                ReactGA.event({
-                  category: "Signup",
-                  action: "Success"
-                });
-                history.push({
-                  pathname: "/get-started",
-                  state: { initial: true }
-                });
-              }
+              ErrorHandler.setBreadcrumb("Signup OK, Single");
+              ReactGA.event({
+                category: "Signup",
+                action: "Success"
+              });
+              history.push({
+                pathname: "/get-started",
+                state: { initial: true }
+              });
             })
             .catch(res => {
               ErrorHandler.catchErrors(res);

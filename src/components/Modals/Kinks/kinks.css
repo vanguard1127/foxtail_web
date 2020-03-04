@@ -41,11 +41,11 @@ section.kinks-popup .modal-popup {
   min-height: 400px;
 }
 
-/* @media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   section.kinks-popup .modal-popup {
     width: 80%;
   }
-} */
+}
 
 section.kinks-popup .modal-popup .m-head {
   width: 100%;
@@ -62,7 +62,11 @@ section.kinks-popup .modal-popup .m-head {
   text-align: center;
   margin-bottom: 25px;
   padding: 30px;
-  background-image: -webkit-linear-gradient(top right, #f70016 0%, #791b7d 100%);
+  background-image: -webkit-linear-gradient(
+    top right,
+    #f70016 0%,
+    #791b7d 100%
+  );
   background-image: -o-linear-gradient(top right, #f70016 0%, #791b7d 100%);
   background-image: linear-gradient(to bottom left, #f70016 0%, #791b7d 100%);
   position: relative;
@@ -143,12 +147,18 @@ section.kinks-popup .modal-popup .m-body .kinks-list-con::-webkit-scrollbar {
   border-radius: 0 3px 3px 0;
 }
 
-section.kinks-popup .modal-popup .m-body .kinks-list-con::-webkit-scrollbar-thumb {
+section.kinks-popup
+  .modal-popup
+  .m-body
+  .kinks-list-con::-webkit-scrollbar-thumb {
   background: #ececec;
   border: none;
 }
 
-section.kinks-popup .modal-popup .m-body .kinks-list-con::-webkit-scrollbar-corner {
+section.kinks-popup
+  .modal-popup
+  .m-body
+  .kinks-list-con::-webkit-scrollbar-corner {
   background: inherit;
 }
 
@@ -178,7 +188,15 @@ section.kinks-popup .modal-popup .m-body .kinks-list-con ul li input {
   display: none;
 }
 
-section.kinks-popup .modal-popup .m-body .kinks-list-con ul li input + label span {
+section.kinks-popup
+  .modal-popup
+  .m-body
+  .kinks-list-con
+  ul
+  li
+  input
+  + label
+  span {
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -213,7 +231,15 @@ section.kinks-popup .modal-popup .m-body .kinks-list-con ul li label b {
   overflow: hidden;
 }
 
-section.kinks-popup .modal-popup .m-body .kinks-list-con ul li input:checked + label span:before {
+section.kinks-popup
+  .modal-popup
+  .m-body
+  .kinks-list-con
+  ul
+  li
+  input:checked
+  + label
+  span:before {
   content: "\e804";
   font-family: "foxtail-icon";
   color: #cb0032;

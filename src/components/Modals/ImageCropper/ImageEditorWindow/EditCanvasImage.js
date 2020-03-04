@@ -44,48 +44,7 @@ class EditCanvasImage extends PureComponent {
     const height = window.innerHeight - 56; // here also we've subtract topbar height
 
     this.setState({ width, height });
-
-    //TODO: figure out resize
-    // var vx_pos = x_pos;
-
-    // var vimageWidth = imageWidth;
-    // if (vimageWidth * scale < width) {
-    //   if (x_pos - vimageWidth / 2 + vimageWidth * scale > width) {
-    //     vx_pos = width - vimageWidth * scale + vimageWidth / 2;
-    //   }
-    // } else {
-    //   vx_pos = width / 2;
-    //   vimageWidth = width / scale;
-    // }
-    // var vy_pos = y_pos;
-    // var vimageHeight = imageHeight;
-    // if (imageHeight * scale < height) {
-    //   if (y_pos - vimageHeight / 2 + imageHeight * scale > height) {
-    //     vy_pos = height - imageHeight * scale + vimageHeight / 2;
-    //   }
-    // } else {
-    //   vy_pos = height / 2;
-    //   vimageHeight = height / scale;
-    // }
-
-    // this.setState({
-    //   width: width,
-    //   height: height,
-    //   x_pos: vx_pos,
-    //   y_pos: vy_pos,
-    //   imageWidth: vimageWidth,
-    //   imageHeight: vimageHeight
-    // });
   };
-
-  // dataURItoBlob = dataURI => {
-  //   var binary = atob(dataURI.split(",")[1]);
-  //   var array = [];
-  //   for (var i = 0; i < binary.length; i++) {
-  //     array.push(binary.charCodeAt(i));
-  //   }
-  //   return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
-  // };
 
   handleExportClick = async () => {
     const { uploading } = this.state;
