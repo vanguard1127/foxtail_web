@@ -31,22 +31,13 @@ class MyEvents extends Component {
   };
 
   render() {
-    const {
-      t,
-      ErrorHandler,
-      dayjs,
-      distanceMetric,
-      lang,
-      lat,
-      long
-    } = this.props;
+    const { t, ErrorHandler, dayjs, distanceMetric, lang } = this.props;
 
     return (
       <Query
         query={GET_MY_EVENTS}
         fetchPolicy="cache-and-network"
         returnPartialData={true}
-        variables={{ lat, long }}
       >
         {({ data, loading, error }) => {
           if (loading) return null;

@@ -267,8 +267,6 @@ class SearchEvents extends Component {
                   dayjs={dayjs}
                   distanceMetric={distanceMetric}
                   lang={lang}
-                  lat={lat}
-                  long={long}
                 />
               ) : null}
             </ErrorHandler.ErrorBoundary>

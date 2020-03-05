@@ -5,7 +5,7 @@ import KinksBlock from "../KinksBlock";
 class ProfileInfoDiv extends PureComponent {
   render() {
     const { profile, t, dayjs, distanceMetric } = this.props;
-    console.log("profile.distance", profile.distance);
+
     return (
       <div className="data">
         <ProfileInfoBox
