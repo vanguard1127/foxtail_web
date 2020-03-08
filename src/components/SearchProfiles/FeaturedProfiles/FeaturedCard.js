@@ -12,39 +12,45 @@ class FeaturedCard extends Component {
     }
     return false;
   }
+
+  goTo = () => {
+    this.props.history.push("/member/" + this.props.profile.id);
+  };
+
   render() {
     const {
       profile,
       showMsgModal,
       likeProfile,
-      history,
       t,
       dayjs,
       liked,
       msgd,
-      distanceMetric
+      distanceMetric,
+      toggleBlockModalVisible,
+      isMobile
     } = this.props;
 
-    const stdCheck = profile.users.every(
-      user => user.verifications.std === true
-    );
-    const photoCheck = profile.users.every(
-      user => user.verifications.photo === true
-    );
-
     let badge = "";
-    if (photoCheck && stdCheck) {
+    if (
+      profile.users.every(
+        user =>
+          user.verifications.photoVer.active && user.verifications.stdVer.active
+      )
+    ) {
       badge = "verified both";
-    } else if (photoCheck) {
-      badge = "verified photo";
-    } else if (stdCheck) {
+    } else if (profile.users.every(user => user.verifications.stdVer.active)) {
       badge = "verified std";
+    } else if (
+      profile.users.every(user => user.verifications.photoVer.active)
+    ) {
+      badge = "verified photo";
     }
 
     return (
       <div className={"item " + badge}>
         <div className="info">
-          <span onClick={() => history.push("/member/" + profile.id)}>
+          <span onClick={this.goTo}>
             <ProfileInfoDiv
               profile={profile}
               t={t}
@@ -53,6 +59,10 @@ class FeaturedCard extends Component {
             />
             <ProfilePic profilePic={profile.profilePic} />
           </span>
+          <div
+            className={isMobile ? "removeProfile isMobile" : "removeProfile"}
+            onClick={() => toggleBlockModalVisible(profile)}
+          ></div>
         </div>
         <ProfileActionBtns
           likeProfile={likeProfile}

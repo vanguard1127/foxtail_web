@@ -105,11 +105,7 @@ class Modal extends Component {
                 </div>
               ) : (
                 <div
-                  style={
-                    fullWidth || width
-                      ? { width }
-                      : { maxWidth: "520px", minWidth: "50%" }
-                  }
+                  style={fullWidth || width ? { width } : { maxWidth: "520px" }}
                   className={innerClassName}
                 >
                   <div

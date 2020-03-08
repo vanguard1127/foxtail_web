@@ -67,7 +67,8 @@ section.profile .avatar-card {
   padding: 15px;
   margin-top: 40px;
   position: relative;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   margin-bottom: 20px;
   z-index: 100;
 }
@@ -196,7 +197,8 @@ section.profile .kinks ul li {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   margin-bottom: 5px;
   font-size: 14px;
   color: #464648;
@@ -244,7 +246,11 @@ section.profile .user-info.couple::after {
   content: "Couple";
   height: 21px;
   display: inline-block;
-  background-image: -webkit-linear-gradient(top right, #ffc223 0%, #ff8f0f 100%);
+  background-image: -webkit-linear-gradient(
+    top right,
+    #ffc223 0%,
+    #ff8f0f 100%
+  );
   background-image: -o-linear-gradient(top right, #ffc223 0%, #ff8f0f 100%);
   background-image: linear-gradient(to bottom left, #ffc223 0%, #ff8f0f 100%);
   text-align: center;
@@ -306,7 +312,8 @@ section.profile .data-info ul li {
   width: 100%;
   padding: 15px 15px 12px 15px;
   background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
   border-radius: 3px;
   margin-bottom: 5px;
 }
@@ -353,6 +360,7 @@ section.profile .data-info .functions .btn {
   height: 38px;
   background-color: inherit;
   display: inline-block;
+  margin-left: 13px;
   float: left;
   text-align: center;
   line-height: 38px;
@@ -399,8 +407,8 @@ section.profile .data-info .functions .btn.report::before {
   content: "\e808";
 }
 
-section.profile .data-info .functions .btn.report {
-  margin-left: 13px;
+section.profile .data-info .functions .btn.remove::before {
+  content: "\e805";
 }
 
 section.profile .user-bio {

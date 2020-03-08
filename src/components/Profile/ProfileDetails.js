@@ -15,6 +15,7 @@ class ProfileDetails extends Component {
       profile,
       showShareModal,
       showBlockModal,
+      showRemoveModal,
       t,
       ErrorBoundary,
       distanceMetric
@@ -87,6 +88,11 @@ class ProfileDetails extends Component {
               className="report btn"
               onClick={showBlockModal}
               title={t("reportmem")}
+            />
+            <div
+              className="remove btn"
+              onClick={showRemoveModal}
+              title={t("removemem")}
             />
           </div>
         </div>

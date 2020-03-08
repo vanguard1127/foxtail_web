@@ -1,4 +1,6 @@
 import React, { PureComponent } from "react";
+import { Mutation } from "react-apollo";
+import { FB_RESOLVE } from "../../queries";
 import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -6,13 +8,16 @@ import ConfirmPhone from "../Modals/ConfirmPhone";
 
 class FirebaseAuth extends PureComponent {
   state = {
-    showPhoneDialog: false
+    showPhoneDialog: false,
+    code: "",
+    password: ""
   };
 
   componentDidMount() {
-    if (process.env.NODE_ENV !== "production") {
-      firebase.auth().settings.appVerificationDisabled = true;
-    }
+    //TODO: READD
+    // if (process.env.NODE_ENV !== "production") {
+    //   firebase.auth().settings.appVerificationDisabled = true;
+    // }
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
       "recaptcha-container",
       {
@@ -56,55 +61,100 @@ class FirebaseAuth extends PureComponent {
     });
   }
 
+  toggleConfirmPopup() {
+    this.setState({ showPhoneDialog: !this.state.showPhoneDialog });
+  }
+
+  handleFirebaseReturn = fbResolve => {
+    if (this.mounted) {
+      const { loadingCB, success, failCB, ErrorHandler } = this.props;
+      ErrorHandler.setBreadcrumb("Phone verification pressed");
+
+      loadingCB && loadingCB();
+      fbResolve()
+        .then(async ({ data }) => {
+          success(data);
+        })
+        .catch(err => {
+          failCB && failCB(err);
+        });
+    }
+  };
+
   render() {
+    const { code, password } = this.state;
     const {
       ErrorHandler,
       type,
-      onResponse,
       children,
       title,
       toggleResetPhone,
       toggleResetPass
     } = this.props;
     return (
-      <>
-        {this.state.showPhoneDialog ? (
-          <ConfirmPhone
-            ErrorHandler={ErrorHandler}
-            sendConfirmationMessage={this.sendCode}
-            confirmPhone={this.confirmPhone}
-            title={title}
-            type={type}
-            onSuccess={(result, password) => {
-              this.setState(
-                {
-                  showPhoneDialog: false
-                },
-                () => {
-                  onResponse({
-                    code: result,
-                    password
-                  });
-                }
-              );
-            }}
-            close={() => {
-              window.location.reload(true);
-            }}
-            sendCode={this.sendCode}
-            toggleResetPhone={toggleResetPhone}
-            toggleResetPass={toggleResetPass}
-          ></ConfirmPhone>
-        ) : null}
-        <span onClick={this.signIn}>{children}</span>
-        <div id="recaptcha-container" style={{ display: "none" }}></div>
-      </>
+      <Mutation
+        mutation={FB_RESOLVE}
+        variables={{
+          csrf: process.env.REACT_APP_CSRF,
+          code,
+          isCreate: false,
+          password
+        }}
+      >
+        {fbResolve => {
+          return (
+            <>
+              {this.state.showPhoneDialog ? (
+                <ConfirmPhone
+                  ErrorHandler={ErrorHandler}
+                  sendConfirmationMessage={this.sendCode}
+                  confirmPhone={this.confirmPhone}
+                  title={title}
+                  type={type}
+                  onSuccess={(result, password) => {
+                    this.setState(
+                      {
+                        showPhoneDialog: false,
+                        code: result,
+                        password
+                      },
+                      () => {
+                        if (
+                          window.applicationVerifier &&
+                          this.recaptchaWrapperRef
+                        ) {
+                          window.applicationVerifier.clear();
+                          this.recaptchaWrapperRef.innerHTML = `<div id="recaptcha-container"></div>`;
+                        }
+
+                        this.handleFirebaseReturn(fbResolve);
+                      }
+                    );
+                  }}
+                  close={() => {
+                    this.toggleConfirmPopup();
+                  }}
+                  sendCode={this.sendCode}
+                  toggleResetPhone={toggleResetPhone}
+                  toggleResetPass={toggleResetPass}
+                ></ConfirmPhone>
+              ) : null}
+              <span onClick={this.signIn}>{children}</span>
+              <div
+                ref={ref => (this.recaptchaWrapperRef = ref)}
+                style={{ display: "none" }}
+              >
+                <div id="recaptcha-container"></div>
+              </div>
+            </>
+          );
+        }}
+      </Mutation>
     );
   }
 }
 
 FirebaseAuth.propTypes = {
-  onResponse: PropTypes.func.isRequired,
   debug: PropTypes.bool,
   disabled: PropTypes.bool
 };

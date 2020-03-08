@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import { BLOCK_PROFILE, FLAG_ITEM } from "../../../queries";
+import { BLOCK_PROFILE, FLAG_ITEM, SEARCH_PROFILES } from "../../../queries";
 import { Mutation } from "react-apollo";
 import { toast } from "react-toastify";
 import Modal from "../../common/Modal";
@@ -43,7 +43,35 @@ class BlockModal extends Component {
   };
 
   handleSubmit = (blockProfile, flagItem) => {
-    const { t, close, goToMain, ErrorHandler, ReactGA } = this.props;
+    const {
+      t,
+      close,
+      goBack,
+      ErrorHandler,
+      ReactGA,
+      isRemove,
+      profile,
+      isProfile
+    } = this.props;
+
+    if (isRemove) {
+      blockProfile().then(({ data }) => {
+        if (data.blockProfile) {
+          ReactGA.event({
+            category: "Profile",
+            action: "Remove"
+          });
+          toast.success(t("removed") + " " + profile.profileName);
+          if (!isProfile) {
+            close();
+          } else {
+            goBack();
+          }
+        }
+      });
+      return;
+    }
+
     if (this.state.reason === "") {
       if (!toast.isActive("err")) {
         toast.error(t("plsreason"), {
@@ -63,7 +91,7 @@ class BlockModal extends Component {
                 action: "Block"
               });
               toast.success(t("selproreported"));
-              goToMain();
+              goBack();
             }
           });
         } else if (this.state.type === flagOptions.Chat) {
@@ -140,6 +168,33 @@ class BlockModal extends Component {
     }
   };
 
+  updateSearchProfiles = cache => {
+    const { profile, searchParams, isRemove } = this.props;
+    if (!isRemove) {
+      return;
+    }
+    const { searchProfiles } = cache.readQuery({
+      query: SEARCH_PROFILES,
+      variables: searchParams
+    });
+
+    cache.writeQuery({
+      query: SEARCH_PROFILES,
+      variables: searchParams,
+      data: {
+        searchProfiles: {
+          ...searchProfiles,
+          profiles: searchProfiles.profiles.filter(
+            member => member.id !== profile.id
+          ),
+          featuredProfiles: searchProfiles.featuredProfiles.filter(
+            member => member.id !== profile.id
+          )
+        }
+      }
+    });
+  };
+
   render() {
     const {
       profile,
@@ -147,6 +202,7 @@ class BlockModal extends Component {
       id,
       t,
       tReady,
+      isRemove,
       ErrorHandler: { ErrorBoundary }
     } = this.props;
 
@@ -157,25 +213,36 @@ class BlockModal extends Component {
     const { other, reason, type } = this.state;
     const blockMenu = this.menu();
     let title;
-    if (type === flagOptions.Profile) {
+    if (isRemove) {
       title =
-        t("repblock") +
+        t("remove") +
         " " +
         profile.users.map((user, index) => {
           if (index === 0) return user.username;
           else return +" & " + user.username;
         });
-    }
-    if (type === flagOptions.Chat) {
-      title = t("reportchat");
     } else {
-      title = t("repblock");
+      if (type === flagOptions.Profile) {
+        title =
+          t("repblock") +
+          " " +
+          profile.users.map((user, index) => {
+            if (index === 0) return user.username;
+            else return +" & " + user.username;
+          });
+      }
+      if (type === flagOptions.Chat) {
+        title = t("reportchat");
+      } else {
+        title = t("repblock");
+      }
     }
+
     return (
       <Modal
         header={title}
         close={close}
-        description={t("selreason")}
+        description={isRemove ? t("cantbeun") : t("selreason")}
         className="report"
         okSpan={
           <Mutation
@@ -193,6 +260,7 @@ class BlockModal extends Component {
                   variables={{
                     blockedProfileID: id
                   }}
+                  update={this.updateSearchProfiles}
                 >
                   {(blockProfile, { loading }) => {
                     if (loading) {
@@ -206,7 +274,7 @@ class BlockModal extends Component {
                         className={"color"}
                         disabled={reason === "" || loading}
                       >
-                        {t("report")}
+                        {isRemove ? t("remove") : t("report")}
                       </span>
                     );
                   }}
@@ -216,26 +284,28 @@ class BlockModal extends Component {
           </Mutation>
         }
       >
-        <ErrorBoundary>
-          <>
-            <div className="select-outline">
-              <label>{t("reasonlbl")}</label>
-              {blockMenu}
-              <div
-                style={{
-                  display: other ? "block" : "none"
-                }}
-              >
-                <input
-                  placeholder={t("otherreason")}
-                  onChange={this.handleTextChange}
-                  value={reason}
-                  style={{ width: "100%" }}
-                />
+        {!isRemove && (
+          <ErrorBoundary>
+            <>
+              <div className="select-outline">
+                <label>{t("reasonlbl")}</label>
+                {blockMenu}
+                <div
+                  style={{
+                    display: other ? "block" : "none"
+                  }}
+                >
+                  <input
+                    placeholder={t("otherreason")}
+                    onChange={this.handleTextChange}
+                    value={reason}
+                    style={{ width: "100%" }}
+                  />
+                </div>
               </div>
-            </div>
-          </>
-        </ErrorBoundary>
+            </>
+          </ErrorBoundary>
+        )}
       </Modal>
     );
   }

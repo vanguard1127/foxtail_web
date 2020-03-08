@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import OwlCarousel from "react-owl-carousel";
 import FeaturedCard from "./FeaturedCard";
 import arraysEqual from "../../../utils/arraysEqual";
-import '../searchProfiles.css';
+import "../searchProfiles.css";
 class FeaturedProfiles extends Component {
   shouldComponentUpdate(nextProps) {
     if (
@@ -26,7 +26,9 @@ class FeaturedProfiles extends Component {
       dayjs,
       likedProfiles,
       msgdProfiles,
-      distanceMetric
+      distanceMetric,
+      toggleBlockModalVisible,
+      isMobile
     } = this.props;
 
     return (
@@ -82,6 +84,8 @@ class FeaturedProfiles extends Component {
                       liked={likedProfiles.includes(profile.id)}
                       msgd={msgdProfiles.includes(profile.id)}
                       distanceMetric={distanceMetric}
+                      toggleBlockModalVisible={toggleBlockModalVisible}
+                      isMobile={isMobile}
                     />
                   );
                 })}

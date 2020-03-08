@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProfileCard from "./ProfileCard";
 import { Waypoint } from "react-waypoint";
 import isArrayStringsEqual from "../../../utils/arraysEqual";
-import '../searchProfiles.css';
+import "../searchProfiles.css";
 class ProfilesDiv extends Component {
   shouldComponentUpdate(nextProps) {
     if (
@@ -26,7 +26,9 @@ class ProfilesDiv extends Component {
       dayjs,
       distanceMetric,
       likedProfiles,
-      msgdProfiles
+      msgdProfiles,
+      toggleBlockModalVisible,
+      isMobile
     } = this.props;
 
     return (
@@ -50,6 +52,8 @@ class ProfilesDiv extends Component {
                     distanceMetric={distanceMetric}
                     liked={likedProfiles.includes(profile.id)}
                     msgd={msgdProfiles.includes(profile.id)}
+                    toggleBlockModalVisible={toggleBlockModalVisible}
+                    isMobile={isMobile}
                   />
                 );
               })}

@@ -6,6 +6,7 @@ import MemberProfiles from "./MemberProfiles/";
 import { Waypoint } from "react-waypoint";
 import FeaturedProfiles from "./FeaturedProfiles/";
 import DirectMsgModal from "../Modals/DirectMsg";
+import BlockModal from "../Modals/Block";
 import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
 import DailyLimitModal from "../Modals/DailyLimit";
@@ -21,6 +22,7 @@ class ProfilesContainer extends Component {
     profile: null,
     matchDlgVisible: false,
     maxLikeDlgVisible: false,
+    blockDlgVisible: false,
     chatID: null,
     likedProfiles: [],
     msgdProfiles: [],
@@ -42,6 +44,7 @@ class ProfilesContainer extends Component {
       this.state.msgModalVisible !== nextState.msgModalVisible ||
       this.state.profile !== nextState.profile ||
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
+      this.state.blockDlgVisible !== nextState.blockDlgVisible ||
       this.state.maxLikeDlgVisible !== nextState.maxLikeDlgVisible ||
       this.state.chatID !== nextState.chatID ||
       this.state.hasMore !== nextState.hasMore ||
@@ -67,6 +70,13 @@ class ProfilesContainer extends Component {
 
     if (this.mounted) {
       this.setState({ maxLikeDlgVisible: !this.state.maxLikeDlgVisible });
+    }
+  };
+
+  toggleBlockModalVisible = (profile = null) => {
+    this.props.ErrorHandler.setBreadcrumb("Block Dialog Toggled:");
+    if (this.mounted) {
+      this.setState({ profile, blockDlgVisible: !this.state.blockDlgVisible });
     }
   };
 
@@ -303,25 +313,26 @@ class ProfilesContainer extends Component {
       loading,
       likedProfiles,
       msgdProfiles,
-      maxLikeDlgVisible
+      maxLikeDlgVisible,
+      blockDlgVisible
     } = this.state;
     if (this.props.loading && loading) {
       return <Spinner page="searchProfiles" title={this.props.t("allmems")} />;
     }
-
+    const searchParams = {
+      long,
+      lat,
+      distance,
+      ageRange,
+      interestedIn,
+      limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT),
+      skip: 0,
+      isMobile: sessionStorage.getItem("isMobile")
+    };
     return (
       <Query
         query={SEARCH_PROFILES}
-        variables={{
-          long,
-          lat,
-          distance,
-          ageRange,
-          interestedIn,
-          limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT),
-          skip: 0,
-          isMobile: sessionStorage.getItem("isMobile")
-        }}
+        variables={searchParams}
         fetchPolicy="cache-first"
       >
         {({ data, loading, fetchMore, error, refetch }) => {
@@ -418,6 +429,10 @@ class ProfilesContainer extends Component {
                         likedProfiles={likedProfiles}
                         msgdProfiles={msgdProfiles}
                         distanceMetric={distanceMetric}
+                        toggleBlockModalVisible={profile =>
+                          this.toggleBlockModalVisible(profile)
+                        }
+                        isMobile={searchParams.isMobile === "true"}
                       />
                     )}
                     {result.profiles.length !== 0 && (
@@ -441,6 +456,10 @@ class ProfilesContainer extends Component {
                         distanceMetric={distanceMetric}
                         likedProfiles={likedProfiles}
                         msgdProfiles={msgdProfiles}
+                        toggleBlockModalVisible={profile =>
+                          this.toggleBlockModalVisible(profile)
+                        }
+                        isMobile={searchParams.isMobile === "true"}
                       />
                     )}
 
@@ -463,6 +482,17 @@ class ProfilesContainer extends Component {
                         ErrorHandler={ErrorHandler}
                         setMsgd={this.setMessaged}
                         ReactGA={ReactGA}
+                      />
+                    )}
+                    {profile && blockDlgVisible && (
+                      <BlockModal
+                        id={profile.id}
+                        profile={profile}
+                        close={this.toggleBlockModalVisible}
+                        ErrorHandler={ErrorHandler}
+                        ReactGA={ReactGA}
+                        isRemove={true}
+                        searchParams={searchParams}
                       />
                     )}
                     {profile && chatID && matchDlgVisible && (

@@ -2526,6 +2526,9 @@ div.register-form div.form-fields .couple-choose {
 
 .datePickerInput {
   width: 100%;
+}
+
+.datePickerInput input {
   cursor: pointer;
 }
 

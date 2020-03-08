@@ -139,9 +139,7 @@ class EventPage extends Component {
       >
         {({ data, loading, error, refetch }) => {
           if (error) {
-            document.title = t(
-              "common:Error Occurred. Please contact support at support@foxtailapp.com"
-            );
+            document.title = t("common:error");
             return (
               <ErrorHandler.report
                 error={error}
@@ -306,7 +304,7 @@ class EventPage extends Component {
                       <Modal
                         header={t("deleve")}
                         close={this.toggleDeleteDialog}
-                        description={t("cantbeun")}
+                        description={t("modals:cantbeun")}
                         okSpan={okSpan}
                       />
                     );

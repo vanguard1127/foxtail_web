@@ -24,7 +24,8 @@ class ProfilePage extends Component {
     profile: null,
     matched: false,
     matchDlgVisible: false,
-    chatID: null
+    chatID: null,
+    isRemove: false
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -90,18 +91,18 @@ class ProfilePage extends Component {
     }
   };
 
-  setBlockModalVisible = (blockModalVisible, profile) => {
+  setBlockModalVisible = (blockModalVisible, profile, isRemove) => {
     this.props.ErrorHandler.setBreadcrumb(
       "Block Modal Opened:" + blockModalVisible
     );
     if (this.mounted) {
-      if (profile) this.setState({ profile, blockModalVisible });
+      if (profile) this.setState({ isRemove, profile, blockModalVisible });
       else this.setState({ blockModalVisible });
     }
   };
 
-  goToMembers = () => {
-    this.props.history.push("/members");
+  goBack = () => {
+    this.props.history.goBack();
   };
 
   handleLike = (profile, likeProfile) => {
@@ -159,7 +160,8 @@ class ProfilePage extends Component {
       shareModalVisible,
       matchDlgVisible,
       chatID,
-      matched
+      matched,
+      isRemove
     } = this.state;
     const { t, ErrorHandler, session, ReactGA, tReady, dayjs } = this.props;
 
@@ -185,9 +187,7 @@ class ProfilePage extends Component {
             >
               {({ data, loading, error, refetch }) => {
                 if (error) {
-                  document.title = t(
-                    "common:Error Occurred. Please contact support at support@foxtailapp.com"
-                  );
+                  document.title = t("common:error");
                   return (
                     <ErrorHandler.report
                       error={error}
@@ -283,6 +283,9 @@ class ProfilePage extends Component {
                               showBlockModal={() =>
                                 this.setBlockModalVisible(true, profile)
                               }
+                              showRemoveModal={() =>
+                                this.setBlockModalVisible(true, profile, true)
+                              }
                               showShareModal={() =>
                                 this.setShareModalVisible(true, profile)
                               }
@@ -328,10 +331,12 @@ class ProfilePage extends Component {
                         id={profile.id}
                         profile={profile}
                         close={() => this.setBlockModalVisible(false)}
-                        goToMain={this.goToMembers}
+                        goBack={this.goBack}
                         type={flagOptions.Profile}
                         ErrorHandler={ErrorHandler}
                         ReactGA={ReactGA}
+                        isRemove={isRemove}
+                        isProfile={true}
                       />
                     )}
                     {profile && shareModalVisible && (

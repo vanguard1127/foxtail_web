@@ -15,49 +15,35 @@ class ResetPhoneButton extends PureComponent {
   componentWillUnmount() {
     this.mounted = false;
   }
-  handleFBReturn = ({ password, code }, fbResetPhone) => {
-    const { t, ErrorHandler, history, ReactGA, close } = this.props;
-    if (!code) {
+
+  success = data => {
+    const { history, t, ReactGA } = this.props;
+    if (!data.fbResolve || data.fbResolve.length === 0) {
+      ReactGA.event({
+        category: "Reset Phone",
+        action: "Fail"
+      });
+      alert(t("passupfail"));
       return;
     }
-
-    if (this.mounted) {
-      this.setState(
-        {
-          code,
-          password
-        },
-        () => {
-          fbResetPhone()
-            .then(({ data }) => {
-              if (data.fbResetPhone === null) {
-                alert(t("passupfail"));
-                window.location.reload();
-                return;
-              } else if (data.fbResetPhone === false) {
-                alert(t("passupfail"));
-                window.location.reload();
-                return;
-              }
-              alert(t("phoneupd"));
-              ReactGA.event({
-                category: "Reset Phone",
-                action: "Success"
-              });
-              history.push("/members");
-            })
-            .catch(res => {
-              ReactGA.event({
-                category: "Reset Phone",
-                action: "Failuer"
-              });
-              ErrorHandler.catchErrors(res);
-              close();
-            });
-        }
-      );
-    }
+    alert(t("phoneupd"));
+    ReactGA.event({
+      category: "Reset Phone",
+      action: "Success"
+    });
+    history.push("/members");
   };
+
+  fail = err => {
+    const { ReactGA, ErrorHandler, close } = this.props;
+    ReactGA.event({
+      category: "Reset Phone",
+      action: "Failure"
+    });
+    ErrorHandler.catchErrors(err);
+    close();
+  };
+
   render() {
     const { code, lang, password } = this.state;
     const { t, token, ErrorHandler } = this.props;
@@ -73,10 +59,9 @@ class ResetPhoneButton extends PureComponent {
               language={lang}
               ErrorHandler={ErrorHandler}
               t={t}
-              onResponse={resp => {
-                this.handleFBReturn(resp, fbResetPhone);
-              }}
               title={t("common:updphone")}
+              success={this.success}
+              fail={this.fail}
             >
               <span className="color">{t("common:update")}</span>
             </FirebaseAuth>

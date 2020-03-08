@@ -14,55 +14,39 @@ class SignupButton extends PureComponent {
     this.mounted = false;
   }
 
-  handleFirebaseReturn = ({ code, password }) => {
-    if (this.mounted) {
-      const { ErrorHandler, history, ReactGA, t } = this.props;
-      ErrorHandler.setBreadcrumb("Signup Button pressed");
-      this.setState(
-        {
-          code,
-          password
-        },
-        () => {
-          this.fbResolve()
-            .then(({ data }) => {
-              const { isCouple } = this.props.createData;
-              if (data.fbResolve === null) {
-                ErrorHandler.setBreadcrumb("Signup Failed");
-                ReactGA.event({
-                  category: "Signup",
-                  action: "Fail"
-                });
-                const failmsg = t("Signup failed.");
-                alert(failmsg);
-                return;
-              }
-
-              localStorage.setItem(
-                "token",
-                data.fbResolve.find(token => token.access === "auth").token
-              );
-              localStorage.setItem(
-                "refreshToken",
-                data.fbResolve.find(token => token.access === "refresh").token
-              );
-
-              ErrorHandler.setBreadcrumb("Signup OK, Single");
-              ReactGA.event({
-                category: "Signup",
-                action: "Success"
-              });
-              history.push({
-                pathname: "/get-started",
-                state: { initial: true }
-              });
-            })
-            .catch(res => {
-              ErrorHandler.catchErrors(res);
-            });
-        }
-      );
+  success = data => {
+    const { history, t, ReactGA, ErrorHandler } = this.props;
+    if (!data.fbResolve || data.fbResolve.length === 0) {
+      ReactGA.event({
+        category: "Signup",
+        action: "Fail"
+      });
+      const failmsg = t("Signup failed.");
+      alert(failmsg);
+      return;
     }
+    localStorage.setItem(
+      "token",
+      data.fbResolve.find(token => token.access === "auth").token
+    );
+    localStorage.setItem(
+      "refreshToken",
+      data.fbResolve.find(token => token.access === "refresh").token
+    );
+
+    ErrorHandler.setBreadcrumb("Signup OK, Single");
+    ReactGA.event({
+      category: "Signup",
+      action: "Success"
+    });
+    history.push({
+      pathname: "/get-started",
+      state: { initial: true }
+    });
+  };
+
+  fail = err => {
+    this.props.ErrorHandler.catchErrors(err);
   };
 
   render() {
@@ -89,10 +73,11 @@ class SignupButton extends PureComponent {
               validateForm={validateForm}
               disabled={disabled}
               ErrorHandler={ErrorHandler}
-              onResponse={this.handleFirebaseReturn}
               type="signup"
               t={t}
               title={t("pleasever")}
+              success={this.success}
+              fail={this.fail}
             >
               <div className="submit">
                 <button className="btn">{t("getstarted")}</button>

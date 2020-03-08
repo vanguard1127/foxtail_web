@@ -19,41 +19,21 @@ class ChangePhoneBtn extends PureComponent {
     this.mounted = false;
   }
 
-  handleFBReturn = ({ code, password }, fbResetPhone) => {
-    if (!code) {
+  success = data => {
+    const { t, ReactGA } = this.props;
+    if (!data.fbResolve || data.fbResolve.length === 0) {
+      alert(t("common:tryagain"));
       return;
     }
+    ReactGA.event({
+      category: "Settings",
+      action: "Change Phone"
+    });
+    toast.success(t("changenum"));
+  };
 
-    const { t, ReactGA } = this.props;
-    if (this.mounted) {
-      this.setState(
-        {
-          code,
-          password
-        },
-        () => {
-          fbResetPhone()
-            .then(({ data }) => {
-              if (data.fbResetPhone === null) {
-                alert(t("common:tryagain"));
-                return;
-              } else if (data.fbResetPhone === false) {
-                alert(t("common:Incorrect information, please try again."));
-                window.location.reload();
-                return;
-              }
-              ReactGA.event({
-                category: "Settings",
-                action: "Change Phone"
-              });
-              toast.success(t("changenum"));
-            })
-            .catch(res => {
-              this.props.ErrorHandler.catchErrors(res);
-            });
-        }
-      );
-    }
+  fail = err => {
+    this.props.ErrorHandler.catchErrors(err);
   };
 
   render() {
@@ -70,8 +50,9 @@ class ChangePhoneBtn extends PureComponent {
               language={lang}
               t={t}
               ErrorHandler={ErrorHandler}
-              onResponse={resp => this.handleFBReturn(resp, fbResetPhone)}
               title={t("common:updphone")}
+              success={this.success}
+              fail={this.fail}
             >
               <div className="verification-box">
                 <span className="clickverify-btn">{t("updatephone")}</span>

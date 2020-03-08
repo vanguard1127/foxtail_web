@@ -469,7 +469,7 @@ class CreateEvent extends Component {
                           <DateTimePicker
                             autoOk
                             disablePast
-                            emptyLabel={t("evestart")}
+                            placeholder={t("evestart")}
                             InputProps={{
                               disableUnderline: true
                             }}
@@ -498,7 +498,7 @@ class CreateEvent extends Component {
                         <div className="input calender calender-input-sm">
                           <DateTimePicker
                             autoOk
-                            emptyLabel={t("eveend")}
+                            placeholder={t("eveend")}
                             InputProps={{
                               disableUnderline: true
                             }}
