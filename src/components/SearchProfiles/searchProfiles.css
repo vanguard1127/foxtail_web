@@ -847,7 +847,7 @@ section.members .card-item .info span.name {
   font-size: 17px;
   line-height: 20px;
   letter-spacing: -0.15px;
-  width: 100%;
+  width: 90%;
   float: left;
   display: inline-block;
   overflow: hidden;
@@ -1047,43 +1047,29 @@ section.members .card-item .info .function .btn.unheart::before {
   content: "\e812";
 }
 
-.removeProfile {
-  display: none;
-  background-color: #1e1e2b;
-  opacity: 0.8;
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  z-index: 1;
-}
-
-.removeProfile.isMobile {
-  display: block;
-}
-
 .removeProfile::before {
   content: "\e805";
   font-family: "foxtail-icon";
-  color: #fff;
-  font-size: 18px;
-  position: absolute;
+  color: #8f969c;
+  font-size: 14px;
   cursor: pointer;
   z-index: 999;
-  padding: 3px 0px 0px 6px;
 }
 
-section.members .card-item .removeProfile:hover {
-  display: block;
+section.members .card-item .removeProfile:hover::before {
+  color: #cf003c;
 }
 
+section.featured-profiles .slider .item .info .removeProfile {
+  background-color: rgba(36, 36, 36, 0.333);
+  position: absolute;
+  width: 24px;
+  height: 24px;
+}
 section.featured-profiles .slider .item .info .removeProfile:hover {
-  display: block;
+  background-color: #cf003c;
 }
-
-section.members .card-item span:hover + .removeProfile {
-  display: block;
-}
-
-section.featured-profiles .slider .item .info span:hover + .removeProfile {
-  display: block;
+section.featured-profiles .slider .item .info .removeProfile::before {
+  color: #fff;
+  padding-left: 6px;
 }

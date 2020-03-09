@@ -60,7 +60,7 @@ class FeaturedCard extends Component {
             <ProfilePic profilePic={profile.profilePic} />
           </span>
           <div
-            className={isMobile ? "removeProfile isMobile" : "removeProfile"}
+            className={"removeProfile"}
             onClick={() => toggleBlockModalVisible(profile)}
           ></div>
         </div>

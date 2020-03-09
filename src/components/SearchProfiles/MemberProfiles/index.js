@@ -27,8 +27,7 @@ class ProfilesDiv extends Component {
       distanceMetric,
       likedProfiles,
       msgdProfiles,
-      toggleBlockModalVisible,
-      isMobile
+      toggleBlockModalVisible
     } = this.props;
 
     return (
@@ -53,7 +52,6 @@ class ProfilesDiv extends Component {
                     liked={likedProfiles.includes(profile.id)}
                     msgd={msgdProfiles.includes(profile.id)}
                     toggleBlockModalVisible={toggleBlockModalVisible}
-                    isMobile={isMobile}
                   />
                 );
               })}

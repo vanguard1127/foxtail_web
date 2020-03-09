@@ -459,7 +459,6 @@ class ProfilesContainer extends Component {
                         toggleBlockModalVisible={profile =>
                           this.toggleBlockModalVisible(profile)
                         }
-                        isMobile={searchParams.isMobile === "true"}
                       />
                     )}
 

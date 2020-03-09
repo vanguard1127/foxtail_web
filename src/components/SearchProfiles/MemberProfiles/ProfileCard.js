@@ -30,8 +30,7 @@ class ProfileCard extends Component {
       distanceMetric,
       liked,
       msgd,
-      toggleBlockModalVisible,
-      isMobile
+      toggleBlockModalVisible
     } = this.props;
     const stdCheck = profile.users.every(
       user => user.verifications.stdVer.active === true
@@ -55,10 +54,7 @@ class ProfileCard extends Component {
           <span onClick={this.onMemberClick}>
             <ProfilePic profilePic={profile.profilePic} />
           </span>
-          <div
-            className={isMobile ? "removeProfile isMobile" : "removeProfile"}
-            onClick={() => toggleBlockModalVisible(profile)}
-          ></div>
+
           <div className="info">
             <span onClick={this.onMemberClick} className="profile-info">
               <ProfileInfoBox
@@ -72,6 +68,10 @@ class ProfileCard extends Component {
               />
               <KinksBlock kinks={profile.kinks} t={t} id={profile.id} />
             </span>
+            <div
+              className={"removeProfile"}
+              onClick={() => toggleBlockModalVisible(profile)}
+            />
             <ProfileActionBtns
               profile={profile}
               likeProfile={likeProfile}
