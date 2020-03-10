@@ -842,6 +842,17 @@ section.members .card-item .info {
   position: relative;
 }
 
+@media only screen and (max-width: 352px) {
+  section.members .card-item .info span.name {
+    width: 84% !important;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  section.members .card-item .info span.name {
+    width: 88% !important;
+  }
+}
 section.members .card-item .info span.name {
   color: #464648;
   font-size: 17px;
@@ -1054,6 +1065,7 @@ section.members .card-item .info .function .btn.unheart::before {
   font-size: 14px;
   cursor: pointer;
   z-index: 999;
+  float: right;
 }
 
 section.members .card-item .removeProfile:hover::before {

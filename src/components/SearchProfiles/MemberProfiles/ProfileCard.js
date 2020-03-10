@@ -56,7 +56,7 @@ class ProfileCard extends Component {
           </span>
 
           <div className="info">
-            <span onClick={this.onMemberClick} className="profile-info">
+            <span className="profile-info">
               <ProfileInfoBox
                 profileName={profile.profileName}
                 users={profile.users}
@@ -65,13 +65,16 @@ class ProfileCard extends Component {
                 t={t}
                 dayjs={dayjs}
                 distanceMetric={distanceMetric}
+                toggleBlockModalVisible={() => toggleBlockModalVisible(profile)}
+                onClick={this.onMemberClick}
               />
-              <KinksBlock kinks={profile.kinks} t={t} id={profile.id} />
+              <KinksBlock
+                kinks={profile.kinks}
+                t={t}
+                id={profile.id}
+                onClick={this.onMemberClick}
+              />
             </span>
-            <div
-              className={"removeProfile"}
-              onClick={() => toggleBlockModalVisible(profile)}
-            />
             <ProfileActionBtns
               profile={profile}
               likeProfile={likeProfile}

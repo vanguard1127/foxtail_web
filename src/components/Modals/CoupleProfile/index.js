@@ -39,15 +39,6 @@ class CoupleProfile extends PureComponent {
     this.setState({ cfmDlgOpen: !this.state.cfmDlgOpen, toLink });
   };
 
-  // copyToClipboard = code => {
-  //   const textField = document.createElement("textarea");
-  //   textField.innerText = code;
-  //   document.body.appendChild(textField);
-  //   textField.select();
-  //   document.execCommand("copy");
-  //   this.toggleDlg(false);
-  // };
-
   handleLink = (linkProfile, close) => {
     if (this.state.code !== "" && this.state.toLink) {
       linkProfile()

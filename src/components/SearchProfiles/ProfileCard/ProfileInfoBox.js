@@ -9,15 +9,22 @@ class ProfileInfoBox extends PureComponent {
       t,
       dayjs,
       distanceMetric,
-      profileName
+      profileName,
+      onClick,
+      toggleBlockModalVisible
     } = this.props;
 
     return (
       <>
-        <span className={online ? "name online" : "name"} title={profileName}>
+        <span
+          className={online ? "name online" : "name"}
+          title={profileName}
+          onClick={onClick}
+        >
           {profileName}
         </span>
-        <span className="detail">
+        <div className={"removeProfile"} onClick={toggleBlockModalVisible} />
+        <span className="detail" onClick={onClick}>
           <ul>
             <li className={"sex " + users[0].sex}>
               <span className={"sex " + users[0].sex + " profileCardSymbol"} />

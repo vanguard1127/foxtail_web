@@ -59,6 +59,7 @@ class ProfilesContainer extends Component {
 
   componentDidMount() {
     this.mounted = true;
+    this.isWaiting = false;
   }
 
   componentWillUnmount() {
@@ -148,6 +149,10 @@ class ProfilesContainer extends Component {
   };
 
   handleLike = (likeProfile, profile, featured) => {
+    if (this.isWaiting) {
+      return;
+    }
+    this.isWaiting = true;
     const { ErrorHandler, t, ReactGA, likesSent } = this.props;
     ErrorHandler.setBreadcrumb("Liked:" + likeProfile);
 
@@ -210,6 +215,7 @@ class ProfilesContainer extends Component {
                 this.setMatchDlgVisible(true, profile, data.likeProfile);
                 break;
             }
+            this.isWaiting = false;
           })
           .catch(res => {
             ErrorHandler.catchErrors(res);

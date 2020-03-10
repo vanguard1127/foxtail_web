@@ -9,11 +9,11 @@ class KinksBlock extends Component {
   }
 
   render() {
-    const { kinks, t, id } = this.props;
+    const { kinks, t, id, onClick } = this.props;
     return (
       <Context.Consumer>
         {({ kinkOptions }) => (
-          <span className="interest">
+          <span className="interest" onClick={onClick}>
             <ul>
               {kinks.reduce(function(result, kink) {
                 if (result.length < 2) {
@@ -27,9 +27,7 @@ class KinksBlock extends Component {
                       </li>
                     );
                     if (result.length > 1 && kinks.length > 2) {
-                      result.push(
-                        <li key={"na" + id}>+{kinks.length - 2}</li>
-                      );
+                      result.push(<li key={"na" + id}>+{kinks.length - 2}</li>);
                     }
                   }
                 }

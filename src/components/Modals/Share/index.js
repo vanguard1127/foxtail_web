@@ -150,7 +150,7 @@ class Share extends Component {
                     >
                       <RedditIcon size={32} round />
                     </RedditShareButton>
-                    <div className="SocialMediaShareButton ">
+                    <div>
                       <span
                         style={{
                           width: "32px",

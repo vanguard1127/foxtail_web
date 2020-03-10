@@ -360,7 +360,6 @@ section.profile .data-info .functions .btn {
   height: 38px;
   background-color: inherit;
   display: inline-block;
-  margin-left: 13px;
   float: left;
   text-align: center;
   line-height: 38px;
@@ -409,6 +408,11 @@ section.profile .data-info .functions .btn.report::before {
 
 section.profile .data-info .functions .btn.remove::before {
   content: "\e805";
+}
+
+section.profile .data-info .functions .btn.report,
+section.profile .data-info .functions .btn.remove {
+  margin-left: 10px;
 }
 
 section.profile .user-bio {
@@ -695,7 +699,7 @@ section.profile .avatar-card.profile-verified::after {
   section.profile .data-info ul li {
     background-color: inherit;
     box-shadow: none;
-    padding: 0 14px;
+    padding: 0 11px;
     width: auto;
     border-radius: 0;
   }
@@ -734,9 +738,6 @@ section.profile .avatar-card.profile-verified::after {
   }
   section.profile .photos-slider .slider-content .item {
     height: auto;
-  }
-  section.profile .data-info ul li {
-    padding: 0 24px;
   }
 }
 
