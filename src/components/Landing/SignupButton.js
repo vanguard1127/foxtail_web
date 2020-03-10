@@ -1,10 +1,7 @@
 import React, { PureComponent } from "react";
-import { Mutation } from "react-apollo";
-import { FB_RESOLVE } from "../../queries";
 import FirebaseAuth from "../common/FirebaseAuth";
 
 class SignupButton extends PureComponent {
-  fbResolve;
   state = { code: "", password: "" };
 
   componentDidMount() {
@@ -58,34 +55,28 @@ class SignupButton extends PureComponent {
       lang,
       createData
     } = this.props;
-    const fbData = {
-      ...createData,
-      ...this.state,
-      csrf: process.env.REACT_APP_CSRF
-    };
+
     return (
-      <Mutation mutation={FB_RESOLVE} variables={fbData}>
-        {fbResolve => {
-          this.fbResolve = fbResolve;
-          return (
-            <FirebaseAuth
-              language={lang}
-              validateForm={validateForm}
-              disabled={disabled}
-              ErrorHandler={ErrorHandler}
-              type="signup"
-              t={t}
-              title={t("pleasever")}
-              success={this.success}
-              fail={this.fail}
-            >
-              <div className="submit">
-                <button className="btn">{t("getstarted")}</button>
-              </div>
-            </FirebaseAuth>
-          );
+      <FirebaseAuth
+        language={lang}
+        validateForm={validateForm}
+        disabled={disabled}
+        ErrorHandler={ErrorHandler}
+        type="signup"
+        createData={{
+          ...createData,
+          ...this.state,
+          csrf: process.env.REACT_APP_CSRF
         }}
-      </Mutation>
+        t={t}
+        title={t("pleasever")}
+        success={this.success}
+        fail={this.fail}
+      >
+        <div className="submit">
+          <button className="btn">{t("getstarted")}</button>
+        </div>
+      </FirebaseAuth>
     );
   }
 }

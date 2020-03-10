@@ -88,17 +88,22 @@ class FirebaseAuth extends PureComponent {
       children,
       title,
       toggleResetPhone,
-      toggleResetPass
+      toggleResetPass,
+      createData
     } = this.props;
     return (
       <Mutation
         mutation={FB_RESOLVE}
-        variables={{
-          csrf: process.env.REACT_APP_CSRF,
-          code,
-          isCreate: false,
-          password
-        }}
+        variables={
+          !createData
+            ? {
+                csrf: process.env.REACT_APP_CSRF,
+                code,
+                isCreate: false,
+                password
+              }
+            : { ...createData, code, password }
+        }
       >
         {fbResolve => {
           return (
@@ -125,7 +130,13 @@ class FirebaseAuth extends PureComponent {
                           window.applicationVerifier.clear();
                           this.recaptchaWrapperRef.innerHTML = `<div id="recaptcha-container"></div>`;
                         }
-
+                        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+                          "recaptcha-container",
+                          {
+                            size: "invisible"
+                            // other options
+                          }
+                        );
                         this.handleFirebaseReturn(fbResolve);
                       }
                     );

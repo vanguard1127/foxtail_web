@@ -84,6 +84,7 @@ class CreateEvent extends Component {
 
   componentDidMount() {
     this.mounted = true;
+    this.isWaiting = false;
     this.props.ErrorHandler.setBreadcrumb("Create Event Modal");
   }
 
@@ -149,11 +150,13 @@ class CreateEvent extends Component {
 
   handleSubmit = async ({ createEvent, signS3 }) => {
     const { t, ErrorHandler, refetch, close, history, ReactGA } = this.props;
-    if (await this.validateForm()) {
+    if (!this.isWaiting && (await this.validateForm())) {
+      this.isWaiting = true;
       if (!toast.isActive("savingeve")) {
         toast(t("savingeve"), {
           hideProgressBar: false,
-          toastId: "savingeve"
+          toastId: "savingeve",
+          autoClose: false
         });
       }
       if (this.state.image && this.state.image.name !== undefined) {
@@ -187,6 +190,7 @@ class CreateEvent extends Component {
           ErrorHandler.catchErrors(res);
         });
     }
+    this.isWaiting = false;
   };
 
   handleUpload = async ({ signS3 }) => {
