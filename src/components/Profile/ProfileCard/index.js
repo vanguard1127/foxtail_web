@@ -108,7 +108,8 @@ class ProfileCard extends Component {
       ReactGA,
       msgd,
       history,
-      showShareModal
+      showShareModal,
+      handlePreview
     } = this.props;
     const { profilePic, id, users } = profile;
 
@@ -136,7 +137,7 @@ class ProfileCard extends Component {
           }
         >
           <div className={"avatar-card " + badge}>
-            <ProfilePic profilePic={profilePic} />
+            <ProfilePic profilePic={profilePic} handlePreview={handlePreview} />
             {!isSelf ? (
               <ProfileActions
                 profileID={id}

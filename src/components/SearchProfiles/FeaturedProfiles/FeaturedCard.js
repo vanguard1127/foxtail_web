@@ -27,8 +27,7 @@ class FeaturedCard extends Component {
       liked,
       msgd,
       distanceMetric,
-      toggleBlockModalVisible,
-      isMobile
+      toggleBlockModalVisible
     } = this.props;
 
     let badge = "";

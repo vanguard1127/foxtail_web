@@ -1,21 +1,17 @@
 import React, { Component } from "react";
 import OwlCarousel from "react-owl-carousel";
 import { toast } from "react-toastify";
-import Lightbox from "react-image-lightbox";
 import NoPictureImg from "../../assets/img/elements/no-picture.png";
 
+//TODO:Turn to functional
 class PhotoSlider extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.props.t !== nextProps.t ||
-      this.state.previewVisible !== nextState.previewVisible
-    ) {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.t !== nextProps.t) {
       return true;
     }
     return false;
   }
 
-  state = { previewVisible: false, selectedImg: null };
   componentDidMount() {
     this.mounted = true;
   }
@@ -32,22 +28,8 @@ class PhotoSlider extends Component {
     }
   }
 
-  handleClickOpen = e => {
-    if (this.mounted) {
-      this.setState({
-        selectedImg: e.target.getAttribute("fullurl"),
-        previewVisible: true
-      });
-    }
-  };
-  handleClose = () => {
-    if (this.mounted) {
-      this.setState({ previewVisible: false });
-    }
-  };
   render() {
-    const { isPublic, photos, t, ErrorHandler } = this.props;
-    const { previewVisible, selectedImg } = this.state;
+    const { isPublic, photos, t, ErrorHandler, handlePreview } = this.props;
 
     return (
       <ErrorHandler.ErrorBoundary>
@@ -95,7 +77,7 @@ class PhotoSlider extends Component {
             {photos.map(photo => (
               <div className="item" key={Math.random()}>
                 {photo.url !== "private" ? (
-                  <div onClick={this.handleClickOpen} fullurl={photo.url}>
+                  <div onClick={handlePreview} src={photo.url}>
                     <img src={photo.smallUrl} alt="" />
                   </div>
                 ) : (
@@ -106,9 +88,6 @@ class PhotoSlider extends Component {
               </div>
             ))}
           </OwlCarousel>
-          {previewVisible && (
-            <Lightbox mainSrc={selectedImg} onCloseRequest={this.handleClose} />
-          )}
         </div>
       </ErrorHandler.ErrorBoundary>
     );

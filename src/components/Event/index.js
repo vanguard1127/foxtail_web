@@ -6,6 +6,7 @@ import {
   enableBodyScroll,
   clearAllBodyScrollLocks
 } from "body-scroll-lock";
+import Lightbox from "react-image-lightbox";
 import { GET_EVENT, DELETE_EVENT } from "../../queries";
 import { withTranslation } from "react-i18next";
 import BlockModal from "../Modals/Block";
@@ -25,7 +26,9 @@ class EventPage extends Component {
     visible: false,
     shareModalVisible: false,
     blockModalVisible: false,
-    showDelete: false
+    showDelete: false,
+    previewVisible: false,
+    selectedImg: null
   };
 
   constructor(props) {
@@ -38,6 +41,10 @@ class EventPage extends Component {
       this.state !== nextState ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady ||
+      this.state.blockModalVisible !== nextState.blockModalVisible ||
+      this.state.shareModalVisible !== nextState.shareModalVisible ||
+      this.state.previewVisible !== nextState.previewVisible ||
+      this.state.selectedImg !== nextState.selectedImg ||
       this.props.match.params !== nextProps.match.params
     ) {
       return true;
@@ -72,7 +79,7 @@ class EventPage extends Component {
   deleteEvent(deleteEvent) {
     this.props.ErrorHandler.setBreadcrumb("Cancel Event");
     deleteEvent()
-      .then(({ data }) => {
+      .then(() => {
         this.props.ReactGA.event({
           category: "Event",
           action: "Deleted Event"
@@ -112,10 +119,30 @@ class EventPage extends Component {
   };
 
   closeBlockModal = () => this.setBlockModalVisible(false, null);
-
+  handlePreview = e => {
+    if (this.mounted) {
+      this.setState({
+        selectedImg: e.target.getAttribute("src"),
+        previewVisible: true
+      });
+    }
+  };
+  closePreview = () => {
+    if (this.mounted) {
+      this.setState({
+        previewVisible: false
+      });
+    }
+  };
   render() {
     const { id } = this.props.match.params;
-    const { blockModalVisible, showDelete, shareModalVisible } = this.state;
+    const {
+      blockModalVisible,
+      showDelete,
+      shareModalVisible,
+      previewVisible,
+      selectedImg
+    } = this.state;
     const {
       session,
       history,
@@ -232,6 +259,7 @@ class EventPage extends Component {
                         ReactGA={ReactGA}
                         toggleScroll={this.toggleScroll}
                         session={session}
+                        handlePreview={this.handlePreview}
                       />
                       <Discussion
                         chatID={chatID}
@@ -261,11 +289,18 @@ class EventPage extends Component {
                         ReactGA={ReactGA}
                         toggleScroll={this.toggleScroll}
                         session={session}
+                        handlePreview={this.handlePreview}
                       />
                     </div>
                   </div>
                 </div>
               </div>
+              {previewVisible && (
+                <Lightbox
+                  mainSrc={selectedImg}
+                  onCloseRequest={this.closePreview}
+                />
+              )}
               {event && shareModalVisible && (
                 <ShareModal
                   userID={session.currentuser.userID}
@@ -304,7 +339,7 @@ class EventPage extends Component {
                       <Modal
                         header={t("deleve")}
                         close={this.toggleDeleteDialog}
-                        description={t("modals:cantbeun")}
+                        description={t("common:cantbeun")}
                         okSpan={okSpan}
                       />
                     );

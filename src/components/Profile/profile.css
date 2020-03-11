@@ -80,6 +80,7 @@ section.profile .avatar-card .avatar {
   display: inline-block;
   float: left;
   overflow: hidden;
+  cursor: pointer;
 }
 
 section.profile .avatar-card .avatar img {
@@ -435,6 +436,7 @@ section.profile .user-bio p {
   line-height: 25px;
   color: #565656;
   letter-spacing: -0.3px;
+  white-space: pre-wrap;
 }
 
 section.profile .photos-slider {
@@ -699,7 +701,7 @@ section.profile .avatar-card.profile-verified::after {
   section.profile .data-info ul li {
     background-color: inherit;
     box-shadow: none;
-    padding: 0 11px;
+    padding: 0 14px;
     width: auto;
     border-radius: 0;
   }
@@ -738,6 +740,9 @@ section.profile .avatar-card.profile-verified::after {
   }
   section.profile .photos-slider .slider-content .item {
     height: auto;
+  }
+  section.profile .data-info ul li {
+    padding: 0 24px;
   }
 }
 

@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import axios from "axios";
-import { SEND_MESSAGE } from "../../../queries";
+import { SEND_MESSAGE, SET_TYPING } from "../../../queries";
 
 var timer;
 const ChatPanel = ({ chatID, t, ErrorHandler }) => {
@@ -9,23 +8,29 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
   const [sending, setSending] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [sendMessage] = useMutation(SEND_MESSAGE);
+  const [setTypingMutation] = useMutation(SET_TYPING);
   const refContainer = useRef(null);
-  const notifyTyping = isTyping => {
-    //TODO: fix this
-    // const token = localStorage.getItem("token");
-    // axios.post(process.env.REACT_APP_HTTPS_URL + "/notify", {
-    //   token,
-    //   isTyping,
-    //   chatID
-    // });
-  };
+  useEffect(() => {
+    return () => {
+      setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
+        res => {
+          ErrorHandler.catchErrors(res);
+        }
+      );
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const submitMessage = e => {
     e && e.preventDefault();
     if (!sending) {
       setSending(true);
       ErrorHandler.setBreadcrumb("Send message (chat)");
       setIsTyping(false);
-      notifyTyping(false);
+      setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
+        res => {
+          ErrorHandler.catchErrors(res);
+        }
+      );
       sendMessage({ variables: { text, chatID } })
         .then(() => {})
         .catch(res => {
@@ -48,17 +53,29 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
     if (!isTyping) {
       if (text !== "") {
         setIsTyping(true);
-        notifyTyping(true);
+        setTypingMutation({ variables: { chatID, isTyping: true } }).catch(
+          res => {
+            ErrorHandler.catchErrors(res);
+          }
+        );
         timer = setTimeout(() => {
           setIsTyping(false);
-          notifyTyping(false);
+          setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
+            res => {
+              ErrorHandler.catchErrors(res);
+            }
+          );
         }, 6000);
       }
     } else {
       clearTimeout(timer);
       timer = setTimeout(() => {
         setIsTyping(false);
-        notifyTyping(false);
+        setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
+          res => {
+            ErrorHandler.catchErrors(res);
+          }
+        );
       }, 6000);
     }
   };

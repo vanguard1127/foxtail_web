@@ -67,7 +67,7 @@ const Notice = ({
         </span>
       </div>
     );
-  } else if (notice.fromProfile) {
+  } else if (notice.fromProfile || notice.name) {
     return (
       <div
         className={notice.read ? "item read" : "item unread"}

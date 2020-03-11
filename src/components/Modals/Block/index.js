@@ -242,7 +242,7 @@ class BlockModal extends Component {
       <Modal
         header={title}
         close={close}
-        description={isRemove ? t("cantbeun") : t("selreason")}
+        description={isRemove ? t("common:cantbeun") : t("selreason")}
         className="report"
         okSpan={
           <Mutation

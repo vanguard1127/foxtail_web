@@ -35,7 +35,8 @@ class EventInfo extends Component {
       lang,
       ReactGA,
       toggleScroll,
-      session
+      session,
+      handlePreview
     } = this.props;
 
     const {
@@ -55,7 +56,7 @@ class EventInfo extends Component {
         <div className="event-info-content hid-mobile">
           <div className="event-image">
             <span>
-              <img src={image || NoEventImg} alt="" />
+              <img src={image || NoEventImg} alt="" onClick={handlePreview} />
             </span>
           </div>
           <ul>

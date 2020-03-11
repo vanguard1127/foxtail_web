@@ -116,7 +116,8 @@ module.exports = {
       { from: "src/assets/locales", to: "locales", toType: "dir" },
       { from: "src/assets/manifest.json", to: "manifest.json" },
       { from: "src/assets/icon-192.png", to: "icon-192.png" },
-      { from: "src/assets/icon-512.png", to: "icon-512.png" }
+      { from: "src/assets/icon-512.png", to: "icon-512.png" },
+      { from: "src/robots.txt", to: "robots.txt" }
     ]),
     new CleanWebpackPlugin(),
     new Dotenv({ path: "./.env.stage", defaults: true }),

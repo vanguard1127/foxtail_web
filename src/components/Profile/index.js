@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import { Query, Mutation, withApollo } from "react-apollo";
 import { toast } from "react-toastify";
+import Lightbox from "react-image-lightbox";
 import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import KinksSection from "./KinksSection";
@@ -25,7 +26,9 @@ class ProfilePage extends Component {
     matched: false,
     matchDlgVisible: false,
     chatID: null,
-    isRemove: false
+    isRemove: false,
+    previewVisible: false,
+    selectedImg: null
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -35,7 +38,9 @@ class ProfilePage extends Component {
       this.state.matchDlgVisible !== nextState.matchDlgVisible ||
       this.state.profile !== nextState.profile ||
       this.state.matched !== nextState.matched ||
+      this.state.previewVisible !== nextState.previewVisible ||
       this.state.shareModalVisible !== nextState.shareModalVisible ||
+      this.state.selectedImg !== nextState.selectedImg ||
       this.props.t !== nextProps.t ||
       this.props.tReady !== nextProps.tReady
     ) {
@@ -151,7 +156,25 @@ class ProfilePage extends Component {
   };
 
   setMsgSent = () => {
-    this.setState({ matched: true });
+    if (this.mounted) {
+      this.setState({ matched: true });
+    }
+  };
+
+  handlePreview = e => {
+    if (this.mounted) {
+      this.setState({
+        selectedImg: e.target.getAttribute("src"),
+        previewVisible: true
+      });
+    }
+  };
+  closePreview = () => {
+    if (this.mounted) {
+      this.setState({
+        previewVisible: false
+      });
+    }
   };
   render() {
     const { id } = this.props.match.params;
@@ -161,7 +184,9 @@ class ProfilePage extends Component {
       matchDlgVisible,
       chatID,
       matched,
-      isRemove
+      isRemove,
+      previewVisible,
+      selectedImg
     } = this.state;
     const { t, ErrorHandler, session, ReactGA, tReady, dayjs } = this.props;
 
@@ -262,6 +287,7 @@ class ProfilePage extends Component {
                                 this.setShareModalVisible(true, profile)
                               }
                               setMsgSent={this.setMsgSent}
+                              handlePreview={this.handlePreview}
                             />
                             <KinksSection
                               kinks={kinks}
@@ -312,6 +338,7 @@ class ProfilePage extends Component {
                                 photos={publicPhotos}
                                 t={t}
                                 ErrorHandler={ErrorHandler}
+                                handlePreview={this.handlePreview}
                               />
                             )}
                             {privatePhotos.length > 0 && (
@@ -320,12 +347,19 @@ class ProfilePage extends Component {
                                 photos={privatePhotos}
                                 t={t}
                                 ErrorHandler={ErrorHandler}
+                                handlePreview={this.handlePreview}
                               />
                             )}
                           </div>
                         </div>
                       </div>
                     </div>
+                    {previewVisible && (
+                      <Lightbox
+                        mainSrc={selectedImg}
+                        onCloseRequest={this.closePreview}
+                      />
+                    )}
                     {profile && blockModalVisible && (
                       <BlockModal
                         id={profile.id}

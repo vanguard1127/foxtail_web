@@ -1058,13 +1058,16 @@ section.members .card-item .info .function .btn.unheart::before {
   content: "\e812";
 }
 
-.removeProfile::before {
+section.members .card-item .removeProfile::before {
   content: "\e805";
   font-family: "foxtail-icon";
   color: #8f969c;
   font-size: 14px;
   cursor: pointer;
   z-index: 999;
+}
+
+section.members .card-item .removeProfile::before {
   float: right;
 }
 
@@ -1084,4 +1087,13 @@ section.featured-profiles .slider .item .info .removeProfile:hover {
 section.featured-profiles .slider .item .info .removeProfile::before {
   color: #fff;
   padding-left: 6px;
+  content: "\e805";
+  font-family: "foxtail-icon";
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 999;
+}
+
+section.featured-profiles .slider .item .info .data .removeProfile {
+  display: none;
 }

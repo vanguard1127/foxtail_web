@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
-const ProfilePic = ({ profilePic }) => {
+const ProfilePic = ({ profilePic, handlePreview }) => {
   const [loading, setLoading] = useState(true);
   const [proPic, setPropic] = useState(profilePic);
 
-  profilePic = NoProfileImg;
   return (
     <div className="avatar">
       {loading && (
@@ -15,7 +14,9 @@ const ProfilePic = ({ profilePic }) => {
         </div>
       )}
       <img
+        alt="profile pic"
         src={proPic}
+        onClick={handlePreview}
         onLoad={() => {
           setLoading(false);
         }}

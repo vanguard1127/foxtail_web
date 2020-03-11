@@ -27,8 +27,7 @@ class FeaturedProfiles extends Component {
       likedProfiles,
       msgdProfiles,
       distanceMetric,
-      toggleBlockModalVisible,
-      isMobile
+      toggleBlockModalVisible
     } = this.props;
 
     return (
@@ -85,7 +84,6 @@ class FeaturedProfiles extends Component {
                       msgd={msgdProfiles.includes(profile.id)}
                       distanceMetric={distanceMetric}
                       toggleBlockModalVisible={toggleBlockModalVisible}
-                      isMobile={isMobile}
                     />
                   );
                 })}

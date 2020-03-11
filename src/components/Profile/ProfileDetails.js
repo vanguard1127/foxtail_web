@@ -60,7 +60,7 @@ class ProfileDetails extends Component {
               <span className="head">{t("lookfor")}:</span>
               <Tooltip title={lookingFor} placement="top">
                 <span className="data lookfor">
-                  {lookingFor.length > 0 ? lookingFor : "?"}
+                  {lookingFor.length > 0 ? lookingFor : t("ask")}
                 </span>
               </Tooltip>
             </li>

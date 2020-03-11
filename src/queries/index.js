@@ -188,6 +188,12 @@ export const MESSAGE_ADMIN = gql`
   }
 `;
 
+export const SET_TYPING = gql`
+  mutation($chatID: ID!, $isTyping: Boolean!) {
+    setTyping(chatID: $chatID, isTyping: $isTyping)
+  }
+`;
+
 export const POST_COMMENT = gql`
   mutation($chatID: ID!, $text: String!) {
     postComment(chatID: $chatID, text: $text)

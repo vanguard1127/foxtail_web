@@ -38,7 +38,8 @@ class EventInfoMobile extends Component {
       ReactGA,
       session,
       showBlockModal,
-      showShareModal
+      showShareModal,
+      handlePreview
     } = this.props;
 
     const {
@@ -57,7 +58,7 @@ class EventInfoMobile extends Component {
         <div className="event-info-content hid-desktop">
           <div className="event-image">
             <span>
-              <img src={image || NoEventImg} alt="" />
+              <img src={image || NoEventImg} alt="" onClick={handlePreview} />
             </span>
           </div>
           <ul>
