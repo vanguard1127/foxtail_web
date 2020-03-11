@@ -83,7 +83,7 @@ const Notice = ({
         <span>
           <span className="avatar">
             <img
-              src={proPic}
+              src={proPic ? proPic : NoProfileImg}
               alt=""
               onError={() => {
                 setPropic(NoProfileImg);

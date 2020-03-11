@@ -702,6 +702,7 @@ section.profile .avatar-card.profile-verified::after {
     background-color: inherit;
     box-shadow: none;
     padding: 0 14px;
+    max-width: 22%;
     width: auto;
     border-radius: 0;
   }
@@ -743,6 +744,7 @@ section.profile .avatar-card.profile-verified::after {
   }
   section.profile .data-info ul li {
     padding: 0 24px;
+    max-width: 42%;
   }
 }
 

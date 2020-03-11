@@ -75,6 +75,17 @@ class FirebaseAuth extends PureComponent {
           success(data);
         })
         .catch(err => {
+          if (window.applicationVerifier && this.recaptchaWrapperRef) {
+            window.applicationVerifier.clear();
+            this.recaptchaWrapperRef.innerHTML = `<div id="recaptcha-container"></div>`;
+          }
+          window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+            "recaptcha-container",
+            {
+              size: "invisible"
+              // other options
+            }
+          );
           failCB && failCB(err);
         });
     }
@@ -123,20 +134,6 @@ class FirebaseAuth extends PureComponent {
                         password
                       },
                       () => {
-                        if (
-                          window.applicationVerifier &&
-                          this.recaptchaWrapperRef
-                        ) {
-                          window.applicationVerifier.clear();
-                          this.recaptchaWrapperRef.innerHTML = `<div id="recaptcha-container"></div>`;
-                        }
-                        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-                          "recaptcha-container",
-                          {
-                            size: "invisible"
-                            // other options
-                          }
-                        );
                         this.handleFirebaseReturn(fbResolve);
                       }
                     );
