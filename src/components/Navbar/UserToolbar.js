@@ -18,7 +18,6 @@ const UserToolbar = ({
   t,
   setRef,
   counts,
-  refetch,
   ErrorHandler,
   blinkInbox,
   history,
@@ -136,7 +135,7 @@ const UserToolbar = ({
               });
 
               let newCounts = { ...getCounts };
-              newCounts.noticesCount -= 1;
+              newCounts.noticesCount = 0;
               cache.writeQuery({
                 query: GET_COUNTS,
                 data: {
@@ -206,7 +205,6 @@ const UserToolbar = ({
             showAlert={showAlert}
             handleCoupleLink={handleCoupleLink}
             readNotices={readNotices}
-            recount={refetch}
             dayjs={dayjs}
           />
         )}

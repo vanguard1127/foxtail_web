@@ -112,6 +112,12 @@ export const SUBMIT_PHOTO = gql`
   }
 `;
 
+export const NOTICES_SEEN = gql`
+  mutation {
+    noticesSeen
+  }
+`;
+
 export const CANCEL_SUBSCRIPTION = gql`
   mutation {
     cancelSubcription

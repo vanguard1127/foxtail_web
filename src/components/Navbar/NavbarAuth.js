@@ -81,7 +81,7 @@ class NavbarAuth extends PureComponent {
 
     return (
       <Query query={GET_COUNTS} fetchPolicy="cache-first">
-        {({ data, loading, error, refetch, subscribeToMore }) => {
+        {({ data, loading, error, subscribeToMore }) => {
           if (loading || !data) {
             return (
               <div className="function">
@@ -320,7 +320,6 @@ class NavbarAuth extends PureComponent {
                         currentuser={session.currentuser}
                         t={t}
                         ErrorHandler={ErrorHandler}
-                        refetch={refetch}
                         counts={data.getCounts}
                         msgAudio={msgAudio}
                         blinkInbox={newMsg}

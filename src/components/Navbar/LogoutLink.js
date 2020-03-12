@@ -9,7 +9,7 @@ class Logout extends Component {
     }
     return false;
   }
-  handleLogout = () => {
+  handleLogout = async () => {
     const token = localStorage.getItem("token");
     if (token)
       axios.get(process.env.REACT_APP_HTTPS_URL + "/offline?token=" + token);

@@ -1,9 +1,28 @@
 import React from "react";
 import { Query } from "react-apollo";
+import { useMutation } from "@apollo/react-hooks";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { GET_NOTIFICATIONS } from "../../queries";
+import { GET_NOTIFICATIONS, GET_COUNTS, NOTICES_SEEN } from "../../queries";
 import Menu from "../common/Menu";
 import NoticesList from "./NoticesList";
+
+const updateCount = client => {
+  const { cache } = client;
+  const { getCounts } = cache.readQuery({
+    query: GET_COUNTS
+  });
+
+  let newCounts = { ...getCounts };
+
+  newCounts.noticesCount = 0;
+
+  cache.writeQuery({
+    query: GET_COUNTS,
+    data: {
+      getCounts: { ...newCounts }
+    }
+  });
+};
 
 const NoticesMenu = ({
   t,
@@ -13,9 +32,9 @@ const NoticesMenu = ({
   showAlert,
   handleCoupleLink,
   readNotices,
-  recount,
   dayjs
 }) => {
+  const [noticesSeen] = useMutation(NOTICES_SEEN);
   return (
     <Menu
       activeStyle="notification active"
@@ -25,7 +44,7 @@ const NoticesMenu = ({
           {count > 0 && <span className="count">{count}</span>}
         </span>
       }
-      closeAction={recount}
+      closeAction={noticesSeen}
     >
       <Query
         query={GET_NOTIFICATIONS}
@@ -34,7 +53,7 @@ const NoticesMenu = ({
           isMobile: sessionStorage.getItem("isMobile")
         }}
       >
-        {({ data, loading, error, subscribeToMore, fetchMore }) => {
+        {({ data, loading, error, subscribeToMore, fetchMore, client }) => {
           if (
             loading ||
             !data ||
@@ -66,6 +85,7 @@ const NoticesMenu = ({
             return <div>{t("nonots")} :)</div>;
           }
 
+          updateCount(client);
           return (
             <NoticesList
               history={history}
@@ -76,7 +96,6 @@ const NoticesMenu = ({
               showAlert={showAlert}
               handleCoupleLink={handleCoupleLink}
               readNotices={readNotices}
-              recount={recount}
               notifications={data.getNotifications.notifications}
               dayjs={dayjs}
             />

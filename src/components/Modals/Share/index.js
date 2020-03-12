@@ -73,10 +73,14 @@ class Share extends Component {
     let body = "";
     const mdlbody = (profile, event, t) => {
       if (profile) {
-        const name = profile.users.map((user, index) => {
-          if (index === 0) return user.username;
-          else return +" & " + user.username;
-        });
+        const name = profile.users.reduce((result, user, index) => {
+          if (index === 0) {
+            return result + user.username;
+          } else {
+            return result + " & " + user.username;
+          }
+        }, "");
+        title = t("whatdoyou") + " Foxtail Member: " + name + "?" + "\n" + "\n";
         body = t("whatdoyou") + " " + name + "?" + "\n" + "\n";
         return <div>{t("meetques") + " " + name}?</div>;
       } else if (event) {
@@ -84,9 +88,11 @@ class Share extends Component {
         body = t("invitation") + " " + event.eventname + ":\n" + "\n";
         return <div>{t("shareevent")}?</div>;
       } else if (profileID) {
+        title = "Check out my profile on Foxtail profile." + "\n" + "\n";
         body = "Check out my profile on Foxtail profile." + "\n" + "\n";
         return <div>{t("shareprof")}</div>;
       } else {
+        title = t("checkoutfox");
         body = t("checkoutfox");
         return (
           <div>
