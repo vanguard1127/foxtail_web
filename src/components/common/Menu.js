@@ -24,6 +24,9 @@ class Menu extends Component {
     document.addEventListener("mousedown", this.handleClickOutside);
     document.addEventListener("touchstart", this.handleClickOutside);
     this.mounted = true;
+    if (this.props.closeAction) {
+      this.props.closeAction();
+    }
   }
 
   componentWillUnmount() {
@@ -38,9 +41,6 @@ class Menu extends Component {
       !this.wrapperRef.current.contains(event.target) &&
       this.state.menuOpen
     ) {
-      if (this.props.closeAction) {
-        this.props.closeAction();
-      }
       this.close();
     }
   };

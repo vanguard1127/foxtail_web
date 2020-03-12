@@ -275,13 +275,10 @@ class ProfilePage extends Component {
                               toast={toast}
                               ReactGA={ReactGA}
                               isBlackMember={
-                                this.props.session.currentuser.blackMember
-                                  .active
+                                session.currentuser.blackMember.active
                               }
                               history={this.props.history}
-                              likesSent={
-                                this.props.session.currentuser.likesSent
-                              }
+                              likesSent={session.currentuser.likesSent}
                               msgsSent={this.props.session.currentuser.msgsSent}
                               showShareModal={() =>
                                 this.setShareModalVisible(true, profile)
@@ -319,6 +316,9 @@ class ProfilePage extends Component {
                               ErrorBoundary={ErrorHandler.ErrorBoundary}
                               distanceMetric={
                                 session.currentuser.distanceMetric
+                              }
+                              showRemove={
+                                profile.id !== session.currentuser.profileID
                               }
                             />
                             <ProfileBio

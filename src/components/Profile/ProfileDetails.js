@@ -18,7 +18,8 @@ class ProfileDetails extends Component {
       showRemoveModal,
       t,
       ErrorBoundary,
-      distanceMetric
+      distanceMetric,
+      showRemove
     } = this.props;
     let distance;
     let distanceUnits =
@@ -89,11 +90,13 @@ class ProfileDetails extends Component {
               onClick={showBlockModal}
               title={t("reportmem")}
             />
-            <div
-              className="remove btn"
-              onClick={showRemoveModal}
-              title={t("removemem")}
-            />
+            {showRemove && (
+              <div
+                className="remove btn"
+                onClick={showRemoveModal}
+                title={t("removemem")}
+              />
+            )}
           </div>
         </div>
       </ErrorBoundary>
