@@ -62,6 +62,7 @@ class ProfilesDiv extends Component {
                     currentPosition
                   })
                 }
+                topOffset="50px"
               />
             </div>
           </div>
