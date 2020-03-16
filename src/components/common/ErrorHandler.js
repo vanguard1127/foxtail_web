@@ -16,7 +16,7 @@ const setBreadcrumb = msg => {
 };
 
 const catchErrors = errors => {
-  Sentry.captureException(errors);
+  Sentry.captureException(errors.message);
 };
 
 class report extends PureComponent {
