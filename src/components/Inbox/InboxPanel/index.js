@@ -70,6 +70,9 @@ class InboxPanel extends Component {
               ) {
                 return previousResult;
               }
+              if (!previousResult) {
+                previousResult = { getInbox: [] };
+              }
               previousResult.getInbox = [
                 ...previousResult.getInbox,
                 ...fetchMoreResult.getInbox
@@ -125,7 +128,9 @@ class InboxPanel extends Component {
                 if (!newInboxMsgSubscribe) {
                   return prev;
                 }
-
+                if (!prev) {
+                  prev = [];
+                }
                 const previousResult = produce(prev.getInbox, draftState => {
                   if (draftState) {
                     const chatIndex = draftState.findIndex(
@@ -161,6 +166,9 @@ class InboxPanel extends Component {
                 const { messageActionSubsubscribe } = subscriptionData.data;
                 if (!messageActionSubsubscribe) {
                   return prev;
+                }
+                if (!prev) {
+                  prev = [];
                 }
                 const newData = produce(prev.getInbox, draftState => {
                   const chatIndex = draftState.findIndex(

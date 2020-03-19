@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ScrollUpButton from "react-scroll-up-button";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
-import { Query, Mutation, withApollo } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 import MemberProfiles from "./MemberProfiles/";
 import { Waypoint } from "react-waypoint";
 import FeaturedProfiles from "./FeaturedProfiles/";
@@ -11,7 +11,6 @@ import Modal from "../common/Modal";
 import Spinner from "../common/Spinner";
 import DailyLimitModal from "../Modals/DailyLimit";
 import { toast } from "react-toastify";
-import deleteFromCache from "../../utils/deleteFromCache";
 import arraysEqual from "../../utils/arraysEqual";
 
 class ProfilesContainer extends Component {
@@ -143,11 +142,6 @@ class ProfilesContainer extends Component {
     }
   };
 
-  clearInboxResults = () => {
-    const { cache } = this.props.client;
-    deleteFromCache({ cache, query: "getInbox" });
-  };
-
   handleLike = (likeProfile, profile, featured) => {
     if (this.isWaiting) {
       return;
@@ -207,7 +201,6 @@ class ProfilesContainer extends Component {
                 );
                 break;
               default:
-                this.clearInboxResults();
                 ReactGA.event({
                   category: "Search Profiles",
                   action: "Matched"
@@ -557,4 +550,4 @@ class ProfilesContainer extends Component {
   }
 }
 
-export default withApollo(ProfilesContainer);
+export default ProfilesContainer;
