@@ -38,9 +38,9 @@ class IdleTimer extends PureComponent {
   }
 
   setTimeout() {
-    this.warnTimeout = setTimeout(this.warn, 5 * 60 * 1000);
+    this.warnTimeout = setTimeout(this.warn, 30 * 60 * 1000);
 
-    this.logoutTimeout = setTimeout(this.logout, 6 * 60 * 1000);
+    this.logoutTimeout = setTimeout(this.logout, 31 * 60 * 1000);
   }
 
   resetTimeout() {
