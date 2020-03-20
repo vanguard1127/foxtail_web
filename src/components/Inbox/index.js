@@ -98,8 +98,8 @@ class InboxPage extends Component {
     if (this.unsubscribe2) {
       this.unsubscribe2();
     }
-    this.props.history.replace({ state: {} });
     this.setState({ chatID: null });
+    this.props.history.replace({ state: {} });
   };
 
   handleRemoveSelf = removeSelf => {
@@ -264,8 +264,13 @@ class InboxPage extends Component {
           }
           const newData = produce(prev, draftState => {
             const newMsgs = draftState.getMessages;
+            //TODO: FIX PRE PUSH
+            console.log("test", messageActionSubsubscribe.isActive);
             if (!messageActionSubsubscribe.seenBy) {
-              if (messageActionSubsubscribe.isTyping) {
+              if (
+                messageActionSubsubscribe.isTyping &&
+                messageActionSubsubscribe.isActive
+              ) {
                 if (!newMsgs.typingList) {
                   newMsgs.typingList = [messageActionSubsubscribe.name];
                 } else {

@@ -6,6 +6,7 @@ export const MESSAGE_ACTION_SUB = gql`
     messageActionSubsubscribe {
       name
       isTyping
+      isActive
       chatID
       seenBy
     }

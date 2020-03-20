@@ -83,7 +83,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
   return (
     <form onSubmit={submitMessage} ref={refContainer}>
       <div className="panel">
-        {/* <div className="files" /> */}
+        <div className="files" />
         <div className="textarea">
           <textarea
             placeholder={t("typemsg") + "..."}
