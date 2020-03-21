@@ -265,7 +265,7 @@ class InboxPage extends Component {
           const newData = produce(prev, draftState => {
             const newMsgs = draftState.getMessages;
             //TODO: FIX PRE PUSH
-            console.log("test", messageActionSubsubscribe.isActive);
+            //console.log("test", messageActionSubsubscribe.isActive);
             if (!messageActionSubsubscribe.seenBy) {
               if (
                 messageActionSubsubscribe.isTyping &&
