@@ -27,8 +27,6 @@ class EventDiscussion extends Component {
             chatID={chatID}
             t={t}
             ErrorHandler={ErrorHandler}
-            currentuser={currentuser}
-            limit={parseInt(process.env.REACT_APP_EVENTDISC_LIMIT)}
             ReactGA={ReactGA}
           />
           <ChatContent

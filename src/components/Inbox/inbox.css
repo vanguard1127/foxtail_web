@@ -386,6 +386,10 @@ section.inbox .chat.show {
   visibility: visible;
 }
 
+section.inbox .chat.show.overlay {
+  z-index: 99999;
+}
+
 section.inbox .chat .navbar {
   width: 100%;
   height: 55px;

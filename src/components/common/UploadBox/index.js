@@ -36,9 +36,13 @@ const UploadComponent = ({
   handlePhotoListChange,
   handleUpload,
   ErrorHandler,
-  setProfilePic
+  setProfilePic,
+  uploadOnly,
+  uploadButton,
+  toggleCB
 }) => {
   const [editorVisible, setEditorVisible] = useState(false);
+  //TODO: DO WE NEED THIS
   const [cropperVisible, setCropperVisible] = useState(false);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
@@ -50,16 +54,12 @@ const UploadComponent = ({
 
   const toggleImgEditorPopup = (file, isPrivate) => {
     ErrorHandler.setBreadcrumb("Toggle image editor");
-
     setFileRecieved(file);
     setIsPrivate(isPrivate);
     setEditorVisible(!editorVisible);
-  };
-
-  const toggleImgCropperPopup = url => {
-    ErrorHandler.setBreadcrumb("Toggle image cropper");
-    setFileRecieved(url);
-    setCropperVisible(!cropperVisible);
+    if (toggleCB) {
+      toggleCB();
+    }
   };
 
   const imageUploaded = (res, file) => {
@@ -73,6 +73,9 @@ const UploadComponent = ({
         setFileRecieved(file);
         setIsPrivate(isPrivate);
         setEditorVisible(true);
+        if (toggleCB) {
+          toggleCB();
+        }
       }
     } else {
       alert(t("onlyimg"));
@@ -101,7 +104,9 @@ const UploadComponent = ({
     setSelectedImg(img.url);
   };
 
+  //TODO: ARE WE USING THIS
   const handleClickProPic = e => {
+    console.log("SetProfilePic");
     const index = e.target.closest("div").getAttribute("index");
     let img = photos[index];
     setFileRecieved(process.env.REACT_APP_S3_BUCKET_URL + img.key);
@@ -137,20 +142,22 @@ const UploadComponent = ({
     />
   );
 
-  const cropperPopup = cropperVisible && (
-    <ImageCropper
-      imgUrl={fileRecieved}
-      close={toggleImgCropperPopup}
-      ErrorHandler={ErrorHandler}
-      handleUpload={handleUpload}
-      setProfilePic={({ key, url }) =>
-        setProfilePic({
-          key,
-          url
-        })
-      }
-    />
-  );
+  if (uploadOnly) {
+    return (
+      <div>
+        <Upload
+          onSuccess={imageUploaded}
+          onError={err => console.error(err)}
+          accept=".jpg,.jpeg,.png"
+          customRequest={dummyRequest}
+        >
+          {uploadButton}
+        </Upload>
+
+        {editorPopup}
+      </div>
+    );
+  }
 
   if (single) {
     return (
@@ -210,7 +217,6 @@ const UploadComponent = ({
         )}
 
         {editorPopup}
-        {cropperPopup}
       </div>
     );
   }

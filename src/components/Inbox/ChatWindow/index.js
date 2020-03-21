@@ -9,11 +9,16 @@ class ChatWindow extends PureComponent {
     loading: false,
     cursor: null,
     hasMoreItems: true,
-    limit: parseInt(process.env.REACT_APP_INBOXMSG_LIMIT)
+    limit: parseInt(process.env.REACT_APP_INBOXMSG_LIMIT),
+    overlay: false
   };
 
   setValue = ({ name, value }) => {
     this.setState({ [name]: value });
+  };
+
+  toggleOverlay = () => {
+    this.setState({ overlay: !this.state.overlay });
   };
 
   onMenuClick = state => {
@@ -54,10 +59,14 @@ class ChatWindow extends PureComponent {
     } else {
       sessionStorage.setItem("pid", null);
     }
+    let chatWinStyle = chatOpen ? "chat show" : "chat";
+    if (this.state.overlay) {
+      chatWinStyle += " overlay";
+    }
     return (
       <div className="col-md-8 col-lg-9 col-xl-7">
         {currentChat !== null ? (
-          <div className={chatOpen ? "chat show" : "chat"}>
+          <div className={chatWinStyle}>
             <ChatHeader
               currentChat={currentChat}
               currentuser={currentuser}
@@ -90,9 +99,7 @@ class ChatWindow extends PureComponent {
               chatID={currentChat.id}
               t={t}
               ErrorHandler={ErrorHandler}
-              currentuser={currentuser}
-              cursor={null}
-              limit={parseInt(process.env.REACT_APP_INBOXMSG_LIMIT)}
+              toggleOverlay={this.toggleOverlay}
             />
           </div>
         ) : (

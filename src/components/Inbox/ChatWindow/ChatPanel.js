@@ -1,13 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { SEND_MESSAGE, SET_TYPING } from "../../../queries";
+import UploadBox from "../../common/UploadBox";
+import axios from "axios";
+import { SEND_MESSAGE, SET_TYPING, SIGNS3 } from "../../../queries";
+import { toast } from "react-toastify";
 
 var timer;
-const ChatPanel = ({ chatID, t, ErrorHandler }) => {
+const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay }) => {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [sendMessage] = useMutation(SEND_MESSAGE);
+  const [signS3] = useMutation(SIGNS3);
   const [setTypingMutation] = useMutation(SET_TYPING);
   const refContainer = useRef(null);
   useEffect(() => {
@@ -80,10 +84,63 @@ const ChatPanel = ({ chatID, t, ErrorHandler }) => {
     }
   };
 
+  async function handleUpload(file) {
+    const filebody = file.filebody;
+    if (filebody === "") {
+      return;
+    }
+
+    try {
+      const { data } = await signS3({
+        variables: {
+          filetype: filebody.type
+        }
+      });
+
+      const { signedRequest, key } = data.signS3;
+      await uploadToS3(filebody, signedRequest);
+
+      sendMessage({ variables: { text: key, chatID } })
+        .then(() => toast.dismiss())
+        .catch(res => {
+          ErrorHandler.catchErrors(res);
+        });
+      return key;
+    } catch (res) {
+      ErrorHandler.catchErrors(res);
+    }
+  }
+
+  const uploadToS3 = async (filebody, signedRequest) => {
+    try {
+      //ORIGINAL
+      const options = {
+        headers: {
+          "Content-Type": filebody.type
+        }
+      };
+      const resp = await axios.put(signedRequest, filebody, options);
+      if (resp.status !== 200) {
+        this.props.toast.error(this.props.t("uplerr"));
+      }
+    } catch (e) {
+      console.error(e);
+      ErrorHandler.catchErrors(e);
+    }
+  };
+
   return (
     <form onSubmit={submitMessage} ref={refContainer}>
       <div className="panel">
-        <div className="files" />
+        <UploadBox
+          uploadOnly
+          t={t}
+          ErrorHandler={ErrorHandler}
+          photos={[]}
+          handleUpload={handleUpload}
+          toggleCB={toggleOverlay}
+          uploadButton={<div className="files" />}
+        />
         <div className="textarea">
           <textarea
             placeholder={t("typemsg") + "..."}

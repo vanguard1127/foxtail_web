@@ -5,7 +5,7 @@ import NoProfileImg from "../../../../assets/img/elements/no-profile.png";
 const Message = React.forwardRef(
   ({ message, currentUserID, t, dayjs, lang }, ref) => {
     const messageText =
-      message.type === "msg"
+      message.type === "msg" || message.type === "img"
         ? message.text
         : `${message.fromUser.username}` + t("leftchat");
 
@@ -28,7 +28,9 @@ const Message = React.forwardRef(
             />
           </div>
         </NavLink>
-        <div className="bubble">{messageText}</div>
+        <div className="bubble">
+          {message.type === "img" ? <img src={messageText} /> : messageText}
+        </div>
         <span className="time">
           {message.fromUser.id === currentUserID
             ? `${

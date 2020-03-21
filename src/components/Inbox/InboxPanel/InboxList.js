@@ -89,11 +89,15 @@ class InboxList extends PureComponent {
               {timeAgo}
             </span>
             <span className={item.type !== "new" ? "msg" : "msg new"}>
-              {item.typingText
-                ? item.typingText
-                : item.type === "left"
-                ? item.text + " " + t("leftchat")
-                : item.text}
+              {item.type === "img" ? (
+                <i>Image</i>
+              ) : item.typingText ? (
+                item.typingText
+              ) : item.type === "left" ? (
+                item.text + " " + t("leftchat")
+              ) : (
+                item.text
+              )}
             </span>
             {item.unSeenCount !== 0 && (
               <span className="notif">{item.unSeenCount}</span>
