@@ -108,6 +108,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay }) => {
       return key;
     } catch (res) {
       ErrorHandler.catchErrors(res);
+      toast.dismiss();
     }
   }
 

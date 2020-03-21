@@ -29,7 +29,14 @@ const Message = React.forwardRef(
           </div>
         </NavLink>
         <div className="bubble">
-          {message.type === "img" ? <img src={messageText} /> : messageText}
+          {message.type === "img" ? (
+            <img
+              src={messageText}
+              style={{ maxHeight: "300px", maxWidth: "300px" }}
+            />
+          ) : (
+            messageText
+          )}
         </div>
         <span className="time">
           {message.fromUser.id === currentUserID
