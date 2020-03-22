@@ -33,22 +33,27 @@ class InboxItem extends Component {
         to="/inbox"
         onClick={() => {
           const { cache } = this.props.client;
-          deleteFromCache({ cache, query: "getInbox" });
 
-          const { getCounts } = cache.readQuery({
-            query: GET_COUNTS
-          });
+          if (window.location.pathname !== "/inbox") {
+            deleteFromCache({ cache, query: "getInbox" });
+            const { getCounts } = cache.readQuery({
+              query: GET_COUNTS
+            });
 
-          let newCounts = { ...getCounts };
+            let newCounts = { ...getCounts };
 
-          newCounts.newMsg = false;
+            newCounts.newMsg = false;
 
-          cache.writeQuery({
-            query: GET_COUNTS,
-            data: {
-              getCounts: { ...newCounts }
-            }
-          });
+            cache.writeQuery({
+              query: GET_COUNTS,
+              data: {
+                getCounts: { ...newCounts }
+              }
+            });
+          } else {
+            //TODO: fix when you can rerender inbox
+            window.location.reload(false);
+          }
         }}
       >
         <div className={iconstyle} role="heading" aria-level="1">

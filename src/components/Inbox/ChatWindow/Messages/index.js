@@ -76,18 +76,17 @@ class MessageList extends Component {
             cursor
           },
           updateQuery: (prev, { fetchMoreResult }) => {
+            if (
+              !fetchMoreResult ||
+              fetchMoreResult.getMessages.messages.length === 0
+            ) {
+              return prev;
+            }
             if (fetchMoreResult.getMessages.messages.length < 12) {
               this.setState({
                 hasMoreItems: false
               });
             }
-            if (
-              fetchMoreResult.getMessages.messages.length === 0 ||
-              !fetchMoreResult
-            ) {
-              return prev;
-            }
-
             let previousResult = Array.from(prev.getMessages.messages);
 
             if (previousResult) {

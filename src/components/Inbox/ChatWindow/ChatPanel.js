@@ -129,15 +129,16 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
       ErrorHandler.catchErrors(e);
     }
   };
-  if (!isEmailOK) {
-    return (
-      <div className="panel">
-        <center>
-          {t("Please confirm your email before contacting members.")}
-        </center>
-      </div>
-    );
-  }
+  //TODO:READD
+  // if (!isEmailOK) {
+  //   return (
+  //     <div className="panel">
+  //       <center>
+  //         {t("Please confirm your email before contacting members. Thanks.")}
+  //       </center>
+  //     </div>
+  //   );
+  // }
   return (
     <form onSubmit={submitMessage} ref={refContainer}>
       <div className="panel">
