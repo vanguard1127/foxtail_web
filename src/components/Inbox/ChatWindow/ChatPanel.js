@@ -6,7 +6,7 @@ import { SEND_MESSAGE, SET_TYPING, SIGNS3 } from "../../../queries";
 import { toast } from "react-toastify";
 
 var timer;
-const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay }) => {
+const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -122,14 +122,22 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay }) => {
       };
       const resp = await axios.put(signedRequest, filebody, options);
       if (resp.status !== 200) {
-        this.props.toast.error(this.props.t("uplerr"));
+        toast.error(t("uplerr"));
       }
     } catch (e) {
       console.error(e);
       ErrorHandler.catchErrors(e);
     }
   };
-
+  if (!isEmailOK) {
+    return (
+      <div className="panel">
+        <center>
+          {t("Please confirm your email before contacting members.")}
+        </center>
+      </div>
+    );
+  }
   return (
     <form onSubmit={submitMessage} ref={refContainer}>
       <div className="panel">

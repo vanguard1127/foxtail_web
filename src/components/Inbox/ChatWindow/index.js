@@ -100,6 +100,7 @@ class ChatWindow extends PureComponent {
               t={t}
               ErrorHandler={ErrorHandler}
               toggleOverlay={this.toggleOverlay}
+              isEmailOK={currentuser.isEmailOK}
             />
           </div>
         ) : (
