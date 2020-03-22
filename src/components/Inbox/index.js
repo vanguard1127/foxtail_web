@@ -14,7 +14,6 @@ import {
   GET_MESSAGES,
   GET_COUNTS,
   NEW_MESSAGE_SUB,
-  READ_CHAT,
   MESSAGE_ACTION_SUB
 } from "../../queries";
 import { Mutation, Query, withApollo } from "react-apollo";
@@ -27,7 +26,6 @@ import "./inbox.css";
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
 class InboxPage extends Component {
-  readChat;
   unsubscribe;
   unsubscribe2;
   state = {
@@ -150,15 +148,6 @@ class InboxPage extends Component {
   };
   //TODO
   openChat = chatID => {
-    this.readChat();
-    const { ErrorHandler } = this.props;
-    ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
-    if (this.unsubscribe2) {
-      this.unsubscribe2();
-    }
     if (this.mounted) {
       const { cache } = this.props.client;
       deleteFromCache({ cache, query: "getMessages" });
@@ -247,8 +236,6 @@ class InboxPage extends Component {
             draftState.getMessages.messages = [newMessageSubscribe];
           }
         });
-        //Marks message seen
-        this.readChat();
 
         return newData;
       }
@@ -340,23 +327,16 @@ class InboxPage extends Component {
         <section className={!chatID ? "inbox" : "inbox hide-mobile"}>
           <div className="row no-gutters chat-window-wrapper">
             <ErrorHandler.ErrorBoundary>
-              <Mutation mutation={READ_CHAT} variables={{ chatID }}>
-                {readChat => {
-                  this.readChat = readChat;
-                  return (
-                    <InboxPanel
-                      currentuser={currentuser}
-                      ErrorHandler={ErrorHandler}
-                      t={t}
-                      history={this.props.history}
-                      client={this.props.client}
-                      openChat={this.openChat}
-                      chatID={chatOpen ? chatID : null}
-                      updateCount={this.updateCount}
-                    />
-                  );
-                }}
-              </Mutation>
+              <InboxPanel
+                currentuser={currentuser}
+                ErrorHandler={ErrorHandler}
+                t={t}
+                history={this.props.history}
+                client={this.props.client}
+                openChat={this.openChat}
+                chatID={chatOpen ? chatID : null}
+                updateCount={this.updateCount}
+              />
             </ErrorHandler.ErrorBoundary>
             <ErrorHandler.ErrorBoundary>
               {!chatID && (

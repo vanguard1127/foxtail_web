@@ -253,7 +253,10 @@ class SettingsPage extends Component {
           privatePhotos = privatePhotos.filter(
             x => x.id.toString() !== file.id.toString()
           );
-
+          this.setErrorHandler({
+            message: "private photo delete",
+            privatePhotos
+          });
           toast.success(t("photodel"));
         } else {
           privatePhotos = [
@@ -296,6 +299,10 @@ class SettingsPage extends Component {
           publicPhotos = publicPhotos.filter(
             x => x.id.toString() !== file.id.toString()
           );
+          this.setErrorHandler({
+            message: "public photo delete",
+            publicPhotos
+          });
           toast.success(t("photodel"));
         } else {
           publicPhotos = [
