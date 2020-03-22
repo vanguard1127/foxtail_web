@@ -951,13 +951,13 @@ export const GET_SETTINGS = gql`
         smallUrl
         url
         key
-        _id
+        id
       }
       privatePhotos {
         smallUrl
         url
         key
-        _id
+        id
       }
       about
       kinks
@@ -988,12 +988,12 @@ export const GET_PROFILE = gql`
       publicPhotos {
         smallUrl
         url
-        _id
+        id
       }
       privatePhotos {
         smallUrl
         url
-        _id
+        id
       }
       users {
         id

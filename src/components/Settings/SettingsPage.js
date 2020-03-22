@@ -251,7 +251,7 @@ class SettingsPage extends Component {
           }
 
           privatePhotos = privatePhotos.filter(
-            x => x._id.toString() !== file._id.toString()
+            x => x.id.toString() !== file.id.toString()
           );
           this.setErrorHandler({
             message: "private photo delete",
@@ -296,9 +296,8 @@ class SettingsPage extends Component {
             this.setErrorHandler("no public photos available for delete");
             return;
           }
-
           publicPhotos = publicPhotos.filter(
-            x => x._id.toString() !== file._id.toString()
+            x => x.id.toString() !== file.id.toString()
           );
           this.setErrorHandler({
             message: "public photo delete",

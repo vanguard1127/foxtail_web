@@ -65,7 +65,7 @@ class UploadComponent extends PureComponent {
     let img = this.props.photos[index];
 
     if (img.uid) {
-      img._id = img.uid;
+      img.id = img.uid;
     }
     this.props.deleteImg({ file: img });
   };
@@ -118,7 +118,7 @@ class UploadComponent extends PureComponent {
       <div className="header-container">
         {photos.map((file, index) => {
           return (
-            <div key={file.uid || file._id}>
+            <div key={file.uid || file.id}>
               <div className="loader">
                 <div className="loading">
                   <CircularProgress
