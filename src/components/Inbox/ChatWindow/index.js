@@ -51,7 +51,8 @@ class ChatWindow extends PureComponent {
       lang,
       fetchMore,
       ReactGA,
-      subscribeToMore
+      subscribeToMore,
+      handlePreview
     } = this.props;
 
     if (currentChat !== null) {
@@ -94,6 +95,7 @@ class ChatWindow extends PureComponent {
               typingText={currentChat.typingText}
               fetchMore={fetchMore}
               subscribeToMore={subscribeToMore}
+              handlePreview={handlePreview}
             />
             <ChatPanel
               chatID={currentChat.id}

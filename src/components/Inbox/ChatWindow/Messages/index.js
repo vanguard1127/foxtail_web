@@ -154,7 +154,15 @@ class MessageList extends Component {
   };
 
   render() {
-    const { currentUserID, t, dayjs, lang, messages, typingText } = this.props;
+    const {
+      currentUserID,
+      t,
+      dayjs,
+      lang,
+      messages,
+      typingText,
+      handlePreview
+    } = this.props;
     const { fetching, hasMoreItems } = this.state;
     const group = this.groupBy(messages, datum =>
       dayjs(datum.createdAt)
@@ -205,7 +213,13 @@ class MessageList extends Component {
             }
 
             return (
-              <Message key={message.id} {...props} dayjs={dayjs} lang={lang} />
+              <Message
+                key={message.id}
+                {...props}
+                dayjs={dayjs}
+                lang={lang}
+                handlePreview={handlePreview}
+              />
             );
           })
           .reverse();
@@ -250,23 +264,7 @@ class MessageList extends Component {
             {fetching ? "Loading..." : "Click for more"}
           </div>
         )}
-        {/* <Waypoint
-          onEnter={({ previousPosition }) => {
-            if (messages.length > 0) {
-              this.handleEndScrollUp({
-                previousPosition,
-                cursor: messages[messages.length - 1].createdAt
-              });
-            }
-          }}
-          topOffset="-20%"
-          key="top"
-          fireOnRapidScroll={true}
-          ref={node => {
-            this.topWaypoint = node;
-          }}
-        /> */}
-        {/** Parent for abs position elements because scroll does weird things for abs items */}
+
         <div
           style={{
             position: "relative",

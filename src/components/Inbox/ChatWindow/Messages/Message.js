@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import NoProfileImg from "../../../../assets/img/elements/no-profile.png";
 
 const Message = React.forwardRef(
-  ({ message, currentUserID, t, dayjs, lang }, ref) => {
+  ({ message, currentUserID, t, dayjs, lang, handlePreview }, ref) => {
     const messageText =
       message.type === "msg" || message.type === "img"
         ? message.text
@@ -32,7 +32,12 @@ const Message = React.forwardRef(
           {message.type === "img" ? (
             <img
               src={messageText}
-              style={{ maxHeight: "300px", maxWidth: "300px" }}
+              style={{
+                maxHeight: "300px",
+                maxWidth: "300px",
+                cursor: "pointer"
+              }}
+              onClick={handlePreview}
             />
           ) : (
             messageText

@@ -15,7 +15,8 @@ class ChatContent extends PureComponent {
       messages,
       limit,
       subscribeToMore,
-      typingText
+      typingText,
+      handlePreview
     } = this.props;
 
     return (
@@ -38,6 +39,7 @@ class ChatContent extends PureComponent {
           limit={limit}
           subscribeToMore={subscribeToMore}
           typingText={typingText}
+          handlePreview={handlePreview}
         />
       </div>
     );

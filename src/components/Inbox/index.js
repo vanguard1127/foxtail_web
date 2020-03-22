@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { withTranslation } from "react-i18next";
 import produce from "immer";
+import Lightbox from "react-image-lightbox";
 import RulesModal from "../Modals/Rules";
 import InboxPanel from "./InboxPanel/";
 import Header from "./Header";
@@ -36,7 +37,9 @@ class InboxPage extends Component {
     title: "",
     chatID: this.props.location.state ? this.props.location.state.chatID : null,
     showRulesModal: false,
-    isBlock: false
+    isBlock: false,
+    previewVisible: false,
+    selectedImg: null
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -48,7 +51,9 @@ class InboxPage extends Component {
       this.state.isBlock !== nextState.isBlock ||
       this.props.location.state !== nextProps.location.state ||
       this.props.t !== nextProps.t ||
-      this.props.tReady !== nextProps.tReady
+      this.props.tReady !== nextProps.tReady ||
+      this.state.previewVisible !== nextState.previewVisible ||
+      this.state.selectedImg !== nextState.selectedImg
     ) {
       return true;
     }
@@ -295,6 +300,22 @@ class InboxPage extends Component {
     }
   };
 
+  handlePreview = e => {
+    if (this.mounted) {
+      this.setState({
+        selectedImg: e.target.getAttribute("src"),
+        previewVisible: true
+      });
+    }
+  };
+  closePreview = () => {
+    if (this.mounted) {
+      this.setState({
+        previewVisible: false
+      });
+    }
+  };
+
   render() {
     let {
       blockModalVisible,
@@ -304,7 +325,9 @@ class InboxPage extends Component {
       title,
       chatID,
       showRulesModal,
-      isBlock
+      isBlock,
+      previewVisible,
+      selectedImg
     } = this.state;
 
     const { t, ReactGA, session, history, tReady, dayjs, lang } = this.props;
@@ -445,6 +468,7 @@ class InboxPage extends Component {
                           subscribeToMore={() =>
                             this.subscribeToMessages(subscribeToMore)
                           }
+                          handlePreview={this.handlePreview}
                         />
                         <Mutation
                           mutation={REMOVE_SELF}
@@ -535,6 +559,12 @@ class InboxPage extends Component {
             </ErrorHandler.ErrorBoundary>
           </div>
           {showRulesModal && <RulesModal close={this.toggleRuleModal} t={t} />}
+          {previewVisible && (
+            <Lightbox
+              mainSrc={selectedImg}
+              onCloseRequest={this.closePreview}
+            />
+          )}
           {blockModalVisible && (
             <BlockModal
               type={flagOptions.Chat}
