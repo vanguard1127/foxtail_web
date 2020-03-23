@@ -151,8 +151,16 @@ class InboxPage extends Component {
       }
     });
   };
-  //TODO
+
   openChat = chatID => {
+    const { ErrorHandler } = this.props;
+    ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+    if (this.unsubscribe2) {
+      this.unsubscribe2();
+    }
     if (this.mounted) {
       const { cache } = this.props.client;
       deleteFromCache({ cache, query: "getMessages" });

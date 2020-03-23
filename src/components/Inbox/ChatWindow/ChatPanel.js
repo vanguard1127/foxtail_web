@@ -46,7 +46,13 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
   };
 
   const onEnterPress = e => {
-    if (e.key === "Enter" && !e.shiftKey && text.trim() && !sending) {
+    if (
+      e.key === "Enter" &&
+      !e.shiftKey &&
+      text.trim() &&
+      !sending &&
+      !sessionStorage.getItem("isMobile")
+    ) {
       e.preventDefault();
       submitMessage();
     }
