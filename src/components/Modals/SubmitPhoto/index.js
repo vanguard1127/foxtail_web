@@ -60,6 +60,7 @@ class PhotoVerify extends PureComponent {
       .then(({ data }) => {
         toast.success(this.props.t("verok"));
         this.props.close();
+        window.location.reload(false);
       })
       .catch(res => {
         this.props.ErrorHandler.catchErrors(res);
