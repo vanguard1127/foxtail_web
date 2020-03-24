@@ -51,7 +51,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
       !e.shiftKey &&
       text.trim() &&
       !sending &&
-      !sessionStorage.getItem("isMobile")
+      sessionStorage.getItem("isMobile") === "false"
     ) {
       e.preventDefault();
       submitMessage();
