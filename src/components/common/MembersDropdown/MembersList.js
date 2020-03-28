@@ -15,7 +15,8 @@ import { NavLink } from "react-router-dom";
 class MembersList extends PureComponent {
   state = {
     skip: 0,
-    invitedProfiles: []
+    invitedProfiles: [],
+    hasMore: true
   };
   componentDidMount() {
     this.mounted = true;
@@ -26,8 +27,8 @@ class MembersList extends PureComponent {
 
   handleEnd = previousPosition => {
     //if total reach skip and show no more sign
-    const { skip } = this.state;
-    if (previousPosition === Waypoint.below) {
+    const { skip, hasMore } = this.state;
+    if (previousPosition === Waypoint.below && hasMore) {
       const { fetchMore } = this.props;
       if (this.mounted) {
         this.setState(
@@ -53,6 +54,7 @@ class MembersList extends PureComponent {
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
           if (!fetchMoreResult || fetchMoreResult.getFriends.length === 0) {
+            this.setState({ hasMore: false });
             return previousResult;
           }
           const prevResult = [

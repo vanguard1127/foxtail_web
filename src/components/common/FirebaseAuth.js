@@ -42,23 +42,38 @@ class FirebaseAuth extends PureComponent {
     return;
   };
 
-  async sendCode(phone) {
+  sendCode = async phone => {
+    this.props.ErrorHandler.setBreadcrumb("sendCode");
     var appVerifier = window.recaptchaVerifier;
-    return appVerifier.render().then(function(widgetId) {
+    return appVerifier.render().then(widgetId => {
       return firebase
         .auth()
         .signInWithPhoneNumber(phone, appVerifier)
         .then(confirmationResult => {
           window.confirmationResult = confirmationResult;
+        })
+        .catch(function(error) {
+          // Error; SMS not sent
+          console.error("Error during signInWithPhoneNumber", error);
+          if (window.applicationVerifier && this.recaptchaWrapperRef) {
+            window.applicationVerifier.clear();
+          }
         });
     });
-  }
+  };
 
-  async confirmPhone(code) {
+  resetReCaptcha = () => {
+    if (window.applicationVerifier && this.recaptchaWrapperRef) {
+      window.applicationVerifier.clear();
+      this.recaptchaWrapperRef.innerHTML = `<div id="recaptcha-container"></div>`;
+    }
+  };
+
+  confirmPhone = async code => {
     return window.confirmationResult.confirm(code).then(async result => {
       return await result.user.getIdToken();
     });
-  }
+  };
 
   toggleConfirmPopup() {
     this.setState({ showPhoneDialog: !this.state.showPhoneDialog });
@@ -75,17 +90,7 @@ class FirebaseAuth extends PureComponent {
           success(data);
         })
         .catch(err => {
-          if (window.applicationVerifier && this.recaptchaWrapperRef) {
-            window.applicationVerifier.clear();
-            this.recaptchaWrapperRef.innerHTML = `<div id="recaptcha-container"></div>`;
-          }
-          window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-            "recaptcha-container",
-            {
-              size: "invisible"
-              // other options
-            }
-          );
+          this.resetReCaptcha();
           failCB && failCB(err);
         });
     }
@@ -126,6 +131,7 @@ class FirebaseAuth extends PureComponent {
                   confirmPhone={this.confirmPhone}
                   title={title}
                   type={type}
+                  resetReCaptcha={this.resetReCaptcha}
                   onSuccess={(result, password) => {
                     this.setState(
                       {

@@ -39,7 +39,10 @@ class ConfirmPhone extends PureComponent {
   componentDidMount() {
     this.mounted = true;
   }
-
+  componentWillUnmount() {
+    this.props.resetReCaptcha();
+    this.mounted = false;
+  }
   setValue = ({ name, value, onlyPass }) => {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {

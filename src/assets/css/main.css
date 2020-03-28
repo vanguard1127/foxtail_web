@@ -42,11 +42,10 @@ main {
 }
 
 .layout {
-  height: auto;
+  height: 100vh;
   margin: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 textarea {
@@ -1408,8 +1407,8 @@ ul.black-member li::before {
   display: -ms-flex;
   display: -o-flex;
   overflow-x: auto;
-  padding:unset !important;
-  height:auto !important;
+  padding: unset !important;
+  height: auto !important;
 }
 
 .scroll-more-down {
