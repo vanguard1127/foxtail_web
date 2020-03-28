@@ -46,7 +46,6 @@ class FirebaseAuth extends PureComponent {
     this.props.ErrorHandler.setBreadcrumb("sendCode");
     var appVerifier = window.recaptchaVerifier;
     if (!appVerifier) {
-      console.log("appVer OK");
       window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
         "recaptcha-container",
         {
@@ -56,21 +55,18 @@ class FirebaseAuth extends PureComponent {
       );
       appVerifier = window.recaptchaVerifier;
     }
-    console.log("verification initializing");
     return appVerifier.render().then(widgetId => {
       return firebase
         .auth()
         .signInWithPhoneNumber(phone, appVerifier)
         .then(confirmationResult => {
+          console.log("Start");
           window.confirmationResult = confirmationResult;
+          console.log("finish");
         })
         .catch(function(error) {
           // Error; SMS not sent
-          console.error(
-            "Error during signInWithPhoneNumber",
-            error.message,
-            error.code
-          );
+          console.error("Error during signInWithPhoneNumber", error);
           if (error.code === "auth/too-many-requests") {
             alert(
               "We've detected unusual activity from this device. Please try again later."
