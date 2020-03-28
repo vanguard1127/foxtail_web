@@ -14,7 +14,7 @@ class DistanceSlider extends Component {
       return true;
     return false;
   }
-
+  //test
   onAfterChange = e => {
     const { setValue } = this.props;
     if (setValue) setValue(e);
