@@ -45,12 +45,24 @@ class FirebaseAuth extends PureComponent {
   sendCode = async phone => {
     this.props.ErrorHandler.setBreadcrumb("sendCode");
     var appVerifier = window.recaptchaVerifier;
+    if (!appVerifier) {
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "invisible"
+          // other options
+        }
+      );
+      appVerifier = window.recaptchaVerifier;
+    }
     return appVerifier.render().then(widgetId => {
       return firebase
         .auth()
         .signInWithPhoneNumber(phone, appVerifier)
         .then(confirmationResult => {
+          console.log("Start");
           window.confirmationResult = confirmationResult;
+          console.log("finish");
         })
         .catch(function(error) {
           // Error; SMS not sent

@@ -130,7 +130,8 @@ class SignupForm extends Component {
       isValid,
       errors
     } = this.state;
-
+    let initDate = new Date();
+    initDate.setFullYear(initDate.getFullYear() - 18);
     return (
       <form>
         <div className="form-content">
@@ -182,7 +183,7 @@ class SignupForm extends Component {
                 disableFuture
                 openTo="year"
                 variant="inline"
-                initialFocusedDate={date}
+                initialFocusedDate={initDate}
                 placeholder={t("Birthday")}
                 InputProps={{
                   disableUnderline: true
