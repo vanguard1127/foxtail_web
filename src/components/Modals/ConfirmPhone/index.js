@@ -127,6 +127,7 @@ class ConfirmPhone extends PureComponent {
         });
       })
       .catch(err => {
+        ErrorHandler.catchErrors(err);
         this.setState({
           sending: false,
           errors: { phoneNumber: err.message }
@@ -261,6 +262,7 @@ class ConfirmPhone extends PureComponent {
                     });
                   })
                   .catch(err => {
+                    ErrorHandler.catchErrors(err);
                     this.setState({
                       sending: false,
                       errors: { phoneNumber: err.message }
