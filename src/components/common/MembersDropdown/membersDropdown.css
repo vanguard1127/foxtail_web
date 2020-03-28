@@ -1,5 +1,5 @@
 .invite-member {
-  max-height: 300px;
+  /* max-height: 300px; */
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #fff;
@@ -7,7 +7,8 @@
   position: absolute;
   top: 16px;
   right: 0px;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 15px 65px 0 rgba(17, 25, 40, 0.12);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 15px 65px 0 rgba(17, 25, 40, 0.12);
   border-radius: 3px;
   padding: 5px 15px;
   display: flex;
@@ -19,7 +20,29 @@
   visibility: visible;
 }
 
-.invite-member::-webkit-scrollbar {
+/* .invite-member::-webkit-scrollbar {
+  width: 9px;
+  height: 10px;
+  border: none;
+  background-color: inherit;
+  overflow: hidden;
+  border-radius: 0 3px 3px 0;
+} */
+/* .invite-member::-webkit-scrollbar-thumb {
+  background: #ececec;
+  border: none;
+}
+.invite-member::-webkit-scrollbar-corner {
+  background: inherit;
+} */
+.invite-member .content .memberList {
+  max-height: 200px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: block;
+}
+.invite-member .content .memberList::-webkit-scrollbar {
   width: 9px;
   height: 10px;
   border: none;
@@ -27,13 +50,11 @@
   overflow: hidden;
   border-radius: 0 3px 3px 0;
 }
-
-.invite-member::-webkit-scrollbar-thumb {
+.invite-member .content .memberList::-webkit-scrollbar-thumb {
   background: #ececec;
   border: none;
 }
-
-.invite-member::-webkit-scrollbar-corner {
+.invite-member .content .memberList::-webkit-scrollbar-corner {
   background: inherit;
 }
 
@@ -68,8 +89,8 @@
 }
 
 .invite-member .inv-item .select-checkbox input:checked + label span:before {
-  content: "\e804";
-  font-family: "foxtail-icon";
+  content: '\e804';
+  font-family: 'foxtail-icon';
   color: #cb0032;
   font-size: 8px;
   text-align: center;
@@ -163,7 +184,7 @@
   background-color: #36d055;
   cursor: pointer;
   transform: 0.3s all;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .invite-member .content .apply-content span:hover {

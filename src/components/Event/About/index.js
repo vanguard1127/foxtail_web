@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GoingBar from "./GoingBar";
+import Linkify from "react-linkify";
 
 class EventAbout extends Component {
   shouldComponentUpdate(nextProps) {
@@ -12,6 +13,17 @@ class EventAbout extends Component {
     }
     return false;
   }
+    componentDecorator = (href, text, key) => (
+    <a
+      href={href}
+      key={key}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      style={{ textDecoration: "underline" }}
+    >
+      {text}
+    </a>
+  );
   render() {
     const {
       id,
@@ -25,7 +37,9 @@ class EventAbout extends Component {
     return (
       <ErrorHandler.ErrorBoundary>
         <div className="about-event-content">
-          <p>{description}</p>
+          <p>        <Linkify componentDecorator={this.componentDecorator}>
+              {description}
+            </Linkify></p>
           <GoingBar
             id={id}
             participants={participants}

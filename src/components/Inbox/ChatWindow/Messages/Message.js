@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Linkify from "react-linkify";
 import NoProfileImg from "../../../../assets/img/elements/no-profile.png";
 
 const Message = React.forwardRef(
@@ -8,7 +9,11 @@ const Message = React.forwardRef(
       message.type === "msg" || message.type === "img"
         ? message.text
         : `${message.fromUser.username}` + t("leftchat");
-
+    const componentDecorator = (href, text, key) => (
+      <a href={href} key={key} target="_blank" rel="noopener noreferrer nofollow" style={{ textDecoration: "underline" }}>
+        {text}
+      </a>
+    );
     return (
       <div
         className={
@@ -38,9 +43,12 @@ const Message = React.forwardRef(
                 cursor: "pointer"
               }}
               onClick={handlePreview}
+              alt="image"
             />
           ) : (
-            messageText
+                    <Linkify componentDecorator={componentDecorator}>
+              {messageText}
+            </Linkify>
           )}
         </div>
         <span className="time">

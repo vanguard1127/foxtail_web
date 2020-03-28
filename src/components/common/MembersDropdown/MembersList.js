@@ -34,7 +34,9 @@ class MembersList extends PureComponent {
           state => ({
             skip: skip + parseInt(process.env.REACT_APP_MEMSLIST_LIMIT)
           }),
-          () => this.fetchData(fetchMore)
+          () => {
+            this.fetchData(fetchMore);
+          }
         );
       }
     }
@@ -50,15 +52,14 @@ class MembersList extends PureComponent {
           limit: parseInt(process.env.REACT_APP_MEMSLIST_LIMIT)
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult || fetchMoreResult.getMembers.length === 0) {
+          if (!fetchMoreResult || fetchMoreResult.getFriends.length === 0) {
             return previousResult;
           }
-          previousResult.getMembers = [
-            ...fetchMoreResult.getMembers,
-            ...previousResult.getMembers
+          const prevResult = [
+            ...previousResult.getFriends,
+            ...fetchMoreResult.getFriends
           ];
-
-          return previousResult;
+          return { getFriends: [...prevResult] };
         }
       });
     }
@@ -199,7 +200,7 @@ class MembersList extends PureComponent {
   };
 
   handleFriendList = ({ members, t }) => (
-    <>
+    <div className="memberList">
       {members.map(el => (
         <div className="inv-item" key={el.id}>
           {this.props.showActionButton && (
@@ -228,11 +229,13 @@ class MembersList extends PureComponent {
         </div>
       ))}
       {this.props.listType === "friends" && (
-        <Waypoint
-          onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
-        />
+        <div className="inv-item">
+          <Waypoint
+            onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
+          />
+        </div>
       )}
-    </>
+    </div>
   );
   actionButton = ({ targetID, invitedProfiles, targetType, listType, t }) => {
     if (targetType === "event" && listType === "friends") {
@@ -344,12 +347,12 @@ class MembersList extends PureComponent {
       t
     });
     return (
-      <div>
+      <>
         {membersList}
         <div style={{ height: "2vh", backgroundColor: "#fff" }}>
           {showActionButton && actionButton}
         </div>
-      </div>
+      </>
     );
   }
 }

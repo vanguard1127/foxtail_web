@@ -1,7 +1,19 @@
 import React from "react";
+import Linkify from "react-linkify";
 import NoProfileImg from "../../../../assets/img/elements/no-profile.png";
 const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
   const messageText = message.text;
+    const componentDecorator = (href, text, key) => (
+    <a
+      href={href}
+      key={key}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      style={{ textDecoration: "underline" }}
+    >
+      {text}
+    </a>
+  );
   return (
     <div className="item" ref={ref}>
       <span className="avatar">
@@ -35,7 +47,11 @@ const Message = React.forwardRef(({ message, history, dayjs, lang }, ref) => {
             .toString()}
         </span>
 
-        <span className="msg">{messageText}</span>
+        <span className="msg">
+          <Linkify componentDecorator={componentDecorator}>
+            {messageText}
+          </Linkify>
+        </span>
       </div>
     </div>
   );
