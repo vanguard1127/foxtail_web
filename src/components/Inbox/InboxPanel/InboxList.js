@@ -41,9 +41,10 @@ class InboxList extends PureComponent {
 
   renderItem = (item, timeAgo) => {
     const { currentuser, openChat, t } = this.props;
-    let title;
+    let title, blackIcon;
     if (item.type === "alert" || item.type === "left") {
       title = "Foxtail";
+      blackIcon = true;
       item.profilePic = NoProfileImg;
     } else {
       if (item.fromUser) {
@@ -52,8 +53,11 @@ class InboxList extends PureComponent {
           item.participants.length > 0
         ) {
           title = item.participants[0].profileName;
+          //TODO: Fix to use Black from other person. must return black here
+          blackIcon = false;
         } else {
           title = item.fromUser.username;
+          blackIcon = item.blackMember;
         }
         let notME = item.participants.filter(
           el => el.id.toString() !== currentuser.profileID
@@ -63,6 +67,7 @@ class InboxList extends PureComponent {
         }
       } else {
         title = item.fromProfile.profileName;
+        blackIcon = item.blackMember;
       }
 
       //kinda hacky but need to use "New Match!" for inbox subscription
@@ -85,9 +90,7 @@ class InboxList extends PureComponent {
             <span className="name" title={title}>
               {title}
             </span>
-            <span className={item.blackMember ? "time blk" : "time"}>
-              {timeAgo}
-            </span>
+            <span className={blackIcon ? "time blk" : "time"}>{timeAgo}</span>
             <span className={item.type !== "new" ? "msg" : "msg new"}>
               {item.type === "img" ? (
                 <i>Image</i>

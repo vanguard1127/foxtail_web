@@ -55,6 +55,12 @@ class FirebaseAuth extends PureComponent {
         .catch(function(error) {
           // Error; SMS not sent
           console.error("Error during signInWithPhoneNumber", error);
+          if (error.code === "auth/too-many-requests") {
+            alert(
+              "We've detected unusual activity from this device. Please try again later."
+            );
+            window.location.reload(true);
+          }
           if (window.applicationVerifier && this.recaptchaWrapperRef) {
             window.applicationVerifier.clear();
           }
@@ -70,9 +76,13 @@ class FirebaseAuth extends PureComponent {
   };
 
   confirmPhone = async code => {
-    return window.confirmationResult.confirm(code).then(async result => {
-      return await result.user.getIdToken();
-    });
+    if (window.confirmationResult) {
+      return window.confirmationResult.confirm(code).then(async result => {
+        return await result.user.getIdToken();
+      });
+    } else {
+      alert("Login Error Occured. Please try again later.");
+    }
   };
 
   toggleConfirmPopup() {
