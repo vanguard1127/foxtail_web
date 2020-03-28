@@ -9,7 +9,7 @@ const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 class InboxPanel extends Component {
   unsubscribe;
   unsubscribe2;
-  state = { searchTerm: "", skip: 0 };
+  state = { searchTerm: "", skip: 0, hasMore: true };
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
@@ -37,7 +37,7 @@ class InboxPanel extends Component {
 
   handleSearchTextChange = (refetch, e) => {
     if (this.mounted) {
-      this.setState({ skip: 0, searchTerm: e.target.value });
+      this.setState({ skip: 0, searchTerm: e.target.value, hasMore: true });
       if (e.target.value === "") {
         refetch();
       }
@@ -46,7 +46,11 @@ class InboxPanel extends Component {
 
   fetchData = fetchMore => {
     if (this.mounted) {
-      const { skip } = this.state;
+      const { skip, hasMore } = this.state;
+      if (!hasMore) {
+        return;
+      }
+
       this.setState(
         {
           skip: skip + limit,
@@ -62,23 +66,27 @@ class InboxPanel extends Component {
               if (this.mounted) {
                 this.setState({ loading: false });
               }
-
               if (
                 !fetchMoreResult ||
                 !fetchMoreResult.getInbox ||
-                !fetchMoreResult.getInbox.length === 0
+                fetchMoreResult.getInbox.length === 0
               ) {
+                this.setState({ hasMore: false });
                 return previousResult;
               }
-              if (!previousResult) {
-                previousResult = { getInbox: [] };
-              }
-              previousResult.getInbox = [
-                ...previousResult.getInbox,
-                ...fetchMoreResult.getInbox
-              ];
 
-              return previousResult;
+              if (!previousResult) {
+                return { getInbox: [] };
+              }
+
+              const newInbox = produce(previousResult, draftState => {
+                draftState.getInbox = [
+                  ...previousResult.getInbox,
+                  ...fetchMoreResult.getInbox
+                ];
+              });
+
+              return newInbox;
             }
           })
       );

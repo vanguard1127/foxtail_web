@@ -1397,6 +1397,7 @@ ul.black-member li::before {
 .avatar-style-vectors .content {
   max-width: calc(100vw - 8px);
   width: 100%;
+  display: flex !important;
   /* height: 70px; */
   border: 1px solid #d6dde4;
   position: relative;
@@ -1406,8 +1407,9 @@ ul.black-member li::before {
   display: -moz-flex;
   display: -ms-flex;
   display: -o-flex;
-  display: flex;
   overflow-x: auto;
+  padding:unset !important;
+  height:auto !important;
 }
 
 .scroll-more-down {
