@@ -266,6 +266,7 @@ class ProfilesContainer extends Component {
   };
 
   handleEnd = ({ previousPosition, fetchMore }) => {
+    console.log("TEST", previousPosition);
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
         console.log("fetch");

@@ -56,10 +56,9 @@ class ProfilesDiv extends Component {
                 );
               })}
               <Waypoint
-                onEnter={({ previousPosition, currentPosition }) =>
+                onEnter={({ previousPosition }) =>
                   handleEnd({
-                    previousPosition,
-                    currentPosition
+                    previousPosition
                   })
                 }
                 topOffset="50px"
