@@ -14,10 +14,16 @@ export const MESSAGE_ACTION_SUB = gql`
 `;
 
 export const NEW_MESSAGE_SUB = gql`
-  subscription($chatID: ID!, $isMobile: String) {
-    newMessageSubscribe(chatID: $chatID, isMobile: $isMobile) {
+  subscription($chatID: ID!, $isMobile: String, $maxW: Int, $maxH: Int) {
+    newMessageSubscribe(
+      chatID: $chatID
+      isMobile: $isMobile
+      maxW: $maxW
+      maxH: $maxH
+    ) {
       id
       text
+      fullImg
       fromUser {
         username
         id
@@ -774,12 +780,21 @@ export const GET_NOTIFICATIONS = gql`
 `;
 
 export const GET_MESSAGES = gql`
-  query($chatID: ID!, $limit: Int!, $cursor: String, $isMobile: String) {
+  query(
+    $chatID: ID!
+    $limit: Int!
+    $cursor: String
+    $isMobile: String
+    $maxW: Int
+    $maxH: Int
+  ) {
     getMessages(
       chatID: $chatID
       limit: $limit
       cursor: $cursor
       isMobile: $isMobile
+      maxW: $maxW
+      maxH: $maxH
     ) {
       id
       updatedAt
@@ -801,6 +816,7 @@ export const GET_MESSAGES = gql`
       messages {
         id
         text
+        fullImg
         fromUser {
           username
           id
@@ -917,8 +933,8 @@ export const GET_SEARCH_SETTINGS = gql`
 `;
 
 export const GET_SETTINGS = gql`
-  query($isMobile: String) {
-    getSettings(isMobile: $isMobile) {
+  query($isMobile: String, $maxW: Int, $maxH: Int) {
+    getSettings(isMobile: $isMobile, maxW: $maxW, maxH: $maxH) {
       distance
       distanceMetric
       ageRange
@@ -979,8 +995,8 @@ export const GENERATE_CODE = gql`
 `;
 
 export const GET_PROFILE = gql`
-  query($id: ID!, $isMobile: String) {
-    profile(id: $id, isMobile: $isMobile)
+  query($id: ID!, $isMobile: String, $maxW: Int, $maxH: Int) {
+    profile(id: $id, isMobile: $isMobile, maxW: $maxW, maxH: $maxH)
       @connection(key: "profile", filter: ["id"]) {
       id
       about

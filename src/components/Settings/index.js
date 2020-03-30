@@ -65,7 +65,11 @@ class Settings extends Component {
         query={GET_SETTINGS}
         fetchPolicy="cache-and-network"
         returnPartialData={true}
-        variables={{ isMobile: sessionStorage.getItem("isMobile") }}
+        variables={{
+          isMobile: sessionStorage.getItem("isMobile"),
+          maxW: window.outerWidth,
+          maxH: window.outerHeight
+        }}
       >
         {({ data, loading, error }) => {
           if (

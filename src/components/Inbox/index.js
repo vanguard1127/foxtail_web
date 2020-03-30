@@ -231,7 +231,9 @@ class InboxPage extends Component {
       document: NEW_MESSAGE_SUB,
       variables: {
         chatID: this.state.chatID,
-        isMobile: sessionStorage.getItem("isMobile")
+        isMobile: sessionStorage.getItem("isMobile"),
+        maxW: window.outerWidth,
+        maxH: window.outerHeight
       },
       updateQuery: (prev, { subscriptionData }) => {
         const { newMessageSubscribe } = subscriptionData.data;
@@ -311,7 +313,7 @@ class InboxPage extends Component {
   handlePreview = e => {
     if (this.mounted) {
       this.setState({
-        selectedImg: e.target.getAttribute("src"),
+        selectedImg: e.target.getAttribute("fullSrc"),
         previewVisible: true
       });
     }
@@ -390,7 +392,9 @@ class InboxPage extends Component {
                     chatID,
                     limit: parseInt(process.env.REACT_APP_CHATMSGS_LIMIT),
                     cursor: null,
-                    isMobile: sessionStorage.getItem("isMobile")
+                    isMobile: sessionStorage.getItem("isMobile"),
+                    maxW: window.outerWidth,
+                    maxH: window.outerHeight
                   }}
                   fetchPolicy="cache-first"
                 >

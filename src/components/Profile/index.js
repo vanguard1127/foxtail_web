@@ -202,11 +202,16 @@ class ProfilePage extends Component {
           toProfileID: id
         }}
       >
-        {(likeProfile, { loading }) => {
+        {likeProfile => {
           return (
             <Query
               query={GET_PROFILE}
-              variables={{ id, isMobile: sessionStorage.getItem("isMobile") }}
+              variables={{
+                id,
+                isMobile: sessionStorage.getItem("isMobile"),
+                maxW: window.outerWidth,
+                maxH: window.outerHeight
+              }}
               returnPartialData={true}
               fetchPolicy="cache-and-network"
             >
