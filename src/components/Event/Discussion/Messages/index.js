@@ -39,7 +39,9 @@ class MessageList extends Component {
       document: NEW_MESSAGE_SUB,
       variables: {
         chatID: chatID,
-        isMobile: sessionStorage.getItem("isMobile")
+        isMobile: sessionStorage.getItem("isMobile"),
+        maxW: window.outerWidth,
+        maxH: window.outerHeight
       },
       updateQuery: (prev, { subscriptionData }) => {
         const { newMessageSubscribe } = subscriptionData.data;

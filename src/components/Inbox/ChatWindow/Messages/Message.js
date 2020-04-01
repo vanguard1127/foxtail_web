@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Linkify from "react-linkify";
@@ -10,7 +11,13 @@ const Message = React.forwardRef(
         ? message.text
         : `${message.fromUser.username}` + t("leftchat");
     const componentDecorator = (href, text, key) => (
-      <a href={href} key={key} target="_blank" rel="noopener noreferrer nofollow" style={{ textDecoration: "underline" }}>
+      <a
+        href={href}
+        key={key}
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        style={{ textDecoration: "underline" }}
+      >
         {text}
       </a>
     );
@@ -37,16 +44,16 @@ const Message = React.forwardRef(
           {message.type === "img" ? (
             <img
               src={messageText}
+              fullSrc={message.fullImg}
               style={{
                 maxHeight: "300px",
                 maxWidth: "300px",
                 cursor: "pointer"
               }}
               onClick={handlePreview}
-              alt="image"
             />
           ) : (
-                    <Linkify componentDecorator={componentDecorator}>
+            <Linkify componentDecorator={componentDecorator}>
               {messageText}
             </Linkify>
           )}
