@@ -212,7 +212,8 @@ class SettingsPage extends Component {
             isPrivate,
             isDeleted: false
           });
-          this.uploadToS3(file.filebody, signedRequest);
+          //TODO: Figure out how to properly save
+          await this.uploadToS3(file.filebody, signedRequest);
 
           this.props.toast.dismiss();
 
