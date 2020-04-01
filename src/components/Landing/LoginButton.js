@@ -24,7 +24,7 @@ class LoginButton extends PureComponent {
       toast.dismiss("loginPop");
       alert(
         t(
-          "Invalid Login - Please contact us at support@foxtailapp.com if you are having problems logging in."
+          "Invalid Login - Please check your passowrd and try again or contact us at support@foxtailapp.com if you are having problems logging in."
         )
       );
       return;

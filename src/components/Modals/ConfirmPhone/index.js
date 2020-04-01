@@ -47,6 +47,7 @@ class ConfirmPhone extends PureComponent {
     if (this.mounted) {
       this.setState({ [name]: value }, () => {
         if (name !== "phoneNumber") {
+          console.log("HI");
           this.validateForm(onlyPass);
         } else {
           this.validatePhone();

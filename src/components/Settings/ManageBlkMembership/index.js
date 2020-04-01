@@ -32,7 +32,7 @@ const ManageBlackSub = ({
           )}
           {!ccLast4 && (
             <div className="col-md-12">
-              {t("common:blkend")}:
+              {t("common:blkend")}:{" "}
               {currentuser.blackMember.renewalDate !== null
                 ? dayjs(currentuser.blackMember.renewalDate)
                     .locale(lang)

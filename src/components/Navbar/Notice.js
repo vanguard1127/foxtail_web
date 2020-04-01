@@ -13,7 +13,7 @@ const Notice = ({
   const [proPic, setPropic] = useState(
     notice.fromProfile ? notice.fromProfile.profilePic : null
   );
-  if (notice.type === "alert") {
+  if (notice.type === "alert" || notice.type === "notice") {
     return (
       <div
         className={notice.read ? "item read" : "item unread"}
