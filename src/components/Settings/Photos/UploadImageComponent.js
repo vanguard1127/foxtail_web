@@ -54,7 +54,7 @@ class UploadComponent extends PureComponent {
       const resizedFile = await resizeImage(file);
       this.props.showEditor(resizedFile);
     } else {
-      alert(this.props.t("onlyimg"));
+      alert(this.props.t("settings:onlyimg"));
     }
   };
 
