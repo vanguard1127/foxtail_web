@@ -1,7 +1,6 @@
 import Resizer from "react-image-file-resizer";
 
 export default function(file) {
-  console.log("File before resize: ", file); // todo remove after test
   return new Promise(resolve => {
     Resizer.imageFileResizer(
       file, // is the file of the current image

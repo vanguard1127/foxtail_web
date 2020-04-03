@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Lightbox from "react-image-lightbox";
-import resizeImage from "./resizeImage";
+import resizeImage from "../../../utils/resizeImage";
 
 const styles = theme => ({
   addIcon: {
@@ -52,7 +52,6 @@ class UploadComponent extends PureComponent {
     let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
     if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
       const resizedFile = await resizeImage(file);
-      console.log("File after resize: ", resizedFile); //todo remove after
       this.props.showEditor(resizedFile);
     } else {
       alert(this.props.t("onlyimg"));

@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Lightbox from "react-image-lightbox";
+import resizeImage from "../../../utils/resizeImage";
 
 const styles = theme => ({
   addIcon: {
@@ -62,7 +63,7 @@ const UploadComponent = ({
     }
   };
 
-  const imageUploaded = (res, file) => {
+  const imageUploaded = async (res, file) => {
     var fileName = file.name;
     let idxDot = fileName.lastIndexOf(".") + 1;
     let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
@@ -70,7 +71,9 @@ const UploadComponent = ({
       if (file.size > 7000000) {
         alert(t("only10mb"));
       } else {
-        setFileRecieved(file);
+
+const resizedFile = await resizeImage(file);
+        setFileRecieved(resizedFile);
         setIsPrivate(isPrivate);
         setEditorVisible(true);
         if (toggleCB) {
