@@ -67,8 +67,7 @@ section.profile .avatar-card {
   padding: 15px;
   margin-top: 40px;
   position: relative;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
   margin-bottom: 20px;
   z-index: 100;
 }
@@ -81,6 +80,18 @@ section.profile .avatar-card .avatar {
   float: left;
   overflow: hidden;
   cursor: pointer;
+}
+
+section.profile .avatar-card .avatar .image-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-image: linear-gradient(160deg, #f70016 0%, #5f00a4 100%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 section.profile .avatar-card .avatar img {
@@ -198,8 +209,7 @@ section.profile .kinks ul li {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
   margin-bottom: 5px;
   font-size: 14px;
   color: #464648;
@@ -214,7 +224,7 @@ section.profile .user-info {
   z-index: 100;
 }
 
-section.profile .user-info > div {
+section.profile .user-info>div {
   width: 100%;
   display: -webkit-flex;
   display: -moz-flex;
@@ -225,16 +235,16 @@ section.profile .user-info > div {
   align-items: center;
 }
 
-section.profile .user-info.couple > div {
+section.profile .user-info.couple>div {
   margin-bottom: 5px;
 }
 
-section.profile .user-info > div:nth-child(2) {
+section.profile .user-info>div:nth-child(2) {
   display: none;
   visibility: hidden;
 }
 
-section.profile .user-info.couple > div:nth-child(2) {
+section.profile .user-info.couple>div:nth-child(2) {
   visibility: visible;
   display: -webkit-flex;
   display: -moz-flex;
@@ -247,11 +257,7 @@ section.profile .user-info.couple::after {
   content: "Couple";
   height: 21px;
   display: inline-block;
-  background-image: -webkit-linear-gradient(
-    top right,
-    #ffc223 0%,
-    #ff8f0f 100%
-  );
+  background-image: -webkit-linear-gradient( top right, #ffc223 0%, #ff8f0f 100%);
   background-image: -o-linear-gradient(top right, #ffc223 0%, #ff8f0f 100%);
   background-image: linear-gradient(to bottom left, #ffc223 0%, #ff8f0f 100%);
   text-align: center;
@@ -269,12 +275,12 @@ section.profile .user-info.couple::after {
   left: 43%;
 }
 
-section.profile .user-info.couple > div span {
+section.profile .user-info.couple>div span {
   font-size: 26px;
   line-height: 28px;
 }
 
-section.profile .user-info > div span {
+section.profile .user-info>div span {
   float: left;
   font-size: 25px;
   font-weight: 700;
@@ -287,7 +293,7 @@ section.profile .user-info > div span {
   white-space: nowrap;
 }
 
-section.profile .user-info > div span.name {
+section.profile .user-info>div span.name {
   flex-shrink: 2;
 }
 
@@ -313,8 +319,7 @@ section.profile .data-info ul li {
   width: 100%;
   padding: 15px 15px 12px 15px;
   background: #ffffff;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
   border-radius: 3px;
   margin-bottom: 5px;
 }
@@ -411,8 +416,7 @@ section.profile .data-info .functions .btn.remove::before {
   content: "\e805";
 }
 
-section.profile .data-info .functions .btn.report,
-section.profile .data-info .functions .btn.remove {
+section.profile .data-info .functions .btn.report, section.profile .data-info .functions .btn.remove {
   margin-left: 10px;
 }
 
@@ -515,14 +519,12 @@ section.profile .photos-slider.private .slider-content .item img.blur {
   -webkit-filter: blur(11px);
 }
 
-section.profile .photos-slider .owl-carousel,
-.owl-carousel {
+section.profile .photos-slider .owl-carousel, .owl-carousel {
   display: inline-block;
   visibility: visible;
 }
 
-section.profile .photos-slider .owl-carousel .owl-nav,
-.owl-carousel .owl-nav {
+section.profile .photos-slider .owl-carousel .owl-nav, .owl-carousel .owl-nav {
   color: white !important;
   position: absolute;
   top: 30%;
@@ -532,10 +534,7 @@ section.profile .photos-slider .owl-carousel .owl-nav,
   visibility: visible;
 }
 
-section.profile .photos-slider .owl-carousel .owl-nav .owl-prev,
-section.profile .photos-slider .owl-carousel .owl-nav .owl-next,
-#lightgallery .owl-carousel .owl-nav .owl-prev,
-#lightgallery .owl-carousel .owl-nav .owl-next {
+section.profile .photos-slider .owl-carousel .owl-nav .owl-prev, section.profile .photos-slider .owl-carousel .owl-nav .owl-next, #lightgallery .owl-carousel .owl-nav .owl-prev, #lightgallery .owl-carousel .owl-nav .owl-next {
   position: absolute;
   width: 30px;
   height: 44px !important;
@@ -545,23 +544,18 @@ section.profile .photos-slider .owl-carousel .owl-nav .owl-next,
   outline: none;
 }
 
-section.profile .photos-slider .owl-carousel .owl-nav .owl-prev i,
-section.profile .photos-slider .owl-carousel .owl-nav .owl-next i,
-.owl-carousel .owl-nav .owl-prev i,
-.owl-carousel .owl-nav .owl-next i {
+section.profile .photos-slider .owl-carousel .owl-nav .owl-prev i, section.profile .photos-slider .owl-carousel .owl-nav .owl-next i, .owl-carousel .owl-nav .owl-prev i, .owl-carousel .owl-nav .owl-next i {
   position: relative;
   line-height: 44px;
   font-size: 14px;
 }
 
-section.profile .photos-slider .owl-carousel .owl-nav .owl-next,
-.owl-carousel .owl-nav .owl-next {
+section.profile .photos-slider .owl-carousel .owl-nav .owl-next, .owl-carousel .owl-nav .owl-next {
   right: 0 !important;
   border-radius: 2px 0 0 2px;
 }
 
-section.profile .photos-slider .owl-carousel .owl-nav .owl-prev,
-.owl-carousel .owl-nav .owl-prev {
+section.profile .photos-slider .owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-prev {
   left: 0;
   border-radius: 0 2px 2px 0;
 }
@@ -659,12 +653,12 @@ section.profile .avatar-card.profile-verified::after {
     padding-top: 80px;
     margin-bottom: 0;
   }
-  section.profile .user-info > div {
+  section.profile .user-info>div {
     float: left;
     justify-content: inherit;
     align-items: inherit;
   }
-  section.profile .user-info > div span {
+  section.profile .user-info>div span {
     color: #fff;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     font-size: 38px;
@@ -673,7 +667,7 @@ section.profile .avatar-card.profile-verified::after {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  section.profile .user-info > div span.name {
+  section.profile .user-info>div span.name {
     flex-shrink: 2;
   }
   section.profile .user-info.couple::after {
