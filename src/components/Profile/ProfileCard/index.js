@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Prompt } from "react-router-dom";
 import ProfilePic from "./ProfilePic";
 import ProfileActions from "./ProfileActions";
 import DailyLimitModal from "../../Modals/DailyLimit";
@@ -172,6 +173,18 @@ class ProfileCard extends Component {
             history={history}
           />
         )}
+        <Prompt
+          message={(location, actionType) => {
+            if (actionType === "POP") {
+              history.goForward();
+              this.setMsgModalVisible(false);
+              return false;
+            } else {
+              return true;
+            }
+          }}
+          when={msgModalVisible}
+        />
       </ErrorHandler.ErrorBoundary>
     );
   }
