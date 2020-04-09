@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Prompt } from "react-router-dom";
 import ScrollUpButton from "react-scroll-up-button";
 import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
 import { Query, Mutation } from "react-apollo";
@@ -542,6 +543,18 @@ class ProfilesContainer extends Component {
                         history={this.props.history}
                       />
                     )}
+                    <Prompt
+                      message={(location, actionType) => {
+                        if (actionType === "POP") {
+                          history.goForward();
+                          this.setMsgModalVisible(false, profile);
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      }}
+                      when={msgModalVisible}
+                    />
                   </>
                 );
               }}
