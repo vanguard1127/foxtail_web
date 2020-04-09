@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Upload from "rc-upload";
+import { Prompt, useHistory } from "react-router-dom";
 import "./UploadImageComponentStyle.css";
 import ImageEditor from "../../Modals/ImageEditor";
-import ImageCropper from "../../Modals/ImageCropper";
+// import ImageCropper from "../../Modals/ImageCropper"; // not used
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import ViewIcon from "@material-ui/icons/RemoveRedEye";
@@ -44,7 +45,7 @@ const UploadComponent = ({
 }) => {
   const [editorVisible, setEditorVisible] = useState(false);
   //TODO: DO WE NEED THIS
-  const [cropperVisible, setCropperVisible] = useState(false);
+  // const [cropperVisible, setCropperVisible] = useState(false); // not used
   const [previewVisible, setPreviewVisible] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
   const [loader, setLoader] = useState("inline-block");
@@ -52,6 +53,7 @@ const UploadComponent = ({
   const [mobileBtnsActive, setMobileBtnsActive] = useState(false);
   const [fileRecieved, setFileRecieved] = useState(undefined);
   const [isPrivate, setIsPrivate] = useState(false);
+  const history = useHistory(); // this is used to keep the same url after closing image with back button
 
   const toggleImgEditorPopup = (file, isPrivate) => {
     ErrorHandler.setBreadcrumb("Toggle image editor");
@@ -71,8 +73,7 @@ const UploadComponent = ({
       if (file.size > 7000000) {
         alert(t("only10mb"));
       } else {
-
-const resizedFile = await resizeImage(file);
+        const resizedFile = await resizeImage(file);
         setFileRecieved(resizedFile);
         setIsPrivate(isPrivate);
         setEditorVisible(true);
@@ -113,7 +114,7 @@ const resizedFile = await resizeImage(file);
     const index = e.target.closest("div").getAttribute("index");
     let img = photos[index];
     setFileRecieved(process.env.REACT_APP_S3_BUCKET_URL + img.key);
-    setCropperVisible(true);
+    // setCropperVisible(true); // not used
   };
 
   const handleClose = () => {
@@ -220,6 +221,18 @@ const resizedFile = await resizeImage(file);
         )}
 
         {editorPopup}
+        <Prompt
+          message={(location, actionType) => {
+            if (actionType === "POP") {
+              history.goForward();
+              setPreviewVisible(false);
+              return false;
+            } else {
+              return true;
+            }
+          }}
+          when={previewVisible}
+        />
       </div>
     );
   }
@@ -337,6 +350,18 @@ const resizedFile = await resizeImage(file);
       {previewVisible && (
         <Lightbox mainSrc={selectedImg} onCloseRequest={handleClose} />
       )}
+      <Prompt
+        message={(location, actionType) => {
+          if (actionType === "POP") {
+            history.goForward();
+            setPreviewVisible(false);
+            return false;
+          } else {
+            return true;
+          }
+        }}
+        when={previewVisible}
+      />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Prompt } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import { Query, Mutation, withApollo } from "react-apollo";
 import { toast } from "react-toastify";
@@ -426,6 +426,18 @@ class ProfilePage extends Component {
                         </span>
                       </Modal>
                     )}
+                    <Prompt
+                      message={(location, actionType) => {
+                        if (actionType === "POP") {
+                          this.props.history.goForward();
+                          this.setState({ previewVisible: false });
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      }}
+                      when={previewVisible}
+                    />
                   </section>
                 );
               }}
