@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import Upload from "rc-upload";
+import { withRouter, Prompt } from "react-router-dom";
 import "./UploadImageComponentStyle.css";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
@@ -234,6 +235,18 @@ class UploadComponent extends PureComponent {
         {previewVisible && (
           <Lightbox mainSrc={selectedImg} onCloseRequest={this.handleClose} />
         )}
+        <Prompt
+          message={(location, actionType) => {
+            if (actionType === "POP") {
+              this.props.history.goForward();
+              this.setState({ previewVisible: false });
+              return false;
+            } else {
+              return true;
+            }
+          }}
+          when={previewVisible}
+        />
       </div>
     );
   }
@@ -243,4 +256,4 @@ UploadComponent.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(UploadComponent);
+export default withRouter(withStyles(styles)(UploadComponent));
