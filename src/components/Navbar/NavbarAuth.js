@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { Prompt } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { GET_COUNTS, NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../queries";
 import { Query } from "react-apollo";
@@ -330,6 +331,18 @@ class NavbarAuth extends PureComponent {
                   </div>
                 </div>
               </div>
+              <Prompt
+                message={(location, actionType) => {
+                  if (actionType === "POP") {
+                    history.goForward();
+                    this.toggleMobileMenu();
+                    return false;
+                  } else {
+                    return true;
+                  }
+                }}
+                when={mobileMenu}
+              />
             </div>
           );
         }}
