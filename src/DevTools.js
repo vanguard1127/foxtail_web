@@ -37,6 +37,7 @@ class DevTools extends Component {
 
     // }
   };
+
   render() {
     const { phone } = this.state;
     return (
@@ -44,54 +45,26 @@ class DevTools extends Component {
         <Mutation mutation={LOGIN} variables={{ phone }}>
           {(login, { loading, error }) => {
             return (
-              <>
-                <span
-                  onClick={() => {
-                    this.setState({ phone: "1" }, () => {
-                      this.handleLogin(login);
-                    });
-                  }}
-                >
-                  1
-                </span>{" "}
-                <span
-                  onClick={() => {
-                    this.setState({ phone: "2" }, () => {
-                      this.handleLogin(login);
-                    });
-                  }}
-                >
-                  2
-                </span>{" "}
-                <span
-                  href={null}
-                  onClick={() => {
-                    this.setState({ phone: "3" }, () => {
-                      this.handleLogin(login);
-                    });
-                  }}
-                >
-                  3
-                </span>{" "}
-                <span
-                  onClick={() => {
-                    this.setState({ phone: "4" }, () =>
-                      this.handleLogin(login)
-                    );
-                  }}
-                >
-                  4
-                </span>
-                <span
-                  onClick={() => {
-                    this.setState({ phone: "5" }, () => {
-                      this.handleLogin(login);
-                    });
-                  }}
-                >
-                  5
-                </span>
-              </>
+              <div style={{ padding: 15 }}>
+                {[1, 2, 3, 4, 5].map(el => (
+                  <span
+                    key={el}
+                    style={{
+                      padding: 15,
+                      marginRight: 10,
+                      border: "1px solid black",
+                      cursor: "pointer"
+                    }}
+                    onClick={() => {
+                      this.setState({ phone: `${el}` }, () => {
+                        this.handleLogin(login);
+                      });
+                    }}
+                  >
+                    {el}
+                  </span>
+                ))}
+              </div>
             );
           }}
         </Mutation>

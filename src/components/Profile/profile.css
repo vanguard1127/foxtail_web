@@ -80,6 +80,19 @@ section.profile .avatar-card .avatar {
   float: left;
   overflow: hidden;
   cursor: pointer;
+  min-height: 220px;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  section.profile .avatar-card .avatar {
+    min-height: 120px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  section.profile .avatar-card .avatar {
+    min-height: 180px;
+  }
 }
 
 section.profile .avatar-card .avatar .image-placeholder {
@@ -642,7 +655,6 @@ section.profile .avatar-card.profile-verified::after {
     width: 100%;
   }
   section.profile .avatar-card .avatar {
-    min-height: 100px;
     height: auto;
   }
   section.profile .user-info {

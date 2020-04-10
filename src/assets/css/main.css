@@ -3,8 +3,10 @@
 @import url("../css/fonts.css");
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500,700|Poppins:400,500|Kaushan+Script:400,500");
 html {
-  height: 100%;
+  width: 100vw;
   overflow-x: hidden;
+  /*override mozila scrollbar */
+  scrollbar-width: thin;
 }
 
 body {
@@ -2551,4 +2553,22 @@ div.register-form div.form-fields .couple-choose {
 .datePickerInput input::placeholder {
   color: #8c909d !important;
   opacity: unset !important;
+}
+
+/* handle scrollbars */
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  box-shadow: inset 0 0 5px #acaaab;
+  -webkit-box-shadow: inset 0 0 5px #acaaab;
+  background-color: #F1F3F3;
 }

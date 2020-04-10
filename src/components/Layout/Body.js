@@ -57,6 +57,18 @@ export const Body = withAuth(session => session && session.currentuser)(
             exact
           />
           <Route
+            path="/member/:id"
+            render={() => (
+              <ProfilePage
+                ErrorHandler={ErrorHandler}
+                ReactGA={ReactGA}
+                session={session}
+                refetch={refetch}
+                dayjs={dayjs}
+              />
+            )}
+          />
+          <Route
             path="/events"
             render={() => (
               <SearchEvents
@@ -84,33 +96,7 @@ export const Body = withAuth(session => session && session.currentuser)(
             )}
           />
           <Route
-            path="/member/:id"
-            render={() => (
-              <ProfilePage
-                ErrorHandler={ErrorHandler}
-                ReactGA={ReactGA}
-                session={session}
-                refetch={refetch}
-                dayjs={dayjs}
-              />
-            )}
-          />
-          <Route
-            path="/inbox/:chatID"
-            render={routeProps => (
-              <InboxPage
-                {...routeProps}
-                ReactGA={ReactGA}
-                ErrorHandler={ErrorHandler}
-                session={session}
-                refetch={refetch}
-                dayjs={dayjs}
-                lang={lang}
-              />
-            )}
-          />
-          <Route
-            path="/inbox"
+            path="/inbox/:chatID?"
             render={routeProps => (
               <InboxPage
                 {...routeProps}
