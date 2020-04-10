@@ -6,7 +6,7 @@ const ProfilePic = ({ profilePic, handlePreview }) => {
   const [proPic, setPropic] = useState(profilePic);
 
   return (
-    <div className="avatar" style={{ position: "relative", minHeight: 180 }}>
+    <div className="avatar" style={{ position: "relative" }}>
       {loading && (
         <div className="image-placeholder">
           <svg

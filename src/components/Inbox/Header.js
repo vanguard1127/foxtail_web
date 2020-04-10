@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
-import { NavLink } from "react-router-dom";
-import '../../assets/css/breadcrumb.css';
+import "../../assets/css/breadcrumb.css";
 class InboxHeader extends PureComponent {
   render() {
     const { t, chatOpen, closeChat, toggleRuleModal } = this.props;
@@ -13,7 +12,7 @@ class InboxHeader extends PureComponent {
               className={chatOpen ? "head back" : "head"}
               onClick={closeChat}
             >
-              <NavLink to="/inbox">{t("common:Inbox")}</NavLink>
+              {t("common:Inbox")}
             </span>
             <span className="title">
               {t("subtitle")}{" "}

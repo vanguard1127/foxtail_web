@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-
+import React, { PureComponent } from "react";
 import { withTranslation } from "react-i18next";
 import produce from "immer";
 import Lightbox from "react-image-lightbox";
@@ -26,43 +25,37 @@ import deleteFromCache from "../../utils/deleteFromCache";
 import "./inbox.css";
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT);
 
-class InboxPage extends Component {
-  unsubscribe;
-  unsubscribe2;
-  state = {
-    blockModalVisible: false,
-    showModal: false,
-    msg: "",
-    btnText: "",
-    title: "",
-    chatID: this.props.location.state ? this.props.location.state.chatID : null,
-    showRulesModal: false,
-    isBlock: false,
-    previewVisible: false,
-    selectedImg: null
-  };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.state.showRulesModal !== nextState.showRulesModal ||
-      this.state.blockModalVisible !== nextState.blockModalVisible ||
-      this.state.showModal !== nextState.showModal ||
-      this.state.chatID !== nextState.chatID ||
-      this.state.isBlock !== nextState.isBlock ||
-      this.props.location.state !== nextProps.location.state ||
-      this.props.t !== nextProps.t ||
-      this.props.tReady !== nextProps.tReady ||
-      this.state.previewVisible !== nextState.previewVisible ||
-      this.state.selectedImg !== nextState.selectedImg
-    ) {
-      return true;
-    }
-    return false;
+class InboxPage extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.unsubscribe = null;
+    this.unsubscribe2 = null;
+    this.state = {
+      blockModalVisible: false,
+      showModal: false,
+      msg: "",
+      btnText: "",
+      title: "",
+      chatID: props.match.params.id,
+      showRulesModal: false,
+      isBlock: false,
+      previewVisible: false,
+      selectedImg: null
+    };
   }
+
   componentDidMount() {
     this.mounted = true;
     document.title = this.props.t("common:Inbox");
     sessionStorage.setItem("page", "inbox");
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.match.params.chatID !== state.chatID) {
+      return { chatID: props.match.params.chatID };
+    } else {
+      return null;
+    }
   }
 
   componentWillUnmount() {
@@ -92,17 +85,6 @@ class InboxPage extends Component {
 
   setDialogContent = ({ title, msg, btnText }) => {
     this.setState({ title, msg, btnText }, () => this.toggleDialog());
-  };
-
-  closeChat = () => {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
-    if (this.unsubscribe2) {
-      this.unsubscribe2();
-    }
-    this.setState({ chatID: null });
-    this.props.history.replace({ state: {} });
   };
 
   handleRemoveSelf = removeSelf => {
@@ -153,7 +135,7 @@ class InboxPage extends Component {
   };
 
   openChat = chatID => {
-    const { ErrorHandler } = this.props;
+    const { ErrorHandler, history } = this.props;
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
     if (this.unsubscribe) {
       this.unsubscribe();
@@ -164,8 +146,18 @@ class InboxPage extends Component {
     if (this.mounted) {
       const { cache } = this.props.client;
       deleteFromCache({ cache, query: "getMessages" });
-      this.setState({ chatID });
+      history.push(`/inbox/${chatID}`);
     }
+  };
+
+  closeChat = () => {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+    if (this.unsubscribe2) {
+      this.unsubscribe2();
+    }
+    this.props.history.push("/inbox");
   };
 
   toggleRuleModal = () => {
