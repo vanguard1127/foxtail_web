@@ -3,8 +3,10 @@
 @import url("../css/fonts.css");
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500,700|Poppins:400,500|Kaushan+Script:400,500");
 html {
-  height: 100%;
+  width: 100vw;
   overflow-x: hidden;
+  /* mozila scrollbar override */
+  scrollbar-width: thin;
 }
 
 body {
@@ -18,7 +20,7 @@ main {
   margin-top: 65px;
 }
 
-.landing + main {
+.landing+main {
   margin-top: 0;
   box-shadow: none;
 }
@@ -40,7 +42,9 @@ main {
   left: 0;
   top: 0;
 }
+
 /*TODO set hieight to 100vh and cause Wayoint on serach*/
+
 .layout {
   height: auto;
   margin: 0;
@@ -53,21 +57,17 @@ textarea {
   white-space: pre-wrap;
 }
 
-button,
-aside,
-div:focus {
+button, aside, div:focus {
   outline: 0;
 }
 
 @-webkit-keyframes FLASH_INBOX {
-  0%,
-  49% {
+  0%, 49% {
     background: -webkit-linear-gradient(28deg, #f70016 7%, #5f00a4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  50%,
-  100% {
+  50%, 100% {
     color: #d6dde4;
   }
 }
@@ -106,8 +106,7 @@ div:focus {
   display: block;
   float: left;
   background: rgba(255, 255, 255, 0.62);
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
   line-height: 46px;
   text-align: center;
   text-transform: uppercase;
@@ -248,16 +247,13 @@ input.location-search-input {
   border: 1px solid #e3e3e3 !important;
 }
 
-.page .settings-content,
-.page form,
-.page form .content {
+.page .settings-content, .page form, .page form .content {
   width: 100%;
   display: block;
   float: left;
 }
 
-.page .settings-content .content.mtop,
-.page form .content.mtop {
+.page .settings-content .content.mtop, .page form .content.mtop {
   margin-top: 15px;
 }
 
@@ -304,8 +300,7 @@ input.location-search-input {
   font-style: normal;
 }
 
-.page .settings-content .content .item,
-.page form .content .item {
+.page .settings-content .content .item, .page form .content .item {
   width: 100%;
   display: block;
   float: left;
@@ -314,29 +309,24 @@ input.location-search-input {
   /* z-index: 1; */
 }
 
-.page .settings-content .content .item.nobottom,
-.page form .content .item.nobottom {
+.page .settings-content .content .item.nobottom, .page form .content .item.nobottom {
   margin-bottom: 0;
 }
 
-.page .settings-content .content .item.sticky,
-.page form .content .item.sticky {
+.page .settings-content .content .item.sticky, .page form .content .item.sticky {
   position: relative;
   top: -1px;
 }
 
-.page .settings-content .content .item button,
-.page form .content .item button {
+.page .settings-content .content .item button, .page form .content .item button {
   cursor: pointer;
 }
 
-.page .settings-content .content .item.sticky .button button,
-.page form .content .item.sticky .button button {
+.page .settings-content .content .item.sticky .button button, .page form .content .item.sticky .button button {
   border-radius: 0 0 2px 2px;
 }
 
-.page .settings-content .content .item .textarea label,
-.page form .content .item .textarea label {
+.page .settings-content .content .item .textarea label, .page form .content .item .textarea label {
   position: absolute;
   left: 20px;
   top: 15px;
@@ -347,36 +337,14 @@ input.location-search-input {
   /* z-index: 500; */
 }
 
-.page
-  .settings-content
-  .content
-  .item
-  .textarea
-  textarea:valid
-  + textarea::before,
-.page
-  .settings-content
-  .content
-  .item
-  .textarea
-  textarea:focus
-  + textarea::before,
-.page .settings-content .content .item .input input:valid + label::before,
-.page .settings-content .content .item .input input:focus + label::before,
-.page form .content .item .textarea textarea:valid + textarea::before,
-.page form .content .item .textarea textarea:focus + textarea::before,
-.page form .content .item .input input:valid + label::before,
-.page form .content .item .input input:focus + label::before {
+.page .settings-content .content .item .textarea textarea:valid+textarea::before, .page .settings-content .content .item .textarea textarea:focus+textarea::before, .page .settings-content .content .item .input input:valid+label::before, .page .settings-content .content .item .input input:focus+label::before, .page form .content .item .textarea textarea:valid+textarea::before, .page form .content .item .textarea textarea:focus+textarea::before, .page form .content .item .input input:valid+label::before, .page form .content .item .input input:focus+label::before {
   line-height: 25px;
   font-size: 12px;
   top: 0;
   padding-left: 1px;
 }
 
-.page .settings-content .content .item .textarea textarea,
-.page .settings-content .content .item .input,
-.page form .content .item .textarea textarea,
-.page form .content .item .input {
+.page .settings-content .content .item .textarea textarea, .page .settings-content .content .item .input, .page form .content .item .textarea textarea, .page form .content .item .input {
   position: relative;
   display: block;
   float: left;
@@ -384,50 +352,20 @@ input.location-search-input {
   resize: none;
 }
 
-.page .settings-content .content .item .textarea.invalid textarea,
-.page
-  .settings-content
-  .content
-  .item
-  .input.invalid
-  input
-  .page
-  form
-  .content
-  .item
-  .textarea.invalid
-  textarea,
-.page form .content .item .input.invalid input {
+.page .settings-content .content .item .textarea.invalid textarea, .page .settings-content .content .item .input.invalid input .page form .content .item .textarea.invalid textarea, .page form .content .item .input.invalid input {
   border-color: #d35656 !important;
 }
 
-.page .settings-content .content .item .textarea.invalid textarea::before,
-.page .settings-content .content .item .item .input.invalid label::before,
-.page
-  .settings-content
-  .content
-  .item
-  .input.invalid
-  input:valid
-  + label::before,
-.page form .content .item .textarea.invalid textarea::before,
-.page form .content .item .item .input.invalid label::before,
-.page form .content .item .input.invalid input:valid + label::before {
+.page .settings-content .content .item .textarea.invalid textarea::before, .page .settings-content .content .item .item .input.invalid label::before, .page .settings-content .content .item .input.invalid input:valid+label::before, .page form .content .item .textarea.invalid textarea::before, .page form .content .item .item .input.invalid label::before, .page form .content .item .input.invalid input:valid+label::before {
   color: #d35656 !important;
 }
 
-.page .settings-content .content .item .textarea span,
-.page .settings-content .content .item .input span,
-.page form .content .item .textarea span,
-.page form .content .item .input span {
+.page .settings-content .content .item .textarea span, .page .settings-content .content .item .input span, .page form .content .item .textarea span, .page form .content .item .input span {
   display: none;
   visibility: hidden;
 }
 
-.page .settings-content .content .item .textarea.invalid textarea,
-.page .settings-content .content .item .input.invalid span,
-.page form .content .item .textarea.invalid textarea,
-.page form .content .item .input.invalid span {
+.page .settings-content .content .item .textarea.invalid textarea, .page .settings-content .content .item .input.invalid span, .page form .content .item .textarea.invalid textarea, .page form .content .item .input.invalid span {
   display: inline-block;
   float: left;
   visibility: visible;
@@ -438,10 +376,7 @@ input.location-search-input {
   padding-left: 1px;
 }
 
-.page .settings-content .content .item .textarea label::before,
-.page .settings-content .content .item .input label::before,
-.page form .content .item .textarea label::before,
-.page form .content .item .input label::before {
+.page .settings-content .content .item .textarea label::before, .page .settings-content .content .item .input label::before, .page form .content .item .textarea label::before, .page form .content .item .input label::before {
   content: attr(title);
   position: absolute;
   top: 15px;
@@ -456,10 +391,7 @@ input.location-search-input {
   text-transform: none;
 }
 
-.page .settings-content .content .item .textarea textarea,
-.page .settings-content .content .item .input input,
-.page form .content .item .textarea textarea,
-.page form .content .item .input input {
+.page .settings-content .content .item .textarea textarea, .page .settings-content .content .item .input input, .page form .content .item .textarea textarea, .page form .content .item .input input {
   width: 100%;
   height: 70px;
   overflow: hidden;
@@ -479,8 +411,7 @@ input.location-search-input {
   box-shadow: none;
 }
 
-.page .settings-content .content .item .calender input,
-.page form .content .item .calender input {
+.page .settings-content .content .item .calender input, .page form .content .item .calender input {
   width: 100%;
   display: block;
   float: left;
@@ -496,74 +427,52 @@ input.location-search-input {
   font-weight: 400;
 }
 
-.page .settings-content .content .item .textarea textarea,
-.page form .content .item .textarea textarea {
+.page .settings-content .content .item .textarea textarea, .page form .content .item .textarea textarea {
   font-size: 14px;
   min-height: 120px;
   overflow-y: auto;
   padding-top: 8px;
 }
 
-.page .settings-content .content .item .textarea textarea::placeholder,
-.page form .content .item .textarea textarea::placeholder {
+.page .settings-content .content .item .textarea textarea::placeholder, .page form .content .item .textarea textarea::placeholder {
   color: #8c909d;
   opacity: 1;
 }
 
-.page .settings-content .content .item .textarea textarea:focus,
-.page .settings-content .content .item .input input:focus,
-.page form .content .item .textarea textarea:focus,
-.page form .content .item .input input:focus {
+.page .settings-content .content .item .textarea textarea:focus, .page .settings-content .content .item .input input:focus, .page form .content .item .textarea textarea:focus, .page form .content .item .input input:focus {
   outline: 0;
   border-color: #b4bbce;
 }
 
-.page .settings-content .content .item .textarea textarea:valid,
-.page .settings-content .content .item .input input:valid,
-.page form .content .item .textarea textarea:valid,
-.page form .content .item .input input:valid {
+.page .settings-content .content .item .textarea textarea:valid, .page .settings-content .content .item .input input:valid, .page form .content .item .textarea textarea:valid, .page form .content .item .input input:valid {
   border-color: #e3e3e3;
 }
 
-.page .settings-content .content .item .textarea textarea:valid + label::before,
-.page .settings-content .content .item .input input:valid + label::before,
-.page form .content .item .textarea textarea:valid + label::before,
-.page form .content .item .input input:valid + label::before {
+.page .settings-content .content .item .textarea textarea:valid+label::before, .page .settings-content .content .item .input input:valid+label::before, .page form .content .item .textarea textarea:valid+label::before, .page form .content .item .input input:valid+label::before {
   color: #8c909d !important;
 }
 
-.page .settings-content .content .item .textarea textarea:focus + label::before,
-.page .settings-content .content .item .input input:focus + label::before,
-.page form .content .item .textarea textarea:focus + label::before,
-.page form .content .item .input input:focus + label::before {
+.page .settings-content .content .item .textarea textarea:focus+label::before, .page .settings-content .content .item .input input:focus+label::before, .page form .content .item .textarea textarea:focus+label::before, .page form .content .item .input input:focus+label::before {
   color: #8c909d;
 }
 
-.page .settings-content .content .item .textarea label,
-.page .settings-content .content .item .input label,
-.page form .content .item .textarea label,
-.page form .content .item .input label {
+.page .settings-content .content .item .textarea label, .page .settings-content .content .item .input label, .page form .content .item .textarea label, .page form .content .item .input label {
   float: left;
   padding: 0;
   margin: 0;
 }
 
-.page .settings-content .content .item .button,
-.page form .content .item .button {
+.page .settings-content .content .item .button, .page form .content .item .button {
   width: 100%;
   display: block;
   float: left;
 }
 
-.page .settings-content .content .item .button.mtop,
-.page form .content .item .button.mtop {
+.page .settings-content .content .item .button.mtop, .page form .content .item .button.mtop {
   margin-top: 15px;
 }
 
-.page .settings-content .content .item .button span,
-.page .settings-content .content .item .button button,
-.page form .content .item .button span,
-.page form .content .item .button button {
+.page .settings-content .content .item .button span, .page .settings-content .content .item .button button, .page form .content .item .button span, .page form .content .item .button button {
   width: 100%;
   height: 50px;
   outline: none;
@@ -581,10 +490,7 @@ input.location-search-input {
   cursor: pointer;
 }
 
-.page .settings-content .content .item .button span:hover,
-.page .settings-content .content .item .button button:hover,
-.page form .content .item .button span:hover,
-.page form .content .item .button button:hover {
+.page .settings-content .content .item .button span:hover, .page .settings-content .content .item .button button:hover, .page form .content .item .button span:hover, .page form .content .item .button button:hover {
   background-color: #00af49;
 }
 
@@ -676,11 +582,11 @@ input.location-search-input {
   display: none;
 }
 
-.sw-btn .switch input:checked ~ label {
+.sw-btn .switch input:checked~label {
   background: #00d157;
 }
 
-.sw-btn .switch input:checked ~ label:after {
+.sw-btn .switch input:checked~label:after {
   content: "ON";
   transform: translateX(30px);
 }
@@ -689,14 +595,13 @@ input.location-search-input {
   content: "KM";
 }
 
-.sw-btn .switch.distance input:checked ~ label:after {
+.sw-btn .switch.distance input:checked~label:after {
   content: "Mile";
 }
 
 /* SELECT2 */
 
-.select2-container--default .select2-selection--single,
-.select2-container--default .select2-selection--multiple {
+.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
   border-radius: 2px;
   height: 70px;
   border-color: #e3e3e3 !important;
@@ -716,32 +621,21 @@ input.location-search-input {
   margin-top: 7px;
 }
 
-.select2-container--default
-  .select2-selection--multiple
-  .select2-selection__rendered {
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
   padding: 0 15px;
 }
 
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__rendered {
+.select2-container--default .select2-selection--single .select2-selection__rendered {
   padding: 30px 19px 0 15px;
   font-size: 15px;
 }
 
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__arrow {
+.select2-container--default .select2-selection--single .select2-selection__arrow {
   display: none;
   visibility: hidden;
 }
 
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__choice,
-.select2-container--default
-  .select2-selection--multiple
-  .select2-selection__choice {
+.select2-container--default .select2-selection--single .select2-selection__choice, .select2-container--default .select2-selection--multiple .select2-selection__choice {
   border-color: #f50043;
   background-color: rgba(245, 0, 67, 0.02);
   color: #f50043;
@@ -770,9 +664,7 @@ input.location-search-input {
   margin-right: 10px;
 }
 
-.select2-container--default
-  .select2-selection--multiple
-  .select2-selection__choice__remove {
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
   color: #f50043;
 }
 
@@ -780,8 +672,7 @@ input.location-search-input {
   border: 1px solid #e3e3e3;
 }
 
-.select2-container--default
-  .select2-results__option--highlighted[aria-selected] {
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: rgba(245, 0, 67, 0.02);
   color: #f50043;
 }
@@ -793,8 +684,7 @@ input.location-search-input {
   z-index: 500;
 }
 
-.select2-container--default
-  .select2-results__option[aria-selected="true"]::before {
+.select2-container--default .select2-results__option[aria-selected="true"]::before {
   content: "\e804";
   font-family: "foxtail-icon";
   position: relative;
@@ -816,11 +706,11 @@ input.location-search-input {
   padding: 6px 19px;
 }
 
-.select2-container--default .select2-results > .select2-results__options li {
+.select2-container--default .select2-results>.select2-results__options li {
   border-radius: 0 0 3px 3px;
 }
 
-.select2-container--default .select2-results > .select2-results__options {
+.select2-container--default .select2-results>.select2-results__options {
   padding-bottom: 10px;
   padding-top: 10px;
 }
@@ -830,9 +720,7 @@ input.location-search-input {
   top: -1px;
 }
 
-.select2-container--default
-  .select2-results
-  > .select2-results__options::before {
+.select2-container--default .select2-results>.select2-results__options::before {
   content: "";
   width: calc(100% - 30px);
   position: absolute;
@@ -850,8 +738,7 @@ input.location-search-input {
 
 /* DROPDOWN */
 
-.page .settings-content .content .item .dropdown,
-.page form .content .item .dropdown {
+.page .settings-content .content .item .dropdown, .page form .content .item .dropdown {
   width: 100%;
   display: block;
   float: left;
@@ -859,8 +746,7 @@ input.location-search-input {
   /* z-index: 9999; */
 }
 
-.page .settings-content .content .item .dropdown select,
-.page form .content .item .dropdown select {
+.page .settings-content .content .item .dropdown select, .page form .content .item .dropdown select {
   width: 100%;
   height: 70px;
   display: block;
@@ -879,8 +765,7 @@ input.location-search-input {
   font-weight: 400;
 }
 
-.page .settings-content .content .item .dropdown::before,
-.page form .content .item .dropdown::before {
+.page .settings-content .content .item .dropdown::before, .page form .content .item .dropdown::before {
   content: "\f004";
   font-family: "foxtail-icon";
   color: #f50043;
@@ -891,8 +776,7 @@ input.location-search-input {
   /* z-index: 99999; */
 }
 
-.page .settings-content .content .item .dropdown label,
-.page form .content .item .dropdown label {
+.page .settings-content .content .item .dropdown label, .page form .content .item .dropdown label {
   font-family: "Roboto Condensed";
   font-size: 13px;
   line-height: 17px;
@@ -909,8 +793,7 @@ input.location-search-input {
 
 /* RANGE SLIDER */
 
-.page .settings-content .content .item .range-slider,
-.page form .content .item .range-slider {
+.page .settings-content .content .item .range-slider, .page form .content .item .range-slider {
   width: 100%;
   display: block;
   float: left;
@@ -976,14 +859,12 @@ input.location-search-input {
   top: -27px;
 }
 
-.noUi-handle:after,
-.noUi-handle:before {
+.noUi-handle:after, .noUi-handle:before {
   display: none;
   visibility: hidden;
 }
 
-.page .settings-content .content .item .range-head,
-.page form .content .item .range-head {
+.page .settings-content .content .item .range-head, .page form .content .item .range-head {
   width: 100%;
   display: block;
   float: left;
@@ -992,41 +873,35 @@ input.location-search-input {
   letter-spacing: -0.3px;
 }
 
-.page .settings-content .content .item .limit,
-.page form .content .item .limit {
+.page .settings-content .content .item .limit, .page form .content .item .limit {
   width: 100%;
   display: block;
   float: left;
   padding: 4px 0 0 0;
 }
 
-.page .settings-content .content .item .limit span,
-.page form .content .item .limit span {
+.page .settings-content .content .item .limit span, .page form .content .item .limit span {
   float: left;
   font-size: 13px;
   color: #acacac;
   letter-spacing: -0.3px;
 }
 
-.page .settings-content .content .item .limit span:first-child,
-.page form .content .item .limit span:first-child {
+.page .settings-content .content .item .limit span:first-child, .page form .content .item .limit span:first-child {
   float: left;
   text-align: left;
 }
 
-.page .settings-content .content .item .limit span:nth-child(2),
-.page form .content .item .limit span:nth-child(2) {
+.page .settings-content .content .item .limit span:nth-child(2), .page form .content .item .limit span:nth-child(2) {
   float: right;
   text-align: right;
 }
 
-.page .settings-content .content .item .pmd-range-slider.noUi-target,
-.page form .content .item .pmd-range-slider.noUi-target {
+.page .settings-content .content .item .pmd-range-slider.noUi-target, .page form .content .item .pmd-range-slider.noUi-target {
   height: 5px !important;
 }
 
-.page .settings-content .content .item .pmd-range-slider .noUi-handle,
-.page form .content .item .pmd-range-slider .noUi-handle {
+.page .settings-content .content .item .pmd-range-slider .noUi-handle, .page form .content .item .pmd-range-slider .noUi-handle {
   top: -5px;
 }
 
@@ -1037,9 +912,7 @@ input.location-search-input {
   border-radius: 2px;
 }
 
-.filepond--root[data-style-panel-layout~="circle"]
-  .filepond--file
-  .filepond--file-action-button[data-align*="bottom"]:not([data-align*="center"]) {
+.filepond--root[data-style-panel-layout~="circle"] .filepond--file .filepond--file-action-button[data-align*="bottom"]:not([data-align*="center"]) {
   position: absolute;
   left: 38%;
   bottom: 2px;
@@ -1047,8 +920,7 @@ input.location-search-input {
 
 /* VERIFICATION BOX */
 
-.page .settings-content .content .verification-box,
-.page form .content .verification-box {
+.page .settings-content .content .verification-box, .page form .content .verification-box {
   width: 100%;
   display: block;
   float: left;
@@ -1058,15 +930,13 @@ input.location-search-input {
   margin-top: 10px;
 }
 
-.page .settings-content .content .verification-box span,
-.page form .content .verification-box span {
+.page .settings-content .content .verification-box span, .page form .content .verification-box span {
   width: 100%;
   display: block;
   float: left;
 }
 
-.page .settings-content .content .verification-box span.head,
-.page form .content .verification-box span.head {
+.page .settings-content .content .verification-box span.head, .page form .content .verification-box span.head {
   font-size: 16px;
   color: #565656;
   line-height: 19px;
@@ -1075,8 +945,7 @@ input.location-search-input {
   font-weight: 700;
 }
 
-.page .settings-content .content .verification-box span.title,
-.page form .content .verification-box span.title {
+.page .settings-content .content .verification-box span.title, .page form .content .verification-box span.title {
   font-size: 14px;
   color: #7b7b7b;
   line-height: 20px;
@@ -1084,10 +953,7 @@ input.location-search-input {
   padding-bottom: 10px;
 }
 
-.page .settings-content .content .verification-box span.clickverify-btn,
-.page .settings-content .content .verification-box a.clickverify-btn,
-.page form .content .verification-box span.clickverify-btn,
-.page form .content .verification-box a.clickverify-btn {
+.page .settings-content .content .verification-box span.clickverify-btn, .page .settings-content .content .verification-box a.clickverify-btn, .page form .content .verification-box span.clickverify-btn, .page form .content .verification-box a.clickverify-btn {
   /* height: 40px; */
   line-height: 40px;
   text-align: center;
@@ -1104,27 +970,21 @@ input.location-search-input {
   cursor: pointer;
 }
 
-.page .settings-content .content .verification-box span.clickverify-btn:hover,
-.page .settings-content .content .verification-box a.clickverify-btn:hover,
-.page form .content .verification-box span.clickverify-btn:hover,
-.page form .content .verification-box a.clickverify-btn:hover {
+.page .settings-content .content .verification-box span.clickverify-btn:hover, .page .settings-content .content .verification-box a.clickverify-btn:hover, .page form .content .verification-box span.clickverify-btn:hover, .page form .content .verification-box a.clickverify-btn:hover {
   background-color: #00be4f;
 }
 
-.page .settings-content .content .verification-box span.resetemail,
-.page form .content .verification-box span.resetemail {
+.page .settings-content .content .verification-box span.resetemail, .page form .content .verification-box span.resetemail {
   background-color: #00a9ff;
 }
 
-.page .settings-content .content .verification-box span.resetemail:hover,
-.page form .content .verification-box span.resetemail:hover {
+.page .settings-content .content .verification-box span.resetemail:hover, .page form .content .verification-box span.resetemail:hover {
   background-color: #1f71e0;
 }
 
 /*---- DESIRES SELECTED */
 
-.page .settings-content .content .select_kinks,
-.page form .content .select_kinks {
+.page .settings-content .content .select_kinks, .page form .content .select_kinks {
   width: 100%;
   height: 70px;
   border: 1px solid #e3e3e3;
@@ -1136,8 +996,7 @@ input.location-search-input {
   cursor: pointer;
 }
 
-.page .settings-content .content .select_kinks span.label,
-.page form .content .select_kinks span.label {
+.page .settings-content .content .select_kinks span.label, .page form .content .select_kinks span.label {
   position: absolute;
   top: 14px;
   left: 15px;
@@ -1154,8 +1013,7 @@ input.location-search-input {
   /* z-index: 99999; */
 }
 
-.page .settings-content .content .select_kinks ul,
-.page form .content .select_kinks ul {
+.page .settings-content .content .select_kinks ul, .page form .content .select_kinks ul {
   list-style-type: none;
   padding: 0 0 0 5px;
   margin: 0;
@@ -1164,8 +1022,7 @@ input.location-search-input {
   width: 80% !important;
 }
 
-.page .settings-content .content .select_kinks ul li,
-.page form .content .select_kinks ul li {
+.page .settings-content .content .select_kinks ul li, .page form .content .select_kinks ul li {
   float: left;
   border: 1px solid #f50043;
   background-color: rgba(245, 0, 67, 0.02);
@@ -1178,8 +1035,7 @@ input.location-search-input {
   width: auto !important;
 }
 
-.page .settings-content .content .select_kinks .counter,
-.page form .content .select_kinks .counter {
+.page .settings-content .content .select_kinks .counter, .page form .content .select_kinks .counter {
   position: absolute;
   right: 4%;
   top: 37%;
@@ -1244,8 +1100,7 @@ section.full-screen-modal {
   max-width: unset !important;
 }
 
-.popup .page .settings-content .content .select_kinks,
-.popup .page form .content .select_kinks {
+.popup .page .settings-content .content .select_kinks, .popup .page form .content .select_kinks {
   margin-bottom: 0px !important;
 }
 
@@ -1259,8 +1114,7 @@ a {
   z-index: 999;
 }
 
-.rc-slider-rail,
-.rc-slider-track {
+.rc-slider-rail, .rc-slider-track {
   height: 6px !important;
   border-radius: 100px !important;
 }
@@ -1314,8 +1168,7 @@ a {
   z-index: auto !important;
 }
 
-.upload-box:focus,
-.upload-box:hover {
+.upload-box:focus, .upload-box:hover {
   border-color: #f50043 !important;
 }
 
@@ -1699,7 +1552,6 @@ section.not-found span.description {
     right: inherit;
     bottom: inherit;
   }
-
   section.featured-profiles::before {
     content: "";
     height: 336px;
@@ -1713,13 +1565,11 @@ section.not-found span.description {
   .inbox-ads .content {
     width: 550px;
     padding: 0;
-    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-      0 13px 16px 0 rgba(66, 81, 110, 0.04);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
   }
   .inbox-ads .ad-con {
     height: 300px;
   }
-
   footer.sticky {
     position: absolute;
     bottom: 0;
@@ -1768,13 +1618,11 @@ section.not-found span.description {
 }
 
 @-webkit-keyframes FLASH_CPL {
-  0%,
-  49% {
+  0%, 49% {
     background-color: #cf003c;
     color: #fff;
   }
-  50%,
-  100% {
+  50%, 100% {
     background-color: #fff;
     color: #464648;
   }
@@ -1787,8 +1635,7 @@ img {
 
 /* lightGallery */
 
-.lg-next,
-.lg-prev {
+.lg-next, .lg-prev {
   border: none !important;
   outline: none !important;
 }
@@ -1937,8 +1784,7 @@ img {
   align-self: center;
 }
 
-.fullscreen a,
-.bluelink {
+.fullscreen a, .bluelink {
   color: blue !important;
   text-decoration: underline;
   cursor: pointer;
@@ -1995,7 +1841,7 @@ img {
   width: 100vw;
 }
 
-.edit-canvas-image-wrapper > div {
+.edit-canvas-image-wrapper>div {
   display: auto !important;
 }
 
@@ -2104,6 +1950,7 @@ img {
   justify-content: center;
   width: 100%;
 }
+
 .stopwatch::before {
   content: "\e800";
   color: #f50043;
@@ -2111,6 +1958,7 @@ img {
   background-image: none;
   font-family: "foxtail-icon";
 }
+
 .deleteProfile {
   width: 90px;
   height: 45px;
@@ -2129,8 +1977,7 @@ img {
   height: 90px;
 }
 
-.css-times:before,
-.css-times:after {
+.css-times:before, .css-times:after {
   position: absolute;
   content: "";
   left: 50px;
@@ -2159,7 +2006,7 @@ img {
   transform-origin: 100% 100%;
 }
 
-#root:empty ~ .xxxloader {
+#root:empty~.xxxloader {
   position: relative;
   height: 100vh;
   width: 100vw;
@@ -2167,7 +2014,7 @@ img {
   margin: 75px;
 }
 
-#root:empty ~ .loadingContainer {
+#root:empty~.loadingContainer {
   display: flex;
   align-items: center;
   height: 100vh;
@@ -2226,8 +2073,7 @@ img {
 }
 
 @-webkit-keyframes times-pulse {
-  0%,
-  100% {
+  0%, 100% {
     -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 1;
@@ -2240,8 +2086,7 @@ img {
 }
 
 @keyframes times-pulse {
-  0%,
-  100% {
+  0%, 100% {
     -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 1;
@@ -2254,8 +2099,7 @@ img {
 }
 
 @-webkit-keyframes times-background {
-  0%,
-  100% {
+  0%, 100% {
     background: #5f00a4;
   }
   60% {
@@ -2264,8 +2108,7 @@ img {
 }
 
 @keyframes times-background {
-  0%,
-  100% {
+  0%, 100% {
     background: #5f00a4;
   }
   60% {
@@ -2353,8 +2196,7 @@ animation: CycleC 30s ease infinite;
 
 .rulesCon .rulesScroll {
   border-top: 1px solid #c40148;
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
-    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 13px 16px 0 rgba(66, 81, 110, 0.04);
   max-height: 40vh;
   overflow: auto;
   padding: 10px;
@@ -2439,9 +2281,7 @@ animation: CycleC 30s ease infinite;
 }
 
 @media (max-width: 550px) {
-  .react-datepicker__portal .react-datepicker__day-name,
-  .react-datepicker__portal .react-datepicker__day,
-  .react-datepicker__portal .react-datepicker__time-name {
+  .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name {
     width: 1.5rem !important;
     line-height: 1.5rem !important;
   }
@@ -2449,9 +2289,7 @@ animation: CycleC 30s ease infinite;
 
 @supports (-webkit-overflow-scrolling: touch) {
   /* CSS specific to iOS devices */
-  .react-datepicker__portal .react-datepicker__day-name,
-  .react-datepicker__portal .react-datepicker__day,
-  .react-datepicker__portal .react-datepicker__time-name {
+  .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day, .react-datepicker__portal .react-datepicker__time-name {
     width: 1.5rem !important;
     line-height: 1.5rem !important;
   }
@@ -2499,7 +2337,7 @@ div.register-form div.form-fields .couple-choose {
   margin-top: 0px;
 }
 
-.ReactModalPortal > div {
+.ReactModalPortal>div {
   z-index: 9999 !important;
 }
 
@@ -2531,8 +2369,7 @@ div.register-form div.form-fields .couple-choose {
   cursor: pointer;
 }
 
-.MuiPopover-root,
-.MuiDialog-root {
+.MuiPopover-root, .MuiDialog-root {
   z-index: 99999999999999 !important;
 }
 
@@ -2551,4 +2388,22 @@ div.register-form div.form-fields .couple-choose {
 .datePickerInput input::placeholder {
   color: #8c909d !important;
   opacity: unset !important;
+}
+
+/* handle scrollbars */
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  box-shadow: inset 0 0 5px #acaaab;
+  -webkit-box-shadow: inset 0 0 5px #acaaab;
+  background-color: #F1F3F3;
 }
