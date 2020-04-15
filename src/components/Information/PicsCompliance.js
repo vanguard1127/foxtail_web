@@ -1,8 +1,12 @@
 import React from "react";
-const PicsCompliance = ({ history }) => (
+import { Link } from "react-router-dom";
+
+const PicsCompliance = () => (
   <div>
     <div>
-      <span className="back-to-home" onClick={() => history.push("/")} />
+      <Link to="/">
+        <span className="back-to-home" />
+      </Link>
       <h1
         style={{
           justifyContent: "center",

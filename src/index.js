@@ -52,7 +52,7 @@ render(
   <ApolloProvider client={client}>
     <MuiPickersUtilsProvider utils={DayJsUtils}>
       <ThemeProvider theme={materialTheme}>
-        <App lang={lang} dayjs={dayjs} />
+        <App lang={lang} />
       </ThemeProvider>
     </MuiPickersUtilsProvider>
   </ApolloProvider>,

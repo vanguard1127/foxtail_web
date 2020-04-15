@@ -1,12 +1,18 @@
 import React, { lazy, Suspense } from "react";
+import { Link } from "react-router-dom";
+
 import Spinner from "../common/Spinner";
 import getLang from "../../utils/getLang";
+
 const lang = getLang();
 const ToSText = lazy(() => import("./" + lang + "/ToSText"));
-const ToS = ({ history }) => (
+
+const ToS = () => (
   <div>
     <div>
-      <span className="back-to-home" onClick={() => history.push("/")} />
+      <Link to="/">
+        <span className="back-to-home" />
+      </Link>
       <h1
         style={{
           justifyContent: "center",

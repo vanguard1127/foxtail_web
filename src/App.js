@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import * as Sentry from "@sentry/browser";
 
 // firebase todo handler bad import
@@ -9,7 +10,7 @@ import "firebase/auth";
 import { preventContextMenu } from "./utils/image";
 import detectMob from "./utils/detectMobile";
 
-import { Wrapper } from "./components/Layout/Wrapper";
+import MainRoutes from "./components/Layout/Wrapper";
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -28,7 +29,7 @@ Sentry.init({
 });
 
 // todo remove props get it right there !
-const App = ({ lang, dayjs }) => {
+const App = ({ lang }) => {
   useEffect(() => {
     window.onresize = function() {
       document.body.height = window.innerHeight;
@@ -39,9 +40,12 @@ const App = ({ lang, dayjs }) => {
   }, []);
 
   return (
-    <Router>
-      <Wrapper lang={lang} dayjs={dayjs} />
-    </Router>
+    <React.Fragment>
+      <Router>
+        <MainRoutes lang={lang} />
+      </Router>
+      <ToastContainer position="top-center" hideProgressBar={true} />
+    </React.Fragment>
   );
 };
 
