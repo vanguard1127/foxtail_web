@@ -10,7 +10,7 @@ import "firebase/auth";
 import { preventContextMenu } from "./utils/image";
 import detectMob from "./utils/detectMobile";
 
-import MainRoutes from "./components/Layout/Wrapper";
+import AppRoutes from "./routes/AppRoutes";
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -42,7 +42,7 @@ const App = ({ lang }) => {
   return (
     <React.Fragment>
       <Router>
-        <MainRoutes lang={lang} />
+        <AppRoutes lang={lang} />
       </Router>
       <ToastContainer position="top-center" hideProgressBar={true} />
     </React.Fragment>
