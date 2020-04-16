@@ -65,7 +65,6 @@ const MainRoutes = ({ lang }) => {
       <Route
         path="/dev"
         render={() => {
-          console.log("Inside dev route");
           return process.env.NODE_ENV !== "production" ? (
             <DevTools />
           ) : (

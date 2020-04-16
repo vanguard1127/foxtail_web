@@ -7,7 +7,6 @@ import { GET_FULL_LINK } from "../../queries";
 import Spinner from "../common/Spinner";
 
 const ShortLinkRedirect = ({ hash }) => {
-  console.log("getting /dev route");
   return (
     <Query
       query={GET_FULL_LINK}
