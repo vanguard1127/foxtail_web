@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import * as Sentry from "@sentry/browser";
 
-// firebase todo handler bad import
+// firebase todo handle bad import
 import * as firebase from "firebase/app";
 import "firebase/auth";
 

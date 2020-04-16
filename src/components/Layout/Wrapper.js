@@ -43,11 +43,14 @@ const MainRoutes = ({ lang }) => {
       <Route
         path="/"
         exact
-        render={({ location }) => {
-          return location.search ? (
-            <ShortLinkRedirect hash={location.search} />
-          ) : !location.search || location.search.includes("=") ? (
-            <Landing ReactGA={ReactGA} lang={lang} location={location} />
+        render={routeProps => {
+          const {
+            location: { search }
+          } = routeProps;
+          return search ? (
+            <ShortLinkRedirect hash={search} />
+          ) : !search || search.includes("=") ? (
+            <Landing ReactGA={ReactGA} lang={lang} {...routeProps} />
           ) : (
             <NotFound />
           );
