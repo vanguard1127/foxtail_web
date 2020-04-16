@@ -91,7 +91,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "Foxtail",
       template: "src/page-template.hbs",
-      description: "FREE | Private | 18+ Fun",
+      description:
+        "Foxtail is a Free Sex-Positive Dating Web App - FREE | Private | 18+ Fun",
       filename: "index.html",
       httpsurl: "https://foxtailapp.com",
       favicon: "./src/assets/favicon.ico",
