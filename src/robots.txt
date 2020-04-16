@@ -1,2 +1,11 @@
 User-agent: *
-Disallow: /
+Crawl-delay:120
+Disallow: /members
+Disallow: /member/*
+Disallow: /events
+Disallow: /event/*
+Disallow: /inbox
+Disallow: /inbox/*
+Disallow: /settings
+Disallow: /get-started
+
