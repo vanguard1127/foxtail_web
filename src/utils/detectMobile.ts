@@ -1,4 +1,4 @@
-export default () => {
+export default (): boolean => {
   const toMatch = [
     /Android/i,
     /webOS/i,

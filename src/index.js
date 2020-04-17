@@ -24,7 +24,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import getLang from "./utils/getLang";
 const lang = getLang();
-import("dayjs/locale/" + lang);
+import(`dayjs/locale/${lang}`);
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);
 

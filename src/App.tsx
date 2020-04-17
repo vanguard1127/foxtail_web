@@ -4,13 +4,15 @@ import { ToastContainer } from "react-toastify";
 import * as Sentry from "@sentry/browser";
 
 // firebase todo handle bad import
-import * as firebase from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/auth";
 
 import { preventContextMenu } from "./utils/image";
 import detectMob from "./utils/detectMobile";
 
 import AppRoutes from "./routes/AppRoutes";
+
+import './App.scss';
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -28,24 +30,20 @@ Sentry.init({
   ignoreErrors: ["Client:", "authenticated"]
 });
 
-// todo remove props get it right there !
-const App = ({ lang }) => {
+const App: React.FC<{ lang: string }> = ({ lang }) => {
   useEffect(() => {
-    window.onresize = function() {
-      document.body.height = window.innerHeight;
-    };
     document.addEventListener("contextmenu", preventContextMenu);
     window.scrollTo(0, 1);
-    sessionStorage.setItem("isMobile", detectMob());
+    sessionStorage.setItem("isMobile", detectMob().toString());
   }, []);
 
   return (
-    <React.Fragment>
+    <div className="app-test-class">
       <Router>
         <AppRoutes lang={lang} />
       </Router>
       <ToastContainer position="top-center" hideProgressBar={true} />
-    </React.Fragment>
+    </div>
   );
 };
 

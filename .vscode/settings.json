@@ -1,19 +1,10 @@
 {
   "editor.formatOnSave": true,
   "javascript.format.enable": false,
-  "prettier.disableLanguages": ["js"],
-  "eslint.alwaysShowStatus": true,
-  "eslint.autoFixOnSave": true,
-  "eslint.validate": [
-    {
-      "language": "javascript",
-      "autoFix": true
-    },
-    {
-      "language": "javascriptreact",
-      "autoFix": true
-    }
+  "prettier.disableLanguages": [
+    "js"
   ],
+  "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }

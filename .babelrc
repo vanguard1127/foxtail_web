@@ -6,15 +6,21 @@
         "corejs": "3.6.4",
         "useBuiltIns": "entry",
         "targets": {
-          "browsers": [">1%", "not dead", "not op_mini all"]
+          "browsers": [
+            ">1%",
+            "not dead",
+            "not op_mini all"
+          ]
         }
       }
     ],
-    "@babel/react"
+    "@babel/react",
+    "@babel/preset-typescript"
   ],
   "plugins": [
     "@babel/proposal-object-rest-spread",
     "@babel/proposal-class-properties",
-    "@babel/syntax-dynamic-import"
+    "@babel/syntax-dynamic-import",
+    "@babel/plugin-transform-runtime"
   ]
 }
