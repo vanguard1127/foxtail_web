@@ -83,7 +83,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "Foxtail",
-      template: "./src/page-template.hbs",
+      template: "src/page-template.hbs",
       description: "FREE | Private | 18+ Fun",
       filename: "index.html",
       httpsurl: "https://localhost:1234",
