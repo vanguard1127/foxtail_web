@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MyAccountMenu from "./MyAccountMenu";
-import Menu from "../common/Menu";
-import NoProfileImg from "../../assets/img/elements/no-profile.png";
+import Menu from "../../../components/common/Menu";
+import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const MyAccountItem = ({ currentuser, setRef, t }) => {

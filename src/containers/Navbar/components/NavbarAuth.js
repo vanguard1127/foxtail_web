@@ -1,15 +1,18 @@
 import React, { PureComponent } from "react";
 import { Prompt } from "react-router-dom";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { GET_COUNTS, NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../queries";
-import { Query } from "react-apollo";
+import { withApollo, Query } from "react-apollo";
 import { NavLink } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import { GET_COUNTS, NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../../queries";
+
 import UserToolbar from "./UserToolbar";
-import * as ErrorHandler from "../common/ErrorHandler";
 import Logout from "./LogoutLink";
-import deleteFromCache from "../../utils/deleteFromCache";
-import { withApollo } from "react-apollo";
-import msgSound from "../../assets/audio/msg.mp3";
+
+import * as ErrorHandler from "../../../components/common/ErrorHandler";
+import deleteFromCache from "../../../utils/deleteFromCache";
+import msgSound from "../../../assets/audio/msg.mp3";
+
 var msgAudio = new Audio(msgSound);
 class NavbarAuth extends PureComponent {
   unsubscribe;

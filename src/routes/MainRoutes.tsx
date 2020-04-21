@@ -4,12 +4,13 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import ReactGA from "react-ga";
 import dayjs from "dayjs";
 
+import { ISession } from "../types/user";
 import Loadable from "../components/HOCs/Loadable";
 import * as ErrorHandler from "../components/common/ErrorHandler";
 import withAuth from "../components/HOCs/withAuth";
 import IdleTimer from "../components/HOCs/IdleTimer";
 
-import Navbar from "../components/Navbar";
+import Navbar from "../containers/Navbar";
 
 import "../components/Header/header.css";
 
@@ -22,7 +23,14 @@ const InboxPage = Loadable({ loader: () => import("../components/Inbox") });
 const SearchEvents = Loadable({ loader: () => import("../components/SearchEvents") });
 const Onboard = Loadable({ loader: () => import("../components/Modals/Onboard") });
 
-const MainRoutes = ({ session, refetch, lang, location }) => {
+interface IMainRoutes {
+  session: ISession;
+  refetch: any;
+  lang: string;
+  location: any;
+}
+
+const MainRoutes: React.FC<IMainRoutes> = ({ session, refetch, lang, location }) => {
   const showFooter =
     location.pathname && location.pathname.match(/^\/inbox/) === null;
   const baseRouteProps = {
@@ -35,9 +43,7 @@ const MainRoutes = ({ session, refetch, lang, location }) => {
   return (
     <div className="layout">
       <IdleTimer />
-      <header className="topbar">
-        <Navbar ErrorHandler={ErrorHandler} session={session} dayjs={dayjs} />
-      </header>
+      <Navbar session={session} dayjs={dayjs} />
       <main style={{ display: "flex", flex: "3", flexDirection: "column" }}>
         <Switch>
           <Route

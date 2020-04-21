@@ -1,11 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-const Alert = ({ alert, close, t, visible }) => {
+import { WithTranslation } from "react-i18next";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@material-ui/core";
+
+interface IAlertProps extends WithTranslation {
+  alert: any; // todo change alert type to actual
+  close: () => void;
+  visible: boolean;
+}
+
+const Alert: React.FC<IAlertProps> = ({ alert, close, t, visible }) => {
   return (
     <Dialog onClose={close} aria-labelledby="Image" open={visible}>
       {alert.text && (
@@ -21,7 +31,7 @@ const Alert = ({ alert, close, t, visible }) => {
       )}
       {alert.link && (
         <DialogActions>
-          <NavLink to={alert.link} color="primary" autoFocus>
+          <NavLink to={alert.link} color="primary">
             {t("Go")}
           </NavLink>
         </DialogActions>
@@ -29,4 +39,5 @@ const Alert = ({ alert, close, t, visible }) => {
     </Dialog>
   );
 };
+
 export default Alert;

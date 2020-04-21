@@ -7,7 +7,7 @@ import Lightbox from "react-image-lightbox";
 import { GET_PROFILE, LIKE_PROFILE } from "../../queries";
 import Spinner from "../common/Spinner";
 import KinksSection from "./KinksSection";
-import ProfileCard from "./ProfileCard/";
+import ProfileCard from "./ProfileCard";
 import ProfileInfo from "./ProfileInfo";
 import ProfileBio from "./ProfileBio";
 import KinksMobile from "./KinksMobile";

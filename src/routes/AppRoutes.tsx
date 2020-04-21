@@ -17,11 +17,10 @@ const Privacy = Loadable({ loader: () => import("../components/Information/Priva
 const AntiSpam = Loadable({ loader: () => import("../components/Information/AntiSpam") });
 const ToS = Loadable({ loader: () => import("../components/Information/ToS") });
 const LawEnforce = Loadable({ loader: () => import("../components/Information/LawEnforce") });
-const ReCaptcha = Loadable({ loader: () => import("../components/Modals/ReCaptcha") });
 const ShortLinkRedirect = Loadable({ loader: () => import("../components/Redirect/ShortLinkRedirect") });
 const PicsCompliance = Loadable({ loader: () => import("../components/Information/PicsCompliance") });
 
-const AppRoutes = ({ lang }) => {
+const AppRoutes: React.FC<{ lang: string }> = ({ lang }) => {
   return (
     <Switch>
       <Route
@@ -36,8 +35,8 @@ const AppRoutes = ({ lang }) => {
           ) : !search || search.includes("=") ? (
             <Landing ReactGA={ReactGA} lang={lang} {...routeProps} />
           ) : (
-            <NotFound />
-          );
+                <NotFound />
+              );
         }}
       />
       <Route path="/tos" component={ToS} />
@@ -47,16 +46,14 @@ const AppRoutes = ({ lang }) => {
       <Route path="/2257" component={PicsCompliance} />
       <Route path="/antispam" component={AntiSpam} />
       <Route path="/lawenforcement" component={LawEnforce} />
-      {/*todo why captcha is a separate route ? */}
-      <Route path="/captcha" component={ReCaptcha} />
       <Route
         path="/dev"
         render={() => {
           return process.env.NODE_ENV !== "production" ? (
             <DevTools />
           ) : (
-            <NotFound />
-          );
+              <NotFound />
+            );
         }}
       />
       <Route

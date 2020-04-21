@@ -7,6 +7,18 @@ import * as Sentry from "@sentry/browser";
 import firebase from "firebase/app";
 import "firebase/auth";
 
+// dayjs
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import getLang from "./utils/getLang";
+import 'dayjs/locale/en';
+import 'dayjs/locale/de';
+const lang = getLang();
+dayjs.locale(lang)
+dayjs.extend(relativeTime);
+dayjs.extend(advancedFormat);
+
 import { preventContextMenu } from "./utils/image";
 import detectMob from "./utils/detectMobile";
 
@@ -30,7 +42,7 @@ Sentry.init({
   ignoreErrors: ["Client:", "authenticated"]
 });
 
-const App: React.FC<{ lang: string }> = ({ lang }) => {
+const App: React.FC = () => {
   useEffect(() => {
     document.addEventListener("contextmenu", preventContextMenu);
     window.scrollTo(0, 1);

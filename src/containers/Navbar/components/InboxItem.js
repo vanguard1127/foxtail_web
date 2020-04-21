@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import deleteFromCache from "../../utils/deleteFromCache";
+import deleteFromCache from "../../../utils/deleteFromCache";
 import { withApollo } from "react-apollo";
-import { GET_COUNTS } from "../../queries";
+import { GET_COUNTS } from "../../../queries";
 class InboxItem extends Component {
   shouldComponentUpdate(nextProps) {
     if (

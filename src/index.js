@@ -4,6 +4,7 @@ import { render } from "react-dom";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
+import DayJsUtils from "@date-io/dayjs";
 
 // apollo
 import { ApolloProvider } from "react-apollo";
@@ -16,17 +17,6 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { ThemeProvider } from "@material-ui/styles";
 
 import App from "./App";
-
-// dayjs todo handle bad implementation
-import dayjs from "dayjs";
-import DayJsUtils from "@date-io/dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import advancedFormat from "dayjs/plugin/advancedFormat";
-import getLang from "./utils/getLang";
-const lang = getLang();
-import(`dayjs/locale/${lang}`);
-dayjs.extend(relativeTime);
-dayjs.extend(advancedFormat);
 
 // external bad imports todo later
 import("./assets/css/main.css");
@@ -52,7 +42,7 @@ render(
   <ApolloProvider client={client}>
     <MuiPickersUtilsProvider utils={DayJsUtils}>
       <ThemeProvider theme={materialTheme}>
-        <App lang={lang} />
+        <App />
       </ThemeProvider>
     </MuiPickersUtilsProvider>
   </ApolloProvider>,
