@@ -166,8 +166,6 @@ const UserToolbar = ({
     window.location.reload(false);
   }
 
-  console.log("USER TOOLBAR ALERT: ", alert);
-
   return (
     <div className="function">
       {alertVisible && counts.alert && (
