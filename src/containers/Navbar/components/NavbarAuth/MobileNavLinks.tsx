@@ -38,8 +38,8 @@ const MobileNavLinks: React.FC<IMobileNavLinksProps> = ({
                     </Link>
                 </li>
                 <li>
-                    <span>
-                        <div className="inbox" onClick={openInbox}>
+                    <span onClick={openInbox}>
+                        <div className="inbox">
                             {t("common:Inbox")}
                             {messagesCount > 0 && <span className="count">{messagesCount}</span>}
                         </div>
