@@ -23,6 +23,7 @@ header.topbar {
 }
 
 header .logo {
+  display: block;
   width: 100px;
   height: 60px;
   margin: 0 auto;

@@ -1,12 +1,18 @@
 import React, { lazy, Suspense } from "react";
+import { Link } from "react-router-dom";
+
 import Spinner from "../common/Spinner";
 import getLang from "../../utils/getLang";
+
 const lang = getLang();
 const PrivacyText = lazy(() => import("./" + lang + "/PrivacyText"));
-const Privacy = ({ history }) => (
+
+const Privacy = () => (
   <div>
     <div>
-      <span className="back-to-home" onClick={() => history.push("/")} />
+      <Link to="/">
+        <span className="back-to-home" />
+      </Link>
       <h1
         style={{
           justifyContent: "center",

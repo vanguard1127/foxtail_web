@@ -6,12 +6,12 @@ import {
   GET_COUNTS,
   CONVERT_COUPLE,
   GET_NOTIFICATIONS
-} from "../../queries";
+} from "../../../queries";
 import NoticesMenu from "./NoticesMenu";
 import InboxItem from "./InboxItem";
 import Alert from "./Alert";
 import MyAccountItem from "./MyAccountItem";
-import Spinner from "../common/Spinner";
+import Spinner from "../../../components/common/Spinner";
 
 const UserToolbar = ({
   currentuser,

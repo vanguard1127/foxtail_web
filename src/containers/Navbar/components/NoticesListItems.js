@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import produce from "immer";
-import { NEW_NOTICE_SUB } from "../../queries";
+import { NEW_NOTICE_SUB } from "../../../queries";
 import { Waypoint } from "react-waypoint";
-import getLang from "../../utils/getLang";
+import getLang from "../../../utils/getLang";
 import Notice from "./Notice";
 const lang = getLang();
 
-class NoticesList extends Component {
+class NoticesListItems extends Component {
   state = {
     loading: false,
     hasMore: true
@@ -18,6 +17,7 @@ class NoticesList extends Component {
   }
 
   componentWillUnmount() {
+    this.props.resetSkip();
     this.mounted = false;
   }
 
@@ -54,34 +54,36 @@ class NoticesList extends Component {
   fetchData = () => {
     if (this.mounted) {
       this.setState({ loading: true }, () => {
-        const { notifications } = this.props;
+        const skip = this.props.skipForward();
 
         this.props.fetchMore({
           variables: {
-            cursor: notifications[notifications.length - 1].date,
+            skip,
             limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
-            this.setState({ loading: false });
-
+            if (this.mounted) {
+              this.setState({ loading: false });
+            }
             if (
               !fetchMoreResult ||
               !fetchMoreResult.getNotifications ||
               fetchMoreResult.getNotifications.notifications.length === 0
             ) {
-              this.setState({ hasMore: false });
-
+              if (this.mounted) {
+                this.setState({ hasMore: false });
+              }
               return;
             }
 
-            const newNotifications = produce(previousResult, draftState => {
-              draftState.getNotifications.notifications = [
+            this.props.setNotifications({
+              notifications: [
                 ...previousResult.getNotifications.notifications,
                 ...fetchMoreResult.getNotifications.notifications
-              ];
+              ]
             });
 
-            return newNotifications;
+            return;
           }
         });
       });
@@ -101,14 +103,18 @@ class NoticesList extends Component {
           return prev;
         }
 
-        const newNotifications = produce(prev, draftState => {
-          draftState.getNotifications.notifications = [
-            newNoticeSubscribe,
-            ...prev.getNotifications.notifications
-          ];
-        });
+        const newNotices = [
+          newNoticeSubscribe,
+          ...prev.getNotifications.notifications
+        ];
 
-        return newNotifications;
+        if (this.mounted) {
+          this.props.setNotifications({
+            notifications: newNotices
+          });
+        }
+
+        return prev;
       }
     }));
 
@@ -118,18 +124,11 @@ class NoticesList extends Component {
 
       switch (type) {
         case "chat":
-          if (~window.location.href.indexOf("/inbox")) {
-            this.props.history.replace({
-              pathname: "/inbox",
-              state: { chatID: targetID }
-            });
-            window.location.reload(false);
-          } else {
-            this.props.history.replace({
-              pathname: "/inbox",
-              state: { chatID: targetID }
-            });
-          }
+          this.props.history.replace({
+            pathname: "/inbox",
+            state: { chatID: targetID }
+          });
+          window.location.reload(false);
           break;
         case "event":
           this.props.history.replace(`/event/${targetID}`);
@@ -199,4 +198,4 @@ class NoticesList extends Component {
   }
 }
 
-export default NoticesList;
+export default NoticesListItems;

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { NEW_NOTICE_SUB } from "../../queries";
+import produce from "immer";
+import { NEW_NOTICE_SUB } from "../../../queries";
 import { Waypoint } from "react-waypoint";
-import getLang from "../../utils/getLang";
+import getLang from "../../../utils/getLang";
 import Notice from "./Notice";
 const lang = getLang();
 
-class NoticesListItems extends Component {
+class NoticesList extends Component {
   state = {
     loading: false,
     hasMore: true
@@ -17,7 +18,6 @@ class NoticesListItems extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetSkip();
     this.mounted = false;
   }
 
@@ -54,36 +54,34 @@ class NoticesListItems extends Component {
   fetchData = () => {
     if (this.mounted) {
       this.setState({ loading: true }, () => {
-        const skip = this.props.skipForward();
+        const { notifications } = this.props;
 
         this.props.fetchMore({
           variables: {
-            skip,
+            cursor: notifications[notifications.length - 1].date,
             limit: parseInt(process.env.REACT_APP_NOTICELIST_LIMIT)
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (this.mounted) {
-              this.setState({ loading: false });
-            }
+            this.setState({ loading: false });
+
             if (
               !fetchMoreResult ||
               !fetchMoreResult.getNotifications ||
               fetchMoreResult.getNotifications.notifications.length === 0
             ) {
-              if (this.mounted) {
-                this.setState({ hasMore: false });
-              }
+              this.setState({ hasMore: false });
+
               return;
             }
 
-            this.props.setNotifications({
-              notifications: [
+            const newNotifications = produce(previousResult, draftState => {
+              draftState.getNotifications.notifications = [
                 ...previousResult.getNotifications.notifications,
                 ...fetchMoreResult.getNotifications.notifications
-              ]
+              ];
             });
 
-            return;
+            return newNotifications;
           }
         });
       });
@@ -103,18 +101,14 @@ class NoticesListItems extends Component {
           return prev;
         }
 
-        const newNotices = [
-          newNoticeSubscribe,
-          ...prev.getNotifications.notifications
-        ];
+        const newNotifications = produce(prev, draftState => {
+          draftState.getNotifications.notifications = [
+            newNoticeSubscribe,
+            ...prev.getNotifications.notifications
+          ];
+        });
 
-        if (this.mounted) {
-          this.props.setNotifications({
-            notifications: newNotices
-          });
-        }
-
-        return prev;
+        return newNotifications;
       }
     }));
 
@@ -124,11 +118,18 @@ class NoticesListItems extends Component {
 
       switch (type) {
         case "chat":
-          this.props.history.replace({
-            pathname: "/inbox",
-            state: { chatID: targetID }
-          });
-          window.location.reload(false);
+          if (~window.location.href.indexOf("/inbox")) {
+            this.props.history.replace({
+              pathname: "/inbox",
+              state: { chatID: targetID }
+            });
+            window.location.reload(false);
+          } else {
+            this.props.history.replace({
+              pathname: "/inbox",
+              state: { chatID: targetID }
+            });
+          }
           break;
         case "event":
           this.props.history.replace(`/event/${targetID}`);
@@ -198,4 +199,4 @@ class NoticesListItems extends Component {
   }
 }
 
-export default NoticesListItems;
+export default NoticesList;

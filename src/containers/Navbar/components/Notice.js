@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NoProfileImg from "../../assets/img/elements/no-profile.png";
+import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
 const Notice = ({
   notice,

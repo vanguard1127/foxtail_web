@@ -1,14 +1,13 @@
 import React from "react";
-
-import { Query } from "react-apollo";
+import dayjs from "dayjs";
+import i18next from "i18next";
+import { Query, ApolloConsumer } from "react-apollo";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
-import ReCaptcha from "../Modals/ReCaptcha";
-import i18next from "i18next";
-import dayjs from "dayjs";
 
-import { ApolloConsumer } from "react-apollo";
 import { GET_CURRENT_USER, CONFIRM_EMAIL } from "../../queries";
+
+import ReCaptcha from "../Modals/ReCaptcha";
 
 const withAuth = conditionFunc => Component => props => {
   const { location } = props;

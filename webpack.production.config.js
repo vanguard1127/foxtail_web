@@ -11,6 +11,9 @@ const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const webpack = require("webpack");
 module.exports = {
   entry: { main: "./src/index.js" },
+  resolve: {
+    extensions: [".mjs", ".ts", ".tsx", ".js", ".jsx", ".scss"]
+  },
   output: {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "./build"),
@@ -22,6 +25,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.ts(x?)$/,
+        use: "ts-loader",
+        exclude: /node_modules/
+      },
       {
         loader: "babel-loader",
         test: /\.js$/,

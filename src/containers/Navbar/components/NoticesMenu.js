@@ -2,8 +2,8 @@ import React from "react";
 import { Query } from "react-apollo";
 import { useMutation } from "@apollo/react-hooks";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { GET_NOTIFICATIONS, GET_COUNTS, NOTICES_SEEN } from "../../queries";
-import Menu from "../common/Menu";
+import { GET_NOTIFICATIONS, GET_COUNTS, NOTICES_SEEN } from "../../../queries";
+import Menu from "../../../components/common/Menu";
 import NoticesList from "./NoticesList";
 
 const updateCount = client => {
