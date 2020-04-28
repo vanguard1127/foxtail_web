@@ -1,31 +1,46 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import produce from "immer";
+
 import {
   READ_NOTIFICATION,
   GET_COUNTS,
   CONVERT_COUPLE,
   GET_NOTIFICATIONS
-} from "../../../queries";
+} from "queries";
+import Spinner from "components/common/Spinner";
+import { IUser } from "types/user";
+
 import NoticesMenu from "./NoticesMenu";
 import InboxItem from "./InboxItem";
 import Alert from "./Alert";
 import MyAccountItem from "./MyAccountItem";
-import Spinner from "../../../components/common/Spinner";
+import { IGetCountsData, IAlertData } from './NavbarAuth';
 
-const UserToolbar = ({
-  currentuser,
-  t,
-  setRef,
+interface IUserToolbarProps {
+  currentUser: IUser;
+  counts: IGetCountsData;
+  ErrorHandler: any;
+  blinkInbox: boolean;
+  history: any;
+  dayjs: any;
+  t: any;
+}
+
+const UserToolbar: React.FC<IUserToolbarProps> = ({
+  currentUser,
   counts,
   ErrorHandler,
   blinkInbox,
   history,
-  dayjs
+  dayjs,
+  t,
 }) => {
-  let { msgsCount, noticesCount } = counts;
-  const [alertVisible, setAlertVisible] = useState(true);
-  const [alert, setAlert] = useState(counts.alert);
+  const { msgsCount, noticesCount } = counts;
+
+  const [alertVisible, setAlertVisible] = useState<boolean>(true);
+  const [alert, setAlert] = useState<IAlertData | null>(counts.alert);
+
   const [updateNotifications, { loading: mutationLoading }] = useMutation(
     READ_NOTIFICATION,
     {
@@ -59,23 +74,19 @@ const UserToolbar = ({
     update(cache) {
       const { getCounts } = cache.readQuery({
         query: GET_COUNTS
-      });
+      }) as any;
 
-      let newCounts = { ...getCounts };
-      if (newCounts.alert && !newCounts.alert.read) {
-        newCounts.alert = null;
-
+      if (getCounts.alert && !getCounts.alert.read) {
+        const newCounts = { ...getCounts, alert: null };
         cache.writeQuery({
           query: GET_COUNTS,
-          data: {
-            getCounts: { ...newCounts }
-          }
+          data: { getCounts: { ...newCounts } }
         });
       }
     }
   });
 
-  const showAlert = alert => {
+  const showAlert = (alert: IAlertData) => {
     setAlertVisible(true);
     setAlert(alert);
   };
@@ -85,7 +96,9 @@ const UserToolbar = ({
   };
 
   const handleCloseAlert = () => {
-    readNotices(alert.id);
+    if (alert) {
+      readNotices(alert.id);
+    }
     setAlertVisible(false);
     setAlert(null);
   };
@@ -96,7 +109,7 @@ const UserToolbar = ({
       update: cache => {
         let query = "getNotifications";
         let found = false;
-        //find in cache
+        //find in cache, TODO The code below will never work
         Object.keys(cache.data.data).forEach(key => {
           if (key === "ROOT_QUERY") {
             Object.keys(cache.data.data[key]).forEach(subkey => {
@@ -116,11 +129,8 @@ const UserToolbar = ({
         }
 
         const {
-          getNotifications,
-          getNotifications: { notifications }
-        } = cache.readQuery({
-          query: GET_NOTIFICATIONS
-        });
+          getNotifications, getNotifications: { notifications }
+        } = cache.readQuery({ query: GET_NOTIFICATIONS }) as any;
 
         const newNotifications = produce(notifications, draftState => {
           var readNotice = draftState.find(
@@ -130,17 +140,11 @@ const UserToolbar = ({
           if (readNotice) {
             readNotice.read = true;
             if (!readNotice.seen) {
-              const { getCounts } = cache.readQuery({
-                query: GET_COUNTS
-              });
-
-              let newCounts = { ...getCounts };
-              newCounts.noticesCount = 0;
+              const { getCounts } = cache.readQuery({ query: GET_COUNTS }) as any;
+              const newCounts = { ...getCounts, noticesCount: 0 };
               cache.writeQuery({
                 query: GET_COUNTS,
-                data: {
-                  getCounts: { ...newCounts }
-                }
+                data: { getCounts: { ...newCounts } }
               });
             }
           }
@@ -168,24 +172,20 @@ const UserToolbar = ({
 
   return (
     <div className="function">
-      {alertVisible && counts.alert && (
+      {alertVisible && alert && (
         <Alert
-          alert={counts.alert}
+          alert={alert}
           close={handleCloseAlert}
           t={t}
           visible={true}
         />
-      )}
-      {alertVisible && alert && (
-        <Alert alert={alert} close={handleCloseAlert} t={t} visible={true} />
       )}
       <ErrorHandler.ErrorBoundary>
         <InboxItem
           count={msgsCount}
           t={t}
           data-name="inbox"
-          ref={setRef}
-          userID={currentuser.userID}
+          userID={currentUser.userID}
           blinkInbox={blinkInbox}
         />
       </ErrorHandler.ErrorBoundary>
@@ -197,21 +197,24 @@ const UserToolbar = ({
             </div>
           </span>
         ) : (
-          <NoticesMenu
-            history={history}
-            ErrorHandler={ErrorHandler}
-            count={noticesCount}
-            t={t}
-            showAlert={showAlert}
-            handleCoupleLink={handleCoupleLink}
-            readNotices={readNotices}
-            dayjs={dayjs}
-          />
-        )}
+            <NoticesMenu
+              history={history}
+              ErrorHandler={ErrorHandler}
+              count={noticesCount}
+              t={t}
+              showAlert={showAlert}
+              handleCoupleLink={handleCoupleLink}
+              readNotices={readNotices}
+              dayjs={dayjs}
+            />
+          )}
       </ErrorHandler.ErrorBoundary>
       <ErrorHandler.ErrorBoundary>
         <div className="user hidden-mobile">
-          <MyAccountItem currentuser={currentuser} setRef={setRef} t={t} />
+          <MyAccountItem
+            currentUser={currentUser}
+            t={t}
+          />
         </div>
       </ErrorHandler.ErrorBoundary>
     </div>

@@ -2,9 +2,10 @@ import React, { memo } from "react";
 import { withRouter, Redirect, RouteComponentProps } from "react-router-dom";
 import { withTranslation, WithTranslation } from "react-i18next";
 
+import Spinner from "components/common/Spinner";
+import { ISession } from "types/user";
+
 import NavbarAuth from "./components/NavbarAuth"
-import Spinner from "../../components/common/Spinner";
-import { ISession } from "../../types/user";
 
 interface INavbarProps extends RouteComponentProps, WithTranslation {
   session: ISession;

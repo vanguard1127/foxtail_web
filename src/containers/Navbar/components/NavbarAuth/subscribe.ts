@@ -1,4 +1,4 @@
-import { NEW_INBOX_SUB, NEW_NOTICE_SUB } from "../../../../queries";
+import { NEW_INBOX_SUB, NEW_NOTICE_SUB } from "queries";
 
 interface ISubscribeProps {
     subscribeToMore: any;

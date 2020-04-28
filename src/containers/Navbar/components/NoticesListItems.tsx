@@ -1,3 +1,4 @@
+// TODO refactor this file
 import React, { Component } from "react";
 import { NEW_NOTICE_SUB } from "../../../queries";
 import { Waypoint } from "react-waypoint";
@@ -162,10 +163,10 @@ class NoticesListItems extends Component {
           {notifications.length > 0 ? (
             notifications.map(notice => this.handleNotice({ notice }))
           ) : (
-            <div className="item" key="na">
-              <span className="text">{t("nonotif")}</span>
-            </div>
-          )}
+              <div className="item" key="na">
+                <span className="text">{t("nonotif")}</span>
+              </div>
+            )}
 
           <div
             key="way"
@@ -186,12 +187,12 @@ class NoticesListItems extends Component {
               {this.state.loading ? (
                 <span className="text">{t("Loading")}</span>
               ) : (
-                <span className="text">{t("nonotif")}</span>
-              )}
+                  <span className="text">{t("nonotif")}</span>
+                )}
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
       </div>
     );

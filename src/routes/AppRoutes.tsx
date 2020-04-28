@@ -3,22 +3,22 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import ReactGA from "react-ga";
 
-import Landing from "../components/Landing";
-import Loadable from "../components/HOCs/Loadable";
-import NotFound from "../components/common/NotFound";
+import Landing from "components/Landing";
+import Loadable from "components/HOCs/Loadable";
+import NotFound from "components/common/NotFound";
 
 import DevTools from "../DevTools";
 
 import MainRoutes from "./MainRoutes";
 
-const About = Loadable({ loader: () => import("../components/Information/About") });
-const FAQ = Loadable({ loader: () => import("../components/Information/FAQ") });
-const Privacy = Loadable({ loader: () => import("../components/Information/Privacy") });
-const AntiSpam = Loadable({ loader: () => import("../components/Information/AntiSpam") });
-const ToS = Loadable({ loader: () => import("../components/Information/ToS") });
-const LawEnforce = Loadable({ loader: () => import("../components/Information/LawEnforce") });
-const ShortLinkRedirect = Loadable({ loader: () => import("../components/Redirect/ShortLinkRedirect") });
-const PicsCompliance = Loadable({ loader: () => import("../components/Information/PicsCompliance") });
+const About = Loadable({ loader: () => import("components/Information/About") });
+const FAQ = Loadable({ loader: () => import("components/Information/FAQ") });
+const Privacy = Loadable({ loader: () => import("components/Information/Privacy") });
+const AntiSpam = Loadable({ loader: () => import("components/Information/AntiSpam") });
+const ToS = Loadable({ loader: () => import("components/Information/ToS") });
+const LawEnforce = Loadable({ loader: () => import("components/Information/LawEnforce") });
+const ShortLinkRedirect = Loadable({ loader: () => import("components/Redirect/ShortLinkRedirect") });
+const PicsCompliance = Loadable({ loader: () => import("components/Information/PicsCompliance") });
 
 const AppRoutes: React.FC<{ lang: string }> = ({ lang }) => {
   return (

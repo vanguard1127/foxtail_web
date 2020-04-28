@@ -3,35 +3,38 @@ import { RouteChildrenProps, Link } from "react-router-dom";
 import { WithTranslation } from "react-i18next";
 import { withApollo } from "react-apollo";
 import { useQuery } from '@apollo/react-hooks';
-
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import subscribe from "./subscribe";
 import MobileMenu from "./MobileMenu";
 import MobileNavLinks from "./MobileNavLinks";
 import NavLinks from "./NavLinks";
-
 import UserToolbar from "../UserToolbar";
-import * as ErrorHandler from "../../../../components/common/ErrorHandler";
-import deleteFromCache from "../../../../utils/deleteFromCache";
-import { ISession } from "../../../../types/user";
 
-import msgSound from "../../../../assets/audio/msg.mp3";
+import * as ErrorHandler from "components/common/ErrorHandler";
+import deleteFromCache from "utils/deleteFromCache";
+import { ISession } from "types/user";
+
+import msgSound from "assets/audio/msg.mp3";
 const msgAudio = new Audio(msgSound);
 
-import { GET_COUNTS } from "../../../../queries";
-interface IResponceData {
-    getCounts: {
-        msgsCount: number
-        noticesCount: number
-        newMsg: false
-        alert: {
-            id: number;
-            type: any;
-            text: string;
-        }
-        __typename: string;
-    }
+import { GET_COUNTS } from "queries";
+
+export interface IAlertData {
+    id: number;
+    type: any;
+    text: string;
+}
+export interface IGetCountsData {
+    msgsCount: number
+    noticesCount: number
+    newMsg: boolean
+    alert: IAlertData;
+    __typename: string;
+}
+
+interface IGetCountsResponceData {
+    getCounts: IGetCountsData;
 }
 
 interface INavbarProps extends WithTranslation, RouteChildrenProps {
@@ -41,7 +44,7 @@ interface INavbarProps extends WithTranslation, RouteChildrenProps {
 }
 
 const NavbarAuth: React.FC<INavbarProps> = ({ session, history, t, dayjs, client }) => {
-    const { data, loading, error, subscribeToMore } = useQuery<IResponceData>(GET_COUNTS);
+    const { data, loading, error, subscribeToMore } = useQuery<IGetCountsResponceData>(GET_COUNTS);
     const [mobileMenu, setMobileMenuOpen] = useState<boolean>(false);
 
     useEffect(() => {
@@ -71,15 +74,10 @@ const NavbarAuth: React.FC<INavbarProps> = ({ session, history, t, dayjs, client
 
         cache.writeQuery({
             query: GET_COUNTS,
-            data: {
-                getCounts: { ...newCounts }
-            }
+            data: { getCounts: { ...newCounts } }
         });
         if (window.location.pathname !== "/inbox") {
             history.push("/inbox");
-        } else {
-            //TODO: fix when you can rerender inbox
-            window.location.reload(false);
         }
         toggleMobileMenu();
     };
@@ -140,14 +138,13 @@ const NavbarAuth: React.FC<INavbarProps> = ({ session, history, t, dayjs, client
                     <div className="col-md-5 flexible">
                         {session && session.currentuser && (
                             <UserToolbar
-                                currentuser={session.currentuser}
-                                t={t}
-                                ErrorHandler={ErrorHandler}
+                                currentUser={session.currentuser}
                                 counts={data.getCounts}
-                                msgAudio={msgAudio}
+                                ErrorHandler={ErrorHandler}
                                 blinkInbox={newMsg}
                                 history={history}
                                 dayjs={dayjs}
+                                t={t}
                             />
                         )}
                     </div>
