@@ -84,7 +84,7 @@ const SignupButton: React.FC<ISignupButtonProps> = memo(({
       type="signup"
       createData={{
         ...createData,
-        // remove the line below, not used
+        // TODO remove the line below, not used
         ...state,
         csrf: process.env.REACT_APP_CSRF
       }}

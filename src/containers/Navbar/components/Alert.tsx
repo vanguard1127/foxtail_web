@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { WithTranslation } from "react-i18next";
 import {
   Dialog,
   DialogActions,
