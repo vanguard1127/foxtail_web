@@ -47,7 +47,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="app-test-class">
+    <div>
       <Router>
         <AppRoutes lang={lang} />
       </Router>

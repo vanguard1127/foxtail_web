@@ -106,21 +106,10 @@ const NoticesList: React.FC<INoticesListProps> = memo(({
       readNotices(notificationID);
       switch (type) {
         case "chat":
-          if (~window.location.href.indexOf("/inbox")) {
-            history.replace({
-              pathname: "/inbox",
-              state: { chatID: targetID }
-            });
-            window.location.reload(false);
-          } else {
-            history.replace({
-              pathname: "/inbox",
-              state: { chatID: targetID }
-            });
-          }
+          history.push(`/inbox/${targetID}`);
           break;
         case "event":
-          history.replace(`/event/${targetID}`);
+          history.push(`/event/${targetID}`);
           break;
         default:
           break;
@@ -155,11 +144,7 @@ const NoticesList: React.FC<INoticesListProps> = memo(({
           )}
         <div
           key="way"
-          style={{
-            width: "100%",
-            display: "block",
-            float: "left"
-          }}
+          style={{ width: "100%", display: "block", float: "left" }}
         >
           <Waypoint
             onEnter={({ previousPosition }) => {

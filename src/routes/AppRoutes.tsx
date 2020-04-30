@@ -1,9 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import ReactGA from "react-ga";
 
-import Landing from "components/Landing";
 import Loadable from "components/HOCs/Loadable";
 import NotFound from "components/common/NotFound";
 
@@ -19,6 +17,7 @@ const ToS = Loadable({ loader: () => import("components/Information/ToS") });
 const LawEnforce = Loadable({ loader: () => import("components/Information/LawEnforce") });
 const ShortLinkRedirect = Loadable({ loader: () => import("components/Redirect/ShortLinkRedirect") });
 const PicsCompliance = Loadable({ loader: () => import("components/Information/PicsCompliance") });
+const Landing = Loadable({ loader: () => import("containers/Landing") });
 
 const AppRoutes: React.FC<{ lang: string }> = ({ lang }) => {
   return (
@@ -27,16 +26,12 @@ const AppRoutes: React.FC<{ lang: string }> = ({ lang }) => {
         path="/"
         exact
         render={routeProps => {
-          const {
-            location: { search }
-          } = routeProps;
+          const { location: { search } } = routeProps;
           return search ? (
             <ShortLinkRedirect hash={search} />
           ) : !search || search.includes("=") ? (
-            <Landing ReactGA={ReactGA} lang={lang} {...routeProps} />
-          ) : (
-                <NotFound />
-              );
+            <Landing lang={lang} {...routeProps} />
+          ) : <NotFound />;
         }}
       />
       <Route path="/tos" component={ToS} />

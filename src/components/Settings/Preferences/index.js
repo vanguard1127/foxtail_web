@@ -101,6 +101,7 @@ class Preferences extends Component {
             <div className="col-md-6">
               <Dropdown
                 type={"interestedIn"}
+                multiple
                 onChange={el =>
                   this.setState({
                     interestedIn: el.map(e => e.value)

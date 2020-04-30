@@ -169,6 +169,7 @@ class SearchCriteria extends PureComponent {
                         <div className="item">
                           <Dropdown
                             type={"interestedIn"}
+                            multiple
                             onChange={el => null}
                             value={[]}
                             placeholder={t("common:Interested") + ":"}
@@ -239,6 +240,7 @@ class SearchCriteria extends PureComponent {
                         <div className="item">
                           <Dropdown
                             type={"interestedIn"}
+                            multiple
                             onChange={el =>
                               this.setState({
                                 interestedIn: el.map(e => e.value)
