@@ -14,7 +14,7 @@ import Navbar from "containers/Navbar";
 
 import "components/Header/header.css";
 
-const ProfileSearch = Loadable({ loader: () => import("components/SearchProfiles") });
+const SearchProfiles = Loadable({ loader: () => import("containers/SearchProfiles") });
 const Footer = Loadable({ loader: () => import("components/Footer") });
 const Settings = Loadable({ loader: () => import("components/Settings") });
 const EventPage = Loadable({ loader: () => import("components/Event") });
@@ -49,7 +49,7 @@ const MainRoutes: React.FC<IMainRoutes> = ({ session, refetch, lang, location })
           <Route
             onEnter={refetch}
             path="/members"
-            render={() => <ProfileSearch {...baseRouteProps} />}
+            render={() => <SearchProfiles {...baseRouteProps} />}
             exact
           />
           <Route

@@ -5,18 +5,18 @@ import { withApollo } from "react-apollo";
 import { useQuery } from '@apollo/react-hooks';
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import * as ErrorHandler from "components/common/ErrorHandler";
+import deleteFromCache from "utils/deleteFromCache";
+import { ISession } from "types/user";
+
 import subscribe from "./subscribe";
 import MobileMenu from "./MobileMenu";
 import MobileNavLinks from "./MobileNavLinks";
 import NavLinks from "./NavLinks";
 import UserToolbar from "../UserToolbar";
 
-import * as ErrorHandler from "components/common/ErrorHandler";
-import deleteFromCache from "utils/deleteFromCache";
-import { ISession } from "types/user";
-
-import msgSound from "assets/audio/msg.mp3";
 const msgAudio = new Audio(msgSound);
+import msgSound from "assets/audio/msg.mp3";
 
 import { GET_COUNTS } from "queries";
 

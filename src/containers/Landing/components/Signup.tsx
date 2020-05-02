@@ -49,6 +49,10 @@ interface ISignupProps {
   lang: string;
   ReactGA: any;
   history: any;
+  refer: string | null;
+  aff: string | null;
+  mem: string | null;
+  eve: string | null;
   t: any;
 }
 
@@ -57,13 +61,12 @@ const Signup: React.FC<ISignupProps> = memo(({
   lang,
   ReactGA,
   history,
+  refer,
+  aff,
+  mem,
+  eve,
   t,
 }) => {
-  const params = new URLSearchParams(history.location.search);
-  const refer = params.get("refer");
-  const aff = params.get("aff");
-  const mem = params.get("mem");
-  const eve = params.get("eve");
 
   const [state, setState] = useState<ISignupFormData>({
     username: "",

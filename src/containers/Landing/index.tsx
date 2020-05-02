@@ -96,6 +96,8 @@ const Landing: React.FC<ILandingProps> = memo(({
     return <Spinner />;
   }
 
+  const params = new URLSearchParams(location.search);
+
   return (
     <React.Fragment>
       <Header
@@ -149,6 +151,10 @@ const Landing: React.FC<ILandingProps> = memo(({
                       lang={lang}
                       history={history}
                       ReactGA={ReactGA}
+                      refer={params.get("refer")}
+                      aff={params.get("aff")}
+                      mem={params.get("mem")}
+                      eve={params.get("eve")}
                     />
                   </ErrorHandler.ErrorBoundary>
                 </div>

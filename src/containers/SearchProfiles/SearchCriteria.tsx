@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
 import { Mutation } from "react-apollo";
-import { UPDATE_SETTINGS } from "../../queries";
-import Dropdown from "../common/Dropdown";
-import AddressSearch from "../common/AddressSearch";
-import DistanceSlider from "../common/DistanceSlider";
-import AgeRange from "../common/AgeRange";
-import getCityCountry from "../../utils/getCityCountry";
+import { UPDATE_SETTINGS } from "queries";
+import Dropdown from "components/common/Dropdown";
+import AddressSearch from "components/common/AddressSearch";
+import DistanceSlider from "components/common/DistanceSlider";
+import AgeRange from "components/common/AgeRange";
+import getCityCountry from "utils/getCityCountry";
 import "./searchProfiles.css";
 class SearchCriteria extends PureComponent {
   state = {
