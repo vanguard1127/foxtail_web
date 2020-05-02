@@ -244,7 +244,6 @@ class ProfilesContainer extends Component {
               !fetchMoreResult ||
               fetchMoreResult.searchProfiles.profiles.length === 0
             ) {
-              console.log("end of list");
               this.setState({
                 hasMore: false
               });
@@ -267,10 +266,8 @@ class ProfilesContainer extends Component {
   };
 
   handleEnd = ({ previousPosition, fetchMore }) => {
-    console.log("TEST", previousPosition);
     if (previousPosition === Waypoint.below) {
       if (this.mounted) {
-        console.log("fetch");
         this.setState(
           state => ({
             skip:

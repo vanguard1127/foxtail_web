@@ -71,7 +71,7 @@ const UploadComponent = ({
     let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
     if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
       if (file.size > 7000000) {
-        alert(t("only10mb"));
+        alert(t("settings:only10mb"));
       } else {
         const resizedFile = await resizeImage(file);
         setFileRecieved(resizedFile);
@@ -82,7 +82,7 @@ const UploadComponent = ({
         }
       }
     } else {
-      alert(t("onlyimg"));
+      alert(t("settings:onlyimg"));
     }
   };
 
