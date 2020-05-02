@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { RouteChildrenProps } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { WithTranslation } from "react-i18next";
 import { withTranslation } from "react-i18next";
 import { useQuery } from "react-apollo";
 import { toast } from "react-toastify";
+
 import { ISession } from "../../types/user";
 import { GET_SETTINGS } from "../../queries";
 import Spinner from "../../components/common/Spinner";
-import SettingsPage from "./SettingsPage";
-import "./settings.css";
 import "../../assets/css/breadcrumb.css";
+
+import SettingsPage from "./SettingsPage";
+import { IResponseData } from "./types/settings"
+import "./settings.css";
 
 interface ISettingsProps extends WithTranslation, RouteChildrenProps {
   session: ISession,
@@ -18,64 +21,10 @@ interface ISettingsProps extends WithTranslation, RouteChildrenProps {
   ErrorHandler: any,
   ReactGA: any,
   dayjs: any,
-  lang: string
+  lang: string,
+  location: { state: { couple: boolean } }
 }
 
-interface IResponseData {
-  getSettings: {
-    distance: number
-    distanceMetric: string
-    ageRange: number[]
-    lang: string
-    interestedIn: string[]
-    city: string
-    visible: boolean
-    newMsgNotify: boolean
-    emailNotify: boolean
-    showOnline: boolean
-    likedOnly: boolean
-    vibrateNotify: boolean
-    profilePic: string
-    profilePicUrl: string
-    couplePartner: string
-    includeMsgs: boolean
-    lastActive: Date
-    users: {
-      username: string
-      verifications: {
-        photoVer: {
-          active: boolean
-        }
-        stdVer: {
-          active: boolean
-        }
-      }
-    }
-    publicPhotos: {
-      smallUrl: string
-      url: string
-      key: string
-      id: string
-    }[]
-    privatePhotos: {
-      smallUrl: string
-      url: string
-      key: string
-      id: string
-    }[]
-    about: string
-    kinks: string[]
-    sexuality: string
-    password: string
-    ccLast4: number
-    verifications: {
-      photo: string
-      std: string
-    }
-    __typename: string;
-  }
-}
-let mounted: boolean, isCouple: boolean = false, isInitial: boolean = false, showBlkModal: boolean = false, showCplModal: boolean = false;
 const Settings: React.FC<ISettingsProps> = ({
   session,
   refetch,
@@ -89,6 +38,11 @@ const Settings: React.FC<ISettingsProps> = ({
   lang
 }) => {
 
+  const [isCouple, setisCouple] = useState<boolean>(location && location.state && location.state.couple ? location.state.couple : false);
+  const [isInitial, setisInitial] = useState<boolean>(false);
+  const [showBlkModal, setshowBlkModal] = useState<boolean>(false);
+  const [showCplModal, setshowCplModal] = useState<boolean>(false);
+
   const { data, loading, error } = useQuery<IResponseData>(GET_SETTINGS, {
     variables: {
       isMobile: sessionStorage.getItem("isMobile"),
@@ -99,11 +53,10 @@ const Settings: React.FC<ISettingsProps> = ({
     returnPartialData: true
   });
 
-  useEffect((): any => {
-    mounted = true;
+  useEffect(() => {
     document.title = t("common:myaccount");
 
-    const { state }: any = location;
+    const { state } = location;
     //For page open responses
     if (state) {
       if (state.couple) isCouple = state.couple;
@@ -112,7 +65,6 @@ const Settings: React.FC<ISettingsProps> = ({
       if (state.showCplMdl) showCplModal = state.showCplMdl;
     }
 
-    return () => mounted = false;
   }, [])
 
   if (!tReady) {
