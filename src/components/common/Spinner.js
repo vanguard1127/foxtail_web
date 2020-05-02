@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { EventLoader, ProfileLoader, InboxLoader } from "../common/Skeletons";
-import '../SearchProfiles/searchProfiles.css';
+import "containers/SearchProfiles/searchProfiles.css";
 class Spinner extends PureComponent {
   constructor(props) {
     super(props);

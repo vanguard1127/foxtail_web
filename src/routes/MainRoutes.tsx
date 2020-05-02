@@ -4,24 +4,24 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import ReactGA from "react-ga";
 import dayjs from "dayjs";
 
-import { ISession } from "../types/user";
-import Loadable from "../components/HOCs/Loadable";
-import * as ErrorHandler from "../components/common/ErrorHandler";
-import withAuth from "../components/HOCs/withAuth";
-import IdleTimer from "../components/HOCs/IdleTimer";
+import { ISession } from "types/user";
+import Loadable from "components/HOCs/Loadable";
+import * as ErrorHandler from "components/common/ErrorHandler";
+import withAuth from "components/HOCs/withAuth";
+import IdleTimer from "components/HOCs/IdleTimer";
 
-import Navbar from "../containers/Navbar";
+import Navbar from "containers/Navbar";
 
-import "../components/Header/header.css";
+import "components/Header/header.css";
 
-const ProfileSearch = Loadable({ loader: () => import("../components/SearchProfiles") });
-const Footer = Loadable({ loader: () => import("../components/Footer") });
-const Settings = Loadable({ loader: () => import("../components/Settings") });
-const EventPage = Loadable({ loader: () => import("../components/Event") });
-const ProfilePage = Loadable({ loader: () => import("../components/Profile") });
-const InboxPage = Loadable({ loader: () => import("../components/Inbox") });
-const SearchEvents = Loadable({ loader: () => import("../components/SearchEvents") });
-const Onboard = Loadable({ loader: () => import("../components/Modals/Onboard") });
+const SearchProfiles = Loadable({ loader: () => import("containers/SearchProfiles") });
+const Footer = Loadable({ loader: () => import("components/Footer") });
+const Settings = Loadable({ loader: () => import("components/Settings") });
+const EventPage = Loadable({ loader: () => import("components/Event") });
+const ProfilePage = Loadable({ loader: () => import("components/Profile") });
+const InboxPage = Loadable({ loader: () => import("components/Inbox") });
+const SearchEvents = Loadable({ loader: () => import("components/SearchEvents") });
+const Onboard = Loadable({ loader: () => import("components/Modals/Onboard") });
 
 interface IMainRoutes {
   session: ISession;
@@ -49,7 +49,7 @@ const MainRoutes: React.FC<IMainRoutes> = ({ session, refetch, lang, location })
           <Route
             onEnter={refetch}
             path="/members"
-            render={() => <ProfileSearch {...baseRouteProps} />}
+            render={() => <SearchProfiles {...baseRouteProps} />}
             exact
           />
           <Route

@@ -12,7 +12,15 @@ const webpack = require("webpack");
 module.exports = {
   entry: { main: "./src/index.js" },
   resolve: {
-    extensions: [".mjs", ".ts", ".tsx", ".js", ".jsx", ".scss"]
+    extensions: [".mjs", ".ts", ".tsx", ".js", ".jsx", ".scss"],
+    alias: {
+      components: path.resolve(__dirname, "src/components"),
+      containers: path.resolve(__dirname, "src/containers"),
+      utils: path.resolve(__dirname, "src/utils"),
+      queries: path.resolve(__dirname, "src/queries"),
+      assets: path.resolve(__dirname, "src/assets"),
+      types: path.resolve(__dirname, "src/types")
+    }
   },
   output: {
     filename: "bundle.[contenthash].js",

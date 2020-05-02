@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { WithTranslation } from "react-i18next";
 import {
   Dialog,
   DialogActions,
@@ -9,12 +8,16 @@ import {
   DialogTitle
 } from "@material-ui/core";
 
-interface IAlertProps extends WithTranslation {
-  alert: any; // todo change alert type to actual
+import { IAlertData } from "./NavbarAuth";
+
+interface IAlertProps {
+  alert: IAlertData;
   close: () => void;
   visible: boolean;
+  t: any;
 }
 
+// TODO Find out alert TYPE, need actual alert from backend call
 const Alert: React.FC<IAlertProps> = ({ alert, close, t, visible }) => {
   return (
     <Dialog onClose={close} aria-labelledby="Image" open={visible}>

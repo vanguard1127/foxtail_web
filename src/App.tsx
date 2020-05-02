@@ -3,7 +3,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import * as Sentry from "@sentry/browser";
 
-// firebase todo handle bad import
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -48,7 +47,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="app-test-class">
+    <div>
       <Router>
         <AppRoutes lang={lang} />
       </Router>

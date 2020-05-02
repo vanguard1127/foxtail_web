@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ProfileActionBtns, ProfilePic, ProfileInfoDiv } from "../ProfileCard/";
+import { ProfileActionBtns, ProfilePic, ProfileInfoDiv } from "../ProfileCard";
 
 class FeaturedCard extends Component {
   shouldComponentUpdate(nextProps) {

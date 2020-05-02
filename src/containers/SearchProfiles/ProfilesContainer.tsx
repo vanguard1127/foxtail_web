@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Prompt } from "react-router-dom";
 import ScrollUpButton from "react-scroll-up-button";
-import { SEARCH_PROFILES, LIKE_PROFILE } from "../../queries";
+import { SEARCH_PROFILES, LIKE_PROFILE } from "queries";
 import { Query, Mutation } from "react-apollo";
-import MemberProfiles from "./MemberProfiles/";
+import MemberProfiles from "./MemberProfiles";
 import { Waypoint } from "react-waypoint";
-import FeaturedProfiles from "./FeaturedProfiles/";
-import DirectMsgModal from "../Modals/DirectMsg";
-import BlockModal from "../Modals/Block";
-import Modal from "../common/Modal";
-import Spinner from "../common/Spinner";
-import DailyLimitModal from "../Modals/DailyLimit";
+import FeaturedProfiles from "./FeaturedProfiles";
+import DirectMsgModal from "components/Modals/DirectMsg";
+import BlockModal from "components/Modals/Block";
+import Modal from "components/common/Modal";
+import Spinner from "components/common/Spinner";
+import DailyLimitModal from "components/Modals/DailyLimit";
 import { toast } from "react-toastify";
-import arraysEqual from "../../utils/arraysEqual";
+import arraysEqual from "utils/arraysEqual";
 
 class ProfilesContainer extends Component {
   state = {
@@ -468,8 +468,8 @@ class ProfilesContainer extends Component {
                           {this.state.loading ? (
                             <span>{t("common:Loading")}</span>
                           ) : (
-                            <span>{t("nopros")}</span>
-                          )}
+                              <span>{t("nopros")}</span>
+                            )}
                         </div>
                       </div>
                     </div>

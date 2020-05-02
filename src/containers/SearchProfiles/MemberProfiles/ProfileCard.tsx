@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import KinksBlock from "../KinksBlock";
-import { ProfileActionBtns, ProfileInfoBox, ProfilePic } from "../ProfileCard/";
+import { ProfileActionBtns, ProfileInfoBox, ProfilePic } from "../ProfileCard";
 
 class ProfileCard extends Component {
   shouldComponentUpdate(nextProps) {
