@@ -14,6 +14,7 @@
 
 #terraform
 /infrastructure
+/cypress
 
 # misc
 .DS_Store

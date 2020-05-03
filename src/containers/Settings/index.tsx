@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { RouteChildrenProps } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { WithTranslation } from "react-i18next";
@@ -6,14 +6,15 @@ import { withTranslation } from "react-i18next";
 import { useQuery } from "react-apollo";
 import { toast } from "react-toastify";
 
-import { ISession } from "../../types/user";
-import { GET_SETTINGS } from "../../queries";
-import Spinner from "../../components/common/Spinner";
-import "../../assets/css/breadcrumb.css";
+import { ISession } from "types/user";
+import { GET_SETTINGS } from "queries";
+import Spinner from "components/common/Spinner";
+import "assets/css/breadcrumb.css";
 
 import SettingsPage from "./SettingsPage";
 import { IResponseData } from "./types/settings"
 import "./settings.css";
+import Header from "./Header";
 
 interface ISettingsProps extends WithTranslation, RouteChildrenProps {
   session: ISession,
@@ -21,8 +22,7 @@ interface ISettingsProps extends WithTranslation, RouteChildrenProps {
   ErrorHandler: any,
   ReactGA: any,
   dayjs: any,
-  lang: string,
-  location: { state: { couple: boolean } }
+  lang: string
 }
 
 const Settings: React.FC<ISettingsProps> = ({
@@ -39,9 +39,9 @@ const Settings: React.FC<ISettingsProps> = ({
 }) => {
 
   const [isCouple, setisCouple] = useState<boolean>(location && location.state && location.state.couple ? location.state.couple : false);
-  const [isInitial, setisInitial] = useState<boolean>(false);
-  const [showBlkModal, setshowBlkModal] = useState<boolean>(false);
-  const [showCplModal, setshowCplModal] = useState<boolean>(false);
+  const [isInitial, setisInitial] = useState<boolean>(location && location.state && location.state.initial ? location.state.initial : false);
+  const [showBlkModal, setshowBlkModal] = useState<boolean>(location && location.state && location.state.showBlkMdl ? location.state.showBlkMdl : false);
+  const [showCplModal, setshowCplModal] = useState<boolean>(location && location.state && location.state.showCplMdl ? location.state.showCplMdl : false);
 
   const { data, loading, error } = useQuery<IResponseData>(GET_SETTINGS, {
     variables: {
@@ -52,20 +52,6 @@ const Settings: React.FC<ISettingsProps> = ({
     fetchPolicy: "cache-and-network",
     returnPartialData: true
   });
-
-  useEffect(() => {
-    document.title = t("common:myaccount");
-
-    const { state } = location;
-    //For page open responses
-    if (state) {
-      if (state.couple) isCouple = state.couple;
-      if (state.initial) isInitial = state.initial;
-      if (state.showBlkMdl) showBlkModal = state.showBlkMdl;
-      if (state.showCplMdl) showCplModal = state.showCplMdl;
-    }
-
-  }, [])
 
   if (!tReady) {
     return <Spinner />;
@@ -134,40 +120,26 @@ const Settings: React.FC<ISettingsProps> = ({
     <>
       <section className="breadcrumb settings">
         <div className="container">
-          <div className="col-md-12">
-            <span className="head">
-              <span>
-                {t("Hello")}, {session.currentuser.username} 👋
-                      </span>
-            </span>
-            <span className="title">
-              {t("loggedin")}:{" "}
-              {dayjs(settings.lastActive)
-                .locale(lang)
-                .format("MMMM DD, YYYY @ HH:mm")}
-            </span>
-          </div>
+          <Header />
         </div>
-      </section>{" "}
-      {mounted && (
-        <SettingsPage
-          t={t}
-          settings={settings}
-          refetchUser={refetch}
-          isCouple={isCouple}
-          isInitial={isInitial}
-          showBlkModal={showBlkModal}
-          showCplModal={showCplModal}
-          ErrorHandler={ErrorHandler}
-          history={history}
-          currentuser={session.currentuser}
-          dayjs={dayjs}
-          lang={lang}
-          ReactGA={ReactGA}
-          errors={errors}
-          toast={toast}
-        />
-      )}
+      </section>
+      <SettingsPage
+        t={t}
+        settings={settings}
+        refetchUser={refetch}
+        isCouple={isCouple}
+        isInitial={isInitial}
+        showBlkModal={showBlkModal}
+        showCplModal={showCplModal}
+        ErrorHandler={ErrorHandler}
+        history={history}
+        currentuser={session.currentuser}
+        dayjs={dayjs}
+        lang={lang}
+        ReactGA={ReactGA}
+        errors={errors}
+        toast={toast}
+      />
     </>
   );
 
