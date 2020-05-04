@@ -120,7 +120,7 @@ const Settings: React.FC<ISettingsProps> = ({
     <>
       <section className="breadcrumb settings">
         <div className="container">
-          <Header />
+          <Header username={session.currentuser.username} lastActive={settings.lastActive} lang={lang} dayjs={dayjs} t={t} />
         </div>
       </section>
       <SettingsPage
