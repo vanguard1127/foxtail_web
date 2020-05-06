@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { RouteChildrenProps } from "react-router-dom";
-import { withRouter } from "react-router-dom";
-import { WithTranslation } from "react-i18next";
-import { withTranslation } from "react-i18next";
+import React from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { withTranslation, WithTranslation } from "react-i18next";
 import { useQuery } from "react-apollo";
 import { toast } from "react-toastify";
 
@@ -16,7 +14,14 @@ import { IResponseData } from "./types/settings"
 import "./settings.css";
 import Header from "./Header";
 
-interface ISettingsProps extends WithTranslation, RouteChildrenProps {
+type LocationStateProps = {
+  couple: string | undefined;
+  initial: string | undefined;
+  showBlkMdl: string | undefined;
+  showCplMdl: string | undefined;
+}
+
+interface ISettingsProps extends WithTranslation, RouteComponentProps<any, any, LocationStateProps> {
   session: ISession,
   refetch: any,
   ErrorHandler: any,
@@ -37,11 +42,10 @@ const Settings: React.FC<ISettingsProps> = ({
   dayjs,
   lang
 }) => {
-
-  const [isCouple, setisCouple] = useState<boolean>(location && location.state && location.state.couple ? location.state.couple : false);
-  const [isInitial, setisInitial] = useState<boolean>(location && location.state && location.state.initial ? location.state.initial : false);
-  const [showBlkModal, setshowBlkModal] = useState<boolean>(location && location.state && location.state.showBlkMdl ? location.state.showBlkMdl : false);
-  const [showCplModal, setshowCplModal] = useState<boolean>(location && location.state && location.state.showCplMdl ? location.state.showCplMdl : false);
+  const isCouple = !!location.state.couple;
+  const isInitial = !!location.state.initial;
+  const showBlkModal = !!location.state.showBlkMdl;
+  const showCplModal = !!location.state.showCplMdl;
 
   const { data, loading, error } = useQuery<IResponseData>(GET_SETTINGS, {
     variables: {
@@ -117,10 +121,16 @@ const Settings: React.FC<ISettingsProps> = ({
   };
 
   return (
-    <>
+    <React.Fragment>
       <section className="breadcrumb settings">
         <div className="container">
-          <Header username={session.currentuser.username} lastActive={settings.lastActive} lang={lang} dayjs={dayjs} t={t} />
+          <Header
+            username={session.currentuser.username}
+            lastActive={settings.lastActive}
+            lang={lang}
+            dayjs={dayjs}
+            t={t}
+          />
         </div>
       </section>
       <SettingsPage
@@ -140,11 +150,8 @@ const Settings: React.FC<ISettingsProps> = ({
         errors={errors}
         toast={toast}
       />
-    </>
+    </React.Fragment>
   );
-
-
-
 }
 
 export default withRouter(withTranslation("settings")(Settings));

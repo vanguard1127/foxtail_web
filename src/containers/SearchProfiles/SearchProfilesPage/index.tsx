@@ -6,47 +6,44 @@ import Spinner from "components/common/Spinner";
 import deleteFromCache from "utils/deleteFromCache";
 import { ISession } from "types/user";
 
-import { kinkOptions } from "../../docs/options";
+import { kinkOptions } from "../../../docs/options";
 
-import SearchCriteria from "./SearchCriteria";
-import ProfilesContainer from "./ProfilesContainer";
+import SearchCriteria from "../SearchCriteria";
+import ProfilesContainer from "../ProfilesContainer";
 
 export const Context = React.createContext();
 
 interface ISearchProfilesPageProps {
+  history: any;
+  loading: boolean;
   t: any;
   ErrorHandler: any;
-  refetch: any;
-  session: ISession;
-  loading: boolean;
-  client: any;
-  history: any;
-  location: any;
   searchCriteria: any;
-  locationErr: any;
   ReactGA: any;
+  session: ISession;
+  refetch: any;
   toggleShareModal: () => void;
   dayjs: any;
+  client: any;
+  location: any;
+  locationErr: any;
 }
 
 const SearchProfilesPage: React.FC<ISearchProfilesPageProps> = memo(({
+  history,
+  loading,
   t,
   ErrorHandler,
-  refetch,
-  session,
-  loading,
-  client,
-  history,
-  location,
   searchCriteria,
-  locationErr,
   ReactGA,
+  session,
+  refetch,
   toggleShareModal,
-  dayjs
+  dayjs,
+  client,
+  location,
+  locationErr,
 }) => {
-  console.log('location from withLocation: ', location);
-  console.log('session from withsession: ', session);
-  console.log('history from withhistory: ', history);
   const [state, setState] = useState<any>({
     lat: location.lat,
     long: location.long,
@@ -60,7 +57,7 @@ const SearchProfilesPage: React.FC<ISearchProfilesPageProps> = memo(({
   })
 
   useEffect(() => {
-    if (location.lat !== undefined) {
+    if (state.lat !== location.lat) {
       setState({
         ...state,
         lat: location.lat,
@@ -69,12 +66,12 @@ const SearchProfilesPage: React.FC<ISearchProfilesPageProps> = memo(({
         country: location.country
       });
     }
-  }, [location])
+  })
 
   useEffect(() => {
     ErrorHandler.setBreadcrumb("Search Profile Page");
     clearSearchResults();
-  }, [])
+  }, []);
 
   const clearSearchResults = () => {
     ErrorHandler.setBreadcrumb("Clear results");
@@ -90,7 +87,7 @@ const SearchProfilesPage: React.FC<ISearchProfilesPageProps> = memo(({
     ErrorHandler.setBreadcrumb(
       "Set Location: lat:" + lat + " long:" + long
     );
-    setState({ ...state, long, lat, city, country });
+    setState({ ...state, lat, long, city, country });
   };
 
   const {
@@ -146,11 +143,7 @@ const SearchProfilesPage: React.FC<ISearchProfilesPageProps> = memo(({
                 interestedIn={interestedIn}
                 ErrorHandler={ErrorHandler}
                 dayjs={dayjs}
-                client={client}
                 isBlackMember={session.currentuser.blackMember.active}
-                locationErr={locationErr}
-                refetchUser={refetch}
-                userID={session.currentuser.userID}
                 ReactGA={ReactGA}
                 toggleShareModal={toggleShareModal}
               />

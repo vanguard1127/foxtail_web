@@ -15,7 +15,7 @@ class KinksBlock extends Component {
         {({ kinkOptions }) => (
           <span className="interest" onClick={onClick}>
             <ul>
-              {kinks.reduce(function(result, kink) {
+              {kinks.reduce(function (result, kink) {
                 if (result.length < 2) {
                   if (kinkOptions.find(el => el.value === kink)) {
                     const kinkLbl = t(
