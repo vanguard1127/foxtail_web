@@ -1,53 +1,60 @@
-import React, { PureComponent } from "react";
+import React, { memo } from "react";
+import { WithT } from "i18next";
 
-class ProfileInfoBox extends PureComponent {
-  render() {
-    const {
-      users,
-      online,
-      distance,
-      t,
-      dayjs,
-      distanceMetric,
-      profileName,
-      onClick,
-      toggleBlockModalVisible
-    } = this.props;
-
-    return (
-      <>
-        <span
-          className={online ? "name online" : "name"}
-          title={profileName}
-          onClick={onClick}
-        >
-          {profileName}
-        </span>
-        <div className={"removeProfile"} onClick={toggleBlockModalVisible} />
-        <span className="detail" onClick={onClick}>
-          <ul>
-            <li className={"sex " + users[0].sex}>
-              <span className={"sex " + users[0].sex + " profileCardSymbol"} />
-              &nbsp;
-              {dayjs().diff(users[0].dob, "years")}
-            </li>
-            {users[1] && (
-              <li className={"sex " + users[1].sex}>
-                <span
-                  className={"sex " + users[1].sex + " profileCardSymbol"}
-                />
-                &nbsp;
-                {dayjs().diff(users[1].dob, "years")}
-              </li>
-            )}
-            <li>
-              ~ {distance} {t(distanceMetric)}
-            </li>
-          </ul>
-        </span>
-      </>
-    );
-  }
+interface IProfileInfoBoxProps extends WithT {
+  profileName: string;
+  users: any;
+  online: boolean;
+  distance: string;
+  distanceMetric: string;
+  dayjs: any;
+  onClick?: () => void;
+  toggleBlockModalVisible?: () => void;
 }
+
+const ProfileInfoBox: React.FC<IProfileInfoBoxProps> = memo(({
+  profileName,
+  users,
+  online,
+  distance,
+  distanceMetric,
+  dayjs,
+  onClick = () => { },
+  toggleBlockModalVisible = () => { },
+  t,
+}) => {
+
+  const getDiff = (user) => dayjs().diff(user.dob, "years")
+
+  return (
+    <React.Fragment>
+      <span
+        className={online ? "name online" : "name"}
+        title={profileName}
+        onClick={onClick}
+      >
+        {profileName}
+      </span>
+      <div className={"removeProfile"} onClick={toggleBlockModalVisible} />
+      <span className="detail" onClick={onClick}>
+        <ul>
+          <li className={`sex ${users[0].sex}`}>
+            <span className={`sex ${users[0].sex} profileCardSymbol`} />
+              &nbsp;
+              {getDiff(users[0])}
+          </li>
+          {users[1] && (
+            <li className={`sex ${users[1].sex}`}>
+              <span className={`sex ${users[1].sex} profileCardSymbol`} />
+                &nbsp;
+              {getDiff(users[1])}
+            </li>
+          )}
+          <li>{`~ ${distance} ${t(distanceMetric)}`}</li>
+        </ul>
+      </span>
+    </React.Fragment>
+  );
+});
 
 export default ProfileInfoBox;

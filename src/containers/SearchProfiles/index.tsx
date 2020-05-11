@@ -93,7 +93,6 @@ const SearchProfiles: React.FC<ISearchProfilesProps> = memo(({
         searchCriteria={data.getSettings}
         ReactGA={ReactGA}
         session={session}
-        refetch={refetch}
         toggleShareModal={toggleShareModal}
         dayjs={dayjs}
       />

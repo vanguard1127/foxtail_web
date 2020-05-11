@@ -1,53 +1,46 @@
-import React, { Component } from "react";
+import React, { memo } from "react";
+import { WithT } from "i18next";
 
-class ProfileActionBtns extends Component {
-  shouldComponentUpdate(nextProps) {
-    if (
-      this.props.liked !== nextProps.liked ||
-      this.props.msgd !== nextProps.msgd ||
-      this.props.t !== nextProps.t
-    ) {
-      return true;
-    }
-    return false;
-  }
-  render() {
-    const {
-      profile,
-      likeProfile,
-      showMsgModal,
-      liked,
-      msgd,
-      t,
-      featured
-    } = this.props;
-
-    let actions;
-    if (liked && featured) {
-      actions = <div className="btn sent">{t("common:matched")}</div>;
-    } else if (!msgd) {
-      actions = (
-        <>
-          <div
-            className={liked ? "btn unheart" : "btn heart"}
-            onClick={() => {
-              likeProfile(profile);
-            }}
-          />
-
-          <div
-            className="btn message"
-            onClick={() => {
-              showMsgModal(profile);
-            }}
-          />
-        </>
-      );
-    } else {
-      actions = <div className="btn sent">{t("common:msgsent")}</div>;
-    }
-    return <div className="function">{actions}</div>;
-  }
+interface IProfileActionBtnsProps extends WithT {
+  profile: any;
+  likeProfile: (profile: any) => void;
+  showMsgModal: (profile: any) => void;
+  liked: boolean;
+  msgd: boolean;
+  featured?: boolean;
 }
+
+const ProfileActionBtns: React.FC<IProfileActionBtnsProps> = memo(({
+  profile,
+  likeProfile,
+  showMsgModal,
+  liked,
+  msgd,
+  featured = false,
+  t,
+}) => {
+  return (
+    <div className="function">
+      {
+        liked && featured ? (
+          <div className="btn sent">{t("common:matched")}</div>
+        ) :
+          !msgd ? (
+            <React.Fragment>
+              <div
+                className={liked ? "btn unheart" : "btn heart"}
+                onClick={() => { likeProfile(profile); }}
+              />
+              <div
+                className="btn message"
+                onClick={() => { showMsgModal(profile); }}
+              />
+            </React.Fragment>
+          ) :
+            <div className="btn sent">{t("common:msgsent")}</div>
+      }
+    </div>
+  )
+});
 
 export default ProfileActionBtns;

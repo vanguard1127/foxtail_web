@@ -21,12 +21,10 @@ interface ISearchProfilesPageProps {
   searchCriteria: any;
   ReactGA: any;
   session: ISession;
-  refetch: any;
   toggleShareModal: () => void;
   dayjs: any;
   client: any;
   location: any;
-  locationErr: any;
 }
 
 const SearchProfilesPage: React.FC<ISearchProfilesPageProps> = memo(({
@@ -37,12 +35,10 @@ const SearchProfilesPage: React.FC<ISearchProfilesPageProps> = memo(({
   searchCriteria,
   ReactGA,
   session,
-  refetch,
   toggleShareModal,
   dayjs,
   client,
   location,
-  locationErr,
 }) => {
   const [state, setState] = useState<any>({
     lat: location.lat,
