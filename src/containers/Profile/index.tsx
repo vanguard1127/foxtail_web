@@ -21,7 +21,6 @@ import MatchDlgModal from "./components/MatchDlgModal";
 
 import { flagOptions } from "../../docs/options";
 
-import 'assets/css/login-modal.css';
 import "./profile.css";
 
 interface MatchProps {
@@ -35,6 +34,18 @@ interface IProfilePageProps extends RouteComponentProps<MatchProps>, WithTransla
   dayjs: any;
 }
 
+interface IProfilePageState {
+  shareModalVisible: boolean;
+  blockModalVisible: boolean;
+  profile: any;
+  matched: boolean;
+  matchDlgVisible: boolean;
+  chatID: string | null;
+  isRemove: boolean;
+  previewVisible: boolean;
+  selectedImg: string | null;
+}
+
 const ProfilePage: React.FC<IProfilePageProps> = memo(({
   ErrorHandler,
   ReactGA,
@@ -45,7 +56,7 @@ const ProfilePage: React.FC<IProfilePageProps> = memo(({
   tReady,
   t,
 }) => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<IProfilePageState>({
     shareModalVisible: false,
     blockModalVisible: false,
     profile: null,
@@ -224,8 +235,6 @@ const ProfilePage: React.FC<IProfilePageProps> = memo(({
     previewVisible,
     selectedImg,
   } = state;
-
-  console.log('selectedImage: ', selectedImg)
 
   return (
     <section className="profile">

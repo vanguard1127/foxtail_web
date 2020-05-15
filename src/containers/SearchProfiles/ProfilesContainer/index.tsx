@@ -18,8 +18,6 @@ import ScrollUp from "./ScrollUp";
 import FeaturedProfiles from "../FeaturedProfiles";
 import MemberProfiles from "../MemberProfiles";
 
-import 'assets/css/login-modal.css';
-
 interface IProfilesContainerProps {
   ErrorHandler: any;
   ReactGA: any;

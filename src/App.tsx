@@ -23,6 +23,7 @@ import detectMob from "./utils/detectMobile";
 
 import AppRoutes from "./routes/AppRoutes";
 
+import 'assets/css/login-modal.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 firebase.initializeApp({

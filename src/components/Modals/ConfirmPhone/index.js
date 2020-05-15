@@ -5,7 +5,6 @@ import { Spring } from "react-spring/renderprops";
 import Select from "./Select";
 import { countryCodeOptions } from "../../../docs/options";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import "../../../assets/css/login-modal.css";
 
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
