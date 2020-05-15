@@ -88,6 +88,7 @@ const SearchProfiles: React.FC<ISearchProfilesProps> = memo(({
       <SearchProfilesPage
         history={history}
         loading={loading}
+        refetch={refetch}
         t={t}
         ErrorHandler={ErrorHandler}
         searchCriteria={data.getSettings}

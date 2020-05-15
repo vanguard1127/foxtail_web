@@ -25,6 +25,7 @@ interface ISearchProfilesPageProps {
   dayjs: any;
   client: any;
   location: any;
+  refetch: any;
 }
 
 const SearchProfilesPage: React.FC<ISearchProfilesPageProps> = memo(({

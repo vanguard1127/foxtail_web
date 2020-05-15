@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import NoProfileImg from "../../../assets/img/elements/no-profile.png";
+
+import NoProfileImg from "assets/img/elements/no-profile.png";
 
 const ProfilePic = ({ profilePic, handlePreview }) => {
   const [loading, setLoading] = useState(true);

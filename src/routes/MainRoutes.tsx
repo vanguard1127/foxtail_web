@@ -18,7 +18,7 @@ const SearchProfiles = Loadable({ loader: () => import("containers/SearchProfile
 const Footer = Loadable({ loader: () => import("components/Footer") });
 const Settings = Loadable({ loader: () => import("components/Settings") });
 const EventPage = Loadable({ loader: () => import("components/Event") });
-const ProfilePage = Loadable({ loader: () => import("components/Profile") });
+const ProfilePage = Loadable({ loader: () => import("containers/Profile") });
 const InboxPage = Loadable({ loader: () => import("components/Inbox") });
 const SearchEvents = Loadable({ loader: () => import("components/SearchEvents") });
 const Onboard = Loadable({ loader: () => import("components/Modals/Onboard") });
@@ -54,7 +54,7 @@ const MainRoutes: React.FC<IMainRoutes> = ({ session, refetch, lang, location })
           />
           <Route
             path="/member/:id"
-            render={() => <ProfilePage {...baseRouteProps} />}
+            render={(routeProps) => <ProfilePage {...routeProps} {...baseRouteProps} />}
           />
           <Route
             path="/events"

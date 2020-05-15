@@ -41,10 +41,10 @@ const MemberProfiles: React.FC<IMemberProfilesProps> = memo(({
             <div className="col-md-12">
               <span className="head">{t("allmems")}</span>
             </div>
-            {profiles.map(profile => {
+            {profiles.map((profile, idx) => {
               return (
                 <ProfileCard
-                  key={profile.id}
+                  key={profile.id + idx}
                   profile={profile}
                   showMsgModal={showMsgModal}
                   likeProfile={likeProfile}
