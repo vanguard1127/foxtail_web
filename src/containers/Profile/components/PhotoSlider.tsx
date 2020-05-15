@@ -9,7 +9,7 @@ interface IPhotoSliderProps extends WithT {
   isPublic: boolean,
   photos: any,
   ErrorHandler: any,
-  handlePreview: (e: any) => void;
+  handlePreview: (imageSource: string) => void;
 }
 
 const PhotoSlider: React.FC<IPhotoSliderProps> = ({
@@ -71,7 +71,7 @@ const PhotoSlider: React.FC<IPhotoSliderProps> = ({
           {photos.map(photo => (
             <div className="item" key={Math.random()}>
               {photo.url !== "private" ? (
-                <div onClick={handlePreview}>
+                <div onClick={() => handlePreview(photo.url)} >
                   <img src={photo.smallUrl} alt="" />
                 </div>
               ) : (

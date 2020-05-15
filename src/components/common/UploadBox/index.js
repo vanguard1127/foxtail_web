@@ -347,7 +347,7 @@ const UploadComponent = ({
           </Upload>
         </div>
       )}
-      {previewVisible && (
+      {previewVisible && selectedImg && (
         <Lightbox mainSrc={selectedImg} onCloseRequest={handleClose} />
       )}
       <Prompt

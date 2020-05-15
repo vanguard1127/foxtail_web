@@ -17,11 +17,12 @@ import ProfileBio from "./components/ProfileBio";
 import KinksMobile from "./components/KinksMobile";
 import ProfileDetails from "./components/ProfileDetails";
 import PhotoSlider from "./components/PhotoSlider";
+import MatchDlgModal from "./components/MatchDlgModal";
 
 import { flagOptions } from "../../docs/options";
 
+import 'assets/css/login-modal.css';
 import "./profile.css";
-import MatchDlgModal from "./components/MatchDlgModal";
 
 interface MatchProps {
   id: string;
@@ -153,10 +154,10 @@ const ProfilePage: React.FC<IProfilePageProps> = memo(({
     setState({ ...state, matched: true });
   };
 
-  const handlePreview = e => {
+  const handlePreview = (imageSource: string) => {
     setState({
       ...state,
-      selectedImg: e.target.getAttribute("src"),
+      selectedImg: imageSource,
       previewVisible: true
     });
   };
@@ -221,8 +222,10 @@ const ProfilePage: React.FC<IProfilePageProps> = memo(({
     matched,
     isRemove,
     previewVisible,
-    selectedImg
+    selectedImg,
   } = state;
+
+  console.log('selectedImage: ', selectedImg)
 
   return (
     <section className="profile">

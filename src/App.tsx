@@ -23,6 +23,8 @@ import detectMob from "./utils/detectMobile";
 
 import AppRoutes from "./routes/AppRoutes";
 
+import 'react-toastify/dist/ReactToastify.css';
+
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,

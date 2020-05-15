@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { Waypoint } from "react-waypoint";
 import { WithT } from "i18next";
 
-import ProfileCard from "./ProfileCard";
+import MemberProfileCard from "./MemberProfileCard";
 
 import "../searchProfiles.css";
 
@@ -43,7 +43,7 @@ const MemberProfiles: React.FC<IMemberProfilesProps> = memo(({
             </div>
             {profiles.map((profile, idx) => {
               return (
-                <ProfileCard
+                <MemberProfileCard
                   key={profile.id + idx}
                   profile={profile}
                   showMsgModal={showMsgModal}

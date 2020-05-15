@@ -2,10 +2,14 @@ import React, { useState } from "react";
 
 import NoProfileImg from "assets/img/elements/no-profile.png";
 
-const ProfilePic = ({ profilePic, handlePreview }) => {
+interface IProfilePic {
+  profilePic: string;
+  handlePreview: (imageSource: string) => void;
+}
+
+const ProfilePic: React.FC<IProfilePic> = ({ profilePic, handlePreview }) => {
   const [loading, setLoading] = useState(true);
   const [proPic, setPropic] = useState(profilePic);
-
   return (
     <div className="avatar" style={{ position: "relative" }}>
       {loading && (
@@ -25,7 +29,7 @@ const ProfilePic = ({ profilePic, handlePreview }) => {
       <img
         alt="profile pic"
         src={proPic}
-        onClick={handlePreview}
+        onClick={() => handlePreview(proPic)}
         onLoad={() => {
           setLoading(false);
         }}

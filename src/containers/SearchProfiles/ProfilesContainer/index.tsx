@@ -18,6 +18,8 @@ import ScrollUp from "./ScrollUp";
 import FeaturedProfiles from "../FeaturedProfiles";
 import MemberProfiles from "../MemberProfiles";
 
+import 'assets/css/login-modal.css';
+
 interface IProfilesContainerProps {
   ErrorHandler: any;
   ReactGA: any;
@@ -69,17 +71,19 @@ const ProfilesContainer: React.FC<IProfilesContainerProps> = memo(({
     hasMore: true
   });
 
+  const searchParams = {
+    long,
+    lat,
+    distance,
+    ageRange,
+    interestedIn,
+    limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT),
+    skip: 0,
+    isMobile: sessionStorage.getItem("isMobile"),
+  }
+
   const { data, loading: queryLoading, fetchMore, error } = useQuery(SEARCH_PROFILES, {
-    variables: {
-      long,
-      lat,
-      distance,
-      ageRange,
-      interestedIn,
-      limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT),
-      skip: 0,
-      isMobile: sessionStorage.getItem("isMobile")
-    },
+    variables: searchParams,
     fetchPolicy: "cache-first",
   });
 
@@ -100,7 +104,7 @@ const ProfilesContainer: React.FC<IProfilesContainerProps> = memo(({
 
   const toggleBlockModalVisible = (profile = null) => {
     ErrorHandler.setBreadcrumb("Block Dialog Toggled:");
-    setState({ ...state, profile, blockDlgVisible: state.blockDlgVisible });
+    setState({ ...state, profile, blockDlgVisible: !state.blockDlgVisible });
   };
 
   const setMatchDlgVisible = (matchDlgVisible, profile, chatID = null) => {
@@ -174,7 +178,7 @@ const ProfilesContainer: React.FC<IProfilesContainerProps> = memo(({
     }
 
     setState({ ...state, profile, likedProfiles });
-    likeProfile()
+    likeProfile({ variables: { toProfileID: profile && profile.id } })
       .then(({ data }) => {
         switch (data.likeProfile) {
           case "like":
