@@ -19,7 +19,7 @@ const Footer = Loadable({ loader: () => import("components/Footer") });
 const Settings = Loadable({ loader: () => import("components/Settings") });
 const EventPage = Loadable({ loader: () => import("components/Event") });
 const ProfilePage = Loadable({ loader: () => import("containers/Profile") });
-const InboxPage = Loadable({ loader: () => import("components/Inbox") });
+const InboxPage = Loadable({ loader: () => import("containers/Inbox") });
 const SearchEvents = Loadable({ loader: () => import("components/SearchEvents") });
 const Onboard = Loadable({ loader: () => import("components/Modals/Onboard") });
 

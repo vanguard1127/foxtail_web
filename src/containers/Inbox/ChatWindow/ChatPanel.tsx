@@ -1,12 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import UploadBox from "../../common/UploadBox";
+import UploadBox from "components/common/UploadBox";
 import axios from "axios";
-import { SEND_MESSAGE, SET_TYPING, SIGNS3 } from "../../../queries";
+import { SEND_MESSAGE, SET_TYPING, SIGNS3 } from "queries";
 import { toast } from "react-toastify";
+import { WithT } from "i18next";
 
-var timer;
-const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
+import * as ErrorHandler from 'components/common/ErrorHandler';
+
+interface IChatPanel extends WithT {
+  chatID: string,
+  toggleOverlay: () => void,
+  isEmailOK: boolean,
+}
+
+const ChatPanel: React.FC<IChatPanel> = ({ chatID, t, toggleOverlay, isEmailOK }) => {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -14,6 +22,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
   const [signS3] = useMutation(SIGNS3);
   const [setTypingMutation] = useMutation(SET_TYPING);
   const refContainer = useRef(null);
+
   useEffect(() => {
     return () => {
       setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
@@ -24,6 +33,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const submitMessage = e => {
     e && e.preventDefault();
     if (!sending) {
@@ -36,7 +46,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
         }
       );
       sendMessage({ variables: { text, chatID } })
-        .then(() => {})
+        .then(() => { })
         .catch(res => {
           ErrorHandler.catchErrors(res);
         });
@@ -54,7 +64,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
       sessionStorage.getItem("isMobile") === "false"
     ) {
       e.preventDefault();
-      submitMessage();
+      submitMessage(e);
     }
   };
 
@@ -68,7 +78,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
             ErrorHandler.catchErrors(res);
           }
         );
-        timer = setTimeout(() => {
+        setTimeout(() => {
           setIsTyping(false);
           setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
             res => {
@@ -78,8 +88,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
         }, 6000);
       }
     } else {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
+      setTimeout(() => {
         setIsTyping(false);
         setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
           res => {
@@ -138,10 +147,8 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
 
   if (!isEmailOK) {
     return (
-      <div className="panel">
-        <center>
-          {t("Please confirm your email before contacting members. Thanks.")}
-        </center>
+      <div className="panel" style={{ textAlign: 'center' }}>
+        {t("Please confirm your email before contacting members. Thanks.")}
       </div>
     );
   }
@@ -165,7 +172,7 @@ const ChatPanel = ({ chatID, t, ErrorHandler, toggleOverlay, isEmailOK }) => {
             onChange={handleTextChange}
             aria-label="message search"
             onKeyDown={onEnterPress}
-            rows="1"
+            rows={1}
           />
         </div>
         <div className="send">

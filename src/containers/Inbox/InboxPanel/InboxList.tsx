@@ -1,28 +1,41 @@
-import React, { PureComponent } from "react";
+import React, { memo, useEffect } from "react";
 import { Waypoint } from "react-waypoint";
-import TimeAgo from "../../../utils/TimeAgo";
-import NoProfileImg from "../../../assets/img/elements/no-profile.png";
+import { WithT } from "i18next";
 
-class InboxList extends PureComponent {
-  unsubscribe;
+import TimeAgo from "utils/TimeAgo";
+import NoProfileImg from "assets/img/elements/no-profile.png";
+import { IUser } from "types/user";
 
-  componentDidMount() {
-    this.mounted = true;
-    this.updateMsgCount();
-  }
+interface IInboxListProps extends WithT {
+  messages: any,
+  fetchData: () => void,
+  openChat: (chatID: any) => void,
+  currentuser: IUser,
+  searchTerm: string,
+  updateCount: (unSeenCount: any) => void,
+  chatID: string | null,
+}
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.chatID !== this.props.chatID) {
-      this.updateMsgCount();
-    }
-  }
+const InboxList: React.FC<IInboxListProps> = memo(({
+  messages,
+  fetchData,
+  openChat,
+  currentuser,
+  searchTerm,
+  updateCount,
+  chatID,
+  t,
+}) => {
 
-  componentWillUnmount() {
-    this.mounted = false;
-  }
+  useEffect(() => {
+    updateMsgCount();
+  }, []);
 
-  updateMsgCount = () => {
-    const { updateCount, messages, chatID } = this.props;
+  useEffect(() => {
+    updateMsgCount();
+  }, [chatID])
+
+  const updateMsgCount = () => {
     if (updateCount && chatID) {
       const chatIndex = messages.findIndex(el => el.chatID === chatID);
       if (chatIndex > -1) {
@@ -31,16 +44,13 @@ class InboxList extends PureComponent {
     }
   };
 
-  handleEnd = previousPosition => {
+  const handleEnd = previousPosition => {
     if (previousPosition === Waypoint.below) {
-      if (this.mounted) {
-        this.props.fetchData();
-      }
+      fetchData();
     }
   };
 
-  renderItem = (item, timeAgo) => {
-    const { currentuser, openChat, t } = this.props;
+  const renderItem = (item, timeAgo) => {
     let title, blackIcon;
     if (item.type === "alert" || item.type === "left") {
       title = "Foxtail";
@@ -99,8 +109,8 @@ class InboxList extends PureComponent {
               ) : item.type === "left" ? (
                 item.text + " " + t("leftchat")
               ) : (
-                item.text
-              )}
+                      item.text
+                    )}
             </span>
             {item.unSeenCount !== 0 && (
               <span className="notif">{item.unSeenCount}</span>
@@ -111,9 +121,9 @@ class InboxList extends PureComponent {
     );
   };
 
-  renderMsgList = ({ messages }) => {
+  const renderMsgList = ({ messages }) => {
     if (messages.length === 0) {
-      return <span className="no-message">{this.props.t("nomsgsInbox")}</span>;
+      return <span className="no-message">{t("nomsgsInbox")}</span>;
     }
 
     return (
@@ -121,34 +131,31 @@ class InboxList extends PureComponent {
         {messages.map((message, i) => {
           var timeAgo = TimeAgo(message.createdAt);
           const msgObj = { ...message };
-          return this.renderItem(msgObj, timeAgo);
+          return renderItem(msgObj, timeAgo);
         })}
       </>
     );
   };
 
-  //Variables by text
-  render() {
-    let { searchTerm, messages } = this.props;
-    if (searchTerm !== "") {
-      messages = messages.filter(msg =>
-        msg.participants[0].profileName
-          .toLocaleLowerCase()
-          .startsWith(searchTerm.toLocaleLowerCase())
-      );
-    }
-
-    return (
-      <div className="conversations">
-        {this.renderMsgList({ messages })}
-        <div className="item">
-          <Waypoint
-            onEnter={({ previousPosition }) => this.handleEnd(previousPosition)}
-          />
-        </div>
-      </div>
+  let messagesCopy = [...messages];
+  if (searchTerm !== "") {
+    messagesCopy = messages.filter(msg =>
+      msg.participants[0].profileName
+        .toLocaleLowerCase()
+        .startsWith(searchTerm.toLocaleLowerCase())
     );
   }
-}
+
+  return (
+    <div className="conversations">
+      {renderMsgList({ messages: messagesCopy })}
+      <div className="item">
+        <Waypoint
+          onEnter={({ previousPosition }) => handleEnd(previousPosition)}
+        />
+      </div>
+    </div>
+  );
+});
 
 export default InboxList;

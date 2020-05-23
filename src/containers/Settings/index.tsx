@@ -33,14 +33,14 @@ interface ISettingsProps extends WithTranslation, RouteComponentProps<any, any, 
 const Settings: React.FC<ISettingsProps> = ({
   session,
   refetch,
-  t,
   ErrorHandler,
   location,
   history,
   ReactGA,
   tReady,
   dayjs,
-  lang
+  lang,
+  t,
 }) => {
   const isCouple = !!location.state.couple;
   const isInitial = !!location.state.initial;
