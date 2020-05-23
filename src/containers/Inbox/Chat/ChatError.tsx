@@ -13,6 +13,7 @@ const ChatError: React.FC<IChatErrorProps> = ({
     error,
     userID,
     chatID,
+    t,
 }) => {
     return (
         <section className="not-found">

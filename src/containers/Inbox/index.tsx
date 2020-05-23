@@ -199,7 +199,6 @@ const Inbox: React.FC<IInboxProps> = memo(({
         const newData = produce(prev, draftState => {
           const newMsgs = draftState.getMessages;
           //TODO: FIX PRE PUSH
-          //console.log("test", messageActionSubsubscribe.isActive);
           if (!messageActionSubsubscribe.seenBy) {
             if (
               messageActionSubsubscribe.isTyping &&
@@ -240,7 +239,7 @@ const Inbox: React.FC<IInboxProps> = memo(({
   const handlePreview = e => {
     setState({
       ...state,
-      selectedImg: e.target.getAttribute("data-fullSrc"),
+      selectedImg: e.target.getAttribute("data-fullsrc"),
       previewVisible: true
     });
   };

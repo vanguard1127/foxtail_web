@@ -47,11 +47,11 @@ const ChatActions: React.FC<IChatActionsProps> = memo(({
           targetID={chatID}
           targetType={"chat"}
           listType={"participants"}
-          t={t}
           close={closeRemDropdown}
           isOwner={isOwner}
           ErrorHandler={ErrorHandler}
           ReactGA={ReactGA}
+          t={t}
         />
       )}
       <li
@@ -65,10 +65,10 @@ const ChatActions: React.FC<IChatActionsProps> = memo(({
           targetID={chatID}
           targetType={"chat"}
           listType={"friends"}
-          t={t}
           close={closeInvDropdown}
           ErrorHandler={ErrorHandler}
           ReactGA={ReactGA}
+          t={t}
         />
       )}
       <li className="leave" onClick={leaveDialog}>

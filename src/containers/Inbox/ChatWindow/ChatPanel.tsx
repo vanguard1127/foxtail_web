@@ -22,6 +22,8 @@ const ChatPanel: React.FC<IChatPanel> = ({ chatID, t, toggleOverlay, isEmailOK }
   const [signS3] = useMutation(SIGNS3);
   const [setTypingMutation] = useMutation(SET_TYPING);
   const refContainer = useRef(null);
+  const timeout1 = useRef();
+  const timeout2 = useRef();
 
   useEffect(() => {
     return () => {
@@ -49,9 +51,11 @@ const ChatPanel: React.FC<IChatPanel> = ({ chatID, t, toggleOverlay, isEmailOK }
         .then(() => { })
         .catch(res => {
           ErrorHandler.catchErrors(res);
-        });
+        })
+        .finally(() => {
+          setSending(false);
+        })
       setText("");
-      setSending(false);
     }
   };
 
@@ -78,24 +82,26 @@ const ChatPanel: React.FC<IChatPanel> = ({ chatID, t, toggleOverlay, isEmailOK }
             ErrorHandler.catchErrors(res);
           }
         );
-        setTimeout(() => {
+        clearTimeout(timeout1.current);
+        timeout1.current = setTimeout(() => {
           setIsTyping(false);
           setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
             res => {
               ErrorHandler.catchErrors(res);
             }
           );
-        }, 6000);
+        }, 5000);
       }
     } else {
-      setTimeout(() => {
+      clearTimeout(timeout2.current);
+      timeout2.current = setTimeout(() => {
         setIsTyping(false);
         setTypingMutation({ variables: { chatID, isTyping: false } }).catch(
           res => {
             ErrorHandler.catchErrors(res);
           }
         );
-      }, 6000);
+      }, 5000);
     }
   };
 

@@ -7,16 +7,18 @@ import * as ErrorHandler from 'components/common/ErrorHandler';
 import Spinner from "components/common/Spinner";
 import { IUser } from 'types/user';
 
-import ChatWindow from "../ChatWindow";
-import ChatInfo from "./ChatInfo";
-
 import {
     GET_INBOX,
     REMOVE_SELF,
     GET_MESSAGES,
 } from "queries";
+
+import ChatWindow from "../ChatWindow";
+
+import ChatInfo from "./ChatInfo";
 import ChatModal from './ChatModal';
 import ChatError from './ChatError';
+
 
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT || '12');
 
@@ -45,9 +47,6 @@ const Chat: React.FC<IChatProps> = ({
     const [state, setState] = useState({
         isBlock: false,
         showModal: false,
-        msg: "",
-        btnText: "",
-        title: "",
     })
 
     const { data, loading, error, subscribeToMore, fetchMore } = useQuery(GET_MESSAGES, {
@@ -113,11 +112,6 @@ const Chat: React.FC<IChatProps> = ({
         setState({ ...state, showModal: !state.showModal });
     };
 
-    const setDialogContent = ({ title, msg, btnText }) => {
-        setState({ ...state, title, msg, btnText });
-        toggleDialog();
-    };
-
     const chat = data ? data.getMessages : null;
     if (error) {
         return (
@@ -152,16 +146,7 @@ const Chat: React.FC<IChatProps> = ({
                     chat &&
                     chat.ownerProfile.id === currentuser.profileID
                 }
-                leaveDialog={() => {
-                    const title = t("leaveconv");
-                    const msg = t("leavewarn");
-                    const btnText = t("Leave");
-                    setDialogContent({
-                        title,
-                        msg,
-                        btnText
-                    });
-                }}
+                leaveDialog={toggleDialog}
                 fetchMore={fetchMore}
                 subscribeToMore={() => subscribeToMessages(subscribeToMore)}
                 handlePreview={handlePreview}
@@ -171,20 +156,15 @@ const Chat: React.FC<IChatProps> = ({
                 setBlockModalVisible={setBlockModalVisible}
                 chatID={chatID}
                 isOwner={chat && chat.ownerProfile.id === currentuser.profileID}
-                leaveDialog={() => {
-                    const title = t("leaveconv");
-                    const msg = t("leavewarn");
-                    const btnText = t("Leave");
-                    setDialogContent({ title, msg, btnText });
-                }}
+                leaveDialog={toggleDialog}
                 participantsNum={chat && chat.participants.length}
             />
             {state.showModal && (
                 <ChatModal
-                    title={state.title}
+                    title={t("leaveconv")}
                     toggleDialog={toggleDialog}
-                    msg={state.msg}
-                    btnText={state.btnText}
+                    msg={t("leavewarn")}
+                    btnText={t("Leave")}
                     onConfirm={() => {
                         setState({ ...state, isBlock: false });
                         handleRemoveSelf(removeSelf);

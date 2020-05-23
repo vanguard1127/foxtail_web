@@ -31,8 +31,8 @@ const InboxPanel: React.FC<IInboxPanelProps> = memo(({
   updateCount,
   t,
 }) => {
-  const unsubscribe = useRef(() => { });
-  const unsubscribe2 = useRef(() => { });
+  const unsubscribe = useRef(null);
+  const unsubscribe2 = useRef(null);
   const [state, setState] = useState({
     searchTerm: "",
     skip: 0,
@@ -50,8 +50,12 @@ const InboxPanel: React.FC<IInboxPanelProps> = memo(({
 
   useEffect(() => {
     return () => {
-      unsubscribe.current();
-      unsubscribe2.current();
+      if (unsubscribe) {
+        unsubscribe.current();
+      }
+      if (unsubscribe2) {
+        unsubscribe2.current();
+      }
     }
   }, []);
 
@@ -106,102 +110,106 @@ const InboxPanel: React.FC<IInboxPanelProps> = memo(({
     );
   }
 
-  unsubscribe.current = subscribeToMore({
-    document: NEW_INBOX_SUB,
-    variables: {
-      isMobile: sessionStorage.getItem("isMobile")
-    },
-    updateQuery: (prev, { subscriptionData }) => {
-      const { newInboxMsgSubscribe } = subscriptionData.data;
-      if (!newInboxMsgSubscribe) {
-        return prev;
+  if (!unsubscribe.current) {
+    unsubscribe.current = subscribeToMore({
+      document: NEW_INBOX_SUB,
+      variables: {
+        isMobile: sessionStorage.getItem("isMobile")
+      },
+      updateQuery: (prev, { subscriptionData }) => {
+        const { newInboxMsgSubscribe } = subscriptionData.data;
+        if (!newInboxMsgSubscribe) {
+          return prev;
+        }
+        if (!prev) {
+          prev = [];
+        }
+        const previousResult = produce(prev.getInbox, draftState => {
+          if (draftState) {
+            const chatIndex = draftState.findIndex(
+              el => el.chatID === newInboxMsgSubscribe.chatID
+            );
+
+            if (chatIndex > -1) {
+              if (
+                sessionStorage.getItem("page") === "inbox" &&
+                sessionStorage.getItem("pid") ===
+                newInboxMsgSubscribe.chatID
+              ) {
+                newInboxMsgSubscribe.unSeenCount = 0;
+              } else {
+                newInboxMsgSubscribe.unSeenCount =
+                  draftState[chatIndex].unSeenCount + 1;
+              }
+              draftState[chatIndex] = newInboxMsgSubscribe;
+            } else {
+              draftState = [newInboxMsgSubscribe, ...draftState];
+            }
+          }
+        });
+        return { getInbox: [...previousResult] };
       }
-      if (!prev) {
-        prev = [];
-      }
-      const previousResult = produce(prev.getInbox, draftState => {
-        if (draftState) {
+    });
+  }
+
+  if (!unsubscribe2.current) {
+    unsubscribe2.current = subscribeToMore({
+      document: MESSAGE_ACTION_SUB,
+      updateQuery: (prev, { subscriptionData }) => {
+        const { messageActionSubsubscribe } = subscriptionData.data;
+        if (!messageActionSubsubscribe) {
+          return prev;
+        }
+        if (!prev) {
+          prev = [];
+        }
+        const newData = produce(prev.getInbox, draftState => {
           const chatIndex = draftState.findIndex(
-            el => el.chatID === newInboxMsgSubscribe.chatID
+            el => el.chatID === messageActionSubsubscribe.chatID
           );
 
-          if (chatIndex > -1) {
-            if (
-              sessionStorage.getItem("page") === "inbox" &&
-              sessionStorage.getItem("pid") ===
-              newInboxMsgSubscribe.chatID
-            ) {
-              newInboxMsgSubscribe.unSeenCount = 0;
-            } else {
-              newInboxMsgSubscribe.unSeenCount =
-                draftState[chatIndex].unSeenCount + 1;
+          if (!messageActionSubsubscribe.seenBy && chatIndex > -1) {
+            if (messageActionSubsubscribe.isTyping) {
+              if (!draftState[chatIndex].typingList) {
+                draftState[chatIndex].typingList = [
+                  messageActionSubsubscribe.name
+                ];
+              } else {
+                draftState[chatIndex].typingList.push(
+                  messageActionSubsubscribe.name
+                );
+              }
+            } else if (draftState[chatIndex].typingList) {
+              draftState[chatIndex].typingList = draftState[
+                chatIndex
+              ].typingList.filter(function (elem, i, rep) {
+                return (
+                  i !== rep.indexOf(messageActionSubsubscribe.name)
+                );
+              });
             }
-            draftState[chatIndex] = newInboxMsgSubscribe;
-          } else {
-            draftState = [newInboxMsgSubscribe, ...draftState];
+            if (draftState[chatIndex].typingList) {
+              switch (draftState[chatIndex].typingList.length) {
+                case 0:
+                  draftState[chatIndex].typingText = null;
+                  break;
+                case 1:
+                  draftState[chatIndex].typingText =
+                    draftState[chatIndex].typingList[0] +
+                    " is typing...";
+                  break;
+                default:
+                  draftState[chatIndex].typingText =
+                    "Members are typing...";
+                  break;
+              }
+            }
           }
-        }
-      });
-      return { getInbox: [...previousResult] };
-    }
-  });
-
-  unsubscribe2.current = subscribeToMore({
-    document: MESSAGE_ACTION_SUB,
-    updateQuery: (prev, { subscriptionData }) => {
-      const { messageActionSubsubscribe } = subscriptionData.data;
-      if (!messageActionSubsubscribe) {
-        return prev;
+        });
+        return { getInbox: [...newData] };
       }
-      if (!prev) {
-        prev = [];
-      }
-      const newData = produce(prev.getInbox, draftState => {
-        const chatIndex = draftState.findIndex(
-          el => el.chatID === messageActionSubsubscribe.chatID
-        );
-
-        if (!messageActionSubsubscribe.seenBy && chatIndex > -1) {
-          if (messageActionSubsubscribe.isTyping) {
-            if (!draftState[chatIndex].typingList) {
-              draftState[chatIndex].typingList = [
-                messageActionSubsubscribe.name
-              ];
-            } else {
-              draftState[chatIndex].typingList.push(
-                messageActionSubsubscribe.name
-              );
-            }
-          } else if (draftState[chatIndex].typingList) {
-            draftState[chatIndex].typingList = draftState[
-              chatIndex
-            ].typingList.filter(function (elem, i, rep) {
-              return (
-                i !== rep.indexOf(messageActionSubsubscribe.name)
-              );
-            });
-          }
-          if (draftState[chatIndex].typingList) {
-            switch (draftState[chatIndex].typingList.length) {
-              case 0:
-                draftState[chatIndex].typingText = null;
-                break;
-              case 1:
-                draftState[chatIndex].typingText =
-                  draftState[chatIndex].typingList[0] +
-                  " is typing...";
-                break;
-              default:
-                draftState[chatIndex].typingText =
-                  "Members are typing...";
-                break;
-            }
-          }
-        }
-      });
-      return { getInbox: [...newData] };
-    }
-  });
+    });
+  }
 
   const messages = data.getInbox || [];
 

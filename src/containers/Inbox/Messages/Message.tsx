@@ -65,7 +65,7 @@ const Message: React.FC<IMessageProps> = forwardRef(({
         {message.type === "img" ? (
           <img
             src={messageText}
-            data-fullSrc={message.fullImg}
+            data-fullsrc={message.fullImg}
             style={{
               maxHeight: "300px",
               maxWidth: "300px",

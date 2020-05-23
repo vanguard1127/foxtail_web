@@ -13,11 +13,11 @@ interface IChatInfoProps extends WithT {
 
 const ChatInfo: React.FC<IChatInfoProps> = memo(({
   chatID,
-  t,
   setBlockModalVisible,
   isOwner,
   leaveDialog,
-  participantsNum
+  participantsNum,
+  t,
 }) => {
   return (
     <div className="col-xl-2">
@@ -27,11 +27,11 @@ const ChatInfo: React.FC<IChatInfoProps> = memo(({
           <div className="functions">
             <ChatActions
               chatID={chatID}
-              t={t}
               setBlockModalVisible={setBlockModalVisible}
               isOwner={isOwner}
               leaveDialog={leaveDialog}
               participantsNum={participantsNum}
+              t={t}
             />
           </div>
         </div>
