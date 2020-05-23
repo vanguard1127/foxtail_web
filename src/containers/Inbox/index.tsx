@@ -51,8 +51,8 @@ const Inbox: React.FC<IInboxProps> = memo(({
   tReady,
   t,
 }) => {
-  const unsubscribe = useRef(() => { });
-  const unsubscribe2 = useRef(() => { });
+  const unsubscribe = useRef(null);
+  const unsubscribe2 = useRef(null);
   const [state, setState] = useState<any>({
     blockModalVisible: false,
     chatID: match.params.chatID,
@@ -65,8 +65,12 @@ const Inbox: React.FC<IInboxProps> = memo(({
     document.title = t("common:Inbox");
     sessionStorage.setItem("page", "inbox");
     return () => {
-      unsubscribe.current();
-      unsubscribe2.current();
+      if (unsubscribe.current) {
+        unsubscribe.current();
+      }
+      if (unsubscribe2) {
+        unsubscribe2.current();
+      }
       sessionStorage.setItem("page", '');
       sessionStorage.setItem("pid", '');
     }
@@ -88,16 +92,24 @@ const Inbox: React.FC<IInboxProps> = memo(({
 
   const openChat = chatID => {
     ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
-    unsubscribe.current();
-    unsubscribe2.current();
+    if (unsubscribe.current) {
+      unsubscribe.current();
+    }
+    if (unsubscribe2.current) {
+      unsubscribe2.current();
+    }
     const { cache } = client;
     deleteFromCache({ cache, query: "getMessages" });
     history.push(`/inbox/${chatID}`);
   };
 
   const closeChat = () => {
-    unsubscribe.current();
-    unsubscribe2.current();
+    if (unsubscribe.current) {
+      unsubscribe.current();
+    }
+    if (unsubscribe2.current) {
+      unsubscribe2.current();
+    }
     history.push("/inbox");
   };
 
@@ -160,80 +172,83 @@ const Inbox: React.FC<IInboxProps> = memo(({
   };
 
   const subscribeToMessages = subscribeToMore => {
-    unsubscribe.current = subscribeToMore({
-      document: NEW_MESSAGE_SUB,
-      variables: {
-        chatID: state.chatID,
-        isMobile: sessionStorage.getItem("isMobile"),
-        maxW: window.outerWidth,
-        maxH: window.outerHeight
-      },
-      updateQuery: (prev, { subscriptionData }) => {
-        const { newMessageSubscribe } = subscriptionData.data;
-        if (!newMessageSubscribe) {
-          return prev;
-        }
-
-        const newData = produce(prev, draftState => {
-          if (draftState.getMessages.messages) {
-            draftState.getMessages.messages = [
-              newMessageSubscribe,
-              ...draftState.getMessages.messages
-            ];
-          } else {
-            draftState.getMessages.messages = [newMessageSubscribe];
+    if (!unsubscribe.current) {
+      unsubscribe.current = subscribeToMore({
+        document: NEW_MESSAGE_SUB,
+        variables: {
+          chatID: state.chatID,
+          isMobile: sessionStorage.getItem("isMobile"),
+          maxW: window.outerWidth,
+          maxH: window.outerHeight
+        },
+        updateQuery: (prev, { subscriptionData }) => {
+          const { newMessageSubscribe } = subscriptionData.data;
+          if (!newMessageSubscribe) {
+            return prev;
           }
-        });
 
-        return newData;
-      }
-    });
+          const newData = produce(prev, draftState => {
+            if (draftState.getMessages.messages) {
+              draftState.getMessages.messages = [
+                newMessageSubscribe,
+                ...draftState.getMessages.messages
+              ];
+            } else {
+              draftState.getMessages.messages = [newMessageSubscribe];
+            }
+          });
 
-    unsubscribe2.current = subscribeToMore({
-      document: MESSAGE_ACTION_SUB,
-      updateQuery: (prev, { subscriptionData }) => {
-        const { messageActionSubsubscribe } = subscriptionData.data;
-        if (!messageActionSubsubscribe) {
-          return prev;
+          return newData;
         }
-        const newData = produce(prev, draftState => {
-          const newMsgs = draftState.getMessages;
-          //TODO: FIX PRE PUSH
-          if (!messageActionSubsubscribe.seenBy) {
-            if (
-              messageActionSubsubscribe.isTyping &&
-              messageActionSubsubscribe.isActive
-            ) {
-              if (!newMsgs.typingList) {
-                newMsgs.typingList = [messageActionSubsubscribe.name];
-              } else {
-                newMsgs.typingList.push(messageActionSubsubscribe.name);
-              }
-            } else if (newMsgs.typingList) {
-              newMsgs.typingList = newMsgs.typingList.filter((_, i, rep) => {
-                return i !== rep.indexOf(messageActionSubsubscribe.name);
-              });
-            }
-            if (newMsgs.typingList) {
-              switch (newMsgs.typingList.length) {
-                case 0:
-                  newMsgs.typingText = null;
-                  break;
-                case 1:
-                  newMsgs.typingText =
-                    newMsgs.typingList[0] + " is typing...";
-                  break;
-                default:
-                  newMsgs.typingText = "Members are typing...";
-                  break;
-              }
-            }
+      });
+    }
+    if (!unsubscribe2.current) {
+      unsubscribe2.current = subscribeToMore({
+        document: MESSAGE_ACTION_SUB,
+        updateQuery: (prev, { subscriptionData }) => {
+          const { messageActionSubsubscribe } = subscriptionData.data;
+          if (!messageActionSubsubscribe) {
+            return prev;
           }
-        });
+          const newData = produce(prev, draftState => {
+            const newMsgs = draftState.getMessages;
+            //TODO: FIX PRE PUSH
+            if (!messageActionSubsubscribe.seenBy) {
+              if (
+                messageActionSubsubscribe.isTyping &&
+                messageActionSubsubscribe.isActive
+              ) {
+                if (!newMsgs.typingList) {
+                  newMsgs.typingList = [messageActionSubsubscribe.name];
+                } else {
+                  newMsgs.typingList.push(messageActionSubsubscribe.name);
+                }
+              } else if (newMsgs.typingList) {
+                newMsgs.typingList = newMsgs.typingList.filter((_, i, rep) => {
+                  return i !== rep.indexOf(messageActionSubsubscribe.name);
+                });
+              }
+              if (newMsgs.typingList) {
+                switch (newMsgs.typingList.length) {
+                  case 0:
+                    newMsgs.typingText = null;
+                    break;
+                  case 1:
+                    newMsgs.typingText =
+                      newMsgs.typingList[0] + " is typing...";
+                    break;
+                  default:
+                    newMsgs.typingText = "Members are typing...";
+                    break;
+                }
+              }
+            }
+          });
 
-        return newData;
-      }
-    });
+          return newData;
+        }
+      });
+    }
   };
 
   const handlePreview = e => {
