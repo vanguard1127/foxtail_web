@@ -68,7 +68,7 @@ const Inbox: React.FC<IInboxProps> = memo(({
       if (unsubscribe.current) {
         unsubscribe.current();
       }
-      if (unsubscribe2) {
+      if (unsubscribe2.current) {
         unsubscribe2.current();
       }
       sessionStorage.setItem("page", '');

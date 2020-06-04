@@ -20,21 +20,6 @@
   visibility: visible;
 }
 
-/* .invite-member::-webkit-scrollbar {
-  width: 9px;
-  height: 10px;
-  border: none;
-  background-color: inherit;
-  overflow: hidden;
-  border-radius: 0 3px 3px 0;
-} */
-/* .invite-member::-webkit-scrollbar-thumb {
-  background: #ececec;
-  border: none;
-}
-.invite-member::-webkit-scrollbar-corner {
-  background: inherit;
-} */
 .invite-member .content .memberList {
   max-height: 200px;
   width: 100%;

@@ -22,19 +22,6 @@ class Preferences extends Component {
     interestedIn: this.props.interestedIn
   };
 
-  handleRemoveLocLock = async () => {
-    await navigator.geolocation.getCurrentPosition(
-      pos => {
-        const { latitude, longitude } = pos.coords;
-        this.props.setLocationValues({ lat: latitude, long: longitude });
-      },
-      err => {
-        alert(this.props.t("common:enablerem"));
-        return;
-      }
-    );
-  };
-
   render() {
     const {
       distance,
@@ -133,7 +120,6 @@ class Preferences extends Component {
                   address={city}
                   type={"(cities)"}
                   placeholder={t("common:setloc") + "..."}
-                  handleRemoveLocLock={this.handleRemoveLocLock}
                   isBlackMember={isBlackMember}
                 />
               </div>

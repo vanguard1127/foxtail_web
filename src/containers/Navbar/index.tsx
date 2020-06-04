@@ -15,9 +15,9 @@ interface INavbarProps extends RouteComponentProps, WithTranslation {
 const Navbar: React.FC<INavbarProps> = memo(({
   session,
   history,
-  t,
   tReady,
-  dayjs
+  dayjs,
+  t,
 }) => {
   if (!tReady) {
     return <Spinner />;

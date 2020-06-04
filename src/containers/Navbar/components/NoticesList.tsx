@@ -1,6 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import { Waypoint } from "react-waypoint";
 import produce from "immer";
+import { WithT } from "i18next";
 
 import { NEW_NOTICE_SUB } from "queries";
 import getLang from "utils/getLang";
@@ -10,14 +11,13 @@ import { IAlertData } from "./NavbarAuth";
 
 const lang = getLang();
 
-interface INoticesListProps {
+interface INoticesListProps extends WithT {
   notifications: any;
   fetchMore: any;
   subscribeToMore: any;
   readNotices: (notificationID: number | string) => void;
   history: any;
   ErrorHandler: any;
-  t: any;
   dayjs: any;
   showAlert: (alert: IAlertData) => void;
   handleCoupleLink: (coupleProID: number | string) => void
@@ -30,10 +30,10 @@ const NoticesList: React.FC<INoticesListProps> = memo(({
   readNotices,
   history,
   ErrorHandler,
-  t,
   dayjs,
   showAlert,
-  handleCoupleLink
+  handleCoupleLink,
+  t,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);

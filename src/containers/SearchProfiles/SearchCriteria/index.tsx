@@ -1,5 +1,6 @@
 import React, { memo, useState } from "react";
 import { useMutation } from "react-apollo";
+import { WithT } from "i18next";
 
 import { UPDATE_SETTINGS } from "queries";
 import Dropdown from "components/common/Dropdown";
@@ -12,9 +13,8 @@ import UIWrapper from "./UIWrapper";
 
 import "../searchProfiles.css";
 
-interface ISearchCriteriaProps {
+interface ISearchCriteriaProps extends WithT {
   loading: boolean;
-  t: any;
   setLocation: (val: any) => void;
   setValue: ({ name, value }: { name: string, value: string }) => void
   lat: any;
@@ -33,7 +33,6 @@ interface ISearchCriteriaProps {
 
 const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
   loading,
-  t,
   setLocation,
   setValue,
   lat,
@@ -48,6 +47,7 @@ const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
   ErrorHandler,
   isBlackMember,
   ReactGA,
+  t,
 }) => {
   const [interestedInState, setInterestedInState] = useState(interestedIn);
   const [updateSettings] = useMutation(UPDATE_SETTINGS, {
@@ -95,13 +95,6 @@ const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
       });
   };
 
-  const handleRemoveLocLock = async updateSettings => {
-    await navigator.geolocation.getCurrentPosition(
-      pos => setLocationHandler(pos, updateSettings),
-      err => { alert(t("common:enablerem")); }
-    );
-  };
-
   const setLocationValues = async ({ lat, long, city, updateSettings }) => {
     if (lat && long) {
       setLocationHandler({ coords: { longitude: long, latitude: lat } }, updateSettings);
@@ -121,7 +114,6 @@ const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
         <div className="col-md-6">
           <div className="item">
             <AddressSearch
-              style={{ width: 150 }}
               setLocationValues={({ lat, long, address }) => {
                 setLocationValues({
                   lat,
@@ -130,9 +122,9 @@ const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
                   updateSettings
                 });
               }}
-              address={""}
-              type={"(cities)"}
-              placeholder={t("common:setloc") + "..."}
+              address=""
+              type="(cities)"
+              placeholder={`${t("common:setloc")}...`}
               isBlackMember={isBlackMember}
             />
           </div>
@@ -146,6 +138,7 @@ const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
               value={[]}
               placeholder={t("common:Interested") + ":"}
               className="dropdown wide"
+              lang={lang}
             />
           </div>
         </div>
@@ -164,7 +157,6 @@ const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
       <div className="col-md-6">
         <div className="item">
           <AddressSearch
-            style={{ width: 150 }}
             setLocationValues={({ lat, long, address }) => {
               setLocationValues({
                 lat,
@@ -176,9 +168,6 @@ const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
             address={city}
             type={"(cities)"}
             placeholder={t("common:setloc") + "..."}
-            handleRemoveLocLock={() =>
-              handleRemoveLocLock(updateSettings)
-            }
             isBlackMember={isBlackMember}
           />
         </div>
@@ -186,9 +175,9 @@ const SearchCriteria: React.FC<ISearchCriteriaProps> = memo(({
       <div className="col-md-6">
         <div className="item">
           <Dropdown
-            type={"interestedIn"}
+            type="interestedIn"
             multiple
-            onChange={el => { setInterestedInState(el.map(e => e.value)); }}
+            onChange={el => setInterestedInState(el.map(e => e.value))}
             onClose={() =>
               setValueHandler({
                 name: "interestedIn",
