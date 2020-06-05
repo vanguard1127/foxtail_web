@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { miOptions, kiOptions } from "../../../docs/options/en";
-import AddressSearch from "../../common/AddressSearch";
-import Select from "../../common/Select";
+import AddressSearch from "components/common/AddressSearch";
+import Select from "components/common/Select";
 
 class SearchEventsFilters extends PureComponent {
   render() {

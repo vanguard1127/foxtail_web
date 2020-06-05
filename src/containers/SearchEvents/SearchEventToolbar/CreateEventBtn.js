@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from "react";
-import CreateEvent from "../../Modals/CreateEvent/";
+import CreateEvent from "components/Modals/CreateEvent/";
 class CreateEventBtn extends PureComponent {
   state = { showPopup: false };
   togglePopup = () => {

@@ -2,22 +2,28 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { withRouter } from "react-router-dom";
 import { Query, withApollo } from "react-apollo";
+import { Waypoint } from "react-waypoint";
 import {
   disableBodyScroll,
   enableBodyScroll,
   clearAllBodyScrollLocks
 } from "body-scroll-lock";
-import { SEARCH_EVENTS } from "../../queries";
-import { Waypoint } from "react-waypoint";
-import ShareModal from "../Modals/Share";
-import MyEvents from "./MyEvents";
-import withLocation from "../HOCs/withLocation";
-import SearchEventToolbar from "./SearchEventToolbar/";
+
+import { SEARCH_EVENTS } from "queries";
+
+import Spinner from "components/common/Spinner";
+import ShareModal from "components/Modals/Share";
+import withLocation from "components/HOCs/withLocation";
+
+import deleteFromCache from "utils/deleteFromCache";
+
 import Header from "./Header";
+import MyEvents from "./MyEvents";
 import EventsList from "./EventsList";
-import Spinner from "../common/Spinner";
-import deleteFromCache from "../../utils/deleteFromCache";
+import SearchEventToolbar from "./SearchEventToolbar/";
+
 import "./searchEvents.css";
+
 class SearchEvents extends Component {
   state = {
     skip: 0,

@@ -18,6 +18,7 @@ const LawEnforce = Loadable({ loader: () => import("components/Information/LawEn
 const ShortLinkRedirect = Loadable({ loader: () => import("components/Redirect/ShortLinkRedirect") });
 const PicsCompliance = Loadable({ loader: () => import("components/Information/PicsCompliance") });
 const Landing = Loadable({ loader: () => import("containers/Landing") });
+const VideoCall = Loadable({ loader: () => import("containers/VideoCall") });
 
 const AppRoutes: React.FC<{ lang: string }> = ({ lang }) => {
   return (
@@ -34,6 +35,7 @@ const AppRoutes: React.FC<{ lang: string }> = ({ lang }) => {
           ) : <NotFound />;
         }}
       />
+      <Route path="/videocall/:videoChatId?" component={VideoCall} />
       <Route path="/tos" component={ToS} />
       <Route path="/about" component={About} />
       <Route path="/faq" component={FAQ} />

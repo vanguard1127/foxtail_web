@@ -7,6 +7,7 @@ import { IUser } from "types/user";
 import NoProfileImg from "assets/img/elements/no-profile.png";
 
 import ChatActions from "./ChatActions";
+import openPopupWindow from "utils/openPopupWindow";
 
 interface IChatHeader extends WithT {
   currentChat: any;
@@ -71,6 +72,16 @@ const ChatHeader: React.FC<IChatHeader> = memo(({
     }
   }
 
+  const videoCallHandler = () => {
+    openPopupWindow(
+      "http://localhost:1234/videocall",
+      "VideoCall",
+      window,
+      700,
+      402
+    );
+  }
+
   return (
     <div className="navbar">
       <div className="user">
@@ -94,6 +105,7 @@ const ChatHeader: React.FC<IChatHeader> = memo(({
           )}
         </NavLink>
       </div>
+      <button onClick={videoCallHandler}>Video Call</button>
       <div className="more" onClick={toggleMenu} />
       <div className={isOpen ? "more-dropdown open" : "more-dropdown"}>
         <ChatActions
