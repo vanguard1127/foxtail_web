@@ -450,9 +450,7 @@ class CreateEvent extends Component {
                     <div className="content">
                       <div className="item">
                         <AddressSearch
-                          style={{
-                            width: "100%"
-                          }}
+                          style={{ width: "100%" }}
                           setLocationValues={({ lat, long, address }) =>
                             this.setLocationValues({
                               lat,

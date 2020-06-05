@@ -17,10 +17,10 @@ import "components/Header/header.css";
 const SearchProfiles = Loadable({ loader: () => import("containers/SearchProfiles") });
 const Footer = Loadable({ loader: () => import("components/Footer") });
 const Settings = Loadable({ loader: () => import("components/Settings") });
-const EventPage = Loadable({ loader: () => import("components/Event") });
+const EventPage = Loadable({ loader: () => import("containers/Event") });
 const ProfilePage = Loadable({ loader: () => import("containers/Profile") });
 const InboxPage = Loadable({ loader: () => import("containers/Inbox") });
-const SearchEvents = Loadable({ loader: () => import("components/SearchEvents") });
+const SearchEvents = Loadable({ loader: () => import("containers/SearchEvents") });
 const Onboard = Loadable({ loader: () => import("components/Modals/Onboard") });
 
 interface IMainRoutes {

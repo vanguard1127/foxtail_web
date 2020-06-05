@@ -49,30 +49,6 @@ const NoticesMenu: React.FC<INoticesMenuProps> = ({
     });
   };
 
-  if (loading || !data || !data.getNotifications || !data.getNotifications.notifications) {
-    return (
-      <div className="toggle toggleNotifications">
-        <div className="notification open">
-          <div className="item" key="na">
-            <span className="text">
-              {t("Loading")}...
-              <span style={{ float: "right" }}>
-                <CircularProgress size={16} />
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    );
-  } else if (error) {
-    return (
-      <ErrorHandler.report
-        error={error}
-        calledName={"getNotifications"}
-      />
-    );
-  }
-
   updateCount(client);
   return (
     <Menu
@@ -85,18 +61,38 @@ const NoticesMenu: React.FC<INoticesMenuProps> = ({
       }
       closeAction={noticesSeen}
     >
-      <NoticesList
-        notifications={data.getNotifications.notifications}
-        fetchMore={fetchMore}
-        subscribeToMore={subscribeToMore}
-        readNotices={readNotices}
-        history={history}
-        ErrorHandler={ErrorHandler}
-        t={t}
-        dayjs={dayjs}
-        showAlert={showAlert}
-        handleCoupleLink={handleCoupleLink}
-      />
+      {loading || !data || !data.getNotifications || !data.getNotifications.notifications ? (
+        <div className="toggle toggleNotifications">
+          <div className="notification open">
+            <div className="item" key="na">
+              <span className="text">
+                {t("Loading")}...
+              <span style={{ float: "right" }}>
+                  <CircularProgress size={16} />
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      ) : !error ? (
+        <NoticesList
+          notifications={data.getNotifications.notifications}
+          fetchMore={fetchMore}
+          subscribeToMore={subscribeToMore}
+          readNotices={readNotices}
+          history={history}
+          ErrorHandler={ErrorHandler}
+          t={t}
+          dayjs={dayjs}
+          showAlert={showAlert}
+          handleCoupleLink={handleCoupleLink}
+        />
+      )
+          : <ErrorHandler.report
+            error={error}
+            calledName={"getNotifications"}
+          />
+      }
     </Menu>
   );
 };

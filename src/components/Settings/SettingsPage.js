@@ -1226,7 +1226,6 @@ class SettingsPage extends Component {
                               />
                               <DeactivateAcctBtn
                                 t={t}
-                                ErrorHandler={ErrorHandler}
                                 history={history}
                                 toggleSharePopup={this.toggleSharePopup}
                               />

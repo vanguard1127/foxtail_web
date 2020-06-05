@@ -204,7 +204,7 @@ const Signup: React.FC<ISignupProps> = memo(({
             <div className="input">
               <Dropdown
                 value={state.interestedIn}
-                type={"interestedIn"}
+                type="interestedIn"
                 multiple
                 onChange={el => {
                   setValue({

@@ -1,9 +1,7 @@
 import React, { useState, memo } from "react";
 import { WithT } from "i18next";
-import ReactGA from 'react-ga';
 
-import * as ErrorHandler from 'components/common/ErrorHandler';
-import MembersDropdown from "components/common/MembersDropdown/MembersDropdown";
+import MembersDropdown from "components/common/MembersDropdown";
 
 interface IChatActionsProps extends WithT {
   chatID: string,
@@ -45,12 +43,10 @@ const ChatActions: React.FC<IChatActionsProps> = memo(({
       {state.remDropOpen && (
         <MembersDropdown
           targetID={chatID}
-          targetType={"chat"}
-          listType={"participants"}
+          targetType="chat"
+          listType="participants"
           close={closeRemDropdown}
           isOwner={isOwner}
-          ErrorHandler={ErrorHandler}
-          ReactGA={ReactGA}
           t={t}
         />
       )}
@@ -63,11 +59,9 @@ const ChatActions: React.FC<IChatActionsProps> = memo(({
       {state.invDropOpen && (
         <MembersDropdown
           targetID={chatID}
-          targetType={"chat"}
-          listType={"friends"}
+          targetType="chat"
+          listType="friends"
           close={closeInvDropdown}
-          ErrorHandler={ErrorHandler}
-          ReactGA={ReactGA}
           t={t}
         />
       )}

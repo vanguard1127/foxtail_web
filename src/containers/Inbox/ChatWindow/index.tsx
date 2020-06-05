@@ -109,9 +109,9 @@ const ChatWindow: React.FC<IChatWindowProps> = memo(({
         </div>
       ) : (
           <AdManager
-            t={t}
             goToBlk={onShowBlackMember}
             goToCpl={onAddCouple}
+            t={t}
           />
         )}
     </div>

@@ -1187,7 +1187,6 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
                       />
                       <DeactivateAcctBtn
                         t={t}
-                        ErrorHandler={ErrorHandler}
                         history={history}
                         toggleSharePopup={toggleSharePopup}
                       />
