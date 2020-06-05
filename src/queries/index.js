@@ -164,6 +164,21 @@ export const RESEND_EMAIL_VER = gql`
   }
 `;
 
+export const START_VIDEO_CHAT = gql`
+  mutation($chatID: ID!) {
+    startVideoChat(chatID: $chatID) {
+      p
+      rn
+    }
+  }
+`;
+
+export const LEAVE_VIDEO_CHAT = gql`
+  mutation($chatID: ID!) {
+    leaveVideoChat(chatID: $chatID)
+  }
+`;
+
 export const DELETE_PHOTO = gql`
   mutation($publicPhotoList: [String], $privatePhotoList: [String]) {
     deletePhoto(

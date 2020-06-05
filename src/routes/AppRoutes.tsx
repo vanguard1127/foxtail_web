@@ -9,14 +9,26 @@ import DevTools from "../DevTools";
 
 import MainRoutes from "./MainRoutes";
 
-const About = Loadable({ loader: () => import("components/Information/About") });
+const About = Loadable({
+  loader: () => import("components/Information/About")
+});
 const FAQ = Loadable({ loader: () => import("components/Information/FAQ") });
-const Privacy = Loadable({ loader: () => import("components/Information/Privacy") });
-const AntiSpam = Loadable({ loader: () => import("components/Information/AntiSpam") });
+const Privacy = Loadable({
+  loader: () => import("components/Information/Privacy")
+});
+const AntiSpam = Loadable({
+  loader: () => import("components/Information/AntiSpam")
+});
 const ToS = Loadable({ loader: () => import("components/Information/ToS") });
-const LawEnforce = Loadable({ loader: () => import("components/Information/LawEnforce") });
-const ShortLinkRedirect = Loadable({ loader: () => import("components/Redirect/ShortLinkRedirect") });
-const PicsCompliance = Loadable({ loader: () => import("components/Information/PicsCompliance") });
+const LawEnforce = Loadable({
+  loader: () => import("components/Information/LawEnforce")
+});
+const ShortLinkRedirect = Loadable({
+  loader: () => import("components/Redirect/ShortLinkRedirect")
+});
+const PicsCompliance = Loadable({
+  loader: () => import("components/Information/PicsCompliance")
+});
 const Landing = Loadable({ loader: () => import("containers/Landing") });
 const VideoCall = Loadable({ loader: () => import("containers/VideoCall") });
 
@@ -26,16 +38,20 @@ const AppRoutes: React.FC<{ lang: string }> = ({ lang }) => {
       <Route
         path="/"
         exact
-        render={routeProps => {
-          const { location: { search } } = routeProps;
+        render={(routeProps) => {
+          const {
+            location: { search }
+          } = routeProps;
           return search ? (
             <ShortLinkRedirect hash={search} />
           ) : !search || search.includes("=") ? (
             <Landing lang={lang} {...routeProps} />
-          ) : <NotFound />;
+          ) : (
+            <NotFound />
+          );
         }}
       />
-      <Route path="/videocall/:videoChatId?" component={VideoCall} />
+      <Route path="/videocall/:rn/:p/:n?" component={VideoCall} />
       <Route path="/tos" component={ToS} />
       <Route path="/about" component={About} />
       <Route path="/faq" component={FAQ} />
@@ -49,13 +65,15 @@ const AppRoutes: React.FC<{ lang: string }> = ({ lang }) => {
           return process.env.NODE_ENV !== "production" ? (
             <DevTools />
           ) : (
-              <NotFound />
-            );
+            <NotFound />
+          );
         }}
       />
       <Route
         path="*"
-        render={({ location }) => <MainRoutes lang={lang} location={location} />}
+        render={({ location }) => (
+          <MainRoutes lang={lang} location={location} />
+        )}
       />
     </Switch>
   );
