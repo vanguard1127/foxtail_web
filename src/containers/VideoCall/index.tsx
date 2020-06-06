@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Jitsi from "react-jitsi";
-
+import { useMutation } from "react-apollo";
+import { LEAVE_VIDEO_CHAT } from "queries";
 import "./VideoCall.scss";
 
-const VideoCall = ({ match }) => {
+const VideoCall = ({ match, chatID }) => {
+  const [leaveVideoChat] = useMutation(LEAVE_VIDEO_CHAT, {
+    variables: { chatID }
+  });
+  useEffect(() => {
+    return function cleanup() {
+      leaveVideoChat();
+    };
+  });
   return (
     <div className="video-call">
       <Jitsi
