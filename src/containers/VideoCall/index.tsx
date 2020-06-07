@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import Jitsi from "react-jitsi";
 import { useMutation } from "react-apollo";
 import { LEAVE_VIDEO_CHAT } from "queries";
+import Jitsi from "react-jitsi";
 import "./VideoCall.scss";
 
 const VideoCall = ({ match, chatID }) => {
@@ -10,7 +10,9 @@ const VideoCall = ({ match, chatID }) => {
   });
   useEffect(() => {
     return function cleanup() {
-      leaveVideoChat();
+      if (chatID) {
+        leaveVideoChat();
+      }
     };
   });
   return (
