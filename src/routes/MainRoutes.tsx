@@ -14,13 +14,18 @@ import Navbar from "containers/Navbar";
 
 import "components/Header/header.css";
 
-const SearchProfiles = Loadable({ loader: () => import("containers/SearchProfiles") });
+const SearchProfiles = Loadable({
+  loader: () => import("containers/SearchProfiles")
+});
 const Footer = Loadable({ loader: () => import("components/Footer") });
 const Settings = Loadable({ loader: () => import("components/Settings") });
 const EventPage = Loadable({ loader: () => import("containers/Event") });
+const PartyPage = Loadable({ loader: () => import("containers/Party") });
 const ProfilePage = Loadable({ loader: () => import("containers/Profile") });
 const InboxPage = Loadable({ loader: () => import("containers/Inbox") });
-const SearchEvents = Loadable({ loader: () => import("containers/SearchEvents") });
+const SearchEvents = Loadable({
+  loader: () => import("containers/SearchEvents")
+});
 const Onboard = Loadable({ loader: () => import("components/Modals/Onboard") });
 
 interface IMainRoutes {
@@ -30,9 +35,16 @@ interface IMainRoutes {
   location: any;
 }
 
-const MainRoutes: React.FC<IMainRoutes> = ({ session, refetch, lang, location }) => {
+const MainRoutes: React.FC<IMainRoutes> = ({
+  session,
+  refetch,
+  lang,
+  location
+}) => {
   const showFooter =
-    location.pathname && location.pathname.match(/^\/inbox/) === null;
+    location.pathname &&
+    location.pathname.match(/^\/inbox/) === null &&
+    location.pathname.match(/^\/party/) === null;
   const baseRouteProps = {
     ErrorHandler,
     ReactGA,
@@ -54,7 +66,9 @@ const MainRoutes: React.FC<IMainRoutes> = ({ session, refetch, lang, location })
           />
           <Route
             path="/member/:id"
-            render={(routeProps) => <ProfilePage {...routeProps} {...baseRouteProps} />}
+            render={(routeProps) => (
+              <ProfilePage {...routeProps} {...baseRouteProps} />
+            )}
           />
           <Route
             path="/events"
@@ -66,8 +80,13 @@ const MainRoutes: React.FC<IMainRoutes> = ({ session, refetch, lang, location })
             render={() => <EventPage {...baseRouteProps} lang={lang} />}
           />
           <Route
+            path="/party"
+            render={() => <PartyPage {...baseRouteProps} lang={lang} />}
+            exact
+          />
+          <Route
             path="/inbox/:chatID?"
-            render={routeProps => (
+            render={(routeProps) => (
               <InboxPage {...routeProps} {...baseRouteProps} lang={lang} />
             )}
           />
@@ -93,4 +112,6 @@ const MainRoutes: React.FC<IMainRoutes> = ({ session, refetch, lang, location })
   );
 };
 
-export default withAuth(session => session && session.currentuser)(MainRoutes);
+export default withAuth((session) => session && session.currentuser)(
+  MainRoutes
+);

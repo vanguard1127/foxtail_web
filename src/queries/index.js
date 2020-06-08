@@ -89,6 +89,16 @@ export const NEW_NOTICE_SUB = gql`
   }
 `;
 
+export const INCOMING_VIDEO_CHAT = gql`
+  subscription {
+    incomingVideoChat {
+      rn
+      p
+    }
+  }
+`;
+
+/* Mutation */
 export const CREATE_SUBSCRIPTION = gql`
   mutation(
     $ccnum: String!
@@ -176,6 +186,18 @@ export const START_VIDEO_CHAT = gql`
 export const LEAVE_VIDEO_CHAT = gql`
   mutation($chatID: ID!) {
     leaveVideoChat(chatID: $chatID)
+  }
+`;
+
+export const ENTER_VIDEO_QUEUE = gql`
+  mutation {
+    enterVideoQueue
+  }
+`;
+
+export const EXIT_VIDEO_QUEUE = gql`
+  mutation {
+    exitVideoQueue
   }
 `;
 
