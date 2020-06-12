@@ -1,10 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useSubscription } from "react-apollo";
-import { LEAVE_VIDEO_CHAT, INCOMING_VIDEO_CHAT } from "queries";
 import Jitsi from "react-jitsi";
+
+import {
+  LEAVE_VIDEO_CHAT,
+  INCOMING_VIDEO_CHAT,
+  EXIT_VIDEO_QUEUE
+} from "queries";
+
 import "./VideoCall.scss";
 
 const VideoCall = ({ match, chatID }) => {
+  const [roomCredentials, setRoomCredentials] = useState({
+    rn: match.params.rn,
+    p: match.params.p
+  });
+
+  const [exitVideoQueue] = useMutation(EXIT_VIDEO_QUEUE);
   const [leaveVideoChat] = useMutation(LEAVE_VIDEO_CHAT, {
     variables: { chatID }
   });
@@ -12,33 +24,31 @@ const VideoCall = ({ match, chatID }) => {
     return function cleanup() {
       if (chatID) {
         leaveVideoChat();
+      } else {
+        exitVideoQueue();
       }
     };
   });
 
-  const { data, loading } = useSubscription(INCOMING_VIDEO_CHAT, {
-    onSubscriptionData: ({ client, subscriptionData }) => {
-      console.log(subscriptionData);
+  useSubscription(INCOMING_VIDEO_CHAT, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      if (subscriptionData.data.incomingVideoChat !== null) {
+        setRoomCredentials({
+          rn: subscriptionData.data.incomingVideoChat.rn,
+          p: subscriptionData.data.incomingVideoChat.p
+        });
+        //TODO: How do we force it to update
+      }
     }
   });
-
-  const rn =
-    data && data.incomingVideoChat ? incomingVideoChat.rn : match.params.rn;
-
-  const p =
-    data && data.incomingVideoChat ? incomingVideoChat.p : match.params.p;
-  if (data && data.incomingVideoChat) {
-    console.log("jklkl", data.incomingVideoChat);
-  }
-  if (rn === "null" || loading) {
-    return <div className="video-call">Loading</div>;
-  }
+  const { rn, p } = roomCredentials;
+  console.log("R", rn, "p", p);
   return (
     <div className="video-call">
       <Jitsi
         roomName={rn}
         domain={"meet.foxtailapp.com"}
-        displayName={match.params.n}
+        displayName={p}
         password={p}
         containerStyle={{
           display: "flex",

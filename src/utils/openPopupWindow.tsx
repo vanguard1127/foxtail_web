@@ -1,10 +1,16 @@
-export default (url: string, title: string, win: any, width: number, height: number) => {
-    const y = win.top.outerHeight / 2 + win.top.screenY - height / 2;
-    const x = win.top.outerWidth / 2 + win.top.screenX - width / 2;
-    return win.open(
-        url,
-        title,
-        `toolbar=no,
+export default (
+  url: string,
+  title: string,
+  win: any,
+  width: number,
+  height: number
+) => {
+  const y = win.top.outerHeight / 2 + win.top.screenY - height / 2;
+  const x = win.top.outerWidth / 2 + win.top.screenX - width / 2;
+  return win.open(
+    url,
+    title,
+    `toolbar=no,
         location=no,
         directories=no,
         status=no,
@@ -16,5 +22,6 @@ export default (url: string, title: string, win: any, width: number, height: num
         height=${height},
         top=${y},
         left=${x}
-    `);
-}
+    `
+  );
+};

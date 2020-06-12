@@ -66,6 +66,13 @@ const InboxList: React.FC<IInboxListProps> = memo(
             </div>
           </span>
         </div>
+        <div className="item unread">
+          <span onClick={() => videoCallHandler()} className="inbox-item">
+            <div className="data">
+              <button onClick={() => enterVideoQueue()}>Test Next</button>
+            </div>
+          </span>
+        </div>
         <div className="item">
           <Waypoint
             onEnter={({ previousPosition }) => handleEnd(previousPosition)}
