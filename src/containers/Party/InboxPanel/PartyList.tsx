@@ -6,15 +6,17 @@ import { useMutation } from "react-apollo";
 import openPopupWindow from "utils/openPopupWindow";
 import { ENTER_VIDEO_QUEUE } from "queries";
 import { IUser } from "types/user";
+import NoProfileImg from "assets/img/elements/no-profile.png";
 
-interface IInboxListProps extends WithT {
+interface IPartyListProps extends WithT {
   fetchData: () => void;
   openChat: (chatID: any) => void;
   currentuser: IUser;
+  chatrooms: any;
 }
 
-const InboxList: React.FC<IInboxListProps> = memo(
-  ({ fetchData, openChat, currentuser, t }) => {
+const PartyList: React.FC<IPartyListProps> = memo(
+  ({ fetchData, openChat, currentuser, t, chatrooms }) => {
     const handleEnd = (previousPosition) => {
       if (previousPosition === Waypoint.below) {
         fetchData();
@@ -34,10 +36,49 @@ const InboxList: React.FC<IInboxListProps> = memo(
       });
     };
 
+    const renderItem = (item) => {
+      const title = item.name;
+
+      return (
+        <div className="item unread" key={item.id}>
+          <span onClick={() => openChat(item.id)} className="inbox-item">
+            <span className="img">
+              <img src={NoProfileImg} alt="" />
+            </span>
+            <div className="data">
+              <span className="name" title={title}>
+                {title}
+              </span>
+              <span className={"time blk"} />
+              <span className={"msg new"}>Members: {item.numParticipants}</span>
+            </div>
+          </span>
+        </div>
+      );
+    };
+
+    const renderMsgList = ({ chatrooms }) => {
+      if (chatrooms.length === 0) {
+        return <span className="no-message">{t("nomsgsInbox")}</span>;
+      }
+
+      return (
+        <>
+          {chatrooms.map((chatroom) => {
+            return renderItem(chatroom);
+          })}
+        </>
+      );
+    };
+
     return (
       <div className="conversations">
+        {renderMsgList({ chatrooms })}
         <div className="item unread">
-          <span onClick={() => console.log("EEE")} className="inbox-item">
+          <span
+            onClick={() => openChat("5ee285fe4c68d803c87f8ca0")}
+            className="inbox-item"
+          >
             <div className="data">
               <span className="name" title={"Global Chat"}>
                 {"Global Chat"}
@@ -46,26 +87,7 @@ const InboxList: React.FC<IInboxListProps> = memo(
             </div>
           </span>
         </div>
-        <div className="item unread">
-          <span onClick={() => console.log("EEE")} className="inbox-item">
-            <div className="data">
-              <span className="name" title={"San Diego Chat"}>
-                {"San Diego Chat"}
-              </span>
-              <span className={"msg new"}>Members: 23</span>
-            </div>
-          </span>
-        </div>
-        <div className="item unread">
-          <span onClick={() => videoCallHandler()} className="inbox-item">
-            <div className="data">
-              <span className="name" title={"Foxtail Meet"}>
-                {"Foxtail Meet"}
-              </span>
-              <span className={"msg new"}>Members: 23</span>
-            </div>
-          </span>
-        </div>
+
         <div className="item unread">
           <span onClick={() => videoCallHandler()} className="inbox-item">
             <div className="data">
@@ -83,4 +105,4 @@ const InboxList: React.FC<IInboxListProps> = memo(
   }
 );
 
-export default InboxList;
+export default PartyList;

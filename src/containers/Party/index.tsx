@@ -9,12 +9,7 @@ import Spinner from "components/common/Spinner";
 import RulesModal from "components/Modals/Rules";
 import BlockModal from "components/Modals/Block";
 import deleteFromCache from "utils/deleteFromCache";
-import {
-  GET_INBOX,
-  GET_COUNTS,
-  NEW_MESSAGE_SUB,
-  MESSAGE_ACTION_SUB
-} from "queries";
+import { NEW_MESSAGE_SUB, MESSAGE_ACTION_SUB } from "queries";
 import { ISession } from "types/user";
 
 import { flagOptions } from "../../docs/options";
@@ -27,8 +22,13 @@ import Chat from "./Chat";
 import "./party.css";
 
 const limit = parseInt(process.env.REACT_APP_INBOXLIST_LIMIT || "12");
+interface MatchParams {
+  chatID: string;
+}
 
-interface IInboxProps extends WithTranslation {
+interface IPartyProps
+  extends RouteComponentProps<MatchParams>,
+    WithTranslation {
   ReactGA: any;
   ErrorHandler: any;
   client: any;
@@ -36,7 +36,7 @@ interface IInboxProps extends WithTranslation {
   lang: string;
 }
 
-const Inbox: React.FC<IInboxProps> = memo(
+const Inbox: React.FC<IPartyProps> = memo(
   ({
     ReactGA,
     ErrorHandler,
@@ -50,8 +50,11 @@ const Inbox: React.FC<IInboxProps> = memo(
   }) => {
     const unsubscribe = useRef(null);
     const unsubscribe2 = useRef(null);
+    //TODO: How do I get this to work?
+    // chatID: match.params.chatID,
     const [state, setState] = useState<any>({
       blockModalVisible: false,
+      chatID: "5ee285fe4c68d803c87f8ca0",
       showRulesModal: false,
       previewVisible: false,
       selectedImg: null
@@ -71,6 +74,13 @@ const Inbox: React.FC<IInboxProps> = memo(
         sessionStorage.setItem("pid", "");
       };
     }, []);
+
+    //TODO: Why not working like inbox
+    // useEffect(() => {
+    //   if (match.params.chatID !== state.chatID) {
+    //     setState({ ...state, chatID: match.params.chatID });
+    //   }
+    // }, [match]);
 
     const setBlockModalVisible = () => {
       const { blockModalVisible } = state;

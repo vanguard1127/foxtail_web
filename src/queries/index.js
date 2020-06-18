@@ -1088,3 +1088,13 @@ export const SET_FULL_LINK = gql`
     setFullLink(url: $url)
   }
 `;
+
+export const GET_CHATROOMS = gql`
+  query($skip: Int!, $limit: Int!, $isMobile: String) {
+    getChatrooms(skip: $skip, limit: $limit, isMobile: $isMobile) {
+      id
+      name
+      numParticipants
+    }
+  }
+`;
