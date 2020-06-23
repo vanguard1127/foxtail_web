@@ -547,7 +547,7 @@ export const SEARCH_EVENTS = gql`
 
 export const SEARCH_PROFILES = gql`
   query(
-    $searchType: String!
+    $searchType: String
     $long: Float!
     $lat: Float!
     $distance: Int!
