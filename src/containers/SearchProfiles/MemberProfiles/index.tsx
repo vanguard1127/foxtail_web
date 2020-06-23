@@ -17,56 +17,80 @@ interface IMemberProfilesProps extends WithT {
   likedProfiles: any;
   msgdProfiles: any;
   toggleBlockModalVisible: (profile: any) => void;
+  searchType: string;
+  setSearchType: any;
 }
 
-const MemberProfiles: React.FC<IMemberProfilesProps> = memo(({
-  profiles,
-  showMsgModal,
-  likeProfile,
-  history,
-  handleEnd,
-  t,
-  dayjs,
-  distanceMetric,
-  likedProfiles,
-  msgdProfiles,
-  toggleBlockModalVisible
-}) => {
-
-  return (
-    <section className="members">
-      <div className="container">
-        <div className="col-md-12">
-          <div className="row">
-            <div className="col-md-12">
-              <span className="head">{t("allmems")}</span>
+const MemberProfiles: React.FC<IMemberProfilesProps> = memo(
+  ({
+    profiles,
+    showMsgModal,
+    likeProfile,
+    history,
+    handleEnd,
+    t,
+    dayjs,
+    distanceMetric,
+    likedProfiles,
+    msgdProfiles,
+    toggleBlockModalVisible,
+    searchType,
+    setSearchType
+  }) => {
+    return (
+      <section className="members">
+        <div className="container">
+          <div className="col-md-12">
+            <div className="row">
+              <div className="col-md-12">
+                <span
+                  className={`head ${searchType === "all" && "selected"}`}
+                  onClick={() => setSearchType("all")}
+                >
+                  {t("allmems")}
+                </span>
+                <span
+                  className={`head ${searchType === "liked" && "selected"}`}
+                  onClick={() => setSearchType("liked")}
+                >
+                  {t("liked")}
+                </span>
+                <span
+                  className={`head ${searchType === "likedMe" && "selected"}`}
+                  onClick={() => setSearchType("likedMe")}
+                >
+                  {t("likedMe")}
+                </span>
+              </div>
+              {profiles.map((profile, idx) => {
+                return (
+                  <MemberProfileCard
+                    key={profile.id + idx}
+                    profile={profile}
+                    showMsgModal={showMsgModal}
+                    likeProfile={likeProfile}
+                    t={t}
+                    history={history}
+                    dayjs={dayjs}
+                    distanceMetric={distanceMetric}
+                    liked={likedProfiles.includes(profile.id)}
+                    msgd={msgdProfiles.includes(profile.id)}
+                    toggleBlockModalVisible={toggleBlockModalVisible}
+                  />
+                );
+              })}
+              <Waypoint
+                onEnter={({ previousPosition }) =>
+                  handleEnd({ previousPosition })
+                }
+                topOffset="50px"
+              />
             </div>
-            {profiles.map((profile, idx) => {
-              return (
-                <MemberProfileCard
-                  key={profile.id + idx}
-                  profile={profile}
-                  showMsgModal={showMsgModal}
-                  likeProfile={likeProfile}
-                  t={t}
-                  history={history}
-                  dayjs={dayjs}
-                  distanceMetric={distanceMetric}
-                  liked={likedProfiles.includes(profile.id)}
-                  msgd={msgdProfiles.includes(profile.id)}
-                  toggleBlockModalVisible={toggleBlockModalVisible}
-                />
-              );
-            })}
-            <Waypoint
-              onEnter={({ previousPosition }) => handleEnd({ previousPosition })}
-              topOffset="50px"
-            />
           </div>
         </div>
-      </div>
-    </section>
-  );
-});
+      </section>
+    );
+  }
+);
 
 export default MemberProfiles;

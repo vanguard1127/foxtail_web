@@ -751,19 +751,28 @@ section.members {
 }
 
 section.members span.head {
-  width: 100%;
   display: block;
   float: left;
   text-transform: uppercase;
   font-size: 15px;
-  color: #464648;
+  color: #ccd6df;
   font-weight: 700;
   letter-spacing: -0.15px;
   border-left: 5px solid #ccd6df;
   line-height: 22px;
   padding-left: 10px;
   padding-top: 1px;
+  padding-right: 11px;
   margin-bottom: 15px;
+  cursor: pointer;
+}
+
+section.members span.head.selected {
+  color: #464648 !important;
+}
+
+section.members span.head:hover {
+  color: #cf003c;
 }
 
 section.members .card-item {
