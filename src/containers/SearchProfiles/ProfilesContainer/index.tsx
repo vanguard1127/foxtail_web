@@ -80,7 +80,7 @@ const ProfilesContainer: React.FC<IProfilesContainerProps> = memo(
       ageRange,
       interestedIn,
       limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT),
-      skip: 0,
+      skip: state.skip,
       isMobile: sessionStorage.getItem("isMobile")
     };
 
@@ -100,7 +100,7 @@ const ProfilesContainer: React.FC<IProfilesContainerProps> = memo(
 
     useEffect(() => {
       document.title = t("common:Search Profiles");
-    }, []);
+    }, [state.skip]);
 
     const setMaxLikeDlgVisible = () => {
       ErrorHandler.setBreadcrumb("Max Like Dialog Toggled:");
