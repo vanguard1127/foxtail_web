@@ -233,20 +233,21 @@ const ProfilesContainer: React.FC<IProfilesContainerProps> = memo(
         });
     };
 
-    const fetchData = async (fetchMore) => {
+    const fetchData = async (fetchMore, newSkip) => {
       ErrorHandler.setBreadcrumb("Fetch more profiles");
-      const { skip, hasMore } = state;
+      const { hasMore } = state;
 
       if (hasMore) {
-        setState({ ...state, loading: true });
+        setState({ ...state, skip: newSkip, loading: true });
         fetchMore({
           variables: {
+            searchType,
             long,
             lat,
             distance,
             ageRange,
             interestedIn,
-            skip: skip,
+            skip: newSkip,
             limit: parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT)
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -275,11 +276,9 @@ const ProfilesContainer: React.FC<IProfilesContainerProps> = memo(
 
     const handleEnd = ({ previousPosition, fetchMore }) => {
       if (previousPosition === Waypoint.below) {
-        setState({
-          ...state,
-          skip: state.skip + parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT)
-        });
-        fetchData(fetchMore);
+        const newSkip =
+          state.skip + parseInt(process.env.REACT_APP_SEARCHPROS_LIMIT);
+        fetchData(fetchMore, newSkip);
       }
     };
 
