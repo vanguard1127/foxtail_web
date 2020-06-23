@@ -19,10 +19,10 @@ const InboxHeader: React.FC<IInboxHeaderPops> = memo(
               className={chatOpen ? "head back" : "head"}
               onClick={closeChat}
             >
-              {t("common:Party")}
+              {t("common:Chat")}
             </span>
             <span className="title">
-              {t("subtitle")}{" "}
+              {t("partysubtitle")}{" "}
               <span onClick={toggleRuleModal} className="link">
                 {t("rules")}
               </span>

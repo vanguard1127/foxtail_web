@@ -8,6 +8,7 @@ import * as ErrorHandler from "components/common/ErrorHandler";
 import Spinner from "components/common/Spinner";
 
 import PartyList from "./PartyList";
+import VideoChatItem from "./VideoChatItem";
 import { IUser } from "types/user";
 
 const limit = parseInt(process.env.REACT_APP_PARTYLIST_LIMIT || "12");
@@ -107,6 +108,7 @@ const PartyPanel: React.FC<IPartyPanelProps> = memo(
     return (
       <div className="col-md-4 col-lg-3 col-xl-3">
         <div className="left">
+          <VideoChatItem t={t} />
           <PartyList
             chatrooms={chatrooms}
             fetchData={() => fetchData(fetchMore)}

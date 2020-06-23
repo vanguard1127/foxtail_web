@@ -7,7 +7,6 @@ import ChatActions from "./ChatActions";
 
 interface IChatHeader extends WithT {
   currentChat: any;
-  title: string;
   chatID: string;
   setBlockModalVisible?: () => void;
   isOwner?: boolean;

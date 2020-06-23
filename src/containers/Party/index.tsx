@@ -61,7 +61,7 @@ const Inbox: React.FC<IPartyProps> = memo(
 
     useEffect(() => {
       document.title = t("common:Inbox");
-      sessionStorage.setItem("page", "party");
+      sessionStorage.setItem("page", "chat");
       return () => {
         if (unsubscribe.current) {
           unsubscribe.current();
@@ -87,6 +87,7 @@ const Inbox: React.FC<IPartyProps> = memo(
     };
 
     const openChat = (chatID) => {
+      console.log("chatpart", chatID);
       ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
       if (unsubscribe.current) {
         unsubscribe.current();
@@ -100,6 +101,7 @@ const Inbox: React.FC<IPartyProps> = memo(
     };
 
     const closeChat = () => {
+      console.log("close pert");
       if (unsubscribe.current) {
         unsubscribe.current();
       }
@@ -114,7 +116,9 @@ const Inbox: React.FC<IPartyProps> = memo(
     };
 
     const subscribeToMessages = (subscribeToMore) => {
+      console.log("object", state.chatID);
       if (!unsubscribe.current) {
+        console.log("12");
         unsubscribe.current = subscribeToMore({
           document: NEW_MESSAGE_SUB,
           variables: {
@@ -145,6 +149,7 @@ const Inbox: React.FC<IPartyProps> = memo(
         });
       }
       if (!unsubscribe2.current) {
+        console.log("56556");
         unsubscribe2.current = subscribeToMore({
           document: MESSAGE_ACTION_SUB,
           updateQuery: (prev, { subscriptionData }) => {

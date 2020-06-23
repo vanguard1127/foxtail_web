@@ -72,21 +72,17 @@ const PartyList: React.FC<IPartyListProps> = memo(
     };
 
     return (
-      <div className="conversations">
-        {renderMsgList({ chatrooms })}
-        <div className="item unread">
-          <span onClick={() => videoCallHandler()} className="inbox-item">
-            <div className="data">
-              <button onClick={() => enterVideoQueue()}>Test Next</button>
-            </div>
-          </span>
+      <>
+        <div className="title">Chatrooms</div>
+        <div className="conversations">
+          {renderMsgList({ chatrooms })}
+          <div className="item">
+            <Waypoint
+              onEnter={({ previousPosition }) => handleEnd(previousPosition)}
+            />
+          </div>
         </div>
-        <div className="item">
-          <Waypoint
-            onEnter={({ previousPosition }) => handleEnd(previousPosition)}
-          />
-        </div>
-      </div>
+      </>
     );
   }
 );

@@ -93,6 +93,7 @@ const Inbox: React.FC<IInboxProps> = memo(
     };
 
     const openChat = (chatID) => {
+      console.log("chatpart inbox", chatID);
       ErrorHandler.setBreadcrumb("Open Chat:" + chatID);
       if (unsubscribe.current) {
         unsubscribe.current();
@@ -106,6 +107,7 @@ const Inbox: React.FC<IInboxProps> = memo(
     };
 
     const closeChat = () => {
+      console.log("close inbox");
       if (unsubscribe.current) {
         unsubscribe.current();
       }
