@@ -81,7 +81,9 @@ const MainRoutes: React.FC<IMainRoutes> = ({
           />
           <Route
             path="/party/:chatID?"
-            render={() => <PartyPage {...baseRouteProps} lang={lang} />}
+            render={(routeProps) => (
+              <PartyPage {...routeProps} {...baseRouteProps} lang={lang} />
+            )}
             exact
           />
           <Route

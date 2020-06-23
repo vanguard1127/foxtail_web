@@ -834,6 +834,7 @@ export const GET_MESSAGES = gql`
       maxH: $maxH
     ) {
       id
+      name
       updatedAt
       ownerProfile {
         id

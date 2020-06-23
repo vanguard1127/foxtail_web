@@ -104,6 +104,10 @@ const Chat: React.FC<IChatProps> = ({
   if (!data || !data.getMessages) {
     return <Spinner message={t("common:Loading")} size="large" />;
   }
+  const isOwner =
+    chat && chat.ownerProfile
+      ? chat.ownerProfile.id === currentuser.profileID
+      : false;
 
   return (
     <React.Fragment>
@@ -115,7 +119,7 @@ const Chat: React.FC<IChatProps> = ({
         history={history}
         setBlockModalVisible={setBlockModalVisible}
         lang={lang}
-        isOwner={chat && chat.ownerProfile.id === currentuser.profileID}
+        isOwner={isOwner}
         leaveDialog={toggleDialog}
         fetchMore={fetchMore}
         subscribeToMore={() => subscribeToMessages(subscribeToMore)}
@@ -125,7 +129,7 @@ const Chat: React.FC<IChatProps> = ({
         t={t}
         setBlockModalVisible={setBlockModalVisible}
         chatID={chatID}
-        isOwner={chat && chat.ownerProfile.id === currentuser.profileID}
+        isOwner={isOwner}
         leaveDialog={toggleDialog}
         participantsNum={chat && chat.participants.length}
       />

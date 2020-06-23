@@ -50,11 +50,10 @@ const Inbox: React.FC<IPartyProps> = memo(
   }) => {
     const unsubscribe = useRef(null);
     const unsubscribe2 = useRef(null);
-    //TODO: How do I get this to work?
-    // chatID: match.params.chatID,
+
     const [state, setState] = useState<any>({
       blockModalVisible: false,
-      chatID: "5ee285fe4c68d803c87f8ca0",
+      chatID: match.params.chatID,
       showRulesModal: false,
       previewVisible: false,
       selectedImg: null
@@ -62,7 +61,7 @@ const Inbox: React.FC<IPartyProps> = memo(
 
     useEffect(() => {
       document.title = t("common:Inbox");
-      sessionStorage.setItem("page", "inbox");
+      sessionStorage.setItem("page", "party");
       return () => {
         if (unsubscribe.current) {
           unsubscribe.current();
@@ -75,12 +74,11 @@ const Inbox: React.FC<IPartyProps> = memo(
       };
     }, []);
 
-    //TODO: Why not working like inbox
-    // useEffect(() => {
-    //   if (match.params.chatID !== state.chatID) {
-    //     setState({ ...state, chatID: match.params.chatID });
-    //   }
-    // }, [match]);
+    useEffect(() => {
+      if (match.params.chatID !== state.chatID) {
+        setState({ ...state, chatID: match.params.chatID });
+      }
+    }, [match]);
 
     const setBlockModalVisible = () => {
       const { blockModalVisible } = state;

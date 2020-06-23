@@ -56,6 +56,7 @@ const Inbox: React.FC<IInboxProps> = memo(
   }) => {
     const unsubscribe = useRef(null);
     const unsubscribe2 = useRef(null);
+
     const [state, setState] = useState<any>({
       blockModalVisible: false,
       chatID: match.params.chatID,

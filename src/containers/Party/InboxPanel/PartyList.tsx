@@ -75,20 +75,6 @@ const PartyList: React.FC<IPartyListProps> = memo(
       <div className="conversations">
         {renderMsgList({ chatrooms })}
         <div className="item unread">
-          <span
-            onClick={() => openChat("5ee285fe4c68d803c87f8ca0")}
-            className="inbox-item"
-          >
-            <div className="data">
-              <span className="name" title={"Global Chat"}>
-                {"Global Chat"}
-              </span>
-              <span className={"msg new"}>Members: 340</span>
-            </div>
-          </span>
-        </div>
-
-        <div className="item unread">
           <span onClick={() => videoCallHandler()} className="inbox-item">
             <div className="data">
               <button onClick={() => enterVideoQueue()}>Test Next</button>
