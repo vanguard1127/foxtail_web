@@ -547,6 +547,7 @@ export const SEARCH_EVENTS = gql`
 
 export const SEARCH_PROFILES = gql`
   query(
+    $searchType: String!
     $long: Float!
     $lat: Float!
     $distance: Int!
@@ -558,9 +559,17 @@ export const SEARCH_PROFILES = gql`
   )
     @connection(
       key: "searchProfiles"
-      filter: ["long", "lat", "distance", "interestedIn", "ageRange"]
+      filter: [
+        "long"
+        "lat"
+        "distance"
+        "interestedIn"
+        "ageRange"
+        "searchType"
+      ]
     ) {
     searchProfiles(
+      searchType: $searchType
       long: $long
       lat: $lat
       distance: $distance
