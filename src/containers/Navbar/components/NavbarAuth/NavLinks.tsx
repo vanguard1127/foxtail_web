@@ -20,7 +20,7 @@ const NavLinks: React.FC<{ t: any }> = ({ t }) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/party">
+          <NavLink to="/chat">
             <span role="heading" aria-level={1}>
               {t("chat")}
             </span>

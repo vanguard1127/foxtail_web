@@ -97,7 +97,7 @@ const Inbox: React.FC<IPartyProps> = memo(
       }
       const { cache } = client;
       deleteFromCache({ cache, query: "getMessages" });
-      history.push(`/party/${chatID}`);
+      history.push(`/chat/${chatID}`);
     };
 
     const closeChat = () => {
@@ -108,7 +108,7 @@ const Inbox: React.FC<IPartyProps> = memo(
       if (unsubscribe2.current) {
         unsubscribe2.current();
       }
-      history.push("/party");
+      history.push("/chat");
     };
 
     const toggleRuleModal = () => {

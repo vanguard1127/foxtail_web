@@ -44,7 +44,7 @@ const MainRoutes: React.FC<IMainRoutes> = ({
   const showFooter =
     location.pathname &&
     location.pathname.match(/^\/inbox/) === null &&
-    location.pathname.match(/^\/party/) === null;
+    location.pathname.match(/^\/chat/) === null;
   const baseRouteProps = {
     ErrorHandler,
     ReactGA,
@@ -80,7 +80,7 @@ const MainRoutes: React.FC<IMainRoutes> = ({
             render={() => <EventPage {...baseRouteProps} lang={lang} />}
           />
           <Route
-            path="/party/:chatID?"
+            path="/chat/:chatID?"
             render={(routeProps) => (
               <PartyPage {...routeProps} {...baseRouteProps} lang={lang} />
             )}

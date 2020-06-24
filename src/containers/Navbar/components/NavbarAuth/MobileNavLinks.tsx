@@ -36,7 +36,7 @@ const MobileNavLinks: React.FC<IMobileNavLinksProps> = ({
           <Link to="/events">{t("goevents")}</Link>
         </li>
         <li>
-          <Link to="/party">{t("chat")}</Link>
+          <Link to="/chat">{t("chat")}</Link>
         </li>
         <li>
           <span onClick={openInbox}>
