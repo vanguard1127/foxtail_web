@@ -19,6 +19,7 @@ interface IMemberProfilesProps extends WithT {
   toggleBlockModalVisible: (profile: any) => void;
   searchType: string;
   setSearchType: any;
+  isEmpty: boolean;
 }
 
 const MemberProfiles: React.FC<IMemberProfilesProps> = memo(
@@ -35,7 +36,8 @@ const MemberProfiles: React.FC<IMemberProfilesProps> = memo(
     msgdProfiles,
     toggleBlockModalVisible,
     searchType,
-    setSearchType
+    setSearchType,
+    isEmpty
   }) => {
     return (
       <section className="members">
@@ -62,23 +64,24 @@ const MemberProfiles: React.FC<IMemberProfilesProps> = memo(
                   {t("likedMe")}
                 </span>
               </div>
-              {profiles.map((profile, idx) => {
-                return (
-                  <MemberProfileCard
-                    key={profile.id + idx}
-                    profile={profile}
-                    showMsgModal={showMsgModal}
-                    likeProfile={likeProfile}
-                    t={t}
-                    history={history}
-                    dayjs={dayjs}
-                    distanceMetric={distanceMetric}
-                    liked={likedProfiles.includes(profile.id)}
-                    msgd={msgdProfiles.includes(profile.id)}
-                    toggleBlockModalVisible={toggleBlockModalVisible}
-                  />
-                );
-              })}
+              {isEmpty &&
+                profiles.map((profile, idx) => {
+                  return (
+                    <MemberProfileCard
+                      key={profile.id + idx}
+                      profile={profile}
+                      showMsgModal={showMsgModal}
+                      likeProfile={likeProfile}
+                      t={t}
+                      history={history}
+                      dayjs={dayjs}
+                      distanceMetric={distanceMetric}
+                      liked={likedProfiles.includes(profile.id)}
+                      msgd={msgdProfiles.includes(profile.id)}
+                      toggleBlockModalVisible={toggleBlockModalVisible}
+                    />
+                  );
+                })}
               <Waypoint
                 onEnter={({ previousPosition }) =>
                   handleEnd({ previousPosition })

@@ -345,28 +345,26 @@ const ProfilesContainer: React.FC<IProfilesContainerProps> = memo(
             }
           />
         )}
-        {result.profiles.length !== 0 && (
-          <MemberProfiles
-            profiles={result.profiles}
-            showMsgModal={(profile) => setMsgModalVisible(true, profile)}
-            likeProfile={(profile) => handleLike(likeProfile, profile)}
-            history={history}
-            handleEnd={({ previousPosition }) =>
-              handleEnd({ previousPosition, fetchMore })
-            }
-            t={t}
-            dayjs={dayjs}
-            distanceMetric={distanceMetric}
-            likedProfiles={likedProfiles}
-            msgdProfiles={msgdProfiles}
-            toggleBlockModalVisible={(profile) =>
-              toggleBlockModalVisible(profile)
-            }
-            searchType={searchType}
-            setSearchType={setSearchType}
-          />
-        )}
-
+        <MemberProfiles
+          isEmpty={result.profiles.length !== 0}
+          profiles={result.profiles}
+          showMsgModal={(profile) => setMsgModalVisible(true, profile)}
+          likeProfile={(profile) => handleLike(likeProfile, profile)}
+          history={history}
+          handleEnd={({ previousPosition }) =>
+            handleEnd({ previousPosition, fetchMore })
+          }
+          t={t}
+          dayjs={dayjs}
+          distanceMetric={distanceMetric}
+          likedProfiles={likedProfiles}
+          msgdProfiles={msgdProfiles}
+          toggleBlockModalVisible={(profile) =>
+            toggleBlockModalVisible(profile)
+          }
+          searchType={searchType}
+          setSearchType={setSearchType}
+        />
         <ScrollUp loading={state.loading} t={t} />
         {profile && msgModalVisible && (
           <DirectMsgModal
