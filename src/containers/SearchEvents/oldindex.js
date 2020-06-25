@@ -14,7 +14,6 @@ import { SEARCH_EVENTS } from "queries";
 import Spinner from "components/common/Spinner";
 import ShareModal from "components/Modals/Share";
 import withLocation from "components/HOCs/withLocation";
-
 import deleteFromCache from "utils/deleteFromCache";
 
 import Header from "./Header";
