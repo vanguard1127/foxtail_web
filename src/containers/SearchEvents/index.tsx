@@ -48,7 +48,7 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
       lat: location.lat,
       long: location.long,
       maxDistance: 50,
-      location: location.city,
+      city: location.city,
       all: true,
       hasMore: true,
       elapse: false
@@ -62,7 +62,8 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
       long,
       maxDistance,
       hasMore,
-      elapse
+      elapse,
+      city
     } = state;
 
     //TODO: Figure out why this doesnt populate lat and long on load
@@ -239,7 +240,6 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
               handleEnd({ previousPosition, currentPosition })
             }
             t={t}
-            dayjs={dayjs}
             loading={hasMore}
             distanceMetric={distanceMetric}
             lang={lang}
@@ -254,7 +254,7 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
         <section className="go-events">
           <ErrorHandler.ErrorBoundary>
             <SearchEventToolbar
-              location={location}
+              location={city}
               setLocationValues={setLocation}
               handleChangeSelect={handleChangeSelect}
               maxDistance={maxDistance}

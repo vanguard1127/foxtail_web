@@ -1,13 +1,13 @@
 import React from "react";
 import { WithT } from "i18next";
 import ScrollUpButton from "react-scroll-up-button";
-import EventCard from "./EventCard";
 import { Waypoint } from "react-waypoint";
+
+import EventCard from "./EventCard";
 
 interface IEventsList extends WithT {
   events: any;
   handleEnd: any;
-  dayjs: any;
   lang: string;
   distanceMetric: string;
   loading: boolean;
@@ -16,7 +16,6 @@ interface IEventsList extends WithT {
 const EventsList: React.FC<IEventsList> = ({
   events,
   handleEnd,
-  dayjs,
   lang,
   distanceMetric,
   loading,
@@ -36,7 +35,6 @@ const EventsList: React.FC<IEventsList> = ({
                 key={Math.random()}
                 event={event}
                 t={t}
-                dayjs={dayjs}
                 distanceMetric={distanceMetric}
                 lang={lang}
               />

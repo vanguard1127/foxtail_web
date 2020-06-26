@@ -75,7 +75,6 @@ const MyEvents: React.FC<IMyEvents> = ({
                   key={Math.random()}
                   event={event}
                   t={t}
-                  dayjs={dayjs}
                   lang={lang}
                 />
               ))}

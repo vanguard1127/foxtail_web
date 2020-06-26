@@ -1,8 +1,10 @@
 import React from "react";
 import { WithT } from "i18next";
-import { miOptions, kiOptions } from "../../../docs/options/en";
+
 import AddressSearch from "components/common/AddressSearch";
 import Select from "components/common/Select";
+
+import { miOptions, kiOptions } from "../../../docs/options/en";
 
 interface ISearchEventsFilters extends WithT {
   location: any;

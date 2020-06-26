@@ -1,7 +1,9 @@
 import React from "react";
 import { WithT } from "i18next";
+
 import SearchEventsFilters from "./SearchEventsFilters";
 import CreateEventBtn from "./CreateEventBtn";
+
 interface ISearchEventToolbar extends WithT {
   location: any;
   setLocationValues: any;
