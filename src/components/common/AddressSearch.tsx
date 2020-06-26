@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
-import PlacesAutocomplete, { geocodeByAddress } from "react-places-autocomplete";
+import PlacesAutocomplete, {
+  geocodeByAddress
+} from "react-places-autocomplete";
 import { toast } from "react-toastify";
 
 import getCityCountry from "utils/getCityCountry";
-import * as ErrorHandler from 'components/common/ErrorHandler';
+import * as ErrorHandler from "components/common/ErrorHandler";
 
 interface IAddressSearchProps extends WithTranslation {
-  address: string,
-  isBlackMember: boolean,
-  setLocationValues: (obj: { lat: number, long: number, address: string }) => void,
-  type: string,
-  placeholder: string,
-  hideReset?: boolean,
+  address: string;
+  isBlackMember?: boolean;
+  setLocationValues: (obj: {
+    lat: number;
+    long: number;
+    address: string;
+  }) => void;
+  type: string;
+  placeholder: string;
+  hideReset?: boolean;
 }
 
 const AddressSearch: React.FC<IAddressSearchProps> = ({
@@ -22,11 +28,11 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
   type,
   placeholder,
   hideReset = false,
-  t,
+  t
 }) => {
   const [addressState, setAddressState] = useState<string>(address);
 
-  const handleChange = newAddress => {
+  const handleChange = (newAddress) => {
     if (newAddress === "My Location") {
       handleRemoveLocLock();
       return;
@@ -47,7 +53,7 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
 
   const handleRemoveLocLock = async () => {
     await navigator.geolocation.getCurrentPosition(
-      async pos => {
+      async (pos) => {
         const { latitude, longitude } = pos.coords;
         const citycntry = await getCityCountry({
           long: longitude,
@@ -58,9 +64,9 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
           lat: latitude,
           long: longitude,
           address: citycntry.city
-        })
+        });
       },
-      err => {
+      (err) => {
         alert(t("common:enablerem"));
         return;
       }
@@ -71,9 +77,9 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
     setAddressState(address);
   }, [address]);
 
-  const handleSelect = newAddress => {
+  const handleSelect = (newAddress) => {
     geocodeByAddress(newAddress)
-      .then(async results => {
+      .then(async (results) => {
         if (type === "address") {
           setLocationValues({
             lat: results[0].geometry.location.lat(),
@@ -90,15 +96,14 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
             lat: results[0].geometry.location.lat(),
             long: results[0].geometry.location.lng(),
             address: citycntry.city
-          })
+          });
         }
       })
-      .catch(error => ErrorHandler.catchErrors(error));
+      .catch((error) => ErrorHandler.catchErrors(error));
   };
 
   const onError = (status, clearSuggestions) => {
-    if (status !== "ZERO_RESULTS")
-      ErrorHandler.catchErrors(status);
+    if (status !== "ZERO_RESULTS") ErrorHandler.catchErrors(status);
     clearSuggestions();
   };
 
@@ -120,7 +125,10 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
               <input
                 id="search-location"
                 aria-label="search location"
-                {...getInputProps({ placeholder, className: "location-search-input" })}
+                {...getInputProps({
+                  placeholder,
+                  className: "location-search-input"
+                })}
               />
 
               {!hideReset && (
@@ -146,7 +154,7 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
                   {`${t("common:Loading")}...`}
                 </div>
               )}
-              {suggestions.map(suggestion => {
+              {suggestions.map((suggestion) => {
                 const style = suggestion.active
                   ? { backgroundColor: "#fafafa", cursor: "pointer" }
                   : { backgroundColor: "#ffffff", cursor: "pointer" };
@@ -154,7 +162,11 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
                   <div
                     key={suggestion.id}
                     {...getSuggestionItemProps(suggestion, {
-                      className: `${suggestion.active ? "suggestion-item--active" : "suggestion-item"}`,
+                      className: `${
+                        suggestion.active
+                          ? "suggestion-item--active"
+                          : "suggestion-item"
+                      }`,
                       style
                     })}
                   >
@@ -168,6 +180,6 @@ const AddressSearch: React.FC<IAddressSearchProps> = ({
       }}
     </PlacesAutocomplete>
   );
-}
+};
 
 export default withTranslation("common")(AddressSearch);

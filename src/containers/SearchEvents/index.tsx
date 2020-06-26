@@ -1,5 +1,4 @@
-import React, { memo, useState, useEffect, useRef } from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import React, { memo, useState, useEffect } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
 import { useQuery, withApollo } from "react-apollo";
 import { Waypoint } from "react-waypoint";
@@ -21,11 +20,13 @@ import getLang from "utils/getLang";
 import Header from "./Header";
 import MyEvents from "./MyEvents";
 import EventsList from "./EventsList";
+import NoEvents from "./NoEvents";
+import NoLocation from "./NoLocation";
 import SearchEventToolbar from "./SearchEventToolbar/";
 
 import "./searchEvents.css";
 
-interface ISearchEventsProps extends WithTranslation, RouteComponentProps {
+interface ISearchEventsProps extends WithTranslation {
   ErrorHandler: any;
   ReactGA: any;
   session: ISession;
@@ -35,18 +36,9 @@ interface ISearchEventsProps extends WithTranslation, RouteComponentProps {
   location: any;
 }
 
+//TODO: Figure out which children should use memo
 const SearchEvents: React.FC<ISearchEventsProps> = memo(
-  ({
-    history,
-    t,
-    tReady,
-    ErrorHandler,
-    ReactGA,
-    session,
-    dayjs,
-    client,
-    location
-  }) => {
+  ({ t, tReady, ErrorHandler, ReactGA, session, dayjs, client, location }) => {
     const [state, setState] = useState<any>({
       skip: 0,
       visible: false,
@@ -62,8 +54,6 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
       elapse: false
     });
 
-    const targetElement = useRef(null);
-
     const {
       event,
       shareModalVisible,
@@ -77,8 +67,8 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
 
     //TODO: Figure out why this doesnt populate lat and long on load
     const searchParams = {
-      lat: 0,
-      long: 0,
+      lat: 32.7830317,
+      long: -117.1923924,
       maxDistance,
       all,
       limit: parseInt(process.env.REACT_APP_SEARCHEVENT_LIMIT),
@@ -201,11 +191,10 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
     };
 
     const toggleScroll = (enabled) => {
-      if (targetElement) {
-        enabled
-          ? disableBodyScroll(targetElement.current)
-          : enableBodyScroll(targetElement.current);
-      }
+      //TODO: finish later
+      //   enabled
+      //     ? disableBodyScroll(targetElement.current)
+      //     : enableBodyScroll(targetElement.current);
     };
 
     //TODO: Find better way to load if lat and others takes time.
@@ -224,52 +213,16 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
       );
     }
 
-    const distanceMetric = session.currentuser.distanceMetric;
-    const lang = getLang();
+    const distanceMetric: string = session.currentuser.distanceMetric;
+    const lang: string = getLang();
     ErrorHandler.setBreadcrumb("Search Events");
     document.title = t("searchevents");
     let resultsBody;
 
     if (!data || !data.searchEvents || data.searchEvents.length === 0) {
-      resultsBody = (
-        <section
-          className="not-found"
-          style={{
-            display: "inline-block",
-            position: "unset",
-            top: "unset",
-            transform: "unset"
-          }}
-        >
-          <div className="container" ref={targetElement}>
-            <div className="col-md-12">
-              <div className="icon">
-                <i className="nico event" />
-              </div>
-              <span className="head">{t("noeventavailable")}</span>
-              <span className="description">{t("noeventavailabledes")}</span>
-            </div>
-          </div>
-        </section>
-      );
+      resultsBody = <NoEvents t={t} />;
     } else if (!lat) {
-      resultsBody = (
-        <section className="not-found" style={{ display: "block" }}>
-          <div className="container">
-            <div className="col-md-12">
-              <div className="icon">
-                <i className="nico location" />
-              </div>
-              <span className="head">{t("Location not available.")}</span>
-              <span className="description">
-                {t(
-                  "Please enable location services on your device to see this page."
-                )}
-              </span>
-            </div>
-          </div>
-        </section>
-      );
+      resultsBody = <NoLocation t={t} />;
     } else {
       resultsBody = (
         <>
@@ -309,7 +262,6 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
               ErrorHandler={ErrorHandler}
               distanceMetric={distanceMetric}
               lang={lang}
-              history={history}
               ReactGA={ReactGA}
               toggleScroll={toggleScroll}
               dayjs={dayjs}
@@ -332,6 +284,7 @@ const SearchEvents: React.FC<ISearchEventsProps> = memo(
   }
 );
 
+//TODO: Can we use useApollo instead? it errored
 export default withApollo(
-  withRouter(withTranslation("searchevents")(withLocation(SearchEvents)))
+  withTranslation("searchevents")(withLocation(SearchEvents))
 );
