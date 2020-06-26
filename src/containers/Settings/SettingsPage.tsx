@@ -39,18 +39,18 @@ import ManageBlkMembership from "./ManageBlkMembership/";
 import MyProfile from "./MyProfile/";
 
 interface ISettingsPageProps extends WithTranslation, RouteChildrenProps {
-  ErrorHandler: any,
-  currentuser: IUser,
-  refetchUser: any,
-  dayjs: any,
-  ReactGA: any,
-  toast: any,
-  settings: any,
-  isCouple: boolean,
-  isInitial: boolean,
-  showBlkModal: boolean,
-  showCplModal: boolean,
-  errors: any
+  ErrorHandler: any;
+  currentuser: IUser;
+  refetchUser: any;
+  dayjs: any;
+  ReactGA: any;
+  toast: any;
+  settings: any;
+  isCouple: boolean;
+  isInitial: boolean;
+  showBlkModal: boolean;
+  showCplModal: boolean;
+  errors: any;
 }
 
 const SettingsPage: React.FC<ISettingsPageProps> = ({
@@ -139,7 +139,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     resetPassVisible: false,
     clearPassDlg: false,
     currPassword: ""
-  })
+  });
 
   const [updateSettings] = useMutation(UPDATE_SETTINGS);
 
@@ -155,11 +155,10 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
         handleSubmit();
       });
       clearAllBodyScrollLocks();
-    }
-  }, [location])
+    };
+  }, [location]);
 
   const handleUpload = async (file, signS3, isPrivate) => {
-
     const signS3res = await signS3({ variables: { filetype: file.filetype } });
     const { signedRequest, key } = signS3res.signS3;
 
@@ -182,14 +181,14 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
   };
 
   const handlePhotoListChange = ({ file, key, isPrivate, isDeleted }) => {
-    setIsPhotoChanged(true)
+    setIsPhotoChanged(true);
     setErrorHandler(
       "Photo list updated isPrivate:" +
-      isPrivate +
-      "isDeleted:" +
-      isDeleted +
-      "key:" +
-      key
+        isPrivate +
+        "isDeleted:" +
+        isDeleted +
+        "key:" +
+        key
     );
     if (!file) {
       setErrorHandler("no file");
@@ -198,7 +197,6 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     if (isPrivate) {
       let { privatePhotos } = state;
 
-
       if (isDeleted) {
         if (!privatePhotos || privatePhotos.length === 0) {
           setErrorHandler("no private photos available for delete");
@@ -206,7 +204,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
         }
 
         privatePhotos = privatePhotos.filter(
-          x => x.id.toString() !== file.id.toString()
+          (x) => x.id.toString() !== file.id.toString()
         );
         setErrorHandler({
           message: "private photo delete",
@@ -224,26 +222,24 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
           }
         ];
       }
-      const privatePhotoList = produce(privatePhotos, draftState => {
-        draftState = draftState.map(file => {
+      const privatePhotoList = produce(privatePhotos, (draftState) => {
+        draftState = draftState.map((file) => {
           delete file.url;
           return file;
         });
       });
 
-      setState(
-        {
-          ...state,
-          privatePhotos,
-          showModal: false,
-          publicPhotoList: undefined,
-          privatePhotoList: privatePhotoList.map(file => JSON.stringify(file))
-        })
+      setState({
+        ...state,
+        privatePhotos,
+        showModal: false,
+        publicPhotoList: undefined,
+        privatePhotoList: privatePhotoList.map((file) => JSON.stringify(file))
+      });
 
       handleSubmit();
     } else {
       let { publicPhotos } = state;
-
 
       if (isDeleted) {
         if (!publicPhotos || publicPhotos.length === 0) {
@@ -251,7 +247,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
           return;
         }
         publicPhotos = publicPhotos.filter(
-          x => x.id.toString() !== file.id.toString()
+          (x) => x.id.toString() !== file.id.toString()
         );
         setErrorHandler({
           message: "public photo delete",
@@ -269,44 +265,40 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
           }
         ];
       }
-      const publicPhotoList = produce(publicPhotos, draftState => {
-        draftState = draftState.map(file => {
+      const publicPhotoList = produce(publicPhotos, (draftState) => {
+        draftState = draftState.map((file) => {
           delete file.url;
           return file;
         });
       });
 
-      setState(
-        {
-          ...state,
-          publicPhotos,
-          showModal: false,
-          privatePhotoList: undefined,
-          publicPhotoList: publicPhotoList.map(file => JSON.stringify(file))
-        }
-      );
+      setState({
+        ...state,
+        publicPhotos,
+        showModal: false,
+        privatePhotoList: undefined,
+        publicPhotoList: publicPhotoList.map((file) => JSON.stringify(file))
+      });
       handleSubmit();
       fillInErrors(true);
-
     }
   };
 
   //Must reset these to prevent override on save
   const resetAcctSettingState = () => {
-
     setState({
       username: undefined,
       email: undefined,
       sex: undefined
     });
-
   };
 
   const handleSubmit = async (doRefetch?: boolean) => {
     const { isCouple, isInitial } = state;
     setErrorHandler("Settings updated...");
 
-    const { lat,
+    const {
+      lat,
       long,
       distance,
       distanceMetric,
@@ -331,7 +323,8 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
       username,
       sex,
       profilePic,
-      sexuality } = state;
+      sexuality
+    } = state;
 
     await updateSettings({
       variables: {
@@ -363,7 +356,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
         sexuality,
         profileID: currentuser.profileID
       }
-    })
+    });
 
     if (!isPhotoChanged) {
       setState({
@@ -394,14 +387,13 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
             refetchUser();
           }
         })
-        .catch(res => {
+        .catch((res) => {
           resetAcctSettingState();
           if (doRefetch) {
             refetchUser();
           }
           ErrorHandler.catchErrors(res);
         });
-
     } else {
       setIsPhotoChanged(false);
       updateSettings()
@@ -422,7 +414,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
             refetchUser();
           }
         })
-        .catch(res => {
+        .catch((res) => {
           resetAcctSettingState();
           ErrorHandler.catchErrors(res);
         });
@@ -436,16 +428,14 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
         lat
       });
 
-      setState(
-        {
-          ...state,
-          long,
-          lat,
-          city: citycntry.city,
-          country: citycntry.country
-        })
+      setState({
+        ...state,
+        long,
+        lat,
+        city: citycntry.city,
+        country: citycntry.country
+      });
       handleSubmit(true);
-
     } else {
       setState({ city });
     }
@@ -456,16 +446,15 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
 
     if (checked) {
       setState({ ...state, kinks: [...kinks, value] });
-      fillInErrors()
+      fillInErrors();
     } else {
-      setState({ ...state, kinks: kinks.filter(kink => kink !== value) });
+      setState({ ...state, kinks: kinks.filter((kink) => kink !== value) });
       fillInErrors();
     }
-
   };
 
   const setValue = ({ name, value, noSave, doRefetch }) => {
-    setState({ ...state, [name]: value })
+    setState({ ...state, [name]: value });
 
     if (noSave === true) {
       if (
@@ -482,7 +471,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     handleSubmit(doRefetch);
   };
 
-  const setErrorHandler = message => {
+  const setErrorHandler = (message) => {
     ErrorHandler.setBreadcrumb(message);
   };
 
@@ -500,7 +489,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
         ? disableBodyScroll(targetElement.current)
         : enableBodyScroll(targetElement.current);
     }
-  }
+  };
 
   const toggleKinksPopup = () => {
     setErrorHandler("Kinks popup toggled");
@@ -509,126 +498,102 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     setState({
       showKinksPopup: !showKinksPopup
     });
-
   };
 
   const toggleImgEditorPopup = (file = null, isPrivate = null) => {
     setErrorHandler("Toggle image editor");
 
-    setState(
-      {
-        ...state,
-        fileRecieved: file,
-        isPrivate,
-        showImgEditorPopup: !state.showImgEditorPopup
-      })
+    setState({
+      ...state,
+      fileRecieved: file,
+      isPrivate,
+      showImgEditorPopup: !state.showImgEditorPopup
+    });
 
     toggleScroll(!state.showImgEditorPopup);
-
-
   };
 
-  const toggleImgCropperPopup = url => {
+  const toggleImgCropperPopup = (url) => {
     setErrorHandler("Toggle image cropper");
 
-    setState(
-      {
-        ...state,
-        fileRecieved: url,
-        showImgCropperPopup: !state.showImgCropperPopup
-      });
+    setState({
+      ...state,
+      fileRecieved: url,
+      showImgCropperPopup: !state.showImgCropperPopup
+    });
 
-    toggleScroll(!state.showImgCropperPopup)
+    toggleScroll(!state.showImgCropperPopup);
   };
 
   const togglePhotoVerPopup = () => {
     setErrorHandler("Toggle Photo Ver Popup");
 
-    setState(
-      {
-        ...state,
-        showPhotoVerPopup: !state.showPhotoVerPopup
-      });
+    setState({
+      ...state,
+      showPhotoVerPopup: !state.showPhotoVerPopup
+    });
     toggleScroll(!state.showPhotoVerPopup);
-
-
   };
 
   const toggleCouplesPopup = () => {
     setErrorHandler("Toggle Couple popup");
 
-    setState(
-      {
-        ...state,
-        showCouplePopup: !state.showCouplePopup,
-        flashCpl: false
-      },
-
-    );
-    toggleScroll(!state.showCouplePopup)
-
+    setState({
+      ...state,
+      showCouplePopup: !state.showCouplePopup,
+      flashCpl: false
+    });
+    toggleScroll(!state.showCouplePopup);
   };
 
   const toggleBlackPopup = () => {
     setErrorHandler("Toggle Blk popup");
 
-    setState(
-      {
-        ...state,
-        showBlackPopup: !state.showBlackPopup
-      }
-    );
-    toggleScroll(!state.showBlackPopup)
-
+    setState({
+      ...state,
+      showBlackPopup: !state.showBlackPopup
+    });
+    toggleScroll(!state.showBlackPopup);
   };
 
   const toggleCCModal = () => {
     setErrorHandler("Toggle Blk popup");
 
-    setState(
-      {
-        ...state,
-        showCCModal: !state.showCCModal
-      }
-    );
+    setState({
+      ...state,
+      showCCModal: !state.showCCModal
+    });
 
-    toggleScroll(!state.showCCModal)
+    toggleScroll(!state.showCCModal);
   };
 
-  const toggleSharePopup = shareProfile => {
+  const toggleSharePopup = (shareProfile) => {
     setErrorHandler("Toggle Share popup");
 
-    setState(
-      {
-        ...state,
-        showSharePopup: !state.showSharePopup,
-        shareProfile
-      }
-
-    );
-    toggleScroll(!state.showSharePopup)
+    setState({
+      ...state,
+      showSharePopup: !state.showSharePopup,
+      shareProfile
+    });
+    toggleScroll(!state.showSharePopup);
   };
 
-  const notifyClient = text => {
+  const notifyClient = (text) => {
     toast.success(text);
   };
-  const openPhotoVerPopup = type => {
-
+  const openPhotoVerPopup = (type) => {
     setState({
       ...state,
       photoSubmitType: type,
       showPhotoVerPopup: !state.showPhotoVerPopup
     });
-
   };
 
-  const setS3PhotoParams = type => {
-
+  const setS3PhotoParams = (type) => {
     setState({
       ...state,
       filetype: type
     });
-
   };
 
   const uploadToS3 = async (file, signedRequest) => {
@@ -685,8 +650,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     let kinksErr = kinks.length === 0 ? t("onedes") : null;
 
     if (
-      isNull(state.errors.profilePic) !==
-      isNull(profilePicErr) ||
+      isNull(state.errors.profilePic) !== isNull(profilePicErr) ||
       isNull(state.errors.about) !== isNull(aboutErr) ||
       isNull(state.errors.kinks) !== isNull(kinksErr)
     ) {
@@ -705,36 +669,30 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     });
   };
 
-  const isNull = word => {
+  const isNull = (word) => {
     return word === null;
   };
 
-  const InputFeedback = error =>
+  const InputFeedback = (error) =>
     error ? (
       <div className="input-feedback" style={{ color: "red" }}>
         {error}
       </div>
     ) : null;
 
-  const handleModalTextChange = event => {
-
+  const handleModalTextChange = (event) => {
     setState({ ...state, modalValue: event.target.value });
-    handleModalInput()
-
+    handleModalInput();
   };
 
-  const handleModalValueChange = event => {
-
+  const handleModalValueChange = (event) => {
     setState({ ...state, modalValue: event.value });
-    handleModalInput()
-
+    handleModalInput();
   };
 
-  const handleModalError = error => {
-
+  const handleModalError = (error) => {
     setState({ ...state, modalError: error.text });
-    handleModalInput()
-
+    handleModalInput();
   };
 
   const validateForm = async () => {
@@ -749,11 +707,10 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
       return true;
     } catch (e) {
       let errors = {};
-      e.inner.forEach(err => (errors[err.path] = err.message));
+      e.inner.forEach((err) => (errors[err.path] = err.message));
       handleModalError(errors);
       return false;
     }
-
   };
 
   const handleModalInput = () => {
@@ -815,21 +772,19 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     modalInputType,
     schemaType
   }) => {
-    setState(
-      {
-        ...state,
-        modalTitle,
-        modalDecription,
-        modalBtnText,
-        okAction,
-        modalClassName,
-        modalPlaceholder,
-        modalInputType,
-        schemaType,
-        showModal: !state.showModal
-      }
-    );
-    handleModalInput()
+    setState({
+      ...state,
+      modalTitle,
+      modalDecription,
+      modalBtnText,
+      okAction,
+      modalClassName,
+      modalPlaceholder,
+      modalInputType,
+      schemaType,
+      showModal: !state.showModal
+    });
+    handleModalInput();
   };
 
   //BEst way to set state?
@@ -841,7 +796,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     setState({ resetPassVisible: !state.resetPassVisible });
   };
 
-  const handleDlgBtnClick = resetPassword => {
+  const handleDlgBtnClick = (resetPassword) => {
     resetPassword()
       .then(({ data }) => {
         if (data.resetPassword) {
@@ -862,7 +817,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
           refetchUser();
         }
       })
-      .catch(res => {
+      .catch((res) => {
         ErrorHandler.catchErrors(res);
       });
   };
@@ -927,35 +882,40 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
     currPassword
   } = state;
 
-
   if (schemaType) {
     switch (schemaType) {
       case "email":
-        setschema(yup.object().shape({
-          text: yup
-            .string()
-            .email(t("invemail"))
-            .required(t("emailreq"))
-        }));
+        setschema(
+          yup.object().shape({
+            text: yup
+              .string()
+              .email(t("invemail"))
+              .required(t("emailreq"))
+          })
+        );
         break;
       case "username":
-        setschema(yup.object().shape({
-          text: yup.string().required(t("unreq"))
-        }))
+        setschema(
+          yup.object().shape({
+            text: yup.string().required(t("unreq"))
+          })
+        );
         break;
       case "sex":
-        setschema(yup.object().shape({
-          text: yup.string().required(t("genreq"))
-        }));
+        setschema(
+          yup.object().shape({
+            text: yup.string().required(t("genreq"))
+          })
+        );
         break;
       default:
-        setschema(yup.object().shape({
-          text: yup.string()
-        }));
+        setschema(
+          yup.object().shape({
+            text: yup.string()
+          })
+        );
     }
   }
-
-
 
   return (
     <section className="settings">
@@ -995,10 +955,8 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
                 {(errors.about !== null ||
                   errors.kinks !== null ||
                   errors.profilePic !== null) && (
-                    <span className="message">
-                      {t("common:plscomplete")}
-                    </span>
-                  )}
+                  <span className="message">{t("common:plscomplete")}</span>
+                )}
                 <div className="settings-content">
                   <div className="page-section mtop">
                     <MyProfile
@@ -1052,17 +1010,13 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
                       toggleScroll={toggleScroll}
                     />
                     {errors.profilePic && (
-                      <label className="errorLbl">
-                        {errors.profilePic}
-                      </label>
+                      <label className="errorLbl">{errors.profilePic}</label>
                     )}
                   </div>
                   <div className="page-section mtop">
                     <Photos
                       isPrivate={true}
-                      showEditor={file =>
-                        toggleImgEditorPopup(file, true)
-                      }
+                      showEditor={(file) => toggleImgEditorPopup(file, true)}
                       photos={privatePhotos}
                       isBlackMember={currentuser.blackMember.active}
                       deleteImg={({ file, key }) =>
@@ -1200,13 +1154,11 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
       </div>
       {showImgEditorPopup && (
         <Mutation mutation={SIGNS3} variables={{ filetype }}>
-          {signS3 => {
+          {(signS3) => {
             return (
               <ImageEditor
                 file={fileRecieved}
-                handleUpload={file =>
-                  handleUpload(file, signS3, isPrivate)
-                }
+                handleUpload={(file) => handleUpload(file, signS3, isPrivate)}
                 setS3PhotoParams={setS3PhotoParams}
                 uploadToS3={uploadToS3}
                 signS3={signS3}
@@ -1219,7 +1171,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
       )}
       {showImgCropperPopup && (
         <Mutation mutation={SIGNS3} variables={{ filetype }}>
-          {signS3 => {
+          {(signS3) => {
             return (
               <ImageCropper
                 imgUrl={fileRecieved}
@@ -1244,7 +1196,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
       {showKinksPopup && (
         <KinksModal
           close={toggleKinksPopup}
-          onChange={e => toggleKinks(e, updateSettings)}
+          onChange={(e) => toggleKinks(e, updateSettings)}
           kinks={kinks}
           updateSettings={updateSettings}
           ErrorBoundary={ErrorHandler.ErrorBoundary}
@@ -1330,7 +1282,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
                 currPassword
               }}
             >
-              {resetPassword => (
+              {(resetPassword) => (
                 <span
                   className="color"
                   onClick={() => {
@@ -1348,7 +1300,7 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
               style={{ width: "100%" }}
               type="password"
               placeholder={"Password (if you have one)"}
-              onChange={e => {
+              onChange={(e) => {
                 setValue({
                   name: "currPassword",
                   value: e.target.value,
@@ -1375,9 +1327,6 @@ const SettingsPage: React.FC<ISettingsPageProps> = ({
       )}
     </section>
   );
-
-
-
-}
+};
 
 export default withApollo(SettingsPage);
