@@ -1,5 +1,11 @@
 import React from "react";
-const EventTitles = ({ eventname, tagline }) => {
+
+interface IEventTitles {
+  eventname: string;
+  tagline: string;
+}
+
+const EventTitles: React.FC<IEventTitles> = ({ eventname, tagline }) => {
   return (
     <>
       <span className="event-name">{eventname}</span>

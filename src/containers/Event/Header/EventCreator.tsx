@@ -1,22 +1,39 @@
 import React, { useState } from "react";
-import NoProfileImg from "../../../assets/img/elements/no-profile.png";
 
-const EventCreator = ({ ownerProfile, createdAt, history, t, dayjs, lang }) => {
+import NoProfileImg from "assets/img/elements/no-profile.png";
+
+interface IEventCreator {
+  ownerProfile: any;
+  createdAt: string;
+  history: any;
+  t: any;
+  dayjs: any;
+  lang: string;
+}
+
+const EventCreator: React.FC<IEventCreator> = ({
+  ownerProfile,
+  createdAt,
+  history,
+  t,
+  dayjs,
+  lang
+}) => {
   const [proPic, setPropic] = useState(ownerProfile.profilePic);
+
+  const setErrorPic = () => {
+    setPropic(NoProfileImg);
+  };
+
+  const goToProfile = () => {
+    history.push("/member/" + ownerProfile.id);
+  };
+
   return (
-    <div
-      className="created"
-      onClick={() => history.push("/member/" + ownerProfile.id)}
-    >
+    <div className="created" onClick={goToProfile}>
       <span>
         <span className="avatar">
-          <img
-            src={proPic}
-            alt=""
-            onError={() => {
-              setPropic(NoProfileImg);
-            }}
-          />
+          <img src={proPic} alt="" onError={setErrorPic} />
         </span>
         <div className="detail">
           <span className="name" title={ownerProfile.profileName}>
