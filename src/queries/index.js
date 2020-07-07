@@ -89,6 +89,16 @@ export const NEW_NOTICE_SUB = gql`
   }
 `;
 
+export const INCOMING_VIDEO_CHAT = gql`
+  subscription {
+    incomingVideoChat {
+      rn
+      p
+    }
+  }
+`;
+
+/* Mutation */
 export const CREATE_SUBSCRIPTION = gql`
   mutation(
     $ccnum: String!
@@ -161,6 +171,33 @@ export const UNLINK_PROFILE = gql`
 export const RESEND_EMAIL_VER = gql`
   mutation {
     resendVerEMail
+  }
+`;
+
+export const START_VIDEO_CHAT = gql`
+  mutation($chatID: ID!) {
+    startVideoChat(chatID: $chatID) {
+      p
+      rn
+    }
+  }
+`;
+
+export const LEAVE_VIDEO_CHAT = gql`
+  mutation($chatID: ID!) {
+    leaveVideoChat(chatID: $chatID)
+  }
+`;
+
+export const ENTER_VIDEO_QUEUE = gql`
+  mutation {
+    enterVideoQueue
+  }
+`;
+
+export const EXIT_VIDEO_QUEUE = gql`
+  mutation {
+    exitVideoQueue
   }
 `;
 
@@ -532,6 +569,7 @@ export const SEARCH_EVENTS = gql`
 
 export const SEARCH_PROFILES = gql`
   query(
+    $searchType: String
     $long: Float!
     $lat: Float!
     $distance: Int!
@@ -543,9 +581,17 @@ export const SEARCH_PROFILES = gql`
   )
     @connection(
       key: "searchProfiles"
-      filter: ["long", "lat", "distance", "interestedIn", "ageRange"]
+      filter: [
+        "long"
+        "lat"
+        "distance"
+        "interestedIn"
+        "ageRange"
+        "searchType"
+      ]
     ) {
     searchProfiles(
+      searchType: $searchType
       long: $long
       lat: $lat
       distance: $distance
@@ -797,6 +843,7 @@ export const GET_MESSAGES = gql`
       maxH: $maxH
     ) {
       id
+      name
       updatedAt
       ownerProfile {
         id
@@ -1049,5 +1096,15 @@ export const GET_FULL_LINK = gql`
 export const SET_FULL_LINK = gql`
   query($url: String!) {
     setFullLink(url: $url)
+  }
+`;
+
+export const GET_CHATROOMS = gql`
+  query($skip: Int!, $limit: Int!, $isMobile: String) {
+    getChatrooms(skip: $skip, limit: $limit, isMobile: $isMobile) {
+      id
+      name
+      numParticipants
+    }
   }
 `;

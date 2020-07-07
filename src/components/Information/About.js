@@ -1,12 +1,14 @@
 import React, { lazy, Suspense } from "react";
+import { Link } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import getLang from "../../utils/getLang";
 const lang = getLang();
 const AboutText = lazy(() => import("./" + lang + "/AboutText"));
-const About = ({ history }) => (
+const About = () => (
   <div>
-    <span className="back-to-home" onClick={() => history.push("/")} />
-
+    <Link to="/">
+      <span className="back-to-home" />
+    </Link>
     <div
       style={{
         display: "flex",

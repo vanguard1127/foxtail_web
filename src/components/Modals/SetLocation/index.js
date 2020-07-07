@@ -61,16 +61,6 @@ class SetLocationModal extends Component {
       });
   };
 
-  handleRemoveLocLock = async updateLocation => {
-    await navigator.geolocation.getCurrentPosition(
-      pos => this.setLocation(pos, updateLocation),
-      err => {
-        alert(this.props.t("common:enablerem"));
-        return;
-      }
-    );
-  };
-
   render() {
     const { close, isBlackMember, t, tReady } = this.props;
 
@@ -123,9 +113,6 @@ class SetLocationModal extends Component {
                     address={address}
                     type={"(cities)"}
                     placeholder={t("common:setloc") + "..."}
-                    handleRemoveLocLock={() =>
-                      this.handleRemoveLocLock(updateLocation)
-                    }
                   />
                 </div>
               </ErrorBoundary>

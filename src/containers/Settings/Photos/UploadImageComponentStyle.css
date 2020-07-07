@@ -1,0 +1,176 @@
+.box {
+  width: 90px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.upload-box {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #999999;
+  color: #999999;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.upload-box:hover {
+  border: 1px dashed #1890ff;
+  color: #878484;
+}
+.upload-box:focus {
+  border: 1px dashed #1890ff;
+  color: #878484;
+}
+.upload-box:focus {
+  border: 1px dashed #1890ff;
+  color: #878484;
+}
+.imgContainer:hover {
+  border: 1px solid orange;
+  color: #878484;
+}
+.imgContainer:focus {
+  border: 1px solid orange;
+  color: #878484;
+}
+.text {
+  margin-top: 8px;
+  font-size: 15px;
+}
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.imgContainer {
+  position: relative;
+  box-sizing: border-box;
+  width: 90px;
+  height: 100px;
+  padding: 5px;
+  border: 1px solid #999999;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.img-box {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+}
+.btns {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgContainer:hover .img-box {
+  opacity: 0.3;
+}
+
+.imgContainer:hover .btns {
+  opacity: 1;
+}
+.loader div.loading {
+  padding: 0px 20px 0px 20px;
+}
+.loader:hover div.loading {
+  display: none;
+}
+
+.loader div.delete {
+  display: none;
+}
+
+.loader:hover div.delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.validat {
+  display: block;
+  color: red;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.imgContainer .tooltip {
+  display: none;
+  background-color: white;
+  position: absolute;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04),
+    0 13px 16px 0 rgba(66, 81, 110, 0.04);
+  top: -75px;
+  right: -44px;
+  border-radius: 5px;
+}
+
+.imgContainer .tooltip.priv {
+  right: -20px;
+}
+
+.mobilebtns {
+  display: flex;
+}
+
+.mobilebtns div {
+  display: flex;
+  border: #acacac 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  font-size: 12px;
+  flex-direction: column;
+  text-align: center;
+}
+
+@media only screen and (max-width: 700px) {
+  .box {
+    width: 70px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  .imgContainer {
+    width: 70px;
+    height: 80px;
+  }
+  .text {
+    margin-top: 0px;
+    font-size: 13px;
+  }
+
+  .validat {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .imgContainer:hover .tooltip {
+    display: block;
+  }
+
+  .btns {
+    display: none;
+  }
+}

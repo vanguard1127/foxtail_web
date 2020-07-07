@@ -22,19 +22,6 @@ class Preferences extends Component {
     interestedIn: this.props.interestedIn
   };
 
-  handleRemoveLocLock = async () => {
-    await navigator.geolocation.getCurrentPosition(
-      pos => {
-        const { latitude, longitude } = pos.coords;
-        this.props.setLocationValues({ lat: latitude, long: longitude });
-      },
-      err => {
-        alert(this.props.t("common:enablerem"));
-        return;
-      }
-    );
-  };
-
   render() {
     const {
       distance,
@@ -101,6 +88,7 @@ class Preferences extends Component {
             <div className="col-md-6">
               <Dropdown
                 type={"interestedIn"}
+                multiple
                 onChange={el =>
                   this.setState({
                     interestedIn: el.map(e => e.value)
@@ -132,7 +120,6 @@ class Preferences extends Component {
                   address={city}
                   type={"(cities)"}
                   placeholder={t("common:setloc") + "..."}
-                  handleRemoveLocLock={this.handleRemoveLocLock}
                   isBlackMember={isBlackMember}
                 />
               </div>
