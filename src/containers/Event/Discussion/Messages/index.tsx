@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Waypoint } from "react-waypoint";
 
+import * as ErrorHandler from "components/common/ErrorHandler";
 import { NEW_MESSAGE_SUB } from "queries";
 
 import Message from "./Message";
@@ -16,7 +17,6 @@ interface IMessageListProps {
   messages: any;
   limit: number;
   fetchMore: any;
-  ErrorHandler: any;
 }
 
 const MessageList: React.FC<IMessageListProps> = ({
@@ -30,9 +30,8 @@ const MessageList: React.FC<IMessageListProps> = ({
   messages: currMessages,
   limit,
   fetchMore,
-  ErrorHandler
 }) => {
-  let unsubscribe;
+  const unsubscribe = useRef(null);
   const [{ hasMoreItems, messages }, setState] = useState({
     hasMoreItems: true,
     messages: currMessages
@@ -41,14 +40,14 @@ const MessageList: React.FC<IMessageListProps> = ({
   useEffect(() => {
     subscribeToNewMsgs();
     return () => {
-      if (unsubscribe) {
-        unsubscribe();
+      if (unsubscribe.current) {
+        unsubscribe.current();
       }
     };
-  });
+  }, []);
 
   const subscribeToNewMsgs = () => {
-    unsubscribe = subscribeToMore({
+    unsubscribe.current = subscribeToMore({
       document: NEW_MESSAGE_SUB,
       variables: {
         chatID: chatID,

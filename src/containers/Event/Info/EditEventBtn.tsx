@@ -1,16 +1,16 @@
 import React, { useState } from "react";
+import ReactGA from 'react-ga';
+import { WithT } from "i18next";
 
-import CreateEvent from "../../../components/Modals/CreateEvent";
+import * as ErrorHandler from "components/common/ErrorHandler";
+import CreateEvent from "components/Modals/CreateEvent";
 
-interface IEditEventBtnProps {
+interface IEditEventBtnProps extends WithT {
   id: string;
   updateEventProps: any;
   refetch: any;
   lang: string;
-  t: any;
-  ReactGA: any;
   dayjs: any;
-  ErrorHandler: any;
   toggleScroll: any;
 }
 
@@ -20,9 +20,7 @@ const EditEventBtn: React.FC<IEditEventBtnProps> = ({
   refetch,
   lang,
   t,
-  ReactGA,
   dayjs,
-  ErrorHandler,
   toggleScroll
 }) => {
   const [showPopup, setShowPopup] = useState(false);

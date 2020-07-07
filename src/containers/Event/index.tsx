@@ -12,11 +12,11 @@ import Lightbox from "react-image-lightbox";
 
 import { GET_EVENT, DELETE_EVENT } from "queries";
 
-import BlockModal from "../../components/Modals/Block";
-import Spinner from "../../components/common/Spinner";
-import Modal from "../../components/common/Modal";
+import BlockModal from "components/Modals/Block";
+import Spinner from "components/common/Spinner";
+import Modal from "components/common/Modal";
+import ShareModal from "components/Modals/Share";
 import { flagOptions } from "../../docs/options";
-import ShareModal from "../../components/Modals/Share";
 
 import Header from "./Header";
 import About from "./About";
@@ -32,7 +32,7 @@ interface MatchProps {
 
 interface IEventPageProps
   extends RouteComponentProps<MatchProps>,
-    WithTranslation {
+  WithTranslation {
   ErrorHandler: any;
   ReactGA: any;
   session: any;
@@ -215,9 +215,7 @@ const EventPage: React.FC<IEventPageProps> = memo(
                   dayjs={dayjs}
                   showShareModal={() => setShareModalVisible(true, event)}
                   showBlockModal={() => setBlockModalVisible(true, event)}
-                  ErrorHandler={ErrorHandler}
                   lang={lang}
-                  ReactGA={ReactGA}
                 />
               </div>
               <div className="col-lg-9 col-md-12">
@@ -229,13 +227,10 @@ const EventPage: React.FC<IEventPageProps> = memo(
                     event.ownerProfile.id === session.currentuser.profileID
                   }
                   t={t}
-                  ErrorHandler={ErrorHandler}
-                  ReactGA={ReactGA}
                 />
                 <EventInfoMobile
                   event={event}
                   t={t}
-                  ErrorHandler={ErrorHandler}
                   showShareModal={() => setShareModalVisible(true, event)}
                   showBlockModal={() => setBlockModalVisible(true, event)}
                   isOwner={
@@ -246,8 +241,6 @@ const EventPage: React.FC<IEventPageProps> = memo(
                   dayjs={dayjs}
                   distanceMetric={session.currentuser.distanceMetric}
                   lang={lang}
-                  ReactGA={ReactGA}
-                  toggleScroll={toggleScroll}
                   session={session}
                   handlePreview={handlePreview}
                 />
@@ -255,18 +248,14 @@ const EventPage: React.FC<IEventPageProps> = memo(
                   chatID={chatID}
                   history={history}
                   t={t}
-                  ErrorHandler={ErrorHandler}
                   dayjs={dayjs}
-                  currentuser={session.currentuser}
                   lang={lang}
-                  ReactGA={ReactGA}
                 />
               </div>
               <div className="col-lg-3 col-md-12">
                 <EventInfo
                   event={event}
                   t={t}
-                  ErrorHandler={ErrorHandler}
                   isOwner={
                     event.ownerProfile.id === session.currentuser.profileID
                   }
@@ -275,7 +264,6 @@ const EventPage: React.FC<IEventPageProps> = memo(
                   dayjs={dayjs}
                   distanceMetric={session.currentuser.distanceMetric}
                   lang={lang}
-                  ReactGA={ReactGA}
                   toggleScroll={toggleScroll}
                   session={session}
                   handlePreview={handlePreview}

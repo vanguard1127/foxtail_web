@@ -1,5 +1,6 @@
 import React from "react";
 
+import * as ErrorHandler from "components/common/ErrorHandler";
 import EventDate from "components/common/EventDate";
 
 import EventTitles from "./EventTitles";
@@ -13,8 +14,6 @@ interface IEventHeaderProps {
   dayjs: any;
   showShareModal: any;
   showBlockModal: any;
-  ErrorHandler: any;
-  ReactGA: any;
   lang: string;
 }
 
@@ -25,9 +24,7 @@ const EventHeader: React.FC<IEventHeaderProps> = ({
   dayjs,
   showShareModal,
   showBlockModal,
-  ErrorHandler,
   lang,
-  ReactGA
 }) => {
   return (
     <ErrorHandler.ErrorBoundary>
@@ -47,9 +44,6 @@ const EventHeader: React.FC<IEventHeaderProps> = ({
             id={id}
             t={t}
             showShareModal={showShareModal}
-            showBlockModal={showBlockModal}
-            ErrorHandler={ErrorHandler}
-            ReactGA={ReactGA}
           />
           <div className="report-con">
             <span className="rep-text">{t("reportlbl")}</span>

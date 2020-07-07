@@ -1,21 +1,16 @@
 import React, { useState } from "react";
+import { WithT } from "i18next";
 
-import MembersDropdown from "../../../components/common/MembersDropdown";
-
-interface IEventShare {
+import MembersDropdown from "components/common/MembersDropdown";
+interface IEventShare extends WithT {
   id: string;
-  t: any;
   showShareModal: any;
-  ErrorHandler: any;
-  ReactGA: any;
 }
 
 const EventShare: React.FC<IEventShare> = ({
   id,
-  t,
   showShareModal,
-  ErrorHandler,
-  ReactGA
+  t,
 }) => {
   const [invDropOpen, setInvDropOpen] = useState(false);
 
@@ -46,8 +41,6 @@ const EventShare: React.FC<IEventShare> = ({
             listType={"friends"}
             t={t}
             close={closeInvDropdown}
-            ErrorHandler={ErrorHandler}
-            ReactGA={ReactGA}
           />
         )}
       </div>

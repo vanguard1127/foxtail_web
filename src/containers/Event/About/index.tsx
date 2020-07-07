@@ -1,16 +1,16 @@
 import React from "react";
 import Linkify from "react-linkify";
+import { WithT } from "i18next";
+
+import * as ErrorHandler from "components/common/ErrorHandler";
 
 import GoingBar from "./GoingBar";
 
-interface IEventAboutProps {
+interface IEventAboutProps extends WithT {
   id: string;
   participants: any;
   description: string;
   isOwner: boolean;
-  t: any;
-  ErrorHandler: any;
-  ReactGA: any;
 }
 
 const EventAbout: React.FC<IEventAboutProps> = ({
@@ -19,8 +19,6 @@ const EventAbout: React.FC<IEventAboutProps> = ({
   description,
   isOwner,
   t,
-  ErrorHandler,
-  ReactGA
 }) => {
   const componentDecorator = (href, text, key) => (
     <a
@@ -47,8 +45,6 @@ const EventAbout: React.FC<IEventAboutProps> = ({
           participants={participants}
           t={t}
           isOwner={isOwner}
-          ErrorHandler={ErrorHandler}
-          ReactGA={ReactGA}
         />
       </div>
     </ErrorHandler.ErrorBoundary>

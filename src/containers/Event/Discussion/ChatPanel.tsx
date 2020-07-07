@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useMutation } from "react-apollo";
-import { POST_COMMENT } from "../../../queries";
+import ReactGA from 'react-ga';
+import { WithT } from "i18next";
 
-interface IChatPanelProps {
+import * as ErrorHandler from "components/common/ErrorHandler";
+
+import { POST_COMMENT } from "queries";
+
+interface IChatPanelProps extends WithT {
   chatID: string;
-  t: any;
-  ErrorHandler: any;
-  ReactGA: any;
 }
 
 const ChatPanel: React.FC<IChatPanelProps> = ({
   chatID,
   t,
-  ErrorHandler,
-  ReactGA
 }) => {
   const [text, setText] = useState("");
 

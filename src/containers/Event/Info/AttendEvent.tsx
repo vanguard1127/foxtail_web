@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
+import ReactGA from 'react-ga';
 import { useMutation } from "react-apollo";
 import produce from "immer";
+import { WithT } from "i18next";
+
+import * as ErrorHandler from "components/common/ErrorHandler";
 import {
   TOGGLE_EVENT_ATTEND,
   GET_EVENT,
   GET_EVENT_PARTICIPANTS
-} from "../../../queries";
+} from "queries";
 
-interface IAttendEventProps {
+interface IAttendEventProps extends WithT {
   id: string;
-  t: any;
   session: any;
   isGoing: boolean;
-  ErrorHandler: any;
-  ReactGA: any;
 }
 
 const AttendEvent: React.FC<IAttendEventProps> = ({
   id,
-  t,
   session,
   isGoing: currIsGoing,
-  ErrorHandler,
-  ReactGA
+  t,
 }) => {
   const [isGoing, setIsGoing] = useState<boolean>(currIsGoing);
 
@@ -100,17 +99,17 @@ const AttendEvent: React.FC<IAttendEventProps> = ({
             ...event,
             participants: isGoing
               ? [
-                  {
-                    id: toggleAttendEvent,
-                    profileName: session.currentuser.username,
-                    profilePic: session.currentuser.profilePic,
-                    __typename: "ProfileType"
-                  },
-                  ...event.participants
-                ]
+                {
+                  id: toggleAttendEvent,
+                  profileName: session.currentuser.username,
+                  profilePic: session.currentuser.profilePic,
+                  __typename: "ProfileType"
+                },
+                ...event.participants
+              ]
               : event.participants.filter(
-                  (member) => member.id !== toggleAttendEvent
-                )
+                (member) => member.id !== toggleAttendEvent
+              )
           }
         }
       });

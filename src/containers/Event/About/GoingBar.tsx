@@ -1,14 +1,13 @@
 import React, { useState } from "react";
+import ReactGA from 'react-ga';
+import { WithT } from "i18next";
 
 import MembersDropdown from "../../../components/common/MembersDropdown";
 
-interface IGoingBarProps {
+interface IGoingBarProps extends WithT {
   id: string;
   participants: any;
   isOwner: boolean;
-  t: any;
-  ErrorHandler: any;
-  ReactGA: any;
 }
 
 const GoingBar: React.FC<IGoingBarProps> = ({
@@ -16,8 +15,6 @@ const GoingBar: React.FC<IGoingBarProps> = ({
   participants,
   t,
   isOwner,
-  ErrorHandler,
-  ReactGA
 }) => {
   const [remDropOpen, setRemDropOpen] = useState(false);
 
@@ -57,8 +54,6 @@ const GoingBar: React.FC<IGoingBarProps> = ({
             isOwner={isOwner}
             t={t}
             close={closeRemDropdown}
-            ErrorHandler={ErrorHandler}
-            ReactGA={ReactGA}
           />
         )}
       </span>

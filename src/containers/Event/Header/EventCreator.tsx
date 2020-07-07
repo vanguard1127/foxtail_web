@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { WithT } from "i18next";
 
 import NoProfileImg from "assets/img/elements/no-profile.png";
 
-interface IEventCreator {
+interface IEventCreator extends WithT {
   ownerProfile: any;
   createdAt: string;
   history: any;
-  t: any;
   dayjs: any;
   lang: string;
 }
@@ -15,9 +15,9 @@ const EventCreator: React.FC<IEventCreator> = ({
   ownerProfile,
   createdAt,
   history,
-  t,
   dayjs,
-  lang
+  lang,
+  t,
 }) => {
   const [proPic, setPropic] = useState(ownerProfile.profilePic);
 

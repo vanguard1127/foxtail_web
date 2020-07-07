@@ -1,22 +1,22 @@
 import React from "react";
+import ReactGA from 'react-ga';
+import { WithT } from "i18next";
 
+import * as ErrorHandler from "components/common/ErrorHandler";
+import NoEventImg from "assets/img/elements/no-eve-image.jpg";
 import { kinkOptions } from "../../../docs/options";
-import NoEventImg from "../../../assets/img/elements/no-eve-image.jpg";
 
 import AttendEvent from "./AttendEvent";
 import EditEventBtn from "./EditEventBtn";
 
-interface IEventInfoProps {
+interface IEventInfoProps extends WithT {
   event: any;
-  t: any;
-  ErrorHandler: any;
   isOwner: boolean;
   openDelete: any;
   refetch: any;
   dayjs: any;
   distanceMetric: string;
   lang: string;
-  ReactGA: any;
   toggleScroll: any;
   session: any;
   handlePreview: any;
@@ -24,18 +24,16 @@ interface IEventInfoProps {
 
 const EventInfo: React.FC<IEventInfoProps> = ({
   event,
-  t,
-  ErrorHandler,
   isOwner,
   openDelete,
   refetch,
   dayjs,
   distanceMetric,
   lang,
-  ReactGA,
   toggleScroll,
   session,
-  handlePreview
+  handlePreview,
+  t,
 }) => {
   const {
     id,
@@ -83,7 +81,7 @@ const EventInfo: React.FC<IEventInfoProps> = ({
           <li>
             <span className="head">{t("toexpect")}:</span>
             <span className="title">
-              {kinks.reduce(function(result, kink, idx) {
+              {kinks.reduce(function (result, kink, idx) {
                 const kinkObj = kinkOptions.find((el) => el.value === kink);
                 if (idx !== kinks.length - 1) {
                   result.push(t(kinkObj.label) + ", ");
@@ -120,23 +118,23 @@ const EventInfo: React.FC<IEventInfoProps> = ({
             session={session}
           />
         ) : (
-          <>
-            <EditEventBtn
-              id={id}
-              t={t}
-              ErrorHandler={ErrorHandler}
-              updateEventProps={event}
-              refetch={refetch}
-              lang={lang}
-              ReactGA={ReactGA}
-              toggleScroll={toggleScroll}
-              dayjs={dayjs}
-            />
-            <div className="join-event">
-              <span onClick={openDelete}>{t("canevent")}</span>
-            </div>
-          </>
-        )}
+            <>
+              <EditEventBtn
+                id={id}
+                t={t}
+                ErrorHandler={ErrorHandler}
+                updateEventProps={event}
+                refetch={refetch}
+                lang={lang}
+                ReactGA={ReactGA}
+                toggleScroll={toggleScroll}
+                dayjs={dayjs}
+              />
+              <div className="join-event">
+                <span onClick={openDelete}>{t("canevent")}</span>
+              </div>
+            </>
+          )}
       </div>
     </ErrorHandler.ErrorBoundary>
   );

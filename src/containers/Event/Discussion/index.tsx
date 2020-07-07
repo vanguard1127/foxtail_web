@@ -1,25 +1,24 @@
 import React from "react";
+import { WithT } from "i18next";
+
+import * as ErrorHandler from "components/common/ErrorHandler";
+
 import ChatPanel from "./ChatPanel";
 import ChatContent from "./ChatContent";
 
-interface IEventDiscussionProps {
+interface IEventDiscussionProps extends WithT {
   chatID: string;
   history: any;
-  t: any;
-  ErrorHandler: any;
   dayjs: any;
   lang: string;
-  ReactGA: any;
 }
 
 const EventDiscussion: React.FC<IEventDiscussionProps> = ({
   chatID,
   history,
-  t,
-  ErrorHandler,
   dayjs,
   lang,
-  ReactGA
+  t,
 }) => {
   return (
     <ErrorHandler.ErrorBoundary>
@@ -28,14 +27,11 @@ const EventDiscussion: React.FC<IEventDiscussionProps> = ({
         <ChatPanel
           chatID={chatID}
           t={t}
-          ErrorHandler={ErrorHandler}
-          ReactGA={ReactGA}
         />
         <ChatContent
           chatID={chatID}
           history={history}
           t={t}
-          ErrorHandler={ErrorHandler}
           dayjs={dayjs}
           limit={parseInt(process.env.REACT_APP_EVENTDISC_LIMIT)}
           lang={lang}

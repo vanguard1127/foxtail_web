@@ -1,14 +1,14 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useQuery } from "react-apollo";
+import { WithT } from "i18next";
+import * as ErrorHandler from "components/common/ErrorHandler";
 
 import { GET_COMMENTS } from "queries";
 
 import Messages from "./Messages";
 
-interface IChatContentProps {
+interface IChatContentProps extends WithT {
   chatID: string;
-  t: any;
-  ErrorHandler: any;
   dayjs: any;
   limit: number;
   lang: string;
@@ -18,14 +18,11 @@ interface IChatContentProps {
 const ChatContent: React.FC<IChatContentProps> = ({
   chatID,
   history,
-  t,
-  ErrorHandler,
   dayjs,
   limit,
-  lang
+  lang,
+  t,
 }) => {
-  //TODO: Do we need this?
-  const messagesRef = useRef(null);
   const { data, loading, error, subscribeToMore, fetchMore } = useQuery(
     GET_COMMENTS,
     {
@@ -65,13 +62,12 @@ const ChatContent: React.FC<IChatContentProps> = ({
       chatID={chatID}
       history={history}
       messages={messages}
-      ref={messagesRef}
       fetchMore={fetchMore}
       limit={limit}
       dayjs={dayjs}
-      t={t}
       lang={lang}
-      ErrorHandler={ErrorHandler}
+      loading={loading}
+      t={t}
     />
   );
 };
